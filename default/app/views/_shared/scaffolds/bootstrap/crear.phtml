@@ -1,0 +1,32 @@
+<div class="page-header">
+    <h1><?php echo ucwords("$model"), ": <span>$action_name</span>" ?></h1>
+</div>
+<?php View::content(); ?>
+
+<?php ModelForm::create($$model) ?>
+<div style="clear: both;margin-bottom: 10px;"></div>
+<div class="actions">
+    <a href="../" class="btn">Listado</a>
+</div>
+<style>
+    label + *{
+        float:left;
+        margin-top: 10px;
+    }
+    * + label{
+        clear: left;
+        margin-top: 10px;
+    }
+
+    input[type=submit]{
+        clear :both;
+        float: left;
+        margin-left: 220px;
+        margin-top: 10px;
+    }
+</style>
+<script>
+    $(function(){
+        $('form.scaffold :submit').addClass("btn primary");
+    });
+</script>

@@ -1,0 +1,34 @@
+<div class="control-group">
+    <label class="control-label" for="config_name">Dirección del Servidor : </label>
+    <div class="controls">
+        <?php echo Form::text('database.host') ?>
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label" for="config_name">Usuario : </label>
+    <div class="controls">
+        <?php echo Form::text('database.username') ?>
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label" for="config_name">Contraseña : </label>
+    <div class="controls">
+        <?php echo Form::text('database.password') ?>
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label" for="config_name">Base de Datos : </label>
+    <div class="controls">
+        <?php echo Form::text('database.name') ?>
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label" for="config_name">Driver de Conexión : </label>
+    <div class="controls">
+        <?php echo Form::select('database.type',array(
+            'mysqli' => 'mysqli',
+            'mysql' => 'mysql',
+            'pgsql' => 'pgsql',
+            )) ?>
+    </div>
+</div>

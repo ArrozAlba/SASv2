@@ -1,0 +1,18 @@
+<?php $registros = Load::model('recursos')->find('group: modulo,controlador', 'order: modulo,controlador'); ?>
+
+<ul>
+    <?php foreach ($registros as $e): ?>
+        <li>
+            <h4>
+            <?php eh("$e->modulo/$e->controlador/") ?> <?php echo Form::check("recurso.$e->id", $e->id) ?>
+            </h4>
+            <hr style="margin: 5px 0px 10px 0px"/>
+            <?php if ($acciones = $e->accionesPorControlador()): ?>
+                <h5>Acciones:</h5>
+                <?php foreach ($acciones as $acc): ?>
+                    <?php echo $acc->accion,' ', Form::check("recurso.$acc->id", $acc->id) ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </li>
+    <?php endforeach; ?>
+</ul>

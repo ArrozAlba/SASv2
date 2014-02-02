@@ -1,0 +1,31 @@
+BASE DE DATOS:
+1) Tablas demograficas Pais/Estados/Municipios/Parroquias.
+sas_pais
+sas_estado
+sas_municipio
+sas_parroquia
+2)Creación de Tablas Auxiliares.
+3)Creación Tablas Titular y Beneficiario. 
+
+DESARROLLO: 
+kumbia
+modelo de seguridad con kumbia
+bootstrap framework maquetacion css
+
+PLATAFORMA: 
+apache2 
+php5
+github
+
+
+
+REPORTES: 
+-----------------------
+Listados de Servicios (Titulares, Beneficiarios, Reembolsos, HCM, Funeraria entre otros.)
+Reportes enfocados para toma de decisiones sumamente graficos.
+reportes graficos comparativos entre periodos, patologias, proveedores y usuarios.
+
+ 
+
+INFORMACION ADICIONAL 
+1) agregar baremos y gacetas de precios maximos para comparativos (gaceta 40196 precios de clinicas).

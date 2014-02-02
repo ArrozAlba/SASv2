@@ -1,0 +1,15 @@
+<?php $registros = Load::model('auditorias')
+                ->find("tabla_afectada = '$tabla'", 'order: id DESC', 'limit: 10'); ?>
+
+<ul>
+    <?php foreach ($registros as $e): ?>
+    <li>
+        <span class="label">
+        <?php eh(substr($e->accion_realizada, 0, 100)) ?>
+        </span>...
+        <span class="label">
+        <?php eh($e->ip) ?>
+        </span>
+    </li>
+    <?php endforeach; ?>
+</ul>

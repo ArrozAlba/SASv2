@@ -1,0 +1,18 @@
+<div class="page-header">
+    <h1>Configuraci&oacute;n General</h1>
+</div>
+<?php View::content() ?>
+<h5>Tablas de la Base de Datos <?php //eh(Config::get('databases.'))     ?></h5>
+<ul>
+    <?php foreach ((array) $tablas_existentes as $t): ?> 
+        <li><h5><?php eh($t) ?> <small><?php if ( Instalacion::esTablaNecesaria($t) ) echo ' usada en el backend'; ?></small></h5></li>
+    <?php endforeach; ?> 
+</ul>
+<hr />
+<p>
+    La base de datos parece estar configurada correctamente...!!!
+</p>
+<div class="form-actions">
+    <?php echo Html::linkAction('index', 'Volver', 'class="btn"') ?>
+    <?php echo Html::linkAction('paso3', 'Siguiente Paso', 'class="btn"') ?>
+</div>

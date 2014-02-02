@@ -1,0 +1,75 @@
+<div class="page-header">
+    <h1>Recursos por Agregar al Sistema
+        <?php echo Html::linkAction('', 'Volver', 'class="btn pull-right visible-desktop"') ?>
+        <?php echo Html::linkAction('crear', 'Crear Recurso', 'class="btn btn-info pull-right visible-desktop"') ?>
+    </h1>
+</div>
+<?php //echo Form::open() ?>
+<?php echo Ajax::form('res-form-ajax') ?>
+        <p>
+    <?php echo Form::submit('Guardar Recursos Seleccionados', 'name="guardar" class="btn btn-primary btn-large"') ?>
+    </p>
+    <div id="res-form-ajax"><?php View::content() ?></div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th class="span4">Datos del Recurso</th>
+                <th>Descripci&oacute;n</th>
+                <th>Activo</th>
+                <th>Agregar</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        <?php foreach ($recursos->items as $index => $e) :++$index ?>
+            <tr>
+                <td>
+                    <ul class="unstyled">
+                        <li>
+                            <strong>Recurso :</strong> <?php echo $e['recurso'] ?>
+                        </li>
+                        <li>
+                            <strong> Modulo :</strong> <?php echo $e['modulo'] ?>
+                        </li>
+                        <li>
+                            <strong>Controlador :</strong> <?php echo $e['controlador'] ?>
+                        </li>
+                        <li>
+                            <strong>Accion :</strong> <?php echo $e['accion'] ?>
+                        </li>
+                    </ul>
+                </td>
+                <td>
+                <?php echo Form::textarea("descripcion.$index", 'class="span6"') ?>
+            </td>
+            <td class="span1">
+                <?php echo Form::radio("activo.$index", '1', NULL, TRUE) ?> Si <br/>
+                <?php echo Form::radio("activo.$index", '0') ?> No
+            </td>
+            <td class="span1">
+                <?php echo Form::check("check.$index", $index) ?>
+            </td>
+        </tr>
+        <?php endforeach ?>
+            </tbody>
+        </table>
+<?php View::partial('paginators/bootstrap', false, array('page' => $recursos, 'url' => Router::get('controller_path') . '/escaner')); ?>
+<?php echo Form::close() ?>
+<style type="text/css" >
+    table ul strong{
+        display: inline-block;
+        width: 90px;
+    }
+
+    table textarea{
+        height: 60px;
+    }
+
+    table ul{
+        margin-bottom: 0px;
+    }
+
+    .page-header h1 a{
+        margin-left: 10px;
+    }
+</style>
