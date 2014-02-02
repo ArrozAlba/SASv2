@@ -1,7 +1,7 @@
 SASv2
 =====
 
-Implementación del S.A.S. bajo el Framework KumbiaPHP utilizando como Backend Postgresql
+Implementación del Sistema Autogestionado de Salud  bajo el Framework KumbiaPHP utilizando como Backend Postgresql
 
 
 Incorporado el KumbiaPHP Backend
