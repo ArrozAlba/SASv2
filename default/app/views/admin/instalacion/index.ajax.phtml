@@ -1,0 +1,8 @@
+<?php if (Input::isAjax())
+    View::content() ?>
+<div id="res-pdo">
+    <?php require 'index.sin_pdo.ajax.phtml';?>
+</div>
+<div class="form-actions">
+    <?php echo Form::submit('Probar Configuración', 'class="btn btn-primary"') ?>
+</div>

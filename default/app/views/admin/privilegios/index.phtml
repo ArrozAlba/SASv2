@@ -1,0 +1,79 @@
+<?php echo Form::open('admin/privilegios/asignar_privilegios/' . $results->current) ?>
+<div class="page-header">
+    <h1>
+        Privilegios de los Usuarios
+        <span style="line-height: 16px;float: right;margin-right: 50px;">
+            <?php echo Form::submit('Guardar Cambios', 'class="btn btn-primary"') ?>
+        </span>
+    </h1>
+</div>
+<div id="mensajes_flash" >        
+    <?php View::content() ?>
+        </div>
+<?php $ids_privilegios = array(); //variable para saber los privilegios de la pagina actual ?>
+<?php if ($results->items) : ?>
+                <table id="tabla_privilegios" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th rowspan="2"style="width: 200px">Recursos</th>
+                            <th rowspan="2" style="width: 300px">Descripcion</th>
+                            <th colspan="<?php echo count($roles) ?>" style="text-align: center; border-bottom:1px solid #DDD;">Roles</th>
+                        </tr>
+                        <tr>
+            <?php foreach ($roles as $e) : ?>
+                    <th style="text-align: center;border-left:1px solid #DDD;">
+                        <a href="#" id="check_rol_<?php eh($e->id) ?>" class="check_roles">
+                    <?php eh($e->rol) ?>
+                </a>
+            </th>
+            <?php endforeach ?>
+                </tr>
+            </thead>
+            <tbody>
+        <?php foreach ($results->items as $item) : ?>
+                        <tr>
+                            <td><?php eh($item->recurso) ?></td>
+                            <td><?php eh($item->descripcion) ?></td>
+            <?php foreach ($roles as $e) : ?>
+            <?php if (array_key_exists("{$e->id}-{$item->id}", $privilegios)) : ?>
+            <?php $ids_privilegios[] = $privilegios["{$e->id}-{$item->id}"] ?>
+                                <td class="check_rol_<?php eh($e->id) ?>">
+                <?php echo Form::check("priv.{$e->id}_{$item->id}", "{$e->id}/{$item->id}", NULL, true) ?>
+                            </td>
+            <?php else: ?>
+                                    <td class="check_rol_<?php eh($e->id) ?>">
+                <?php echo Form::check("priv.{$e->id}_{$item->id}", "{$e->id}/{$item->id}") ?>
+                                </td>
+            <?php endif; ?>
+            <?php endforeach ?>
+                                </tr>
+        <?php endforeach ?>
+                                </tbody>
+                            </table>
+<?php View::partial('paginators/bootstrap', false, array('page' => $results, 'url' => Router::get('controller_path') . '/index')); ?>
+
+<?php else : // Si no hay items?>
+                                        <h2>No hay ningún registro</h2>
+<?php endif ?>
+<?php echo Form::hidden('privilegios_pagina', NULL, join(',', $ids_privilegios)); ?>
+<?php echo Form::close() ?>
+<script type="text/javascript">
+    $(function(){
+        $('.check_roles').live('click',toggle_privilegios);
+    });
+    
+    function toggle_privilegios(){
+        var link = $(this);
+        var clase = link.attr('id');
+        if ($('.' + clase + ' input:checked').size() < $('.' + clase + ' input').size() ){
+            $('.' + clase + ' input').attr('checked','checked');
+        }else{
+            $('.' + clase + ' input').attr('checked',false);            
+        }
+    }
+</script>
+<style>
+    th{
+        vertical-align: middle !important;
+    }
+</style>

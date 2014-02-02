@@ -1,0 +1,64 @@
+<div class="page-header">
+    <h1>Configuraci&oacute;n de Perfil</h1>
+</div>       
+<?php View::content() ?>
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#datos-personales" data-toggle="tab">Datos Personales</a></li>
+    <li><a href="#clave" data-toggle="tab">Contrase&ntilde;a</a></li>
+</ul>
+<div class="tab-content">
+    <div id="datos-personales" class="tab-pane active">
+        <?php echo Ajax::form('res-datos-personales', NULL, 'form-horizontal') //Form::open() ?>
+        <fieldset>
+            <legend>Configurar Datos Personales</legend>
+            <br/>
+            <div id="res-datos-personales"></div>
+            <div class="control-group">                
+                <label class="control-label" for="usuario_nombres">Nombre Completo* : </label>
+                <div class="controls">
+                    <?php echo Form::text('usuario1.nombres') ?>
+                </div>
+            </div>
+            <div class="control-group">                
+                <label class="control-label" for="usuario_email">Correo Electronico* : </label>
+                <div class="controls">
+                    <?php echo Form::text('usuario1.email') ?>
+                </div>
+            </div>
+            <div class="form-actions">
+                <?php echo Form::submit('Guardar Cambios', 'name="datos_personas" class="btn btn-primary"') ?>
+            </div>
+        </fieldset>
+        <?php echo Form::close() ?>
+    </div>
+    <div id="clave" class="tab-pane">
+        <?php echo Ajax::form('res-clave', NULL, 'form-horizontal')//Form::open() ?>
+        <fieldset>
+            <legend>Cambiar Contrase&ntilde;a</legend>
+            <br/>
+            <div id="res-clave"></div>
+            <div class="control-group">
+                <label class="control-label" for="usuario_clave">Contrase&ntilde;a Actual * : </label>
+                <div class="controls">
+                    <?php echo Form::pass('usuario2.clave_actual') ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="usuario_clave">Nueva Contrase&ntilde;a* : </label>
+                <div class="controls">
+                    <?php echo Form::pass('usuario2.nueva_clave') ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="usuario_clave2">Volver a escribir Contrase&ntilde;a* : </label>
+                <div class="controls">
+                    <?php echo Form::pass('usuario2.nueva_clave2') ?>
+                </div>
+            </div>
+            <div class="form-actions">
+                <?php echo Form::submit('Guardar Cambios', 'name="cambiar_clave" class="btn btn-primary"') ?>
+            </div>
+        </fieldset>
+        <?php echo Form::close() ?>
+    </div>
+</div>

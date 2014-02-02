@@ -1,0 +1,41 @@
+<div class="page-header">
+    <h1>Crear una Cuenta</h1>
+</div>
+<?php View::content(); ?>
+<?php echo Form::open(NULL, 'post', 'class="form-horizontal"') ?>
+<?php echo Form::hidden('registro.id') ?>
+<div class="control-group">
+    <label for="usuario_login">Nombre de Usuario (Login)* : </label>
+    <div class="controls">
+        <?php echo Form::text('registro.login') ?>
+    </div>
+</div>
+<div class="control-group">
+    <label for="usuario_clave">Contrase&ntilde;a* : </label>
+    <div class="controls">
+        <?php echo Form::pass('registro.clave') ?>
+    </div>
+</div>
+<div class="control-group">
+    <label for="usuario_clave2">Volver a escribir Contrase&ntilde;a* : </label>
+    <div class="controls">
+        <?php echo Form::pass('registro.clave2') ?>
+    </div>
+</div>
+<div class="control-group">
+    <label for="usuario_nombres">Nombre Completo* : </label>
+    <div class="controls">
+        <?php echo Form::text('registro.nombres') ?>
+    </div>
+</div>
+<div class="control-group">
+    <label for="usuario_email">Correo Electronico* : </label>
+    <div class="controls">
+        <?php echo Form::text('registro.email') ?>
+    </div>
+</div>
+<div class="form-actions">
+    <?php echo Form::submit('Crear Cuenta', 'class="btn btn-primary"') ?>
+    <?php echo Html::linkAction('', 'Cancelar', 'class="btn"') ?>
+</div>
+<?php echo Form::close() ?>

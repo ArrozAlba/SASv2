@@ -1,0 +1,18 @@
+<?php
+isset($texto) || $texto = 'Crear Registro';
+isset($accion) || $accion = 'crear';
+isset($opciones) || $opciones= TRUE;
+?>
+
+<div class="well" style="padding: 8px;border-radius: 2px;">
+    <?php echo Html::linkAction($accion, $texto, 'class="btn btn-primary"') ?>
+    <?php if ($opciones): ?>
+        <div class="btn-group pull-right">
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"> Seleccionados <span class="caret"></span></a>
+            <ul class="dropdown-menu" style="min-width: 130px">
+                <li><a href="#" class="eliminar_seleccionados"><i class="icon-trash"></i> Eliminar</a></li>
+            </ul>
+        </div>
+    <?php endif; ?>
+</div>
+

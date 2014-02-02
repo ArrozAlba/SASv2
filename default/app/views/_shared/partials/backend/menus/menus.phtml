@@ -1,0 +1,20 @@
+<?php $res = Load::model('menus')->find('limit: 8', 'order: id DESC'); ?>
+<?php $actual = Form::getFieldValue('menu.id') //vriable con el id del registro que se edita ?>
+
+<ul class="nav nav-tabs nav-stacked visible-desktop">
+    <li class="<?php if (!$actual) echo 'active'; ?>">
+        <?php echo Html::linkAction("crear", 'Agregar Nuevo'); ?>
+    </li>
+    <?php foreach ($res as $e): ?>
+        <li class="<?php if ($e->id == $actual) echo 'active'; ?>">
+            <?php $content = h(strtoupper($e->nombre)); ?>
+            <?php $content .= "<h6 style='text-transform: lowercase'>" .
+                            (strlen($e->url) > 25 ? substr($e->url, 0, 25) . '...' : $e->url) .
+                            "</h6>" ?>
+            <?php echo Html::linkAction("editar/$e->id", $content); ?>
+        </li>
+    <?php endforeach; ?>
+    <li>
+        <?php echo Html::linkAction("", 'Ver Todos...'); ?>
+    </li>
+</ul>
