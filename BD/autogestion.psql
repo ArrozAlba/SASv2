@@ -1,0 +1,419 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: sas_upsa; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+--
+
+CREATE TABLE sas_upsa (
+    id integer NOT NULL,
+    creacion_uid integer,
+    creacion_fecha timestamp without time zone,
+    edicion_fecha timestamp without time zone,
+    edicion_uid integer,
+    nombre character varying(64) NOT NULL,
+    ciudad_id integer NOT NULL,
+    municipio_id integer NOT NULL,
+    parroquia_id integer NOT NULL,
+    direccion character varying(100) NOT NULL,
+    telefono character varying(64) NOT NULL,
+    correo character varying(100) NOT NULL,    
+    observacion character varying(250) NOT NULL
+);
+
+
+ALTER TABLE public.sas_upsa OWNER TO jelitox;
+
+--
+-- Name: TABLE sas_upsa; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON TABLE sas_upsa IS 'Modelo para manipular las diferentes UPSAS';
+
+
+--
+-- Name: COLUMN sas_upsa.creacion_uid; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN sas_upsa.creacion_uid IS 'Codigo del Usuario Creador del Registro';
+
+
+--
+-- Name: COLUMN sas_upsa.creacion_fecha; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN sas_upsa.creacion_fecha IS 'Fecha de Creación del Registro';
+
+
+--
+-- Name: COLUMN sas_upsa.edicion_fecha; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN sas_upsa.edicion_fecha IS 'Fecha de Ultima Edición del Registro';
+
+
+--
+-- Name: COLUMN sas_upsa.edicion_uid; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN sas_upsa.edicion_uid IS 'Codigo del Ultimo Usuario Editor del Registro';
+
+
+--
+-- Name: COLUMN sas_upsa.nombre; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN sas_upsa.nombre IS 'Nombre de la UPSA';
+
+
+--
+-- Name: COLUMN sas_upsa.ciudad_id; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN sas_upsa.ciudad_id IS 'Codigo de Ciudad';
+
+
+--
+-- Name: COLUMN sas_upsa.municipio_id; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN sas_upsa.municipio_id IS 'Codigo de Municipio';
+
+--
+-- Name: COLUMN sas_upsa.parroquia_id; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN sas_upsa.parroquia_id IS 'Codigo de Parroquia';
+
+--
+-- Name: COLUMN sas_upsa.direccion; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN sas_upsa.direccion IS 'Direccion de la UPSA';
+
+--
+-- Name: COLUMN sas_upsa.telefono; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN sas_upsa.telefono IS 'Telefono de la UPSA';
+
+--
+-- Name: COLUMN sas_upsa.correo; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN sas_upsa.correo IS 'Correo de la UPSA';
+
+--
+-- Name: COLUMN sas_upsa.observacion; Type: COMMENT; Schema: public; Owner: jelitox
+--
+COMMENT ON COLUMN sas_upsa.observacion IS 'Observacion';
+
+--
+-- Name: sas_upsa_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+--
+
+CREATE SEQUENCE sas_upsa_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sas_upsa_id_seq OWNER TO jelitox;
+
+--
+-- Name: sas_upsa_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+--
+
+ALTER SEQUENCE sas_upsa_id_seq OWNED BY sas_upsa.id;
+
+--
+-- Name: sas_departamento; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+--
+
+CREATE TABLE sas_departamento (
+    id integer NOT NULL,
+    creacion_uid integer,
+    creacion_fecha timestamp without time zone,
+    edicion_fecha timestamp without time zone,
+    edicion_uid integer,
+    nombre character varying(64) NOT NULL,
+    observacion character varying(250) NOT NULL
+);
+
+ALTER TABLE public.sas_departamento OWNER TO jelitox;
+
+--
+-- Name: TABLE sas_departamento; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON TABLE sas_departamento IS 'Modelo para manipular los diferentes Departamentos de las UPSAS';
+
+--
+-- Name: COLUMN sas_departamento.creacion_uid; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN sas_departamento.creacion_uid IS 'Codigo del Usuario Creador del Registro';
+
+
+--
+-- Name: COLUMN sas_departamento.creacion_fecha; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN sas_departamento.creacion_fecha IS 'Fecha de Creación del Registro';
+
+
+--
+-- Name: COLUMN sas_departamento.edicion_fecha; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN sas_departamento.edicion_fecha IS 'Fecha de Ultima Edición del Registro';
+
+
+--
+-- Name: COLUMN sas_departamento.edicion_uid; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN sas_departamento.edicion_uid IS 'Codigo del Ultimo Usuario Editor del Registro';
+
+
+--
+-- Name: COLUMN sas_departamento.nombre; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN sas_departamento.nombre IS 'Nombre del Departamento';
+
+
+--
+-- Name: COLUMN sas_upsa.observacion; Type: COMMENT; Schema: public; Owner: jelitox
+--
+COMMENT ON COLUMN sas_upsa.observacion IS 'Observacion';
+
+--
+-- Name: sas_upsa_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+--
+
+CREATE SEQUENCE sas_departamento_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sas_departamento_id_seq OWNER TO jelitox;
+
+--
+-- Name: sas_departamento_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+--
+
+ALTER SEQUENCE sas_departamento_id_seq OWNED BY sas_departamento.id;
+------------------------------------------------------------------------------------------------------
+
+--
+-- Name: sas_profesion; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+--
+
+CREATE TABLE sas_profesion (
+    id integer NOT NULL,
+    creacion_uid integer,
+    creacion_fecha timestamp without time zone,
+    edicion_fecha timestamp without time zone,
+    edicion_uid integer,
+    nombre character varying(64) NOT NULL,
+    observacion character varying(250) NOT NULL
+);
+
+ALTER TABLE public.sas_profesion OWNER TO jelitox;
+
+--
+-- Name: TABLE sas_profesion; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON TABLE sas_profesion IS 'Modelo para manipular las diferentes Profesiones';
+
+--
+-- Name: COLUMN sas_profesion.creacion_uid; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN sas_profesion.creacion_uid IS 'Codigo del Usuario Creador del Registro';
+
+
+--
+-- Name: COLUMN sas_profesion.creacion_fecha; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN sas_profesion.creacion_fecha IS 'Fecha de Creación del Registro';
+
+
+--
+-- Name: COLUMN sas_profesion.edicion_fecha; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN sas_profesion.edicion_fecha IS 'Fecha de Ultima Edición del Registro';
+
+
+--
+-- Name: COLUMN sas_profesion.edicion_uid; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN sas_profesion.edicion_uid IS 'Codigo del Ultimo Usuario Editor del Registro';
+
+
+--
+-- Name: COLUMN sas_profesion.nombre; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN sas_profesion.nombre IS 'Nombre de la Profesion';
+
+
+--
+-- Name: COLUMN sas_profesion.observacion; Type: COMMENT; Schema: public; Owner: jelitox
+--
+COMMENT ON COLUMN sas_profesion.observacion IS 'Observacion';
+
+--
+-- Name: sas_profesion_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+--
+
+CREATE SEQUENCE sas_profesion_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sas_profesion_id_seq OWNER TO jelitox;
+
+--
+-- Name: sas_profesion_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+--
+
+ALTER SEQUENCE sas_profesion_id_seq OWNED BY sas_profesion.id;
+------------------------------------------------------------------------------------------
+
+--
+-- Name: sas_cargo; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+--
+
+CREATE TABLE sas_cargo (
+    id integer NOT NULL,
+    creacion_uid integer,
+    creacion_fecha timestamp without time zone,
+    edicion_fecha timestamp without time zone,
+    edicion_uid integer,
+    nombre character varying(64) NOT NULL,
+    observacion character varying(250) NOT NULL
+);
+
+ALTER TABLE public.sas_cargo OWNER TO jelitox;
+
+--
+-- Name: TABLE sas_cargo; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON TABLE sas_cargo IS 'Modelo para manipular las diferentes Profesiones';
+
+--
+-- Name: COLUMN sas_cargo.creacion_uid; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN sas_cargo.creacion_uid IS 'Codigo del Usuario Creador del Registro';
+
+
+--
+-- Name: COLUMN sas_cargo.creacion_fecha; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN sas_cargo.creacion_fecha IS 'Fecha de Creación del Registro';
+
+
+--
+-- Name: COLUMN sas_cargo.edicion_fecha; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN sas_cargo.edicion_fecha IS 'Fecha de Ultima Edición del Registro';
+
+
+--
+-- Name: COLUMN sas_cargo.edicion_uid; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN sas_cargo.edicion_uid IS 'Codigo del Ultimo Usuario Editor del Registro';
+
+
+--
+-- Name: COLUMN sas_cargo.nombre; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN sas_cargo.nombre IS 'Nombre de la Profesion';
+
+
+--
+-- Name: COLUMN sas_cargo.observacion; Type: COMMENT; Schema: public; Owner: jelitox
+--
+COMMENT ON COLUMN sas_cargo.observacion IS 'Observacion';
+
+--
+-- Name: sas_cargo_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+--
+
+CREATE SEQUENCE sas_cargo_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sas_cargo_id_seq OWNER TO jelitox;
+
+--
+-- Name: sas_cargo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+--
+
+ALTER SEQUENCE sas_cargo_id_seq OWNED BY sas_cargo.id;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
