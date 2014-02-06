@@ -1,0 +1,550 @@
+<?php
+
+class sigesp_sim_c_articuloxalmacen_transf
+{
+	var $obj="";
+	var $io_sql;
+	var $siginc;
+	var $con;
+
+	function sigesp_sim_c_articuloxalmacen_transf()
+	{
+		require_once("../shared/class_folder/class_sql.php");
+		require_once("../shared/class_folder/class_mensajes.php");
+		require_once("../shared/class_folder/sigesp_include.php");
+		require_once("../shared/class_folder/sigesp_c_seguridad.php");
+		require_once("../shared/class_folder/class_funciones_db.php");
+		require_once("../shared/class_folder/class_funciones.php");
+		require_once("../shared/class_folder/sigesp_sfc_c_intarchivo.php");
+		$this->archivoO= new sigesp_sfc_c_intarchivo("/var/www/sigesp_fac/sfc/transferencias/ALMACENORIGEN");
+		$this->archivoD= new sigesp_sfc_c_intarchivo("/var/www/sigesp_fac/sfc/transferencias/ALMACENDESTINO");
+
+		$in=              new sigesp_include();
+		$this->con=       $in->uf_conectar();
+		$this->io_sql=    new class_sql($this->con);
+		$this->seguridad= new sigesp_c_seguridad();
+		$this->fun=       new class_funciones_db($this->con);
+		$this->io_msg=new class_mensajes();
+		$this->io_funcion = new class_funciones();
+	}
+
+
+	function uf_sim_select_articuloxalmacen($as_codemp,$as_codart,$as_codalm)
+	{
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//	     Function: uf_sim_select_articuloxalmacen
+		//         Access: public
+		//      Argumento: $as_codemp //codigo de empresa
+		//                 $as_codart // codigo de articulo
+		//                 $as_codalm //codigo de almacen
+		//	      Returns: Retorna un Booleano
+		//    Description:	Funcion que verifica si existe un articulo en un determinado almacen en la tabla de  sim_articuloalmacen
+		//	   Creado Por: Ing. Luis Anibal Lang
+		// Fecha Creaci�n: 01/01/2006 								Fecha �ltima Modificaci�n :
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		$lb_valido=false;
+		$ls_sql = "SELECT * FROM sim_articuloalmacen  ".
+				  " WHERE codemp='".$as_codemp."'".
+				  " AND codart='".$as_codart."'".
+				  " AND codalm='".$as_codalm."'";
+		$rs_data=$this->io_sql->select($ls_sql);
+		if($rs_data===false)
+		{
+			$this->io_msg->message("CLASE->articuloxalmacen M�TODO->uf_sim_select_articuloxalmacen ERROR->".$this->io_funcion->uf_convertirmsg($this->io_sql->message));
+			$lb_valido=false;
+		}
+		else
+		{
+			if($row=$this->io_sql->fetch_row($rs_data))
+			{
+				$lb_valido=true;
+
+			}
+			$this->io_sql->free_result($rs_data);
+		}
+		return $lb_valido;
+	} // end  function uf_sim_select_articuloxalmacen
+
+
+	function uf_sim_insert_articuloxalmacen_transf($as_codemp,$as_codart,$as_codalm,$as_existencia,$aa_seguridad)
+	{
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//	     Function: uf_sim_insert_articuloxalmacen
+		//         Access: public
+		//      Argumento: $as_codemp      //codigo de empresa
+		//                 $as_codart      // codigo de articulo
+		//                 $as_codalm      //codigo de almacen
+		//                 $as_existencia  // codigo del usuario
+		//                 $aa_seguridad   // arreglo de registro de seguridad
+		//	      Returns: Retorna un Booleano
+		//    Description:	Funcion que registra cierta cantidad de un articulo en determinado almacen en la tabla sim_articuloalmacen
+		//	   Creado Por: Ing. Luis Anibal Lang
+		// Fecha Creaci�n: 01/01/2006 								Fecha �ltima Modificaci�n :
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		$lb_valido=true;
+		$ls_sql="INSERT INTO sim_articuloalmacen (codemp, codart, codalm, existencia)".
+				" VALUES ('".$as_codemp."','".$as_codart."','".$as_codalm."','".$as_existencia."');";
+
+		/**-----------------------GENERAR ARCHIVO DE TRANSFERENCIA-----------------------------------------------/**/
+
+		$ls_nomarchivo="trans".$as_codalm;
+		$this->archivoD->crear_archivo($ls_nomarchivo);
+		$this->archivoD->escribir_archivo($ls_sql);
+		$this->archivoD->cerrar_archivo();
+
+
+		return $lb_valido;
+	} // end function uf_sim_insert_articuloxalmacen
+
+	function uf_sim_update_articuloxalmacen($as_codemp,$as_codart,$as_codalm,$as_existencia)
+	{
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//	     Function: uf_sim_update_articuloxalmacen
+		//         Access: public
+		//      Argumento: $as_codemp      //codigo de empresa
+		//                 $as_codart      // codigo de articulo
+		//                 $as_codalm      //codigo de almacen
+		//                 $as_existencia  // codigo del usuario
+		//                 $aa_seguridad   // arreglo de registro de seguridad
+		//	      Returns: Retorna un Booleano
+		//    Description:	Funcion que actualiza cierta cantidad de articulos en un almacen determinado en la tabla sim_articuloalmacen
+		//	   Creado Por: Ing. Luis Anibal Lang
+		// Fecha Creaci�n: 01/01/2006 								Fecha �ltima Modificaci�n :
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		 $lb_valido=true;
+		 $ls_sql = "UPDATE sim_articuloalmacen SET   existencia='". $as_existencia ."' ".
+					" WHERE codemp='" . $as_codemp ."'".
+					" AND codart='" . $ad_codart ."'".
+					" AND codalm='" . $ad_codalm ."'";
+        $this->io_sql->begin_transaction();
+		$li_row = $this->io_sql->execute($ls_sql);
+		if($li_row===false)
+		{
+			$this->io_msg->message("CLASE->articuloxalmacen M�TODO->uf_sim_update_articuloxalmacen ERROR->".$this->io_funcion->uf_convertirmsg($this->io_sql->message));
+			$lb_valido=false;
+			$this->io_sql->rollback();
+
+		}
+		else
+		{
+			$lb_valido=true;
+			/////////////////////////////////         SEGURIDAD               /////////////////////////////
+/*			$ls_evento="UPDATE";
+			$ls_descripcion ="Modific� el Movimiento ".$as_nummov." de Fecha ".$ad_fecmov;
+			$ls_variable= $this->seguridad->uf_sss_insert_eventos_ventana($aa_seguridad["empresa"],
+											$aa_seguridad["sistema"],$ls_evento,$aa_seguridad["logusr"],
+											$aa_seguridad["ventanas"],$ls_descripcion);*/
+			/////////////////////////////////         SEGURIDAD               /////////////////////////////
+			$this->io_sql->commit();
+		}
+
+
+	  return $lb_valido;
+
+	}
+
+	function uf_sim_chequear_articuloxalmacen($as_codemp,$as_codart,$as_codalm,$ai_cantidad)
+	{
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//	     Function: uf_sim_chequear_articuloxalmacen
+		//         Access: public
+		//      Argumento: $as_codemp      //codigo de empresa
+		//                 $as_codart      // codigo de articulo
+		//                 $as_codalm      //codigo de almacen
+		//                 $ai_cantidad   // cantidad de articulos
+		//                 $aa_seguridad   // arreglo de registro de seguridad
+		//	      Returns: Retorna un Booleano
+		//    Description:	Funcion que verifica que exista la cantidad suficiente de articulos en un almacen deteriminado
+		//	   Creado Por: Ing. Luis Anibal Lang
+		// Fecha Creaci�n: 01/01/2006 								Fecha �ltima Modificaci�n :
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		$lb_valido=false;
+		$ls_sql = "SELECT * FROM sim_articuloalmacen  ".
+				  " WHERE codemp='".$as_codemp."'".
+				  " AND codart='".$as_codart."'".
+				  " AND codalm='".$as_codalm."'";
+		$rs_data=$this->io_sql->select($ls_sql);
+		if($rs_data===false)
+		{
+			$this->io_msg->message("CLASE->articuloxalmacen M�TODO->uf_sim_chequear_articuloxalmacen ERROR->".$this->io_funcion->uf_convertirmsg($this->io_sql->message));
+			$lb_valido=false;
+		}
+		else
+		{
+			if($row=$this->io_sql->fetch_row($rs_data))
+			{
+				$li_existencia=$row["existencia"];
+				if ($li_existencia >= $ai_cantidad)
+				{
+					$lb_valido=true;
+				}
+				else
+				{
+					$this->io_msg->message("No existen suficientes articulos en el almacen seleccionado");
+					$lb_valido=false;
+				}
+			}
+			else
+			{
+				$this->io_msg->message("No existen suficientes articulos en el almacen seleccionado");
+			}
+		}
+		return $lb_valido;
+	}
+
+	function uf_sim_disminuir_articuloxalmacen_transf($as_codemp,$as_codart,$as_codalm,$ai_cantidad,$aa_seguridad)
+	{
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//	     Function: uf_sim_disminuir_articuloxalmacen
+		//         Access: public
+		//      Argumento: $as_codemp      //codigo de empresa
+		//                 $as_codart      // codigo de articulo
+		//                 $as_codalm      //codigo de almacen
+		//                 $ai_cantidad    // cantidad de articulos
+		//                 $aa_seguridad   // arreglo de registro de seguridad
+		//	      Returns: Retorna un Booleano
+		//    Description:	Funcion que disminuye la cantidad de un articulo en un almacen determinado
+		//	   Creado Por: Ing. Luis Anibal Lang
+		// Fecha Creaci�n: 01/01/2006 								Fecha �ltima Modificaci�n :
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	 $lb_valido=true;
+	 //$lb_valido=$this->uf_sim_chequear_articuloxalmacen($as_codemp,$as_codart,$as_codalm,$ai_cantidad);
+	 if($lb_valido)
+		 {
+		 $ls_sql =  "UPDATE sim_articuloalmacen".
+		 			"   SET existencia= (existencia - '". $ai_cantidad ."') ".
+					" WHERE codemp='" . $as_codemp ."'".
+					"   AND codart='" . $as_codart ."'".
+					"   AND codalm='" . $as_codalm ."';";
+		/**-----------------------GENERAR ARCHIVO DE TRANSFERENCIA-----------------------------------------------/**/
+
+		$ls_nomarchivo="trans".$as_codalm;
+		$this->archivoO->crear_archivo($ls_nomarchivo);
+		$this->archivoO->escribir_archivo($ls_sql);
+		$this->archivoO->cerrar_archivo();
+
+		}
+	  return $lb_valido;
+	}
+
+	function uf_sim_sumar_articuloxalmacen_transf($as_codemp,$as_codart,$as_codalm,$ai_cantidad,$aa_seguridad)
+	{
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//	     Function: uf_sim_sumar_articuloxalmacen
+		//         Access: public
+		//      Argumento: $as_codemp      //codigo de empresa
+		//                 $as_codart      // codigo de articulo
+		//                 $as_codalm      //codigo de almacen
+		//                 $ai_cantidad    // cantidad de articulos
+		//                 $aa_seguridad   // arreglo de registro de seguridad
+		//	      Returns: Retorna un Booleano
+		//    Description:	Funcion que aumenta la cantidad de un articulo en un almacen determinado
+		//	   Creado Por: Ing. Luis Anibal Lang
+		// Fecha Creaci�n: 01/01/2006 								Fecha �ltima Modificaci�n :
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		 $lb_valido=true;
+		 $ls_sql= "UPDATE sim_articuloalmacen SET existencia= (existencia + '". $ai_cantidad ."') WHERE codemp='" . $as_codemp ."' AND codart='" . $as_codart ."' AND codalm='" . $as_codalm ."';";
+		/**-----------------------GENERAR ARCHIVO DE TRANSFERENCIA-----------------------------------------------/**/
+
+		$ls_nomarchivo="trans".$as_codalm;
+		$this->archivoD->crear_archivo($ls_nomarchivo);
+		$this->archivoD->escribir_archivo($ls_sql);
+		$this->archivoD->cerrar_archivo();
+
+
+
+	    return $lb_valido;
+	}
+
+function uf_sim_disminuir_articuloxalmacen2_transf($as_codemp,$as_codart,$as_codalm,$ai_cantidad,$aa_seguridad)
+	{
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//	     Function: uf_sim_disminuir_articuloxalmacen
+		//         Access: public
+		//      Argumento: $as_codemp      //codigo de empresa
+		//                 $as_codart      // codigo de articulo
+		//                 $as_codalm      //codigo de almacen
+		//                 $ai_cantidad    // cantidad de articulos
+		//                 $aa_seguridad   // arreglo de registro de seguridad
+		//	      Returns: Retorna un Booleano
+		//    Description:	Funcion que disminuye la cantidad de un articulo en un almacen determinado
+		//	   Creado Por: Ing. Luis Anibal Lang
+		// Fecha Creaci�n: 01/01/2006 								Fecha �ltima Modificaci�n :
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// $lb_valido=true;
+	// $lb_valido=$this->uf_sim_chequear_articuloxalmacen($as_codemp,$as_codart,$as_codalm,$ai_cantidad);
+	 //if($lb_valido)
+		// {
+		 $ls_sql =  "UPDATE sim_articuloalmacen".
+		 			"   SET existencia= (existencia - '". $ai_cantidad ."') ".
+					" WHERE codemp='" . $as_codemp ."'".
+					"   AND codart='" . $as_codart ."'".
+					"   AND codalm='" . $as_codalm ."';";
+		/**-----------------------GENERAR ARCHIVO DE TRANSFERENCIA-----------------------------------------------/**/
+
+		$ls_nomarchivo="trans".$as_codalm;
+		$this->archivoD->crear_archivo($ls_nomarchivo);
+		$this->archivoD->escribir_archivo($ls_sql);
+		$this->archivoD->cerrar_archivo();
+
+		//}
+	 // return $lb_valido;
+	}
+
+	function uf_sim_sumar_articuloxalmacen2_transf($as_codemp,$as_codart,$as_codalm,$ai_cantidad,$aa_seguridad)
+	{
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//	     Function: uf_sim_sumar_articuloxalmacen
+		//         Access: public
+		//      Argumento: $as_codemp      //codigo de empresa
+		//                 $as_codart      // codigo de articulo
+		//                 $as_codalm      //codigo de almacen
+		//                 $ai_cantidad    // cantidad de articulos
+		//                 $aa_seguridad   // arreglo de registro de seguridad
+		//	      Returns: Retorna un Booleano
+		//    Description:	Funcion que aumenta la cantidad de un articulo en un almacen determinado
+		//	   Creado Por: Ing. Luis Anibal Lang
+		// Fecha Creaci�n: 01/01/2006 								Fecha �ltima Modificaci�n :
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		 //$lb_valido=true;
+		 $ls_sql= "UPDATE sim_articuloalmacen SET existencia= (existencia + '". $ai_cantidad ."') WHERE codemp='" . $as_codemp ."' AND codart='" . $as_codart ."' AND codalm='" . $as_codalm ."';";
+		/**-----------------------GENERAR ARCHIVO DE TRANSFERENCIA-----------------------------------------------/**/
+
+		$ls_nomarchivo="trans".$as_codalm;
+		$this->archivoO->crear_archivo($ls_nomarchivo);
+		$this->archivoO->escribir_archivo($ls_sql);
+		$this->archivoO->cerrar_archivo();
+
+
+
+	    return $lb_valido;
+	}
+
+	function uf_sim_aumentar_articuloxalmacen_transf($as_codemp,$as_codart,$as_codalm,$ai_cantidad,$aa_seguridad)
+	{
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//	     Function: uf_sim_aumentar_articuloxalmacen
+		//         Access: public
+		//      Argumento: $as_codemp      //codigo de empresa
+		//                 $as_codart      // codigo de articulo
+		//                 $as_codalm      //codigo de almacen
+		//                 $ai_cantidad    // cantidad de articulos
+		//                 $aa_seguridad   // arreglo de registro de seguridad
+		//	      Returns: Retorna un Booleano
+		//    Description:	Funcion que deacuerdo a los resultados de una busqueda (select), inserta o actualiza cierta cantidad de
+		//				    articulos en un almacen determinado en la tabla de  sim_articuloalmacen
+		//	   Creado Por: Ing. Luis Anibal Lang
+		// Fecha Creaci�n: 01/01/2006 								Fecha �ltima Modificaci�n :
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		if(!($this->uf_sim_select_articuloxalmacen($as_codemp,$as_codart,$as_codalm)))
+		{
+			$lb_valido=$this->uf_sim_insert_articuloxalmacen_transf($as_codemp,$as_codart,$as_codalm,$ai_cantidad,$aa_seguridad);
+		}
+		else
+		{
+			$lb_valido=$this->uf_sim_sumar_articuloxalmacen_transf($as_codemp,$as_codart,$as_codalm,$ai_cantidad,$aa_seguridad);
+		}
+		return $lb_valido;
+	}
+
+	function uf_sim_select_articulo($as_codemp,$as_codart)
+	{
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//	     Function: uf_sim_select_articulo
+		//         Access: public
+		//      Argumento: $as_codemp //codigo de empresa
+		//                 $as_codart // codigo de articulo
+		//	      Returns: Retorna un Booleano
+		//    Description:	Funcion que busca un articulo en la tabla de  sim_articulo
+		//	   Creado Por: Ing. Luis Anibal Lang
+		// Fecha Creaci�n: 01/01/2006 								Fecha �ltima Modificaci�n :
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		$lb_valido=true;
+		$ls_sql = "SELECT * FROM sim_articulo  ".
+				  " WHERE codemp='".$as_codemp."'".
+				  "   AND codart='".$as_codart."'" ;
+		$rs_data=$this->io_sql->select($ls_sql);
+		if($rs_data===false)
+		{
+			$this->io_msg->message("CLASE->articuloxalmacen M�TODO->uf_sim_select_articulo ERROR->".$this->io_funcion->uf_convertirmsg($this->io_sql->message));
+			$lb_valido=false;
+		}
+		else
+		{
+			if($row=$this->io_sql->fetch_row($rs_data))
+			{
+				$lb_valido=true;
+
+			}
+			else
+			{
+				$lb_valido=false;
+			}
+			$this->io_sql->free_result($rs_data);
+		}
+		return $lb_valido;
+	}
+
+	function uf_sim_disminuir_articulo($as_codemp,$as_codart,$ai_cantidad,$aa_seguridad)
+	{
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//	     Function: uf_sim_disminuir_articulo
+		//         Access: public
+		//      Argumento: $as_codemp     //codigo de empresa
+		//                 $as_codart     // codigo de articulo
+		//                 $as_codalm     // codigo de almacen
+		//                 $as_cantidad   // cantidad de articulos
+		//                 $aa_seguridad  // arreglo de registro de seguridad
+		//	      Returns: Retorna un Booleano
+		//    Description:	Funcion que disminuye la cantidad de un articulo en un almacen determinado
+		//	   Creado Por: Ing. Luis Anibal Lang
+		// Fecha Creaci�n: 01/01/2006 								Fecha �ltima Modificaci�n :
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		$lb_valido=true;
+		$lb_existe=false;
+		$lb_existe=uf_sim_select_articulo($as_codemp,$as_codart);
+		if($lb_existe)
+		{
+			 $ls_sql= "UPDATE sim_articulo".
+			 		  "   SET exiart= (exiart - '". $ai_cantidad ."') ".
+					  " WHERE codemp='" . $as_codemp ."'".
+					  "   AND codart='" . $as_codart ."'";
+				$li_row = $this->io_sql->execute($ls_sql);
+				if($li_row===false)
+				{
+					$this->io_msg->message("CLASE->articuloxalmacen M�TODO->uf_sim_disminuir_articulo ERROR->".$this->io_funcion->uf_convertirmsg($this->io_sql->message));
+					$lb_valido=false;
+				}else
+				{
+
+					$lb_valido=true;
+					/////////////////////////////////         SEGURIDAD               /////////////////////////////
+		/*			$ls_evento="UPDATE";
+					$ls_descripcion ="Modific� el Movimiento ".$as_nummov." de Fecha ".$ad_fecmov;
+					$ls_variable= $this->seguridad->uf_sss_insert_eventos_ventana($aa_seguridad["empresa"],
+													$aa_seguridad["sistema"],$ls_evento,$aa_seguridad["logusr"],
+													$aa_seguridad["ventanas"],$ls_descripcion);*/
+					/////////////////////////////////         SEGURIDAD               /////////////////////////////
+				}
+		}
+	    return $lb_valido;
+	}
+
+	function uf_sim_update_total_articulo($as_codemp,$as_codart,$ai_cantidad,$aa_seguridad)
+	{
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//	     Function: uf_sim_update_total_articulo
+		//         Access: public
+		//      Argumento: $as_codemp     //codigo de empresa
+		//                 $as_codart     // codigo de articulo
+		//                 $as_codalm     // codigo de almacen
+		//                 $as_cantidad   // cantidad de articulos
+		//                 $aa_seguridad  // arreglo de registro de seguridad
+		//	      Returns: Retorna un Booleano
+		//    Description:	Funcion que actualiza la cantidad de un articulo en un almacen determinado
+		//	   Creado Por: Ing. Luis Anibal Lang
+		// Fecha Creaci�n: 01/01/2006 								Fecha �ltima Modificaci�n :
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		$lb_valido=true;
+		$lb_existe=$this->uf_sim_select_articulo($as_codemp,$as_codart);
+		if($lb_existe)
+		{
+			 $ls_sql= "UPDATE sim_articulo".
+			 		  "   SET exiart='". $ai_cantidad ."' ".
+					  " WHERE codemp='" . $as_codemp ."'".
+					  "   AND codart='" . $as_codart ."'";
+				$li_row = $this->io_sql->execute($ls_sql);
+				if($li_row===false)
+				{
+					$this->io_msg->message("CLASE->articuloxalmacen M�TODO->uf_sim_update_total_articulo ERROR->".$this->io_funcion->uf_convertirmsg($this->io_sql->message));
+					$lb_valido=false;
+				}
+				else
+				{
+					$lb_valido=true;
+					/////////////////////////////////         SEGURIDAD               /////////////////////////////
+/*					$ls_evento="UPDATE";
+					$ls_descripcion ="Actualiz� la cantidad total del articulo ".$as_codart." de la Empresa ".$as_codemp." en ".$ai_cantidad;
+					$ls_variable= $this->seguridad->uf_sss_insert_eventos_ventana($aa_seguridad["empresa"],
+													$aa_seguridad["sistema"],$ls_evento,$aa_seguridad["logusr"],
+													$aa_seguridad["ventanas"],$ls_descripcion);*/
+					/////////////////////////////////         SEGURIDAD               /////////////////////////////
+				}
+		}
+		return $lb_valido;
+	}
+
+	function uf_sim_actualizar_cantidad_articulos($as_codemp,$as_codart,$aa_seguridad)
+	{
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//	     Function: uf_sim_actualizar_cantidad_articulos
+		//         Access: public
+		//      Argumento: $as_codemp     //codigo de empresa
+		//                 $as_codart     // codigo de articulo
+		//                 $aa_seguridad  // arreglo de registro de seguridad
+		//	      Returns: Retorna un Booleano
+		//    Description:	Funcion que calcula la cantidad total de un articulo entre todos los almacenes para luego actualizar dicha cantidad
+		//	   Creado Por: Ing. Luis Anibal Lang
+		// Fecha Creaci�n: 01/01/2006 								Fecha �ltima Modificaci�n :
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		$lb_valido=true;
+		$li_exec=-1;
+		$li_totart=0;
+		$ls_sql = "SELECT * FROM sim_articuloalmacen  ".
+				  " WHERE codemp='".$as_codemp."'".
+				  "   AND codart='".$as_codart."'" ;
+		$rs_data=$this->io_sql->select($ls_sql);
+		while($row=$this->io_sql->fetch_row($rs_data))
+		{
+			$li_cantalm=$row["existencia"];
+			$li_totart=$li_totart + $li_cantalm;
+		}
+		$lb_valido=$this->uf_sim_update_total_articulo($as_codemp,$as_codart,$li_totart,$aa_seguridad);
+		return $lb_valido;
+	}
+
+	function uf_sim_delete_articuloxalmacen($as_codemp,$as_codart,$as_codalm)
+	{
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//	     Function: uf_sim_delete_articuloxalmacen
+		//         Access: public
+		//      Argumento: $as_codemp     //codigo de empresa
+		//                 $as_codart     // codigo de articulo
+		//                 $as_codalm     // codigo de almacen
+		//                 $aa_seguridad  // arreglo de registro de seguridad
+		//	      Returns: Retorna un Booleano
+		//    Description:	Funcion que elimina un registro de cantidad de articulos en un almacen
+		//	   Creado Por: Ing. Luis Anibal Lang
+		// Fecha Creaci�n: 01/01/2006 								Fecha �ltima Modificaci�n :
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		$lb_valido=true;
+		$ls_sql= "DELETE FROM sim_articuloxalmacen".
+				 " WHERE codemp= '".$as_codemp. "'".
+				 "   AND codart= '".$as_codart. "'".
+				 "   AND codalm= '".$as_codalm. "'";
+
+			$this->io_sql->begin_transaction();
+			$li_row=$this->io_sql->execute($ls_sql);
+			if($li_row===false)
+			{
+				$this->io_msg->message("CLASE->articuloxalmacen M�TODO->uf_sim_delete_articuloxalmacen ERROR->".$this->io_funcion->uf_convertirmsg($this->io_sql->message));
+				$lb_valido=false;
+				$this->io_sql->rollback();
+			}
+			else
+			{
+				$lb_valido=true;
+				/////////////////////////////////         SEGURIDAD               /////////////////////////////
+/*				$ls_evento="DELETE";
+				$ls_descripcion ="Elimin� el Movimiento ".$as_nummov." de Fecha ".$ad_fecmov;
+				$ls_variable= $this->seguridad->uf_sss_insert_eventos_ventana($aa_seguridad["empresa"],
+												$aa_seguridad["sistema"],$ls_evento,$aa_seguridad["logusr"],
+												$aa_seguridad["ventanas"],$ls_descripcion);*/
+				//////////////////////////////////         SEGURIDAD               /////////////////////////////
+				$this->io_sql->commit();
+			}
+		return $lb_valido;
+	}
+
+}
+?>

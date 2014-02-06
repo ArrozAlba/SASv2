@@ -1,0 +1,18 @@
+logica de negocio de la integracioon de cuentas.
+
+se cargan las cuentas que tienen codigo caif
+se llena mediante un script el plan de cuentas integrado en la tabla sigesp_sfp_asociacion.
+a traves del sistema se realiza la asociacion de las cuentas de variacion patrimonial.
+
+se realiza la creacion del plan de cuentas integrado del organismo.
+
+
+se procede a llenar los campos de las cuentas contables, año real y ultimo año estimado(las cuentas conntables que tengan variacion patrimonial por el haber, y que pertenezcan al plan de cuentas integrados del organismo se programaran autimaticamente
+con el monto que se haya colocado como  ultimo  estimado de dicha cuenta, este monto representara la programacion tentativa para el año del presupuesto) 
+
+
+se realiza la configuracion de niveles 
+
+se cargan las definiciones.
+
+se procede a 

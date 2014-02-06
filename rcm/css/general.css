@@ -1,0 +1,30 @@
+body{
+	color:#000000;
+	font-family:Tahoma, Verdana, Arial;
+	font-size:11px;
+	margin:0px;
+	background-color: #EBEBEB;
+}
+input,checkbox{border:thin solid #000000;color: #000000;}
+input,select,textarea,text{background-color:#FFFFFF;border:1px solid #999999;color:#000000;font-family:Tahoma, Verdana, Arial;font-size:11px;}
+.sin-borde{border:none;color:#000000;cursor:text}
+.boton{
+	border-right:1px ridge #666666;
+	border-top:1px ridge #FFFFFF;
+	border-left:1px ridge #FFFFFF;
+	border-bottom:1px ridge #666666;
+	font-wejght:bold;
+	cursor:hand;
+	color: #000000;
+	background-color:#CCCCCC;
+	font-family: Tahoma, Verdana, Arial;
+	font-size: 11px;
+	background-image: none;
+}
+.sin-bordeCopy {
+	border:none;
+	color:#000000;
+	cursor:text;
+	background-color: #E2EFFE;
+}
+

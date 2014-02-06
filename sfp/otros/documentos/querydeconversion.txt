@@ -1,0 +1,18 @@
+select codgi,codvp,dengi,denvp,sfp_conversiones.colvp,tblCont1.sc_cuenta as codco1,tblCont1.denominacion as denco1,tblCont2.sc_cuenta as codco2,tblCont2.denominacion as denco2 from sfp_conversiones,scg_cuentas as tblCont1,scg_cuentas as tblCont2 where tblCont1.sc_cuenta=sfp_conversiones.codco1 and tblCont2.sc_cuenta=sfp_conversiones.codco2 
+
+
+and  tblCont1.sc_cuenta='$this->codco1' and tblCont2.sc_cuenta='$this->codco2' and 
+
+
+1, '0001', '303990101', '1110201010001', '1110202030001', '301100401', 'H', ''
+
+
+and tblCont1.sc_cuenta='1110201010001' and tblCont2.sc_cuenta='1110202030001' and tblPlan2.sig_cuenta='301100401'
+
+
+
+, sigesp_plan_unico_re2 as tblPlan2,scg_cuentas as tblCont1,scg_cuentas as tblCont2 
+
+
+
+sfp_conversiones.colvp,tblPlan1.sig_cuenta as codgi,tblPlan1.denominacion as dengi,tblCont1.sc_cuenta as codco1,tblCont1.denominacion as denco1,tblCont2.sc_cuenta as codco2,tblCont2.denominacion as denco2,tblPlan2.sig_cuenta as convp1,tblPlan2.denominacion as denvp

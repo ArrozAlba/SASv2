@@ -1,0 +1,1 @@
+"var.DescripcionObra";"var.UbicacionObra";"var.EmpresaContratista";"var.CodigoContrato";"var.NombreInspector";"var.NombreResidente";"var.Dia";"var.Mes";"var.Ano";"var.CedulaInspector";"var.CedulaResidente";"var.CivInspector";"var.CivResidente";"var.Fecha";"var.CodigoObra";"var.MontoContrato";"var.CodigoActa";"var.MontoContratoLetras"

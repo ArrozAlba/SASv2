@@ -1,0 +1,27 @@
+Estados de los Documentos:
+
+	1--->Emitido.
+	2--->Asignado.
+	3--->Anulado.
+	4--->Contratado.
+	5--->Contabilizado.
+	6--->Modificado.
+	7--->Paralizado.
+	8--->Finalizado.
+	9--->Prórroga.
+	10-->Iniciado.
+
+Tipos de Actas
+
+	1--->Inicio.
+	2--->Finalización.
+	3--->Recepción Provisional.
+	4--->Recepción Definitiva.
+	5--->Paralización
+	6--->Reanudacion
+	7--->Prórroga.
+
+Variaciones de Contrato
+	
+	1--->Aumento.
+	2--->Disminuciones.

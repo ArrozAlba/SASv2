@@ -1,0 +1,2484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.16" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 2.3.0.v20080606 Build &lt;2.3.0.v20080618-0630></property>
+    <property name="units">in</property>
+    <list-property name="propertyBindings">
+        <structure>
+            <property name="name">FILELIST</property>
+            <property name="id">313</property>
+            <expression name="value">params["rutaarchivo1"].value</expression>
+        </structure>
+        <structure>
+            <property name="name">ENCODINGLIST</property>
+            <property name="id">313</property>
+        </structure>
+        <structure>
+            <property name="name">SCHEMAFILELIST</property>
+            <property name="id">313</property>
+        </structure>
+        <structure>
+            <property name="name">OdaConnProfileName</property>
+            <property name="id">313</property>
+        </structure>
+        <structure>
+            <property name="name">OdaConnProfileStorePath</property>
+            <property name="id">313</property>
+        </structure>
+        <structure>
+            <property name="name">FILELIST</property>
+            <property name="id">405</property>
+            <expression name="value">params["rutaarchivo2"].value</expression>
+        </structure>
+        <structure>
+            <property name="name">ENCODINGLIST</property>
+            <property name="id">405</property>
+        </structure>
+        <structure>
+            <property name="name">SCHEMAFILELIST</property>
+            <property name="id">405</property>
+        </structure>
+        <structure>
+            <property name="name">OdaConnProfileName</property>
+            <property name="id">405</property>
+        </structure>
+        <structure>
+            <property name="name">OdaConnProfileStorePath</property>
+            <property name="id">405</property>
+        </structure>
+    </list-property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <parameters>
+        <scalar-parameter name="rutaarchivo1" id="404">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <property name="distinct">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="rutaarchivo2" id="407">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <property name="distinct">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.datatools.enablement.oda.xml" name="Data Source" id="313">
+            <property name="FILELIST">C:\wamp\www\Formulacion\xml\InfGeneral1222464350127.0.0.1.xml</property>
+        </oda-data-source>
+        <oda-data-source extensionID="org.eclipse.datatools.enablement.oda.xml" name="Data Source Titulo" id="405">
+            <property name="FILELIST">C:\AppServ\www\Formulacion\xml\tituloEmpresa1221684981127.0.0.1.xml</property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.datatools.enablement.oda.xml.dataSet" name="DatosGen" id="315">
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">sector</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">baselegal</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">forma_juri</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">ano_inicio</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">act_principal</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">mision</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">vision</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">nom_presi</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">tel_presi</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">nom_dirplan</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">tel_dirplan</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">email_dirplan</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">nom_diradmin</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">tel_diradmin</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">email_diradmin</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">nom_dirrh</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">17</property>
+                        <property name="name">tel_dirrh</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">18</property>
+                        <property name="name">email_dirrh</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">19</property>
+                        <property name="name">nom_respre</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">20</property>
+                        <property name="name">tel_respre</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">21</property>
+                        <property name="name">email_respre</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">22</property>
+                        <property name="name">comp_patrimonio</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">23</property>
+                        <property name="name">nombre</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">24</property>
+                        <property name="name">direccion</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">25</property>
+                        <property name="name">telemp</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">26</property>
+                        <property name="name">faxemp</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">27</property>
+                        <property name="name">rifemp</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">28</property>
+                        <property name="name">estemp</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">29</property>
+                        <property name="name">ciuemp</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">30</property>
+                        <property name="name">zonpos</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">31</property>
+                        <property name="name">email</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">32</property>
+                        <property name="name">website</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">sector</property>
+                    <property name="nativeName">sector</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">baselegal</property>
+                    <property name="nativeName">baselegal</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">forma_juri</property>
+                    <property name="nativeName">forma_juri</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">ano_inicio</property>
+                    <property name="nativeName">ano_inicio</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">act_principal</property>
+                    <property name="nativeName">act_principal</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">mision</property>
+                    <property name="nativeName">mision</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">vision</property>
+                    <property name="nativeName">vision</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">nom_presi</property>
+                    <property name="nativeName">nom_presi</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">tel_presi</property>
+                    <property name="nativeName">tel_presi</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">nom_dirplan</property>
+                    <property name="nativeName">nom_dirplan</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">tel_dirplan</property>
+                    <property name="nativeName">tel_dirplan</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">email_dirplan</property>
+                    <property name="nativeName">email_dirplan</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">nom_diradmin</property>
+                    <property name="nativeName">nom_diradmin</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
+                    <property name="name">tel_diradmin</property>
+                    <property name="nativeName">tel_diradmin</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
+                    <property name="name">email_diradmin</property>
+                    <property name="nativeName">email_diradmin</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">nom_dirrh</property>
+                    <property name="nativeName">nom_dirrh</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">17</property>
+                    <property name="name">tel_dirrh</property>
+                    <property name="nativeName">tel_dirrh</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">18</property>
+                    <property name="name">email_dirrh</property>
+                    <property name="nativeName">email_dirrh</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">19</property>
+                    <property name="name">nom_respre</property>
+                    <property name="nativeName">nom_respre</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">20</property>
+                    <property name="name">tel_respre</property>
+                    <property name="nativeName">tel_respre</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">21</property>
+                    <property name="name">email_respre</property>
+                    <property name="nativeName">email_respre</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">22</property>
+                    <property name="name">comp_patrimonio</property>
+                    <property name="nativeName">comp_patrimonio</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">23</property>
+                    <property name="name">nombre</property>
+                    <property name="nativeName">nombre</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">24</property>
+                    <property name="name">direccion</property>
+                    <property name="nativeName">direccion</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">25</property>
+                    <property name="name">telemp</property>
+                    <property name="nativeName">telemp</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">26</property>
+                    <property name="name">faxemp</property>
+                    <property name="nativeName">faxemp</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">27</property>
+                    <property name="name">rifemp</property>
+                    <property name="nativeName">rifemp</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">28</property>
+                    <property name="name">estemp</property>
+                    <property name="nativeName">estemp</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">29</property>
+                    <property name="name">ciuemp</property>
+                    <property name="nativeName">ciuemp</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">30</property>
+                    <property name="name">zonpos</property>
+                    <property name="nativeName">zonpos</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">31</property>
+                    <property name="name">email</property>
+                    <property name="nativeName">email</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+                <structure>
+                    <property name="position">32</property>
+                    <property name="name">website</property>
+                    <property name="nativeName">website</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">0</property>
+                </structure>
+            </list-property>
+            <property name="queryText">table0#-TNAME-#table0#:#[/registros/registro]#:#{sector;STRING;/sector},{baselegal;STRING;/baselegal},{forma_juri;STRING;/forma_juri},{ano_inicio;STRING;/ano_inicio},{act_principal;STRING;/act_principal},{mision;STRING;/mision},{vision;STRING;/vision},{nom_presi;STRING;/nom_presi},{tel_presi;STRING;/tel_presi},{nom_dirplan;STRING;/nom_dirplan},{tel_dirplan;STRING;/tel_dirplan},{email_dirplan;STRING;/email_dirplan},{nom_diradmin;STRING;/nom_diradmin},{tel_diradmin;STRING;/tel_diradmin},{email_diradmin;STRING;/email_diradmin},{nom_dirrh;STRING;/nom_dirrh},{tel_dirrh;STRING;/tel_dirrh},{email_dirrh;STRING;/email_dirrh},{nom_respre;STRING;/nom_respre},{tel_respre;STRING;/tel_respre},{email_respre;STRING;/email_respre},{comp_patrimonio;STRING;/comp_patrimonio},{nombre;STRING;/nombre},{direccion;STRING;/direccion},{telemp;STRING;/telemp},{faxemp;STRING;/faxemp},{rifemp;STRING;/rifemp},{estemp;STRING;/estemp},{ciuemp;STRING;/ciuemp},{zonpos;STRING;/zonpos},{email;STRING;/email},{website;STRING;/website}</property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>1.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>sector</design:name>
+            <design:position>1</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>sector</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>baselegal</design:name>
+            <design:position>2</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>baselegal</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>forma_juri</design:name>
+            <design:position>3</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>forma_juri</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>ano_inicio</design:name>
+            <design:position>4</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ano_inicio</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>act_principal</design:name>
+            <design:position>5</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>act_principal</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>mision</design:name>
+            <design:position>6</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>mision</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>vision</design:name>
+            <design:position>7</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>vision</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>nom_presi</design:name>
+            <design:position>8</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>nom_presi</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>tel_presi</design:name>
+            <design:position>9</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>tel_presi</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>nom_dirplan</design:name>
+            <design:position>10</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>nom_dirplan</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>tel_dirplan</design:name>
+            <design:position>11</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>tel_dirplan</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>email_dirplan</design:name>
+            <design:position>12</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>email_dirplan</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>nom_diradmin</design:name>
+            <design:position>13</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>nom_diradmin</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>tel_diradmin</design:name>
+            <design:position>14</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>tel_diradmin</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>email_diradmin</design:name>
+            <design:position>15</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>email_diradmin</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>nom_dirrh</design:name>
+            <design:position>16</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>nom_dirrh</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>tel_dirrh</design:name>
+            <design:position>17</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>tel_dirrh</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>email_dirrh</design:name>
+            <design:position>18</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>email_dirrh</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>nom_respre</design:name>
+            <design:position>19</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>nom_respre</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>tel_respre</design:name>
+            <design:position>20</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>tel_respre</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>email_respre</design:name>
+            <design:position>21</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>email_respre</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>comp_patrimonio</design:name>
+            <design:position>22</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>comp_patrimonio</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>nombre</design:name>
+            <design:position>23</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>nombre</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>direccion</design:name>
+            <design:position>24</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>direccion</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>telemp</design:name>
+            <design:position>25</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>telemp</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>faxemp</design:name>
+            <design:position>26</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>faxemp</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>rifemp</design:name>
+            <design:position>27</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>rifemp</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>estemp</design:name>
+            <design:position>28</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>estemp</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>ciuemp</design:name>
+            <design:position>29</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ciuemp</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>zonpos</design:name>
+            <design:position>30</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>zonpos</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>email</design:name>
+            <design:position>31</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>email</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>website</design:name>
+            <design:position>32</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>website</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>MAX_ROW</name>
+                    <value>-1</value>
+                </ex-property>
+                <ex-property>
+                    <name>XML_FILE</name>
+                </ex-property>
+            </list-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.datatools.enablement.oda.xml.dataSet" name="Data Set Titulo" id="406">
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">codemp</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">nombre</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">nomorgads</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">periodo</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source Titulo</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">codemp</property>
+                    <property name="nativeName">codemp</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">nombre</property>
+                    <property name="nativeName">nombre</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">nomorgads</property>
+                    <property name="nativeName">nomorgads</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">periodo</property>
+                    <property name="nativeName">periodo</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <property name="queryText">table0#-TNAME-#table0#:#[/registros/registro]#:#{codemp;STRING;/codemp},{nombre;STRING;/nombre},{nomorgads;STRING;/nomorgads},{periodo;STRING;/periodo}</property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>1.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>codemp</design:name>
+            <design:position>1</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>codemp</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>nombre</design:name>
+            <design:position>2</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>nombre</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>nomorgads</design:name>
+            <design:position>3</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>nomorgads</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>periodo</design:name>
+            <design:position>4</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>periodo</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>
+]]></xml-property>
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>MAX_ROW</name>
+                    <value>-1</value>
+                </ex-property>
+                <ex-property>
+                    <name>XML_FILE</name>
+                </ex-property>
+            </list-property>
+        </oda-data-set>
+    </data-sets>
+    <styles>
+        <style name="crosstab-cell" id="4">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab" id="5">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="topMargin">0.5104166666666666in</property>
+            <property name="leftMargin">0.75in</property>
+            <property name="rightMargin">0.71875in</property>
+            <page-header>
+                <text id="3">
+                    <property name="textAlign">right</property>
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-header>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <grid id="6">
+            <property name="width">100%</property>
+            <column id="7"/>
+            <row id="384">
+                <cell id="385">
+                    <grid id="386">
+                        <property name="width">100%</property>
+                        <column id="387">
+                            <property name="width">1.4791666666666667in</property>
+                        </column>
+                        <column id="388"/>
+                        <row id="389">
+                            <cell id="253">
+                                <label id="390">
+                                    <property name="fontSize">x-small</property>
+                                    <property name="fontWeight">bold</property>
+                                    <property name="textAlign">left</property>
+                                    <text-property name="text">CÓDIGO DEL ENTE:</text-property>
+                                </label>
+                            </cell>
+                            <cell id="391">
+                                <data id="408">
+                                    <property name="fontSize">small</property>
+                                    <property name="dataSet">Data Set Titulo</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">codemp</property>
+                                            <property name="displayName">codemp</property>
+                                            <expression name="expression">dataSetRow["codemp"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">codemp</property>
+                                </data>
+                            </cell>
+                        </row>
+                        <row id="392">
+                            <cell id="393">
+                                <label id="394">
+                                    <property name="fontSize">x-small</property>
+                                    <property name="fontWeight">bold</property>
+                                    <property name="textAlign">justify</property>
+                                    <text-property name="text">DENOMINACIÓN DEL ENTE:</text-property>
+                                </label>
+                            </cell>
+                            <cell id="395">
+                                <data id="409">
+                                    <property name="fontSize">small</property>
+                                    <property name="dataSet">Data Set Titulo</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">nombre</property>
+                                            <property name="displayName">nombre</property>
+                                            <expression name="expression">dataSetRow["nombre"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">nombre</property>
+                                </data>
+                            </cell>
+                        </row>
+                        <row id="396">
+                            <cell id="397">
+                                <label id="398">
+                                    <property name="fontSize">x-small</property>
+                                    <property name="fontWeight">bold</property>
+                                    <text-property name="text">ÓRGANO DE ADSCRIPCIÓN:</text-property>
+                                </label>
+                            </cell>
+                            <cell id="399">
+                                <data id="410">
+                                    <property name="fontSize">small</property>
+                                    <property name="dataSet">Data Set Titulo</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">nomorgads</property>
+                                            <property name="displayName">nomorgads</property>
+                                            <expression name="expression">dataSetRow["nomorgads"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">nomorgads</property>
+                                </data>
+                            </cell>
+                        </row>
+                        <row id="400">
+                            <cell id="401">
+                                <label id="402">
+                                    <property name="fontSize">x-small</property>
+                                    <property name="fontWeight">bold</property>
+                                    <text-property name="text">PERÍODO PRESUPUESTARIO:</text-property>
+                                </label>
+                            </cell>
+                            <cell id="403">
+                                <data id="411">
+                                    <property name="fontSize">small</property>
+                                    <property name="dataSet">Data Set Titulo</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">periodo</property>
+                                            <property name="displayName">periodo</property>
+                                            <expression name="expression">dataSetRow["periodo"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">periodo</property>
+                                </data>
+                            </cell>
+                        </row>
+                    </grid>
+                </cell>
+            </row>
+            <row id="8">
+                <cell id="9">
+                    <label id="10">
+                        <property name="fontWeight">bold</property>
+                        <property name="textAlign">center</property>
+                        <text-property name="text">IDENTIFICACION DEL ENTE</text-property>
+                    </label>
+                </cell>
+            </row>
+        </grid>
+        <grid id="11">
+            <property name="height">0.34375in</property>
+            <property name="width">7.020833333333333in</property>
+            <column id="12">
+                <property name="width">3.375in</property>
+            </column>
+            <column id="13">
+                <property name="width">2.0833333333333335in</property>
+            </column>
+            <column id="14">
+                <property name="width">1.4375in</property>
+            </column>
+            <row id="15">
+                <property name="borderBottomColor">#000000</property>
+                <property name="borderBottomStyle">solid</property>
+                <property name="borderBottomWidth">1px</property>
+                <property name="borderLeftColor">#000000</property>
+                <property name="borderLeftStyle">solid</property>
+                <property name="borderLeftWidth">1px</property>
+                <property name="borderRightColor">#000000</property>
+                <property name="borderRightStyle">solid</property>
+                <property name="borderRightWidth">1px</property>
+                <property name="borderTopColor">#000000</property>
+                <property name="borderTopStyle">solid</property>
+                <property name="borderTopWidth">1px</property>
+                <cell id="16">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <grid id="23">
+                        <property name="height">0.2708333333333333in</property>
+                        <property name="width">3.4270833333333335in</property>
+                        <column id="24">
+                            <property name="width">1.2916666666666667in</property>
+                        </column>
+                        <column id="25">
+                            <property name="width">2.1354166666666665in</property>
+                        </column>
+                        <row id="26">
+                            <cell id="27">
+                                <label id="29">
+                                    <property name="fontWeight">normal</property>
+                                    <text-property name="text">2. RAZON SOCIAL:</text-property>
+                                </label>
+                            </cell>
+                            <cell id="28">
+                                <data id="316">
+                                    <property name="dataSet">DatosGen</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">nombre</property>
+                                            <property name="displayName">nombre</property>
+                                            <expression name="expression">dataSetRow["nombre"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">nombre</property>
+                                </data>
+                            </cell>
+                        </row>
+                    </grid>
+                </cell>
+                <cell id="17">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <grid id="30">
+                        <property name="width">100%</property>
+                        <column id="31"/>
+                        <column id="32"/>
+                        <row id="33">
+                            <cell id="34">
+                                <label id="36">
+                                    <property name="fontWeight">normal</property>
+                                    <text-property name="text">3. SECTOR:</text-property>
+                                </label>
+                            </cell>
+                            <cell id="35">
+                                <data id="317">
+                                    <property name="dataSet">DatosGen</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">sector</property>
+                                            <property name="displayName">sector</property>
+                                            <expression name="expression">dataSetRow["sector"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">sector</property>
+                                </data>
+                            </cell>
+                        </row>
+                    </grid>
+                </cell>
+                <cell id="18">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <grid id="37">
+                        <property name="width">100%</property>
+                        <column id="38">
+                            <property name="width">0.4791666666666667in</property>
+                        </column>
+                        <column id="39"/>
+                        <row id="40">
+                            <cell id="41">
+                                <label id="43">
+                                    <property name="fontWeight">normal</property>
+                                    <text-property name="text">4. RIF:</text-property>
+                                </label>
+                            </cell>
+                            <cell id="42">
+                                <data id="318">
+                                    <property name="dataSet">DatosGen</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">rifemp</property>
+                                            <property name="displayName">rifemp</property>
+                                            <expression name="expression">dataSetRow["rifemp"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">rifemp</property>
+                                </data>
+                            </cell>
+                        </row>
+                    </grid>
+                </cell>
+            </row>
+        </grid>
+        <grid id="283">
+            <property name="borderBottomColor">#000000</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1px</property>
+            <property name="borderLeftColor">#000000</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1px</property>
+            <property name="borderRightColor">#000000</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1px</property>
+            <property name="borderTopColor">#000000</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1px</property>
+            <property name="width">100%</property>
+            <column id="284">
+                <property name="width">2.7083333333333335in</property>
+            </column>
+            <column id="285">
+                <property name="width">1.6458333333333333in</property>
+            </column>
+            <column id="286"/>
+            <row id="287">
+                <cell id="288">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <grid id="291">
+                        <property name="width">100%</property>
+                        <column id="292">
+                            <property name="width">1.65625in</property>
+                        </column>
+                        <column id="293"/>
+                        <row id="294">
+                            <cell id="295">
+                                <label id="298">
+                                    <property name="fontSize">small</property>
+                                    <text-property name="text">5. BASE LEGAL DE CREACIÓN Y MODIFICACIONES: </text-property>
+                                </label>
+                            </cell>
+                            <cell id="296">
+                                <data id="319">
+                                    <property name="dataSet">DatosGen</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">baselegal</property>
+                                            <property name="displayName">baselegal</property>
+                                            <expression name="expression">dataSetRow["baselegal"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">baselegal</property>
+                                </data>
+                            </cell>
+                        </row>
+                    </grid>
+                </cell>
+                <cell id="289">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <grid id="299">
+                        <property name="width">100%</property>
+                        <column id="300"/>
+                        <column id="301"/>
+                        <row id="302">
+                            <cell id="303">
+                                <label id="305">
+                                    <property name="fontSize">small</property>
+                                    <text-property name="text">6. FORMA JURÍDICA:</text-property>
+                                </label>
+                            </cell>
+                            <cell id="304">
+                                <data id="320">
+                                    <property name="dataSet">DatosGen</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">forma_juri</property>
+                                            <property name="displayName">forma_juri</property>
+                                            <expression name="expression">dataSetRow["forma_juri"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">forma_juri</property>
+                                </data>
+                            </cell>
+                        </row>
+                    </grid>
+                </cell>
+                <cell id="290">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <grid id="306">
+                        <property name="width">100%</property>
+                        <column id="307"/>
+                        <column id="308"/>
+                        <row id="309">
+                            <cell id="310">
+                                <label id="312">
+                                    <property name="fontSize">small</property>
+                                    <text-property name="text">7. AÑO DE INICIO DE OPERACIONES:</text-property>
+                                </label>
+                            </cell>
+                            <cell id="311">
+                                <data id="321">
+                                    <property name="dataSet">DatosGen</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">ano_inicio</property>
+                                            <property name="displayName">ano_inicio</property>
+                                            <expression name="expression">dataSetRow["ano_inicio"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">ano_inicio</property>
+                                </data>
+                            </cell>
+                        </row>
+                    </grid>
+                </cell>
+            </row>
+        </grid>
+        <grid id="65">
+            <property name="height">1.0104166666666667in</property>
+            <property name="width">7.020833333333333in</property>
+            <column id="66">
+                <property name="width">7.020833333333333in</property>
+            </column>
+            <row id="67">
+                <property name="borderBottomColor">#000000</property>
+                <property name="borderBottomStyle">solid</property>
+                <property name="borderBottomWidth">1px</property>
+                <property name="borderLeftColor">#000000</property>
+                <property name="borderLeftStyle">solid</property>
+                <property name="borderLeftWidth">1px</property>
+                <property name="borderRightColor">#000000</property>
+                <property name="borderRightStyle">solid</property>
+                <property name="borderRightWidth">1px</property>
+                <property name="borderTopColor">#000000</property>
+                <property name="borderTopStyle">solid</property>
+                <property name="borderTopWidth">1px</property>
+                <cell id="68">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <grid id="73">
+                        <property name="height">0.2708333333333333in</property>
+                        <property name="width">6.947916666666667in</property>
+                        <column id="74">
+                            <property name="width">1.6875in</property>
+                        </column>
+                        <column id="75">
+                            <property name="width">5.260416666666667in</property>
+                        </column>
+                        <row id="76">
+                            <cell id="77">
+                                <label id="79">
+                                    <text-property name="text">8. ACTIVIDAD PRINCIPAL:</text-property>
+                                </label>
+                            </cell>
+                            <cell id="78">
+                                <data id="322">
+                                    <property name="dataSet">DatosGen</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">act_principal</property>
+                                            <property name="displayName">act_principal</property>
+                                            <expression name="expression">dataSetRow["act_principal"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">act_principal</property>
+                                </data>
+                            </cell>
+                        </row>
+                    </grid>
+                </cell>
+            </row>
+            <row id="69">
+                <property name="borderBottomColor">#000000</property>
+                <property name="borderBottomStyle">solid</property>
+                <property name="borderBottomWidth">1px</property>
+                <property name="borderLeftColor">#000000</property>
+                <property name="borderLeftStyle">solid</property>
+                <property name="borderLeftWidth">1px</property>
+                <property name="borderRightColor">#000000</property>
+                <property name="borderRightStyle">solid</property>
+                <property name="borderRightWidth">1px</property>
+                <property name="borderTopColor">#000000</property>
+                <property name="borderTopStyle">solid</property>
+                <property name="borderTopWidth">1px</property>
+                <cell id="70">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <grid id="80">
+                        <property name="width">100%</property>
+                        <column id="81">
+                            <property name="width">0.8020833333333334in</property>
+                        </column>
+                        <column id="82"/>
+                        <row id="83">
+                            <cell id="84">
+                                <label id="86">
+                                    <text-property name="text">9. MISION:</text-property>
+                                </label>
+                            </cell>
+                            <cell id="85">
+                                <data id="323">
+                                    <property name="dataSet">DatosGen</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">mision</property>
+                                            <property name="displayName">mision</property>
+                                            <expression name="expression">dataSetRow["mision"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">mision</property>
+                                </data>
+                            </cell>
+                        </row>
+                    </grid>
+                </cell>
+            </row>
+            <row id="71">
+                <property name="borderBottomColor">#000000</property>
+                <property name="borderBottomStyle">solid</property>
+                <property name="borderBottomWidth">1px</property>
+                <property name="borderLeftColor">#000000</property>
+                <property name="borderLeftStyle">solid</property>
+                <property name="borderLeftWidth">1px</property>
+                <property name="borderRightColor">#000000</property>
+                <property name="borderRightStyle">solid</property>
+                <property name="borderRightWidth">1px</property>
+                <property name="borderTopColor">#000000</property>
+                <property name="borderTopStyle">solid</property>
+                <property name="borderTopWidth">1px</property>
+                <cell id="72">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">1px</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <grid id="87">
+                        <property name="width">100%</property>
+                        <column id="88">
+                            <property name="width">0.8333333333333334in</property>
+                        </column>
+                        <column id="89"/>
+                        <row id="90">
+                            <cell id="91">
+                                <label id="94">
+                                    <text-property name="text">10. VISION:</text-property>
+                                </label>
+                            </cell>
+                            <cell id="92">
+                                <data id="324">
+                                    <property name="dataSet">DatosGen</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">vision</property>
+                                            <property name="displayName">vision</property>
+                                            <expression name="expression">dataSetRow["vision"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">vision</property>
+                                </data>
+                            </cell>
+                        </row>
+                    </grid>
+                </cell>
+            </row>
+        </grid>
+        <grid id="179">
+            <property name="marginTop">auto</property>
+            <property name="width">100%</property>
+            <column id="180"/>
+            <row id="181">
+                <property name="borderBottomColor">#000000</property>
+                <property name="borderBottomStyle">solid</property>
+                <property name="borderBottomWidth">1px</property>
+                <property name="borderLeftColor">#000000</property>
+                <property name="borderLeftStyle">solid</property>
+                <property name="borderLeftWidth">1px</property>
+                <property name="borderRightColor">#000000</property>
+                <property name="borderRightStyle">solid</property>
+                <property name="borderRightWidth">1px</property>
+                <property name="borderTopColor">#000000</property>
+                <property name="borderTopStyle">solid</property>
+                <property name="borderTopWidth">1px</property>
+                <cell id="182">
+                    <label id="275">
+                        <text-property name="text">11. DOMICILIO LEGAL</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="325">
+                <property name="borderBottomColor">#000000</property>
+                <property name="borderBottomStyle">solid</property>
+                <property name="borderBottomWidth">1px</property>
+                <property name="borderLeftColor">#000000</property>
+                <property name="borderLeftStyle">solid</property>
+                <property name="borderLeftWidth">1px</property>
+                <property name="borderRightColor">#000000</property>
+                <property name="borderRightStyle">solid</property>
+                <property name="borderRightWidth">1px</property>
+                <property name="borderTopColor">#000000</property>
+                <property name="borderTopStyle">solid</property>
+                <property name="borderTopWidth">1px</property>
+                <cell id="326">
+                    <data id="327">
+                        <property name="dataSet">DatosGen</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">direccion</property>
+                                <property name="displayName">direccion</property>
+                                <expression name="expression">dataSetRow["direccion"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">direccion</property>
+                    </data>
+                </cell>
+            </row>
+        </grid>
+        <grid id="158">
+            <property name="width">100%</property>
+            <column id="159"/>
+            <column id="160">
+                <property name="width">1.0520833333333333in</property>
+            </column>
+            <column id="161"/>
+            <column id="162"/>
+            <column id="163">
+                <property name="width">0.8333333333333334in</property>
+            </column>
+            <column id="164"/>
+            <row id="165">
+                <property name="borderBottomColor">#000000</property>
+                <property name="borderBottomStyle">solid</property>
+                <property name="borderBottomWidth">1px</property>
+                <property name="borderLeftColor">#000000</property>
+                <property name="borderLeftStyle">solid</property>
+                <property name="borderLeftWidth">1px</property>
+                <property name="borderRightColor">#000000</property>
+                <property name="borderRightStyle">solid</property>
+                <property name="borderRightWidth">1px</property>
+                <property name="borderTopColor">#000000</property>
+                <property name="borderTopStyle">solid</property>
+                <property name="borderTopWidth">1px</property>
+                <cell id="166">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">1px</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="211">
+                        <text-property name="text">CIUDAD</text-property>
+                    </label>
+                </cell>
+                <cell id="167">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">1px</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="212">
+                        <text-property name="text">ESTADO</text-property>
+                    </label>
+                </cell>
+                <cell id="168">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">1px</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="213">
+                        <text-property name="text">TELEFONOS</text-property>
+                    </label>
+                </cell>
+                <cell id="169">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">1px</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="214">
+                        <text-property name="text">PAGINA WEB</text-property>
+                    </label>
+                </cell>
+                <cell id="170">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">1px</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="215">
+                        <text-property name="text">FAX</text-property>
+                    </label>
+                </cell>
+                <cell id="171">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">1px</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="216">
+                        <text-property name="text">CODIGO POSTAL</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="172">
+                <property name="borderBottomColor">#000000</property>
+                <property name="borderBottomStyle">solid</property>
+                <property name="borderBottomWidth">1px</property>
+                <property name="borderLeftColor">#000000</property>
+                <property name="borderLeftStyle">solid</property>
+                <property name="borderLeftWidth">1px</property>
+                <property name="borderRightColor">#000000</property>
+                <property name="borderRightStyle">solid</property>
+                <property name="borderRightWidth">1px</property>
+                <property name="borderTopColor">#000000</property>
+                <property name="borderTopStyle">solid</property>
+                <property name="borderTopWidth">1px</property>
+                <cell id="173">
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <data id="328">
+                        <property name="dataSet">DatosGen</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">ciuemp</property>
+                                <property name="displayName">ciuemp</property>
+                                <expression name="expression">dataSetRow["ciuemp"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">ciuemp</property>
+                    </data>
+                </cell>
+                <cell id="174">
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <data id="329">
+                        <property name="dataSet">DatosGen</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">estemp</property>
+                                <property name="displayName">estemp</property>
+                                <expression name="expression">dataSetRow["estemp"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">estemp</property>
+                    </data>
+                </cell>
+                <cell id="175">
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <data id="330">
+                        <property name="dataSet">DatosGen</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">telemp</property>
+                                <property name="displayName">telemp</property>
+                                <expression name="expression">dataSetRow["telemp"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">telemp</property>
+                    </data>
+                </cell>
+                <cell id="176">
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <data id="331">
+                        <property name="dataSet">DatosGen</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">website</property>
+                                <property name="displayName">website</property>
+                                <expression name="expression">dataSetRow["website"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">website</property>
+                    </data>
+                </cell>
+                <cell id="177">
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <data id="332">
+                        <property name="dataSet">DatosGen</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">faxemp</property>
+                                <property name="displayName">faxemp</property>
+                                <expression name="expression">dataSetRow["faxemp"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">faxemp</property>
+                    </data>
+                </cell>
+                <cell id="178">
+                    <data id="333">
+                        <property name="dataSet">DatosGen</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">zonpos</property>
+                                <property name="displayName">zonpos</property>
+                                <expression name="expression">dataSetRow["zonpos"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">zonpos</property>
+                    </data>
+                </cell>
+            </row>
+            <row id="276">
+                <property name="borderBottomColor">#000000</property>
+                <property name="borderBottomStyle">solid</property>
+                <property name="borderBottomWidth">1px</property>
+                <property name="borderLeftColor">#000000</property>
+                <property name="borderLeftStyle">solid</property>
+                <property name="borderLeftWidth">1px</property>
+                <property name="borderRightColor">#000000</property>
+                <property name="borderRightStyle">solid</property>
+                <property name="borderRightWidth">1px</property>
+                <property name="borderTopColor">#000000</property>
+                <property name="borderTopStyle">solid</property>
+                <property name="borderTopWidth">1px</property>
+                <cell id="277"/>
+                <cell id="278"/>
+                <cell id="279"/>
+                <cell id="280"/>
+                <cell id="281"/>
+                <cell id="282"/>
+            </row>
+        </grid>
+        <grid id="221">
+            <property name="width">100%</property>
+            <column id="222">
+                <property name="width">2.21875in</property>
+            </column>
+            <column id="223">
+                <property name="width">1.65625in</property>
+            </column>
+            <column id="224"/>
+            <row id="225">
+                <cell id="226">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">1px</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="233">
+                        <property name="textAlign">center</property>
+                        <text-property name="text">12. DIRECTORES/RESPONSABLES</text-property>
+                    </label>
+                </cell>
+                <cell id="227">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">1px</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="234">
+                        <property name="textAlign">center</property>
+                        <text-property name="text">13. TELÉFONOS</text-property>
+                    </label>
+                </cell>
+                <cell id="228">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">1px</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="235">
+                        <property name="textAlign">center</property>
+                        <text-property name="text">14. NOMBRE Y DIRECCIÓN ELECTRÓNICA</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="229">
+                <cell id="230">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">1px</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <grid id="258">
+                        <property name="width">100%</property>
+                        <column id="259"/>
+                        <row id="260">
+                            <cell id="261">
+                                <label id="270">
+                                    <text-property name="text">Presidente de la Institución</text-property>
+                                </label>
+                            </cell>
+                        </row>
+                        <row id="262">
+                            <cell id="263">
+                                <label id="271">
+                                    <text-property name="text">Planificación y Presupuesto</text-property>
+                                </label>
+                            </cell>
+                        </row>
+                        <row id="264">
+                            <cell id="265">
+                                <label id="272">
+                                    <text-property name="text">Administración y/o Finanzas</text-property>
+                                </label>
+                            </cell>
+                        </row>
+                        <row id="266">
+                            <cell id="267">
+                                <label id="273">
+                                    <text-property name="text">Recursos Humanos y/o Personal</text-property>
+                                </label>
+                            </cell>
+                        </row>
+                        <row id="268">
+                            <cell id="269">
+                                <label id="274">
+                                    <text-property name="text">Analistas Responsables del Proyecto</text-property>
+                                </label>
+                            </cell>
+                        </row>
+                    </grid>
+                </cell>
+                <cell id="231">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">1px</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <grid id="338">
+                        <property name="height">1.3125in</property>
+                        <property name="width">1.59375in</property>
+                        <column id="339"/>
+                        <row id="340">
+                            <cell id="341">
+                                <data id="350">
+                                    <property name="dataSet">DatosGen</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">tel_presi</property>
+                                            <property name="displayName">tel_presi</property>
+                                            <expression name="expression">dataSetRow["tel_presi"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">tel_presi</property>
+                                </data>
+                            </cell>
+                        </row>
+                        <row id="342">
+                            <cell id="343">
+                                <data id="371">
+                                    <property name="dataSet">DatosGen</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">tel_dirplan</property>
+                                            <property name="displayName">tel_dirplan</property>
+                                            <expression name="expression">dataSetRow["tel_dirplan"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">tel_dirplan</property>
+                                </data>
+                            </cell>
+                        </row>
+                        <row id="344">
+                            <cell id="345">
+                                <data id="374">
+                                    <property name="dataSet">DatosGen</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">tel_diradmin</property>
+                                            <property name="displayName">tel_diradmin</property>
+                                            <expression name="expression">dataSetRow["tel_diradmin"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">tel_diradmin</property>
+                                </data>
+                            </cell>
+                        </row>
+                        <row id="346">
+                            <property name="height">0.3229166666666667in</property>
+                            <cell id="347">
+                                <data id="378">
+                                    <property name="dataSet">DatosGen</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">tel_dirrh</property>
+                                            <property name="displayName">tel_dirrh</property>
+                                            <expression name="expression">dataSetRow["tel_dirrh"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">tel_dirrh</property>
+                                </data>
+                            </cell>
+                        </row>
+                        <row id="348">
+                            <property name="height">0.3541666666666667in</property>
+                            <cell id="349">
+                                <data id="380">
+                                    <property name="dataSet">DatosGen</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">tel_respre</property>
+                                            <property name="displayName">tel_respre</property>
+                                            <expression name="expression">dataSetRow["tel_respre"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">tel_respre</property>
+                                </data>
+                            </cell>
+                        </row>
+                    </grid>
+                </cell>
+                <cell id="232">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">1px</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <grid id="351">
+                        <property name="height">1.46875in</property>
+                        <property name="width">3.6145833333333335in</property>
+                        <column id="352">
+                            <property name="width">2.0104166666666665in</property>
+                        </column>
+                        <column id="369">
+                            <property name="width">1.9375in</property>
+                        </column>
+                        <row id="353">
+                            <cell id="354">
+                                <data id="370">
+                                    <property name="dataSet">DatosGen</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">nom_presi</property>
+                                            <property name="displayName">nom_presi</property>
+                                            <expression name="expression">dataSetRow["nom_presi"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">nom_presi</property>
+                                </data>
+                            </cell>
+                            <cell id="364"/>
+                        </row>
+                        <row id="356">
+                            <cell id="357">
+                                <data id="372">
+                                    <property name="dataSet">DatosGen</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">nom_dirplan</property>
+                                            <property name="displayName">nom_dirplan</property>
+                                            <expression name="expression">dataSetRow["nom_dirplan"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">nom_dirplan</property>
+                                </data>
+                            </cell>
+                            <cell id="365">
+                                <data id="373">
+                                    <property name="dataSet">DatosGen</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">email_diradmin</property>
+                                            <property name="displayName">email_diradmin</property>
+                                            <expression name="expression">dataSetRow["email_diradmin"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">email_diradmin</property>
+                                </data>
+                            </cell>
+                        </row>
+                        <row id="358">
+                            <cell id="359">
+                                <data id="375">
+                                    <property name="dataSet">DatosGen</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">nom_diradmin</property>
+                                            <property name="displayName">nom_diradmin</property>
+                                            <expression name="expression">dataSetRow["nom_diradmin"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">nom_diradmin</property>
+                                </data>
+                            </cell>
+                            <cell id="366">
+                                <data id="376">
+                                    <property name="dataSet">DatosGen</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">email_diradmin</property>
+                                            <property name="displayName">email_diradmin</property>
+                                            <expression name="expression">dataSetRow["email_diradmin"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">email_diradmin</property>
+                                </data>
+                            </cell>
+                        </row>
+                        <row id="360">
+                            <property name="height">0.3229166666666667in</property>
+                            <cell id="361">
+                                <data id="377">
+                                    <property name="dataSet">DatosGen</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">nom_dirrh</property>
+                                            <property name="displayName">nom_dirrh</property>
+                                            <expression name="expression">dataSetRow["nom_dirrh"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">nom_dirrh</property>
+                                </data>
+                            </cell>
+                            <cell id="367">
+                                <data id="379">
+                                    <property name="dataSet">DatosGen</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">email_dirrh</property>
+                                            <property name="displayName">email_dirrh</property>
+                                            <expression name="expression">dataSetRow["email_dirrh"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">email_dirrh</property>
+                                </data>
+                            </cell>
+                        </row>
+                        <row id="362">
+                            <property name="height">0.3541666666666667in</property>
+                            <cell id="363">
+                                <data id="381">
+                                    <property name="dataSet">DatosGen</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">nom_respre</property>
+                                            <property name="displayName">nom_respre</property>
+                                            <expression name="expression">dataSetRow["nom_respre"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">nom_respre</property>
+                                </data>
+                            </cell>
+                            <cell id="368">
+                                <data id="382">
+                                    <property name="dataSet">DatosGen</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">email_respre</property>
+                                            <property name="displayName">email_respre</property>
+                                            <expression name="expression">dataSetRow["email_respre"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">email_respre</property>
+                                </data>
+                            </cell>
+                        </row>
+                    </grid>
+                </cell>
+            </row>
+        </grid>
+        <grid id="238">
+            <property name="height">0.8020833333333334in</property>
+            <property name="width">7.020833333333333in</property>
+            <column id="239">
+                <property name="width">7.020833333333333in</property>
+            </column>
+            <row id="240">
+                <property name="borderBottomColor">#000000</property>
+                <property name="borderBottomStyle">solid</property>
+                <property name="borderBottomWidth">1px</property>
+                <property name="borderLeftColor">#000000</property>
+                <property name="borderLeftStyle">solid</property>
+                <property name="borderLeftWidth">1px</property>
+                <property name="borderRightColor">#000000</property>
+                <property name="borderRightStyle">solid</property>
+                <property name="borderRightWidth">1px</property>
+                <property name="borderTopColor">#000000</property>
+                <property name="borderTopStyle">solid</property>
+                <property name="borderTopWidth">1px</property>
+                <cell id="241">
+                    <label id="244">
+                        <property name="textAlign">center</property>
+                        <text-property name="text">15. COMPOSICIÓN DEL PATRIMONIO</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="242">
+                <property name="height">0.53125in</property>
+                <property name="borderBottomColor">#000000</property>
+                <property name="borderBottomStyle">solid</property>
+                <property name="borderBottomWidth">1px</property>
+                <property name="borderLeftColor">#000000</property>
+                <property name="borderLeftStyle">solid</property>
+                <property name="borderLeftWidth">1px</property>
+                <property name="borderRightColor">#000000</property>
+                <property name="borderRightStyle">solid</property>
+                <property name="borderRightWidth">1px</property>
+                <property name="borderTopColor">#000000</property>
+                <property name="borderTopStyle">solid</property>
+                <property name="borderTopWidth">1px</property>
+                <cell id="243">
+                    <data id="383">
+                        <property name="dataSet">DatosGen</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">comp_patrimonio</property>
+                                <property name="displayName">comp_patrimonio</property>
+                                <expression name="expression">dataSetRow["comp_patrimonio"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">comp_patrimonio</property>
+                    </data>
+                </cell>
+            </row>
+        </grid>
+    </body>
+</report>

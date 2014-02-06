@@ -1,0 +1,18 @@
+  // simple array store
+    var store = new Ext.data.SimpleStore({
+        fields: ['numero'],
+        data : numeros // from states.js
+    });
+    var combo = new Ext.form.ComboBox({
+        store: store,
+        displayField:'numero',
+        valueField: 'numero',
+        editable:false,
+        typeAhead: true,
+        mode: 'local',
+        triggerAction: 'all',
+        selectOnFocus:true,
+        lazyRender:true,
+        listClass: 'x-combo-list-small'
+       // applyTo: 'local-states'
+    });

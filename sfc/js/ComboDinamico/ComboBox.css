@@ -1,0 +1,68 @@
+.combo-button {
+	cursor:			hand;
+	cursor:			pointer;	
+	height:			20px;
+	border:			1px solid rgb(153,153,153);
+	padding:'padding-top' 'padding-right' 'padding-bottom' 'padding-left';
+	/*padding:		0;*/
+	background:		rgb(199,199,199);
+	width:			14px;
+	vertical-align:	baseline;
+	font-size:		8pt;
+	font-family:	Webdings3, Marlett;
+	elevation:higher;
+	border-collapse:separate;
+}
+.combo-hilite {
+	cursor:			hand;
+	cursor:			pointer;
+	background:		rgb(234,242,255);
+	border:			1px solid rgb(120,172,255);
+	color:			black;
+	font-family:	verdana;
+	font-size:		7pt;
+}
+.combo-item   {
+	cursor:			hand;
+	cursor:			pointer;
+	background:		white;
+	border:			1px solid white;
+	color:			black;
+	font-family:	verdana;
+	font-size:		7pt;
+}
+
+.combo-input  {
+	border:			1px solid rgb(153,153,153) !important;
+	width:			123px !important;
+	vertical-align:	baseline;
+}
+
+.combo-list table {
+	table-layout:	fixed;
+	width:			120px;
+	float:none;
+	
+}
+
+.combo-list {
+	border:				1px solid black;
+	background:			white;
+	padding:			1px;
+	width:  			120px;
+	
+	 /*enable this if you want scroll bars*/
+	height:				100px;
+	overflow:			auto;
+	overflow-x:			visible;
+	overflow-y:			auto;
+	/*scrollbar-base-color:		rgb(234,242,255);
+	scrollbar-highlight-color:	rgb(234,242,255);
+	scrollbar-3dlight-color:	rgb(120,172,255);
+	scrollbar-darkshadow-color:	rgb(120,172,255);
+	scrollbar-shadow-color:		rgb(234,242,255);
+	scrollbar-face-color:		rgb(234,242,255);
+	scrollbar-track-color:		white;
+	scrollbar-arrow-color:		black;*/
+	
+}

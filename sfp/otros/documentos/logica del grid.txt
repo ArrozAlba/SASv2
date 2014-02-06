@@ -1,0 +1,17 @@
+5-obtener el numero de niveles.
+
+buscar los niveles.
+	si existen
+		pintarlos y permitir editar(var oper = editar)
+	sino.
+		habilitar el boton agregar.	
+			click.agregar
+				escribir 5 cinco filas en blanco permitiendo editar desde la primera(var oper=incluir).
+
+validar antes de incluir o editar que las ciinco o las tres tengas su nombre.
+
+obtener el json del y enviarlo a php en forma de arrglo.
+realizar la operacion segun el caso y recibir la respuesta de php.
+
+
+

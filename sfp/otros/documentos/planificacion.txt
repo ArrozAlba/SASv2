@@ -1,0 +1,15 @@
+pasos a seguir (lo que falta).
+
+Elaborar el script para el casamiento de las cuentas.
+
+hacer la parte del asiento de las cuentas.
+
+realizar la planificacion de los reportes que faltan
+
+realizar la pantalla de reportes.
+
+hacer las modificaciones a la de ingreso de montos para 
+las cuentas de gastos y para las cuentas de ingresos.
+
+
+

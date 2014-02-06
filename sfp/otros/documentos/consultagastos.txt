@@ -1,0 +1,23 @@
+select sfp_estpro1.codestpro1,sfp_estpro1.denestpro1,sum(spe_int_cuentas1.enero) as p402,sum(spe_int_cuentas2.enero) as p404,
+sum(spe_int_cuentas3.enero) as p405
+ from sfp_estpro1 inner join spe_relacion_es 
+on spe_relacion_es.codestpro1=sfp_estpro1.codestpro1 inner join spe_int_cuentas as spe_int_cuentas1 
+on spe_relacion_es.codinte=spe_int_cuentas1.codinte 
+inner join spe_int_cuentas as spe_int_cuentas2 
+on spe_relacion_es.codinte=spe_int_cuentas2.codinte
+inner join spe_int_cuentas as spe_int_cuentas3 
+on spe_relacion_es.codinte=spe_int_cuentas3.codinte
+ where sfp_estpro1.estcla='P'
+and spe_int_cuentas1.sig_cuenta like '402%' and spe_int_cuentas2.sig_cuenta like '404%'
+and spe_int_cuentas3.sig_cuenta like '405%' 
+group by sfp_estpro1.codestpro1,sfp_estpro1.denestpro1
+
+
+
+select sfp_estpro1.codestpro1,sfp_estpro1.denestpro1,coalesce((select sum(enero+febrero+marzo+abril+mayo+junio+agosto+septiembre+octubre+noviembre+diciembre) from spe_int_cuentas inner join spe_relacion_es on spe_int_cuentas.codinte=spe_relacion_es.codinte where spe_int_cuentas.sig_cuenta like '401%'),0000) as "401",
+(select sum((enero+febrero+marzo+abril+mayo+junio+agosto+septiembre+octubre+noviembre+diciembre) from spe_int_cuentas inner join spe_relacion_es on spe_int_cuentas.codinte=spe_relacion_es.codinte where spe_int_cuentas.sig_cuenta like '402%') as "402", coalesce((select sum((enero+febrero+marzo+abril+mayo+junio+agosto+septiembre+octubre+noviembre+diciembre) from spe_int_cuentas inner join spe_relacion_es on spe_int_cuentas.codinte=spe_relacion_es.codinte where spe_int_cuentas.sig_cuenta like '403%'),0000) as "403", 
+coalesce((select sum((enero+febrero+marzo+abril+mayo+junio+agosto+septiembre+octubre+noviembre+diciembre) from spe_int_cuentas inner join spe_relacion_es on spe_int_cuentas.codinte=spe_relacion_es.codinte where spe_int_cuentas.sig_cuenta like '404%'),0000) as "404" ,
+coalesce((select sum((enero+febrero+marzo+abril+mayo+junio+agosto+septiembre+octubre+noviembre+diciembre) from spe_int_cuentas inner join spe_relacion_es on spe_int_cuentas.codinte=spe_relacion_es.codinte where spe_int_cuentas.sig_cuenta like '405%'),0000) as "405",
+coalesce((select sum((enero+febrero+marzo+abril+mayo+junio+agosto+septiembre+octubre+noviembre+diciembre) from spe_int_cuentas inner join spe_relacion_es on spe_int_cuentas.codinte=spe_relacion_es.codinte where spe_int_cuentas.sig_cuenta like '407%'),0000) as "407",
+coalesce((select sum((enero+febrero+marzo+abril+mayo+junio+agosto+septiembre+octubre+noviembre+diciembre) from spe_int_cuentas inner join spe_relacion_es on spe_int_cuentas.codinte=spe_relacion_es.codinte where spe_int_cuentas.sig_cuenta like '408%'),0000) as "408"
+from sfp_estpro1 inner join spe_relacion_es on sfp_estpro1.codestpro1=spe_relacion_es.codestpro1

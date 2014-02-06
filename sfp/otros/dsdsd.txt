@@ -1,0 +1,10 @@
+ejecución de pantalla de integracion de cuentas.
+
+-Colocar la cuenta de ingreso y de gastos por una columna.(mirar plan de cuentas respectivo)
+-en la otra columna colocar las dos cuentas contables para hacer el asiento(mirar el plan de duentas contables)
+-en la otra columna colocar la cuenta de variacion patrimonial(mirar el plan de cuentas contables).
+-en la otra cuenta mirar el plan de cuentas del CAIF(mirar el plan de cuentas del caif(hay que hacerlo nuevo))
+
+
+
+select max(codinte) as Ultimo from {$this->_table} where codest1='{$this->codest1}' and codest2='{$this->codest2}' and codest3='{$this->codest3}' and codest4='{$this->codest4}' and codest5='{$this->codest5}' and codestpro1='{$this->codestpro1}' and codestpro2='{$this->codestpro2}' and codestpro3='{$this->codestpro3}' and codestpro4='{$this->codestpro4}' and codestpro5='{$this->codestpro5}'

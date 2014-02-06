@@ -1,0 +1,19 @@
+========== Description Part Begin ==========
+Description = 
+LastUpdateTime = 37434.458101852
+PreviewPath = 
+ProgID = PageletServer.DynamicMenu
+Title = SeparatorText
+Version = 4.00
+========== Description Part End ==========
+========== Parameter Part Begin ==========
+CrossFrame = 0;0;0;0;;1;
+MenuBody0 = 4;0;1;3;0;0;0;0;0;0;0;0;0;90;0;0;0;0;0;0;0;15132390;0;;3
+MenuItem0_0 = 3;1;;;0; Datos Básicos ;0;0;1;;;_self;;1;15132390;16053492;0;0;;;3;3;0;3;0;0;16252927;16252927;16252927;16252927;0;0;0;0;;;0;0;0;;;0;0;0;;;0;0;0;Tahoma,Arial;Tahoma,Arial;8;8;0;0;9474192;9474192;0;0;0;0;0;0;0;0;0;0;
+MenuItem0_1 = 2;1;;;0; Datos de Registro y Otros ;0;0;1;;;_self;;1;15132390;16053492;0;0;;;3;3;0;0;0;0;16252927;16252927;16252927;16252927;0;0;0;0;;;0;0;0;;;0;0;0;;;0;0;0;Tahoma,Arial;Tahoma,Arial;8;8;0;0;9474192;9474192;0;0;0;0;0;0;0;0;0;0;
+MenuItem0_2 = 2;1;;;0; Socios ;0;0;1;;;_self;;1;15132390;16053492;0;0;;;3;3;0;0;0;0;16252927;16252927;16252927;16252927;0;0;0;0;;;0;0;0;;;0;0;0;;;0;0;0;Tahoma,Arial;Tahoma,Arial;8;8;0;0;9474192;9474192;0;0;0;0;0;0;0;0;0;0;
+MenuItem0_3 = 2;1;;;0; Lista ;0;0;1;;;_self;;1;15132390;16053492;0;0;;;3;3;0;0;0;0;16252927;16252927;16252927;16252927;0;0;0;0;;;0;0;0;;;0;0;0;;;0;0;0;Tahoma,Arial;Tahoma,Arial;8;8;0;0;9474192;9474192;0;0;0;0;0;0;0;0;0;0;
+Scrolling0 = 0;16252927;1;14073525;1;;;3;3;0;1;1;16252927;16252927;16252927;16252927;1;0;0;0;0;C:\\Archivos de programa\\DHTMLMenu\\left_disabled.gif;C:\\Archivos de programa\\DHTMLMenu\\left_enabled.gif;9;7;0;C:\\Archivos de programa\\DHTMLMenu\\right_disabled.gif;C:\\Archivos de programa\\DHTMLMenu\\right_enabled.gif;9;7;0
+Scrolling1 = 0;16252927;1;14073525;1;;;3;3;0;1;1;16252927;16252927;16252927;16252927;1;0;0;0;0;C:\\Archivos de programa\\DHTMLMenu\\up_disabled.gif;C:\\Archivos de programa\\DHTMLMenu\\up_enabled.gif;7;9;0;C:\\Archivos de programa\\DHTMLMenu\\down_disabled.gif;C:\\Archivos de programa\\DHTMLMenu\\down_enabled.gif;7;9;0
+TopMenuBody = 2;430;menu08dd;0;1;1;0;0;0;0;1000;0;0;;1;0;0;;1;1;100;0;;67108896
+========== Parameter Part End ==========

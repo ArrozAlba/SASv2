@@ -1,0 +1,241 @@
+<?php
+session_start();
+//////////////////////////////////////////////         SEGURIDAD               /////////////////////////////////////////////
+if(!array_key_exists("la_logusr",$_SESSION))
+{
+	print "<script language=JavaScript>";
+	print "location.href='../sigesp_inicio_sesion.php'";
+	print "</script>";		
+}
+$ls_logusr=$_SESSION["la_logusr"];
+require_once("../../../class_folder/utilidades/class_funciones_srh.php");
+$io_fun_srh=new class_funciones_srh('../../../../');
+$io_fun_srh->uf_load_seguridad("SRH","sigesp_srh_r_listado_concurso.php",$ls_permisos,$la_seguridad,$la_permisos);
+//////////////////////////////////////////////         SEGURIDAD               /////////////////////////////////////////////
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Reporte Listado de Personal</title>
+
+<style type="text/css">
+<!--
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	background-color: #EFEBEF;
+}
+
+a:link {
+	color: #006699;
+}
+a:visited {
+	color: #006699;
+}
+a:active {
+	color: #006699;
+}
+.Estilo1 {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 12px;
+	color: #6699CC;
+}
+
+-->
+</style>
+<script type="text/javascript" language="JavaScript1.2" src="../../../public/js/librerias_comunes.js"></script>
+
+</head>
+<body>
+<table width="762" border="0" align="center" cellpadding="0" cellspacing="0" class="contorno">
+  <tr>
+    <td height="30" colspan="11" class="cd-logo"><img src="../../../public/imagenes/header.jpg" width="778" height="40"></td>
+  </tr>
+   <tr>
+    <td width="432" height="20" colspan="11" bgcolor="#E7E7E7">
+		<table width="762" border="0" align="center" cellpadding="0" cellspacing="0">
+			  <td width="432" height="20" bgcolor="#E7E7E7" class="descripcion_sistema Estilo1">Sistema de Recursos Humanos</td>
+			    <td width="346" bgcolor="#E7E7E7"><div align="right"><span class="letras-pequenas"><b><?PHP print date("j/n/Y")." - ".date("h:i a");?></b></span></div></td>
+				<tr>
+	  	      <td height="20" bgcolor="#E7E7E7" class="descripcion_sistema">&nbsp;</td>
+	  	      <td bgcolor="#E7E7E7" class="letras-pequenas"><div align="right"><b><?PHP print $_SESSION["la_nomusu"]." ".$_SESSION["la_apeusu"];?></b></div></td> </tr>
+	  	</table>
+	 </td>
+  </tr>
+ <tr>
+    <td height="20" colspan="11" bgcolor="#E7E7E7" class="cd-menu"><script type="text/javascript" language="JavaScript1.2" src="../../js/menu/menu.js"></script></td>
+  </tr>
+  <tr>
+    <td width="780" height="13" colspan="11" class="toolbar"></td>
+  </tr>
+  
+  <tr>
+   <td height="20" width="25" class="toolbar"><div align="center"><a href="javascript: ue_print();"><img src="../../../../shared/imagebank/tools20/imprimir.gif" alt="Imprimir" width="20" height="20" border="0" title="Imprimir"></a></div></td>
+   <td class="toolbar" width="24"><div align="center"><a href="javascript: ue_cerrar();"><img src="../../../public/imagenes/salir.gif" alt="Salir" width="20" height="20" border="0"></a></div></td>
+    <td class="toolbar" width="24"><div align="center"><img src="../../../public/imagenes/ayuda.gif" alt="Ayuda" width="20" height="20"></div></td>
+    <td class="toolbar" width="24"><div align="center"></div></td>
+    <td class="toolbar" width="618">&nbsp;</td>
+  </tr>
+</table>
+
+
+<?php
+
+	$arre=$_SESSION["la_empresa"];
+	$ls_empresa=$arre["codemp"];
+	if (array_key_exists("operacion",$_POST))
+	{
+		$ls_operacion=$_POST["operacion"];
+	}
+	else
+	{
+		$ls_operacion="";
+	}
+?>
+
+<p>&nbsp;</p>
+<div align="center">
+  
+          <form name="form1" method="post" action="">
+<?php
+//////////////////////////////////////////////         SEGURIDAD               /////////////////////////////////////////////
+	$io_fun_srh->uf_print_permisos($ls_permisos,$la_permisos,$ls_logusr,"location.href='sigespwindow_blank.php'");
+	unset($io_fun_srh);
+//////////////////////////////////////////////         SEGURIDAD               /////////////////////////////////////////////
+?>
+<table width="600" height="138" border="0" align="center" cellpadding="0" cellspacing="0" class="formato-blanco">
+  <tr>
+    <td height="136">
+      <p>&nbsp;</p>
+      <table width="550" border="0" align="center" cellpadding="1" cellspacing="0" class="formato-blanco">
+        <tr class="titulo-ventana">
+          <td height="20" colspan="6" class="titulo-ventana">Reporte Listado de Personal</td>
+        </tr>
+       
+                     
+       <tr>
+          <td height="22" colspan="6" class="titulo-celdanew">Intervalo de Personal </td>
+          </tr>
+       <tr>
+          <td width="136" height="22"><div align="right"> Desde </div></td>
+          <td width="140"><div align="left"><input name="txtcodperdes" type="text" id="txtcodperdes"   size="16"   style="text-align:center" readonly >
+		    <a href="javascript:catalogo_personal_desde();"><img src="../../../public/imagenes/buscar.gif" alt="Cat&aacute;logo Personal" name="buscartip" width="15" height="15" border="0" id="buscartip" /></a></td>
+          <td width="183"><div align="left">Hasta 
+            <input name="txtcodperhas" type="text" id="txtcodperhas"   size="16"   style="text-align:center" readonly >
+            <a href="javascript:catalogo_personal_hasta();"><img src="../../../public/imagenes/buscar.gif" alt="Cat&aacute;logo Personal" name="buscartip" width="15" height="15" border="0" id="buscartip"></a>
+          </div></td>
+          <td width="83" colspan="3"><div align="left"></div></td>
+        </tr>
+        <tr>
+          <td height="20" colspan="6" class="titulo-celdanew"><div align="right" class="titulo-celdanew">Ordenado por </div></td>
+          </tr>
+        <tr>
+          <td height="22"><div align="right">Código del Personal</div></td>
+          <td colspan="4"><div align="left">
+            <input name="rdborden" type="radio" class="sin-borde" value="1" checked>
+          </div></td>
+        </tr>
+        <tr>
+          <td height="22"><div align="right">Cédula del Personal</div></td>
+          <td colspan="4"><div align="left">
+            <input name="rdborden" type="radio" class="sin-borde" value="2">
+          </div></td>
+        </tr>
+        <tr>
+          <td height="22"><div align="right">Nombre del Personal</div></td>
+          <td colspan="4"><div align="left">
+            <input name="rdborden" type="radio" class="sin-borde" value="3">
+          </div></td>
+        </tr>
+		<tr>
+          <td height="22"><div align="right">Apellido del Personal</div></td>
+          <td colspan="4"><div align="left">
+            <input name="rdborden" type="radio" class="sin-borde" value="4" >
+          </div></td>
+        </tr>
+		 <tr>
+          <td height="22">&nbsp;</td>
+          <td colspan="4"> <div align="right"></div></td>
+        </tr>
+      </table>
+      <p>&nbsp;</p>
+	  <input name="hiscontrol" type="hidden" id="hidcontrol" value="2"></td>
+  </tr>
+</table>
+</form>      
+
+
+
+</html>
+
+<script language="javascript">
+
+function catalogo_personal_desde()
+{   
+   pagina="../catalogos/sigesp_srh_cat_personal.php?valor_cat=1"+"&tipo=6"; 
+  window.open(pagina,"catalogo","menubar=no,toolbar=no,scrollbars=yes,width=520,height=400,resizable=yes,location=no,dependent=yes");
+}
+
+
+function catalogo_personal_hasta()
+{  
+  pagina="../catalogos/sigesp_srh_cat_personal.php?valor_cat=1"+"&tipo=7"; 
+  window.open(pagina,"catalogo","menubar=no,toolbar=no,scrollbars=yes,width=520,height=400,resizable=yes,location=no,dependent=yes");
+}
+
+
+
+function ue_print()
+{
+	f=document.form1;
+	li_imprimir=f.imprimir.value;
+	if(li_imprimir==1)
+	{			
+    	codperdes=f.txtcodperdes.value;
+		codperhas=f.txtcodperhas.value;
+				if(codperdes<=codperhas)
+				{
+     				if(f.rdborden[0].checked)
+					{
+						orden="1";
+					}
+					if(f.rdborden[1].checked)
+					{
+						orden="2";
+					}
+					if(f.rdborden[2].checked)
+					{
+						orden="3";
+					}
+					if(f.rdborden[3].checked)
+					{
+						orden="4";
+					}
+				   	pagina="../../../reporte/sigesp_srh_rpp_listado_personal.php?codperdes="+codperdes+"&codperhas="+codperhas+"&orden="+orden+"";
+					window.open(pagina,"Reporte","menubar=no,toolbar=no,scrollbars=yes,width=800,height=600,left=0,top=0,location=no,resizable=yes");
+				}
+				else
+				{
+					alert("El rango del personal está erroneo");
+				}
+			
+   	}
+	else
+   	{
+ 		alert("No tiene permiso para realizar esta operación");
+   	}		
+}
+
+
+
+function ue_cerrar()
+{
+	window.location.href="sigespwindow_blank.php";
+}
+
+
+</script> 
+

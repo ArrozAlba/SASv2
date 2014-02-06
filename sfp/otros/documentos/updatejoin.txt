@@ -1,0 +1,44 @@
+update tabla1 set tabla1.campox=tabla2.campox,[....]  from tabla2 where tabla1.coigo1=tabla2.codigo1 and tabla1.coigo2=tabla2.codigo2
+
+update sigesp_sfp_plancuentas set denominacion=sigesp_plan_unico_re.denominacion 
+from sigesp_plan_unico_re where sigesp_plan_unico_re.sig_cuenta=sigesp_sfp_plancuentas.sig_cuenta
+
+
+
+
+
+update sigesp_sfp_plancuentas set sig_cuenta=sig_cuenta||'00' 
+where length(sig_cuenta)=9
+ 
+
+
+
+hacer una aplicacion aparte para el manejo de los permisos
+esta aplicacion debe estar en lenguaje c++, que escriba data
+en el servidor para que, el sigesp, lea ese archivo
+en un xml encriptado, con 
+.sigesp_installer
+
+esta aplicacion debe trabajar con archivos xml
+
+con codigos encriptados.
+
+y con el codigo ofuscado.
+
+
+
+
+crear una clase sigesp_installer_ofuscada
+
+validar_contrato_online
+
+validar_local.
+
+escribir_archivos_seguridad.
+	escribir cinco archivos con codigos de seguridad diferentes y uno con la tabla de los codigos encriptada.
+
+
+colcobrado
+
+
+

@@ -1,0 +1,4 @@
+alter table SPE_PLAN_INGRESOS
+   add constraint FK_SPE_PLAN_REFERENCE_SIGESP_P foreign key (sig_cuenta, ANO_PRESUPUESTO)
+      references SIGESP_PLAN_UNICO_RE (sig_cuenta, ANO_PRESUPUESTO)
+      on delete restrict on update restrict;

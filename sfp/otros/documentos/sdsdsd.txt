@@ -1,0 +1,27 @@
+para el proceso de formulacion:
+
+Cuenta principal(la que se va a formular).
+
+cuando se formule. buscar en la tabla asociacion la cuenta a debitar y mostrarla.
+
+leer la cuanta a debitar.
+
+realizar el asiento contable
+
+leer las cuentas de variacion tomando en cuenta las cuentas contables.
+
+realizar el asiento de variacion patrimonial
+
+
+
+ new Ext.Panel({
+                region:'south',
+                width: 210,
+                height:250,
+                bodyStyle:'background-color:#DFE8F6',
+                layout:'accordion',
+                items: [item1,item2]
+            })
+			, 
+
+

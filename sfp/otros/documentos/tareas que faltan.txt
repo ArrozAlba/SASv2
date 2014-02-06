@@ -1,0 +1,25 @@
+desarrollar el cambio a la pantalla para que muestre todos los asientos que se generen en el detalle.
+terminar los reportes que me faltan(balance general, presupuesto de caja, consolidado de proyectos por fuentes financieras, reporte caif) y probarlos todos en el birt  
+montarle toda la la seguridad.
+
+estar pendiente de los cambios que me envie eduardo pacheco.
+
+hacer lo de multiempresa.
+
+hace el bosquejo del manual.
+
+hacer los reportes consolidadores.
+
+mintar la table sfp_empresa.
+
+campos:
+
+codemp char(4).
+nombre varchar(100).
+consolidadora char(1). si se tilda desabilitar el combo, si no tiene empresa donde consolida, es decir no es consolidada porque es consolidadora ella consolida a otras 
+empcons char(4) empresa donde consolida
+
+
+
+terminar el modelo de datos. y pasarselo a yesenia para que lo agrege al modelo general de sigesp.
+y a Jenifer para que lo monte en el release.

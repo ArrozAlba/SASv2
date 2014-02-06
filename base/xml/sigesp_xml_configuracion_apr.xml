@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<conexiones>
+  <conexion>
+      <servidor>localhost</servidor>
+      <puerto>5432</puerto>
+      <basedatos>db_prueba</basedatos>
+      <nombre>IPSFA 2009</nombre>
+      <login>postgres</login>
+      <password>14160533</password>
+      <gestor>POSTGRES</gestor>
+  </conexion>
+</conexiones>

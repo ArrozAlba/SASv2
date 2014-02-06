@@ -1,0 +1,7 @@
+[FACTURACION]
+DBMS="ODBC"
+CONNECT="dsn=DSN_SIF;database=db_facturacion_sigesp"
+
+[ENLACE]
+DBMS="ODBC"
+CONNECT="dsn=ENLACE;database=db_sigesp_2007;"

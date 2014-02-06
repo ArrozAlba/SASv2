@@ -1,0 +1,51 @@
+ .settings_icon {
+     background-image:url(../img/folder_wrench.png);
+ }
+ .nav_icon {
+     background-image:url(../img/folder_go.png);
+ }
+.client_icon {
+    background-image:url(../img/user_suit.png) !important;
+}
+.invoice_icon {
+    background-image:url(../img/coins.png) !important;
+}
+
+.home_icon {
+    background-image:url(../img/house.png) !important;
+}
+
+.new_icon {
+    background-image:url(../img/add.gif) !important;
+}
+.delete_icon {
+    background-image:url(../img/delete.png) !important;
+}
+.edit_icon {
+    background-image:url(../img/edit.png) !important;
+}
+
+.module_icon {
+	background-image:url(../img/brick.png) !important;
+}
+.help_icon {
+	background-image:url(../img/help.png) !important;
+}
+.themes_icon {
+	background-image:url(../img/palette.png) !important;
+}
+.web_icon {
+	background-image:url(../img/world.png) !important;
+}
+.google_icon {
+	background-image:url(http://www.google.com/favicon.ico) !important;
+}
+.yahoo_icon {
+	background-image:url(http://www.yahoo.es/favicon.ico) !important;
+}
+.limestore_icon {
+	background-image:url(http://www.limestudio.es/favicon.ico) !important;
+}
+.print_icon {
+	background-image:url(../img/printer.png) !important;
+}

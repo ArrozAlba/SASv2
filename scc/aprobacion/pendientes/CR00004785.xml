@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<APROBACION>
+  <RPC_BENEFICIARIO>
+    <dato>
+      <codemp>0001</codemp>
+      <ced_bene>9572374</ced_bene>
+      <codpai>---</codpai>
+      <codest>---</codest>
+      <codmun>---</codmun>
+      <codpar>---</codpar>
+      <codtipcta>s1</codtipcta>
+      <rifben />
+      <nombene>ANTONIO</nombene>
+      <apebene>YEPEZ</apebene>
+      <dirbene>URB.DON CRISPI VEREDA N.3-377               .EL TOCUYO EDO.LARA,  VENEZUELA - Venezuela</dirbene>
+      <telbene />
+      <celbene />
+      <email />
+      <sc_cuenta>643990000020000</sc_cuenta>
+      <codbansig />
+      <codban>s1</codban>
+      <ctaban />
+      <foto />
+      <fecregben>2008-12-29</fecregben>
+      <nacben>V</nacben>
+      <numpasben />
+      <tipconben />
+      <estatus />
+      <concepto />
+    </dato>
+  </RPC_BENEFICIARIO>
+  <SEP_SOLICITUD>
+    <dato>
+      <codtipsol>03</codtipsol>
+      <coduniadm>0000003600</coduniadm>
+      <codestpro1>0000000000000000000079936</codestpro1>
+      <codestpro2>0000000000000000000125068</codestpro2>
+      <codestpro3>0000000000000000000003600</codestpro3>
+      <codestpro4>0000000000000000000000000</codestpro4>
+      <codestpro5>0000000000000000000000000</codestpro5>
+      <estcla>P</estcla>
+      <fecregsol>2008-12-29</fecregsol>
+      <consol>REGISTRO DE COMPROMISO DEL CREDITO No. CR00004785</consol>
+      <monto>48500</monto>
+      <tipo_destino>B</tipo_destino>
+      <ced_bene>9572374</ced_bene>
+      <numsol />
+      <estatus />
+      <concepto />
+    </dato>
+  </SEP_SOLICITUD>
+  <SEP_DT_CONCEPTOS>
+    <dato>
+      <codconsep>023</codconsep>
+      <moncon>48500</moncon>
+      <spg_cuenta>40504010008</spg_cuenta>
+      <estatus />
+      <concepto />
+    </dato>
+  </SEP_DT_CONCEPTOS>
+  <LISTA_CREDITOS />
+</APROBACION>
+
