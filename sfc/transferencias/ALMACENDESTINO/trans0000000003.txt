@@ -1,0 +1,1 @@
+UPDATE siv_articuloalmacen SET existencia= (existencia + '1') WHERE codemp='0001' AND codart='0000V09120320QUI0001' AND codalm='0000000003';

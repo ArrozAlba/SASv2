@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Módulo de Seguridad</title>
+   <link rel="stylesheet" type="text/css" href="../../base/css/sigesp_css_cabecera.css" />
+   <link rel="stylesheet" type="text/css" href="../../base/librerias/js/ext/resources/css/ext-all.css" />
+   <script type="text/javascript" src="../../base/librerias/js/ext/adapter/ext/ext-base.js"></script>
+   <script type="text/javascript" src="../../base/librerias/js/ext/ext-all.js"></script>
+   <script type="text/javascript" src="../../base/librerias/js/ext/adapter/locale/ext-lang-es.js"></script>
+   <script type="text/javascript" src="../../base/librerias/js/general/sigesp_lib_funciones.js"></script>
+   <script type="text/javascript" src="../../base/librerias/js/general/json2.js"></script>
+   <script language="javascript">sistema="SSS";</script>
+   <script type="text/javascript" src="js/sigesp_vis_sss_cabecera.js"></script>
+</head>
+<body  class="bsistema" onLoad="cargarCabecera();" >
+<script language="javascript">
+Xpos=((screen.width-50)-10);
+document.write("<div id='logo' style=' position: relative; top:0px;'>");
+document.write("  <div align='center'><a href='http://www.sigesp.com.ve' target='_blank' style='margin:0px; float:center;'><img src='../../base/imagenes/sigesp_img_encabezado.jpg' width='"+Xpos+"' height='45'  align='baseline'/></a></div>");
+document.write("</div>");
+cargarCabecera();
+//setInterval('cargarCabecera()',10000);
+</script>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr class="bsistema">
+    <td width="60%" rowspan="2" align="left"><div id="sistema"></div></td>
+    <td colspan="2" align="right" class="busuario"><div id="usuario"></div></td>
+  </tr>
+  <tr>
+    <td width="30%" height="25" align="center" class="binactivo"><div id="inactivo"></div></td>
+    <td width="10%" align="center" class="bhora"><div id="hora"></div></td>
+  </tr>
+</table>
+</html>

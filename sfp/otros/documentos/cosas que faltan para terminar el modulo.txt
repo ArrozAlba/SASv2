@@ -1,0 +1,9 @@
+completar el modulo indicadores de gestion.
+
+modulo de creacion de nuevas cuentas integradas.
+
+agregar el modulo de traspaso de datos al modulo de ejecucion.
+
+agregar el porcentaje de tasa de inflacion.
+
+hacer la apertura de las tablas de formulacion de la base de datos de un año a otro

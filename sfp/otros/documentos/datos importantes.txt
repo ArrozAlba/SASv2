@@ -1,0 +1,8 @@
+se debe realizar se crea el plan
+se crea la estructura presupuestaria.
+las fuentes de financiamiento, tienen un monto disponible.
+luego las estructuras presupuestarias(sean proyctos o acciones centralizadas),
+se casa con las estructuras presupuestaria. y se les asigna un general.
+luego se debe hacer la imputacion presupiestaria por partida especifica y sub especifica.
+se le asigna un monto a la estructura y la cuenta
+ 

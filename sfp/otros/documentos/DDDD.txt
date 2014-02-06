@@ -1,0 +1,33 @@
+delete from spe_int_ub3
+delete spe_int_cuenta_dtfuentefin
+delete spe_int_cuentas
+delete spe_int_prob
+delete spe_est_unadmin
+delete spe_relacion_es
+
+
+
+ var DatosNuevo={"raiz":[{"NombreNivel":'',"CodSel":'',"DenSel":''}]};
+
+	var DatosNuevoAd={"raiz":[{"coduac":'',"denuac":'',"codinte":'',"nivel":'nivel'}]};	
+
+gridIntAd
+
+DataStorePlan
+
+DataStorePre
+
+
+
+DatosNuevoUb={"raiz":[{"coduac":'',"denuac":'',"codinte":''}]};
+	
+gridIntUb
+DatosNuevoProb={"raiz":[{"codprob":'',"denominacion":'',"causa":''}]};	
+gridIntProb
+
+DatosNuevoGas={"raiz":[{"spg_cuenta":'',"denominacion":'',"codinte":''}]};	
+
+gridIntGastos
+			
+
+

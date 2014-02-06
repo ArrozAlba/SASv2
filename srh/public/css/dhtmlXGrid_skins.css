@@ -1,0 +1,172 @@
+/*light*/
+div.gridbox_light {
+  border:1px solid  #c2d5dc;
+}
+div.gridbox_light table.hdr{
+	background-image:url(../imgs/skin_light_header.png);
+}
+
+div.gridbox_light table.hdr td {
+	border: 1px solid;
+	border-color : #FDFDFD #93AFBA #93AFBA #FDFDFD;
+	background-color:transparent;
+	font-family:Tahoma;
+	font-size:11px;
+	font-weight:bold;
+	color:#055A78;
+	vertical-align:top;
+	text-align:left;
+}
+div.gridbox_light table.hdr td div{
+	width:auto;
+	padding-left:10px;
+}
+div.gridbox_light table.obj td {
+	border-width: 0px 1px 0px 1px;
+	border-left: 1px solid white;
+	border-right: 1px solid #D6D6D6;
+	font-family:Tahoma;
+	font-size:11px;
+	padding-right:4px;
+	padding-left:4px;
+}
+div.gridbox_light table.row20px tr td {
+	padding-right:4px;
+	padding-left:4px;
+}
+div.gridbox_light .dhx_combo_edit{
+  font-family:Tahoma;
+	font-size:11px;
+}
+div.gridbox_light table.obj tr.rowselected td{
+	background-color:#ededed;
+	color:black;
+	}
+div.gridbox_light table.obj tr.rowselected td.cellselected, div.gridbox table.obj td.cellselected {
+	background-color:#ededed;
+	}
+div.gridbox_light .odd_light{
+	background-color:#E5F2F8;
+}
+
+
+/*modern*/
+div.gridbox_modern {
+  border:1px solid  #D6D6D6;
+}
+
+div.gridbox_modern table.hdr{
+	background-image:url(../imgs/skin_modern_header.png);
+}
+
+div.gridbox_modern table.hdr td {
+	border-right:1px solid #B5B5B5;
+	border-left:1px solid #FDFDFD;
+	border-top:1px solid #FDFDFD;
+	border-bottom:1px solid #B5B5B5;
+
+	background-color:transparent;
+	font-family:Tahoma;
+	font-size:11px;
+	font-weight:bold;
+	color:#055A78;
+	vertical-align:top;
+	text-align:left;
+}
+div.gridbox_modern table.hdr td div{
+	width:auto;
+	padding-left:10px;
+}
+div.gridbox_modern table.obj td {
+	border: 0px solid;
+	font-family:Tahoma;
+	font-size:11px;
+	padding-right:4px;
+	padding-left:4px;
+}
+div.gridbox_modern table.row20px tr td {
+	padding-right:4px;
+	padding-left:4px;
+}
+div.gridbox_modern .dhx_combo_edit{
+  font-family:Tahoma;
+	font-size:11px;
+}
+div.gridbox_modern table.obj tr.rowselected td{
+	background-color:#9ac2e5;
+	color:black;
+	}
+div.gridbox_modern table.obj tr.rowselected td.cellselected, div.gridbox table.obj td.cellselected {
+	background-color:#9ac2e5;
+	}
+div.gridbox_modern .odd_modern{
+	background-color:#EDEDED;
+}
+
+
+
+
+/*clear*/
+div.gridbox_clear div.topMumba{
+     position:absolute;
+	 left:0px;
+	 width:100%;
+	 height:3px;
+	 background-image:url(../imgs/skinC_header.png);
+	 overflow:hidden;
+	 padding:0px;
+	 margin:0px;
+}
+div.gridbox_clear div.bottomMumba{
+     position:absolute;
+	 left:0px;
+	 width:100%;
+	 height:3px;
+	 background-image:url(../imgs/skinD_header.png);
+	 overflow:hidden;
+}
+div.gridbox_clear div.bottomMumba img,div.gridbox_clear div.topMumba img{
+	border:0px;
+	position:absolute;
+	top:0px;
+}
+
+div.gridbox_clear{
+	padding-left: 10px;
+	padding-right: 0px;
+}
+
+div.gridbox_clear table.hdr td {
+	border:0px;
+	background-color:transparent;
+	font-family:Tahoma;
+	font-size:11px;
+	font-weight:bold;
+	color:#055A78;
+	vertical-align:top;
+	text-align:left;
+}
+div.gridbox_clear table.hdr td div{
+	width:auto;
+	padding-left:10px;
+	padding-bottom:2px;
+}
+div.gridbox_clear table.obj td {
+    border-width:  0px 1px 0px 0px ;
+	border-color:#D6D6D6;
+	font-family:Tahoma;
+	font-size:11px;
+	padding-right:4px;
+	padding-left:4px;
+}
+div.gridbox_clear table.row20px tr td {
+	padding-right:4px;
+	padding-left:4px;
+}
+div.gridbox_clear .dhx_combo_edit{
+  font-family:Tahoma;
+	font-size:11px;
+}
+div.gridbox_clear .odd_light{
+	background-color:#E5F2F8;
+}

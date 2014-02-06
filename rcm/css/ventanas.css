@@ -1,0 +1,53 @@
+.contorno-rojo{background-color:#ffffff;border: 3px solid #999999;font-family: Tahoma, Verdana, Arial;font-size: 11px;color: 666666;}
+.formato-blanco {
+	font-family: Tahoma, Verdana, Arial;
+	font-size: 11px;
+	font-weight: normal;
+	color: #666666;
+	background-color: #ffffff;
+	border: 1px solid #BBBBBB;
+	padding-top: 2px;
+	padding-right: 5px;
+	padding-bottom: 2px;
+	padding-left: 5px;
+	text-indent: 5px;
+}
+.formato-catalogo{
+	font-family: Tahoma, Verdana, Arial;
+	font-size:11px;
+	font-weight: normal;
+	color:#666666;
+	background-color: ffffff;
+	border: 1px solid #BBBBBB;
+	padding: 2px;
+}
+.letras-pequeñas{font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 9px;color: #666666;}
+.texto-rojo{color:#FFFFFF;font-family:Tahoma, Verdana, Arial;font-size:11px;font-weight:bold;padding-bottom:2px;padding-left:15px;padding-right:15px;padding-top:2px}
+.titulo-ventana{color:#FFFFFF;font-family:Tahoma, Verdana, Arial;font-size:11px;font-weight:bold;padding-bottom:2px;padding-left:15px;padding-right:15px;padding-top:2px;text-align: center;background-color: #3b77b3;}
+.titulo-catálogo{font-family: Verdana;font-size:14px;font-weight: bold;color: #336699;text-align: center;vertical-align: middle;font-style: normal;}
+.titulo-conect {
+color:#006699;font-family:Tahoma, Verdana, Arial;font-size:11px;font-weight:bold;padding-bottom:2px;padding-left:15px;padding-right:15px;padding-top:2px;text-align: center;background-color: #FFFFFF;
+}
+.titulo-catclaro {
+	font-family: Verdana;
+	font-size:14px;
+	font-weight: bold;
+	color: #000000;
+	text-align: center;
+	vertical-align: middle;
+	font-style: normal;
+	background-color: #DEEBF7;
+}
+.titulo-nuevo {
+color:#FFFFFF;font-family:Tahoma, Verdana, Arial;font-size:11px;font-weight:bold;padding-bottom:2px;padding-left:15px;padding-right:15px;padding-top:2px;text-align: center;background-color: #3982C6;
+}
+.formato-azul {
+
+	font-family: Tahoma, Verdana, Arial;
+	font-size:11px;
+	font-weight: normal;
+	color:#666666;
+	background-color: #dae9f3;
+	border: 1px solid #BBBBBB;
+	padding: 2px;
+}

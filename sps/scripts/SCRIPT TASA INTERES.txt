@@ -1,0 +1,146 @@
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1997', '6', '20.53', '36256');
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1997', '7', '19.43', '36276');
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1997', '8', '19.86', '36301');
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1997', '9', '18.73', '36321');
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1997', '10', '18.34', '36340');
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1997', '11', '18.72', '36360');
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1997', '12', '21.14', '36377');
+
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1998', '12', '39.72', '36624'); 		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1998', '11', '42.71', '36614');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1998', '10', '47.07', '36581');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1998', '9', '63.84', '36567');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1998', '8', '51.28', '36549');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1998', '7', '53.25', '36522');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1998', '6', '38.79', '36503');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1998', '5', '38.18', '36475');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1998', '4', '32.27', '36459');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1998', '3', '30.84', '36440');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1998', '2', '29.46', '36420');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1998', '1', '21.51', '36400');		
+
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1999', '12', '22.69', '36871'); 		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1999', '11', '22.95', '36857');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1999', '10', '21.74', '36837');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1999', '9', '21.12', '36812');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1999', '8', '21.03', '36793');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1999', '7', '23.00', '36770');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1999', '6', '24.84', '36749');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1999', '5', '24.80', '36726');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1999', '4', '27.26', '36703');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1999', '3', '30.55', '36682');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1999', '2', '35.07', '36670');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('1999', '1', '36.73', '36652');		
+
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2000', '12', '17.76', '37121'); 		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2000', '11', '17.70', '37114');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2000', '10', '17.43', '37084');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2000', '9', '18.84', '37064');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2000', '8', '19.28', '37040');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2000', '7', '18.81', '37020');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2000', '6', '21.31', '36996');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2000', '5', '19.04', '36976');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2000', '4', '20.49', '36952');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2000', '3', '19.78', '36939');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2000', '2', '22.10', '36916');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2000', '1', '23.76', '36898');
+
+
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2001', '12', '23.57', '37369'); 		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2001', '11', '21.51', '37347');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2001', '10', '25.59', '37330');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2001', '9', '27.62', '37307');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2001', '8', '19.69', '37287');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2001', '7', '18.54', '37265');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2001', '6', '18.50', '37240');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2001', '5', '16.56', '37221');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2001', '4', '16.05', '37200');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2001', '3', '16.17', '37180');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2001', '2', '16.17', '37160');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2001', '1', '17.34', '37142');
+
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2002', '12', '29.99', '37607'); 		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2002', '11', '30.47', '37589');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2002', '10', '29.44', '38141');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2002', '9', '26.92', '37547');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2002', '8', '26.92', '37527');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2002', '7', '29.90', '37504');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2002', '6', '31.64', '37481');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2002', '5', '36.20', '37463');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2002', '4', '43.59', '37440');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2002', '3', '50.10', '37420');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2002', '2', '39.10', '37405');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2002', '1', '28.91', '37388');
+
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2003', '12', '16.83', '37856'); 		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2003', '11', '17.67', '37835');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2003', '10', '16.87', '37815');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2003', '9', '19.99', '37793');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2003', '8', '18.74', '37771');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2003', '7', '18.49', '37748');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2003', '6', '18.33', '37728');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2003', '5', '20.12', '37709');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2003', '4', '24.52', '37685');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2003', '3', '25.05', '37667');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2003', '2', '29.12', '37647');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2003', '1', '31.63', '37630');
+
+
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2004', '12', '15.25', '38104'); 		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2004', '11', '14.51', '38083');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2004', '10', '15.02', '38061');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2004', '9', '15.20', '38039');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2004', '8', '15.01', '38017');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2004', '7', '14.45', '37998');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2004', '6', '14.92', '37975');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2004', '5', '15.40', '37955');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2004', '4', '15.22', '37935');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2004', '3', '15.20', '37916');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2004', '2', '14.46', '37895');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2004', '1', '15.09', '37876');
+
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2005', '12', '12.79', '38354'); 		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2005', '11', '12.95', '38332');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2005', '10', '13.18', '38309');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2005', '9', '12.71', '38291');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2005', '8', '13.33', '38268');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2005', '7', '13.53', '38247');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2005', '6', '13.47', '38226');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2005', '5', '14.02', '38205');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2005', '4', '13.96', '38183');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2005', '3', '14.44', '38164');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2005', '2', '14.21', '38143');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2005', '1', '14.93', '38124');
+
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2006', '12', '12.64', '38600'); 		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2006', '11', '12.63', '38580');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2006', '10', '12.46', '38560');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2006', '9', '12.32', '38537');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2006', '8', '12.43', '38517');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2006', '7', '12.29', '38495');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2006', '6', '11.94', '38476');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2006', '5', '12.15', '38452');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2006', '4', '12.11', '38429');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2006', '3', '12.31', '38414');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2006', '2', '12.76', '38394');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2006', '1', '12.71', '38376');
+
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2007', '12', '16.44', '38847'); 		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2007', '11', '15.75', '38826');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2007', '10', '14.00', '38806');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2007', '9', '13.79', '38783');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2007', '8', '13.86', '38766');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2007', '7', '13.51', '38743');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2007', '6', '12.53', '38722');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2007', '5', '13.03', '38700');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2007', '4', '13.05', '38680');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2007', '3', '12.53', '38660');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2007', '2', '12.82', '38640');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2007', '1', '12.92', '38622');
+
+	
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2008', '5', '20.85', '38946');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2008', '4', '18.35', '38926');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2008', '3', '18.17', '38905');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2008', '2', '17.56', '38885');		
+INSERT INTO sps_tasa_interes(anotasint, mestasint, valtas, numgac)VALUES('2008', '1', '18.53', '38869');

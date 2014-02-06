@@ -1,0 +1,84 @@
+USE db_sfp_2008;
+select codinte as Ultimo from spe_relacion_es
+where codest1='0000000000000000000000001'
+and codest2='0000000000000000000000001'
+and codest3='0000000000000000000000001'
+and codest4='0000000000000000000000000'
+and codest5='0000000000000000000000001'
+and codestpro1='00000000000000000000PROY1'
+and codestpro2='0000000000000000000000AE2'
+and codestpro3='0000000000000000346346456'
+and codestpro4='0000000000000000000000000'
+and codestpro5='0000000000000000000000000'
+
+
+
+
+	{name: 'codubgeo1'}, 
+				{name: 'codubgeo2'},
+				{name: 'codubgeo3'},
+				{name: 'codubgeo4'},               
+				{name: 'codubgeo5'}, 
+				{name: 'nivel'}, 
+				{name: 'denominacion'}
+
+
+
+
+
+
+cantidadUb
+
+
+
+
+
+{name: 'codinte'}, 
+				{name: 'codprob'},
+				{name: 'descripcion'},
+				{name: 'causa'},
+				{name: 'efecto'}
+
+
+
+
+
+
+
+
+
+
+
+
+				{name: 'spg_cuenta'}, 
+				{name: 'denominacion'},
+				{name: 'codinte'},
+				{name: 'montoglobal'},
+				{name: 'NuevoRegistro'},
+				{name: 'ano_presupuesto'},
+				{name: 'enero'},
+				{name: 'febrero'},
+				{name: 'marzo'},
+				{name: 'abril'},
+				{name: 'mayo'},
+				{name: 'junio'},
+				{name: 'julio'},
+				{name: 'agosto'},
+				{name: 'septiembre'},
+				{name: 'octubre'},
+				{name: 'noviembre'},
+				{name: 'diciembre'},
+				{name: 'fuentes'}
+
+
+
+
+
+
+
+delete from spe_int_ub3
+delete from spe_int_unadmin
+delete from spe_int_prob
+delete from spe_relacion_es
+
+

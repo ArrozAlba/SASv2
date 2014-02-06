@@ -1,0 +1,70 @@
+body{
+	color:#000000;
+	font-family:Tahoma, Verdana, Arial;
+	font-size:11px;
+	margin:0px 5px 0px 0px;
+	background-color: #EBEBEB;
+	top: 0px;
+	right: 5px;
+}
+input,checkbox{
+	border:thin solid #000000;
+	color: #000000;
+}
+input,select,textarea,text{
+	background-color:#FFFFFF;
+	border:1px solid #999999;
+	color:#000000;
+	font-family:Tahoma, Verdana, Arial;
+	font-size:11px;
+}
+.sin-borde{
+	border:none;
+	color:#000000;
+	cursor:text;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.boton{
+	border-right:1px ridge #666666;
+	border-top:1px ridge #FFFFFF;
+	border-left:1px ridge #FFFFFF;
+	border-bottom:1px ridge #666666;
+	font-wejght:bold;
+	cursor:hand;
+	color: #000000;
+	background-color:#CCCCCC;
+	font-family: Tahoma, Verdana, Arial;
+	font-size: 11px;
+	background-image: none;
+}
+.sin-bordeCopy {
+	border:none;
+	color:#000000;
+	cursor:text;
+	background-color: #E2EFFE;
+}
+.sin-borde2 {
+	border:none;
+	color:#3982C6;
+	cursor:text;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+}
+.sin-bordeAzul {
+	border:none;
+	color:#FFFFFF;
+	cursor:text;
+	background-color: #3982C6;
+	font-weight: bold;
+	font-size: 12px;
+}
+.resaltado-rojo {
+	color: #FF0000;
+}
+.nota {
+	color: #999999;
+	font-style: italic;
+	font-weight: bold;
+	text-transform: none;
+}

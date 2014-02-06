@@ -1,0 +1,18 @@
+ejemplo de indicadores de gestion.
+
+Niños atendidos para diciembre del 2009.
+Niños atendidos el año pasado. 2008.
+esa es la variable.
+
+indicador incremento de niños atendidos con respecto al año pasado
+
+(100*(0.05))+100={(120añoactual-100añoanterior)*100}/añoanterior
+
+	case 'Itab5':
+			ObjFuente = new CatFuenteFin();
+			ParamGridTarget = gridIntFuente;
+			ObjFuente.MostrarCatalogo();
+			break;
+	
+
+ 

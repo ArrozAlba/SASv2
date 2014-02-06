@@ -1,0 +1,1 @@
+update sigesp_plan_unico_re set codcaif=sigesp_plan_unico_caif."codigo_caif"  from sigesp_plan_unico_caif where sigesp_plan_unico_re."sig_cuenta"=sigesp_plan_unico_caif."sig_cuenta"

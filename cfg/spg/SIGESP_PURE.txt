@@ -1,0 +1,1390 @@
+300000000  RECURSOS                                                                                              
+301000000  INGRESOS ORDINARIOS                                                                                   
+301010000  Impuestos dominio forestal                                                                            
+301010100  Aprovechamiento o explotación de productos forestales                                                 
+301010101  Impuesto superficial                                                                                  
+301010102  Impuesto de explotación o aprovechamiento                                                             
+301010103  Permiso o autorización para la explotación o aprovechamiento de los productos forestales              
+301010104  Autorización para deforestación                                                                       
+301010105  Autorización para movilizar productos forestales                                                      
+301010106  Participación por la explotación en zonas de reserva forestal                                         
+301010107  Ventajas especiales por recursos forestal                                                             
+301020000  Impuestos dominio minero                                                                              
+301020100  Renta de hidrocarburos                                                                                
+301020101  Impuesto de exploración de hidrocarburos                                                              
+301020102  Impuesto inicial de explotación de hidrocarburos                                                      
+301020103  Impuesto superficial sobre hidrocarburos                                                              
+301020104  Impuesto de explotación de petróleo                                                                   
+301020105  Impuesto de explotación de gas                                                                        
+301020106  Impuesto de transporte de hidrocarburos                                                               
+301020107  Ventajas especiales por hidrocarburos                                                                 
+301020200  Renta minera                                                                                          
+301020201  Impuesto superficial minero                                                                           
+301020202  Impuesto de exploración minero                                                                        
+301020203  Impuesto de explotación del hierro                                                                    
+301020204  Impuesto de explotación de otros minerales                                                            
+301020205  Prórrogas y renovaciones de títulos                                                                   
+301020206  Derechos de adquisición                                                                               
+301020207  Ventajas especiales                                                                                   
+301030000  Impuestos directos                                                                                    
+301030100  Impuesto sobre la renta                                                                               
+301030101  Impuesto a empresas de hidrocarburos                                                                  
+301030102  Impuesto adicional a empresas de hidrocarburos                                                        
+301030103  Reparos administrativos a empresas de hidrocarburos                                                   
+301030104  Impuesto a empresas mineras                                                                           
+301030105  Impuesto adicional a empresas mineras                                                                 
+301030106  Reparos administrativos a empresas mineras                                                            
+301030107  Impuesto sobre la renta a personas jurídicas                                                          
+301030108  Impuesto sobre la renta a personas naturales                                                          
+301030109  Reparos administrativos a personas jurídicas y/o naturales                                            
+301030200  Impuesto sobre sucesiones, donaciones y demás ramos conexos                                           
+301030300  Impuesto a los activos empresariales                                                                  
+301030400  Reparos administrativos a impuesto sobre sucesiones, donaciones y demás ramos conexos                 
+301030500  Reparos administrativos a impuesto a los activos empresariales                                        
+301040000  Impuestos indirectos                                                                                  
+301040100  Régimen de aduanas                                                                                    
+301040101  Impuesto de importaciones ordinarias                                                                  
+301040102  Impuesto de importación de bultos postales                                                            
+301040103  Impuesto de exportación                                                                               
+301040104  Impuesto interno por la importación de alcoholes y bebidas alcohólicas                                
+301040200  Sobre la producción y el consumo                                                                      
+301040201  Impuesto sobre alcoholes de producción nacional                                                       
+301040202  Impuesto sobre bebidas alcohólicas de producción nacional                                             
+301040203  Impuesto sobre cerveza de producción nacional                                                         
+301040204  Impuesto sobre vinos de producción nacional                                                           
+301040205  Impuesto a la producción de fósforos                                                                  
+301040206  Ventajas especiales por fabricación de fósforos                                                       
+301040207  Impuesto sobre telecomunicaciones                                                                     
+301040208  Derechos de registro inmobiliario                                                                     
+301040209  Impuesto sobre el precio de venta al público de las cervezas y vinos naturales de producción naciona  
+301040210  Impuesto sobre el precio de venta al público de las cervezas y vinos naturales importados             
+301040211  Impuesto sobre el precio de venta al público de otras bebidas hasta 50.0º G.L. de producción naciona  
+301040212  Impuesto sobre el precio de venta al público de otras bebidas hasta 50.0º G.L. importadas             
+301040213  Impuesto sobre la venta de cigarrillos, tabacos y picaduras importadas                                
+301040214  Impuesto sobre la venta de cigarrillos, tabacos y picaduras de producción nacional                    
+301040215  Impuesto sobre expedición al público de especies alcohólicas importadas                               
+301040216  Impuesto sobre expedición al público de especies alcohólicas nacionales                               
+301040217  Impuesto a los productos derivados del petróleo.                                                      
+301040218  Impuesto a la gasolina                                                                                
+301040219  Impuesto al consumo suntuario y a las ventas al mayor sobre importaciones de bienes y servicios       
+301040220  Impuesto al consumo suntuario y a las ventas al mayor sobre la producción y distribución de bienes y  
+301040221  Impuesto al consumo suntuario y a las ventas al mayor sobre los hechos imponibles realizados por emp  
+301040223  Impuesto al valor agregado sobre la importación de bienes y servicios                                 
+301040224  Impuesto al valor agregado sobre la producción, distribución y comercialización de bienes y servicio  
+301040225  Impuesto al valor agregado sobre los hechos imponibles realizados por empresas públicas, institutos   
+301040226  Reparos administrativos al impuesto al valor agregado                                                 
+301040300  Inmuebles urbanos                                                                                     
+301040400  Participación en el impuesto a la propiedad territorial rural                                         
+301040500  Patente de industria y comercio                                                                       
+301040600  Patente de vehículos                                                                                  
+301040700  Propaganda comercial                                                                                  
+301040800  Espectáculos públicos                                                                                 
+301040900  Apuestas lícitas                                                                                      
+301041000  Deuda morosa                                                                                          
+301041100  Apuestas lícitas de casinos, salas de juego y máquinas traganíqueles                                  
+301041101  Impuesto a las apuestas lícitas de casinos y salas de bingo                                           
+301041102  Explotación de mesas de juegos de casinos y máquinas traganíqueles                                    
+301049900  Otros impuestos indirectos                                                                            
+301050000  Ingresos por aportes y contribuciones                                                                 
+301050100  Aportes patronales a la seguridad social                                                              
+301050101  Aportes del sector privado                                                                            
+301050102  Aportes del sector público                                                                            
+301050200  Contribuciones personales a la seguridad social                                                       
+301050201  Contribuciones personales del sector privado                                                          
+301050202  Contribuciones personales del sector público                                                          
+301059900  Otras contribuciones                                                                                  
+301100000  Ingresos no tributarios                                                                               
+301100100  Ingresos por tasas                                                                                    
+301100101  Derechos de tránsito terrestre                                                                        
+301100102  Derechos a examen                                                                                     
+301100103  Derechos de expedición, renovación y reválida de licencias                                            
+301100104  Derechos de registro y traspaso                                                                       
+301100105  Derechos de placas identificadoras                                                                    
+301100106  Derechos por revisión anual                                                                           
+301100107  Derechos por remoción o arrastre de vehículos                                                         
+301100108  Derechos por estacionamiento de vehículos                                                             
+301100109  Permiso para uso de rutas extraurbanas                                                                
+301100110  Copias de documentos                                                                                  
+301100111  Tasas pa ra el uso de aeronaves y por licencias personal aeronáutico                                  
+301100112  Tasas aeroportuarias                                                                                  
+301100113  Patente de navegación                                                                                 
+301100114  Expedición de licencias de navegación                                                                 
+301100115  Servicio de telecomunicaciones                                                                        
+301100116  Permisos para estaciones privadas de radiocomunicaciones                                              
+301100117  Derechos de pilotajes                                                                                 
+301100118  Habilitación de pilotaje                                                                              
+301100119  Servicios de remolcadores                                                                             
+301100120  Habilitación de remolcadores                                                                          
+301100121  Habilitación de capitanías de puerto                                                                  
+301100122  Otros servicios de capitanías de puerto                                                               
+301100123  Servicios de faros y boyas                                                                            
+301100124  Servicios de aduana                                                                                   
+301100125  Habilitación de aduanas                                                                               
+301100126  Derechos de almacenaje                                                                                
+301100127  Corretaje de bultos postales                                                                          
+301100128  Servicios de consulta sobre clasificación arancelaria, valoración aduanera y análisis de laboratorio  
+301100129  Bandas de garantía, cápsulas y sellos                                                                 
+301100130  Servicio de peaje                                                                                     
+301100131  Servicio de riego y drenaje                                                                           
+301100132  Estampillas fiscales                                                                                  
+301100133  Papel sellado                                                                                         
+301100134  Derechos de traslado                                                                                  
+301100135  Servicios sanitarios marítimos                                                                        
+301100136  Servicios hospitalarios                                                                               
+301100137  Venta de copias de planos                                                                             
+301100138  Derechos de contraste, verificación y estudios                                                        
+301100139  Patente de pesca de perlas                                                                            
+301100140  Licencia de caza                                                                                      
+301100141  Derechos de cancillería                                                                               
+301100142  Depósitos por el ingreso al país de extranjeros                                                       
+301100143  Registro sanitario                                                                                    
+301100144  Derechos de análisis de sustancias químicas                                                           
+301100145  Derechos consulares                                                                                   
+301100146  Matrícula para importar y exportar sustancias estupefacientes y psicotrópicas                         
+301100147  Permisos municipales                                                                                  
+301100148  Certificaciones y solvencias                                                                          
+301100149  Mensura y deslinde                                                                                    
+301100150  Aseo domiciliario                                                                                     
+301100151  Matadero                                                                                              
+301100152  Mercado                                                                                               
+301100153  Cementerio                                                                                            
+301100154  Terminal de pasajeros                                                                                 
+301100155  Servicio de energía eléctrica                                                                         
+301100156  Servicio de distribución de agua                                                                      
+301100157  Servicio de gas doméstico                                                                             
+301100158  Deuda morosa por tasas                                                                                
+301100199  Otros tipos de tasas                                                                                  
+301110000  Contribuciones especiales                                                                             
+301110100  Sobre la plusvalía inmobiliaria                                                                       
+301110200  Contribuciones por mejoras                                                                            
+301119900  Otras contribuciones especiales                                                                       
+301120000  Diversos                                                                                              
+301120100  Intereses por demora                                                                                  
+301120200  Reparos Fiscales                                                                                      
+301120400  Diversos conceptos                                                                                    
+301120401  Producto de remates                                                                                   
+301120499  Ingresos varios                                                                                       
+301120500  Recargos e intereses moratorios                                                                       
+301120600  Sanciones fiscales                                                                                    
+301120700  Juicios y costas procesales                                                                           
+301120701  Ingresos por el principal en sentencias judiciales                                                    
+301120702  Costas procesales varias                                                                              
+301120703  Responsabilidad fiscal                                                                                
+301120704  Otras disposiciones legales                                                                           
+301120705  Indemnización por incumplimiento de contratos                                                         
+301120706  Juicios y costas procesales por impuesto sobre la renta                                               
+301120800  Multas y recargos                                                                                     
+301130000  Ingresos por ventas de bienes y servicios de la administración pública                                
+301130100  Ventas de bienes o servicios                                                                          
+301130101  Acuñación de monedas y emisión de billetes                                                            
+301130102  Ventas de gacetas municipales y formularios                                                           
+301130103  Ventas de publicaciones oficiales y formularios                                                       
+301130104  Productos de la lotería                                                                               
+301130105  Instalaciones de portivas                                                                             
+301130106  Venta de servicios                                                                                    
+301130107  Otros ingresos                                                                                        
+301130108  Operaciones diversas municipios                                                                       
+301130199  Otros ingresos por ventas de bienes y servicios de la administración pública                          
+301140000  Ingresos de la propiedad                                                                              
+301140100  Intereses por préstamos concedidos                                                                    
+301140101  De préstamos concedidos al sector privado                                                             
+301140102  De préstamos concedidos a agentes económicos del sector externo                                       
+301140103  De préstamos concedidos a entidades federales                                                         
+301140104  De préstamos concedidos a municipios                                                                  
+301140105  De préstamos concedidos a los entes descentralizados                                                  
+301140106  De préstamos concedidos a entidades del sistema de seguridad social                                   
+301140107  De préstamos concedidos a empresas públicas                                                           
+301140108  De préstamos concedidos a la República                                                                
+301140200  Intereses por dinero en depósito                                                                      
+301140300  Intereses por títulos y valores                                                                       
+301140400  Utilidades por inversiones en empresas                                                                
+301140401  Rentas inmobiliarias                                                                                  
+301140402  Rentas por inversiones en empresas donde el Estado es accionista minoritario                          
+301140403  Rentas de derechos de explotación de bienes del Estado por concesiones                                
+301140404  Rentas de derecho de usufructo de bienes del Estado                                                   
+301140405  Otras rentas de bienes del Estado                                                                     
+301140406  Utilidades de explotación de juegos de azar                                                           
+301140407  Utilidades de explotación de juegos de azar por concesionarios                                        
+301140408  Utilidades por ganancias de explotación de empresas públicas (antes de impuesto)                      
+301140409  Utilidades por ganancias de explotación de servicios financieros (antes de impuesto)                  
+301140410  Renta de títulos o valores públicos de la República                                                   
+301140411  Renta de títulos o valores públicos estadales                                                         
+301140412  Rentas de títulos o valores públicos municipales                                                      
+301140413  Rentas de valores de empresas públicas                                                                
+301140414  Rentas de valores o títulos de organismos internacionales                                             
+301140415  Otras rentas o utilidades                                                                             
+301140500  Arrendamiento de tierras y terrenos                                                                   
+301140501  Arrendamiento de ejidos                                                                               
+301140600  Derechos sobre bienes intangibles                                                                     
+301140700  Participaciones comerciales e industriales                                                            
+301140701  Utilidades o excedentes de los entes de la administración descentralizada                             
+301140702  Beneficios en operaciones cambiaras                                                                   
+301140703  Dividendos y utilidades de empresas, comercios e industrias propiedad del municipio                   
+301140704  Proventos de actividades descentralizadas                                                             
+301140705  Utilidades por ventas de activos                                                                      
+301140799  Otras participaciones comerciales e industriales                                                      
+301150000  Ingresos de entidades federales por aportes                                                           
+301150100  Situado constitucional                                                                                
+301150200  Aportes por incremento de ingresos adicionales al Tesoro Nacional                                     
+301150300  Aportes especiales para gastos de funcionamiento                                                      
+301150400  Aportes e speciales para gastos de inversión                                                          
+301150500  Aportes por participación de las entidades federales en el impuesto al valor agregado                 
+301159900  Otros aportes a entidades federales                                                                   
+301160000  Ingresos por aportes a municipios                                                                     
+301160100  Situado municipal                                                                                     
+301160200  Aportes especiales para gastos de funcionamiento                                                      
+301160300  Aportes especiales para gastos de inversión                                                           
+301160400  Aportes por participación de los municipios en el impuesto al valor agregado                          
+301169900  Otros aportes a municipios                                                                            
+302000000  INGRESOS EXTRAORDINARIOS                                                                              
+302010000  Endeudamiento público                                                                                 
+302010100  Emisión de títulos y contratación de préstamos internos                                               
+302010101  Colocación de deuda interna a corto plazo                                                             
+302010102  Colocación de deuda interna a largo plazo                                                             
+302010103  Obtención de préstamos a corto plazo                                                                  
+302010104  Obtención de préstamos a largo plazo                                                                  
+302010200  Emisión de títulos y contratación de préstamos externos                                               
+302010201  Colocación de deuda externa a corto plazo                                                             
+302010202  Colocación de deuda externa a largo plazo                                                             
+302020000  Reservas del Tesoro no comprometidas                                                                  
+302020100  Reservas del Tesoro Nacional no comprometidas                                                         
+302020200  Reservas del Tesoro no comprometidas de Entidades Federales                                           
+302020300  Reservas del Tesoro Municipal no comprometidas                                                        
+302030000  Aportes por transferencias de bienes específicos de las Entidades Federales                           
+302030100  Aportes por transferencias de bienes específicos de las Entidades Federales                           
+302040000  Aportes especiales a los Municipios                                                                   
+302040100  Aportes especiales a los Municipios                                                                   
+302050000  Contribuciones especiales                                                                             
+302050100  Contribuciones especiales                                                                             
+302060000  Ingresos por operaciones diversas                                                                     
+302060100  Liquidación de organismos del sector público                                                          
+302060200  Ventas de bienes                                                                                      
+302060300  Intereses sobre venta de bienes                                                                       
+302060400  Redención de valores negociables adquiridos por el Estado                                             
+302060500  Amortización sobre préstamos concedidos por el Estado                                                 
+302060600  Herencias vacantes y donaciones                                                                       
+302070000  Impuestos a los débitos a cuentas mantenidas en instituciones financieras                             
+302070100  Impuestos a los débitos a cuentas mantenidas en instituciones financieras                             
+302080000  Reintegro de fondos correspondientes a ejercicios anteriores                                          
+302080100  Reintegro de fondos efectuados por particulares                                                       
+302080101  Reintegro de anticipos a contratistas y proveedores                                                   
+302080102  Reintegro por pagos indebidos                                                                         
+302080103  Reintegro proveniente de bonos de exportación                                                         
+302080200  Reintegro de fondos efectuados por cuentadantes                                                       
+302080201  Reintegro proveniente de fondos girados en avance                                                     
+302080202  Reintegro proveniente de fondos girados en anticipo                                                   
+302080203  Reintegro proveniente de fondos girados en divisas                                                    
+302080300  Reintegro de fondos efectuados por organismos públicos provenientes de bonos de exportación           
+302089900  Reintegro de fondos efectuados por organismos públicos, provenientes de otros conceptos               
+302090000  Ingresos por aportes del Fondo de Inversión para la Estabilización Macroeconómica                     
+302090100  Ingresos para el Fondo Único Social provenientes del Fondo de Inversión para la Estabilización Macro  
+302990000  Otros ingresos extraordinarios                                                                        
+302990100  Otros ingresos extraordinarios                                                                        
+303000000  INGRESOS DE OPERACIÓN                                                                                 
+303010000  Venta bruta de bienes                                                                                 
+303010100  Venta de productos principales del sector primario                                                    
+303010200  Venta de produ ctos principales industriales                                                          
+303010300  Ventas de productos principales no industriales                                                       
+303020000  Venta bruta de servicios                                                                              
+303020100  Ventas de servicios principales                                                                       
+303020200  Ventas de otros servicios                                                                             
+303029900  Otras ventas brutas de servicios                                                                      
+303030000  Ingresos financieros de instituciones financieras                                                     
+303030100  Ingresos financieros de instituciones financieras                                                     
+303040000  Ingresos de organismos productores de servicios                                                       
+303040100  Ingresos de organismos productores de servicios                                                       
+303990000  Otros ingresos de operación                                                                           
+303990100  Otros ingresos de operación                                                                           
+304000000  INGRESOS AJENOS A LA OPERACIÓN                                                                        
+304010000  Subsidios para precios                                                                                
+304010100  Subsidios para precios                                                                                
+304020000  Incentivos a la exportación                                                                           
+304020100  Incentivos a la exportación                                                                           
+304030000  Trabajos para el activo fijo                                                                          
+304030100  Trabajos para el activo fijo                                                                          
+304040000  Ingresos por regalías a entes descentralizados públicos                                               
+304040100  Ingresos por regalías a entes descentralizados públicos                                               
+304990000  Otros ingresos ajenos a la operación                                                                  
+304990100  Otros ingresos ajenos a la operación                                                                  
+305000000  TRANSFERENCIAS                                                                                        
+305010000  Transferencias para financiar gastos corrientes                                                       
+305010100  Del sector privado                                                                                    
+305010101  De unidades familiares                                                                                
+305010102  De instituciones privadas sin fines de lucro                                                          
+305010103  De empresas privadas                                                                                  
+305010200  Del sector público                                                                                    
+305010201  De la administración central                                                                          
+305010202  De entes descentralizados                                                                             
+305010203  De empresas públicas no financieras                                                                   
+305010204  De instituciones públicas financieras                                                                 
+305010205  De gobiernos estadales                                                                                
+305010206  De empresas estadales                                                                                 
+305010207  De gobiernos municipales                                                                              
+305010208  De empresas municipales                                                                               
+305010209  De servicios autónomos sin personalidad jurídica                                                      
+305010300  Del sector externo                                                                                    
+305010301  Del sector privado extranjero                                                                         
+305010302  De gobiernos extranjeros                                                                              
+305010303  De organismos internacionales                                                                         
+305020000  Transferencias para financiar gastos de capital                                                       
+305020100  Del sector privado                                                                                    
+305020101  De unidades familiares                                                                                
+305020102  De instituciones privadas sin fines de lucro                                                          
+305020103  De empresas privadas                                                                                  
+305020200  Del sector público                                                                                    
+305020201  De la administración central                                                                          
+305020202  De entes descentralizados                                                                             
+305020203  De empresas públicas no financieras                                                                   
+305020204  De instituciones públicas financieras                                                                 
+305020205  De gobiernos estadales                                                                                
+305020206  De empresas estadales                                                                                 
+305020207  De gobiernos municipales                                                                              
+305020208  De empresas municipales                                                                               
+305020209  Servicios autónomos sin personalidad jurídica                                                         
+305020300  Del sector externo                                                                                    
+305020301  Del sector privado extranjero                                                                         
+305020302  De gobiernos extranjeros                                                                              
+305020303  De organismos internacionales                                                                         
+306000000  INGRESOS POR RECURSOS PROPIOS DE CAPITAL                                                              
+306010000  Ventas de activos fijos                                                                               
+306010100  Venta de tierras y terrenos                                                                           
+306010200  Venta de edificios e instalaciones                                                                    
+306010300  Venta de maquinarias y equipos                                                                        
+306019900  Otras ventas de activos fijos                                                                         
+306020000  Venta de activos bienes intangibles                                                                   
+306020100  Venta de activos bienes intangibles                                                                   
+306030000  Ventas de existencias                                                                                 
+306030100  Ventas de existencias                                                                                 
+306040000  Depreciación y amortización acumulada                                                                 
+306040100  Incremento de la depreciación acumulada                                                               
+306040101  Incremento de la depreciación acumulada de edificios y construcciones                                 
+306040102  Incremento de la depreciación acumulada de instalaciones                                              
+306040103  Incremento de la depreciación acumulada de maquinarias y equipos                                      
+306040104  Incremento de la depreciación acumulada de otros activos fijos en operación                           
+306040199  Incremento de la depreciación acumulada de otros activos fijos                                        
+306040200  Incremento de la amortización acumulada                                                               
+306040201  Incremento de la amortización acumulada de estudios y proyectos                                       
+306040202  Incremento de la amortización acumulada de gastos de organización                                     
+306040203  Incremento de la amortización acumulada de marcas de fábrica y patentes de invención                  
+306040204  Incremento de la amortización acumulada de derechos de autor                                          
+306040205  Incremento de la amortización acumulada de paquetes y programas de computación                        
+306040299  Incremento de la amortización acumulada de otros activos intangibles                                  
+306050000  Venta de títulos y valores                                                                            
+306050100  Venta de títulos y valores de corto plazo                                                             
+306050200  Venta de títulos y valores de largo plazo                                                             
+306060000  Venta de acciones y participaciones de capital                                                        
+306060100  De empresas privadas nacionales                                                                       
+306060200  De instituciones públicas financieras                                                                 
+306060300  De empresas públicas no financieras                                                                   
+306060400  De empresas publicas multinacionales                                                                  
+306060500  De organismos internacionales                                                                         
+306060600  De otras empresas del sector externo                                                                  
+306070000  Recuperación de préstamos                                                                             
+306070100  Recuperación de préstamos de corto plazo                                                              
+306070101  De empresas privadas nacionales                                                                       
+306070102  De instituciones públicas financieras                                                                 
+306070103  De empresas públicas no financieras                                                                   
+306070104  De empresas públicas multinacionales                                                                  
+306070105  De organismos internacionales                                                                         
+306070106  De otras empresas del sector externo                                                                  
+306070200  Recuperación de préstamos de largo plazo                                                              
+306070201  De empresas privadas nacionales                                                                       
+306070202  De instituciones públicas financieras                                                                 
+306070203  De empresas públicas no financieras                                                                   
+306070204  De empresas públicas multinacionales                                                                  
+306070205  De organismos internacionales                                                                         
+306070206  De otras empresas del sector externo                                                                  
+307000000  DISMINUCIÓN DE OTROS ACTIVOS FINANCIEROS                                                              
+307010000  Disminución de activos circulantes                                                                    
+307010100  Disminución de caja                                                                                   
+307010200  Disminución de bancos                                                                                 
+307010300  Disminución de inversiones temporales                                                                 
+307010400  Disminución de deudores                                                                               
+307010500  Disminución de deudores comerciales                                                                   
+307010600  Disminución de efectos a cobrar                                                                       
+307010700  Disminución de otras cuentas y efectos a cobrar                                                       
+307010800  Disminución de otros activos circulantes                                                              
+307010900  Disminución de anticipos a proveedores                                                                
+307011000  Disminución de anticipos a contratistas                                                               
+307011100  Disminución de otros gastos pagados por anticipado                                                    
+307019900  Disminución de otros activos circulantes                                                              
+307020000  Disminución de activos no circulantes                                                                 
+307020100  Disminución de otros activos no circulantes                                                           
+307020200  Disminución de otros gastos pagados por anticipado                                                    
+307020300  Disminución de anticipos a proveedores                                                                
+307020400  Disminución de depósitos en garantía                                                                  
+307020500  Disminución de activos no especificados                                                               
+307020600  Disminución de anticipos a contratistas                                                               
+307030000  Disminución de revaluación de activos                                                                 
+307030100  Disminución de revaluación de terrenos                                                                
+307030200  Disminución de revaluación de edificios y construcciones                                              
+307030300  Disminución de revaluación de instalaciones                                                           
+307030400  Disminución de revaluación de maquinarias y equipos                                                   
+307030401  Disminución de revaluación de repuestos mayores de maquinarias y equipos                              
+307030402  Disminución de revaluación de maquinarias y demás equipos de construcción, campo, industria y taller  
+307030403  Disminución de revaluación de equipos de transporte, tracción y elevación                             
+307030404  Disminución de revaluación de equipos de comunicaciones y de señalamiento                             
+307030405  Disminución de revaluación de equi pos médicos-quirúrgicos, dentales y veterinarios                   
+307030406  Disminución de revaluación de equipos científicos, religiosos, de enseñanza y recreación              
+307030407  Disminución de revaluación de equipos para la seguridad pública                                       
+307030408  Disminución de revaluación de máquinas, muebles y demás equipos de oficina y alojamiento              
+307030499  Disminución de revaluación de otras maquinarias y equipos                                             
+307030600  Disminución de revaluación de obras en proceso de bienes de dominio privado                           
+307030700  Disminución de revaluación de obras en proceso de bienes de dominio público                           
+307030800  Disminución de revaluación de obras civiles                                                           
+307030900  Disminución de revaluación de otros activos fijos de operación                                        
+307039900  Disminución de revaluación de otros activos fijos                                                     
+308000000  INCREMENTO DE PASIVOS                                                                                 
+308010000  Incremento de pasivos circulantes                                                                     
+308010100  Incremento de cuentas a pagar                                                                         
+308010101  Incremento de proveedores                                                                             
+308010102  Incremento de contratistas                                                                            
+308010103  Incremento de sueldos a pagar                                                                         
+308010105  Incremento de retenciones laborales                                                                   
+308010106  Incremento de préstamos por aportes patronales a pagar                                                
+308010200  Incremento de efectos a pagar                                                                         
+308010300  Incremento de préstamos a mediano y largo plazo - porción circulante                                  
+308010900  Incremento de depósitos de terceros a la vista                                                        
+308010901  Incremento de depósitos a la vista de organismos del sector público                                   
+308010902  Incremento de depósitos a la vista de personas naturales y jurídicas del sector privado               
+308011000  Incremento de depósitos de terceros a plazo fijo                                                      
+308011001  Incremento de depósitos a plazo fijo de organismos del sector público                                 
+308011002  Incremento de depósitos a plazo fijo de personas naturales y jurídicas del sector privado             
+308011100  Incremento de emisión monetaria                                                                       
+308011101  Incremento de billetes y monedas en circulación                                                       
+308011102  Incremento de depósitos a la vista de organismos del sector público                                   
+308011103  Incremento de cheques emitidos por el Banco Central de Venezuela                                      
+308019900  Incremento de otros pasivos circulantes                                                               
+308020000  Incremento de otros pasivos                                                                           
+308020100  Incremento de intereses por pagar                                                                     
+308020200  Incremento de otras cuentas y efectos a pagar                                                         
+308020300  Incremento de préstamos a corto plazo                                                                 
+308020400  Incremento de pasivos diferidos                                                                       
+308020500  Incremento de provisiones                                                                             
+308020600  Incremento de previsiones para cuentas incobrables                                                    
+308020700  Incremento de previsiones para pérdidas de inventario                                                 
+308020800  Incremento de depósitos y fianzas a pagar                                                             
+308021200  Incremento de créditos diferidos                                                                      
+308021201  Incremento de fluctuaciones cambiarías                                                                
+308021202  Incremento de Ingresos devengados y cobrados                                                          
+308029900  Incrementos de otros pasivos                                                                          
+308030000  Incremento de pasivos a mediano y largo plazo                                                         
+308030100  Incremento de préstamos internos a mediano y largo plazo                                              
+308030200  Incremento de préstamos externos a mediano y largo plazo                                              
+308030300  Incremento de reservas para prestaciones sociales                                                     
+308030400  Incremento de reservas técnicas                                                                       
+308030500  Incremento de otros pasivos a mediano y largo plazo                                                   
+309000000  INCREMENTO DE PATRIMONIO                                                                              
+309010000  Incremento de capital                                                                                 
+309010100  Incremento de capital social                                                                          
+309010200  Aportes de capital                                                                                    
+309010201  Aportes de capital recibidos del sector público                                                       
+309010202  Aportes de capital de la administración central                                                       
+309010203  Aportes de capital de las entidades federales                                                         
+309010204  Aportes de capital de los municipios                                                                  
+309010205  Aportes de capital seguridad social                                                                   
+309010206  Aportes de capital institutos autónomos                                                               
+309010207  Aportes de capital empresas públicas no financieras                                                   
+309010208  Aportes de capital instituciones públicas financieras bancarias                                       
+309010209  Aportes de capital instituciones públicas financieras no bancarias                                    
+309010210  Aportes de capital de otros organismos públicos                                                       
+309010211  Aportes de capital recibidos del sector externo                                                       
+309010212  Incremento de superávit por donación                                                                  
+309020000  Incremento de reservas de capital                                                                     
+309020100  Incremento de reservas legales y estatutarias                                                         
+309020200  Incremento de reservas facultativas                                                                   
+309020300  Incremento de otras reservas                                                                          
+309020400  Incremento de revaluación de activos                                                                  
+309030000  Incremento de resultados acumulados                                                                   
+309030100  Incremento de resultados acumulados                                                                   
+309030200  Incremento por resultado del ejercicio                                                                
+310000000  DEVOLUCIÓN DE FONDOS CORRESPONDIENTES AL EJERCICIO VIGENTE                                            
+310010000  Devolución de fondos efectuados por particulares                                                      
+310010100  Devolución de anticipos a contratistas y proveedores                                                  
+310010200  Devolución por pagos indebidos                                                                        
+310010300  Devolución proveniente de bonos de exportación                                                        
+310020000  Devolución de fondos efectuados por cuentadantes                                                      
+310020100  Devolución proveniente de fondos girados en avance                                                    
+310020200  Devolución proveniente de fondos girados en anticipo                                                  
+310020300  Devolución proveniente de fondos girados en divisas                                                   
+310030000  Devolución de fondos efectuados por organismos públicos, provenientes de bonos de exportación         
+310030100  Devolución de fondos efectuados por organismos públicos, provenientes de bonos de exportación         
+310990000  Devolución de fondos efectuados por organismos públicos, provenientes de otros conceptos              
+310990100  Devolución de fondos efectuados por organismos públicos, provenientes de otros conceptos              
+400000000  EGRESOS                                                                                               
+401000000  GASTOS DE PERSONAL                                                                                    
+401010000  Sueldos, salarios y otras retribuciones                                                               
+401010100  Sueldos básicos personal fijo a tiempo completo                                                       
+401010200  Sueldos básicos personal fijo a tiempo parcial                                                        
+401010300  Suplencias a empleados                                                                                
+401010400  Sueldos personal en trámite de nombramiento                                                           
+401010500  Remuneraciones al personal en período de disponibilidad                                               
+401010600  Remuneraciones al personal contratado                                                                 
+401010700  Dietas                                                                                                
+401010800  Salarios a obreros en puestos permanentes                                                             
+401010900  Salarios a obreros no permanentes                                                                     
+401011000  Suplencias a obreros                                                                                  
+401011100  Retribuciones por becas-salarios, bolsas de trabajo, pasantías y similares                            
+401019900  Otros sueldos, salarios y retribuciones                                                               
+401020000  Compensaciones previstas en las escalas de sueldos y salarios                                         
+401020100  Compensaciones previstas en las escalas de sueldos al personal fijo a tiempo completo                 
+401020200  Compensaciones previstas en las escalas de sueldos al personal fijo a tiempo parcial                  
+401020300  Compensaciones previstas en las escalas de salarios                                                   
+401030000  Primas a empleados y obreros                                                                          
+401030100  Primas por mérito a empleados                                                                         
+401030200  Primas de transporte a empleados                                                                      
+401030300  Primas por hogar a empleados                                                                          
+401030400  Primas por hijos a empleados                                                                          
+401030500  Primas por alquileres a empleados                                                                     
+401030600  Primas por residencia a empleados                                                                     
+401030700  Primas por categoría de escuelas a empleados                                                          
+401030900  Primas personal servicio exterior                                                                     
+401031100  Primas por mérito a obreros                                                                           
+401031200  Primas por hogar a obreros                                                                            
+401031300  Primas por hijos de obreros                                                                           
+401031400  Primas por residencia a obreros                                                                       
+401039800  Otras primas a empleados                                                                              
+401039900  Otras primas a obreros                                                                                
+401040000  Complementos de sueldos y salarios                                                                    
+401040100  Complemento por horas extraordinarias o por sobre tiempo a empleados                                  
+401040200  Complemento por trabajo nocturno a empleados                                                          
+401040300  Complemento por gastos de alimentación a empleados                                                    
+401040400  Complemento por gastos de representación a empleados                                                  
+401040500  Bono vacacional a empleados                                                                           
+401040600  Bonificación a empleados                                                                              
+401040700  Bono compensatorio de transporte                                                                      
+401040800  Bono compensatorio de alimentación a empleados                                                        
+401040900  Complemento por comisión de servicios a empleados                                                     
+401041000  Complemento por horas extraordinarias a obreros                                                       
+401041100  Complemento por trabajo o jornada nocturna a obreros                                                  
+401041200  Complemento por gastos de alimentación a obreros                                                      
+401041300  Complemento por gastos de transporte a obreros                                                        
+401041400  Bono vacacional a obreros                                                                             
+401041500  Bono compensatorio de transporte a obreros                                                            
+401041600  Bono compensatorio de alimentación a obreros                                                          
+401041700  Bono a la alimentación y transporte a empleados                                                       
+401041800  Bono a la alimentación y transporte a obreros                                                         
+401049800  Otros complementos a empleados                                                                        
+401049900  Otros complementos a obreros                                                                          
+401050000  Aguinaldos, utilidades y bonificación legal a empleados y obreros                                     
+401050100  Aguinaldos a empleados                                                                                
+401050200  Utilidades legales y convencionales a empleados                                                       
+401050300  Aguinaldos a obreros                                                                                  
+401050400  Utilidades legales y convencionales a obreros                                                         
+401060000  Aportes patronales por empleados y obreros                                                            
+401060100  Aporte patronal al Instituto Venezolano de los Seguros Sociales (IVSS), por empleados                 
+401060200  Aporte patronal al Instituto de Previsión y Asistencia Social para el personal del Ministerio de Edu  
+401060300  Aporte patronal al Fondo de Jubilaciones por empleados                                                
+401060400  Aporte patronal al Fondo de Seguro de Paro Forzoso por empleados                                      
+401060500  Aporte patronal al Fondo de Ahorro Habitacional por empleados                                         
+401060600  Aporte patronal al Instituto Venezolano de los Seguros Sociales (IVSS) por obreros                    
+401060700  Aporte patronal al Fondo de Jubilaciones por obreros                                                  
+401060800  Aporte patronal al Fondo de Seguro de Paro Forzoso por obreros                                        
+401060900  Aporte patronal al Fondo de Ahorro Habitacional por obreros                                           
+401061000  Aporte patronal a los organismos de seguridad social por los trabajadores locales empleados en las r  
+401069800  Otros aporte legales por empleados                                                                    
+401069900  Otros aportes legales por obreros                                                                     
+401070000  Asistencia socio-económica a empleados y obreros                                                      
+401070100  Capacitación y adiestramiento a empleados                                                             
+401070200  Becas a empleados                                                                                     
+401070300  Ayudas por matrimonio a empleados                                                                     
+401070400  Ayudas por nacimiento de hijos a empleados                                                            
+401070500  Ayudas por defunción a empleados                                                                      
+401070600  Ayudas para medicinas, gastos médicos, odontológicos y de hospitalización a empleados                 
+401070700  Aporte patronal a cajas de ahorro por empleados                                                       
+401070800  Aporte patronal al Seguro de Vida, Accidentes Personales, Hospitalización, Cirugía, Maternidad (HCM)  
+401070900  Ayudas para adquisición de uniformes y útiles escolares a empleados                                   
+401071000  Dotación de uniformes a empleados                                                                     
+401071100  Capacitación y adiestramiento a obreros                                                               
+401071200  Becas a obreros                                                                                       
+401071300  Ayudas por matrimonio de obreros                                                                      
+401071400  Ayudas por nacimiento de hijos de obreros                                                             
+401071500  Ayudas por defunción a obreros                                                                        
+401071600  Ayudas para medicinas, gastos médicos, odontológicos y de hospitalización a obreros                   
+401071700  Aporte patronal a cajas de ahorro por obreros                                                         
+401071800  Aporte patronal al Seguro de Vida, Accidentes Personales, Hospitalización, Cirugía, Maternidad (HCM)  
+401071900  Ayuda para adquisición de uniformes y útiles escolares a obreros                                      
+401072000  Dotación de uniformes a obreros                                                                       
+401072100  Aporte patronal para gastos de guarderías y preescolar para hijo de empleados                         
+401072200  Aporte patronal para gastos de guarderías y preescolar para hijos de obreros                          
+401079800  Otras subvenciones a empleados                                                                        
+401079900  Otras subvenciones a obreros                                                                          
+401080000  Prestaciones sociales y otras indemnizaciones a empleados y obreros                                   
+401080100  Prestaciones sociales y otras indemnizaciones a empleados                                             
+401080200  Prestaciones sociales y otras indemnizaciones a obreros                                               
+401080300  Prestaciones sociales y otras indemnizaciones al personal contratado                                  
+401090000  Capacitación y adiestramiento realizado por personal del organismo                                    
+401090100  Capacitación y adiestramiento realizado por personal del organismo                                    
+401980000  Otros gastos de personal empleados                                                                    
+401980100  Otros gastos de personal empleados                                                                    
+401990000  Otros gastos de personal obreros                                                                      
+401990100  Otros gastos de personal obreros                                                                      
+402000000  MATERIALES Y SUMINISTROS                                                                              
+402010000  Productos alimenticios y agropecuarios                                                                
+402010100  Alimentos y bebidas para personas                                                                     
+402010200  Alimentos para animales                                                                               
+402010300  Productos agrícolas y pecuarios                                                                       
+402010400  Productos de la caza y pesca                                                                          
+402019900  Otros productos alimenticios y agropecuarios                                                          
+402020000  Productos de minas y canteras                                                                         
+402020100  Carbón mineral                                                                                        
+402020200  Petróleo crudo y gas natural                                                                          
+402020300  Mineral de hierro                                                                                     
+402020400  Mineral no ferroso                                                                                    
+402020500  Piedra, arcilla, arena y tierra                                                                       
+402020600  Mineral para la fabricación de productos químicos                                                     
+402020700  Sal industrial                                                                                        
+402029900  Otros productos de minas y canteras                                                                   
+402030000  Textiles y vestuarios                                                                                 
+402030100  Textiles                                                                                              
+402030200  Prendas de vestir                                                                                     
+402030300  Calzados                                                                                              
+402039900  Otros productos textiles y vestuarios                                                                 
+402040000  Productos de cuero y caucho                                                                           
+402040100  Cueros y pieles                                                                                       
+402040200  Productos de cuero y sucedáneos del cuero                                                             
+402040300  Cauchos y tripas para vehículos                                                                       
+402049900  Otros productos de cuero y caucho                                                                     
+402050000  Productos de papel, cartón e impresos                                                                 
+402050100  Pulpa de madera, papel y cartón                                                                       
+402050200  Envases y cajas de papel y cartón                                                                     
+402050300  Productos de papel y cartón para oficina                                                              
+402050400  Libros, revistas y periódicos                                                                         
+402050500  Material de enseñanza                                                                                 
+402050600  Otros libros                                                                                          
+402050700  Productos de papel y cartón para computación                                                          
+402050800  Productos de papel y cartón para la imprenta y reproducción                                           
+402059900  Otros productos de pulpa, papel y cartón                                                              
+402060000  Productos químicos y derivados                                                                        
+402060100  Sustancias químicas e industriales                                                                    
+402060200  Abonos, plaguicidas y otros                                                                           
+402060300  Tintas, pinturas y colorantes                                                                         
+402060400  Productos farmacéuticos y medicamentos                                                                
+402060500  Productos de tocador                                                                                  
+402060600  Combustibles y lubricantes                                                                            
+402060700  Productos diversos derivados del petróleo y del carbón                                                
+402060800  Productos plásticos                                                                                   
+402060900  Mezclas explosivas                                                                                    
+402069900  Otros productos de la industria química y conexos                                                     
+402070000  Productos minerales no metálicos                                                                      
+402070100  Productos de barro, loza y porcelana                                                                  
+402070200  Vidrios y productos de vidrio                                                                         
+402070300  Productos de arcilla para construcción                                                                
+402070400  Cemento, cal y yeso                                                                                   
+402079900  Otros productos minerales no metálicos                                                                
+402080000  Productos metálicos                                                                                   
+402080100  Productos primarios de hierro y acero                                                                 
+402080200  Productos de metales no ferrosos                                                                      
+402080300  Herramientas menores, cuchillería y artículos generales de ferretería                                 
+402080400  Productos metálicos estructurales                                                                     
+402080500  Material de guerra                                                                                    
+402080600  Material de seguridad pública                                                                         
+402080700  Material de señalamiento                                                                              
+402080800  Material de educación                                                                                 
+402080900  Repuestos y accesorios para equipos de transporte                                                     
+402081000  Repuestos y accesorios para otros equipos                                                             
+402089900  Otros productos metálicos                                                                             
+402090000  Productos de madera                                                                                   
+402090100  Productos primarios de madera                                                                         
+402090200  Muebles y accesorios de madera para edificaciones                                                     
+402099900  Otros productos de madera                                                                             
+402100000  Productos varios y útiles diversos                                                                    
+402100100  Artículos de deporte y recreación                                                                     
+402100200  Juguetes                                                                                              
+402100300  Materiales y útiles de limpieza y aseo                                                                
+402100400  Utensilios de cocina y comedor                                                                        
+402100500  Útiles menores médicos-quirúrgicos de laboratorio, dentales y de veterinaria                          
+402100600  Útiles de escritorio, oficina y materiales de instrucción                                             
+402100700  Condecoraciones, ofrendas y similares                                                                 
+402100800  Productos de seguridad en el trabajo                                                                  
+402100900  Materiales para equipos de computación                                                                
+402101000  Especies timbradas y valores                                                                          
+402101100  Útiles religiosos                                                                                     
+402101200  Materiales eléctricos                                                                                 
+402101300  Materiales para instalaciones sanitarias                                                              
+402101400  Materiales fotográficos                                                                               
+402109900  Otros productos y útiles diversos                                                                     
+402990000  Otros materiales y suministros                                                                        
+402990100  Otros materiales y suministros                                                                        
+403000000  SERVICIOS NO PERSONALES                                                                               
+403010000  Alquileres de inmuebles                                                                               
+403010100  Alquileres de edificios y locales                                                                     
+403010200  Alquileres de locales para eventos especiales                                                         
+403010300  Arrendamiento de tierras y terrenos                                                                   
+403019900  Alquileres de Otros Inmuebles                                                                         
+403020000  Alquileres de equipos                                                                                 
+403020100  Alquileres de equipos de construcción, campo, industria y taller                                      
+403020200  Alquileres de equipos de transporte, tracción y elevación                                             
+403020300  Alquileres de equipos de telecomunicaciones y señalamiento                                            
+403020400  Alquileres de equipos médico-quirúrgicos, dentales y de veterinaria                                   
+403020500  Alquileres de equipos científicos, de enseñanza y recreación                                          
+403020600  Alquileres de equipos de oficina y alojamiento                                                        
+403020700  Alquileres de equipos de computación                                                                  
+403020800  Alquileres de paquetes y programas de computación                                                     
+403029900  Alquileres de otras maquinarias y equipos                                                             
+403030000  Servicios básicos                                                                                     
+403030100  Electricidad                                                                                          
+403030200  Gas                                                                                                   
+403030300  Agua                                                                                                  
+403030400  Teléfonos                                                                                             
+403030500  Servicio de comunicaciones                                                                            
+403030600  Servicio de aseo urbano y domiciliario                                                                
+403039900  Otros servicios básicos                                                                               
+403040000  Servicios de transporte y almacenaje                                                                  
+403040100  Fletes y embalajes                                                                                    
+403040200  Almacenajes                                                                                           
+403040300  Estacionamiento                                                                                       
+403040400  Peaje                                                                                                 
+403040500  Servicios de protección en traslado de fondos y de mensajería                                         
+403049900  Otros servicios de transporte y almacenaje                                                            
+403050000  Servicios de información, impresión y relaciones públicas                                             
+403050100  Publicidad y propaganda                                                                               
+403050200  Imprenta y reproducción                                                                               
+403050300  Relaciones sociales                                                                                   
+403050400  Avisos                                                                                                
+403059900  Otros servicios de información, impresión y relaciones públicas                                       
+403060000  Primas y otros gastos de seguros y comisiones                                                         
+403060100  Primas y gastos de seguros                                                                            
+403060200  Comisiones y gastos bancarios                                                                         
+403069900  Otros servicios bancarios                                                                             
+403070000  Viáticos y pasajes                                                                                    
+403070100  Viáticos y pasajes dentro del país                                                                    
+403070200  Viáticos y pasajes fuera del país                                                                     
+403070300  Asignación por kilómetros recorridos                                                                  
+403080000  Servicios profesionales y técnicos                                                                    
+403080100  Servicios jurídicos                                                                                   
+403080200  Servicios de contabilidad y auditoría                                                                 
+403080300  Servicios de procesamiento de datos                                                                   
+403080400  Servicios de ingeniería y arquitectónicos                                                             
+403080500  Servicios médicos, odontológicos y otros servicios de sanidad                                         
+403080600  Servicios de veterinaria                                                                              
+403080700  Servicios de capacitación y adiestramiento                                                            
+403080800  Servicios presupuestarios                                                                             
+403080900  Servicios de lavandería y tintorería                                                                  
+403081000  Servicios de vigilancia                                                                               
+403089900  Otros servicios profesionales y técnicos                                                              
+403090000  Conservación y reparaciones menores de maquinarias y equipos                                          
+403090100  Conservación y reparaciones menores de maquinarias y demás equipos de construcción, campo, industria  
+403090200  Conservación y reparaciones menores de equipos de transporte, tracción y elevación                    
+403090300  Conservación y reparaciones menores de equipos de telecomunicaciones y señalamiento                   
+403090400  Conservación y reparaciones menores de equipos médico quirúrgicos, dentales y de veterinaria          
+403090500  Conservación y reparaciones menores de equipos científicos, de enseñanza y recreación                 
+403090600  Conservación y reparaciones menores de equipos para la seguridad pública                              
+403090700  Conservación y reparaciones menores de máquinas, muebles y demás equipos de oficina y alojamiento     
+403090800  Conservación y reparaciones menores de equipos de computación                                         
+403090900  Conservación y reparaciones menores de otras maquinarias y equipos                                    
+403099900  Otros gastos de conservación y reparaciones menores de maquinarias y equipos                          
+403100000  Conservación y reparaciones menores de inmuebles                                                      
+403100100  Conservación y reparaciones menores de inmuebles del dominio privado                                  
+403100300  Conservación y reparaciones menores de inmuebles del dominio público                                  
+403100400  Servicios de condominio                                                                               
+403109900  Otras conservaciones y reparaciones menores de inmuebles                                              
+403110000  Construcciones temporales                                                                             
+403110100  Construcciones temporales                                                                             
+403120000  Servicios fiscales                                                                                    
+403120100  Derechos de importación y servicios aduaneros                                                         
+403120200  Tasas y otros derechos obligatorios                                                                   
+403120300  Asignación a agentes de espe cies fiscales                                                            
+403129900  Otros servicios fiscales                                                                              
+403130000  Servicios de construcción de edificaciones para la venta                                              
+403130100  Servicios de construcción de edificaciones para la venta                                              
+403140000  Servicios de acuñación de moneda                                                                      
+403140100  Servicios de acuñación de moneda                                                                      
+403150000  Servicios de diversión, esparcimiento y culturales                                                    
+403150100  Servicios de diversión, esparcimiento y culturales                                                    
+403160000  Servicios de gestión administrativa prestados por organismos de asistencia técnica                    
+403160100  Servicios de gestión administrativa prestados por organismos de asistencia técnica                    
+403990000  Otros servicios no personales                                                                         
+403990100  Otros servicios no personales                                                                         
+404000000  ACTIVOS REALES                                                                                        
+404010000  Repuestos y reparaciones mayores                                                                      
+404010100  Repuestos mayores                                                                                     
+404010101  Repuestos mayores para equipos de transporte, tracción y elevación                                    
+404010102  Repuestos mayores para equipos de comunicaciones y de señalamiento                                    
+404010103  Repuestos mayores para equipos médico-quirúrgicos, dentales y de veterinaria                          
+404010104  Repuestos mayores para equipos científicos, de enseñanza y recreación                                 
+404010106  Repuestos mayores para equipos de seguridad pública                                                   
+404010107  Repuestos mayores para máquinas, muebles y demás equipos de oficina y alojamiento                     
+404010108  Repuestos mayores para equipos de computación                                                         
+404010109  Repuestos mayores para maquinarias y equipos de construcción, campo, industria y taller               
+404010199  Repuestos mayores de otras maquinarias y equipos                                                      
+404010200  Reparaciones mayores de maquinarias y equipos                                                         
+404010201  Reparaciones mayores para maquinarias y equipos de construcción, campo, industria y taller            
+404010202  Reparaciones mayores para equipos de transporte, tracción y elevación                                 
+404010203  Reparaciones mayores para equipos de comunicaciones y de señalamiento                                 
+404010204  Reparaciones mayores para equipos médico-quirúrgicos, dentales y de veterinaria                       
+404010205  Reparaciones mayores para equipos científicos, de enseñanza y recreación                              
+404010207  Reparaciones mayores para equipos de seguridad pública                                                
+404010208  Reparaciones mayores para máquinas, muebles y demás equipos de oficina y alojamiento                  
+404010209  Reparaciones mayores para equipos de computación.                                                     
+404010299  Reparaciones mayores de otras maquinarias y equipos                                                   
+404020000  Conservaciones, ampliaciones y mejoras                                                                
+404020100  Conservaciones, ampliaciones y mejoras de obras en bienes del dominio público                         
+404020200  Conservaciones, ampliaciones y mejoras de obras en bienes del dominio privado                         
+404029900  Otras conservaciones, ampliaciones y mejoras.                                                         
+404030000  Maquinarias y demás equipos de construcción, campo, industria y taller                                
+404030100  Maquinarias y equipos de construcción y mantenimiento                                                 
+404030200  Maquinarias y equipos para mantenimiento de automotores                                               
+404030300  Maquinarias y equipos agrícolas y pecuarios                                                           
+404030400  Maquinarias y equipos de artes gráficas y reproducción                                                
+404030500  Maquinarias y equipos industriales y de taller                                                        
+404030600  Maquinarias y equipos de energía                                                                      
+404030700  Maquinarias y equipos de riego y acueductos                                                           
+404030800  Equipos de almacén                                                                                    
+404039900  Otras maquinarias y demás equipos de construcción, campo, industria y taller                          
+404040000  Equipos de transporte, tracción y elevación                                                           
+404040100  Vehículos automotores terrestres                                                                      
+404040200  Equipos ferroviarios y de cables aéreos                                                               
+404040300  Equipos marítimos de transporte                                                                       
+404040400  Equipos aéreos de transporte                                                                          
+404040500  Vehículos de tracción no motorizados                                                                  
+404040600  Equipos auxiliares de transporte                                                                      
+404049900  Otros equipos de transporte, tracción y elevación                                                     
+404050000  Equipos de comunicaciones y de señalamiento                                                           
+404050100  Equipos de telecomunicaciones                                                                         
+404050200  Equipos de señalamiento                                                                               
+404050300  Equipos de control de tráfico aéreo                                                                   
+404050400  Equipos de correo                                                                                     
+404059900  Otros equipos de comunicaciones y de señalamiento                                                     
+404060000  Equipos médico-quirúrgicos, dentales y de veterinaria                                                 
+404060100  Equipos médico-quirúrgicos, dentales y de veterinaria                                                 
+404069900  Otros equipos médico-quirúrgicos, dentales y de veterinaria                                           
+404070000  Equipos científicos, religiosos, de enseñanza y recreación                                            
+404070100  Equipos científicos y de laboratorio                                                                  
+404070200  Equipos de enseñanza, deporte y recreación                                                            
+404070300  Obras de arte                                                                                         
+404070400  Libros y revistas                                                                                     
+404070500  Equipos religiosos                                                                                    
+404070600  Instrumentos musicales                                                                                
+404079900  Otros equipos científicos, religiosos, de enseñanza y recreación                                      
+404080000  Equipos para la seguridad pública                                                                     
+404080100  Equipos y armamentos de seguridad y orden público                                                     
+404089900  Otros equipos para la seguridad                                                                       
+404090000  Máquinas, muebles y demás equipos de oficina y alojamiento                                            
+404090100  Mobiliario y equipos de oficina                                                                       
+404090200  Equipos de procesamiento de datos                                                                     
+404090400  Mobiliario y equipos de alojamiento                                                                   
+404099900  Otras máquinas, muebles y demás equipos de oficina y alojamiento                                      
+404100000  Semovientes                                                                                           
+404100100  Semovientes                                                                                           
+404110000  Inmuebles y equipos existentes                                                                        
+404110100  Adquisición de tierras y terrenos                                                                     
+404110200  Adquisición de inmuebles                                                                              
+404110300  Expropiación de tierras y terrenos                                                                    
+404110400  Expropiación de inmuebles                                                                             
+404110500  Adquisición de equi pos existentes                                                                    
+404119900  Otros inmuebles y equipos existentes                                                                  
+404120000  Activos intangibles                                                                                   
+404120100  Marcas y patentes                                                                                     
+404120200  Derechos de autor                                                                                     
+404120300  Gastos de organización                                                                                
+404120400  Paquetes y programas de computación                                                                   
+404129900  Otros activos intangibles                                                                             
+404130000  Estudios y proyectos para inversión en activos fijos                                                  
+404130100  Proyectos y estudios aplicables a bienes del dominio público                                          
+404130200  Proyectos y estudios aplicables a bienes del dominio privado                                          
+404139900  Otros estudios y proyectos para inversión en activos reales                                           
+404140000  Contratación de inspección de obras                                                                   
+404140100  Contratación de inspección de obras de bienes del dominio público                                     
+404140200  Contratación de inspección de obras de bienes del dominio privado                                     
+404149900  Otras contrataciones de inspección de obras                                                           
+404150000  Construcciones del dominio privado                                                                    
+404150100  Construcciones médico-asistenciales                                                                   
+404150200  Edificaciones militares y de seguridad                                                                
+404150300  Edificaciones educativas                                                                              
+404150400  Edificaciones culturales                                                                              
+404150500  Edificaciones para vivienda del activo fijo                                                           
+404150700  Edificaciones industriales                                                                            
+404159900  Otras construcciones del dominio privado                                                              
+404160000  Construcciones del dominio público                                                                    
+404160100  Construcción de vialidad                                                                              
+404160200  Construcción de plazas, parques y similares                                                           
+404160300  Construcciones de acueductos                                                                          
+404169900  Otras construcciones del dominio público                                                              
+404990000  Otros activos reales                                                                                  
+404990100  Otros activos reales                                                                                  
+405000000  ACTIVOS FINANCIEROS                                                                                   
+405010000  Aportes directos para participaciones de capital                                                      
+405010100  Aportes de capital a empresas privadas nacionales                                                     
+405010200  Aportes de capital a empresas públicas nacionales no financieras                                      
+405010300  Aportes de capital a instituciones públicas financieras bancarias                                     
+405010400  Aportes de capital a instituciones públicas financieras no bancarias                                  
+405010500  Aportes de capital a organismos del sector público para el pago de su deuda                           
+405010600  Aportes de capital a organismos internacionales                                                       
+405019900  Otras acciones y aportes de capital a entes del sector externo                                        
+405020000  Adquisición de títulos y valores                                                                      
+405020100  Adquisición de títulos y valores públicos que no otorgan propiedad a corto plazo                      
+405020200  Adquisición de títulos y valores privados que no otorgan propiedad a corto plazo                      
+405020300  Adquisición de títulos y valores externos a corto plazo                                               
+405020400  Adquisición de títulos y valores públicos que no otorgan propiedad a mediano y largo plazo            
+405020500  Adquisición de títulos y valores privados que no otorgan propiedad a mediano y largo plazo            
+405020600  Adquisición de títulos y valores externos que no otorgan propiedad a mediano y largo plazo            
+405029900  Adquisición de otros títulos y valores que no otorgan propiedad a mediano y largo plazo               
+405030000  Concesión de préstamos a corto plazo                                                                  
+405030100  Concesión de préstamos a la administración central a corto plazo                                      
+405030200  Concesión de préstamos a instituciones de seguridad social a corto plazo                              
+405030300  Concesión de préstamos a los entes descentralizados sin fines empresariales a corto plazo             
+405030400  Concesión de préstamos a las empresas públicas no financieras a corto plazo                           
+405030500  Concesión de préstamos a empresas petroleras a corto plazo                                            
+405030600  Concesión de préstamos a instituciones financieras no bancarias a corto plazo                         
+405030700  Concesión de préstamos a instituciones financieras bancarias a corto plazo                            
+405030800  Concesión de préstamos al sector privado a corto plazo                                                
+405030900  Concesión de préstamos al exterior a corto plazo                                                      
+405031000  Concesión de préstamos a las entidades federales a corto plazo                                        
+405031100  Concesión de préstamos a los municipios a corto plazo                                                 
+405039900  Otras concesiones de préstamos a corto plazo                                                          
+405040000  Concesión de préstamos a mediano y largo plazo                                                        
+405040100  Concesión de préstamos a la administración central a mediano y largo plazo                            
+405040200  Concesión de préstamos a instituciones de seguridad social a mediano y largo plazo                    
+405040300  Concesión de préstamos a entes descentralizados sin fines empresariales a mediano y largo plazo       
+405040400  Concesión de préstamos a las empresas públicas no financieras en el mediano y largo plazo             
+405040500  Concesión de préstamos a empresas petroleras a mediano y largo plazo                                  
+405040600  Concesión de préstamos a instituciones financieras no bancarias a mediano y largo plazo               
+405040700  Concesión de préstamos a instituciones financieras bancarias a mediano y largo plazo                  
+405040800  Concesión de préstamos al sector privado a mediano y largo plazo                                      
+405040900  Concesión de préstamos al exterior a mediano y largo plazo                                            
+405041000  Concesión de préstamos a las entidades federales a mediano y largo plazo                              
+405041100  Concesión de préstamos a los municipios a mediano y largo plazo                                       
+405049900  Otras concesiones de préstamos a mediano y largo plazo                                                
+405050000  Incremento de disponibilidades                                                                        
+405050100  Incremento de caja y bancos                                                                           
+405050101  Incremento de caja                                                                                    
+405050102  Incremento en bancos públicos                                                                         
+405050103  Incremento en bancos privados                                                                         
+405050104  Incremento en bancos del exterior                                                                     
+405050200  Incremento de inversiones temporales                                                                  
+405060000  Incremento de cuentas a cobrar a corto plazo                                                          
+405060100  Incremento de deudores comerciales                                                                    
+405060200  Incremento de otros deudores                                                                          
+405060300  Incremento de otras cuentas a cobrar                                                                  
+405070000  Incremento de documentos a cobrar a corto plazo                                                       
+405070100  Incremento de documentos comerciales a cobrar a corto plazo                                           
+405070200  Incremento de otros documentos a cobrar a corto plazo                                                 
+405080000  Incremento de documentos a cobrar a mediano y largo plazo                                             
+405080100  Incremento de documentos comerciales a cobrar a mediano y largo plazo                                 
+405080200  Incremento de otros documentos a cobrar a mediano y largo plazo                                       
+405090000  Incremento de anticipos financieros y activos diferidos                                               
+405090100  Incremento de anticipos a contratistas                                                                
+405090200  Incremento de gastos pagados por anticipado                                                           
+405090300  Incremento de depósitos en garantía                                                                   
+405090400  Incremento de anticipo a proveedores                                                                  
+405099900  Incremento de otros anticipos y activos diferidos                                                     
+405100000  Incremento de inventarios                                                                             
+405100100  Incremento de inventarios de materia prima, materiales y suministros de producción                    
+405100200  Incremento de inventarios de productos terminados                                                     
+405100300  Incremento de inventarios de productos en proceso                                                     
+405100400  Incremento de inventarios de repuestos                                                                
+405100500  Incremento de inventarios de mercancías                                                               
+405109900  Otros incrementos de inventarios                                                                      
+405110000  Incremento de revaluación de activos                                                                  
+405110100  Incremento de revaluación de terrenos                                                                 
+405110200  Incremento de revaluación de edificios y construcciones                                               
+405110300  Incremento de revaluación de instalaciones                                                            
+405110400  Incremento de revaluación de maquinarias y equipos                                                    
+405110401  Incremento de revaluación de repuestos mayores de maquinarias y equipos                               
+405110403  Incremento de revaluación de maquinarias y demás equipos de construcción, campo, industria y taller   
+405110404  Incremento de revaluación de equipos de transporte, tracción y elevación                              
+405110405  Incremento de revaluación de equipos de comunicaciones y de señalamiento                              
+405110406  Incremento de revaluación de equipos médico-quirúrgicos, dentales y de veterinaria                    
+405110407  Incremento de revaluación de equipos científicos, religiosos, de enseñanza y recreación               
+405110408  Incremento de revaluación de equipos para la seguridad pública                                        
+405110409  Incremento de revaluación de máquinas, muebles y demás equipos de oficina y alojamiento               
+405110499  Incremento de revaluación de otras maquinarias y equipos                                              
+405110600  Incremento de revaluación de otros activos fijos en operación                                         
+405110700  Incremento de revaluación de obras en proceso de bienes de dominio privado                            
+405110800  Incremento de revaluación de obras en proceso de bienes de dominio público                            
+405110900  Incremento de revaluación de obras civiles                                                            
+405119900  Incremento de revaluación de otros activos fijos                                                      
+405990000  Otros activos financieros                                                                             
+405990100  Otros activos financieros                                                                             
+406000000  SERVICIO DE LA DEUDA PÚBLICA Y DISMINUCIÓN DE OTROS PASIVOS                                           
+406010000  Servicio de la deuda pública interna a corto y largo plazo                                            
+406010100  Servicio de la deuda pública directa interna                                                          
+406010101  Amortización de la deuda pública directa interna a corto plazo                                        
+406010102  Amortización de la deuda pública directa interna a largo plazo                                        
+406010103  Intereses de la deuda pública directa interna a corto plazo                                           
+406010104  Intereses de la deuda pública directa interna a largo plazo                                           
+406010105  Intereses por mora y multas de la deuda pública directa interna a corto plazo                         
+406010106  Intereses por mora y multas de la deuda pública directa interna a largo plazo                         
+406010107  Comisiones y otros gastos de la deuda pública directa interna a corto plazo                           
+406010108  Comisiones y otros gastos de la de uda pública directa interna a largo plazo                          
+406010200  Servicio de la deuda pública indirecta interna                                                        
+406010201  Amortización de la deuda pública indirecta interna a corto plazo                                      
+406010202  Amortización de la deuda pública indirecta interna a largo plazo                                      
+406010203  Intereses de la deuda pública indirecta interna a corto plazo                                         
+406010204  Intereses de la deuda pública indirecta interna a largo plazo                                         
+406010205  Intereses por mora y multas de la deuda pública indirecta interna a corto plazo                       
+406010206  Intereses por mora y multas de la deuda pública indirecta interna a largo plazo                       
+406010207  Comisiones y otros gastos de la deuda pública indirecta interna a corto plazo                         
+406010208  Comisiones y otros gastos de la deuda pública indirecta interna a largo plazo                         
+406010300  Servicio de la deuda pública interna por contratos de gestión ordinaria                               
+406010301  Amortización de la deuda pública interna por contratos de gestión ordinaria                           
+406010302  Intereses de la deuda pública interna por contratos de gestión ordinaria                              
+406010400  Servicio de la deuda pública interna por contratos de adquisición o construcción de inmuebles         
+406010401  Amortización de la deuda pública interna por contratos de adquisición o construcción de inmuebles     
+406010402  Intereses de la deuda pública interna por contratos de adquisición o construcción de inmuebles        
+406010500  Servicio de la deuda agrícola                                                                         
+406020000  Servicio de la deuda pública externa                                                                  
+406020100  Servicio de la deuda pública directa externa                                                          
+406020101  Amortización de la deuda pública directa externa a corto plazo                                        
+406020102  Amortización de la deuda pública directa externa a largo plazo                                        
+406020103  Intereses de la deuda pública directa externa a corto plazo                                           
+406020104  Intereses de la deuda pública directa externa a largo plazo                                           
+406020105  Intereses por mora y multas de la deuda pública directa externa a corto plazo                         
+406020106  Intereses por mora y multas de la deuda pública directa externa a largo plazo                         
+406020107  Comisiones y otros gastos de la deuda pública directa externa a corto plazo                           
+406020108  Comisiones y otros gastos de la deuda pública directa externa a largo plazo                           
+406020200  Servicio de la deuda pública indirecta externa a corto y largo plazo                                  
+406020201  Amortización de la deuda pública indirecta externa a corto plazo                                      
+406020202  Intereses de la deuda pública indirecta externa a corto plazo                                         
+406020203  Amortización de la deuda pública indirecta externa a largo plazo                                      
+406020204  Intereses de la deuda pública indirecta externa a largo plazo                                         
+406020205  Intereses por mora y multas de la deuda pública indirecta externa a corto plazo                       
+406020206  Intereses por mora y multas de la deuda pública indirecta externa a largo plazo                       
+406020207  Comisiones y otros gastos de la deuda pública indirecta externa a corto plazo                         
+406020208  Comisiones y otros gastos de la deuda pública indirecta externa a largo plazo                         
+406020300  Servicio de la deuda pública externa por contratos de gestión ordinaria                               
+406020301  Amortización de la deuda pública externa por contratos de gestión ordinaria                           
+406020302  Intereses de la deuda pública externa por contratos de gestión ordinaria                              
+406020400  Servicio de la deuda pública externa por contratos de adquisición o construcción de inmuebles         
+406020401  Amortización de la deuda pública externa por contratos de adquisición o construcción de inmuebles     
+406020402  Intereses de la deuda pública externa por contratos de adquisición o construcción de inmuebles        
+406030000  Obligaciones de ejercicios anteriores                                                                 
+406030100  Devoluciones de cobros indebidos                                                                      
+406030200  Devoluciones y reintegros diversos                                                                    
+406030300  Indemnizaciones diversas                                                                              
+406030500  Compromisos pendientes de ejercicios anteriores                                                       
+406030600  Prestaciones de antigüedad originadas por la aplicación de la Ley Orgánica del Trabajo                
+406039900  Otras obligaciones de ejercicios anteriores                                                           
+406040000  Disminución de depósitos de instituciones financieras                                                 
+406040100  Disminución de depósitos a la vista                                                                   
+406040101  Disminución de depósitos de terceros a la vista de organismos del sector público                      
+406040102  Disminución de depósitos de terceros a la vista de personas naturales y jurídicas del sector privado  
+406040200  Disminución de depósitos a plazo fijo                                                                 
+406040201  Disminución de depósitos a plazo fijo de organismos del sector público                                
+406040202  Disminución de depósitos a plazo fijo de personas naturales y jurídicas del sector privado            
+406050000  Disminución de cuentas y efectos a pagar a proveedores                                                
+406050100  Disminución de cuentas a pagar comerciales                                                            
+406050200  Disminución de efectos a pagar a corto plazo a proveedores                                            
+406050300  Disminución de efectos a pagar a largo plazo a proveedores                                            
+406059900  Disminución de otras cuentas y efectos a pagar a proveedores                                          
+406060000  Disminución de cuentas y efectos a pagar a contratistas                                               
+406060100  Disminución de cuentas a pagar a contratistas                                                         
+406060200  Disminución de efectos a pagar a corto plazo a contratistas                                           
+406060300  Disminución de efectos a pagar a largo plazo a contratistas                                           
+406060400  Disminución de cuentas y efectos a pagar a contratistas del sector externo                            
+406069900  Disminución de otras cuentas y efectos a pagar a contratistas                                         
+406070000  Disminución de cuentas a pagar por retenciones laborales                                              
+406070100  Retenciones laborales para instituciones de seguridad social                                          
+406070200  Retenciones laborales para el Instituto Nacional de Cooperación Educativa (INCE)                      
+406070300  Retenciones laborales por Ley de Política Habitacional                                                
+406079900  Otras retenciones laborales                                                                           
+406080000  Disminución de intereses por pagar                                                                    
+406080100  Disminución de intereses por pagar a instituciones nacionales                                         
+406080200  Disminución de intereses por pagar a instituciones del exterior                                       
+406090000  Disminución de otras cuentas y efectos a pagar                                                        
+406090100  Disminución de cuentas a pagar a corto plazo por sueldos y salarios                                   
+406099900  Otras disminuciones de cuentas y efectos a pagar                                                      
+406100000  Disminución de préstamos a corto plazo por la parte de la conversión del mediano y largo plazo        
+406100100  Disminución de la deuda interna a corto plazo por conversión                                          
+406100200  Disminución de la deuda externa a mediano y largo plazo por conversión                                
+406110000  Disminución de deudas por préstamos a corto plazo                                                     
+406110100  Disminución de la deuda interna por préstamos a corto plazo                                           
+406110101  Disminución de préstamos a corto plazo de la administración central                                   
+406110102  Disminución de préstamos a corto plazo de entidades federales                                         
+406110103  Disminución de préstamos a corto plazo de municipios                                                  
+406110104  Disminución de préstamos a corto plazo de instituciones de seguridad social                           
+406110105  Disminución de préstamos a corto plazo de entes descentralizados                                      
+406110106  Disminución de préstamos a corto plazo de empresas públicas no financieras                            
+406110107  Disminución de préstamos a corto plazo de empresas petroleras                                         
+406110108  Disminución de préstamos a corto plazo de instituciones financieras no bancarias                      
+406110109  Disminución de préstamos a corto plazo de instituciones financieras bancarias                         
+406110110  Disminución de préstamos a corto plazo del sector privado                                             
+406110200  Disminución de la deuda externa por préstamos a corto plazo                                           
+406110201  Disminución de préstamos a corto plazo del sector externo                                             
+406120000  Disminución de deuda por préstamos a mediano y largo plazo                                            
+406120100  Disminución de deuda interna a mediano y largo plazo                                                  
+406120101  Disminución de préstamos a mediano y largo plazo de la administración central                         
+406120102  Disminución de préstamos a mediano y largo plazo de entidades federales                               
+406120103  Disminución de préstamos a mediano y largo plazo de municipios                                        
+406120104  Disminución de préstamos a medi ano y largo plazo de instituciones de seguridad social                
+406120105  Disminución de préstamos a mediano y largo plazo de entes descentralizados                            
+406120106  Disminución de préstamos a mediano y largo plazo de empresas pública no financieras                   
+406120107  Disminución de préstamos a mediano y largo plazo de empresas petroleras                               
+406120108  Disminución de préstamos a mediano y largo plazo de instituciones financieras públicas no bancarias   
+406120109  Disminución de préstamos a mediano y largo plazo de instituciones públicas bancarias                  
+406120110  Disminución de préstamos a mediano y largo plazo del sector privado                                   
+406120200  Disminución de la deuda externa a mediano y largo plazo                                               
+406120201  Disminución de préstamos a mediano y largo plazo del sector externo                                   
+406130000  Disminución de previsiones                                                                            
+406130100  Disminución de previsiones para cuentas incobrables                                                   
+406130200  Disminución de previsiones para despidos                                                              
+406130300  Disminución de reservas técnicas                                                                      
+406130400  Disminución de previsiones para pérdidas de inventarios                                               
+406139900  Disminución de otras previsiones                                                                      
+406140000  Disminución de provisiones                                                                            
+406140100  Disminución de provisiones para impuestos                                                             
+406140200  Disminución de provisiones para cargas sociales                                                       
+406140300  Disminución de provisiones para otras erogaciones                                                     
+406149900  Disminución de otras provisiones                                                                      
+406150000  Disminución de pasivos diferidos                                                                      
+406150100  Disminución de pasivos diferidos a corto plazo                                                        
+406150200  Disminución de pasivos diferidos a mediano y largo plazo                                              
+406160000  Disminución de emisión monetaria                                                                      
+406160100  Disminución de billetes y monedas en circulación                                                      
+406160200  Disminución de depósitos a la vista de instituciones financieras en el Banco Central de Venezuela     
+406160300  Disminución de cheques emitidos por el Banco Central de Venezuela                                     
+406170000  Disminución de depreciación y amortización acumulada                                                  
+406170100  Disminución de depreciación acumulada                                                                 
+406170101  Disminución de depreciación acumulada de edificios y construcciones                                   
+406170102  Disminución de depreciación acumulada de instalaciones                                                
+406170103  Disminución de depreciación acumulada de maquinarias y equipos                                        
+406170104  Disminución de depreciación acumulada de otros activos fijos en operación                             
+406170199  Disminución de depreciación acumulada de otros activos fijos                                          
+406170200  Disminución de amortización acumulada                                                                 
+406170201  Disminución de amortización acumulada de estudios y proyectos                                         
+406170202  Disminución de amortización acumulada de gastos de organización                                       
+406170203  Disminución de amortización acumulada de marcas de fábrica y patentes de invención                    
+406170204  Disminución de amortización acumulada de derechos de autor                                            
+406170205  Disminución de amortización acumulada de paquetes y programas de computación                          
+406170299  Disminución de amortización acumulada de otros activos intangibles                                    
+406200000  Devoluciones y otras indemnizaciones en el ejercicio presupuestario vigente.                          
+406200100  Intereses de mora                                                                                     
+406200200  Devoluciones de cobros indebidos                                                                      
+406200300  Reintegros diversos                                                                                   
+406200400  Indemnizaciones diversas                                                                              
+406980000  Disminución de otros pasivos a corto plazo                                                            
+406980100  Disminución de otros pasivos a corto plazo                                                            
+406990000  Disminución de otros pasivos a mediano y largo plazo                                                  
+406990100  Disminución de otros pasivos a mediano y largo plazo                                                  
+407000000  TRANSFERENCIAS                                                                                        
+407010000  Transferencias corrientes internas                                                                    
+407010100  Transferencias corrientes al sector privado                                                           
+407010101  Pensiones                                                                                             
+407010102  Jubilaciones                                                                                          
+407010103  Becas escolares                                                                                       
+407010104  Becas universitarias en el país                                                                       
+407010105  Becas de perfeccionamiento profesional en el país                                                     
+407010106  Becas para estudios en el extranjero                                                                  
+407010107  Donaciones a personas                                                                                 
+407010108  Previsión por accidentes de trabajo                                                                   
+407010109  Otras transferencias directas a personas                                                              
+407010110  Subsidios educacionales al sector privado                                                             
+407010111  Subsidios a universidades privadas                                                                    
+407010112  Subsidios culturales al sector privado                                                                
+407010113  Subsidios a instituciones benéficas privadas                                                          
+407010114  Subsidios a centros de empleados                                                                      
+407010115  Subsidios a organismos laborales y gremiales                                                          
+407010116  Subsidios a entidades religiosas                                                                      
+407010117  Subsidios a entidades deportivas y recreativas de carácter privado                                    
+407010118  Subsidios científicos al sector privado                                                               
+407010119  Otros subsidios sociales al sector privado                                                            
+407010120  Subsidios económicos directos a empresas privadas                                                     
+407010121  Subsidios económicos directos a cooperativas                                                          
+407010198  Otros subsidios económicos directos al sector privado                                                 
+407010199  Otras transferencias corrientes internas al sector privado                                            
+407010200  Transferencias corrientes al sector público                                                           
+407010201  Transferencias corrientes a la administración central                                                 
+407010202  Transferencias corrientes a los entes descentralizados                                                
+407010203  Transferencias corrientes a las instituciones de seguridad social                                     
+407010204  Transferencias corrientes a las entidades federales                                                   
+407010205  Transferencias corrientes a los municipios                                                            
+407010206  Transferencias corrientes a las empresas públicas no financieras                                      
+407010207  Transferencias corrientes a las empresas públicas petroleras                                          
+407010208  Transferencias corrientes a las instituciones públicas financieras no bancarias                       
+407010209  Transferencias corrientes a las instituciones públicas financieras bancarias                          
+407010210  Transferencias corrientes a organismos del sector público para ser transferidos al sector privado     
+407010211  Transferencias corrientes a organismos del sector público para financiar intereses y otros gastos fi  
+407010212  Transferencias corrientes a los servicios autónomos sin personalidad jurídica                         
+407010213  Donaciones corrientes a organismos del sector público                                                 
+407010299  Transferencias corrientes a otros organismos del sector público                                       
+407010300  Asistencia social al personal pensionado                                                              
+407010301  Aguinaldos al personal pensionado                                                                     
+407010302  Aportes a caja de ahorro del personal pensionado                                                      
+407010303  Aportes al seguro de hospitalización, cirugía y maternidad del personal pensionado                    
+407010399  Otras subvenciones socio-económicas del personal pensionado                                           
+407010400  Asistencia social al personal jubilado                                                                
+407010401  Aguinaldos al personal jubilado                                                                       
+407010402  Aportes a caja de ahorro del personal jubilado                                                        
+407010403  Aportes al seguro de hospitalización, cirugía y maternidad del personal jubilado                      
+407010499  Otras subvenciones socio-económicas del personal jubilado                                             
+407020000  Transferencias de capital internas                                                                    
+407020100  Transferencias de capital al sector privado interno                                                   
+407020101  Transferencias de capital a personas                                                                  
+407020102  Transferencias de capital a empresas privadas                                                         
+407020103  Donaciones de capital al sector privado                                                               
+407020200  Transferencias de capital al sector público                                                           
+407020201  Transferencias de capital a la administración central                                                 
+407020202  Transferencias de capital a los entes descentralizados                                                
+407020203  Transferencias de capital a instituciones de seguridad social                                         
+407020204  Transferencias de capital a entidades federales                                                       
+407020205  Transferencias de capital a los municipios                                                            
+407020206  Transferencias de capital a empresas públicas no financieras                                          
+407020207  Transferencias de capital a empresas petroleras                                                       
+407020208  Transferencias de capital a instituciones públicas financieras no bancarias                           
+407020209  Transferencias de capital a instituciones públicas financieras bancarias                              
+407020210  Transferencias de capital a servicios autónomos sin personalidad jurídica                             
+407020211  Donaciones de capital a organismos del sector público                                                 
+407020299  Transferencias de capital a otros organismos del sector público                                       
+407030000  Transferencias al exterior                                                                            
+407030100  Transferencias al exterior para financiar gastos corrientes                                           
+407030101  Becas de capacitación e investigación en el exterior                                                  
+407030102  Ayudas a personas en el exterior                                                                      
+407030103  Transferencias a organismos internacionales o instituciones en el exterior                            
+407030200  Transferencias al exterior para financiar gastos de capital                                           
+407030201  Transferencias a empresas o instituciones en el exterior                                              
+407030202  Transferencias para inversiones en organismos internacionales                                         
+407039900  Otras transferencias al exterior                                                                      
+407040000  Situado                                                                                               
+407040100  Situado Constitucional                                                                                
+407040200  Situado Municipal                                                                                     
+407050000  Indemnizaciones temporales únicas y por pensiones y demás prestaciones en dinero                      
+407050100  Incapacidad temporal                                                                                  
+407050101  Incapacidad temporal sin hospitalización                                                              
+407050102  Incapacidad temporal con hospitalización                                                              
+407050103  Reposo por maternidad                                                                                 
+407050104  Indemnización por paro forzoso                                                                        
+407050199  Otros tipos de incapacidad temporal no incluídos en las subespecíficas anteriores                     
+407050200  Pensiones y demás prestaciones en dinero                                                              
+407050201  Comisión por pensiones                                                                                
+407050202  Comisión por cesantía                                                                                 
+407050203  Incapacidad parcial                                                                                   
+407050204  Invalidez                                                                                             
+407050205  Pensiones por vejez, viudez y orfandad                                                                
+407050206  Indemnización por cesantía                                                                            
+407050299  Otras pensiones y demás prestaciones en dinero                                                        
+407050300  Indemnizaciones únicas a los trabajadores                                                             
+407050301  Incapacidad parcial por accidente común                                                               
+407050302  Incapacidad parcial por enfermedades profesionales                                                    
+407050303  Incapacidad parcial por accidente de trabajo                                                          
+407050304  Indemnización única por invalidez                                                                     
+407050305  Indemnización única por vejez                                                                         
+407050306  Sobrevivientes por enfermedad común                                                                   
+407050307  Sobrevivientes por accidente común                                                                    
+407050308  Sobrevivientes por enfermedades profesionales                                                         
+407050309  Sobrevivientes por accidentes de trabajo                                                              
+407050310  Por conmutación de renta                                                                              
+407050311  Por conmutación de pensiones                                                                          
+407050400  Asignación por nupcias                                                                                
+407050500  Asignación por funeraria                                                                              
+407990000  Transferencias corrientes y de capital diversas                                                       
+407990100  Transferencias corrientes diversas                                                                    
+407990200  Transferencias de capital diversas                                                                    
+408000000  OTROS GASTOS DE INSTITUCIONES DESCENTRALIZADAS                                                        
+408010000  Depreciación y amortización                                                                           
+408010100  Depreciación                                                                                          
+408010101  Depreciación de edificios y construcciones                                                            
+408010102  Depreciación de instalaciones                                                                         
+408010103  Depreciación de maquinarias y equipos                                                                 
+408010104  Depreciación de otros activos fijos en operación                                                      
+408010700  Depreciación de obras en proceso de bienes del dominio privado                                        
+408010800  Depreciación de obras en proceso de bienes del dominio público                                        
+408010900  Depreciación de obras civiles                                                                         
+408011000  Amortización                                                                                          
+408011001  Amortización de estudios y proyectos                                                                  
+408011002  Amortización de gastos de organización                                                                
+408011003  Amortización de marcas y patentes                                                                     
+408011004  Amortización de derechos de autor                                                                     
+408011005  Amortización de paquetes y programas de computación                                                   
+408019800  Depreciación de otros activos fijos                                                                   
+408019900  Amortización de otros activos intangibles                                                             
+408020000  Intereses por operaciones financieras                                                                 
+408020100  Intereses de instituciones financieras bancarias                                                      
+408020200  Intereses de instituciones financieras no bancarias                                                   
+408020300  Intereses de entes descentralizados no financieros                                                    
+408029900  Intereses por operaciones financieras no especificadas                                                
+408030000  Pérdidas ajenas a la operación                                                                        
+408030100  Pérdi das en inventarios                                                                              
+408030200  Pérdidas en operaciones cambiarías                                                                    
+408030300  Pérdidas en ventas de activos                                                                         
+408030400  Pérdidas por cuentas incobrables                                                                      
+408030500  Participación en pérdidas de otras empresas                                                           
+408030600  Pérdidas por auto-seguro                                                                              
+408030700  Pérdida por inflación monetaria                                                                       
+408030800  Impuestos por pagos directos                                                                          
+408030900  Pérdidas por normas externas de política económica y social                                           
+408030901  Ajustes por normas externas sobre subsidios otorgados                                                 
+408030902  Ajustes por normas externas sobre incentivos otorgados                                                
+408030903  Ajustes por normas externas por precios políticos                                                     
+408030904  Ajustes de costos sociales por normas externas                                                        
+408031000  Intereses de mora                                                                                     
+408031100  Gastos por cobranzas de proveedores                                                                   
+408039900  Otras pérdidas de no operación                                                                        
+408050000  Descuentos, bonificaciones y devoluciones                                                             
+408050100  Descuentos sobre ventas                                                                               
+408050200  Bonificaciones por ventas                                                                             
+408050300  Devoluciones por ventas                                                                               
+408059900  Otras pérdidas sobre ventas                                                                           
+409000000  DISMINUCIÓN DEL PATRIMONIO                                                                            
+409010000  Disminución del capital social                                                                        
+409010100  Disminución del capital social                                                                        
+409020000  Disminución de reservas de capital                                                                    
+409020100  Disminución de reservas legales y estatutarias                                                        
+409020200  Disminución de reservas facultativas                                                                  
+409020300  Disminución de otras reservas                                                                         
+409030000  Disminución de los resultados acumulados                                                              
+409030100  Disminución de los resultados acumulados                                                              
+410000000  GASTOS POR INDEMNIZACIONES Y SANCIONES PECUNIARIAS                                                    
+410010000  Indemnizaciones por daños y perjuicios ocasionados por organismos del sector público                  
+410010100  Indemnizaciones por daños y perjuicios ocasionados por organismos de la Administración Central, Esta  
+410010200  Indemnizaciones por daños y perjuicios ocasionados por organismos de la Administración Descentraliza  
+410020000  Sanciones pecuniarias ocasionadas por los organismos del sector público                               
+410020100  Sanciones pecuniarias ocasionadas por los organismos de la Administración Central, Estadal y Municip  
+410020200  Sanciones pecuniarias ocasionadas por los organismos de la Administración Descentralizada             
+451000000  GASTOS DE DEFENSA Y SEGURIDAD DEL ESTADO                                                              
+451010000  Gastos de defensa y seguridad del Estado                                                              
+451010100  Gastos de defensa y seguridad del Estado                                                              
+452000000  ASIGNACIONES NO DISTRIBUIDAS                                                                          
+452010000  Asignaciones no distribuidas de la Asamblea Nacional                                                  
+452010100  Asignaciones no distribuidas de la Asamblea Nacional                                                  
+452020000  Reestructuración de organismos del sector público                                                     
+452020100  Reestructuración de organismos del sector público                                                     
+452030000  Productividad y calidad de la gerencia pública                                                        
+452030100  Productividad y calidad de la gerencia pública                                                        
+452040000  Jubilados y pensionados de la Administración Pública                                                  
+452040100  Jubilados y pensionados de la Administración Pública                                                  
+452050000  Fondo de Apoyo al trabajador y su grupo familiar                                                      
+452050100  Fondo de Apoyo al trabajador y su grupo familiar                                                      
+452050200  Fondo de Apoyo al trabajador y su grupo familiar de los Estados y Municipios                          
+452060000  Remuneraciones y demás retribuciones                                                                  
+452060100  Remuneraciones y demás retribuciones                                                                  
+452070000  Proyecto Sectorial Social (BID-BM)                                                                    
+452070100  Proyecto Sectorial Social (BID-BM)                                                                    
+452080000  Fondo para Programas de Fortalecimiento Social                                                        
+452080100  Fondo para Programas de Fortalecimiento Social                                                        
+452090000  Fondo de alimentación y transporte para los trabajadores de la administración pública                 
+452090100  Fondo de alimentación y transporte para los trabajadores de la administración pública                 
+452100000  Apoyo al proceso presupuestario y análisis de política económica.                                     
+452100100  Apoyo al proceso presupuestario y análisis de política económica.                                     
+452110000  Reforma de la seguridad social                                                                        
+452110100  Reforma de la seguridad social                                                                        
+452120000  Programa de fortalecimiento del sector financiero.                                                    
+452120100  Programa de fortalecimiento del sector financiero.                                                    
+452130000  Recapitalización del Fondo de Pensiones del Instituto Venezolano de los Seguros Sociales              
+452130100  Recapitalización del Fondo de Pensiones del Instituto Venezolano de los Seguros Sociales              
+452140000  Programa sectorial financiero                                                                         
+452140100  Programa sectorial financiero                                                                         
+452150000  Emergencias en el territorio nacional                                                                 
+452150100  Emergencias en el territorio nacional                                                                 
+452160000  Fondo para la cancelación de pasivos laborales                                                        
+452160100  Fondo para la cancelación de pasivos laborales                                                        
+452190000  Programas de fortalecimiento de las finanzas públicas de las Gobernaciones de Venezuela               
+452190100  Programas de fortalecimiento de las finanzas públicas de las Gobernaciones de Venezuela               
+452200000  Fondo para la cancelación de deuda por servicios de electricidad, teléfono, aseo, agua y condominio   
+452200100  Fondo para la cancelación de deuda por servicios de electricidad, teléfono, aseo, agua y condominio,  
+452200200  Fondo para la cancelación de deuda por servicios de electricidad, teléfono, aseo, agua y condominio,  
+452220000  Fondo para remuneraciones, pensiones y jubilaciones y otras retribuciones                             
+452220100  Fondo para remuneraciones, pensiones y jubilaciones y otras retribuciones                             
+452230000  Asignaciones no distribuidas del Tribunal Supremo de Justicia                                         
+452230100  Asignaciones no distribuidas del Tribunal Supremo de Justicia                                         
+452240000  Asignaciones no distribuidas del Ministerio Público                                                   
+452240100  Asignaciones no distribuidas del Ministerio Público                                                   
+452250000  Asignaciones no distribuidas de la Defensoría del Pueblo                                              
+452250100  Asignaciones no distribuidas de la Defensoría del Pueblo                                              
+452260000  Asignaciones no distribuidas de la Contraloría General de la República                                
+452260100  Asignaciones no distribuidas de la Contraloría General de la República                                
+452270000  Asignaciones no distribuidas del Consejo Nacional Electoral                                           
+452270100  Asignaciones no distribuidas del Consejo Nacional Electoral                                           
+498000000  RECTIFICACIONES AL PRESUPUESTO                                                                        
+498010000  Rectificaciones al presupuesto                                                                        
+498010100  Rectificaciones al presupuesto

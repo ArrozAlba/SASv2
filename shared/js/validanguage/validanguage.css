@@ -1,0 +1,57 @@
+/**
+ * This file includes some sample CSS which you can use to style the error message fields
+ * which are dynamically created by validanguage.  See the Validanguage Demo and Test Case
+ * pages listed on http://drlongghost.com/vd_tests/index.php to see these CSS rules in action.
+ */
+
+/* Sample CSS to format error messages */
+.vdError span {
+   color: red;
+   padding-left: 20px;
+   background-image:url(/images/red_error.gif);
+   background-repeat: no-repeat;
+   background-position: 0px 0px;
+   vertical-align: top;   
+}
+
+#vdErrorDiv {
+   position: fixed;
+   color: red;
+   background-color: #EEEEEB;
+   border: 2px solid red;
+   padding: 15px;
+   font-size: 10pt;
+   top: 20%;
+   right: 30%;
+}
+
+/* Sample CSS for use with the showSubmitMessage() transformation */
+#vdSubmitMessage {
+   color: green;
+   font-size: 9pt;
+   font-weight: bold;
+   padding-left: 20px;
+   background-image:url(/images/ajax-loader.gif);
+   background-repeat: no-repeat;
+   background-position: 0px 0px;
+   vertical-align: top;   
+}
+
+/* Sample CSS for use with the remainingChars() transformation */
+.remaining {font-weight: bold; color: black; padding: 4px;}
+.vdLengthPassed {background-color: #93F371; padding: 0px 2px;}
+.vdLengthFailed {background-color: #E15643; padding: 0px 2px;}
+
+/* Sample CSS for use with the validatePasswordStrength() validation */
+.passwordClass {
+    border: 1px solid gray;
+    width: 200px;
+    margin: 8px 0px;
+}
+.passwordClassStrong {background-color: green; width: 200px;}
+.passwordClassMedium {background-color: yellow; width: 120px;}
+.passwordClassWeak {background-color: red; width: 60px;}
+#passwordStrength {
+    
+}
+

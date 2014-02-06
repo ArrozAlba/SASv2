@@ -1,0 +1,15 @@
+rutaimagen='..base/imagenes'
+
+
+
+		{
+		  xtype:'panel',
+		  name: 'dennominacion',
+		  id: 'denomss',
+		  contentEl:'divimagen',
+		  width:600,
+		  height:150,
+		 }
+
+
+Ext.get('mimagen').dom.src='rutaimagen/'+grid.selectionModel.getSelected.get('nombreimagen')

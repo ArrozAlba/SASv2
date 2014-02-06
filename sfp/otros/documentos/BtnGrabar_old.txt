@@ -1,0 +1,133 @@
+Ext.get('grabar').on('click', function()
+{
+		
+		switch (cantidad)
+		{
+			case '1':
+			valor1=valorActual;
+			valor2='0000000000000000000000000';
+			valor3='0000000000000000000000000';
+			valor4='0000000000000000000000000';
+			valor5='0000000000000000000000000';
+			break;
+			case '2':
+			valor2=valorActual;
+			valor3='0000000000000000000000000';
+			valor4='0000000000000000000000000';
+			valor5='0000000000000000000000000';
+			break;
+			case '3':
+			valor3=valorActual;
+			valor4='0000000000000000000000000';
+			valor5='0000000000000000000000000';
+			break;
+			case '4':
+			valor4=valorActual;
+			valor5='0000000000000000000000000';
+			break;
+			case '5':
+			valor5=valorActual;
+			break;
+		}
+		
+		switch (cantidadPlan)
+		{
+			case '1':
+			valorPlan1=valorPlanActual;
+			valorPlan2='0000000000000000000000000';
+			valorPlan3='0000000000000000000000000';
+			valorPlan4='0000000000000000000000000';
+			valorPlan5='0000000000000000000000000';
+			break;
+			case '2':
+			valorPlan2=valorPlanActual;
+			valorPlan3='0000000000000000000000000';
+			valorPlan4='0000000000000000000000000';
+			valorPlan5='0000000000000000000000000';
+			break;
+			case '3':
+			valorPlan3=valorPlanActual;
+			valorPlan4='0000000000000000000000000';
+			valorPlan5='0000000000000000000000000';
+			break;
+			case '4':
+			valorPlan4=valorPlanActual;
+			valorPlan5='0000000000000000000000000';
+			break;
+			case '5':
+			valorPlan5=valorPlanActual;
+			break;
+		}
+		
+	
+	var reg = "{";
+	reg = reg + "'oper':'incluirInt','codemp':'0001','codinte':'','CODEST1':'"+valorPlan1+"','CODEST2':'"+valorPlan2+"','CODEST3':'"+valorPlan3+"','CODEST4':'"+valorPlan4+"','CODEST5':'"+valorPlan5+"','CODORGEJ':'0001','estcla_p':'T','ano_presupuesto':'2008','estcla':'T','CODESTPRO1':'"+valor1+"','CODESTPRO2':'"+valor2+"','CODESTPRO3':'"+valor3+"','CODESTPRO4':'"+valor4+"','CODESTPRO5':'"+valor5+"'";
+
+
+	arrFuentes = gridIntFuente.store.getModifiedRecords();
+	if(arrFuentes.length>0)
+	{	
+		reg=reg+ ",DatosFuente:[";
+		for(i=0;i<arrFuentes.length;i++)
+		{
+			if(i==0)
+			{
+				
+				reg= reg +"{'codemp':'0001','cod_fuenfin':'"+ arrFuentes[i].get('cod_fuenfin')+ "','codinte':'"+IdPadre+"','montot':'"+ arrFuentes[i].get('montot') +"'}";
+				
+			}
+			else
+			{
+			
+			reg= reg +",{'codemp':'0001','cod_fuenfin':'"+ arrFuentes[i].get('cod_fuenfin')+ "','codinte':'"+IdPadre+"','montot':'"+ arrFuentes[i].get('montot') +"'}";
+			}
+		}
+		reg = reg + "]";
+	}
+
+	reg = reg + "}";
+	
+	Obj= eval('(' + reg + ')');
+	ObjSon=JSON.stringify(Obj);
+	parametros = 'ObjSon='+ObjSon; 
+	Ext.Ajax.request({
+	url : rutaIntepr,
+	params : parametros,
+	method: 'POST',
+	success: function ( resultad, request ){ 
+        datos = resultad.responseText;
+		alert(datos);
+		 var Registros = datos.split("|");
+				if (Registros[1] == '1')
+				 {
+					Ext.MessageBox.alert('Mensaje','Registro Incluido con éxito')
+					DesabilitarGrids(false);
+										
+				 }
+				 else if(Registros[1]=='0')
+				 {
+				  	Ext.MessageBox.alert('Error', 'No se pudo eliminar el archivo');
+				 }
+				 else
+				 {
+				 	var myObject = eval('(' + datos + ')');
+				 	IdPadre = myObject.raiz[0].codinte;
+				 	DesabilitarGrids(false);
+				 	ActualizarGrids();
+				 }
+				
+      },
+	failure: function ( result, request)
+	 { 
+		Ext.MessageBox.alert('Error', result.responseText); 
+	 } 
+      });
+ 		
+});
+
+
+
+
+
+
+gridIntFuente2

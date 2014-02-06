@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workbench progressCount="27" version="2.0">
+<workbenchAdvisor/>
+<window height="768" width="1024" x="184" y="2">
+<fastViewData fastViewLocation="1024"/>
+<perspectiveBar>
+<itemSize x="160"/>
+</perspectiveBar>
+<coolbarLayout locked="0">
+<coolItem id="group.file" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.ui.workbench.file" itemType="typeToolBarContribution" x="99" y="22"/>
+<coolItem id="additions" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.debug.ui.launchActionSet" itemType="typeToolBarContribution" x="53" y="22"/>
+<coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="38" y="22"/>
+<coolItem id="org.eclipse.wst.server.ui.internal.webbrowser.actionSet" itemType="typeToolBarContribution" x="38" y="22"/>
+<coolItem id="org.eclipse.wst.ws.explorer.explorer" itemType="typeToolBarContribution" x="38" y="22"/>
+<coolItem id="group.nav" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.ui.workbench.navigate" itemType="typeToolBarContribution" x="190" y="22"/>
+<coolItem id="group.editor" itemType="typeGroupMarker"/>
+<coolItem id="group.help" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
+</coolbarLayout>
+<page focus="true" label="Workspace - Resource">
+<editors>
+<editorArea activeWorkbook="DefaultEditorWorkbook">
+<info part="DefaultEditorWorkbook">
+<folder appearance="1" expanded="2">
+<presentation id="org.eclipse.ui.internal.presentations.r33.WorkbenchPresentationFactory_33"/>
+</folder>
+</info>
+</editorArea>
+</editors>
+<views>
+<view id="org.eclipse.ui.navigator.ProjectExplorer" partName="Project Explorer">
+<viewState CommonNavigator.LINKING_ENABLED="0" org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets="0"/>
+</view>
+<view id="org.eclipse.ui.views.TaskList" partName="Tasks">
+<viewState columnWidth0="43" columnWidth1="19" columnWidth2="253" columnWidth3="78" columnWidth4="153" columnWidth5="63" columnWidth6="0" horizontalPosition="0" verticalPosition="0">
+<columnOrder columnOrderIndex="0"/>
+<columnOrder columnOrderIndex="1"/>
+<columnOrder columnOrderIndex="2"/>
+<columnOrder columnOrderIndex="3"/>
+<columnOrder columnOrderIndex="4"/>
+<columnOrder columnOrderIndex="5"/>
+<columnOrder columnOrderIndex="6"/>
+</viewState>
+</view>
+<view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
+<viewState/>
+</view>
+</views>
+<perspectives activePart="org.eclipse.ui.navigator.ProjectExplorer" activePerspective="org.eclipse.ui.resourcePerspective">
+<perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
+<descriptor class="org.eclipse.ui.internal.ide.application.ResourcePerspective" id="org.eclipse.ui.resourcePerspective" label="Resource"/>
+<alwaysOnActionSet id="org.eclipse.jst.servlet.ui.internal.actions.ConvertToWebModuleTypeActionSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.search.searchActionSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.annotationNavigation"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.navigation"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.convertLineDelimitersTo"/>
+<alwaysOnActionSet id="org.eclipse.ui.externaltools.ExternalToolsSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.actionSet.keyBindings"/>
+<alwaysOnActionSet id="org.eclipse.ui.WorkingSetActionSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.actionSet.openFiles"/>
+<alwaysOnActionSet id="org.eclipse.update.ui.softwareUpdates"/>
+<alwaysOnActionSet id="org.eclipse.wst.server.ui.internal.webbrowser.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.wst.ws.explorer.explorer"/>
+<alwaysOnActionSet id="org.eclipse.ui.NavigateActionSet"/>
+<show_view_action id="org.eclipse.ui.views.ResourceNavigator"/>
+<show_view_action id="org.eclipse.ui.views.BookmarkView"/>
+<show_view_action id="org.eclipse.ui.views.ContentOutline"/>
+<show_view_action id="org.eclipse.ui.views.PropertySheet"/>
+<show_view_action id="org.eclipse.ui.views.ProblemView"/>
+<show_view_action id="org.eclipse.ui.views.ProgressView"/>
+<show_view_action id="org.eclipse.ui.views.TaskList"/>
+<show_view_action id="org.eclipse.ant.ui.views.AntView"/>
+<new_wizard_action id="org.eclipse.ui.wizards.new.folder"/>
+<new_wizard_action id="org.eclipse.ui.wizards.new.file"/>
+<new_wizard_action id="org.eclipse.ui.editors.wizards.UntitledTextFileWizard"/>
+<perspective_action id="org.eclipse.jdt.ui.JavaPerspective"/>
+<perspective_action id="org.eclipse.jdt.ui.JavaBrowsingPerspective"/>
+<perspective_action id="org.eclipse.jst.j2ee.J2EEPerspective"/>
+<perspective_action id="org.eclipse.php.perspective"/>
+<perspective_action id="org.eclipse.team.cvs.ui.cvsPerspective"/>
+<perspective_action id="org.eclipse.team.ui.TeamSynchronizingPerspective"/>
+<view id="org.eclipse.ui.navigator.ProjectExplorer"/>
+<view id="org.eclipse.ui.views.ContentOutline"/>
+<view id="org.eclipse.ui.views.TaskList"/>
+<fastViewBars/>
+<layout>
+<mainWindow>
+<info folder="true" part="topLeft">
+<folder activePageID="org.eclipse.ui.navigator.ProjectExplorer" appearance="2" expanded="2">
+<page content="org.eclipse.ui.navigator.ProjectExplorer" label="Project Explorer"/>
+<page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
+<page content="org.eclipse.ui.views.ResourceNavigator" label="LabelNotFound"/>
+<page content="org.eclipse.team.ccvs.ui.RepositoriesView" label="LabelNotFound"/>
+<page content="org.eclipse.team.ccvs.ui.AnnotateView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.internal.presentations.r33.WorkbenchPresentationFactory_33">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@143073a" ratio="0.75" ratioLeft="750" ratioRight="250" relationship="2" relative="topLeft">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
+<page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.internal.presentations.r33.WorkbenchPresentationFactory_33"/>
+</folder>
+</info>
+<info part="org.eclipse.gef.ui.palette_view" ratio="0.26" ratioLeft="260" ratioRight="740" relationship="2" relative="topLeft"/>
+<info folder="true" part="bottomRight" ratio="0.65909094" ratioLeft="464" ratioRight="240" relationship="4" relative="org.eclipse.gef.ui.palette_view">
+<folder activePageID="org.eclipse.ui.views.TaskList" appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.TaskList" label="Tasks"/>
+<page content="org.eclipse.team.ui.GenericHistoryView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.internal.presentations.r33.WorkbenchPresentationFactory_33">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+<info part="org.eclipse.ui.editorss" ratio="0.15945946" ratioLeft="118" ratioRight="622" relationship="2" relative="org.eclipse.gef.ui.palette_view"/>
+<info folder="true" part="bottomLeft" ratio="0.5" ratioLeft="352" ratioRight="352" relationship="4" relative="topLeft">
+<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<page content="org.eclipse.ant.ui.views.AntView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.internal.presentations.r33.WorkbenchPresentationFactory_33">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+</mainWindow>
+</layout>
+</perspective>
+</perspectives>
+<workingSets/>
+<navigationHistory/>
+<input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
+</page>
+<workbenchWindowAdvisor/>
+<actionBarAdvisor/>
+<trimLayout>
+<trimArea IMemento.internal.id="128">
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
+</trimArea>
+<trimArea IMemento.internal.id="1024">
+<trimItem IMemento.internal.id="org.eclise.ui.internal.FastViewBar"/>
+<trimItem IMemento.internal.id="org.eclipse.jface.action.StatusLineManager"/>
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.progress.ProgressRegion"/>
+</trimArea>
+</trimLayout>
+</window>
+<mruList/>
+</workbench>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tablas>
+  <tabla>
+      <nombre>spi_cuentas</nombre>
+      <criterio></criterio>
+      <tipo>INSERT</tipo>
+	  <id>1</id>
+  </tabla>
+  <tabla>
+      <nombre>spi_cuentas_estructuras</nombre>
+      <criterio></criterio>
+      <tipo>INSERT</tipo>
+	  <id>0</id>
+  </tabla>
+</tablas>

@@ -1,0 +1,45 @@
+.contorno{
+	background-color:#ffffff;
+	border: 1px solid #BBBBBB;
+}
+.cd-menu {background-color: #F7F7F7;}
+.cd-logo {background-color: #cc3433;}.toolbar {
+	font-family: Tahoma, Verdana, Arial;
+	font-size: 11px;
+	font-weight: normal;
+	color: 909090;
+	background-color: #FFFFFF;
+}
+.pie-pagina{
+	font-family: Tahoma, Verdana, Arial;
+	font-size: 9px;
+	font-weight: normal;
+	color: 666666;
+	background-color: #EAEAEA;
+	text-align: center;
+	padding-top: 2px;
+	padding-right: 15px;
+	padding-bottom: 2px;
+	padding-left: 15px;
+}
+.formato-blancotabla {
+	font-family: Tahoma, Verdana, Arial;
+	font-size: 11px;
+	font-weight: normal;
+	color: #000000;
+	background-color: #ffffff;
+	border: 1px solid #000000;
+	padding: 5px;
+	margin-right: 0px;
+	right: 20px;
+}
+.sin-bordebackdoor {
+
+	border:none;
+	color:#18599C;
+	cursor:hand;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	background-color: #18599C;
+	font-size: 12px;
+}

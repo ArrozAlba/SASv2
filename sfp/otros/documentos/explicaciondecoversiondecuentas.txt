@@ -1,0 +1,56 @@
+la cuentas del organismo, contable y cuentas de variacion patrimonial.
+
+las cuentas de aumentos y disminucion del grupo 4 que no son contables
+todas esas cuentas 305,307, 308 las cuentas de ncremento y disminucion del grupo 3 de recursos
+el grupo 405 de incremento.
+incremento de inventario de mercancia. que son de fuentes y aplicaciones de fondos.
+
+son cuentas que tienen que casarse. para poder hacer la hoja de cvalcul
+para sacar el origen y aplicacion de fondos.
+
+en el instructivo 4 de onapre tiene que haber un casamiento.
+
+porque son cuentas de incremento y disminuciones.
+
+aqui se casan todas, esa tabla ha tenido problema, porque ella 
+la dejo cerrada si hace un operacion distinta.
+
+son todas las cuentas de disminucion.
+
+cuando uno le carga a banco va a disminucion de banco.
+
+pero es la el origen y aplicacion de fondos.
+
+cuando cargo en el presupuesto el carga al presupuesto.
+
+hay cuenta contables que tienen una afectacion en el presupuesto paga en presupuesto.
+
+en contabilidad refleja un cargo a banco e incrementa de bancos privados.
+
+la cuenta se divide en tres, le carga a contabilidad a banco.
+
+en incremento de caja y banco.
+
+hay que crear un tabla de variacion patrimonial.
+
+cuando de mueva una por debe en contabilidad y la otra se mueve tambien por el haber.
+
+
+cuando el banco se mueve por el debe se mueve por la 405.
+
+los ingresos no tienen variacion patrimonial, no hay incremento de ingresos.
+
+se tiene que haber abonado. incremento de activos y disminiciones de pasivos o incremento de pasivo y disminuciones de activos.
+
+se ejecuta el movimiento presupuestario de gastos y se hace el asiento contable normal y luego a la de variacion patrimonial
+
+permitir una relacion de cuentas.
+
+presupuesto de caja no es lo mismo que el presupuesto de gastos.
+
+habia un plan unico de cuenta
+
+hay un plan de cuenta presupuestaria y contables del organismo
+
+ademas de las presupuestarias y contables hay un tercer grupo de cuentas (las cuentas de variación)
+

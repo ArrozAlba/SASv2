@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tablas>
+  <tabla>
+      <nombre>soc_clausulas</nombre>
+      <criterio></criterio>
+      <tipo>INSERT</tipo>
+	  <id>4</id>
+  </tabla>
+  <tabla>
+      <nombre>soc_modalidadclausulas</nombre>
+      <criterio></criterio>
+      <tipo>INSERT</tipo>
+	  <id>3</id>
+  </tabla>
+  <tabla>
+      <nombre>soc_tiposervicio</nombre>
+      <criterio></criterio>
+      <tipo>INSERT</tipo>
+	  <id>2</id>
+  </tabla>
+  <tabla>
+      <nombre>soc_servicios</nombre>
+      <criterio></criterio>
+      <tipo>INSERT</tipo>
+	  <id>1</id>
+  </tabla>
+  <tabla>
+      <nombre>soc_serviciocargo</nombre>
+      <criterio></criterio>
+      <tipo>INSERT</tipo>
+	  <id>0</id>
+  </tabla>
+</tablas>

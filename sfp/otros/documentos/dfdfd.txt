@@ -1,0 +1,8 @@
+hacer la seleccion por el ultimo nivel.
+
+-se asocia las funentes de financiamiento a las partidas.
+-este proyecto tiene asignacion para tres años partiendo de hoy. y que para algun 
+proyecto, pero se formula es para el año que viene. 
+se programa mensual, hay una que ya estan hechas.
+primero pasar las contables.
+hacer la migracion del plan de cuentas.

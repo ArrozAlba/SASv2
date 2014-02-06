@@ -1,0 +1,175 @@
+body{
+	color:#000000;
+	font-family:Tahoma, Verdana, Arial;
+	font-size:11px;
+	margin:0px 5px 0px 0px;
+	/*background-color: #EBEBEB;*/
+	background-color:#C1D5F0;
+	top: 0px;
+	right: 5px;
+}
+input,checkbox{border:thin solid #000000;color: #000000;}
+input,select,textarea,text{background-color:#FFFFFF;border:1px solid #999999;color:#000000;font-family:Tahoma, Verdana, Arial;font-size:11px;}
+.sin-borde{
+	border:none;
+	color:#000000;
+	cursor:text;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.boton{
+	border-right:1px ridge #666666;
+	border-top:1px ridge #FFFFFF;
+	border-left:1px ridge #FFFFFF;
+	border-bottom:1px ridge #666666;
+	font-weight:bold;
+	cursor:pointer;
+	color: #000000;
+	background-color:#CCCCCC;
+	font-family: Tahoma, Verdana, Arial;
+	font-size: 11px;
+	background-image: none;
+}
+.sin-bordeCopy {
+	border:none;
+	color:#000000;
+	cursor:text;
+	background-color: #E2EFFE;
+}
+.sin-borde2 {
+	border:none;
+	color:#3982C6;
+	cursor:text;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+}
+.sin-bordeAzul {
+	border:none;
+	color:#FFFFFF;
+	cursor:text;
+	background-color: #3982C6;
+	font-weight: bold;
+	font-size: 12px;
+}
+.resaltado-rojo {
+	color: #FF0000;
+}
+.nota {
+	color: #999999;
+	font-style: italic;
+	font-weight: bold;
+	text-transform: none;
+}
+
+#ImgSumar
+{
+
+/*		position:absolute;
+		left:80px;
+		top:120px;
+		cursor:pointer;
+	
+*/
+}
+
+#ImgRestar
+{
+	/*	position:absolute;
+		left:80px;
+		top:150px;
+		cursor:pointer;
+	*/
+}
+#Contenedor-Grid
+{
+	position:absolute;
+	left: 195px;
+	top:150px;	
+}
+
+#formestprog {
+	position:absolute;
+	/*border:1px solid black;*/
+	left:150px;
+	top:100px;
+}
+#formestprog #denest{
+	height: 40px;
+	/*border:1px solid black;*/
+	width:400px;
+}
+
+#grid0,#grid1,#grid2,#grid3,#grid4,#grid5,#grid6,#grid6
+{
+	margin-top:80px;
+}
+
+.titulo-pantalla
+{
+	border:1px solid black;
+	width: 800px;
+	position:absolute;
+	left: 110px;
+	margin-top:10px;
+	text-align:center;
+	background-color:#3D75B0;
+	color:white;
+	font-weight:bold;
+	font-size:1.7em;	
+}	
+
+#tabPrin>div{
+	height:200px;
+	
+}
+.NombreNivel{
+	font-size:1.2em;
+	color:black;
+	font-weight: bolder;
+	
+}
+
+.ValorNivel{
+	font-size:1.2em;
+	color:black;
+		
+}
+.NombreNivel2{
+	font-size:0.7em;
+	color:black;
+	font-weight:bolder;
+	
+}
+
+.ValorNivel2{
+	font-size:0.7em;
+	color:black;
+		
+}
+#aqui{
+	border:1px solid black;
+}
+
+.bmenuagregar
+{
+    background-image: url(../../otros/imagenes/file-add.gif) !important;
+}
+
+.bmenuquitar 
+{
+    background-image: url(../../otros/imagenes/file-remove.gif) !important;
+}
+
+.Total .x-grid3-cell-inner
+{
+	  font-weight:bolder;
+      color:black;
+}
+ 
+.Filazul .x-grid3-cell-inner
+{
+      color:black;
+      background-color:#CADAEE;
+}
+ 
+ 

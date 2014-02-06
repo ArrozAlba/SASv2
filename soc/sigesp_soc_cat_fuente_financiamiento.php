@@ -1,0 +1,128 @@
+<?php
+	session_start();
+	if(!array_key_exists("la_logusr",$_SESSION))
+	{
+		print "<script language=JavaScript>";
+		print "close();";
+		print "opener.document.formulario.submit();";
+		print "</script>";		
+	}
+	require_once("class_folder/class_funciones_soc.php");
+	$io_fun_soc=new class_funciones_soc();
+	$ls_tipo=$io_fun_soc->uf_obtenertipo();
+	$ls_codestpro1=$_GET["codestpro1"];
+	$ls_codestpro2=$_GET["codestpro2"];
+	$ls_codestpro3=$_GET["codestpro3"];
+	$ls_codestpro4=$_GET["codestpro4"];
+	$ls_codestpro5=$_GET["codestpro5"];
+	$ls_estcla=$_GET["estcla"]; 
+	unset($io_fun_soc);
+?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Cat&aacute;logo de Fuente de Financiamiento</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<style type="text/css">
+<!--
+a:link {
+	color: #006699;
+}
+a:visited {
+	color: #006699;
+}
+a:active {
+	color: #006699;
+}
+-->
+</style>
+<link href="../shared/css/ventanas.css" rel="stylesheet" type="text/css">
+<link href="../shared/css/general.css" rel="stylesheet" type="text/css">
+<link href="../shared/css/tablas.css" rel="stylesheet" type="text/css">
+</head>
+<script type="text/javascript" language="JavaScript1.2" src="../sep/js/funcion_sep.js"></script>
+<script type="text/javascript" language="JavaScript1.2" src="../shared/js/disabled_keys.js"></script>
+<body onLoad="javascript: ue_search();">
+<form name="formulario" method="post" action="">
+<input name="campoorden" type="hidden" id="campoorden" value="codfuefin">
+<input name="orden" type="hidden" id="orden" value="ASC">
+<input name="tipo" type="hidden" id="tipo" value="<?php print $ls_tipo; ?>">
+<input name="codestpro1" type="hidden" id="codestpro1" value="<?php print $ls_codestpro1; ?>">
+<input name="codestpro2" type="hidden" id="codestpro2" value="<?php print $ls_codestpro2; ?>">
+<input name="codestpro3" type="hidden" id="codestpro3" value="<?php print $ls_codestpro3; ?>">
+<input name="codestpro4" type="hidden" id="codestpro4" value="<?php print $ls_codestpro4; ?>">
+<input name="codestpro5" type="hidden" id="codestpro5" value="<?php print $ls_codestpro5; ?>">
+<input name="estcla" type="hidden" id="estcla" value="<?php print $ls_estcla; ?>">
+  <table width="500" border="0" align="center" cellpadding="1" cellspacing="1">
+    <tr>
+      <td width="496" height="20" colspan="2" class="titulo-ventana">Cat&aacute;logo 
+        de Fuente de Financiamiento</td>
+    </tr>
+  </table>
+	<p>
+		<div id="resultados" align="center"></div>	
+	</p>
+</form>
+</body>
+<script language="JavaScript">
+function aceptar(codfuefin,denfuefin)
+{
+	opener.document.formulario.txtcodfuefin.value=codfuefin;
+    opener.document.formulario.txtdenfuefin.value=denfuefin;
+	close();
+}
+
+function ue_search()
+{
+	f=document.formulario;
+	// Cargamos las variables para pasarlas al AJAX
+	tipo=f.tipo.value;
+	orden=f.orden.value;
+	codestpro1=f.codestpro1.value;
+	codestpro2=f.codestpro2.value;
+	codestpro3=f.codestpro3.value;
+	codestpro4=f.codestpro4.value;
+	codestpro5=f.codestpro5.value;
+	estcla=f.estcla.value;
+	campoorden=f.campoorden.value;
+	// Div donde se van a cargar los resultados
+	divgrid = document.getElementById('resultados');
+	// Instancia del Objeto AJAX
+	ajax=objetoAjax();
+	// Pagina donde están los métodos para buscar y pintar los resultados
+	ajax.open("POST","class_folder/sigesp_soc_c_catalogo_ajax.php",true);
+	ajax.onreadystatechange=function(){
+		if(ajax.readyState==1)
+		{
+			divgrid.innerHTML = "<img src='imagenes/loading.gif' width='350' height='200'>";//<-- aqui iria la precarga en AJAX 
+		}
+		else
+		{
+			if(ajax.readyState==4)
+			{
+				if(ajax.status==200)
+				{//mostramos los datos dentro del contenedor
+					divgrid.innerHTML = ajax.responseText
+				}
+				else
+				{
+					if(ajax.status==404)
+					{
+						divgrid.innerHTML = "La página no existe";
+					}
+					else
+					{//mostramos el posible error     
+						divgrid.innerHTML = "Error:".ajax.status;
+					}
+				}
+				
+			}
+		}
+	}	
+	ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	// Enviar todos los campos a la pagina para que haga el procesamiento
+	ajax.send("catalogo=FUENTE-FINANCIAMIENTO&tipo="+tipo+"&orden="+orden+"&campoorden="+campoorden+"&codestpro1="+codestpro1+"&codestpro2="+codestpro2+"&codestpro3="+codestpro3+"&codestpro4="+codestpro4+"&codestpro5="+codestpro5+"&estcla="+estcla);
+}
+</script>
+</html>

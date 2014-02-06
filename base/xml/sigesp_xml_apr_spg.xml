@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tablas>
+  <tabla>
+      <nombre>spg_ep1</nombre>
+      <criterio>WHERE codestpro1 DISTINTO -:::::::::::::::::::::::::-</criterio>
+      <tipo>INSERT</tipo>
+	  <id>8</id>
+  </tabla>
+  <tabla>
+      <nombre>spg_ep2</nombre>
+      <criterio>WHERE codestpro1 DISTINTO -:::::::::::::::::::::::::- AND codestpro2 DISTINTO -:::::::::::::::::::::::::-</criterio>
+      <tipo>INSERT</tipo>
+	  <id>7</id>
+  </tabla>
+  <tabla>
+      <nombre>spg_ep3</nombre>
+      <criterio>WHERE codestpro1 DISTINTO -:::::::::::::::::::::::::- AND codestpro2 DISTINTO -:::::::::::::::::::::::::- AND codestpro3 DISTINTO -:::::::::::::::::::::::::-</criterio>
+      <tipo>INSERT</tipo>
+	  <id>6</id>
+  </tabla>
+  <tabla>
+      <nombre>spg_ep4</nombre>
+      <criterio>WHERE codestpro3 IN (SELECT codestpro3 FROM spg_ep3 WHERE spg_ep4.codemp = spg_ep3.codemp AND spg_ep4.codestpro1 = spg_ep3.codestpro1 AND spg_ep4.codestpro2 = spg_ep3.codestpro2 AND spg_ep4.codestpro3 = spg_ep3.codestpro3) AND codestpro1 DISTINTO -:::::::::::::::::::::::::- AND codestpro2 DISTINTO -:::::::::::::::::::::::::- AND codestpro3 DISTINTO -:::::::::::::::::::::::::- AND codestpro4 DISTINTO -:::::::::::::::::::::::::-</criterio>
+      <tipo>INSERT</tipo>
+	  <id>5</id>
+  </tabla>
+  <tabla>
+      <nombre>spg_ep5</nombre>
+      <criterio>WHERE codestpro4 IN (SELECT codestpro4 FROM spg_ep4 WHERE spg_ep5.codemp = spg_ep4.codemp AND spg_ep5.codestpro1 = spg_ep4.codestpro1 AND spg_ep5.codestpro2 = spg_ep4.codestpro2 AND spg_ep5.codestpro3 = spg_ep4.codestpro3 AND spg_ep5.codestpro4 = spg_ep4.codestpro4) AND codestpro3 IN (SELECT codestpro3 FROM spg_ep3 WHERE spg_ep5.codemp = spg_ep3.codemp AND spg_ep5.codestpro1 = spg_ep3.codestpro1 AND spg_ep5.codestpro2 = spg_ep3.codestpro2 AND spg_ep5.codestpro3 = spg_ep3.codestpro3)  AND codestpro1 DISTINTO -:::::::::::::::::::::::::- AND codestpro2 DISTINTO -:::::::::::::::::::::::::- AND codestpro3 DISTINTO -:::::::::::::::::::::::::- AND codestpro4 DISTINTO -:::::::::::::::::::::::::- AND codestpro5 DISTINTO -:::::::::::::::::::::::::-</criterio>
+      <tipo>INSERT</tipo>
+	  <id>4</id>
+  </tabla>  
+  <tabla>
+      <nombre>spg_dt_fuentefinanciamiento</nombre>
+      <criterio>WHERE codestpro1 DISTINTO -:::::::::::::::::::::::::- AND codestpro2 DISTINTO -:::::::::::::::::::::::::- AND codestpro3 DISTINTO -:::::::::::::::::::::::::- AND codestpro4 DISTINTO -:::::::::::::::::::::::::- AND codestpro5 DISTINTO -:::::::::::::::::::::::::-</criterio>
+      <tipo>INSERT</tipo>
+	  <id>3</id>
+  </tabla>
+  <tabla>
+      <nombre>spg_dt_unidadadministrativa</nombre>
+      <criterio>WHERE coduniadm DISTINTO -::::::::::- AND codestpro1 DISTINTO -:::::::::::::::::::::::::- AND codestpro2 DISTINTO -:::::::::::::::::::::::::- AND codestpro3 DISTINTO -:::::::::::::::::::::::::- AND codestpro4 DISTINTO -:::::::::::::::::::::::::- AND codestpro5 DISTINTO -:::::::::::::::::::::::::-</criterio>
+      <tipo>INSERT</tipo>
+	  <id>2</id>
+  </tabla>
+  <tabla>
+      <nombre>spg_cuentas</nombre>
+      <criterio></criterio>
+      <tipo>INSERT</tipo>
+	  <id>1</id>
+  </tabla>
+  <tabla>
+      <nombre>spg_cuenta_fuentefinanciamiento</nombre>
+      <criterio></criterio>
+      <tipo>INSERT</tipo>
+	  <id>0</id>
+  </tabla>
+</tablas>

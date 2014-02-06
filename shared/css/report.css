@@ -1,0 +1,42 @@
+.report {
+	border: thin solid #FFFFFF;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	padding: 2px;
+}
+.titulo_report {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #000000;
+	font-weight: bold;
+	top: auto;
+}
+.fecha_report {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #000000;
+}
+.titulos {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-style: oblique;
+	font-weight: bold;
+	padding: 0px 2px;
+	text-decoration: underline;
+}
+.data {
+	padding: 2px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: normal;
+	margin: 5px;
+}
+.data14 {
+
+	padding: 2px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	margin: 5px;
+}

@@ -1,0 +1,15 @@
+-- Table: sigesp_sfp_saldoscon
+
+-- DROP TABLE sigesp_sfp_saldoscon;
+
+CREATE TABLE sigesp_sfp_saldoscon
+(
+  codemp varchar(4) NOT NULL,
+  ano_presupuesto int4 NOT NULL,
+  sc_cuenta char(20) NOT NULL,
+  monto_anreal int8,
+  monto_anest int8,
+  CONSTRAINT sigesp_sfp_saldoscon_pkey PRIMARY KEY (codemp, sc_cuenta, ano_presupuesto)
+) 
+WITHOUT OIDS;
+ALTER TABLE sigesp_sfp_saldoscon OWNER TO postgres;

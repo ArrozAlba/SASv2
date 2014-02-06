@@ -1,0 +1,10 @@
+/*********************************************************************************************************
+* @Clase que permite generar el archivo Xml para mostrar los datos del reporte.
+* @Fecha de Creación: 04/2008
+* @Autor: Johny Porras.
+* @Última Modificación:Modificar nombres de variables y funciones para que se rigan por los 
+*                       estandares establecidos para la nueva versión.
+*                @Fecha: 19/05/08.
+*
+@Autor: Gusmary Balza. 
+*********************************************************************************************************/

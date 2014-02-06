@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tablas>
+  <tabla>
+      <nombre>cxp_clasificador_rd</nombre>
+      <criterio></criterio>
+      <tipo>INSERT</tipo>
+	  <id>3</id>
+  </tabla>
+  <tabla>
+      <nombre>cxp_documento</nombre>
+      <criterio></criterio>
+      <tipo>INSERT</tipo>
+	  <id>2</id>
+  </tabla>
+  <tabla>
+      <nombre>sigesp_cargos</nombre>
+      <criterio></criterio>
+      <tipo>INSERT</tipo>
+	  <id>1</id>
+  </tabla>
+  <tabla>
+      <nombre>sigesp_deducciones</nombre>
+      <criterio></criterio>
+      <tipo>INSERT</tipo>
+	  <id>0</id>
+  </tabla>
+</tablas>

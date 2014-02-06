@@ -1,0 +1,20 @@
+cuentas de variacion patrimonial, tienen que casase
+para que se pueda dar el hoja de calculo del presupuesto
+
+instructivo 4, las cuentas de incremento y disminuciones son cuentas de variacion patrimonial
+
+tabla conversion, ha tenido problemas, no tienen movimientos
+
+cuando se le carga al banco, tiene que ir a una cuenta que se llama incremento de banco, que no es una cuenta 
+origen y aplicacion de fondos, cuando cargo en presupuesto.
+hay cuentas contable que tienen varias afectaciones
+presupuesto, en contabilidad carga en banco y abono a ingreso, y carga una cuenta que se llama incremento en banco
+
+buscar el plan asociado con sus montos
+
+dejar un plan para años , que me traiga las cuentas de ingreso.
+dejar habilitadas solo las especcificas, yo puedo marcar varios.
+
+cuanto voy a meterle en los años previstos.
+eso es cuando programa y se puede crear un equitativo.
+planificacion del plan completo. planificar por proyecto

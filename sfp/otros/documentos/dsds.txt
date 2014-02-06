@@ -1,0 +1,28 @@
+frmRepProveedores
+
+tiene que haber un cuenta de ingreso, cuentas de variacion de 
+patrimonio.
+
+planificacion por estructura presupuestaria.
+
+que es lo que se esta planificando.
+
+el plan se supone que yo tengo la estructura presupuestaria.
+
+financiamiento.
+gastos y aplicaciones caso el plan con la est.
+
+debe salir el nombre.
+
+planificacion yb presupuesto sacar la asociada.
+
+vinculacion presupuestaria.
+
+si salga a nivel de detalle o a nivel de partida.
+
+planificar cuanto se va a gastar a alli.
+ya se planifico los montos.
+
+agregarle las variables y metas.
+
+casar las que tengas relacion

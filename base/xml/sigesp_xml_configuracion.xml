@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<conexiones>
+  <conexion>
+      <servidor>192.168.1.65</servidor>
+      <puerto>5432</puerto>
+      <basedatos>db_redtv_2009</basedatos>
+      <nombre>REDTV 2009</nombre>
+      <login>sigesp</login>
+      <password>adminsigesp</password>
+      <gestor>POSTGRES</gestor>
+      <logo>imagen.gif</logo>	  	  	  
+      <ancho>70</ancho>
+      <alto>70</alto>
+  </conexion>
+  <conexion>
+      <servidor>192.168.1.65</servidor>
+      <puerto>5432</puerto>
+      <basedatos>db_viaconsucre_2009</basedatos>
+      <nombre>VIALIDAD Y CONSTRUCCIONES SUCRE 2009</nombre>
+      <login>sigesp</login>
+      <password>adminsigesp</password>
+      <gestor>POSTGRES</gestor>
+      <logo>imagen.gif</logo>	  	  	  
+      <ancho>70</ancho>
+      <alto>70</alto>
+  </conexion>
+  <conexion>
+      <servidor>192.168.1.65</servidor>
+      <puerto>5432</puerto>
+      <basedatos>db_inass_2009</basedatos>
+      <nombre>INASS 2009</nombre>
+      <login>sigesp</login>
+      <password>adminsigesp</password>
+      <gestor>POSTGRES</gestor>
+      <logo>imagen.gif</logo>	  	  	  
+      <ancho>70</ancho>
+      <alto>70</alto>
+  </conexion>
+  <conexion>
+ 	  <servidor>192.168.1.65</servidor>
+	  <puerto>3306</puerto>
+	  <basedatos>db_corpivensa_2009</basedatos>
+	  <nombre>CORPIVENSA 2009</nombre>
+	  <login>sigesp</login>
+	  <password>adminsigesp</password>
+	  <gestor>MYSQLT</gestor>
+      <logo>imagen.gif</logo>	  	  	  
+      <ancho>70</ancho>
+      <alto>70</alto>
+  </conexion>
+  <conexion>
+  	<servidor>192.168.1.65</servidor>
+  	<puerto>3306</puerto>
+  	<basedatos>db_fundaescolar_2009</basedatos>
+  	<nombre>FUNDAESCOLAR 2009</nombre>
+  	<login>sigesp</login>
+  	<password>adminsigesp</password>
+  	<gestor>MYSQLT</gestor>
+      <logo>imagen.gif</logo>	  	  	  
+      <ancho>70</ancho>
+      <alto>70</alto>
+  </conexion>  
+  <conexion>
+  	<servidor>192.168.1.62</servidor>
+  	<puerto>5432</puerto>
+  	<basedatos>db_sigesp</basedatos>
+  	<nombre>sigesp</nombre>
+  	<login>postgres</login>
+  	<password>adminsigesp</password>
+  	<gestor>POSTGRES</gestor></conexion>
+</conexiones>

@@ -1,0 +1,27 @@
+Objson.(los mismos de los campos que este en la base de datos)
+
+ObJson = arreglo u objeto de php.
+Dao.
+
+Instanciar el dao correspondiente.=ObjDao.
+
+PasarDatos(Objson,ObjDao).
+
+
+
+Validar()
+{
+	if()
+
+}
+
+
+
+
+
+
+
+
+
+
+

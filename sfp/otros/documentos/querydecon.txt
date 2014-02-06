@@ -1,0 +1,7 @@
+select an.sig_cuenta,si.denominacion as DenPre,an.sc_cuenta,s.denominacion as  DenCo1
+ from sigesp_sfp_asociacion an
+ inner join sigesp_plan_unico_re si 
+on an.sig_cuenta=si.sig_cuenta 
+inner join sigesp_plan_unico s
+on an.sc_cuenta=s.sc_cuenta
+where an.estatus=1

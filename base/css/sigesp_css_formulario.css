@@ -1,0 +1,44 @@
+/***********************************************************************************
+* @Estilo para manejar los formularios del sistema
+* @fecha de creación: 07/08/2008
+* @autor: Ing. Gusmary Balza
+* **************************
+* @fecha modificacion 
+* @autor   
+* @descripcion 
+***********************************************************************************/
+.calendar .x-menu-item-icon {
+    background-image:url(../../resources/images/default/shared/calendar.gif);
+}
+
+.search-item {
+    font:normal 11px tahoma, arial, helvetica, sans-serif;
+    padding:3px 10px 3px 10px;
+    border-bottom:1px solid #eeeeee;
+}
+.search-item h3 {
+    display:block;
+    font:inherit;
+    font-weight:bold;
+}
+
+.search-item h3 span {
+    float: right;
+    font-weight:normal;
+    margin:0 0 5px 5px;
+    width:100px;
+    display:block;
+    clear:none;
+}
+
+.combos
+	{
+			float:left;
+			margin-right:5px
+	}
+
+.fondo
+	{
+		background:#F9F9EE;
+	}
+

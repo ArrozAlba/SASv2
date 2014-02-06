@@ -1,0 +1,46 @@
+ knowfree.net 
+
+
+tareas pendietes.
+
+terminar la que estoy haciendo.
+
+crear el script para la relacion de cuentas.
+crear la estructura de las tablas de contabilidad.
+
+cod_cuenta.
+operacion
+Monto
+Status.
+
+una vez creada la tabla.
+
+proceder a realizar el asiento contable correspondiente.
+
+los montos se deben incluir luego dispara pa los asientos contables.
+
+
+se debe crear un plan unico integrado.
+el cual viene de la integracion de las cuentas.
+
+
+
+en la conversion de las cuentas se coloca la cuenta contable 401,402,403,404,301,302,303,304, la 
+cuenta contable que va por el debe 
+
+cuando se presupuesten los ingresos se le asocia la misma cuenta por el haber
+
+cuando se presupueste el gasto se coloca
+
+
+
+{name: 'NombreNivel'},     // "mapping" property not needed if it's the same as "name"
+{name: 'CodSel'},
+{name: 'DenSel'}	// This field will use "occupation" as the mapping.
+			]);
+ 
+
+evaluar al que me traigo(convertir a json).
+
+generar una cadena con la nueva 
+ir evaluando para formar el json del datastore correspondiente

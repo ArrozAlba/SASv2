@@ -1,0 +1,195 @@
+/***********************************************************************************
+* @Estilo para manejar el escritorio del sistema
+* @fecha de creación: 07/08/2008
+* @autor: Ing. Gusmary Balza
+* **************************
+* @fecha modificacion 
+* @autor   
+* @descripcion 
+***********************************************************************************/
+html, body {
+	margin: 0;
+	padding: 0;
+	border: 0 none;
+	overflow: hidden;
+	height: 100%;
+	font-family: verdana;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: bold;
+	font-variant: normal;
+        }
+        .empty .x-panel-body {
+            padding-top:20px;
+            text-align:center;
+            font-style:italic;
+            color: gray;
+            font-size:11px;
+        }
+.modprincipal 
+{
+	background-image: url( ../../base/imagenes/sigesp_img_modprincipales.png ) !important;
+}
+.modherramienta 
+{
+	background-image: url( ../../base/imagenes/sigesp_img_modherramientas.png ) !important;
+}
+.modpersonal 
+{
+	background-image: url( ../../base/imagenes/sigesp_img_modpersonal.png ) !important;
+}
+.modauxiliar 
+{
+	background-image: url( ../../base/imagenes/sigesp_img_modauxiliares.png ) !important;
+}
+.modfondo
+{
+	background-image: url( ../../base/imagenes/sigesp_img_fondopantalla.jpg) !important;
+}
+
+/* Desktop Shortcuts */
+#x-shortcuts dt {
+    float:left;
+    margin:15px 25px 25px 15px;
+    clear:left;
+    width:64px;
+    font:normal 12px tahoma,arial,verdana,sans-serif;
+    text-align:center;
+    zoom:1;
+    display:block;
+}
+#x-shortcuts dt a {
+    width:64px;
+    display:block;
+    color:white;
+    text-decoration:none;
+}
+#x-shortcuts2 dt {
+    float:left;
+    margin:15px 25px 25px 15px;
+    clear:left;
+    width:64px;
+    font:normal 10px tahoma,arial,verdana,sans-serif;
+    text-align:center;
+    zoom:1;
+    display:block;
+}
+#x-shortcuts2 dt a {
+    width:64px;
+    display:block;
+    color:white;
+    text-decoration:none;
+}
+#x-shortcuts3 dt {
+    float:left;
+    margin:15px 25px 25px 15px;
+    clear:left;
+    width:64px;
+    font:normal 10px tahoma,arial,verdana,sans-serif;
+    text-align:center;
+    zoom:1;
+    display:block;
+}
+#x-shortcuts3 dt a {
+    width:64px;
+    display:block;
+    color:white;
+    text-decoration:none;
+}
+#x-shortcuts4 dt {
+    float:left;
+    margin:15px 25px 25px 15px;
+    clear:left;
+    width:64px;
+    font:normal 10px tahoma,arial,verdana,sans-serif;
+    text-align:center;
+    zoom:1;
+    display:block;
+}
+#x-shortcuts5 dt {
+    float:left;
+    margin:15px 25px 25px 15px;
+    clear:left;
+    width:64px;
+    font:normal 10px tahoma,arial,verdana,sans-serif;
+    text-align:center;
+    zoom:1;
+    display:block;
+}
+#x-shortcuts4 dt a {
+    width:64px;
+    display:block;
+    color:white;
+    text-decoration:none;
+}
+#x-shortcuts5 dt a {
+    width:64px;
+    display:block;
+    color:white;
+    text-decoration:none;
+}
+#x-shortcuts dt div {
+    width:100%;
+    color:black;
+    overflow:visible;
+	font-size:11px;
+    text-overflow:ellipsis;
+    cursor:pointer;
+}
+#x-shortcuts2 dt div {
+    width:100%;
+    color:black;
+	font-size:11px;
+    overflow:visible;
+    text-overflow:ellipsis;
+    cursor:pointer;
+}
+
+#x-shortcuts3 dt div {
+    width:100%;
+    color:black;
+    overflow:visible;
+	font-size:11px;
+    text-overflow:ellipsis;
+    cursor:pointer;
+}
+
+#x-shortcuts4 dt div {
+    width:100%;
+    color:black;
+    overflow:visible;
+	font-size:11px;
+    text-overflow:ellipsis;
+    cursor:pointer;
+}
+#x-shortcuts5 dt div {
+    width:100%;
+    color:black;
+    overflow:visible;
+	font-size:11px;
+    text-overflow:ellipsis;
+    cursor:pointer;
+}
+
+
+.ext-ie #x-shortcuts dt img {
+    background:transparent !important;
+}
+#x-shortcuts dt a:hover {
+    text-decoration:underline;
+}
+/* shortcuts */
+#grid-win-shortcut img {
+    width:48px;
+    height:48px;
+/*    background-image: url(../images/grid48x48.png);
+*/    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/grid48x48.png', sizingMethod='scale');
+}
+#acc-win-shortcut img {
+    width:56px;
+    height:56px;
+/*    background-image: url(../images/im48x48.png);
+*/    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/im48x48.png', sizingMethod='scale');
+}
+
+

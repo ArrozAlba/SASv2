@@ -1,0 +1,6 @@
+			{name: 'CODEMP'},     // "mapping" property not needed if it's the same as "name"
+			{name: 'CODEST'+numero},
+			{name: 'ESTCLA_P'},
+			{name: 'ANO_PRESUPUESTO'},
+			{name: 'CODUAC'},
+			{name: 'DENEST'+numero}

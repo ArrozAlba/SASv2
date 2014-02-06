@@ -1,0 +1,83 @@
+ [select s.sector,p.programa,sp.subprog,pr.proyecto,ac.actividad,s.denominacion as sdenominacion,p.denominacion as pdenominacion,sp.denominacion as spdenominacion,pr.denominacion as prdenominacion,ac.denominacion as acdenominacion ]+;
+ [from ]+oApp.cDBO+[spg_sector s,]+oApp.cDBO+[spg_programa p,]+oApp.cDBO+[spg_subprograma sp,]+oApp.cDBO+[spg_proyecto pr,]+oApp.cDBO+[spg_actividad ac ]+;
+ [where s.sector = p.sector and ]+;
+ [p.sector = sp.sector and ]+;
+ [p.programa = sp.programa and ]+;
+ [sp.sector  = pr.sector and ]+;
+ [sp.programa = pr.programa and ]+;
+ [sp.subprog = pr.subprog and ]+;
+ [pr.sector = ac.sector and ]+;
+ [pr.programa = ac.programa and ]+;
+ [pr.subprog = ac.subprog and  ]+;
+ [pr.proyecto = ac.proyecto ]+;
+ [order by ac.sector,ac.programa,ac.subprog,ac.proyecto,ac.actividad ]
+
+
+select * from spe_relacion_es as i,sfp_estpro1 as e1,sfp_estpro2 as e2,sfp_estpro3 as e3,sfp_estpro4 as e4,sfp_estpro5 as e5
+where i.codestpro1=e1.codestpro1 and
+e1.codestpro1='00000000000000000000PROY1' and
+i.codestpro1=e2.codestpro1 and
+i.codestpro2=e2.codestpro2 and
+e2.codestpro1='00000000000000000000PROY1' and
+e2.codestpro2='0000000000000000000000AE2' and
+i.codestpro1=e3.codestpro1 and
+i.codestpro2=e3.codestpro2 and
+i.codestpro3=e3.codestpro3 and
+e3.codestpro1='00000000000000000000PROY1' and
+e3.codestpro2='0000000000000000000000AE2' and
+e3.codestpro3='0000000000000000346346456' and
+i.codestpro1=e4.codestpro1 and
+ i.codestpro2=e4.codestpro2 and
+ i.codestpro3=e4.codestpro3 and
+ i.codestpro4=e4.codestpro4 and
+ e4.codestpro1='00000000000000000000PROY1' and
+  e4.codestpro2='0000000000000000000000AE2' and
+  e4.codestpro3='0000000000000000346346456' and
+  e4.codestpro4='00000000000000000000PROY1' and
+  i.codestpro1=e5.codestpro1 and
+  i.codestpro2=e5.codestpro2 and
+  .codestpro3=e5.codestpro3 and
+  i.codestpro4=e5.codestpro4 and
+  i.codestpro5=e5.codestpro5 and
+  e5.codestpro1='00000000000000000000PROY1' and
+  e5.codestpro2='0000000000000000000000AE2' and
+  e5.codestpro3='0000000000000000346346456' and
+  e5.codestpro4='00000000000000000000PROY1' and
+  e5.codestpro5='0000000000000000000000AE2'
+  
+  
+  
+  
+
+select p1.codest1,p1.denest1,p2.codest2,p2.denest2,p3.codest3,p3.denest3,
+p4.codest4,p4.denest4,p5.codest5,p5.denest5,e1.codestpro1,e1.denestpro1,e2.codestpro1,e2.codestpro2,denestpro2,e3.codestpro3,e3.denestpro3
+from spe_relacion_es as i,sfp_estpro1 as e1,sfp_estpro2 as e2,sfp_estpro3 as e3,spe_estpro1 as p1,
+spe_estpro2 as p2,spe_estpro3 as p3,spe_estpro4 as p4,spe_estpro5 as p5
+where i.codestpro1=e1.codestpro1 and
+e1.codestpro1='00000000000000000000PROY1' and
+i.codestpro2=e2.codestpro2 and
+e2.codestpro1='00000000000000000000PROY1' and
+e2.codestpro2='0000000000000000000000AE2' and
+i.codestpro1=e3.codestpro1 and
+i.codestpro2=e3.codestpro2 and
+i.codestpro3=e3.codestpro3 and
+e3.codestpro1='00000000000000000000PROY1' and
+e3.codestpro2='0000000000000000000000AE2' and
+e3.codestpro3='0000000000000000346346456' and
+p1.codest1=i.codest1 and
+p2.codest1=i.codest1 and
+p2.codest2=i.codest2 and
+p3.codest1=i.codest1 and
+p3.codest2 = i.codest2 and
+p3.codest3=i.codest3 and
+p4.codest1 = i.codest1 and
+p4.codest2=i.codest2 and
+p4.codest3=i.codest3 and
+p4.codest4=i.codest4 and
+p5.codest1=i.codest1 and
+p5.codest2=i.codest2 and
+p5.codest3=i.codest3 and
+p5.codest4=i.codest4 and
+p5.codest5=i.codest5
+
+ 

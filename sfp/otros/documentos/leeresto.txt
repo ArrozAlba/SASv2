@@ -1,0 +1,29 @@
+obtener si son 3 o si son 5.
+
+mostrar siempre tres, son 5 mostrar las demas.
+
+
+variar solo los datastore, filtrar  e ir cambiando el valor de los datastore
+
+leer cuantos
+ciclo
+por cada1
+agregarle el titulo
+generar el grid correspondiente al nivel.
+
+
+
+agregarla dinamicamente.
+
+,items:[{contentEl:'grid-example',title:'Fuentes de Financiamiento'},
+                    {
+                    title:'Item 2'
+                },{
+                    title:'Item 3'
+                }
+		   
+		]
+
+
+
+
