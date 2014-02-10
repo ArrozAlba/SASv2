@@ -29,11 +29,25 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: sas_ciudad_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+--
+
+CREATE SEQUENCE sas_ciudad_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sas_ciudad_id_seq OWNER TO jelitox;
+
+--
 -- Name: sas_ciudad; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
 CREATE TABLE sas_ciudad (
-    id integer NOT NULL,
+    id integer DEFAULT nextval('sas_ciudad_id_seq'::regclass) NOT NULL,
     creacion_uid integer,
     creacion_fecha timestamp without time zone,
     edicion_fecha timestamp without time zone,
@@ -103,10 +117,16 @@ COMMENT ON COLUMN sas_ciudad.nombre IS 'Nombre de Ciudad';
 
 
 --
--- Name: sas_ciudad_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: sas_ciudad_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
-CREATE SEQUENCE sas_ciudad_id_seq
+ALTER SEQUENCE sas_ciudad_id_seq OWNED BY sas_ciudad.id;
+
+--
+-- Name: sas_municipio_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+--
+
+CREATE SEQUENCE sas_municipio_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -114,21 +134,14 @@ CREATE SEQUENCE sas_ciudad_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.sas_ciudad_id_seq OWNER TO jelitox;
-
---
--- Name: sas_ciudad_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
---
-
-ALTER SEQUENCE sas_ciudad_id_seq OWNED BY sas_ciudad.id;
-
+ALTER TABLE public.sas_municipio_id_seq OWNER TO jelitox;
 
 --
 -- Name: sas_municipio; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
 CREATE TABLE sas_municipio (
-    id integer NOT NULL,
+    id integer DEFAULT nextval('sas_municipio_id_seq'::regclass) NOT NULL,
     creacion_uid integer,
     creacion_fecha timestamp without time zone,
     edicion_fecha timestamp without time zone,
@@ -197,19 +210,6 @@ COMMENT ON COLUMN sas_municipio.codigo IS 'Codigo Municipio';
 COMMENT ON COLUMN sas_municipio.nombre IS 'Nombre Municipio';
 
 
---
--- Name: sas_municipio_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
---
-
-CREATE SEQUENCE sas_municipio_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.sas_municipio_id_seq OWNER TO jelitox;
 
 --
 -- Name: sas_municipio_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
@@ -219,11 +219,26 @@ ALTER SEQUENCE sas_municipio_id_seq OWNED BY sas_municipio.id;
 
 
 --
+-- Name: sas_pais_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+--
+
+CREATE SEQUENCE sas_pais_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sas_pais_id_seq OWNER TO jelitox;
+
+
+--
 -- Name: sas_pais; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
 CREATE TABLE sas_pais (
-    id integer NOT NULL,
+    id integer DEFAULT nextval('sas_pais_id_seq'::regclass) NOT NULL,
     creacion_uid integer,
     creacion_fecha timestamp without time zone,
     edicion_fecha timestamp without time zone,
@@ -234,6 +249,11 @@ CREATE TABLE sas_pais (
 
 
 ALTER TABLE public.sas_pais OWNER TO jelitox;
+--
+-- Name: sas_pais_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+--
+
+ALTER SEQUENCE sas_pais_id_seq OWNED BY sas_pais.id;
 
 --
 -- Name: TABLE sas_pais; Type: COMMENT; Schema: public; Owner: jelitox
@@ -283,13 +303,26 @@ COMMENT ON COLUMN sas_pais.codigo IS 'Codigo del Pais';
 
 COMMENT ON COLUMN sas_pais.nombre IS 'Nombre Pais';
 
+--
+-- Name: sas_pais_estado_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+--
+
+CREATE SEQUENCE sas_pais_estado_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sas_pais_estado_id_seq OWNER TO jelitox;
 
 --
 -- Name: sas_pais_estado; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
 CREATE TABLE sas_pais_estado (
-    id integer NOT NULL,
+    id integer DEFAULT nextval('sas_pais_estado_id_seq'::regclass) NOT NULL,
     creacion_uid integer,
     creacion_fecha timestamp without time zone,
     edicion_fecha timestamp without time zone,
@@ -358,19 +391,6 @@ COMMENT ON COLUMN sas_pais_estado.pais_id IS 'Pais';
 COMMENT ON COLUMN sas_pais_estado.nombre IS 'Nombre Estado';
 
 
---
--- Name: sas_pais_estado_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
---
-
-CREATE SEQUENCE sas_pais_estado_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.sas_pais_estado_id_seq OWNER TO jelitox;
 
 --
 -- Name: sas_pais_estado_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
@@ -378,12 +398,11 @@ ALTER TABLE public.sas_pais_estado_id_seq OWNER TO jelitox;
 
 ALTER SEQUENCE sas_pais_estado_id_seq OWNED BY sas_pais_estado.id;
 
-
 --
--- Name: sas_pais_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: sas_parroquia_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
-CREATE SEQUENCE sas_pais_id_seq
+CREATE SEQUENCE sas_parroquia_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -391,21 +410,14 @@ CREATE SEQUENCE sas_pais_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.sas_pais_id_seq OWNER TO jelitox;
-
---
--- Name: sas_pais_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
---
-
-ALTER SEQUENCE sas_pais_id_seq OWNED BY sas_pais.id;
-
+ALTER TABLE public.sas_parroquia_id_seq OWNER TO jelitox;
 
 --
 -- Name: sas_parroquia; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
 CREATE TABLE sas_parroquia (
-    id integer NOT NULL,
+    id integer DEFAULT nextval('sas_parroquia_id_seq'::regclass) NOT NULL,
     creacion_uid integer,
     creacion_fecha timestamp without time zone,
     edicion_fecha timestamp without time zone,
@@ -466,19 +478,6 @@ COMMENT ON COLUMN sas_parroquia.nombre IS 'Parroquia';
 COMMENT ON COLUMN sas_parroquia.municipio_id IS 'Municipio';
 
 
---
--- Name: sas_parroquia_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
---
-
-CREATE SEQUENCE sas_parroquia_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.sas_parroquia_id_seq OWNER TO jelitox;
 
 --
 -- Name: sas_parroquia_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
