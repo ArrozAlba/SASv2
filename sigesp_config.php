@@ -10,5 +10,4 @@ $empresa["gestor"][$i]="POSTGRES";
 $empresa["width"][$i]="70";
 $empresa["height"][$i]="70";
 $empresa["logo"][$i]="logo.jpg";
-
 ?>

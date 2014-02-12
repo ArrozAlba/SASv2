@@ -1,7 +1,7 @@
 <?php
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //    REPORTE: Formato de salida  de la Orden de Compra
-//  ORGANISMO: Ninguno en particular
+//  ORGANISMO: ARROZ DEL ALBA
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     session_start();   
 	header("Pragma: public");
@@ -16,15 +16,16 @@
 	}
 	//-----------------------------------------------------------------------------------------------------------------------------------
 	function uf_print_encabezado_pagina($as_estcondat,$as_numordcom,$ad_fecordcom,$as_coduniadm,$as_denuniadm, $as_codfuefin,
-	                                   $as_denfuefin,$as_codigo,$as_nombre,$as_conordcom,$as_rifpro,$as_diaplacom,$as_dirpro,
-									   $ls_forpagcom,$ld_perentdesde,$ld_perenthasta,&$io_pdf)
+	                                    $as_denfuefin,$as_codigo,$as_nombre,$as_conordcom,$as_rifpro,$as_diaplacom,$as_dirpro,
+									    $ls_forpagcom,$ls_orgrif,$as_telpro,$as_obscom,$as_nomdep,$as_dirdep,$as_fecent,$as_conent,$as_orgnom,
+										$as_orgtit,$ls_monant,&$io_pdf)
 	{
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		//       Function: uf_print_encabezado_pagina
 		//		   Access: private 
 		//	    Arguments: as_estcondat  ---> tipo de la orden de compra
 		//	    		   as_numordcom ---> numero de la orden de compra
-		//	    		   ad_fecordcom ---> fecha de registro de la orden de compra
+		//	    		   ad_fecordcom ---> fecha de registro de la orden d compra
 		//	    		   io_pdf // Instancia de objeto pdf
 		//    Description: Función que imprime los encabezados por página
 		//	   Creado Por: Ing. Yozelin Barragan
@@ -32,13 +33,20 @@
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		$io_encabezado=$io_pdf->openObject();
 		$io_pdf->saveState();
+		
+		$io_pdf->addText(200,767,10,"<b>".$as_orgnom."<b>"); 
+	        $dirempresa="Ctra Principal  vía  a  Turen  Local  antigua sede Cargill de Venezuela, Sector Piritu Edo Portuguesa";
+                $telecorreo="Teléfonos: 0256-3361333/3361377  unidad.compras@arrozdelalba.gob.ve";
+                $io_pdf->addText(115,757,10,"<b>".$dirempresa."<b>");
+                $io_pdf->addText(168,747,10,"<b>".$telecorreo."<b>");
+		
+		
 		$io_pdf->setStrokeColor(0,0,0);
-		//$io_pdf->line(15,40,585,40);
-		$io_pdf->line(485,693,485,763);
-		$io_pdf->line(485,730,585,730);
-        $io_pdf->Rectangle(16,693,570,70);
-		$io_pdf->addJpegFromFile('../../shared/imagebank/'.$_SESSION["ls_logo"],20,690,$_SESSION["ls_width"],$_SESSION["ls_height"]); // Agregar Logo
-		if($as_estcondat=="B") 
+		$io_pdf->rectangle(140,705,446,40);
+		$io_pdf->line(400,705,400,745);
+		$io_pdf->line(400,725,586,725);
+		$io_pdf->addJpegFromFile('../../shared/imagebank/logo.jpg',20,715,80,60);
+		if(($as_estcondat=="B") || ($as_estcondat=="-") || ($as_estcondat=="")) 
         {
              $ls_titulo="Orden de Compra";	
 			 $ls_titulo_grid="Bienes";
@@ -48,63 +56,38 @@
              $ls_titulo="Orden de Servicio";
 			 $ls_titulo_grid="Servicios";
         }
-		$ls_titulo1="Corporacion Venezolana de Alimentos S.A (CVAL)";
-		$ls_titulo2="Domicilio fiscal: Av. Libertador Edificio CVAL Piso 3 Oficina Presidencia Zona Industrial I.";
-		$ls_titulo3="Zona Postal 3001. Barquisimeto Estado Lara";		
-		$ls_titulo6="RIF: G-20009365-0";
+		$io_pdf->addText(20,700,9,"RIF: ".$ls_orgrif); // Agregar RIF de la Empresa.
+		$li_tm=$io_pdf->getTextWidth(14,$ls_titulo);
+		$tm=230;
+		$io_pdf->addText($tm,720,14,$ls_titulo); // Agregar el título
+		$io_pdf->addText(420,730,10," <b>No.: </b> ".$as_numordcom); // agrega ord comp
+		$io_pdf->addText(420,712,10,"<b>Fecha: </b>".$ad_fecordcom); // Agregar 		$io_pdf->addText(554,750,7,date("d/m/Y")); // Agregar la Fecha	
+		
 
-														
-		$li_tm =$io_pdf->getTextWidth(10,$ls_titulo);
-		$li_tm1=$io_pdf->getTextWidth(10,$ls_titulo1);
-		$li_tm2=$io_pdf->getTextWidth(10,$ls_titulo2);
-		$li_tm3=$io_pdf->getTextWidth(10,$ls_titulo3);
-		
-		$li_tm6=$io_pdf->getTextWidth(10,$ls_titulo6);		
-		
-		$io_pdf->addText(178,742,11,$ls_titulo1); // Agregar el título
-		$io_pdf->addText(148,732,8,$ls_titulo2); // Agregar el título
-		$io_pdf->addText(223,723,8,$ls_titulo3); // Agregar el título		
-		$io_pdf->addText(260,712,8,$ls_titulo6); // Agregar el título
-        $io_pdf->addText(249,700,11,$ls_titulo); // Agregar el título
-
-		$io_pdf->addText(488,740,9," <b>No. </b>".$as_numordcom); // Agregar el título
-		$io_pdf->addText(488,710,9,"<b>Fecha </b>".$ad_fecordcom); // Agregar el título
-		// cuadro inferior
-        $io_pdf->Rectangle(15,45,570,85); 
-		$io_pdf->line(15,117,585,117);	//HORIZONTAL	
-		$io_pdf->addText(28,122,7,"ELABORADO POR"); // Agregar el título
-		$io_pdf->addText(35,63,7,"ESPECIALISTA"); // Agregar el título
-		$io_pdf->addText(40,53,7,"COMPRAS"); // Agregar el título
-		
-		$io_pdf->line(105,45,105,130);	//VERTICAL	
-		$io_pdf->addText(123,122,7,"AUTORIZADO POR"); // Agregar el título
-		$io_pdf->addText(123,63,7,"COORDINADOR DE"); // Agregar el título
-		$io_pdf->addText(133,53,7,"COMPRAS"); // Agregar el título
-		
-		$io_pdf->line(204,45,204,130);	//VERTICAL		
-		$io_pdf->addText(222,122,7,"APROBADO POR"); // Agregar el título
-		$io_pdf->addText(227,63,7,"DIRECTOR DE"); // Agregar el título
-		$io_pdf->addText(224,53,7,"PLANIF. Y PRESUP."); // Agregar el título
-		
-		$io_pdf->line(298,45,298,130);	//VERTICAL	
-		$io_pdf->addText(313,122,7,"AUTORIZADO POR"); // Agregar el título
-		$io_pdf->addText(320,63,7,"DIRECTOR DE"); // Agregar el título
-		$io_pdf->addText(313,53,7,"ADMON. Y FINANZAS"); // Agregar el título
-		
-		$io_pdf->line(391,45,391,130);	//VERTICAL		
-		$io_pdf->addText(410,122,7,"AUTORIZADO POR"); // Agregar el título
-		$io_pdf->addText(408,63,7,"PRESIDENTE DE LA"); // Agregar el título
-		$io_pdf->addText(421,53,7,"EMPRESA"); // Agregar el título
-		
-		$io_pdf->line(489,45,489,130);	//VERTICAL		
-		$io_pdf->addText(515,122,7,"PROVEEDOR"); // Agregar el título
-		$io_pdf->addText(495,63,7,"FIRMA / SELLO / FECHA"); // Agregar el título
-		$io_pdf->line(15,73,585,73); //HORIZONTAL		
-		
+                // cuadro inferior
+		$io_pdf->line(15,100,586,100);	//HORIZONTAL	
+		$io_pdf->addText(30,105,7,"ELABORADO POR"); // Agregar el título
+		$io_pdf->addText(45,45,6,"COMPRAS"); // Agregar el título
+		$io_pdf->line(114,40,114,115);	//VERTICAL	
+		$io_pdf->addText(137,105,7,"REVISADO POR"); // Agregar el título
+		$io_pdf->addText(145,45,6,"PRESUPUESTO"); // Agregar el título
+		$io_pdf->line(228,40,228,115);	//VERTICAL		
+		$io_pdf->addText(250,105,7,"APROBADO POR"); // Agregar el título
+		$io_pdf->addText(255,45,6,"ADMINISTRACIÓN"); // Agregar el título
+		$io_pdf->line(342,40,342,115);	//VERTICAL		
+		$io_pdf->addText(367,105,7,"AUTORIZADO POR"); // Agregar el título
+                $io_pdf->addText(375,45,6,"PRESIDENCIA"); // Agregar el título
+                $io_pdf->line(456,40,456,115);	//VERTICAL		
+		$io_pdf->addText(498,105,7,"PROVEEDOR"); // Agregar el título
+                $io_pdf->addText(470,45,6,"FIRMA,CEDULA,SELLO Y FECHA"); // Agregar el título
+		$io_pdf->line(15,55,586,55); //HORIZONTAL		
+		$io_pdf->rectangle(15,40,571,75);
 		$io_pdf->ezSetY(695);
-		$la_data[1]=array('columna1'=>'<b>Proveedor</b>  '.$as_nombre.'<b>             Rif</b> '.$as_rifpro,
-		                 'columna2'=>'<b>Direccion</b> '.$as_dirpro.'');
-		$la_columna=array('columna1'=>'','columna2'=>'');
+		$la_data = array(array('fila'=>'<b>Proveedor  :</b> '.$as_nombre.' <b> - RIF: </b>'.$as_rifpro),
+		            	 array('fila'=>'<b>Dirección     : </b> '.$as_dirpro.'<b> - Teléfono:</b> '.$as_telpro),					   
+					     array('fila'=>'<b>Concepto:</b> '.$as_conordcom));
+
+		$la_columna=array('fila'=>'');
 		$la_config=array('showHeadings'=>0, // Mostrar encabezados
 						 'fontSize' => 9, // Tamaño de Letras
 						 'titleFontSize' => 12,  // Tamaño de Letras de los títulos
@@ -112,35 +95,37 @@
 						 'shaded'=>0, // Sombra entre líneas
 						 'width'=>570, // Ancho de la tabla
 						 'maxWidth'=>570, // Ancho Máximo de la tabla
-						 'xOrientation'=>'center', // Orientación de la tabla
-						 'cols'=>array('columna1'=>array('justification'=>'left','width'=>250), // Justificación y ancho de la columna
-						 			   'columna2'=>array('justification'=>'left','width'=>320))); // Justificación y ancho de la columna
+						 'xOrientation'=>'center'); // Justificación y ancho de la columna
 		$io_pdf->ezTable($la_data,$la_columna,'',$la_config);
 		unset($la_data);
 		unset($la_columna);
 		unset($la_config);
-		
-		$ls_uniadm=$as_coduniadm."  -  ".$as_denuniadm;
-		$la_data[1]=array('columna1'=>'<b>Unidad Ejecutora</b>    '.$ls_uniadm,'columna2'=>'<b>Forma de Pago</b>    '.$ls_forpagcom);
-		$la_columnas=array('columna1'=>'','columna2'=>'');
-		$la_config=array('showHeadings'=>0, // Mostrar encabezados
-						 'fontSize' => 9, // Tamaño de Letras
-						 'titleFontSize' => 12,  // Tamaño de Letras de los títulos
-						 'showLines'=>1, // Mostrar Líneas
-						 'shaded'=>0, // Sombra entre líneas
-						 'width'=>570, // Ancho de la tabla
-						 'maxWidth'=>570, // Ancho Máximo de la tabla
-						 'xOrientation'=>'center', // Orientación de la tabla
-						 'cols'=>array('columna1'=>array('justification'=>'left','width'=>300), // Justificación y ancho de la columna
-						 			   'columna2'=>array('justification'=>'left','width'=>270))); // Justificación y ancho de la columna
+
+//para imprimir cuadro y variables de condiciones de entrega		
+		$ls_uniadm   = $as_coduniadm."  -  ".$as_denuniadm;
+		$la_data[1]  = array('columna1'=>'<b>Dependencia:</b>','columna2'=>'<b>Dirección de Entrega</b>','columna3'=>'<b>Condicion de Entrega:</b>');
+		$la_data[2]  = array('columna1'=>$as_nomdep,'columna2'=>$as_dirdep,'columna3'=>''.$as_conent);
+		$la_columnas = array('columna1'=>'','columna2'=>'','columna3'=>'');
+		$la_config   = array('showHeadings'=>0, // Mostrar encabezados
+						     'fontSize' => 9, // Tamaño de Letras
+						     'titleFontSize' => 12,  // Tamaño de Letras de los títulos
+						     'showLines'=>1, // Mostrar Líneas
+						     'shaded'=>0, // Sombra entre líneas
+						     'width'=>570, // Ancho de la tabla
+						 	 'maxWidth'=>570, // Ancho Máximo de la tabla
+						 	 'xOrientation'=>'center', // Orientación de la tabla
+						 	 'cols'=>array('columna1'=>array('justification'=>'left','width'=>135), // Justificación y ancho de la columna
+						 			       'columna2'=>array('justification'=>'left','width'=>300),
+									       'columna3'=>array('justification'=>'left','width'=>135))); // Justificación y ancho de la columna
 		$io_pdf->ezTable($la_data,$la_columnas,'',$la_config);
 		unset($la_data);
 		unset($la_columnas);
 		unset($la_config);
 
 		$ls_fuefin=$as_codfuefin."  -  ".$as_denfuefin;
-		$la_data[1]=array('columna1'=>'<b>Fuente Financiamiento</b>   '.$ls_fuefin,'columna2'=>'<b> Plazo de Entrega</b>    '.$as_diaplacom);
-		$la_columnas=array('columna1'=>'','columna2'=>'');
+		$la_data[1] = array('columna1'=>'<b>Fecha de entrega</b>','columna2'=>'<b>Plazo en Días</b>','columna3'=>'<b>Condición de Pago</b>','columna4'=>'<b>Anticipo de Pago</b>');
+		$la_data[2] = array('columna1'=>'','columna2'=>$as_diaplacom,'columna3'=>$ls_forpagcom,'columna4'=>$ls_monant);
+		$la_columnas=array('columna1'=>'','columna2'=>'','columna3'=>'','columna4'=>'');
 		$la_config=array('showHeadings'=>0, // Mostrar encabezados
 						 'fontSize' => 9, // Tamaño de Letras
 						 'titleFontSize' => 12,  // Tamaño de Letras de los títulos
@@ -149,40 +134,13 @@
 						 'width'=>570, // Ancho de la tabla
 						 'maxWidth'=>570, // Ancho Máximo de la tabla
 						 'xOrientation'=>'center', // Orientación de la tabla
-						 'cols'=>array('columna1'=>array('justification'=>'left','width'=>300), // Justificación y ancho de la columna
-						 			   'columna2'=>array('justification'=>'left','width'=>270))); // Justificación y ancho de la columna
-		$io_pdf->ezTable($la_data,$la_columnas,'',$la_config);
-		unset($la_data);
-		unset($la_columnas);
-		unset($la_config);
-		
-		$la_data[1]=array('columna1'=>'<b>Período de Entrega    Desde:</b> '.$ld_perentdesde.'    <b>Hasta:</b> '.$ld_perenthasta.'');
-		$la_columnas=array('columna1'=>'');
-		$la_config=array('showHeadings'=>0, // Mostrar encabezados
-						 'fontSize' => 9, // Tamaño de Letras
-						 'titleFontSize' => 12,  // Tamaño de Letras de los títulos
-						 'showLines'=>1, // Mostrar Líneas
-						 'shaded'=>0, // Sombra entre líneas
-						 'width'=>570, // Ancho de la tabla
-						 'maxWidth'=>570, // Ancho Máximo de la tabla
-						 'xOrientation'=>'center', // Orientación de la tabla
-						 'cols'=>array('columna1'=>array('justification'=>'left','width'=>570))); // Justificación y ancho de la columna
-		$io_pdf->ezTable($la_data,$la_columnas,'',$la_config);
-		unset($la_data);
-		unset($la_columnas);
-		unset($la_config);
-
-		$la_data[1]=array('columna1'=>'<b>Concepto</b>         '.$as_conordcom);
-		$la_columnas=array('columna1'=>'');
-		$la_config=array('showHeadings'=>0, // Mostrar encabezados
-						 'fontSize' => 9, // Tamaño de Letras
-						 'titleFontSize' => 12,  // Tamaño de Letras de los títulos
-						 'showLines'=>1, // Mostrar Líneas
-						 'shaded'=>0, // Sombra entre líneas
-						 'width'=>570, // Ancho de la tabla
-						 'maxWidth'=>570, // Ancho Máximo de la tabla
-						 'xOrientation'=>'center', // Orientación de la tabla
-						 'cols'=>array('columna1'=>array('justification'=>'left','width'=>570))); // Justificación y ancho de la columna
+						 'cols'=>array('columna1'=>array('justification'=>'left','width'=>142), // Justificación y ancho de la columna
+						 		       'columna2'=>array
+('justification'=>'left','width'=>142),
+					        		       'columna3'=>array
+('justification'=>'left','width'=>143), // Justificación y ancho de la columna
+					        		       'columna4'=>array
+('justification'=>'left','width'=>143))); // Justificación y ancho de la columna
 		$io_pdf->ezTable($la_data,$la_columnas,'',$la_config);
 		unset($la_data);
 		unset($la_columnas);
@@ -195,7 +153,7 @@
 	//-----------------------------------------------------------------------------------------------------------------------------------
 
 	//-----------------------------------------------------------------------------------------------------------------------------------
-	function uf_print_detalle($la_data,&$io_pdf)
+	function uf_print_detalle($la_data,$li_subtot,$li_totcar,$li_montot,&$io_pdf)
 	{
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		//       Function: uf_print_detalle
@@ -216,13 +174,13 @@
 			$ls_titulo_grid="Servicios";
 		}
 		$io_pdf->ezSetDy(-10);
-		$la_datatitulo[1]=array('columna1'=>'<b> Detalle de '.$ls_titulo_grid.'</b>');
+		$la_datatitulo[1]=array('columna1'=>'<b> Detalle de los '.$ls_titulo_grid.'</b>');
 		$la_columnas=array('columna1'=>'');
 		$la_config=array('showHeadings'=>0, // Mostrar encabezados
-						 'fontSize' => 7, // Tamaño de Letras
+						 'fontSize' => 9, // Tamaño de Letras
 						 'titleFontSize' => 12,  // Tamaño de Letras de los títulos
-						 'showLines'=>1, // Mostrar Líneas
-						 'shaded'=>2, // Sombra entre líneas
+						 'showLines'=>0, // Mostrar Líneas
+						 'shaded'=>0, // Sombra entre líneas
 						 'width'=>570, // Ancho de la tabla
 						 'maxWidth'=>570, // Ancho Máximo de la tabla
 						 'xOrientation'=>'center', // Orientación de la tabla
@@ -231,32 +189,93 @@
 		unset($la_datatitulo);
 		unset($la_columnas);
 		unset($la_config);
+		
 		$io_pdf->ezSetDy(-2);
-		$la_columnas=array('codigo'=>'<b>Código</b>',
-						   'denominacion'=>'<b>Denominacion</b>',
-						   'cantidad'=>'<b>Cant.</b>',
-						   'unidad'=>'<b>Unidad</b>',
-						   'cosuni'=>'<b>Costo '.$ls_bolivares.'</b>',
-						   'baseimp'=>'<b>Sub-Total '.$ls_bolivares.'</b>',
-						   'cargo'=>'<b>Cargo '.$ls_bolivares.'</b>',
-						   'montot'=>'<b>Total '.$ls_bolivares.'</b>');
+		$la_columnas=array('renglon'=>'<b>No.</b>',
+						   'codigo'=>'Código',
+						   'denominacion'=>'Denominación',
+						   'cantidad'=>'Cant.',
+						   'precio'=>'Precio '.$ls_bolivares,
+						   'subtotal'=>'Sub-Total '.$ls_bolivares,
+						   'cargo'=>'Cargo '.$ls_bolivares,
+						   'montot'=>'Total '.$ls_bolivares);
 		$la_config=array('showHeadings'=>1, // Mostrar encabezados
-						 'fontSize' => 7, // Tamaño de Letras
+						 'fontSize' => 8, // Tamaño de Letras
 						 'titleFontSize' => 12,  // Tamaño de Letras de los títulos
 						 'showLines'=>1, // Mostrar Líneas
 						 'shaded'=>0, // Sombra entre líneas
 						 'width'=>570, // Ancho de la tabla
 						 'maxWidth'=>570, // Ancho Máximo de la tabla
 						 'xOrientation'=>'center', // Orientación de la tabla
-						 'cols'=>array('codigo'=>array('justification'=>'center','width'=>115), // Justificación y ancho de la columna
-						 			   'denominacion'=>array('justification'=>'left','width'=>115), // Justificación y ancho de la columna
-						 			   'cantidad'=>array('justification'=>'left','width'=>40), // Justificación y ancho de la columna
-						 			   'unidad'=>array('justification'=>'center','width'=>45), // Justificación y ancho de la columna
-						 			   'cosuni'=>array('justification'=>'right','width'=>60), // Justificación y ancho de la columna
-						 			   'baseimp'=>array('justification'=>'right','width'=>65), // Justificación y ancho de la columna
-						 			   'cargo'=>array('justification'=>'right','width'=>60), // Justificación y ancho de la columna
-						 			   'montot'=>array('justification'=>'right','width'=>70))); // Justificación y ancho de la columna
+						 'cols'=>array('renglon'=>array('justification'=>'center','width'=>25),
+						 			   'codigo'=>array('justification'=>'center','width'=>55), // Justificación y ancho de la columna
+						 			   'denominacion'=>array('justification'=>'left','width'=>150), // Justificación y ancho de la columna
+						 			   'cantidad'=>array('justification'=>'right','width'=>40), // Justificación y ancho de la columna
+						 			   'precio'=>array('justification'=>'right','width'=>75), // Justificación y ancho de la columna
+						 			   'subtotal'=>array('justification'=>'right','width'=>75), // Justificación y ancho de la columna
+						 			   'cargo'=>array('justification'=>'right','width'=>75), // Justificación y ancho de la columna
+						 			   'montot'=>array('justification'=>'right','width'=>75))); // Justificación y ancho de la columna
 		$io_pdf->ezTable($la_data,$la_columnas,'',$la_config);
+		unset($la_data);
+		unset($la_columnas);
+		unset($la_config);
+
+		$la_data[1]  = array('titulo'=>'<b>Sub Total '.$ls_bolivares.'</b>','contenido'=>$li_subtot);
+		$la_columnas = array('titulo'=>'','contenido'=>'');
+		$la_config=array('showHeadings'=>0, // Mostrar encabezados
+						 'fontSize' => 9, // Tamaño de Letras
+						 'titleFontSize' => 12,  // Tamaño de Letras de los títulos
+						 'showLines'=>0, // Mostrar Líneas
+						 'shaded'=>0, // Sombra entre líneas
+						 'shadeCol'=>array((249/255),(249/255),(249/255)), // Color de la sombra
+						 'shadeCol2'=>array((249/255),(249/255),(249/255)), // Color de la sombra
+						 'width'=>540, // Ancho de la tabla
+						 'maxWidth'=>540, // Ancho Máximo de la tabla
+						 'xOrientation'=>'center', // Orientación de la tabla
+						 'cols'=>array('titulo'=>array('justification'=>'right','width'=>450), // Justificación y ancho de la columna
+						 			   'contenido'=>array('justification'=>'right','width'=>120))); // Justificación y ancho de la columna
+		$io_pdf->ezTable($la_data,$la_columnas,'',$la_config);
+		unset($la_data);
+		unset($la_columnas);
+		unset($la_config);
+		
+		$la_data[1]=array('titulo'=>'<b>Cargos '.$ls_bolivares.'</b>','contenido'=>$li_totcar);
+		$la_columnas=array('titulo'=>'',
+						   'contenido'=>'');
+		$la_config=array('showHeadings'=>0, // Mostrar encabezados
+						 'fontSize' => 9, // Tamaño de Letras
+						 'titleFontSize' => 12,  // Tamaño de Letras de los títulos
+						 'showLines'=>0, // Mostrar Líneas
+						 'shaded'=>0, // Sombra entre líneas
+						 'shadeCol'=>array((249/255),(249/255),(249/255)), // Color de la sombra
+						 'shadeCol2'=>array((249/255),(249/255),(249/255)), // Color de la sombra
+						 'width'=>540, // Ancho de la tabla
+						 'maxWidth'=>540, // Ancho Máximo de la tabla
+						 'xOrientation'=>'center', // Orientación de la tabla
+						 'cols'=>array('titulo'=>array('justification'=>'right','width'=>450), // Justificación y ancho de la columna
+						 			   'contenido'=>array('justification'=>'right','width'=>120))); // Justificación y ancho de la columna
+		$io_pdf->ezTable($la_data,$la_columnas,'',$la_config);
+		unset($la_data);
+		unset($la_columnas);
+		unset($la_config);
+		
+		$la_data[1]=array('titulo'=>'<b>Total '.$ls_bolivares.'</b>','contenido'=>$li_montot);
+		$la_columnas=array('titulo'=>'',
+						   'contenido'=>'');
+		$la_config=array('showHeadings'=>0, // Mostrar encabezados
+						 'fontSize' => 9, // Tamaño de Letras
+						 'titleFontSize' => 12,  // Tamaño de Letras de los títulos
+						 'showLines'=>0, // Mostrar Líneas
+						 'shaded'=>0, // Sombra entre líneas
+						 'width'=>540, // Ancho de la tabla
+						 'maxWidth'=>540, // Ancho Máximo de la tabla
+						 'xOrientation'=>'center', // Orientación de la tabla
+						 'cols'=>array('titulo'=>array('justification'=>'right','width'=>450), // Justificación y ancho de la columna
+						 			   'contenido'=>array('justification'=>'right','width'=>120))); // Justificación y ancho de la columna
+		$io_pdf->ezTable($la_data,$la_columnas,'',$la_config);
+		unset($la_data);
+		unset($la_columnas);
+		unset($la_config);
 	}// end function uf_print_detalle
 	//-----------------------------------------------------------------------------------------------------------------------------------
 
@@ -280,15 +299,15 @@
 		}
 		else
 		{
-			$ls_titulo="Estructura Programatica";
+			$ls_titulo="Estructura Programática";
 		}
 		$la_datatit[1]=array('titulo'=>'<b> Detalle de Presupuesto </b>');
 		$la_columnas=array('titulo'=>'');
 		$la_config=array('showHeadings'=>0, // Mostrar encabezados
-						 'fontSize' => 7, // Tamaño de Letras
+						 'fontSize' => 9, // Tamaño de Letras
 						 'titleFontSize' => 12,  // Tamaño de Letras de los títulos
-						 'showLines'=>1, // Mostrar Líneas
-						 'shaded'=>2, // Sombra entre líneas
+						 'showLines'=>0, // Mostrar Líneas
+						 'shaded'=>0, // Sombra entre líneas
 						 'width'=>540, // Ancho de la tabla
 						 'maxWidth'=>540, // Ancho Máximo de la tabla
 						 'xOrientation'=>'center', // Orientación de la tabla
@@ -300,10 +319,10 @@
 		$io_pdf->ezSetDy(-2);
 		$la_columnas=array('codestpro'=>'<b>'.$ls_titulo.'</b>',
 						   'cuenta'=>'<b>Cuenta</b>',
-						   'denominacion'=>'<b>Denominacion</b>',
+						   'denominacion'=>'<b>Denominación</b>',
 						   'monto'=>'<b>Total '.$ls_bolivares.'</b>');
 		$la_config=array('showHeadings'=>1, // Mostrar encabezados
-						 'fontSize' => 7, // Tamaño de Letras
+						 'fontSize' => 9, // Tamaño de Letras
 						 'titleFontSize' => 12,  // Tamaño de Letras de los títulos
 						 'showLines'=>1, // Mostrar Líneas
 						 'shaded'=>0, // Sombra entre líneas
@@ -319,131 +338,111 @@
 	//-----------------------------------------------------------------------------------------------------------------------------------
 	
 	//-----------------------------------------------------------------------------------------------------------------------------------
-	function uf_print_piecabecera($li_subtot,$li_totcar,$li_montot,$ls_monlet,&$io_pdf)
+	function uf_print_piecabecera($li_montot,$ls_monlet,&$io_pdf)
 	{
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		//       Function: uf_print_piecabecera
 		//		    Acess: private 
-		//	    Arguments: li_subtot ---> Subtotal del articulo
-		//	    		   li_totcar -->  Total cargos
-		//	    		   li_montot  --> Monto total
+		//	    Arguments: li_montot  --> Monto total
 		//	    		   ls_monlet   //Monto en letras
 		//				   io_pdf   : Instancia de objeto pdf
 		//    Description: función que imprime los totales
 		//	   Creado Por: Ing. Yozelin Barragan
 		// Fecha Creación: 21/06/2007
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
 		global $ls_bolivares;
 		
-		$la_data[1]=array('titulo'=>'<b>Sub Total '.$ls_bolivares.'</b>','contenido'=>$li_subtot,);
-		$la_columnas=array('titulo'=>'',
-						   'contenido'=>'');
-		$la_config=array('showHeadings'=>0, // Mostrar encabezados
-						 'fontSize' => 7, // Tamaño de Letras
-						 'titleFontSize' => 12,  // Tamaño de Letras de los títulos
-						 'showLines'=>0, // Mostrar Líneas
-						 'shaded'=>0, // Sombra entre líneas
-						 'shadeCol'=>array((249/255),(249/255),(249/255)), // Color de la sombra
-						 'shadeCol2'=>array((249/255),(249/255),(249/255)), // Color de la sombra
-						 'width'=>540, // Ancho de la tabla
-						 'maxWidth'=>540, // Ancho Máximo de la tabla
-						 'xOrientation'=>'center', // Orientación de la tabla
-						 'cols'=>array('titulo'=>array('justification'=>'right','width'=>450), // Justificación y ancho de la columna
-						 			   'contenido'=>array('justification'=>'right','width'=>120))); // Justificación y ancho de la columna
-		$io_pdf->ezTable($la_data,$la_columnas,'',$la_config);
-		unset($la_data);
-		unset($la_columnas);
-		unset($la_config);
-		$la_data[1]=array('titulo'=>'<b>Cargos '.$ls_bolivares.'</b>','contenido'=>$li_totcar,);
-		$la_columnas=array('titulo'=>'',
-						   'contenido'=>'');
-		$la_config=array('showHeadings'=>0, // Mostrar encabezados
-						 'fontSize' => 7, // Tamaño de Letras
-						 'titleFontSize' => 12,  // Tamaño de Letras de los títulos
-						 'showLines'=>0, // Mostrar Líneas
-						 'shaded'=>0, // Sombra entre líneas
-						 'shadeCol'=>array((249/255),(249/255),(249/255)), // Color de la sombra
-						 'shadeCol2'=>array((249/255),(249/255),(249/255)), // Color de la sombra
-						 'width'=>540, // Ancho de la tabla
-						 'maxWidth'=>540, // Ancho Máximo de la tabla
-						 'xOrientation'=>'center', // Orientación de la tabla
-						 'cols'=>array('titulo'=>array('justification'=>'right','width'=>450), // Justificación y ancho de la columna
-						 			   'contenido'=>array('justification'=>'right','width'=>120))); // Justificación y ancho de la columna
-		$io_pdf->ezTable($la_data,$la_columnas,'',$la_config);
-		unset($la_data);
-		unset($la_columnas);
-		unset($la_config);
-		$la_data[1]=array('titulo'=>'<b>Total '.$ls_bolivares.'</b>','contenido'=>$li_montot,);
-		$la_columnas=array('titulo'=>'',
-						   'contenido'=>'');
-		$la_config=array('showHeadings'=>0, // Mostrar encabezados
-						 'fontSize' => 7, // Tamaño de Letras
-						 'titleFontSize' => 12,  // Tamaño de Letras de los títulos
-						 'showLines'=>0, // Mostrar Líneas
-						 'shaded'=>0, // Sombra entre líneas
-						 'width'=>540, // Ancho de la tabla
-						 'maxWidth'=>540, // Ancho Máximo de la tabla
-						 'xOrientation'=>'center', // Orientación de la tabla
-						 'cols'=>array('titulo'=>array('justification'=>'right','width'=>450), // Justificación y ancho de la columna
-						 			   'contenido'=>array('justification'=>'right','width'=>120))); // Justificación y ancho de la columna
-		$io_pdf->ezTable($la_data,$la_columnas,'',$la_config);
-		unset($la_data);
-		unset($la_columnas);
-		unset($la_config);
-		
 		$io_pdf->ezSetDy(-5);
-		$la_data[1]=array('titulo'=>'<b> Son: '.$ls_monlet.'</b>');
-		$la_columnas=array('titulo'=>'');
+		$la_data[1] = array('monlet'=>'<b>MONTO TOTAL EN LETRAS ('.$ls_bolivares.')</b>','monnum'=>'<b>MONTO TOTAL ('.$ls_bolivares.')</b>');
+		$la_data[2] = array('monlet'=>$ls_monlet,'monnum'=>$li_montot);
+		$la_columnas=array('monlet'=>'','monnum'=>'');
 		$la_config=array('showHeadings'=>0, // Mostrar encabezados
 						 'fontSize' => 7, // Tamaño de Letras
 						 'titleFontSize' => 12,  // Tamaño de Letras de los títulos
 						 'showLines'=>1, // Mostrar Líneas
-						 'shaded'=>1, // Sombra entre líneas
+						 'shaded'=>0, // Sombra entre líneas
 						 'width'=>540, // Ancho de la tabla
 						 'maxWidth'=>540, // Ancho Máximo de la tabla
 						 'xOrientation'=>'center', // Orientación de la tabla
-						 'cols'=>array('titulo'=>array('justification'=>'center','width'=>570))); // Justificación y ancho de la columna
+						 'cols'=>array('monlet'=>array('justification'=>'left','width'=>400),
+						               'monnum'=>array('justification'=>'right','width'=>170))); // Justificación y ancho de la columna
 		$io_pdf->ezTable($la_data,$la_columnas,'',$la_config);
 		unset($la_data);
 		unset($la_columnas);
 		unset($la_config);
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		$la_data[1]=array('titulo'=>'');
-		$la_columnas=array('titulo'=>'');
-		$la_config=array('showHeadings'=>0, // Mostrar encabezados
-						 'fontSize' => 7, // Tamaño de Letras
-						 'titleFontSize' => 12,  // Tamaño de Letras de los títulos
-						 'showLines'=>0, // Mostrar Líneas
-						 'shaded'=>1, // Sombra entre líneas
-						 'width'=>540, // Ancho de la tabla
-						 'maxWidth'=>540, // Ancho Máximo de la tabla
-						 'xOrientation'=>'center', // Orientación de la tabla
-						 'cols'=>array('titulo'=>array('justification'=>'center','width'=>570))); // Justificación y ancho de la columna
-		$io_pdf->ezTable($la_data,$la_columnas,'',$la_config);
-		unset($la_data);
-		unset($la_columnas);
-		unset($la_config);
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		$la_data[1]=array('titulo'=>'<b> TODA CORRESPONDENCIA O DOCUMENTACION RELACIONADA CON ESTA ORDEN DEBERÁ INDICAR EL # DE LA MISMA, FAVOR DEBE NOTIFICAR INMEDIATAMENTE SI EXISTEN INCONVENIENTES PARA EL DESPACHO EXACTO DE ESTA ORDEN (PRECIO, DISPONIBILIDAD, ENTREGA). ES NECESARIA LA ENTREGA DE LA FACTURA Y NOTA DE ENTREGA ORIGINAL EN NUESTRAS OFICINAS ADMINISTRATIVAS PARA REALIZAR EL PROCESO DE PAGO.</b>');
-		$la_columnas=array('titulo'=>'');
+
+
+				//imprime las clausulas especiales
+				$ls_clafiecum=" Al Suscribirse esta orden, se exigirá al beneficiario Fianza de Fiel Cumplimiento Equivalente al ____ %";
+				$ls_clafiecum2= "del Monto de la Orden (sin IVA), Otorgada por un Banco o Compañía de seguros, Notariada y Vigente hasta   la total Recepción de la Mercancia.";
+		
+				$ls_clapenal=" Al Suscribirse esta Orden, se exigirá al Beneficiario Fianza de Anticipo en base a un ____% del monto del Anticipo de la orden (sin IVA),"; 
+				$ls_clapenal2="Otorgada por un Banco o Compañía de seguros, Notariada y Vigente hasta la total Recepción de la Mercancia.";
+		
+				$ls_claesp=" Al Suscribirse esta orden,se hará una retención al beneficiario de un ____% del monto de la orden (sin incluir IVA),"; 
+				$ls_claesp2="de conformidad de las previsiones legales que rigen la materia.";
+				$ls_clasocial=" Al Suscribirse esta orden, se exigirá al beneficiario de un donativo al equivalente al ____% del monto de la orden (sin IVA),"; 
+				$ls_clasocial2="de conformidad de las previsiones legales correspondientes al cumplimiento de la responsabilidad social.";
+				
+
+$la_data[1] = array('columna1'=>'<b>FIANZA DE FIEL CUMPLIMIENTO</b>','columna2'=>'<b>FIANZA DE ANTICIPO</b>','columna3'=>'<b>RETENCION PATRONAL</b>','columna4'=>'<b>RESPONSABILIDAD SOCIAL</b>');
+		$la_data[2] = array('columna1'=>$ls_clafiecum." ".$ls_clafiecum2,'columna2'=>$ls_clapenal." ".$ls_clapenal2,'columna3'=>$ls_claesp." ".$ls_claesp2,'columna4'=>$ls_clasocial." ".$ls_clasocial2);
+		$la_columnas=array('columna1'=>'','columna2'=>'','columna3'=>'','columna4'=>'');
 		$la_config=array('showHeadings'=>0, // Mostrar encabezados
 						 'fontSize' => 7, // Tamaño de Letras
 						 'titleFontSize' => 12,  // Tamaño de Letras de los títulos
 						 'showLines'=>1, // Mostrar Líneas
-						 'shaded'=>1, // Sombra entre líneas
-						 'width'=>540, // Ancho de la tabla
-						 'maxWidth'=>540, // Ancho Máximo de la tabla
+						 'shaded'=>0, // Sombra entre líneas
+						 'width'=>570, // Ancho de la tabla
+						 'maxWidth'=>570, // Ancho Máximo de la tabla
 						 'xOrientation'=>'center', // Orientación de la tabla
-						 'cols'=>array('titulo'=>array('justification'=>'center','width'=>570))); // Justificación y ancho de la columna
+						 'cols'=>array('columna1'=>array('justification'=>'left','width'=>143), // Justificación y ancho de la columna
+						 		       'columna2'=>array
+('justification'=>'left','width'=>143),
+					        		       'columna3'=>array
+('justification'=>'left','width'=>142), // Justificación y ancho de la columna
+					        		       'columna4'=>array
+('justification'=>'left','width'=>142))); // Justificación y ancho de la columna
 		$io_pdf->ezTable($la_data,$la_columnas,'',$la_config);
 		unset($la_data);
 		unset($la_columnas);
 		unset($la_config);
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////imprime otra clausulas especiales//////////////////////////////////////
+		$ls_claobligacion="A) Se obliga a ejecutar de manera responsable la presente orden en las condiciones establecidas en la misma.";
+		$ls_claobligacion2= " B) Correrán por cuenta exclusiva de El Proveedor, los gastos de traslados de las maquinarias, equipos y personal requerido para la ejecución del objeto de la presente Orden.";
+		
+		$ls_clarescision=" EMPRESA MIXTA SOCIALISTA ARROZ DEL ALBA S,A; podrá rescindir unilateralmente la presente Orden en cualquier"; 
+		$ls_clarescision2=" momento antes de su vencimiento, sin que El Proveedor tenga derecho a reclamo o al pago de indemnización alguna.";
+		
+		$ls_clapenalidad=" De no iniciare la ejecución del servicio, obra o suministro en el tiempo estipulado en la presente Orden, se deberá pagar por cada día de retraso el valor equivalente al uno por ciento (1%) del monto total de la misma, hasta un máximo"; 
+		$ls_clapenalidad2=" del quince por ciento (15%), cuando las penalidades superen este porcentaje se podrá rescindir unilateralmente la Orden y se procederá a tomar las acciones legales conducentes en contra de El Proveedor.";
+				
+
+$la_data[1] = array('columna1'=>'<b>OBLIGACIONES DEL PROVEEDOR</b>','columna2'=>'<b>RESCISION</b>','columna3'=>'<b>PENALIDADES<b>');
+$la_data[2] = array('columna1'=>$ls_claobligacion." ".$ls_claobligacion2,'columna2'=>$ls_clarescision." ".$ls_clarescision2,'columna3'=>$ls_clapenalidad." ".$ls_clapenalidad2);
+		$la_columnas=array('columna1'=>'','columna2'=>'','columna3'=>'');
+		$la_config=array('showHeadings'=>0, // Mostrar encabezados
+						 'fontSize' => 7, // Tamaño de Letras
+						 'titleFontSize' => 12,  // Tamaño de Letras de los títulos
+						 'showLines'=>1, // Mostrar Líneas
+						 'shaded'=>0, // Sombra entre líneas
+						 'width'=>570, // Ancho de la tabla
+						 'maxWidth'=>570, // Ancho Máximo de la tabla
+						 'xOrientation'=>'center', // Orientación de la tabla
+						 'cols'=>array('columna1'=>array('justification'=>'left','width'=>190), // Justifi y ancho de la columna
+						 	       'columna2'=>array('justification'=>'left','width'=>190),
+					        	       'columna3'=>array('justification'=>'left','width'=>190)));
+		$io_pdf->ezTable($la_data,$la_columnas,'',$la_config);
+		unset($la_data);
+		unset($la_columnas);
+		unset($la_config);
 
 	}
 	//-----------------------------------------------------------------------------------------------------------------------------------
-	
+
 	//-----------------------------------------------------------------------------------------------------------------------------------
 	function uf_print_piecabeceramonto_bsf($li_montotaux,&$io_pdf)
 	{
@@ -457,8 +456,7 @@
 		// Fecha Creación: 25/09/2007
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		$la_data[1]=array('titulo'=>'<b>Monto Bs.F.</b>','contenido'=>$li_montotaux,);
-		$la_columnas=array('titulo'=>'',
-						   'contenido'=>'');
+		$la_columnas=array('titulo'=>'','contenido'=>'');
 		$la_config=array('showHeadings'=>0, // Mostrar encabezados
 						 'fontSize' => 9, // Tamaño de Letras
 						 'titleFontSize' => 12,  // Tamaño de Letras de los títulos
@@ -477,13 +475,15 @@
 		unset($la_config);
 	}
 	//-----------------------------------------------------------------------------------------------------------------------------------
+	
 	//-----------------------------------------------------  Instancia de las clases  ------------------------------------------------
-	require_once("../../shared/class_folder/sigesp_include.php");
-	require_once("../../shared/class_folder/class_sql.php");	
-	require_once("../../shared/ezpdf/class.ezpdf.php");
-	require_once("../../shared/class_folder/class_funciones.php");
 	require_once("sigesp_soc_class_report.php");	
+	require_once("../../shared/ezpdf/class.ezpdf.php");
 	require_once("../class_folder/class_funciones_soc.php");
+	require_once("../../shared/class_folder/class_sql.php");	
+	require_once("../../shared/class_folder/sigesp_include.php");
+	require_once("../../shared/class_folder/class_funciones.php");
+
 	$in           = new sigesp_include();
 	$con          = $in->uf_conectar();
 	$io_sql       = new class_sql($con);	
@@ -491,9 +491,12 @@
 	$io_fun_soc   = new class_funciones_soc();
 	$io_report    = new sigesp_soc_class_report($con);
 	$ls_estmodest = $_SESSION["la_empresa"]["estmodest"];
+	$ls_orgrif	  = $_SESSION["la_empresa"]["rifemp"];
+	$ls_orgnom    = $_SESSION["la_empresa"]["nombre"];
+	$ls_orgtit	  = $_SESSION["la_empresa"]["titulo"];
 
 	//Instancio a la clase de conversión de numeros a letras.
-	include("../../shared/class_folder/class_numero_a_letra.php");
+	require_once("../../shared/class_folder/class_numero_a_letra.php");
 	$numalet= new class_numero_a_letra();
 	//imprime numero con los valore por defecto
 	//cambia a minusculas
@@ -520,7 +523,7 @@
 	$ls_numordcom=$io_fun_soc->uf_obtenervalor_get("numordcom","");
 	$ls_estcondat=$io_fun_soc->uf_obtenervalor_get("tipord","");
 	//--------------------------------------------------------------------------------------------------------------------------------
-	$rs_data= $io_report->uf_select_orden_imprimir($ls_numordcom,$ls_estcondat,&$lb_valido); // Cargar los datos del reporte
+	$rs_data   = $io_report->uf_select_orden_imprimir($ls_numordcom,$ls_estcondat,&$lb_valido); // Cargar los datos del reporte
 	if($lb_valido==false) // Existe algún error ó no hay registros
 	{
 		print("<script language=JavaScript>");
@@ -538,10 +541,10 @@
 			set_time_limit(1800);
 			$io_pdf=new Cezpdf('LETTER','portrait'); // Instancia de la clase PDF
 			$io_pdf->selectFont('../../shared/ezpdf/fonts/Helvetica.afm'); // Seleccionamos el tipo de letra
-			$io_pdf->ezSetCmMargins(8.5,6,3,3); // Configuración de los margenes en centímetros
-			$io_pdf->ezStartPageNumbers(580,36,8,'','',1); // Insertar el número de página
+			$io_pdf->ezSetCmMargins(7.5,4.5,3,3); // Configuración de los margenes en centímetros
 			if ($row=$io_sql->fetch_row($rs_data))
 			{
+				$io_pdf->ezStartPageNumbers(588,760,8,'','',1);
 				$ls_numordcom=$row["numordcom"];
 				$ls_estcondat=$row["estcondat"];
 				$ls_coduniadm=$row["coduniadm"];
@@ -554,30 +557,34 @@
 				$ls_nompro=$row["nompro"];
 				$ls_rifpro=$row["rifpro"];
 				$ls_dirpro=$row["dirpro"];
+				$ls_telpro=$row["telpro"];
 				$ld_fecordcom=$row["fecordcom"];
 				$ls_obscom=$row["obscom"];
 				$ld_monsubtot=$row["monsubtot"];
 				$ld_monimp=$row["monimp"];
 				$ld_montot=$row["montot"];
-				$ld_perentdesde=$row["fechentdesde"];
-				$ld_perenthasta=$row["fechenthasta"];
-				$ld_perentdesde=$io_funciones->uf_convertirfecmostrar($ld_perentdesde);
-				$ld_perenthasta=$io_funciones->uf_convertirfecmostrar($ld_perenthasta);
-				if($ls_tiporeporte==0)
-				{
-					$ld_montotaux=$row["montotaux"];
-					$ld_montotaux=number_format($ld_montotaux,2,",",".");
-				}
+				if ($ls_tiporeporte==0)
+				   {
+					 $ld_montotaux = $row["montotaux"];
+					 $ld_montotaux = number_format($ld_montotaux,2,",",".");
+				   }
+				$ls_nomdep = $row["lugentnomdep"];
+				$ls_dirdep = $row["lugentdir"];
+                                $ls_fecent=$row["fecent"];
+				$ls_concom = $row["concom"];
+                                $ls_monant=$row["monant"];   //monto de anticipo de pago
 				$numalet->setNumero($ld_montot);
 				$ls_monto= $numalet->letra();
 				$ld_montot=number_format($ld_montot,2,",",".");
 				$ld_monsubtot=number_format($ld_monsubtot,2,",",".");
 				$ld_monimp=number_format($ld_monimp,2,",",".");
+                                $ls_monant=number_format($ls_monant,2,",",".");
 				$ld_fecordcom=$io_funciones->uf_convertirfecmostrar($ld_fecordcom);
+                                $ls_fecent=$io_funciones->uf_convertirfecmostrar($ls_fecent); 
 		 
 				uf_print_encabezado_pagina($ls_estcondat,$ls_numordcom,$ld_fecordcom,$ls_coduniadm,$ls_denuniadm,
 				                           $ls_codfuefin,$ls_denfuefin,$ls_codpro,$ls_nompro,$ls_obscom,$ls_rifpro,
-										   $ls_diaplacom,$ls_dirpro,$ls_forpagcom,$ld_perentdesde,$ld_perenthasta,&$io_pdf);
+										   $ls_diaplacom,$ls_dirpro,$ls_forpagcom,$ls_orgrif,$ls_telpro,$ls_obscom,$ls_nomdep,$ls_dirdep,$ls_fecent,$ls_concom,$ls_orgnom,$ls_orgtit,$ls_monant,&$io_pdf);
 				/////DETALLE  DE  LA ORDEN DE COMPRA
 			   $rs_datos = $io_report->uf_select_detalle_orden_imprimir($ls_numordcom,$ls_estcondat,&$lb_valido);
 			   if ($lb_valido)
@@ -613,23 +620,27 @@
 						$ld_totartser=$row["monttotartser"];
 						$ld_carartser=$ld_totartser-$ld_subtotartser;
 						
-						
-						$li_cantartser=number_format($li_cantartser,2,",",".");
-						$ld_preartser=number_format($ld_preartser,2,",",".");
-						$ld_subtotartser=number_format($ld_subtotartser,2,",",".");
-						$ld_totartser=number_format($ld_totartser,2,",",".");
-						$ld_carartser=number_format($ld_carartser,2,",",".");
-						$la_data[$li_i]=array('codigo'=>$ls_codartser,'denominacion'=>$ls_denartser,'cantidad'=>$li_cantartser,
-											  'unidad'=>$ls_unidad,'cosuni'=>$ld_preartser,'baseimp'=>$ld_subtotartser,
-											  'cargo'=>$ld_carartser,'montot'=>$ld_totartser);
+						$li_cantartser    = number_format($li_cantartser,2,",",".");
+						$ld_preartser    = number_format($ld_preartser,2,",",".");
+						$ld_subtotartser = number_format($ld_subtotartser,2,",",".");
+						$ld_totartser	 = number_format($ld_totartser,2,",",".");
+						$ld_carartser	 = number_format($ld_carartser,2,",",".");
+						$la_data[$li_i]  = array('renglon'=>$li_i,
+												 'codigo'=>$ls_codartser,
+						                         'denominacion'=>$ls_denartser,
+											     'cantidad'=>$li_cantartser,
+											     'precio'=>$ld_preartser,
+											     'subtotal'=>$ld_subtotartser,
+											     'cargo'=>$ld_carartser,
+											     'montot'=>$ld_totartser);
 					}
-					uf_print_detalle($la_data,&$io_pdf);
+					uf_print_detalle($la_data,$ld_monsubtot,$ld_monimp,$ld_montot,&$io_pdf);
 					unset($la_data);
 				    /////DETALLE  DE  LAS  CUENTAS DE GASTOS DE LA ORDEN DE COMPRA
 					$rs_datos_cuenta=$io_report->uf_select_cuenta_gasto($ls_numordcom,$ls_estcondat,&$lb_valido); 
 					if($lb_valido)
 					{
-						 $li_totrows = $io_sql->num_rows($rs_datos_cuenta);
+						 $li_totrows = $io_sql->num_rows($rs_datos);
 						 if ($li_totrows>0)
 						 {
 							$li_s = 0;
@@ -653,11 +664,11 @@
 								$lb_valido = $io_report->uf_select_denominacionspg($ls_spg_cuenta,$ls_dencuenta);																																						
 								if($ls_estmodest==1)
 								{
-									$ls_codestpro  = $ls_codestpro1.'-'.$ls_codestpro2.'-'.$ls_codestpro3;
+									$ls_codestpro=$ls_codestpro1.'-'.$ls_codestpro2.'-'.$ls_codestpro3;
 								}
 								else
 								{
-									$ls_codestpro = $ls_codestpro1.'-'.$ls_codestpro2.'-'.$ls_codestpro3.'-'.$ls_codestpro4.'-'.$ls_codestpro5;
+									$ls_codestpro=substr($ls_codestpro1,-2)."-".substr($ls_codestpro2,-2)."-".substr($ls_codestpro3,-2)."-".substr($ls_codestpro4,-2)."-".substr($ls_codestpro5,-2);
 								}
 								$la_data[$li_s]=array('codestpro'=>$ls_codestpro,'denominacion'=>$ls_dencuenta,
 													  'cuenta'=>$ls_spg_cuenta,'monto'=>$ld_monto);
@@ -670,7 +681,7 @@
 		       }
 	     	}
 		}
-		uf_print_piecabecera($ld_monsubtot,$ld_monimp,$ld_montot,$ls_monto,&$io_pdf);
+		uf_print_piecabecera($ld_montot,$ls_monto,&$io_pdf);
 	} 	  	 
 	if($lb_valido) // Si no ocurrio ningún error
 	{

@@ -766,19 +766,19 @@
 				switch ($ls_tipo)
 				{
 					case "SC":
-				        echo "<a href=\"javascript: ue_aceptar_proveedor_solicitud_cotizacion('".$ls_codpro."','".$ls_nompro."','".$ls_dirpro."','".$ls_telpro."');\"><img src='../shared/imagebank/tools20/aprobado.gif' title='Agregar Proveedor' width='15' height='15' border='0'></a></td>";
+				        echo "<td><a href=\"javascript: ue_aceptar_proveedor_solicitud_cotizacion('".$ls_codpro."','".$ls_nompro."','".$ls_dirpro."','".$ls_telpro."');\"><img src='../shared/imagebank/tools20/aprobado.gif' title='Agregar Proveedor' width='15' height='15' border='0'></a></td>";
 					break;
 					case "RC":
-				        echo "<a href=\"javascript: ue_aceptar_proveedor_registro_cotizacion('".$ls_codpro."','".$ls_nompro."','".$ls_tipconpro."');\"><img src='../shared/imagebank/tools20/aprobado.gif' title='Agregar Proveedor' width='15' height='15' border='0'></a></td>";
+				        echo "<td><a href=\"javascript: ue_aceptar_proveedor_registro_cotizacion('".$ls_codpro."','".$ls_nompro."','".$ls_tipconpro."');\"><img src='../shared/imagebank/tools20/aprobado.gif' title='Agregar Proveedor' width='15' height='15' border='0'></a></td>";
 					break;
 					case "":
-				        echo "<a href=\"javascript: ue_aceptar('".$ls_codpro."','".$ls_nompro."','".$ls_tipconpro."','".$ls_rifpro."');\"><img src='../shared/imagebank/tools20/aprobado.gif' title='Agregar Proveedor' width='15' height='15' border='0'></a></td>";
+				        echo "<td><a href=\"javascript: ue_aceptar('".$ls_codpro."','".$ls_nompro."','".$ls_tipconpro."','".$ls_rifpro."');\"><img src='../shared/imagebank/tools20/aprobado.gif' title='Agregar Proveedor' width='15' height='15' border='0'></a></td>";
 					break;
 				  	case "REPDES":
-				        echo "<a href=\"javascript: aceptar_reportedesde('".$ls_codpro."');\"><img src='../shared/imagebank/tools20/aprobado.gif' title='Agregar Proveedor' width='15' height='15' border='0'></a></td>";
+				        echo "<td><a href=\"javascript: aceptar_reportedesde('".$ls_codpro."');\"><img src='../shared/imagebank/tools20/aprobado.gif' title='Agregar Proveedor' width='15' height='15' border='0'></a></td>";
 					break;
 					case "REPHAS":
-				        echo "<a href=\"javascript: aceptar_reportehasta('".$ls_codpro."');\"><img src='../shared/imagebank/tools20/aprobado.gif' title='Agregar Proveedor' width='15' height='15' border='0'></a></td>";
+				        echo "<td><a href=\"javascript: aceptar_reportehasta('".$ls_codpro."');\"><img src='../shared/imagebank/tools20/aprobado.gif' title='Agregar Proveedor' width='15' height='15' border='0'></a></td>";
 					break;
 				}
 			    echo "</tr>";
