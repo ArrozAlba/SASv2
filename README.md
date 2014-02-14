@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 SASv2
 =====
 
@@ -62,3 +63,9 @@ Cada menu está asociado a un recurso, esto con el fin de poder tener menus inte
 a los que un rol tenga acceso.
 
 Ademas los items pueden tener items padres asociados para crear menus hijos.
+=======
+huayra
+======
+
+Sistema de Gestión Huayra
+>>>>>>> 7f7e1ec3f1593dc1e6423afbac2dddd7b4cc03b5

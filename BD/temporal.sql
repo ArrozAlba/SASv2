@@ -22,11 +22,11 @@ CREATE TABLE sas_solicitud_servicio (
     creacion_fecha timestamp without time zone,
     edicion_fecha timestamp without time zone,
     edicion_uid integer,
-	fecha date DEFAULT '1900-01-01'::date,	
+	fecha_solicitud date DEFAULT '1900-01-01'::date,	
     codigo_solicitud character varying(8) NOT NULL,
 	titular_id integer NOT NULL,
 	beneficiario_id integer NOT NULL,
-	beneficiario_tipo_id integer NOT NULL,
+	beneficiario_tipo character(1) NOT NULL,
 	id_patologia integer NOT NULL,
 	servicio_id integer NOT NULL,
 	proveedor_id integer NOT NULL,
@@ -46,7 +46,7 @@ ALTER TABLE public.sas_solicitud_servicio OWNER TO jelitox;
 -- Name: TABLE sas_solicitud_servicio; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
-COMMENT ON TABLE sas_solicitud_servicio IS 'Modelo para manipular los beneficiarios';
+COMMENT ON TABLE sas_solicitud_servicio IS 'Modelo para manipular las Solicitudes de Servicio';
 
 --
 -- Name: COLUMN sas_solicitud_servicio.creacion_uid; Type: COMMENT; Schema: public; Owner: jelitox
@@ -77,25 +77,25 @@ COMMENT ON COLUMN sas_solicitud_servicio.edicion_uid IS 'Codigo del Ultimo Usuar
 
 
 --
--- Name: COLUMN sas_solicitud_servicio.tipoempleado_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN sas_solicitud_servicio.fecha_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
-COMMENT ON COLUMN sas_solicitud_servicio.titular_id IS 'Empleado Titular';
+COMMENT ON COLUMN sas_solicitud_servicio.fecha_solicitud IS 'Fecha de la Solicitud';
 
 --
--- Name: COLUMN sas_solicitud_servicio.parentesco; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN sas_solicitud_servicio.codigo_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
-COMMENT ON COLUMN sas_solicitud_servicio.parentesco IS 'Parentesco del beneficiario';
+COMMENT ON COLUMN sas_solicitud_servicio.codigo_solicitud IS 'Codigo de la Solicitud';
 
 --
--- Name: COLUMN sas_solicitud_servicio.nacionalidad; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN sas_solicitud_servicio.titular_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
-COMMENT ON COLUMN sas_solicitud_servicio.nacionalidad IS 'Nacionalidad del beneficiario';
+COMMENT ON COLUMN sas_solicitud_servicio.titular_id IS 'Codigo del Titular';
 
 --
--- Name: COLUMN sas_solicitud_servicio.cedula; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN sas_solicitud_servicio.be; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
 COMMENT ON COLUMN sas_solicitud_servicio.cedula IS 'N° Cedula beneficiario';
