@@ -24,7 +24,7 @@
     <?php endforeach?>
 	</tbody>
 </table>
-<?php View::partial('paginators/extended', false, array('page' => $results ,'url' => Router::get('controller_path').'/index')); ?>
+<?php View::partial('paginators/digg', false, array('page' => $results ,'url' => Router::get('controller_path').'/index')); ?>
 
 <?php else : // Si no hay items?>
 <h2>No hay ningún registro</h2>

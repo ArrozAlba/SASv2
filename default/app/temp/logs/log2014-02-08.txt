@@ -1,0 +1,6 @@
+[Sat, 08 Feb 14 10:11:54 -0430][DEBUG] DESCRIBE `empresa`
+[Sat, 08 Feb 14 10:11:54 -0430][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sat, 08 Feb 14 10:11:59 -0430][DEBUG] DESCRIBE `empresa`
+[Sat, 08 Feb 14 10:11:59 -0430][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sat, 08 Feb 14 10:12:00 -0430][DEBUG] DESCRIBE `empresa`
+[Sat, 08 Feb 14 10:12:00 -0430][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
