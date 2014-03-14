@@ -68,21 +68,6 @@ class Html
     }
 
     /**
-     * Devuelve una URL usando la constante PUBLIC_PATH, para que siempre funcione
-     * 
-     * @example Html::url
-     * echo Html::url('controller/action')
-     * Devuelve una URL a ese controller y acción
-     *
-     * @param string $action Ruta a la acción
-     * @return string
-     */
-    public static function url($action)
-    {
-        return PUBLIC_PATH . $action;
-    }
-
-    /**
      * Crea un enlace a una acción del mismo controller que estemos
      *
      * @example Html::linkAction

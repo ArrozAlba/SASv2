@@ -1,0 +1,267 @@
+[Sun, 09 Mar 14 15:25:28 -0500][DEBUG] DESCRIBE `empresa`
+[Sun, 09 Mar 14 15:25:28 -0500][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sun, 09 Mar 14 15:25:30 -0500][DEBUG] DESCRIBE `empresa`
+[Sun, 09 Mar 14 15:25:30 -0500][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sun, 09 Mar 14 15:25:36 -0500][DEBUG] DESCRIBE `empresa`
+[Sun, 09 Mar 14 15:25:36 -0500][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sun, 09 Mar 14 15:25:36 -0500][DEBUG] DESCRIBE `usuario`
+[Sun, 09 Mar 14 15:25:36 -0500][DEBUG] SELECT id,sucursal_id,persona_id,login,password,perfil_id,email,tema,app_ajax,datagrid,registrado_at,modificado_in FROM usuario WHERE login = 'admin' AND password = 'd93a5def7511da3d0f2d171d9c344e91' LIMIT 1
+[Sun, 09 Mar 14 15:25:36 -0500][DEBUG] SELECT usuario.*, perfil.perfil, persona.nombre, persona.apellido, estado_usuario.estado_usuario FROM usuario INNER JOIN persona ON persona.id = usuario.persona_id INNER JOIN perfil ON perfil.id = usuario.perfil_id INNER JOIN (SELECT usuario_id, CASE estado_usuario WHEN 1 THEN 'Activo' WHEN 2 THEN 'Bloqueado' ELSE 'INDEFINIDO' END AS estado_usuario, descripcion, fecha_estado_at FROM (SELECT * FROM estado_usuario ORDER BY estado_usuario.id DESC ) AS estado_usuario GROUP BY estado_usuario.usuario_id ) AS estado_usuario ON estado_usuario.usuario_id = usuario.id  WHERE usuario.id = '2' LIMIT 1
+[Sun, 09 Mar 14 15:25:36 -0500][DEBUG] DESCRIBE `acceso`
+[Sun, 09 Mar 14 15:25:36 -0500][DEBUG] INSERT INTO acceso (usuario_id,tipo_acceso,ip,registrado_at) VALUES ('2','1','127.0.0.1','2014-03-09 15:25:36')
+[Sun, 09 Mar 14 15:25:36 -0500][DEBUG] SELECT id,usuario_id,tipo_acceso,ip,registrado_at FROM acceso WHERE id = 19 LIMIT 1
+[Sun, 09 Mar 14 15:25:37 -0500][DEBUG] DESCRIBE `empresa`
+[Sun, 09 Mar 14 15:25:37 -0500][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sun, 09 Mar 14 15:25:37 -0500][DEBUG] DESCRIBE `perfil`
+[Sun, 09 Mar 14 15:25:37 -0500][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Sun, 09 Mar 14 15:25:37 -0500][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Sun, 09 Mar 14 15:25:37 -0500][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Sun, 09 Mar 14 15:25:53 -0500][DEBUG] DESCRIBE `empresa`
+[Sun, 09 Mar 14 15:25:53 -0500][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sun, 09 Mar 14 15:25:53 -0500][DEBUG] DESCRIBE `perfil`
+[Sun, 09 Mar 14 15:25:53 -0500][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Sun, 09 Mar 14 15:25:53 -0500][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Sun, 09 Mar 14 15:25:53 -0500][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Sun, 09 Mar 14 15:25:54 -0500][DEBUG] DESCRIBE `empresa`
+[Sun, 09 Mar 14 15:25:54 -0500][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sun, 09 Mar 14 15:25:54 -0500][DEBUG] DESCRIBE `perfil`
+[Sun, 09 Mar 14 15:25:54 -0500][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Sun, 09 Mar 14 15:25:54 -0500][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Sun, 09 Mar 14 15:25:54 -0500][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Sun, 09 Mar 14 15:25:54 -0500][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.id > 1 AND estado=1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Sun, 09 Mar 14 15:25:54 -0500][DEBUG] DESCRIBE `empresa`
+[Sun, 09 Mar 14 15:25:54 -0500][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sun, 09 Mar 14 15:25:54 -0500][DEBUG] DESCRIBE `perfil`
+[Sun, 09 Mar 14 15:25:54 -0500][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Sun, 09 Mar 14 15:25:54 -0500][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Sun, 09 Mar 14 15:25:54 -0500][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Sun, 09 Mar 14 15:25:54 -0500][DEBUG] DESCRIBE `usuario`
+[Sun, 09 Mar 14 15:25:54 -0500][DEBUG] SELECT COUNT(*) FROM usuario  INNER JOIN (SELECT usuario_id, CASE estado_usuario WHEN 1 THEN 'Activo' WHEN 2 THEN 'Bloqueado' ELSE 'INDEFINIDO' END AS estado_usuario, descripcion, fecha_estado_at FROM (SELECT * FROM estado_usuario ORDER BY estado_usuario.id DESC ) AS estado_usuario GROUP BY estado_usuario.usuario_id ) AS estado_usuario ON estado_usuario.usuario_id = usuario.id INNER JOIN perfil ON perfil.id = usuario.perfil_id INNER JOIN persona ON persona.id = usuario.persona_id LEFT JOIN sucursal ON sucursal.id = usuario.sucursal_id  WHERE usuario.id > '2'
+[Sun, 09 Mar 14 15:25:54 -0500][DEBUG] SELECT usuario.*, perfil.perfil, persona.nombre, persona.apellido, estado_usuario.estado_usuario, estado_usuario.descripcion, sucursal.sucursal FROM usuario INNER JOIN (SELECT usuario_id, CASE estado_usuario WHEN 1 THEN 'Activo' WHEN 2 THEN 'Bloqueado' ELSE 'INDEFINIDO' END AS estado_usuario, descripcion, fecha_estado_at FROM (SELECT * FROM estado_usuario ORDER BY estado_usuario.id DESC ) AS estado_usuario GROUP BY estado_usuario.usuario_id ) AS estado_usuario ON estado_usuario.usuario_id = usuario.id INNER JOIN perfil ON perfil.id = usuario.perfil_id INNER JOIN persona ON persona.id = usuario.persona_id LEFT JOIN sucursal ON sucursal.id = usuario.sucursal_id  WHERE usuario.id > '2' ORDER BY nombre ASC LIMIT 30 OFFSET 0
+[Sun, 09 Mar 14 15:26:06 -0500][DEBUG] DESCRIBE `empresa`
+[Sun, 09 Mar 14 15:26:06 -0500][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sun, 09 Mar 14 15:26:06 -0500][DEBUG] DESCRIBE `perfil`
+[Sun, 09 Mar 14 15:26:06 -0500][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Sun, 09 Mar 14 15:26:06 -0500][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Sun, 09 Mar 14 15:26:06 -0500][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Sun, 09 Mar 14 15:26:06 -0500][DEBUG] DESCRIBE `tipo_nuip`
+[Sun, 09 Mar 14 15:26:06 -0500][DEBUG] SELECT id,tipo_nuip FROM tipo_nuip ORDER BY tipo_nuip ASC
+[Sun, 09 Mar 14 15:26:06 -0500][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.id > 1 AND estado=1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Sun, 09 Mar 14 15:26:06 -0500][DEBUG] DESCRIBE `sucursal`
+[Sun, 09 Mar 14 15:26:06 -0500][DEBUG] SELECT sucursal.*, empresa.siglas, ciudad.ciudad FROM sucursal INNER JOIN empresa ON empresa.id = sucursal.empresa_id INNER JOIN ciudad ON ciudad.id = sucursal.ciudad_id WHERE sucursal.id > 0 ORDER BY sucursal.sucursal ASC, ciudad.ciudad ASC, empresa.siglas ASC
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] DESCRIBE `empresa`
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] DESCRIBE `perfil`
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] DESCRIBE `usuario`
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] BEGIN
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] DESCRIBE `persona`
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] SELECT id,nombre,apellido,nuip,tipo_nuip_id,telefono,fotografia,registrado_at,modificado_in FROM persona WHERE nuip = 092384098230 AND tipo_nuip_id = 5 LIMIT 1
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] INSERT INTO persona (nombre,apellido,nuip,tipo_nuip_id,telefono,fotografia,registrado_at,modificado_in) VALUES ('PROBANDO','BD','092384098230','5',NULL,'default.png','2014-03-09 15:26:43',NULL)
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] SELECT id,nombre,apellido,nuip,tipo_nuip_id,telefono,fotografia,registrado_at,modificado_in FROM persona WHERE id = 4 LIMIT 1
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] SELECT COUNT(*) FROM usuario  WHERE login = 'prueba'
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] SELECT COUNT(*) FROM usuario  WHERE persona_id = '4'
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] SELECT COUNT(*) FROM usuario  WHERE email = 'dflkjhalk@kajshdfkjds'
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] INSERT INTO usuario (sucursal_id,persona_id,login,password,perfil_id,email,tema,app_ajax,datagrid,registrado_at,modificado_in) VALUES ('2','4','prueba','d93a5def7511da3d0f2d171d9c344e91','2','dflkjhalk@kajshdfkjds','default',DEFAULT,'29','2014-03-09 15:26:43',NULL)
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] SELECT id,sucursal_id,persona_id,login,password,perfil_id,email,tema,app_ajax,datagrid,registrado_at,modificado_in FROM usuario WHERE id = 4 LIMIT 1
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] DESCRIBE `estado_usuario`
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] SELECT estado_usuario FROM estado_usuario WHERE usuario_id = '4' ORDER BY id DESC LIMIT 1
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] INSERT INTO estado_usuario (usuario_id,estado_usuario,descripcion,fecha_estado_at) VALUES ('4','1','Activado por registro inicial','2014-03-09 15:26:43')
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] SELECT id,usuario_id,estado_usuario,descripcion,fecha_estado_at FROM estado_usuario WHERE id = 4 LIMIT 1
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] SELECT id,sucursal_id,persona_id,login,password,perfil_id,email,tema,app_ajax,datagrid,registrado_at,modificado_in FROM usuario WHERE id = 4 LIMIT 1
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] COMMIT
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] SELECT COUNT(*) FROM usuario  INNER JOIN (SELECT usuario_id, CASE estado_usuario WHEN 1 THEN 'Activo' WHEN 2 THEN 'Bloqueado' ELSE 'INDEFINIDO' END AS estado_usuario, descripcion, fecha_estado_at FROM (SELECT * FROM estado_usuario ORDER BY estado_usuario.id DESC ) AS estado_usuario GROUP BY estado_usuario.usuario_id ) AS estado_usuario ON estado_usuario.usuario_id = usuario.id INNER JOIN perfil ON perfil.id = usuario.perfil_id INNER JOIN persona ON persona.id = usuario.persona_id LEFT JOIN sucursal ON sucursal.id = usuario.sucursal_id  WHERE usuario.id > '2'
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] SELECT usuario.*, perfil.perfil, persona.nombre, persona.apellido, estado_usuario.estado_usuario, estado_usuario.descripcion, sucursal.sucursal FROM usuario INNER JOIN (SELECT usuario_id, CASE estado_usuario WHEN 1 THEN 'Activo' WHEN 2 THEN 'Bloqueado' ELSE 'INDEFINIDO' END AS estado_usuario, descripcion, fecha_estado_at FROM (SELECT * FROM estado_usuario ORDER BY estado_usuario.id DESC ) AS estado_usuario GROUP BY estado_usuario.usuario_id ) AS estado_usuario ON estado_usuario.usuario_id = usuario.id INNER JOIN perfil ON perfil.id = usuario.perfil_id INNER JOIN persona ON persona.id = usuario.persona_id LEFT JOIN sucursal ON sucursal.id = usuario.sucursal_id  WHERE usuario.id > '2' ORDER BY nombre ASC LIMIT 30 OFFSET 0
+[Sun, 09 Mar 14 15:26:53 -0500][DEBUG] DESCRIBE `empresa`
+[Sun, 09 Mar 14 15:26:53 -0500][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sun, 09 Mar 14 15:26:53 -0500][DEBUG] DESCRIBE `acceso`
+[Sun, 09 Mar 14 15:26:53 -0500][DEBUG] INSERT INTO acceso (usuario_id,tipo_acceso,ip,registrado_at) VALUES ('2','2','127.0.0.1','2014-03-09 15:26:53')
+[Sun, 09 Mar 14 15:26:53 -0500][DEBUG] SELECT id,usuario_id,tipo_acceso,ip,registrado_at FROM acceso WHERE id = 20 LIMIT 1
+[Sun, 09 Mar 14 15:26:53 -0500][DEBUG] DESCRIBE `empresa`
+[Sun, 09 Mar 14 15:26:53 -0500][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sun, 09 Mar 14 15:27:01 -0500][DEBUG] DESCRIBE `empresa`
+[Sun, 09 Mar 14 15:27:01 -0500][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sun, 09 Mar 14 15:27:01 -0500][DEBUG] DESCRIBE `usuario`
+[Sun, 09 Mar 14 15:27:01 -0500][DEBUG] SELECT id,sucursal_id,persona_id,login,password,perfil_id,email,tema,app_ajax,datagrid,registrado_at,modificado_in FROM usuario WHERE login = 'prueba' AND password = 'd93a5def7511da3d0f2d171d9c344e91' LIMIT 1
+[Sun, 09 Mar 14 15:27:01 -0500][DEBUG] SELECT usuario.*, perfil.perfil, persona.nombre, persona.apellido, estado_usuario.estado_usuario FROM usuario INNER JOIN persona ON persona.id = usuario.persona_id INNER JOIN perfil ON perfil.id = usuario.perfil_id INNER JOIN (SELECT usuario_id, CASE estado_usuario WHEN 1 THEN 'Activo' WHEN 2 THEN 'Bloqueado' ELSE 'INDEFINIDO' END AS estado_usuario, descripcion, fecha_estado_at FROM (SELECT * FROM estado_usuario ORDER BY estado_usuario.id DESC ) AS estado_usuario GROUP BY estado_usuario.usuario_id ) AS estado_usuario ON estado_usuario.usuario_id = usuario.id  WHERE usuario.id = '4' LIMIT 1
+[Sun, 09 Mar 14 15:27:01 -0500][DEBUG] DESCRIBE `acceso`
+[Sun, 09 Mar 14 15:27:01 -0500][DEBUG] INSERT INTO acceso (usuario_id,tipo_acceso,ip,registrado_at) VALUES ('4','1','127.0.0.1','2014-03-09 15:27:01')
+[Sun, 09 Mar 14 15:27:01 -0500][DEBUG] SELECT id,usuario_id,tipo_acceso,ip,registrado_at FROM acceso WHERE id = 21 LIMIT 1
+[Sun, 09 Mar 14 15:27:01 -0500][DEBUG] DESCRIBE `empresa`
+[Sun, 09 Mar 14 15:27:01 -0500][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sun, 09 Mar 14 15:27:01 -0500][DEBUG] DESCRIBE `perfil`
+[Sun, 09 Mar 14 15:27:01 -0500][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Sun, 09 Mar 14 15:27:01 -0500][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Sun, 09 Mar 14 15:27:01 -0500][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Sun, 09 Mar 14 15:27:05 -0500][DEBUG] DESCRIBE `empresa`
+[Sun, 09 Mar 14 15:27:05 -0500][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sun, 09 Mar 14 15:27:05 -0500][DEBUG] DESCRIBE `perfil`
+[Sun, 09 Mar 14 15:27:05 -0500][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Sun, 09 Mar 14 15:27:05 -0500][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Sun, 09 Mar 14 15:27:05 -0500][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Sun, 09 Mar 14 15:27:05 -0500][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sun, 09 Mar 14 15:27:05 -0500][DEBUG] DESCRIBE `tipo_nuip`
+[Sun, 09 Mar 14 15:27:05 -0500][DEBUG] SELECT id,tipo_nuip FROM tipo_nuip ORDER BY tipo_nuip ASC
+[Sun, 09 Mar 14 15:27:05 -0500][DEBUG] DESCRIBE `empresa`
+[Sun, 09 Mar 14 15:27:05 -0500][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sun, 09 Mar 14 15:27:06 -0500][DEBUG] DESCRIBE `perfil`
+[Sun, 09 Mar 14 15:27:06 -0500][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Sun, 09 Mar 14 15:27:06 -0500][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Sun, 09 Mar 14 15:27:06 -0500][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Sun, 09 Mar 14 15:27:06 -0500][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sun, 09 Mar 14 15:27:06 -0500][DEBUG] DESCRIBE `tipo_nuip`
+[Sun, 09 Mar 14 15:27:06 -0500][DEBUG] SELECT id,tipo_nuip FROM tipo_nuip ORDER BY tipo_nuip ASC
+[Sun, 09 Mar 14 15:27:10 -0500][DEBUG] DESCRIBE `empresa`
+[Sun, 09 Mar 14 15:27:10 -0500][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sun, 09 Mar 14 15:27:10 -0500][DEBUG] DESCRIBE `acceso`
+[Sun, 09 Mar 14 15:27:10 -0500][DEBUG] INSERT INTO acceso (usuario_id,tipo_acceso,ip,registrado_at) VALUES ('4','2','127.0.0.1','2014-03-09 15:27:10')
+[Sun, 09 Mar 14 15:27:10 -0500][DEBUG] SELECT id,usuario_id,tipo_acceso,ip,registrado_at FROM acceso WHERE id = 22 LIMIT 1
+[Sun, 09 Mar 14 15:27:10 -0500][DEBUG] DESCRIBE `empresa`
+[Sun, 09 Mar 14 15:27:10 -0500][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sun, 09 Mar 14 15:48:27 -0500][DEBUG] DESCRIBE `empresa`
+[Sun, 09 Mar 14 15:48:27 -0500][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sun, 09 Mar 14 15:48:28 -0500][DEBUG] DESCRIBE `empresa`
+[Sun, 09 Mar 14 15:48:28 -0500][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sun, 09 Mar 14 15:49:12 -0500][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Sun, 09 Mar 14 15:49:12 -0500][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sun, 09 Mar 14 15:49:12 -0500][ERROR] ERROR:  relation "tipo_nuip" does not exist
+LINE 1: ...sa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ...
+                                                             ^ al ejecutar <em>'SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1'</em> al ejecutar <em>'SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1'</em>
+[Sun, 09 Mar 14 15:49:13 -0500][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Sun, 09 Mar 14 15:49:13 -0500][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sun, 09 Mar 14 15:49:13 -0500][ERROR] ERROR:  relation "tipo_nuip" does not exist
+LINE 1: ...sa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ...
+                                                             ^ al ejecutar <em>'SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1'</em> al ejecutar <em>'SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1'</em>
+[Sun, 09 Mar 14 16:33:31 -0500][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Sun, 09 Mar 14 16:33:31 -0500][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sun, 09 Mar 14 16:33:31 -0500][ERROR] ERROR:  relation "tipo_nuip" does not exist
+LINE 1: ...sa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ...
+                                                             ^ al ejecutar <em>'SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1'</em> al ejecutar <em>'SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1'</em>
+[Sun, 09 Mar 14 16:33:31 -0500][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Sun, 09 Mar 14 16:33:31 -0500][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Sun, 09 Mar 14 16:33:31 -0500][ERROR] ERROR:  relation "tipo_nuip" does not exist
+LINE 1: ...sa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ...
+                                                             ^ al ejecutar <em>'SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1'</em> al ejecutar <em>'SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1'</em>
+[Sun, 09 Mar 14 16:35:57 -0500][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Sun, 09 Mar 14 16:35:57 -0500][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Sun, 09 Mar 14 16:36:31 -0500][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Sun, 09 Mar 14 16:36:31 -0500][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Sun, 09 Mar 14 16:40:36 -0500][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Sun, 09 Mar 14 16:40:36 -0500][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Sun, 09 Mar 14 16:40:36 -0500][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'usuario' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Sun, 09 Mar 14 16:40:36 -0500][DEBUG] SELECT id,usuario_id,fecha_registro,fecha_modificado,sucursal_id,persona_id,login,password,perfil_id,email,tema,app_ajax,datagrid FROM usuario WHERE login = 'admin' AND password = 'd93a5def7511da3d0f2d171d9c344e91' LIMIT 1
+[Sun, 09 Mar 14 19:51:58 -0500][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Sun, 09 Mar 14 19:51:58 -0500][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Sun, 09 Mar 14 19:52:05 -0500][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Sun, 09 Mar 14 19:52:05 -0500][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Sun, 09 Mar 14 19:52:09 -0500][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Sun, 09 Mar 14 19:52:09 -0500][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Sun, 09 Mar 14 19:52:12 -0500][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Sun, 09 Mar 14 19:52:12 -0500][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Sun, 09 Mar 14 19:52:16 -0500][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Sun, 09 Mar 14 19:52:16 -0500][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Sun, 09 Mar 14 19:52:16 -0500][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'usuario' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Sun, 09 Mar 14 19:52:16 -0500][DEBUG] SELECT id,usuario_id,fecha_registro,fecha_modificado,sucursal_id,persona_id,login,password,perfil_id,email,tema,app_ajax,datagrid FROM usuario WHERE login = 'admin' AND password = 'd93a5def7511da3d0f2d171d9c344e91' LIMIT 1
