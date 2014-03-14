@@ -12,7 +12,7 @@
 
 class PrincipalController extends AppController {
     
-    public $page_title = 'Daily Backend Manager';
+    public $page_title = 'Sistema Autogestionado de Salud';
     
     public function index() {
         

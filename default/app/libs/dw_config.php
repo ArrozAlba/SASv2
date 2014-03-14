@@ -156,7 +156,7 @@ class DwConfig {
         Session::set('empresa', $empresa, 'config');
         
         if(!defined('APP_CLIENT')) {
-            define('APP_CLIENT', (empty($empresa->siglas)) ? 'Empresa LTDA' : $empresa->siglas);
+            define('APP_CLIENT', (empty($empresa->razon_social)) ? 'E.M.S. Arroz del Alba S.A.' : $empresa->razon_social);
         }
         if(!defined('APP_CLIENT_LOGO')) {
             define('APP_CLIENT_LOGO', (empty($empresa->logo)) ? NULL : $empresa->logo);
