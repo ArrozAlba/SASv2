@@ -2,10 +2,6 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.1.12
--- Dumped by pg_dump version 9.1.12
--- Started on 2014-03-13 15:51:08 VET
-
 SET statement_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
@@ -13,7 +9,6 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- TOC entry 257 (class 3079 OID 11725)
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
@@ -21,8 +16,6 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2713 (class 0 OID 0)
--- Dependencies: 257
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
 
@@ -36,8 +29,6 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 161 (class 1259 OID 104325)
--- Dependencies: 2116 2117 6
 -- Name: acceso; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -58,8 +49,6 @@ CREATE TABLE acceso (
 ALTER TABLE public.acceso OWNER TO jelitox;
 
 --
--- TOC entry 2714 (class 0 OID 0)
--- Dependencies: 161
 -- Name: TABLE acceso; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -67,8 +56,6 @@ COMMENT ON TABLE acceso IS 'Modelo para manipular los  accesos de usuarios';
 
 
 --
--- TOC entry 2715 (class 0 OID 0)
--- Dependencies: 161
 -- Name: COLUMN acceso.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -76,8 +63,6 @@ COMMENT ON COLUMN acceso.usuario_id IS 'Identificador del usuario que accede';
 
 
 --
--- TOC entry 2716 (class 0 OID 0)
--- Dependencies: 161
 -- Name: COLUMN acceso.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -85,8 +70,6 @@ COMMENT ON COLUMN acceso.fecha_registro IS 'Fecha de registro del acceso';
 
 
 --
--- TOC entry 2717 (class 0 OID 0)
--- Dependencies: 161
 -- Name: COLUMN acceso.tipo_acceso; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -94,8 +77,6 @@ COMMENT ON COLUMN acceso.tipo_acceso IS 'Tipo de acceso (entrada o salida)';
 
 
 --
--- TOC entry 2718 (class 0 OID 0)
--- Dependencies: 161
 -- Name: COLUMN acceso.navegador; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -103,8 +84,6 @@ COMMENT ON COLUMN acceso.navegador IS 'Navegador del Cliente';
 
 
 --
--- TOC entry 2719 (class 0 OID 0)
--- Dependencies: 161
 -- Name: COLUMN acceso.version_navegador; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -112,8 +91,6 @@ COMMENT ON COLUMN acceso.version_navegador IS 'Version del Navegador del Cliente
 
 
 --
--- TOC entry 2720 (class 0 OID 0)
--- Dependencies: 161
 -- Name: COLUMN acceso.sistema_operativo; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -121,8 +98,6 @@ COMMENT ON COLUMN acceso.sistema_operativo IS 'Sistema Operativo del Cliente';
 
 
 --
--- TOC entry 2721 (class 0 OID 0)
--- Dependencies: 161
 -- Name: COLUMN acceso.nombre_equipo; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -130,8 +105,6 @@ COMMENT ON COLUMN acceso.nombre_equipo IS 'Nombre del Equipo';
 
 
 --
--- TOC entry 2722 (class 0 OID 0)
--- Dependencies: 161
 -- Name: COLUMN acceso.ip; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -139,8 +112,6 @@ COMMENT ON COLUMN acceso.ip IS 'Dirección IP del usuario que ingresa';
 
 
 --
--- TOC entry 162 (class 1259 OID 104330)
--- Dependencies: 6 161
 -- Name: acceso_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -155,8 +126,6 @@ CREATE SEQUENCE acceso_id_seq
 ALTER TABLE public.acceso_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2723 (class 0 OID 0)
--- Dependencies: 162
 -- Name: acceso_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -164,8 +133,6 @@ ALTER SEQUENCE acceso_id_seq OWNED BY acceso.id;
 
 
 --
--- TOC entry 163 (class 1259 OID 104332)
--- Dependencies: 2119 2120 6
 -- Name: backup; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -183,8 +150,6 @@ CREATE TABLE backup (
 ALTER TABLE public.backup OWNER TO jelitox;
 
 --
--- TOC entry 2724 (class 0 OID 0)
--- Dependencies: 163
 -- Name: TABLE backup; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -192,8 +157,6 @@ COMMENT ON TABLE backup IS 'Modelo para manipular los Backups generados por el s
 
 
 --
--- TOC entry 2725 (class 0 OID 0)
--- Dependencies: 163
 -- Name: COLUMN backup.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -201,8 +164,6 @@ COMMENT ON COLUMN backup.usuario_id IS 'ID del Usuario';
 
 
 --
--- TOC entry 2726 (class 0 OID 0)
--- Dependencies: 163
 -- Name: COLUMN backup.denominacion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -210,8 +171,6 @@ COMMENT ON COLUMN backup.denominacion IS 'Denominacion del Backup';
 
 
 --
--- TOC entry 2727 (class 0 OID 0)
--- Dependencies: 163
 -- Name: COLUMN backup.tamano; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -219,8 +178,6 @@ COMMENT ON COLUMN backup.tamano IS 'Tamaño del Backup';
 
 
 --
--- TOC entry 2728 (class 0 OID 0)
--- Dependencies: 163
 -- Name: COLUMN backup.archivo; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -228,8 +185,6 @@ COMMENT ON COLUMN backup.archivo IS 'Nombre del Archivo';
 
 
 --
--- TOC entry 164 (class 1259 OID 104337)
--- Dependencies: 6 163
 -- Name: backup_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -244,8 +199,6 @@ CREATE SEQUENCE backup_id_seq
 ALTER TABLE public.backup_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2729 (class 0 OID 0)
--- Dependencies: 164
 -- Name: backup_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -253,8 +206,6 @@ ALTER SEQUENCE backup_id_seq OWNED BY backup.id;
 
 
 --
--- TOC entry 165 (class 1259 OID 104339)
--- Dependencies: 2122 2123 2124 6
 -- Name: beneficiario; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -274,8 +225,6 @@ CREATE TABLE beneficiario (
 ALTER TABLE public.beneficiario OWNER TO jelitox;
 
 --
--- TOC entry 2730 (class 0 OID 0)
--- Dependencies: 165
 -- Name: TABLE beneficiario; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -283,8 +232,6 @@ COMMENT ON TABLE beneficiario IS 'Modelo para manipular los beneficiarios';
 
 
 --
--- TOC entry 2731 (class 0 OID 0)
--- Dependencies: 165
 -- Name: COLUMN beneficiario.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -292,8 +239,6 @@ COMMENT ON COLUMN beneficiario.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2732 (class 0 OID 0)
--- Dependencies: 165
 -- Name: COLUMN beneficiario.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -301,8 +246,6 @@ COMMENT ON COLUMN beneficiario.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2733 (class 0 OID 0)
--- Dependencies: 165
 -- Name: COLUMN beneficiario.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -310,8 +253,6 @@ COMMENT ON COLUMN beneficiario.fecha_modificado IS 'Fecha Modificacion del Regis
 
 
 --
--- TOC entry 2734 (class 0 OID 0)
--- Dependencies: 165
 -- Name: COLUMN beneficiario.titular_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -319,8 +260,6 @@ COMMENT ON COLUMN beneficiario.titular_id IS 'Empleado Titular';
 
 
 --
--- TOC entry 2735 (class 0 OID 0)
--- Dependencies: 165
 -- Name: COLUMN beneficiario.parentesco; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -328,8 +267,6 @@ COMMENT ON COLUMN beneficiario.parentesco IS 'Parentesco del beneficiario';
 
 
 --
--- TOC entry 2736 (class 0 OID 0)
--- Dependencies: 165
 -- Name: COLUMN beneficiario.observacion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -337,8 +274,6 @@ COMMENT ON COLUMN beneficiario.observacion IS 'Observacion';
 
 
 --
--- TOC entry 166 (class 1259 OID 104345)
--- Dependencies: 6 165
 -- Name: beneficiario_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -353,8 +288,6 @@ CREATE SEQUENCE beneficiario_id_seq
 ALTER TABLE public.beneficiario_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2737 (class 0 OID 0)
--- Dependencies: 166
 -- Name: beneficiario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -362,8 +295,6 @@ ALTER SEQUENCE beneficiario_id_seq OWNED BY beneficiario.id;
 
 
 --
--- TOC entry 167 (class 1259 OID 104347)
--- Dependencies: 2126 2127 6
 -- Name: beneficiario_tipo; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -380,8 +311,6 @@ CREATE TABLE beneficiario_tipo (
 ALTER TABLE public.beneficiario_tipo OWNER TO jelitox;
 
 --
--- TOC entry 2738 (class 0 OID 0)
--- Dependencies: 167
 -- Name: TABLE beneficiario_tipo; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -389,8 +318,6 @@ COMMENT ON TABLE beneficiario_tipo IS 'Modelo para manipular los Tipos de Benefi
 
 
 --
--- TOC entry 2739 (class 0 OID 0)
--- Dependencies: 167
 -- Name: COLUMN beneficiario_tipo.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -398,8 +325,6 @@ COMMENT ON COLUMN beneficiario_tipo.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2740 (class 0 OID 0)
--- Dependencies: 167
 -- Name: COLUMN beneficiario_tipo.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -407,8 +332,6 @@ COMMENT ON COLUMN beneficiario_tipo.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2741 (class 0 OID 0)
--- Dependencies: 167
 -- Name: COLUMN beneficiario_tipo.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -416,8 +339,6 @@ COMMENT ON COLUMN beneficiario_tipo.fecha_modificado IS 'Fecha Modificacion del 
 
 
 --
--- TOC entry 2742 (class 0 OID 0)
--- Dependencies: 167
 -- Name: COLUMN beneficiario_tipo.descripcion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -425,8 +346,6 @@ COMMENT ON COLUMN beneficiario_tipo.descripcion IS 'Descripcion del Tipo de Bene
 
 
 --
--- TOC entry 2743 (class 0 OID 0)
--- Dependencies: 167
 -- Name: COLUMN beneficiario_tipo.observacion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -434,8 +353,6 @@ COMMENT ON COLUMN beneficiario_tipo.observacion IS 'Observacion';
 
 
 --
--- TOC entry 168 (class 1259 OID 104352)
--- Dependencies: 6 167
 -- Name: beneficiario_tipo_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -450,8 +367,6 @@ CREATE SEQUENCE beneficiario_tipo_id_seq
 ALTER TABLE public.beneficiario_tipo_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2744 (class 0 OID 0)
--- Dependencies: 168
 -- Name: beneficiario_tipo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -459,8 +374,6 @@ ALTER SEQUENCE beneficiario_tipo_id_seq OWNED BY beneficiario_tipo.id;
 
 
 --
--- TOC entry 169 (class 1259 OID 104354)
--- Dependencies: 2129 2130 6
 -- Name: cargo; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -477,8 +390,6 @@ CREATE TABLE cargo (
 ALTER TABLE public.cargo OWNER TO jelitox;
 
 --
--- TOC entry 2745 (class 0 OID 0)
--- Dependencies: 169
 -- Name: TABLE cargo; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -486,8 +397,6 @@ COMMENT ON TABLE cargo IS 'Modelo para manipular las diferentes Profesiones';
 
 
 --
--- TOC entry 2746 (class 0 OID 0)
--- Dependencies: 169
 -- Name: COLUMN cargo.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -495,8 +404,6 @@ COMMENT ON COLUMN cargo.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2747 (class 0 OID 0)
--- Dependencies: 169
 -- Name: COLUMN cargo.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -504,8 +411,6 @@ COMMENT ON COLUMN cargo.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2748 (class 0 OID 0)
--- Dependencies: 169
 -- Name: COLUMN cargo.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -513,8 +418,6 @@ COMMENT ON COLUMN cargo.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- TOC entry 2749 (class 0 OID 0)
--- Dependencies: 169
 -- Name: COLUMN cargo.nombre; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -522,8 +425,6 @@ COMMENT ON COLUMN cargo.nombre IS 'Nombre de la Profesion';
 
 
 --
--- TOC entry 2750 (class 0 OID 0)
--- Dependencies: 169
 -- Name: COLUMN cargo.observacion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -531,8 +432,6 @@ COMMENT ON COLUMN cargo.observacion IS 'Observacion';
 
 
 --
--- TOC entry 170 (class 1259 OID 104359)
--- Dependencies: 6 169
 -- Name: cargo_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -547,8 +446,6 @@ CREATE SEQUENCE cargo_id_seq
 ALTER TABLE public.cargo_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2751 (class 0 OID 0)
--- Dependencies: 170
 -- Name: cargo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -556,8 +453,6 @@ ALTER SEQUENCE cargo_id_seq OWNED BY cargo.id;
 
 
 --
--- TOC entry 171 (class 1259 OID 104361)
--- Dependencies: 2132 2133 2134 2135 2136 6
 -- Name: cobertura; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -578,8 +473,6 @@ CREATE TABLE cobertura (
 ALTER TABLE public.cobertura OWNER TO jelitox;
 
 --
--- TOC entry 2752 (class 0 OID 0)
--- Dependencies: 171
 -- Name: TABLE cobertura; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -587,8 +480,6 @@ COMMENT ON TABLE cobertura IS 'Modelo para manipular las Coberturas';
 
 
 --
--- TOC entry 2753 (class 0 OID 0)
--- Dependencies: 171
 -- Name: COLUMN cobertura.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -596,8 +487,6 @@ COMMENT ON COLUMN cobertura.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2754 (class 0 OID 0)
--- Dependencies: 171
 -- Name: COLUMN cobertura.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -605,8 +494,6 @@ COMMENT ON COLUMN cobertura.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2755 (class 0 OID 0)
--- Dependencies: 171
 -- Name: COLUMN cobertura.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -614,8 +501,6 @@ COMMENT ON COLUMN cobertura.fecha_modificado IS 'Fecha Modificacion del Registro
 
 
 --
--- TOC entry 2756 (class 0 OID 0)
--- Dependencies: 171
 -- Name: COLUMN cobertura.descripcion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -623,8 +508,6 @@ COMMENT ON COLUMN cobertura.descripcion IS 'Descripcion de la cobertura';
 
 
 --
--- TOC entry 2757 (class 0 OID 0)
--- Dependencies: 171
 -- Name: COLUMN cobertura.tipo_cobertura; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -632,8 +515,6 @@ COMMENT ON COLUMN cobertura.tipo_cobertura IS 'Tipo de Cobertura (G-Grupal,I-Ind
 
 
 --
--- TOC entry 2758 (class 0 OID 0)
--- Dependencies: 171
 -- Name: COLUMN cobertura.monto_cobertura; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -641,8 +522,6 @@ COMMENT ON COLUMN cobertura.monto_cobertura IS 'Monto de la Cobertura';
 
 
 --
--- TOC entry 2759 (class 0 OID 0)
--- Dependencies: 171
 -- Name: COLUMN cobertura.fecha_inicio; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -650,8 +529,6 @@ COMMENT ON COLUMN cobertura.fecha_inicio IS 'Fecha de Inicio de la cobertura';
 
 
 --
--- TOC entry 2760 (class 0 OID 0)
--- Dependencies: 171
 -- Name: COLUMN cobertura.fecha_fin; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -659,8 +536,6 @@ COMMENT ON COLUMN cobertura.fecha_fin IS 'Fecha de Fin de la cobertura';
 
 
 --
--- TOC entry 2761 (class 0 OID 0)
--- Dependencies: 171
 -- Name: COLUMN cobertura.observacion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -668,8 +543,6 @@ COMMENT ON COLUMN cobertura.observacion IS 'Observacion de la Cobertura';
 
 
 --
--- TOC entry 172 (class 1259 OID 104369)
--- Dependencies: 6 171
 -- Name: cobertura_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -684,8 +557,6 @@ CREATE SEQUENCE cobertura_id_seq
 ALTER TABLE public.cobertura_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2762 (class 0 OID 0)
--- Dependencies: 172
 -- Name: cobertura_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -693,8 +564,6 @@ ALTER SEQUENCE cobertura_id_seq OWNED BY cobertura.id;
 
 
 --
--- TOC entry 173 (class 1259 OID 104371)
--- Dependencies: 2138 2139 6
 -- Name: departamento; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -712,8 +581,6 @@ CREATE TABLE departamento (
 ALTER TABLE public.departamento OWNER TO jelitox;
 
 --
--- TOC entry 2763 (class 0 OID 0)
--- Dependencies: 173
 -- Name: TABLE departamento; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -721,8 +588,6 @@ COMMENT ON TABLE departamento IS 'Modelo para manipular los diferentes Departame
 
 
 --
--- TOC entry 2764 (class 0 OID 0)
--- Dependencies: 173
 -- Name: COLUMN departamento.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -730,8 +595,6 @@ COMMENT ON COLUMN departamento.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2765 (class 0 OID 0)
--- Dependencies: 173
 -- Name: COLUMN departamento.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -739,8 +602,6 @@ COMMENT ON COLUMN departamento.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2766 (class 0 OID 0)
--- Dependencies: 173
 -- Name: COLUMN departamento.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -748,8 +609,6 @@ COMMENT ON COLUMN departamento.fecha_modificado IS 'Fecha Modificacion del Regis
 
 
 --
--- TOC entry 2767 (class 0 OID 0)
--- Dependencies: 173
 -- Name: COLUMN departamento.nombre; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -757,8 +616,6 @@ COMMENT ON COLUMN departamento.nombre IS 'Nombre del Departamento';
 
 
 --
--- TOC entry 2768 (class 0 OID 0)
--- Dependencies: 173
 -- Name: COLUMN departamento.observacion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -766,8 +623,6 @@ COMMENT ON COLUMN departamento.observacion IS 'Observacion';
 
 
 --
--- TOC entry 174 (class 1259 OID 104376)
--- Dependencies: 6 173
 -- Name: departamento_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -782,8 +637,6 @@ CREATE SEQUENCE departamento_id_seq
 ALTER TABLE public.departamento_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2769 (class 0 OID 0)
--- Dependencies: 174
 -- Name: departamento_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -791,8 +644,6 @@ ALTER SEQUENCE departamento_id_seq OWNED BY departamento.id;
 
 
 --
--- TOC entry 175 (class 1259 OID 104378)
--- Dependencies: 2141 2142 6
 -- Name: discapacidad; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -809,8 +660,6 @@ CREATE TABLE discapacidad (
 ALTER TABLE public.discapacidad OWNER TO jelitox;
 
 --
--- TOC entry 2770 (class 0 OID 0)
--- Dependencies: 175
 -- Name: TABLE discapacidad; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -818,8 +667,6 @@ COMMENT ON TABLE discapacidad IS 'Modelo para manipular los diferentes Tipos de 
 
 
 --
--- TOC entry 2771 (class 0 OID 0)
--- Dependencies: 175
 -- Name: COLUMN discapacidad.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -827,8 +674,6 @@ COMMENT ON COLUMN discapacidad.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2772 (class 0 OID 0)
--- Dependencies: 175
 -- Name: COLUMN discapacidad.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -836,8 +681,6 @@ COMMENT ON COLUMN discapacidad.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2773 (class 0 OID 0)
--- Dependencies: 175
 -- Name: COLUMN discapacidad.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -845,8 +688,6 @@ COMMENT ON COLUMN discapacidad.fecha_modificado IS 'Fecha Modificacion del Regis
 
 
 --
--- TOC entry 2774 (class 0 OID 0)
--- Dependencies: 175
 -- Name: COLUMN discapacidad.nombre; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -854,8 +695,6 @@ COMMENT ON COLUMN discapacidad.nombre IS 'Nombre de la Discapacidad';
 
 
 --
--- TOC entry 2775 (class 0 OID 0)
--- Dependencies: 175
 -- Name: COLUMN discapacidad.observacion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -863,8 +702,6 @@ COMMENT ON COLUMN discapacidad.observacion IS 'Observacion';
 
 
 --
--- TOC entry 176 (class 1259 OID 104383)
--- Dependencies: 175 6
 -- Name: discapacidad_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -879,8 +716,6 @@ CREATE SEQUENCE discapacidad_id_seq
 ALTER TABLE public.discapacidad_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2776 (class 0 OID 0)
--- Dependencies: 176
 -- Name: discapacidad_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -888,8 +723,6 @@ ALTER SEQUENCE discapacidad_id_seq OWNED BY discapacidad.id;
 
 
 --
--- TOC entry 177 (class 1259 OID 104385)
--- Dependencies: 6
 -- Name: discapacidad_persona; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -903,8 +736,6 @@ CREATE TABLE discapacidad_persona (
 ALTER TABLE public.discapacidad_persona OWNER TO jelitox;
 
 --
--- TOC entry 2777 (class 0 OID 0)
--- Dependencies: 177
 -- Name: TABLE discapacidad_persona; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -912,8 +743,6 @@ COMMENT ON TABLE discapacidad_persona IS 'Modelo para manipular la relacion Disc
 
 
 --
--- TOC entry 2778 (class 0 OID 0)
--- Dependencies: 177
 -- Name: COLUMN discapacidad_persona.persona_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -921,8 +750,6 @@ COMMENT ON COLUMN discapacidad_persona.persona_id IS 'ID de la Persona';
 
 
 --
--- TOC entry 2779 (class 0 OID 0)
--- Dependencies: 177
 -- Name: COLUMN discapacidad_persona.discapacidad_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -930,8 +757,6 @@ COMMENT ON COLUMN discapacidad_persona.discapacidad_id IS 'ID de la Discapacidad
 
 
 --
--- TOC entry 178 (class 1259 OID 104388)
--- Dependencies: 6 177
 -- Name: discapacidad_persona_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -946,8 +771,6 @@ CREATE SEQUENCE discapacidad_persona_id_seq
 ALTER TABLE public.discapacidad_persona_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2780 (class 0 OID 0)
--- Dependencies: 178
 -- Name: discapacidad_persona_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -955,8 +778,6 @@ ALTER SEQUENCE discapacidad_persona_id_seq OWNED BY discapacidad_persona.id;
 
 
 --
--- TOC entry 179 (class 1259 OID 104390)
--- Dependencies: 2145 2146 6
 -- Name: empresa; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -976,15 +797,14 @@ CREATE TABLE empresa (
     telefono character varying(15) NOT NULL,
     fax character varying(15),
     celular character varying(15),
-    logo character varying(45)
+    logo character varying(45),
+    email character varying(100)
 );
 
 
 ALTER TABLE public.empresa OWNER TO jelitox;
 
 --
--- TOC entry 2781 (class 0 OID 0)
--- Dependencies: 179
 -- Name: TABLE empresa; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -992,8 +812,6 @@ COMMENT ON TABLE empresa IS 'Modelo para manipular la empresa';
 
 
 --
--- TOC entry 2782 (class 0 OID 0)
--- Dependencies: 179
 -- Name: COLUMN empresa.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1001,8 +819,6 @@ COMMENT ON COLUMN empresa.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2783 (class 0 OID 0)
--- Dependencies: 179
 -- Name: COLUMN empresa.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1010,8 +826,6 @@ COMMENT ON COLUMN empresa.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2784 (class 0 OID 0)
--- Dependencies: 179
 -- Name: COLUMN empresa.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1019,8 +833,6 @@ COMMENT ON COLUMN empresa.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- TOC entry 2785 (class 0 OID 0)
--- Dependencies: 179
 -- Name: COLUMN empresa.razon_social; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1028,8 +840,6 @@ COMMENT ON COLUMN empresa.razon_social IS 'Razon Social de la Empresa ';
 
 
 --
--- TOC entry 2786 (class 0 OID 0)
--- Dependencies: 179
 -- Name: COLUMN empresa.pais_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1037,8 +847,6 @@ COMMENT ON COLUMN empresa.pais_id IS 'ID Pais';
 
 
 --
--- TOC entry 2787 (class 0 OID 0)
--- Dependencies: 179
 -- Name: COLUMN empresa.estado_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1046,8 +854,6 @@ COMMENT ON COLUMN empresa.estado_id IS 'ID Estado';
 
 
 --
--- TOC entry 2788 (class 0 OID 0)
--- Dependencies: 179
 -- Name: COLUMN empresa.municipio_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1055,8 +861,6 @@ COMMENT ON COLUMN empresa.municipio_id IS 'ID Municipio ';
 
 
 --
--- TOC entry 2789 (class 0 OID 0)
--- Dependencies: 179
 -- Name: COLUMN empresa.parroquia_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1064,8 +868,6 @@ COMMENT ON COLUMN empresa.parroquia_id IS 'ID Parroquia ';
 
 
 --
--- TOC entry 2790 (class 0 OID 0)
--- Dependencies: 179
 -- Name: COLUMN empresa.representante_legal; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1073,8 +875,6 @@ COMMENT ON COLUMN empresa.representante_legal IS 'Representante Legal de la Empr
 
 
 --
--- TOC entry 2791 (class 0 OID 0)
--- Dependencies: 179
 -- Name: COLUMN empresa.pagina_web; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1082,8 +882,6 @@ COMMENT ON COLUMN empresa.pagina_web IS 'Pagina Web de la Empresa ';
 
 
 --
--- TOC entry 2792 (class 0 OID 0)
--- Dependencies: 179
 -- Name: COLUMN empresa.telefono; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1091,8 +889,6 @@ COMMENT ON COLUMN empresa.telefono IS 'Telefono de la Empresa ';
 
 
 --
--- TOC entry 2793 (class 0 OID 0)
--- Dependencies: 179
 -- Name: COLUMN empresa.fax; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1100,8 +896,6 @@ COMMENT ON COLUMN empresa.fax IS 'Telefax de la Empresa ';
 
 
 --
--- TOC entry 2794 (class 0 OID 0)
--- Dependencies: 179
 -- Name: COLUMN empresa.celular; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1109,8 +903,6 @@ COMMENT ON COLUMN empresa.celular IS 'Telefono Celular del Representante Legal '
 
 
 --
--- TOC entry 2795 (class 0 OID 0)
--- Dependencies: 179
 -- Name: COLUMN empresa.logo; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1118,8 +910,14 @@ COMMENT ON COLUMN empresa.logo IS 'Logo de la Empresa ';
 
 
 --
--- TOC entry 180 (class 1259 OID 104395)
--- Dependencies: 179 6
+-- Name: COLUMN empresa.email; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN empresa.email IS 'Correo Electronico de la Empresa
+';
+
+
+--
 -- Name: empresa_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -1134,8 +932,6 @@ CREATE SEQUENCE empresa_id_seq
 ALTER TABLE public.empresa_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2796 (class 0 OID 0)
--- Dependencies: 180
 -- Name: empresa_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -1143,8 +939,6 @@ ALTER SEQUENCE empresa_id_seq OWNED BY empresa.id;
 
 
 --
--- TOC entry 181 (class 1259 OID 104397)
--- Dependencies: 2148 2149 6
 -- Name: especialidad; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -1161,8 +955,6 @@ CREATE TABLE especialidad (
 ALTER TABLE public.especialidad OWNER TO jelitox;
 
 --
--- TOC entry 2797 (class 0 OID 0)
--- Dependencies: 181
 -- Name: TABLE especialidad; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1170,8 +962,6 @@ COMMENT ON TABLE especialidad IS 'Modelo para manipular las Especialidades';
 
 
 --
--- TOC entry 2798 (class 0 OID 0)
--- Dependencies: 181
 -- Name: COLUMN especialidad.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1179,8 +969,6 @@ COMMENT ON COLUMN especialidad.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2799 (class 0 OID 0)
--- Dependencies: 181
 -- Name: COLUMN especialidad.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1188,8 +976,6 @@ COMMENT ON COLUMN especialidad.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2800 (class 0 OID 0)
--- Dependencies: 181
 -- Name: COLUMN especialidad.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1197,8 +983,6 @@ COMMENT ON COLUMN especialidad.fecha_modificado IS 'Fecha Modificacion del Regis
 
 
 --
--- TOC entry 2801 (class 0 OID 0)
--- Dependencies: 181
 -- Name: COLUMN especialidad.descripcion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1206,8 +990,6 @@ COMMENT ON COLUMN especialidad.descripcion IS 'Descripcion de la Especialidad';
 
 
 --
--- TOC entry 2802 (class 0 OID 0)
--- Dependencies: 181
 -- Name: COLUMN especialidad.observacion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1215,8 +997,6 @@ COMMENT ON COLUMN especialidad.observacion IS 'Observacion de la Especialidad';
 
 
 --
--- TOC entry 182 (class 1259 OID 104402)
--- Dependencies: 6 181
 -- Name: especialidad_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -1231,8 +1011,6 @@ CREATE SEQUENCE especialidad_id_seq
 ALTER TABLE public.especialidad_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2803 (class 0 OID 0)
--- Dependencies: 182
 -- Name: especialidad_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -1240,8 +1018,6 @@ ALTER SEQUENCE especialidad_id_seq OWNED BY especialidad.id;
 
 
 --
--- TOC entry 183 (class 1259 OID 104404)
--- Dependencies: 2151 2152 6
 -- Name: proveedor; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -1270,8 +1046,6 @@ CREATE TABLE proveedor (
 ALTER TABLE public.proveedor OWNER TO jelitox;
 
 --
--- TOC entry 2804 (class 0 OID 0)
--- Dependencies: 183
 -- Name: TABLE proveedor; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1279,8 +1053,6 @@ COMMENT ON TABLE proveedor IS 'Modelo para manipular los Proveedores';
 
 
 --
--- TOC entry 2805 (class 0 OID 0)
--- Dependencies: 183
 -- Name: COLUMN proveedor.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1288,8 +1060,6 @@ COMMENT ON COLUMN proveedor.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2806 (class 0 OID 0)
--- Dependencies: 183
 -- Name: COLUMN proveedor.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1297,8 +1067,6 @@ COMMENT ON COLUMN proveedor.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2807 (class 0 OID 0)
--- Dependencies: 183
 -- Name: COLUMN proveedor.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1306,8 +1074,6 @@ COMMENT ON COLUMN proveedor.fecha_modificado IS 'Fecha Modificacion del Registro
 
 
 --
--- TOC entry 2808 (class 0 OID 0)
--- Dependencies: 183
 -- Name: COLUMN proveedor.rif; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1315,8 +1081,6 @@ COMMENT ON COLUMN proveedor.rif IS 'Rif del Proveedor';
 
 
 --
--- TOC entry 2809 (class 0 OID 0)
--- Dependencies: 183
 -- Name: COLUMN proveedor.razon_social; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1324,8 +1088,6 @@ COMMENT ON COLUMN proveedor.razon_social IS 'Razon Social del Proveedor';
 
 
 --
--- TOC entry 2810 (class 0 OID 0)
--- Dependencies: 183
 -- Name: COLUMN proveedor.nombre_corto; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1333,8 +1095,6 @@ COMMENT ON COLUMN proveedor.nombre_corto IS 'Nombre Corto Proveedor';
 
 
 --
--- TOC entry 2811 (class 0 OID 0)
--- Dependencies: 183
 -- Name: COLUMN proveedor.pais_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1342,8 +1102,6 @@ COMMENT ON COLUMN proveedor.pais_id IS 'Pais Origen del Proveedor';
 
 
 --
--- TOC entry 2812 (class 0 OID 0)
--- Dependencies: 183
 -- Name: COLUMN proveedor.estado_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1351,8 +1109,6 @@ COMMENT ON COLUMN proveedor.estado_id IS 'Estado de Origen del Proveedor';
 
 
 --
--- TOC entry 2813 (class 0 OID 0)
--- Dependencies: 183
 -- Name: COLUMN proveedor.municipio_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1360,8 +1116,6 @@ COMMENT ON COLUMN proveedor.municipio_id IS 'Municipio de Origen del Proveedor';
 
 
 --
--- TOC entry 2814 (class 0 OID 0)
--- Dependencies: 183
 -- Name: COLUMN proveedor.parroquia_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1369,8 +1123,6 @@ COMMENT ON COLUMN proveedor.parroquia_id IS 'Parroquia de Origen del Proveedor';
 
 
 --
--- TOC entry 2815 (class 0 OID 0)
--- Dependencies: 183
 -- Name: COLUMN proveedor.direccion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1378,8 +1130,6 @@ COMMENT ON COLUMN proveedor.direccion IS 'Direccion del Proveedor';
 
 
 --
--- TOC entry 2816 (class 0 OID 0)
--- Dependencies: 183
 -- Name: COLUMN proveedor.celular; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1387,8 +1137,6 @@ COMMENT ON COLUMN proveedor.celular IS 'N° de Celular del Proveedor';
 
 
 --
--- TOC entry 2817 (class 0 OID 0)
--- Dependencies: 183
 -- Name: COLUMN proveedor.telefono1; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1396,8 +1144,6 @@ COMMENT ON COLUMN proveedor.telefono1 IS 'N° de Telefono del Proveedor';
 
 
 --
--- TOC entry 2818 (class 0 OID 0)
--- Dependencies: 183
 -- Name: COLUMN proveedor.telefono2; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1405,8 +1151,6 @@ COMMENT ON COLUMN proveedor.telefono2 IS 'N° de Telefono del Proveedor';
 
 
 --
--- TOC entry 2819 (class 0 OID 0)
--- Dependencies: 183
 -- Name: COLUMN proveedor.fax; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1414,8 +1158,6 @@ COMMENT ON COLUMN proveedor.fax IS 'N° de Fax del Proveedor';
 
 
 --
--- TOC entry 2820 (class 0 OID 0)
--- Dependencies: 183
 -- Name: COLUMN proveedor.correo_electronico; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1423,8 +1165,6 @@ COMMENT ON COLUMN proveedor.correo_electronico IS 'Direccion de Correo Electroni
 
 
 --
--- TOC entry 2821 (class 0 OID 0)
--- Dependencies: 183
 -- Name: COLUMN proveedor.observacion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1432,8 +1172,6 @@ COMMENT ON COLUMN proveedor.observacion IS 'Observacion';
 
 
 --
--- TOC entry 184 (class 1259 OID 104412)
--- Dependencies: 183 6
 -- Name: proveedor_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -1448,8 +1186,6 @@ CREATE SEQUENCE proveedor_id_seq
 ALTER TABLE public.proveedor_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2822 (class 0 OID 0)
--- Dependencies: 184
 -- Name: proveedor_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -1457,8 +1193,6 @@ ALTER SEQUENCE proveedor_id_seq OWNED BY proveedor.id;
 
 
 --
--- TOC entry 185 (class 1259 OID 104414)
--- Dependencies: 2154 6
 -- Name: especialidad_medico; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -1472,8 +1206,6 @@ CREATE TABLE especialidad_medico (
 ALTER TABLE public.especialidad_medico OWNER TO jelitox;
 
 --
--- TOC entry 2823 (class 0 OID 0)
--- Dependencies: 185
 -- Name: TABLE especialidad_medico; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1481,8 +1213,6 @@ COMMENT ON TABLE especialidad_medico IS 'Modelo para manipular la relacion espec
 
 
 --
--- TOC entry 2824 (class 0 OID 0)
--- Dependencies: 185
 -- Name: COLUMN especialidad_medico.medico_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1490,8 +1220,6 @@ COMMENT ON COLUMN especialidad_medico.medico_id IS 'ID del medico';
 
 
 --
--- TOC entry 2825 (class 0 OID 0)
--- Dependencies: 185
 -- Name: COLUMN especialidad_medico.especialidad_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1499,8 +1227,6 @@ COMMENT ON COLUMN especialidad_medico.especialidad_id IS 'ID de la especialidad'
 
 
 --
--- TOC entry 186 (class 1259 OID 104418)
--- Dependencies: 185 6
 -- Name: especialidad_medico_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -1515,8 +1241,6 @@ CREATE SEQUENCE especialidad_medico_id_seq
 ALTER TABLE public.especialidad_medico_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2826 (class 0 OID 0)
--- Dependencies: 186
 -- Name: especialidad_medico_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -1524,8 +1248,6 @@ ALTER SEQUENCE especialidad_medico_id_seq OWNED BY especialidad_medico.id;
 
 
 --
--- TOC entry 187 (class 1259 OID 104420)
--- Dependencies: 6
 -- Name: estado; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -1540,8 +1262,6 @@ CREATE TABLE estado (
 ALTER TABLE public.estado OWNER TO jelitox;
 
 --
--- TOC entry 2827 (class 0 OID 0)
--- Dependencies: 187
 -- Name: TABLE estado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1549,8 +1269,6 @@ COMMENT ON TABLE estado IS 'Modelo para manipular la relación Pais Estado';
 
 
 --
--- TOC entry 2828 (class 0 OID 0)
--- Dependencies: 187
 -- Name: COLUMN estado.codigo; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1558,8 +1276,6 @@ COMMENT ON COLUMN estado.codigo IS 'Codigo Estado';
 
 
 --
--- TOC entry 2829 (class 0 OID 0)
--- Dependencies: 187
 -- Name: COLUMN estado.pais_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1567,8 +1283,6 @@ COMMENT ON COLUMN estado.pais_id IS 'Pais';
 
 
 --
--- TOC entry 2830 (class 0 OID 0)
--- Dependencies: 187
 -- Name: COLUMN estado.nombre; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1576,8 +1290,6 @@ COMMENT ON COLUMN estado.nombre IS 'Nombre Estado';
 
 
 --
--- TOC entry 188 (class 1259 OID 104423)
--- Dependencies: 187 6
 -- Name: estado_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -1592,8 +1304,6 @@ CREATE SEQUENCE estado_id_seq
 ALTER TABLE public.estado_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2831 (class 0 OID 0)
--- Dependencies: 188
 -- Name: estado_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -1601,8 +1311,6 @@ ALTER SEQUENCE estado_id_seq OWNED BY estado.id;
 
 
 --
--- TOC entry 189 (class 1259 OID 104425)
--- Dependencies: 2156 2157 6
 -- Name: estado_usuario; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -1619,8 +1327,6 @@ CREATE TABLE estado_usuario (
 ALTER TABLE public.estado_usuario OWNER TO jelitox;
 
 --
--- TOC entry 2832 (class 0 OID 0)
--- Dependencies: 189
 -- Name: TABLE estado_usuario; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1628,8 +1334,6 @@ COMMENT ON TABLE estado_usuario IS 'Modelo para manipular el estado de los usuar
 
 
 --
--- TOC entry 2833 (class 0 OID 0)
--- Dependencies: 189
 -- Name: COLUMN estado_usuario.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1637,8 +1341,6 @@ COMMENT ON COLUMN estado_usuario.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2834 (class 0 OID 0)
--- Dependencies: 189
 -- Name: COLUMN estado_usuario.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1646,8 +1348,6 @@ COMMENT ON COLUMN estado_usuario.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2835 (class 0 OID 0)
--- Dependencies: 189
 -- Name: COLUMN estado_usuario.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1655,8 +1355,6 @@ COMMENT ON COLUMN estado_usuario.fecha_modificado IS 'Fecha Modificacion del Reg
 
 
 --
--- TOC entry 2836 (class 0 OID 0)
--- Dependencies: 189
 -- Name: COLUMN estado_usuario.estado_usuario; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1664,8 +1362,6 @@ COMMENT ON COLUMN estado_usuario.estado_usuario IS 'ID Estado del usuario ';
 
 
 --
--- TOC entry 2837 (class 0 OID 0)
--- Dependencies: 189
 -- Name: COLUMN estado_usuario.descripcion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1673,8 +1369,6 @@ COMMENT ON COLUMN estado_usuario.descripcion IS 'Descripcion del estado del usua
 
 
 --
--- TOC entry 190 (class 1259 OID 104430)
--- Dependencies: 189 6
 -- Name: estado_usuario_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -1689,8 +1383,6 @@ CREATE SEQUENCE estado_usuario_id_seq
 ALTER TABLE public.estado_usuario_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2838 (class 0 OID 0)
--- Dependencies: 190
 -- Name: estado_usuario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -1698,8 +1390,6 @@ ALTER SEQUENCE estado_usuario_id_seq OWNED BY estado_usuario.id;
 
 
 --
--- TOC entry 191 (class 1259 OID 104432)
--- Dependencies: 2159 2160 6
 -- Name: medicina; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -1716,8 +1406,6 @@ CREATE TABLE medicina (
 ALTER TABLE public.medicina OWNER TO jelitox;
 
 --
--- TOC entry 2839 (class 0 OID 0)
--- Dependencies: 191
 -- Name: TABLE medicina; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1725,8 +1413,6 @@ COMMENT ON TABLE medicina IS 'Modelo para manipular las Medicina';
 
 
 --
--- TOC entry 2840 (class 0 OID 0)
--- Dependencies: 191
 -- Name: COLUMN medicina.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1734,8 +1420,6 @@ COMMENT ON COLUMN medicina.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2841 (class 0 OID 0)
--- Dependencies: 191
 -- Name: COLUMN medicina.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1743,8 +1427,6 @@ COMMENT ON COLUMN medicina.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2842 (class 0 OID 0)
--- Dependencies: 191
 -- Name: COLUMN medicina.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1752,8 +1434,6 @@ COMMENT ON COLUMN medicina.fecha_modificado IS 'Fecha Modificacion del Registro'
 
 
 --
--- TOC entry 2843 (class 0 OID 0)
--- Dependencies: 191
 -- Name: COLUMN medicina.descripcion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1761,8 +1441,6 @@ COMMENT ON COLUMN medicina.descripcion IS 'Descripcion de la Medicina';
 
 
 --
--- TOC entry 2844 (class 0 OID 0)
--- Dependencies: 191
 -- Name: COLUMN medicina.observacion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1770,8 +1448,6 @@ COMMENT ON COLUMN medicina.observacion IS 'Observacion de la Medicina';
 
 
 --
--- TOC entry 192 (class 1259 OID 104437)
--- Dependencies: 191 6
 -- Name: medicina_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -1786,8 +1462,6 @@ CREATE SEQUENCE medicina_id_seq
 ALTER TABLE public.medicina_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2845 (class 0 OID 0)
--- Dependencies: 192
 -- Name: medicina_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -1795,8 +1469,6 @@ ALTER SEQUENCE medicina_id_seq OWNED BY medicina.id;
 
 
 --
--- TOC entry 193 (class 1259 OID 104439)
--- Dependencies: 2162 2163 2164 2165 6
 -- Name: medico; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -1824,8 +1496,6 @@ CREATE TABLE medico (
 ALTER TABLE public.medico OWNER TO jelitox;
 
 --
--- TOC entry 2846 (class 0 OID 0)
--- Dependencies: 193
 -- Name: TABLE medico; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1833,8 +1503,6 @@ COMMENT ON TABLE medico IS 'Modelo para manipular los Medicos';
 
 
 --
--- TOC entry 2847 (class 0 OID 0)
--- Dependencies: 193
 -- Name: COLUMN medico.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1842,8 +1510,6 @@ COMMENT ON COLUMN medico.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2848 (class 0 OID 0)
--- Dependencies: 193
 -- Name: COLUMN medico.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1851,8 +1517,6 @@ COMMENT ON COLUMN medico.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2849 (class 0 OID 0)
--- Dependencies: 193
 -- Name: COLUMN medico.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1860,8 +1524,6 @@ COMMENT ON COLUMN medico.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- TOC entry 2850 (class 0 OID 0)
--- Dependencies: 193
 -- Name: COLUMN medico.nacionalidad; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1869,8 +1531,6 @@ COMMENT ON COLUMN medico.nacionalidad IS 'Nacionalidad del Medico';
 
 
 --
--- TOC entry 2851 (class 0 OID 0)
--- Dependencies: 193
 -- Name: COLUMN medico.cedula; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1878,8 +1538,6 @@ COMMENT ON COLUMN medico.cedula IS 'Numero de Cedula del Medico';
 
 
 --
--- TOC entry 2852 (class 0 OID 0)
--- Dependencies: 193
 -- Name: COLUMN medico.rmpps; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1887,8 +1545,6 @@ COMMENT ON COLUMN medico.rmpps IS 'Numero de Registro del MPPS del Medico';
 
 
 --
--- TOC entry 2853 (class 0 OID 0)
--- Dependencies: 193
 -- Name: COLUMN medico.rif; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1896,8 +1552,6 @@ COMMENT ON COLUMN medico.rif IS 'Numero de Rif del Medico';
 
 
 --
--- TOC entry 2854 (class 0 OID 0)
--- Dependencies: 193
 -- Name: COLUMN medico.nombre1; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1905,8 +1559,6 @@ COMMENT ON COLUMN medico.nombre1 IS 'Primer Nombre del Medico';
 
 
 --
--- TOC entry 2855 (class 0 OID 0)
--- Dependencies: 193
 -- Name: COLUMN medico.nombre2; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1914,8 +1566,6 @@ COMMENT ON COLUMN medico.nombre2 IS 'Segundo Nombre del Medico';
 
 
 --
--- TOC entry 2856 (class 0 OID 0)
--- Dependencies: 193
 -- Name: COLUMN medico.apellido1; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1923,8 +1573,6 @@ COMMENT ON COLUMN medico.apellido1 IS 'Primer apellido del Medico';
 
 
 --
--- TOC entry 2857 (class 0 OID 0)
--- Dependencies: 193
 -- Name: COLUMN medico.apellido2; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1932,8 +1580,6 @@ COMMENT ON COLUMN medico.apellido2 IS 'Segundo apellido del Medico';
 
 
 --
--- TOC entry 2858 (class 0 OID 0)
--- Dependencies: 193
 -- Name: COLUMN medico.sexo; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1941,8 +1587,6 @@ COMMENT ON COLUMN medico.sexo IS 'Sexo del Medico';
 
 
 --
--- TOC entry 2859 (class 0 OID 0)
--- Dependencies: 193
 -- Name: COLUMN medico.celular; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1950,8 +1594,6 @@ COMMENT ON COLUMN medico.celular IS 'Numero Celular del Medico';
 
 
 --
--- TOC entry 2860 (class 0 OID 0)
--- Dependencies: 193
 -- Name: COLUMN medico.telefono; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1959,8 +1601,6 @@ COMMENT ON COLUMN medico.telefono IS 'Numero Telefono del Medico';
 
 
 --
--- TOC entry 2861 (class 0 OID 0)
--- Dependencies: 193
 -- Name: COLUMN medico.correo_electronico; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1968,8 +1608,6 @@ COMMENT ON COLUMN medico.correo_electronico IS 'Correo Electronico del medico';
 
 
 --
--- TOC entry 2862 (class 0 OID 0)
--- Dependencies: 193
 -- Name: COLUMN medico.observacion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -1977,8 +1615,6 @@ COMMENT ON COLUMN medico.observacion IS 'Observacion del Medico';
 
 
 --
--- TOC entry 194 (class 1259 OID 104446)
--- Dependencies: 193 6
 -- Name: medico_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -1993,8 +1629,6 @@ CREATE SEQUENCE medico_id_seq
 ALTER TABLE public.medico_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2863 (class 0 OID 0)
--- Dependencies: 194
 -- Name: medico_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -2002,8 +1636,6 @@ ALTER SEQUENCE medico_id_seq OWNED BY medico.id;
 
 
 --
--- TOC entry 195 (class 1259 OID 104448)
--- Dependencies: 2167 2168 2169 2170 2171 6
 -- Name: menu; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -2026,8 +1658,6 @@ CREATE TABLE menu (
 ALTER TABLE public.menu OWNER TO jelitox;
 
 --
--- TOC entry 2864 (class 0 OID 0)
--- Dependencies: 195
 -- Name: TABLE menu; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2035,8 +1665,6 @@ COMMENT ON TABLE menu IS 'Modelo para manipular menus del sistema';
 
 
 --
--- TOC entry 2865 (class 0 OID 0)
--- Dependencies: 195
 -- Name: COLUMN menu.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2044,8 +1672,6 @@ COMMENT ON COLUMN menu.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2866 (class 0 OID 0)
--- Dependencies: 195
 -- Name: COLUMN menu.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2053,8 +1679,6 @@ COMMENT ON COLUMN menu.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2867 (class 0 OID 0)
--- Dependencies: 195
 -- Name: COLUMN menu.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2062,8 +1686,6 @@ COMMENT ON COLUMN menu.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- TOC entry 2868 (class 0 OID 0)
--- Dependencies: 195
 -- Name: COLUMN menu.menu_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2071,8 +1693,6 @@ COMMENT ON COLUMN menu.menu_id IS 'ID menu padre';
 
 
 --
--- TOC entry 2869 (class 0 OID 0)
--- Dependencies: 195
 -- Name: COLUMN menu.recurso_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2080,8 +1700,6 @@ COMMENT ON COLUMN menu.recurso_id IS 'ID del recurso ';
 
 
 --
--- TOC entry 2870 (class 0 OID 0)
--- Dependencies: 195
 -- Name: COLUMN menu.menu; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2089,8 +1707,6 @@ COMMENT ON COLUMN menu.menu IS 'Texto a mostrar del menu';
 
 
 --
--- TOC entry 2871 (class 0 OID 0)
--- Dependencies: 195
 -- Name: COLUMN menu.url; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2098,8 +1714,6 @@ COMMENT ON COLUMN menu.url IS 'Url del menu';
 
 
 --
--- TOC entry 2872 (class 0 OID 0)
--- Dependencies: 195
 -- Name: COLUMN menu.posicion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2107,8 +1721,6 @@ COMMENT ON COLUMN menu.posicion IS 'Posicion del menu dentro de otros items';
 
 
 --
--- TOC entry 2873 (class 0 OID 0)
--- Dependencies: 195
 -- Name: COLUMN menu.icono; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2116,8 +1728,6 @@ COMMENT ON COLUMN menu.icono IS 'Icono a mostrar';
 
 
 --
--- TOC entry 2874 (class 0 OID 0)
--- Dependencies: 195
 -- Name: COLUMN menu.activo; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2125,8 +1735,6 @@ COMMENT ON COLUMN menu.activo IS 'Estado del menu (Activo o Inactivo)';
 
 
 --
--- TOC entry 2875 (class 0 OID 0)
--- Dependencies: 195
 -- Name: COLUMN menu.visibilidad; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2134,8 +1742,6 @@ COMMENT ON COLUMN menu.visibilidad IS 'Indica si el menú se muestra en el backe
 
 
 --
--- TOC entry 196 (class 1259 OID 104456)
--- Dependencies: 195 6
 -- Name: menu_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -2150,8 +1756,6 @@ CREATE SEQUENCE menu_id_seq
 ALTER TABLE public.menu_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2876 (class 0 OID 0)
--- Dependencies: 196
 -- Name: menu_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -2159,8 +1763,6 @@ ALTER SEQUENCE menu_id_seq OWNED BY menu.id;
 
 
 --
--- TOC entry 197 (class 1259 OID 104458)
--- Dependencies: 6
 -- Name: municipio; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -2175,8 +1777,6 @@ CREATE TABLE municipio (
 ALTER TABLE public.municipio OWNER TO jelitox;
 
 --
--- TOC entry 2877 (class 0 OID 0)
--- Dependencies: 197
 -- Name: TABLE municipio; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2184,8 +1784,6 @@ COMMENT ON TABLE municipio IS 'Modelo para manipular Municipios';
 
 
 --
--- TOC entry 2878 (class 0 OID 0)
--- Dependencies: 197
 -- Name: COLUMN municipio.estado_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2193,8 +1791,6 @@ COMMENT ON COLUMN municipio.estado_id IS 'Estado';
 
 
 --
--- TOC entry 2879 (class 0 OID 0)
--- Dependencies: 197
 -- Name: COLUMN municipio.codigo; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2202,8 +1798,6 @@ COMMENT ON COLUMN municipio.codigo IS 'Codigo Municipio';
 
 
 --
--- TOC entry 2880 (class 0 OID 0)
--- Dependencies: 197
 -- Name: COLUMN municipio.nombre; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2211,8 +1805,6 @@ COMMENT ON COLUMN municipio.nombre IS 'Nombre Municipio';
 
 
 --
--- TOC entry 198 (class 1259 OID 104461)
--- Dependencies: 197 6
 -- Name: municipio_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -2227,8 +1819,6 @@ CREATE SEQUENCE municipio_id_seq
 ALTER TABLE public.municipio_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2881 (class 0 OID 0)
--- Dependencies: 198
 -- Name: municipio_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -2236,8 +1826,6 @@ ALTER SEQUENCE municipio_id_seq OWNED BY municipio.id;
 
 
 --
--- TOC entry 199 (class 1259 OID 104463)
--- Dependencies: 6
 -- Name: pais; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -2251,8 +1839,6 @@ CREATE TABLE pais (
 ALTER TABLE public.pais OWNER TO jelitox;
 
 --
--- TOC entry 2882 (class 0 OID 0)
--- Dependencies: 199
 -- Name: TABLE pais; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2260,8 +1846,6 @@ COMMENT ON TABLE pais IS 'Modelo para manipular los Paises';
 
 
 --
--- TOC entry 2883 (class 0 OID 0)
--- Dependencies: 199
 -- Name: COLUMN pais.codigo; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2269,8 +1853,6 @@ COMMENT ON COLUMN pais.codigo IS 'Codigo del Pais';
 
 
 --
--- TOC entry 2884 (class 0 OID 0)
--- Dependencies: 199
 -- Name: COLUMN pais.nombre; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2278,8 +1860,6 @@ COMMENT ON COLUMN pais.nombre IS 'Nombre Pais';
 
 
 --
--- TOC entry 200 (class 1259 OID 104466)
--- Dependencies: 6 199
 -- Name: pais_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -2294,8 +1874,6 @@ CREATE SEQUENCE pais_id_seq
 ALTER TABLE public.pais_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2885 (class 0 OID 0)
--- Dependencies: 200
 -- Name: pais_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -2303,8 +1881,6 @@ ALTER SEQUENCE pais_id_seq OWNED BY pais.id;
 
 
 --
--- TOC entry 201 (class 1259 OID 104468)
--- Dependencies: 6
 -- Name: parroquia; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -2318,8 +1894,6 @@ CREATE TABLE parroquia (
 ALTER TABLE public.parroquia OWNER TO jelitox;
 
 --
--- TOC entry 2886 (class 0 OID 0)
--- Dependencies: 201
 -- Name: TABLE parroquia; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2327,8 +1901,6 @@ COMMENT ON TABLE parroquia IS 'Modelo para  manipular Parroquia';
 
 
 --
--- TOC entry 2887 (class 0 OID 0)
--- Dependencies: 201
 -- Name: COLUMN parroquia.nombre; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2336,8 +1908,6 @@ COMMENT ON COLUMN parroquia.nombre IS 'Parroquia';
 
 
 --
--- TOC entry 2888 (class 0 OID 0)
--- Dependencies: 201
 -- Name: COLUMN parroquia.municipio_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2345,8 +1915,6 @@ COMMENT ON COLUMN parroquia.municipio_id IS 'Municipio';
 
 
 --
--- TOC entry 202 (class 1259 OID 104471)
--- Dependencies: 6 201
 -- Name: parroquia_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -2361,8 +1929,6 @@ CREATE SEQUENCE parroquia_id_seq
 ALTER TABLE public.parroquia_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2889 (class 0 OID 0)
--- Dependencies: 202
 -- Name: parroquia_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -2370,8 +1936,6 @@ ALTER SEQUENCE parroquia_id_seq OWNED BY parroquia.id;
 
 
 --
--- TOC entry 203 (class 1259 OID 104473)
--- Dependencies: 2176 2177 6
 -- Name: patologia; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -2388,8 +1952,6 @@ CREATE TABLE patologia (
 ALTER TABLE public.patologia OWNER TO jelitox;
 
 --
--- TOC entry 2890 (class 0 OID 0)
--- Dependencies: 203
 -- Name: TABLE patologia; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2397,8 +1959,6 @@ COMMENT ON TABLE patologia IS 'Modelo para manipular las Patologias';
 
 
 --
--- TOC entry 2891 (class 0 OID 0)
--- Dependencies: 203
 -- Name: COLUMN patologia.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2406,8 +1966,6 @@ COMMENT ON COLUMN patologia.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2892 (class 0 OID 0)
--- Dependencies: 203
 -- Name: COLUMN patologia.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2415,8 +1973,6 @@ COMMENT ON COLUMN patologia.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2893 (class 0 OID 0)
--- Dependencies: 203
 -- Name: COLUMN patologia.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2424,8 +1980,6 @@ COMMENT ON COLUMN patologia.fecha_modificado IS 'Fecha Modificacion del Registro
 
 
 --
--- TOC entry 2894 (class 0 OID 0)
--- Dependencies: 203
 -- Name: COLUMN patologia.descripcion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2433,8 +1987,6 @@ COMMENT ON COLUMN patologia.descripcion IS 'Descripcion de la Patologia';
 
 
 --
--- TOC entry 2895 (class 0 OID 0)
--- Dependencies: 203
 -- Name: COLUMN patologia.observacion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2442,8 +1994,6 @@ COMMENT ON COLUMN patologia.observacion IS 'Observacion de la Patologia';
 
 
 --
--- TOC entry 204 (class 1259 OID 104478)
--- Dependencies: 6 203
 -- Name: patologia_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -2458,8 +2008,6 @@ CREATE SEQUENCE patologia_id_seq
 ALTER TABLE public.patologia_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2896 (class 0 OID 0)
--- Dependencies: 204
 -- Name: patologia_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -2467,8 +2015,6 @@ ALTER SEQUENCE patologia_id_seq OWNED BY patologia.id;
 
 
 --
--- TOC entry 205 (class 1259 OID 104480)
--- Dependencies: 2179 2180 2181 2182 6
 -- Name: perfil; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -2486,8 +2032,6 @@ CREATE TABLE perfil (
 ALTER TABLE public.perfil OWNER TO jelitox;
 
 --
--- TOC entry 2897 (class 0 OID 0)
--- Dependencies: 205
 -- Name: TABLE perfil; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2495,8 +2039,6 @@ COMMENT ON TABLE perfil IS 'Modelo para manipular perfiles del sistema';
 
 
 --
--- TOC entry 2898 (class 0 OID 0)
--- Dependencies: 205
 -- Name: COLUMN perfil.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2504,8 +2046,6 @@ COMMENT ON COLUMN perfil.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2899 (class 0 OID 0)
--- Dependencies: 205
 -- Name: COLUMN perfil.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2513,8 +2053,6 @@ COMMENT ON COLUMN perfil.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2900 (class 0 OID 0)
--- Dependencies: 205
 -- Name: COLUMN perfil.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2522,8 +2060,6 @@ COMMENT ON COLUMN perfil.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- TOC entry 2901 (class 0 OID 0)
--- Dependencies: 205
 -- Name: COLUMN perfil.perfil; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2531,8 +2067,6 @@ COMMENT ON COLUMN perfil.perfil IS 'Nombre del Perfil';
 
 
 --
--- TOC entry 2902 (class 0 OID 0)
--- Dependencies: 205
 -- Name: COLUMN perfil.estado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2540,8 +2074,6 @@ COMMENT ON COLUMN perfil.estado IS 'Indica si el perfil esta activo o inactivo';
 
 
 --
--- TOC entry 2903 (class 0 OID 0)
--- Dependencies: 205
 -- Name: COLUMN perfil.plantilla; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2549,8 +2081,6 @@ COMMENT ON COLUMN perfil.plantilla IS 'Plantilla para usar en el sistema';
 
 
 --
--- TOC entry 206 (class 1259 OID 104487)
--- Dependencies: 6 205
 -- Name: perfil_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -2565,8 +2095,6 @@ CREATE SEQUENCE perfil_id_seq
 ALTER TABLE public.perfil_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2904 (class 0 OID 0)
--- Dependencies: 206
 -- Name: perfil_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -2574,8 +2102,6 @@ ALTER SEQUENCE perfil_id_seq OWNED BY perfil.id;
 
 
 --
--- TOC entry 207 (class 1259 OID 104489)
--- Dependencies: 2184 2185 2186 2187 2188 2189 6
 -- Name: persona; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -2608,8 +2134,6 @@ CREATE TABLE persona (
 ALTER TABLE public.persona OWNER TO jelitox;
 
 --
--- TOC entry 2905 (class 0 OID 0)
--- Dependencies: 207
 -- Name: TABLE persona; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2617,8 +2141,6 @@ COMMENT ON TABLE persona IS 'Modelo para manipular las diferentes Personas';
 
 
 --
--- TOC entry 2906 (class 0 OID 0)
--- Dependencies: 207
 -- Name: COLUMN persona.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2626,8 +2148,6 @@ COMMENT ON COLUMN persona.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2907 (class 0 OID 0)
--- Dependencies: 207
 -- Name: COLUMN persona.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2635,8 +2155,6 @@ COMMENT ON COLUMN persona.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2908 (class 0 OID 0)
--- Dependencies: 207
 -- Name: COLUMN persona.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2644,8 +2162,6 @@ COMMENT ON COLUMN persona.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- TOC entry 2909 (class 0 OID 0)
--- Dependencies: 207
 -- Name: COLUMN persona.cedula; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2653,8 +2169,6 @@ COMMENT ON COLUMN persona.cedula IS 'N° Cedula persona';
 
 
 --
--- TOC entry 2910 (class 0 OID 0)
--- Dependencies: 207
 -- Name: COLUMN persona.nombre1; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2662,8 +2176,6 @@ COMMENT ON COLUMN persona.nombre1 IS 'N° Primer Nombre de la persona';
 
 
 --
--- TOC entry 2911 (class 0 OID 0)
--- Dependencies: 207
 -- Name: COLUMN persona.nombre2; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2671,8 +2183,6 @@ COMMENT ON COLUMN persona.nombre2 IS 'N° Segundo Nombre de la persona';
 
 
 --
--- TOC entry 2912 (class 0 OID 0)
--- Dependencies: 207
 -- Name: COLUMN persona.apellido1; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2680,8 +2190,6 @@ COMMENT ON COLUMN persona.apellido1 IS 'N° Primer Apellido del persona';
 
 
 --
--- TOC entry 2913 (class 0 OID 0)
--- Dependencies: 207
 -- Name: COLUMN persona.apellido2; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2689,8 +2197,6 @@ COMMENT ON COLUMN persona.apellido2 IS 'N° Segundo Apellido del persona';
 
 
 --
--- TOC entry 2914 (class 0 OID 0)
--- Dependencies: 207
 -- Name: COLUMN persona.nacionalidad; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2698,8 +2204,6 @@ COMMENT ON COLUMN persona.nacionalidad IS 'Nacionalidad de la persona';
 
 
 --
--- TOC entry 2915 (class 0 OID 0)
--- Dependencies: 207
 -- Name: COLUMN persona.sexo; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2707,8 +2211,6 @@ COMMENT ON COLUMN persona.sexo IS 'N° Sexo del persona';
 
 
 --
--- TOC entry 2916 (class 0 OID 0)
--- Dependencies: 207
 -- Name: COLUMN persona.fecha_nacimiento; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2716,8 +2218,6 @@ COMMENT ON COLUMN persona.fecha_nacimiento IS 'Fecha de Nacimiento del persona';
 
 
 --
--- TOC entry 2917 (class 0 OID 0)
--- Dependencies: 207
 -- Name: COLUMN persona.pais_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2725,8 +2225,6 @@ COMMENT ON COLUMN persona.pais_id IS 'Pais Origen del persona';
 
 
 --
--- TOC entry 2918 (class 0 OID 0)
--- Dependencies: 207
 -- Name: COLUMN persona.estado_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2734,8 +2232,6 @@ COMMENT ON COLUMN persona.estado_id IS 'Estado de Origen del persona';
 
 
 --
--- TOC entry 2919 (class 0 OID 0)
--- Dependencies: 207
 -- Name: COLUMN persona.municipio_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2743,8 +2239,6 @@ COMMENT ON COLUMN persona.municipio_id IS 'Municipio de Origen del persona';
 
 
 --
--- TOC entry 2920 (class 0 OID 0)
--- Dependencies: 207
 -- Name: COLUMN persona.parroquia_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2752,8 +2246,6 @@ COMMENT ON COLUMN persona.parroquia_id IS 'Parroquia de Origen del persona';
 
 
 --
--- TOC entry 2921 (class 0 OID 0)
--- Dependencies: 207
 -- Name: COLUMN persona.direccion_habitacion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2761,8 +2253,6 @@ COMMENT ON COLUMN persona.direccion_habitacion IS 'Direccion de Habitacion del p
 
 
 --
--- TOC entry 2922 (class 0 OID 0)
--- Dependencies: 207
 -- Name: COLUMN persona.estado_civil; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2770,8 +2260,6 @@ COMMENT ON COLUMN persona.estado_civil IS 'Estado Civil del persona';
 
 
 --
--- TOC entry 2923 (class 0 OID 0)
--- Dependencies: 207
 -- Name: COLUMN persona.celular; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2779,8 +2267,6 @@ COMMENT ON COLUMN persona.celular IS 'N° de Celular del persona';
 
 
 --
--- TOC entry 2924 (class 0 OID 0)
--- Dependencies: 207
 -- Name: COLUMN persona.telefono; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2788,8 +2274,6 @@ COMMENT ON COLUMN persona.telefono IS 'N° de Telefono del persona';
 
 
 --
--- TOC entry 2925 (class 0 OID 0)
--- Dependencies: 207
 -- Name: COLUMN persona.correo_electronico; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2797,8 +2281,6 @@ COMMENT ON COLUMN persona.correo_electronico IS 'Direccion de Correo Electronico
 
 
 --
--- TOC entry 2926 (class 0 OID 0)
--- Dependencies: 207
 -- Name: COLUMN persona.grupo_sanguineo; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2806,8 +2288,6 @@ COMMENT ON COLUMN persona.grupo_sanguineo IS 'Grupo Sanguineo del persona';
 
 
 --
--- TOC entry 208 (class 1259 OID 104498)
--- Dependencies: 207 6
 -- Name: persona_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -2822,8 +2302,6 @@ CREATE SEQUENCE persona_id_seq
 ALTER TABLE public.persona_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2927 (class 0 OID 0)
--- Dependencies: 208
 -- Name: persona_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -2831,8 +2309,6 @@ ALTER SEQUENCE persona_id_seq OWNED BY persona.id;
 
 
 --
--- TOC entry 209 (class 1259 OID 104500)
--- Dependencies: 2191 2192 6
 -- Name: profesion; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -2849,8 +2325,6 @@ CREATE TABLE profesion (
 ALTER TABLE public.profesion OWNER TO jelitox;
 
 --
--- TOC entry 2928 (class 0 OID 0)
--- Dependencies: 209
 -- Name: TABLE profesion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2858,8 +2332,6 @@ COMMENT ON TABLE profesion IS 'Modelo para manipular las diferentes Profesiones'
 
 
 --
--- TOC entry 2929 (class 0 OID 0)
--- Dependencies: 209
 -- Name: COLUMN profesion.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2867,8 +2339,6 @@ COMMENT ON COLUMN profesion.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2930 (class 0 OID 0)
--- Dependencies: 209
 -- Name: COLUMN profesion.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2876,8 +2346,6 @@ COMMENT ON COLUMN profesion.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2931 (class 0 OID 0)
--- Dependencies: 209
 -- Name: COLUMN profesion.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2885,8 +2353,6 @@ COMMENT ON COLUMN profesion.fecha_modificado IS 'Fecha Modificacion del Registro
 
 
 --
--- TOC entry 2932 (class 0 OID 0)
--- Dependencies: 209
 -- Name: COLUMN profesion.nombre; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2894,8 +2360,6 @@ COMMENT ON COLUMN profesion.nombre IS 'Nombre de la Profesion';
 
 
 --
--- TOC entry 2933 (class 0 OID 0)
--- Dependencies: 209
 -- Name: COLUMN profesion.observacion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2903,8 +2367,6 @@ COMMENT ON COLUMN profesion.observacion IS 'Observacion';
 
 
 --
--- TOC entry 210 (class 1259 OID 104505)
--- Dependencies: 209 6
 -- Name: profesion_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -2919,8 +2381,6 @@ CREATE SEQUENCE profesion_id_seq
 ALTER TABLE public.profesion_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2934 (class 0 OID 0)
--- Dependencies: 210
 -- Name: profesion_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -2928,8 +2388,6 @@ ALTER SEQUENCE profesion_id_seq OWNED BY profesion.id;
 
 
 --
--- TOC entry 211 (class 1259 OID 104507)
--- Dependencies: 2194 6
 -- Name: proveedor_medico; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -2943,8 +2401,6 @@ CREATE TABLE proveedor_medico (
 ALTER TABLE public.proveedor_medico OWNER TO jelitox;
 
 --
--- TOC entry 2935 (class 0 OID 0)
--- Dependencies: 211
 -- Name: TABLE proveedor_medico; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2952,8 +2408,6 @@ COMMENT ON TABLE proveedor_medico IS 'Modelo para manipular la relacion proveedo
 
 
 --
--- TOC entry 2936 (class 0 OID 0)
--- Dependencies: 211
 -- Name: COLUMN proveedor_medico.medico_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2961,8 +2415,6 @@ COMMENT ON COLUMN proveedor_medico.medico_id IS 'ID del medico';
 
 
 --
--- TOC entry 2937 (class 0 OID 0)
--- Dependencies: 211
 -- Name: COLUMN proveedor_medico.proveedor_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -2970,8 +2422,6 @@ COMMENT ON COLUMN proveedor_medico.proveedor_id IS 'ID del proveedor';
 
 
 --
--- TOC entry 212 (class 1259 OID 104511)
--- Dependencies: 6 211
 -- Name: proveedor_medico_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -2986,8 +2436,6 @@ CREATE SEQUENCE proveedor_medico_id_seq
 ALTER TABLE public.proveedor_medico_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2938 (class 0 OID 0)
--- Dependencies: 212
 -- Name: proveedor_medico_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -2995,8 +2443,6 @@ ALTER SEQUENCE proveedor_medico_id_seq OWNED BY proveedor_medico.id;
 
 
 --
--- TOC entry 213 (class 1259 OID 104513)
--- Dependencies: 2195 2196 6
 -- Name: recaudo; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -3014,8 +2460,6 @@ CREATE TABLE recaudo (
 ALTER TABLE public.recaudo OWNER TO jelitox;
 
 --
--- TOC entry 2939 (class 0 OID 0)
--- Dependencies: 213
 -- Name: TABLE recaudo; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3023,8 +2467,6 @@ COMMENT ON TABLE recaudo IS 'Modelo para manipular los diferentes Recaudos';
 
 
 --
--- TOC entry 2940 (class 0 OID 0)
--- Dependencies: 213
 -- Name: COLUMN recaudo.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3032,8 +2474,6 @@ COMMENT ON COLUMN recaudo.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2941 (class 0 OID 0)
--- Dependencies: 213
 -- Name: COLUMN recaudo.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3041,8 +2481,6 @@ COMMENT ON COLUMN recaudo.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2942 (class 0 OID 0)
--- Dependencies: 213
 -- Name: COLUMN recaudo.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3050,8 +2488,6 @@ COMMENT ON COLUMN recaudo.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- TOC entry 2943 (class 0 OID 0)
--- Dependencies: 213
 -- Name: COLUMN recaudo.nombre; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3059,8 +2495,6 @@ COMMENT ON COLUMN recaudo.nombre IS 'Nombre del Recaudo';
 
 
 --
--- TOC entry 2944 (class 0 OID 0)
--- Dependencies: 213
 -- Name: COLUMN recaudo.tipo; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3068,8 +2502,6 @@ COMMENT ON COLUMN recaudo.tipo IS 'Tipo de Recaudo';
 
 
 --
--- TOC entry 2945 (class 0 OID 0)
--- Dependencies: 213
 -- Name: COLUMN recaudo.observacion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3077,8 +2509,6 @@ COMMENT ON COLUMN recaudo.observacion IS 'Observacion';
 
 
 --
--- TOC entry 214 (class 1259 OID 104518)
--- Dependencies: 2198 6
 -- Name: recaudo_beneficiario; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -3093,8 +2523,6 @@ CREATE TABLE recaudo_beneficiario (
 ALTER TABLE public.recaudo_beneficiario OWNER TO jelitox;
 
 --
--- TOC entry 2946 (class 0 OID 0)
--- Dependencies: 214
 -- Name: TABLE recaudo_beneficiario; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3102,8 +2530,6 @@ COMMENT ON TABLE recaudo_beneficiario IS 'Modelo para manipular la relacion Reca
 
 
 --
--- TOC entry 2947 (class 0 OID 0)
--- Dependencies: 214
 -- Name: COLUMN recaudo_beneficiario.beneficiario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3111,8 +2537,6 @@ COMMENT ON COLUMN recaudo_beneficiario.beneficiario_id IS 'ID del Beneficiario';
 
 
 --
--- TOC entry 2948 (class 0 OID 0)
--- Dependencies: 214
 -- Name: COLUMN recaudo_beneficiario.recaudo_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3120,8 +2544,6 @@ COMMENT ON COLUMN recaudo_beneficiario.recaudo_id IS 'ID del Recaudo';
 
 
 --
--- TOC entry 2949 (class 0 OID 0)
--- Dependencies: 214
 -- Name: COLUMN recaudo_beneficiario.estado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3129,8 +2551,6 @@ COMMENT ON COLUMN recaudo_beneficiario.estado IS 'Estado del Recaudo';
 
 
 --
--- TOC entry 215 (class 1259 OID 104522)
--- Dependencies: 6 214
 -- Name: recaudo_beneficiario_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -3145,8 +2565,6 @@ CREATE SEQUENCE recaudo_beneficiario_id_seq
 ALTER TABLE public.recaudo_beneficiario_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2950 (class 0 OID 0)
--- Dependencies: 215
 -- Name: recaudo_beneficiario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -3154,8 +2572,6 @@ ALTER SEQUENCE recaudo_beneficiario_id_seq OWNED BY recaudo_beneficiario.id;
 
 
 --
--- TOC entry 216 (class 1259 OID 104524)
--- Dependencies: 6 213
 -- Name: recaudo_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -3170,8 +2586,6 @@ CREATE SEQUENCE recaudo_id_seq
 ALTER TABLE public.recaudo_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2951 (class 0 OID 0)
--- Dependencies: 216
 -- Name: recaudo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -3179,8 +2593,6 @@ ALTER SEQUENCE recaudo_id_seq OWNED BY recaudo.id;
 
 
 --
--- TOC entry 217 (class 1259 OID 104526)
--- Dependencies: 6
 -- Name: recaudo_reembolso; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -3195,8 +2607,6 @@ CREATE TABLE recaudo_reembolso (
 ALTER TABLE public.recaudo_reembolso OWNER TO jelitox;
 
 --
--- TOC entry 2952 (class 0 OID 0)
--- Dependencies: 217
 -- Name: TABLE recaudo_reembolso; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3204,8 +2614,6 @@ COMMENT ON TABLE recaudo_reembolso IS 'Modelo para manipular la relacion Recaudo
 
 
 --
--- TOC entry 2953 (class 0 OID 0)
--- Dependencies: 217
 -- Name: COLUMN recaudo_reembolso.recaudo_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3213,8 +2621,6 @@ COMMENT ON COLUMN recaudo_reembolso.recaudo_id IS 'ID del Recaudo';
 
 
 --
--- TOC entry 2954 (class 0 OID 0)
--- Dependencies: 217
 -- Name: COLUMN recaudo_reembolso.codigo_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3222,8 +2628,6 @@ COMMENT ON COLUMN recaudo_reembolso.codigo_solicitud IS 'Codigo de la Solicitud'
 
 
 --
--- TOC entry 2955 (class 0 OID 0)
--- Dependencies: 217
 -- Name: COLUMN recaudo_reembolso.estado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3231,8 +2635,6 @@ COMMENT ON COLUMN recaudo_reembolso.estado IS 'Estado del Recaudo';
 
 
 --
--- TOC entry 218 (class 1259 OID 104529)
--- Dependencies: 217 6
 -- Name: recaudo_reembolso_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -3247,8 +2649,6 @@ CREATE SEQUENCE recaudo_reembolso_id_seq
 ALTER TABLE public.recaudo_reembolso_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2956 (class 0 OID 0)
--- Dependencies: 218
 -- Name: recaudo_reembolso_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -3256,8 +2656,6 @@ ALTER SEQUENCE recaudo_reembolso_id_seq OWNED BY recaudo_reembolso.id;
 
 
 --
--- TOC entry 219 (class 1259 OID 104531)
--- Dependencies: 6
 -- Name: recaudo_solicitud_medicina; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -3272,8 +2670,6 @@ CREATE TABLE recaudo_solicitud_medicina (
 ALTER TABLE public.recaudo_solicitud_medicina OWNER TO jelitox;
 
 --
--- TOC entry 2957 (class 0 OID 0)
--- Dependencies: 219
 -- Name: TABLE recaudo_solicitud_medicina; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3281,8 +2677,6 @@ COMMENT ON TABLE recaudo_solicitud_medicina IS 'Modelo para manipular la relacio
 
 
 --
--- TOC entry 2958 (class 0 OID 0)
--- Dependencies: 219
 -- Name: COLUMN recaudo_solicitud_medicina.recaudo_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3290,8 +2684,6 @@ COMMENT ON COLUMN recaudo_solicitud_medicina.recaudo_id IS 'ID del Recaudo';
 
 
 --
--- TOC entry 2959 (class 0 OID 0)
--- Dependencies: 219
 -- Name: COLUMN recaudo_solicitud_medicina.codigo_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3299,8 +2691,6 @@ COMMENT ON COLUMN recaudo_solicitud_medicina.codigo_solicitud IS 'Codigo de la S
 
 
 --
--- TOC entry 2960 (class 0 OID 0)
--- Dependencies: 219
 -- Name: COLUMN recaudo_solicitud_medicina.estado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3308,8 +2698,6 @@ COMMENT ON COLUMN recaudo_solicitud_medicina.estado IS 'Estado del Recaudo';
 
 
 --
--- TOC entry 220 (class 1259 OID 104534)
--- Dependencies: 219 6
 -- Name: recaudo_solicitud_medicina_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -3324,8 +2712,6 @@ CREATE SEQUENCE recaudo_solicitud_medicina_id_seq
 ALTER TABLE public.recaudo_solicitud_medicina_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2961 (class 0 OID 0)
--- Dependencies: 220
 -- Name: recaudo_solicitud_medicina_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -3333,8 +2719,6 @@ ALTER SEQUENCE recaudo_solicitud_medicina_id_seq OWNED BY recaudo_solicitud_medi
 
 
 --
--- TOC entry 221 (class 1259 OID 104536)
--- Dependencies: 6
 -- Name: recaudo_solicitud_servicio; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -3349,8 +2733,6 @@ CREATE TABLE recaudo_solicitud_servicio (
 ALTER TABLE public.recaudo_solicitud_servicio OWNER TO jelitox;
 
 --
--- TOC entry 2962 (class 0 OID 0)
--- Dependencies: 221
 -- Name: TABLE recaudo_solicitud_servicio; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3358,8 +2740,6 @@ COMMENT ON TABLE recaudo_solicitud_servicio IS 'Modelo para manipular la relacio
 
 
 --
--- TOC entry 2963 (class 0 OID 0)
--- Dependencies: 221
 -- Name: COLUMN recaudo_solicitud_servicio.recaudo_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3367,8 +2747,6 @@ COMMENT ON COLUMN recaudo_solicitud_servicio.recaudo_id IS 'ID del Recaudo';
 
 
 --
--- TOC entry 2964 (class 0 OID 0)
--- Dependencies: 221
 -- Name: COLUMN recaudo_solicitud_servicio.codigo_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3376,8 +2754,6 @@ COMMENT ON COLUMN recaudo_solicitud_servicio.codigo_solicitud IS 'Codigo de la S
 
 
 --
--- TOC entry 2965 (class 0 OID 0)
--- Dependencies: 221
 -- Name: COLUMN recaudo_solicitud_servicio.estado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3385,8 +2761,6 @@ COMMENT ON COLUMN recaudo_solicitud_servicio.estado IS 'Estado del Recaudo';
 
 
 --
--- TOC entry 222 (class 1259 OID 104539)
--- Dependencies: 221 6
 -- Name: recaudo_solicitud_servicio_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -3401,8 +2775,6 @@ CREATE SEQUENCE recaudo_solicitud_servicio_id_seq
 ALTER TABLE public.recaudo_solicitud_servicio_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2966 (class 0 OID 0)
--- Dependencies: 222
 -- Name: recaudo_solicitud_servicio_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -3410,8 +2782,6 @@ ALTER SEQUENCE recaudo_solicitud_servicio_id_seq OWNED BY recaudo_solicitud_serv
 
 
 --
--- TOC entry 223 (class 1259 OID 104541)
--- Dependencies: 6
 -- Name: recaudo_titular; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -3426,8 +2796,6 @@ CREATE TABLE recaudo_titular (
 ALTER TABLE public.recaudo_titular OWNER TO jelitox;
 
 --
--- TOC entry 2967 (class 0 OID 0)
--- Dependencies: 223
 -- Name: TABLE recaudo_titular; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3435,8 +2803,6 @@ COMMENT ON TABLE recaudo_titular IS 'Modelo para manipular la relacion Recaudo-T
 
 
 --
--- TOC entry 2968 (class 0 OID 0)
--- Dependencies: 223
 -- Name: COLUMN recaudo_titular.titular_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3444,8 +2810,6 @@ COMMENT ON COLUMN recaudo_titular.titular_id IS 'ID del Titular';
 
 
 --
--- TOC entry 2969 (class 0 OID 0)
--- Dependencies: 223
 -- Name: COLUMN recaudo_titular.recaudo_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3453,8 +2817,6 @@ COMMENT ON COLUMN recaudo_titular.recaudo_id IS 'ID del Recaudo';
 
 
 --
--- TOC entry 2970 (class 0 OID 0)
--- Dependencies: 223
 -- Name: COLUMN recaudo_titular.estado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3462,8 +2824,6 @@ COMMENT ON COLUMN recaudo_titular.estado IS 'Estado del Recaudo';
 
 
 --
--- TOC entry 224 (class 1259 OID 104544)
--- Dependencies: 6 223
 -- Name: recaudo_titular_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -3478,8 +2838,6 @@ CREATE SEQUENCE recaudo_titular_id_seq
 ALTER TABLE public.recaudo_titular_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2971 (class 0 OID 0)
--- Dependencies: 224
 -- Name: recaudo_titular_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -3487,8 +2845,6 @@ ALTER SEQUENCE recaudo_titular_id_seq OWNED BY recaudo_titular.id;
 
 
 --
--- TOC entry 225 (class 1259 OID 104546)
--- Dependencies: 2203 2204 2205 6
 -- Name: recurso; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -3509,8 +2865,6 @@ CREATE TABLE recurso (
 ALTER TABLE public.recurso OWNER TO jelitox;
 
 --
--- TOC entry 2972 (class 0 OID 0)
--- Dependencies: 225
 -- Name: TABLE recurso; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3518,8 +2872,6 @@ COMMENT ON TABLE recurso IS 'Modelo para manipular recursos (controladores)';
 
 
 --
--- TOC entry 2973 (class 0 OID 0)
--- Dependencies: 225
 -- Name: COLUMN recurso.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3527,8 +2879,6 @@ COMMENT ON COLUMN recurso.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2974 (class 0 OID 0)
--- Dependencies: 225
 -- Name: COLUMN recurso.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3536,8 +2886,6 @@ COMMENT ON COLUMN recurso.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2975 (class 0 OID 0)
--- Dependencies: 225
 -- Name: COLUMN recurso.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3545,8 +2893,6 @@ COMMENT ON COLUMN recurso.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- TOC entry 2976 (class 0 OID 0)
--- Dependencies: 225
 -- Name: COLUMN recurso.modulo; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3554,8 +2900,6 @@ COMMENT ON COLUMN recurso.modulo IS 'Nombre del Modulo';
 
 
 --
--- TOC entry 2977 (class 0 OID 0)
--- Dependencies: 225
 -- Name: COLUMN recurso.controlador; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3563,8 +2907,6 @@ COMMENT ON COLUMN recurso.controlador IS 'Nombre del Controlador';
 
 
 --
--- TOC entry 2978 (class 0 OID 0)
--- Dependencies: 225
 -- Name: COLUMN recurso.accion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3572,8 +2914,6 @@ COMMENT ON COLUMN recurso.accion IS 'Nombre de la Accion';
 
 
 --
--- TOC entry 2979 (class 0 OID 0)
--- Dependencies: 225
 -- Name: COLUMN recurso.recurso; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3581,8 +2921,6 @@ COMMENT ON COLUMN recurso.recurso IS 'Nombre del recurso';
 
 
 --
--- TOC entry 2980 (class 0 OID 0)
--- Dependencies: 225
 -- Name: COLUMN recurso.descripcion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3590,8 +2928,6 @@ COMMENT ON COLUMN recurso.descripcion IS 'Descripcion del Recurso';
 
 
 --
--- TOC entry 2981 (class 0 OID 0)
--- Dependencies: 225
 -- Name: COLUMN recurso.activo; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3599,8 +2935,6 @@ COMMENT ON COLUMN recurso.activo IS 'Estado del Recurso';
 
 
 --
--- TOC entry 226 (class 1259 OID 104552)
--- Dependencies: 6 225
 -- Name: recurso_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -3615,8 +2949,6 @@ CREATE SEQUENCE recurso_id_seq
 ALTER TABLE public.recurso_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2982 (class 0 OID 0)
--- Dependencies: 226
 -- Name: recurso_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -3624,8 +2956,6 @@ ALTER SEQUENCE recurso_id_seq OWNED BY recurso.id;
 
 
 --
--- TOC entry 227 (class 1259 OID 104554)
--- Dependencies: 2207 2208 6
 -- Name: recurso_perfil; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -3642,8 +2972,6 @@ CREATE TABLE recurso_perfil (
 ALTER TABLE public.recurso_perfil OWNER TO jelitox;
 
 --
--- TOC entry 2983 (class 0 OID 0)
--- Dependencies: 227
 -- Name: TABLE recurso_perfil; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3651,8 +2979,6 @@ COMMENT ON TABLE recurso_perfil IS 'Modelo para manipular relacion Recurso - Per
 
 
 --
--- TOC entry 2984 (class 0 OID 0)
--- Dependencies: 227
 -- Name: COLUMN recurso_perfil.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3660,8 +2986,6 @@ COMMENT ON COLUMN recurso_perfil.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2985 (class 0 OID 0)
--- Dependencies: 227
 -- Name: COLUMN recurso_perfil.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3669,8 +2993,6 @@ COMMENT ON COLUMN recurso_perfil.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2986 (class 0 OID 0)
--- Dependencies: 227
 -- Name: COLUMN recurso_perfil.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3678,8 +3000,6 @@ COMMENT ON COLUMN recurso_perfil.fecha_modificado IS 'Fecha Modificacion del Reg
 
 
 --
--- TOC entry 2987 (class 0 OID 0)
--- Dependencies: 227
 -- Name: COLUMN recurso_perfil.recurso_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3687,8 +3007,6 @@ COMMENT ON COLUMN recurso_perfil.recurso_id IS 'ID del Recurso';
 
 
 --
--- TOC entry 2988 (class 0 OID 0)
--- Dependencies: 227
 -- Name: COLUMN recurso_perfil.perfil_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3696,8 +3014,6 @@ COMMENT ON COLUMN recurso_perfil.perfil_id IS 'ID del Perfil';
 
 
 --
--- TOC entry 228 (class 1259 OID 104559)
--- Dependencies: 6 227
 -- Name: recurso_perfil_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -3712,8 +3028,6 @@ CREATE SEQUENCE recurso_perfil_id_seq
 ALTER TABLE public.recurso_perfil_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 2989 (class 0 OID 0)
--- Dependencies: 228
 -- Name: recurso_perfil_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -3721,8 +3035,6 @@ ALTER SEQUENCE recurso_perfil_id_seq OWNED BY recurso_perfil.id;
 
 
 --
--- TOC entry 229 (class 1259 OID 104561)
--- Dependencies: 2210 2211 2212 6
 -- Name: reembolso; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -3744,8 +3056,6 @@ CREATE TABLE reembolso (
 ALTER TABLE public.reembolso OWNER TO jelitox;
 
 --
--- TOC entry 2990 (class 0 OID 0)
--- Dependencies: 229
 -- Name: TABLE reembolso; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3753,8 +3063,6 @@ COMMENT ON TABLE reembolso IS 'Modelo para manipular las Solicitudes de Reembols
 
 
 --
--- TOC entry 2991 (class 0 OID 0)
--- Dependencies: 229
 -- Name: COLUMN reembolso.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3762,8 +3070,6 @@ COMMENT ON COLUMN reembolso.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2992 (class 0 OID 0)
--- Dependencies: 229
 -- Name: COLUMN reembolso.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3771,8 +3077,6 @@ COMMENT ON COLUMN reembolso.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2993 (class 0 OID 0)
--- Dependencies: 229
 -- Name: COLUMN reembolso.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3780,8 +3084,6 @@ COMMENT ON COLUMN reembolso.fecha_modificado IS 'Fecha Modificacion del Registro
 
 
 --
--- TOC entry 2994 (class 0 OID 0)
--- Dependencies: 229
 -- Name: COLUMN reembolso.estado_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3789,8 +3091,6 @@ COMMENT ON COLUMN reembolso.estado_solicitud IS 'Estado de la Solicitud';
 
 
 --
--- TOC entry 2995 (class 0 OID 0)
--- Dependencies: 229
 -- Name: COLUMN reembolso.fecha_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3798,8 +3098,6 @@ COMMENT ON COLUMN reembolso.fecha_solicitud IS 'Fecha de la Solicitud';
 
 
 --
--- TOC entry 2996 (class 0 OID 0)
--- Dependencies: 229
 -- Name: COLUMN reembolso.codigo_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3807,8 +3105,6 @@ COMMENT ON COLUMN reembolso.codigo_solicitud IS 'Codigo de la Solicitud';
 
 
 --
--- TOC entry 2997 (class 0 OID 0)
--- Dependencies: 229
 -- Name: COLUMN reembolso.titular_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3816,8 +3112,6 @@ COMMENT ON COLUMN reembolso.titular_id IS 'Codigo del Titular';
 
 
 --
--- TOC entry 2998 (class 0 OID 0)
--- Dependencies: 229
 -- Name: COLUMN reembolso.beneficiario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3825,8 +3119,6 @@ COMMENT ON COLUMN reembolso.beneficiario_id IS 'Codigo del Beneficiario';
 
 
 --
--- TOC entry 2999 (class 0 OID 0)
--- Dependencies: 229
 -- Name: COLUMN reembolso.beneficiario_tipo; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3834,8 +3126,6 @@ COMMENT ON COLUMN reembolso.beneficiario_tipo IS 'beneficiario de la Solicitud';
 
 
 --
--- TOC entry 3000 (class 0 OID 0)
--- Dependencies: 229
 -- Name: COLUMN reembolso.observacion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3843,8 +3133,6 @@ COMMENT ON COLUMN reembolso.observacion IS 'Observacion';
 
 
 --
--- TOC entry 230 (class 1259 OID 104567)
--- Dependencies: 229 6
 -- Name: reembolso_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -3859,8 +3147,6 @@ CREATE SEQUENCE reembolso_id_seq
 ALTER TABLE public.reembolso_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 3001 (class 0 OID 0)
--- Dependencies: 230
 -- Name: reembolso_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -3868,8 +3154,6 @@ ALTER SEQUENCE reembolso_id_seq OWNED BY reembolso.id;
 
 
 --
--- TOC entry 231 (class 1259 OID 104569)
--- Dependencies: 2214 2215 6
 -- Name: servicio; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -3886,8 +3170,6 @@ CREATE TABLE servicio (
 ALTER TABLE public.servicio OWNER TO jelitox;
 
 --
--- TOC entry 3002 (class 0 OID 0)
--- Dependencies: 231
 -- Name: TABLE servicio; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3895,8 +3177,6 @@ COMMENT ON TABLE servicio IS 'Modelo para manipular los Servicios';
 
 
 --
--- TOC entry 3003 (class 0 OID 0)
--- Dependencies: 231
 -- Name: COLUMN servicio.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3904,8 +3184,6 @@ COMMENT ON COLUMN servicio.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 3004 (class 0 OID 0)
--- Dependencies: 231
 -- Name: COLUMN servicio.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3913,8 +3191,6 @@ COMMENT ON COLUMN servicio.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3005 (class 0 OID 0)
--- Dependencies: 231
 -- Name: COLUMN servicio.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3922,8 +3198,6 @@ COMMENT ON COLUMN servicio.fecha_modificado IS 'Fecha Modificacion del Registro'
 
 
 --
--- TOC entry 3006 (class 0 OID 0)
--- Dependencies: 231
 -- Name: COLUMN servicio.descripcion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3931,8 +3205,6 @@ COMMENT ON COLUMN servicio.descripcion IS 'Descripcion del Servicio';
 
 
 --
--- TOC entry 3007 (class 0 OID 0)
--- Dependencies: 231
 -- Name: COLUMN servicio.observacion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3940,8 +3212,6 @@ COMMENT ON COLUMN servicio.observacion IS 'Observacion del Servicio';
 
 
 --
--- TOC entry 232 (class 1259 OID 104574)
--- Dependencies: 6 231
 -- Name: servicio_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -3956,8 +3226,6 @@ CREATE SEQUENCE servicio_id_seq
 ALTER TABLE public.servicio_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 3008 (class 0 OID 0)
--- Dependencies: 232
 -- Name: servicio_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -3965,8 +3233,6 @@ ALTER SEQUENCE servicio_id_seq OWNED BY servicio.id;
 
 
 --
--- TOC entry 233 (class 1259 OID 104576)
--- Dependencies: 2217 6
 -- Name: servicio_proveedor; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -3980,8 +3246,6 @@ CREATE TABLE servicio_proveedor (
 ALTER TABLE public.servicio_proveedor OWNER TO jelitox;
 
 --
--- TOC entry 3009 (class 0 OID 0)
--- Dependencies: 233
 -- Name: TABLE servicio_proveedor; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3989,8 +3253,6 @@ COMMENT ON TABLE servicio_proveedor IS 'Modelo para manipular la relacion servic
 
 
 --
--- TOC entry 3010 (class 0 OID 0)
--- Dependencies: 233
 -- Name: COLUMN servicio_proveedor.proveedor_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -3998,8 +3260,6 @@ COMMENT ON COLUMN servicio_proveedor.proveedor_id IS 'ID del proveedor';
 
 
 --
--- TOC entry 3011 (class 0 OID 0)
--- Dependencies: 233
 -- Name: COLUMN servicio_proveedor.servicio_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4007,8 +3267,6 @@ COMMENT ON COLUMN servicio_proveedor.servicio_id IS 'ID del servicio';
 
 
 --
--- TOC entry 234 (class 1259 OID 104580)
--- Dependencies: 233 6
 -- Name: servicio_proveedor_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -4023,8 +3281,6 @@ CREATE SEQUENCE servicio_proveedor_id_seq
 ALTER TABLE public.servicio_proveedor_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 3012 (class 0 OID 0)
--- Dependencies: 234
 -- Name: servicio_proveedor_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -4032,8 +3288,6 @@ ALTER SEQUENCE servicio_proveedor_id_seq OWNED BY servicio_proveedor.id;
 
 
 --
--- TOC entry 235 (class 1259 OID 104582)
--- Dependencies: 2218 6
 -- Name: servicio_tiposolicitud; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -4047,8 +3301,6 @@ CREATE TABLE servicio_tiposolicitud (
 ALTER TABLE public.servicio_tiposolicitud OWNER TO jelitox;
 
 --
--- TOC entry 3013 (class 0 OID 0)
--- Dependencies: 235
 -- Name: TABLE servicio_tiposolicitud; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4056,8 +3308,6 @@ COMMENT ON TABLE servicio_tiposolicitud IS 'Modelo para manipular la relacion Se
 
 
 --
--- TOC entry 3014 (class 0 OID 0)
--- Dependencies: 235
 -- Name: COLUMN servicio_tiposolicitud.tiposolicitud_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4065,8 +3315,6 @@ COMMENT ON COLUMN servicio_tiposolicitud.tiposolicitud_id IS 'ID del tipo de sol
 
 
 --
--- TOC entry 3015 (class 0 OID 0)
--- Dependencies: 235
 -- Name: COLUMN servicio_tiposolicitud.servicio_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4074,8 +3322,6 @@ COMMENT ON COLUMN servicio_tiposolicitud.servicio_id IS 'ID del Servicio';
 
 
 --
--- TOC entry 236 (class 1259 OID 104586)
--- Dependencies: 6 235
 -- Name: servicio_tiposolicitud_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -4090,8 +3336,6 @@ CREATE SEQUENCE servicio_tiposolicitud_id_seq
 ALTER TABLE public.servicio_tiposolicitud_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 3016 (class 0 OID 0)
--- Dependencies: 236
 -- Name: servicio_tiposolicitud_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -4099,8 +3343,6 @@ ALTER SEQUENCE servicio_tiposolicitud_id_seq OWNED BY servicio_tiposolicitud.id;
 
 
 --
--- TOC entry 237 (class 1259 OID 104588)
--- Dependencies: 6
 -- Name: solicitud_dt_factura; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -4117,8 +3359,6 @@ CREATE TABLE solicitud_dt_factura (
 ALTER TABLE public.solicitud_dt_factura OWNER TO jelitox;
 
 --
--- TOC entry 3017 (class 0 OID 0)
--- Dependencies: 237
 -- Name: TABLE solicitud_dt_factura; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4126,8 +3366,6 @@ COMMENT ON TABLE solicitud_dt_factura IS 'Modelo para manipular el Detalle de la
 
 
 --
--- TOC entry 3018 (class 0 OID 0)
--- Dependencies: 237
 -- Name: COLUMN solicitud_dt_factura.solicitud_factura_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4135,8 +3373,6 @@ COMMENT ON COLUMN solicitud_dt_factura.solicitud_factura_id IS 'Id de la Factura
 
 
 --
--- TOC entry 3019 (class 0 OID 0)
--- Dependencies: 237
 -- Name: COLUMN solicitud_dt_factura.descripcion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4144,8 +3380,6 @@ COMMENT ON COLUMN solicitud_dt_factura.descripcion IS 'Descripcion del Item';
 
 
 --
--- TOC entry 3020 (class 0 OID 0)
--- Dependencies: 237
 -- Name: COLUMN solicitud_dt_factura.cantidad; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4153,8 +3387,6 @@ COMMENT ON COLUMN solicitud_dt_factura.cantidad IS 'Cantidad del Item';
 
 
 --
--- TOC entry 3021 (class 0 OID 0)
--- Dependencies: 237
 -- Name: COLUMN solicitud_dt_factura.monto; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4162,8 +3394,6 @@ COMMENT ON COLUMN solicitud_dt_factura.monto IS 'Monto del Item';
 
 
 --
--- TOC entry 3022 (class 0 OID 0)
--- Dependencies: 237
 -- Name: COLUMN solicitud_dt_factura.exento; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4171,8 +3401,6 @@ COMMENT ON COLUMN solicitud_dt_factura.exento IS 'Item Exento del Iva';
 
 
 --
--- TOC entry 238 (class 1259 OID 104591)
--- Dependencies: 237 6
 -- Name: solicitud_dt_factura_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -4187,8 +3415,6 @@ CREATE SEQUENCE solicitud_dt_factura_id_seq
 ALTER TABLE public.solicitud_dt_factura_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 3023 (class 0 OID 0)
--- Dependencies: 238
 -- Name: solicitud_dt_factura_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -4196,8 +3422,6 @@ ALTER SEQUENCE solicitud_dt_factura_id_seq OWNED BY solicitud_dt_factura.id;
 
 
 --
--- TOC entry 239 (class 1259 OID 104593)
--- Dependencies: 2220 2221 6
 -- Name: solicitud_dt_medicina; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -4215,8 +3439,6 @@ CREATE TABLE solicitud_dt_medicina (
 ALTER TABLE public.solicitud_dt_medicina OWNER TO jelitox;
 
 --
--- TOC entry 3024 (class 0 OID 0)
--- Dependencies: 239
 -- Name: TABLE solicitud_dt_medicina; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4224,8 +3446,6 @@ COMMENT ON TABLE solicitud_dt_medicina IS 'Modelo para manipular los Detalles de
 
 
 --
--- TOC entry 3025 (class 0 OID 0)
--- Dependencies: 239
 -- Name: COLUMN solicitud_dt_medicina.id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4233,8 +3453,6 @@ COMMENT ON COLUMN solicitud_dt_medicina.id IS 'Id del Registro';
 
 
 --
--- TOC entry 3026 (class 0 OID 0)
--- Dependencies: 239
 -- Name: COLUMN solicitud_dt_medicina.solicitud_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4242,8 +3460,6 @@ COMMENT ON COLUMN solicitud_dt_medicina.solicitud_id IS 'Id la Solicitud';
 
 
 --
--- TOC entry 3027 (class 0 OID 0)
--- Dependencies: 239
 -- Name: COLUMN solicitud_dt_medicina.medicina_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4251,8 +3467,6 @@ COMMENT ON COLUMN solicitud_dt_medicina.medicina_id IS 'Codigo de la Medicina';
 
 
 --
--- TOC entry 3028 (class 0 OID 0)
--- Dependencies: 239
 -- Name: COLUMN solicitud_dt_medicina.fecha_inicio; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4260,8 +3474,6 @@ COMMENT ON COLUMN solicitud_dt_medicina.fecha_inicio IS 'Fecha Inicio del Tratam
 
 
 --
--- TOC entry 3029 (class 0 OID 0)
--- Dependencies: 239
 -- Name: COLUMN solicitud_dt_medicina.fecha_fin; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4269,8 +3481,6 @@ COMMENT ON COLUMN solicitud_dt_medicina.fecha_fin IS 'Fecha Fin del Tratamiento'
 
 
 --
--- TOC entry 3030 (class 0 OID 0)
--- Dependencies: 239
 -- Name: COLUMN solicitud_dt_medicina.dosis; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4278,8 +3488,6 @@ COMMENT ON COLUMN solicitud_dt_medicina.dosis IS 'Dosis de la Medicina';
 
 
 --
--- TOC entry 3031 (class 0 OID 0)
--- Dependencies: 239
 -- Name: COLUMN solicitud_dt_medicina.horas; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4287,8 +3495,6 @@ COMMENT ON COLUMN solicitud_dt_medicina.horas IS 'Dosis de la Medicina';
 
 
 --
--- TOC entry 240 (class 1259 OID 104598)
--- Dependencies: 6 239
 -- Name: solicitud_dt_medicina_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -4303,8 +3509,6 @@ CREATE SEQUENCE solicitud_dt_medicina_id_seq
 ALTER TABLE public.solicitud_dt_medicina_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 3032 (class 0 OID 0)
--- Dependencies: 240
 -- Name: solicitud_dt_medicina_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -4312,8 +3516,6 @@ ALTER SEQUENCE solicitud_dt_medicina_id_seq OWNED BY solicitud_dt_medicina.id;
 
 
 --
--- TOC entry 241 (class 1259 OID 104600)
--- Dependencies: 2223 2224 2225 6
 -- Name: solicitud_factura; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -4334,8 +3536,6 @@ CREATE TABLE solicitud_factura (
 ALTER TABLE public.solicitud_factura OWNER TO jelitox;
 
 --
--- TOC entry 3033 (class 0 OID 0)
--- Dependencies: 241
 -- Name: TABLE solicitud_factura; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4343,8 +3543,6 @@ COMMENT ON TABLE solicitud_factura IS 'Modelo para manipular la Facturacion de l
 
 
 --
--- TOC entry 3034 (class 0 OID 0)
--- Dependencies: 241
 -- Name: COLUMN solicitud_factura.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4352,8 +3550,6 @@ COMMENT ON COLUMN solicitud_factura.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 3035 (class 0 OID 0)
--- Dependencies: 241
 -- Name: COLUMN solicitud_factura.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4361,8 +3557,6 @@ COMMENT ON COLUMN solicitud_factura.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3036 (class 0 OID 0)
--- Dependencies: 241
 -- Name: COLUMN solicitud_factura.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4370,8 +3564,6 @@ COMMENT ON COLUMN solicitud_factura.fecha_modificado IS 'Fecha Modificacion del 
 
 
 --
--- TOC entry 3037 (class 0 OID 0)
--- Dependencies: 241
 -- Name: COLUMN solicitud_factura.solicitud_servicio_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4379,8 +3571,6 @@ COMMENT ON COLUMN solicitud_factura.solicitud_servicio_id IS 'Id de la Solicitud
 
 
 --
--- TOC entry 3038 (class 0 OID 0)
--- Dependencies: 241
 -- Name: COLUMN solicitud_factura.codigo_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4388,8 +3578,6 @@ COMMENT ON COLUMN solicitud_factura.codigo_solicitud IS 'Codigo de la Solicitud'
 
 
 --
--- TOC entry 3039 (class 0 OID 0)
--- Dependencies: 241
 -- Name: COLUMN solicitud_factura.fecha_factura; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4397,8 +3585,6 @@ COMMENT ON COLUMN solicitud_factura.fecha_factura IS 'Fecha de Factura';
 
 
 --
--- TOC entry 3040 (class 0 OID 0)
--- Dependencies: 241
 -- Name: COLUMN solicitud_factura.nro_control; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4406,8 +3592,6 @@ COMMENT ON COLUMN solicitud_factura.nro_control IS 'Numero de Control';
 
 
 --
--- TOC entry 3041 (class 0 OID 0)
--- Dependencies: 241
 -- Name: COLUMN solicitud_factura.nro_factura; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4415,8 +3599,6 @@ COMMENT ON COLUMN solicitud_factura.nro_factura IS 'Numero de Factura';
 
 
 --
--- TOC entry 3042 (class 0 OID 0)
--- Dependencies: 241
 -- Name: COLUMN solicitud_factura.observacion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4424,8 +3606,6 @@ COMMENT ON COLUMN solicitud_factura.observacion IS 'Observacion';
 
 
 --
--- TOC entry 242 (class 1259 OID 104606)
--- Dependencies: 241 6
 -- Name: solicitud_factura_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -4440,8 +3620,6 @@ CREATE SEQUENCE solicitud_factura_id_seq
 ALTER TABLE public.solicitud_factura_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 3043 (class 0 OID 0)
--- Dependencies: 242
 -- Name: solicitud_factura_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -4449,8 +3627,6 @@ ALTER SEQUENCE solicitud_factura_id_seq OWNED BY solicitud_factura.id;
 
 
 --
--- TOC entry 243 (class 1259 OID 104608)
--- Dependencies: 2227 2228 2229 2230 2231 6
 -- Name: solicitud_medicina; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -4481,8 +3657,6 @@ CREATE TABLE solicitud_medicina (
 ALTER TABLE public.solicitud_medicina OWNER TO jelitox;
 
 --
--- TOC entry 3044 (class 0 OID 0)
--- Dependencies: 243
 -- Name: TABLE solicitud_medicina; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4490,8 +3664,6 @@ COMMENT ON TABLE solicitud_medicina IS 'Modelo para manipular las Solicitudes de
 
 
 --
--- TOC entry 3045 (class 0 OID 0)
--- Dependencies: 243
 -- Name: COLUMN solicitud_medicina.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4499,8 +3671,6 @@ COMMENT ON COLUMN solicitud_medicina.usuario_id IS 'Usuario Editor del Registro'
 
 
 --
--- TOC entry 3046 (class 0 OID 0)
--- Dependencies: 243
 -- Name: COLUMN solicitud_medicina.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4508,8 +3678,6 @@ COMMENT ON COLUMN solicitud_medicina.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3047 (class 0 OID 0)
--- Dependencies: 243
 -- Name: COLUMN solicitud_medicina.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4517,8 +3685,6 @@ COMMENT ON COLUMN solicitud_medicina.fecha_modificado IS 'Fecha Modificacion del
 
 
 --
--- TOC entry 3048 (class 0 OID 0)
--- Dependencies: 243
 -- Name: COLUMN solicitud_medicina.estado_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4526,8 +3692,6 @@ COMMENT ON COLUMN solicitud_medicina.estado_solicitud IS 'Estado de la Solicitud
 
 
 --
--- TOC entry 3049 (class 0 OID 0)
--- Dependencies: 243
 -- Name: COLUMN solicitud_medicina.fecha_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4535,8 +3699,6 @@ COMMENT ON COLUMN solicitud_medicina.fecha_solicitud IS 'Fecha de la Solicitud';
 
 
 --
--- TOC entry 3050 (class 0 OID 0)
--- Dependencies: 243
 -- Name: COLUMN solicitud_medicina.fecha_vencimiento; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4544,8 +3706,6 @@ COMMENT ON COLUMN solicitud_medicina.fecha_vencimiento IS 'Fecha de Vencimiento 
 
 
 --
--- TOC entry 3051 (class 0 OID 0)
--- Dependencies: 243
 -- Name: COLUMN solicitud_medicina.codigo_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4553,8 +3713,6 @@ COMMENT ON COLUMN solicitud_medicina.codigo_solicitud IS 'Codigo de la Solicitud
 
 
 --
--- TOC entry 3052 (class 0 OID 0)
--- Dependencies: 243
 -- Name: COLUMN solicitud_medicina.titular_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4562,8 +3720,6 @@ COMMENT ON COLUMN solicitud_medicina.titular_id IS 'Codigo del Titular';
 
 
 --
--- TOC entry 3053 (class 0 OID 0)
--- Dependencies: 243
 -- Name: COLUMN solicitud_medicina.beneficiario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4571,8 +3727,6 @@ COMMENT ON COLUMN solicitud_medicina.beneficiario_id IS 'Codigo del Beneficiario
 
 
 --
--- TOC entry 3054 (class 0 OID 0)
--- Dependencies: 243
 -- Name: COLUMN solicitud_medicina.beneficiario_tipo; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4580,8 +3734,6 @@ COMMENT ON COLUMN solicitud_medicina.beneficiario_tipo IS 'beneficiario de la So
 
 
 --
--- TOC entry 3055 (class 0 OID 0)
--- Dependencies: 243
 -- Name: COLUMN solicitud_medicina.patologia_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4589,8 +3741,6 @@ COMMENT ON COLUMN solicitud_medicina.patologia_id IS 'Codigo de la Patologia';
 
 
 --
--- TOC entry 3056 (class 0 OID 0)
--- Dependencies: 243
 -- Name: COLUMN solicitud_medicina.proveedor_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4598,8 +3748,6 @@ COMMENT ON COLUMN solicitud_medicina.proveedor_id IS 'Codigo del Proveedor';
 
 
 --
--- TOC entry 3057 (class 0 OID 0)
--- Dependencies: 243
 -- Name: COLUMN solicitud_medicina.medico_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4607,8 +3755,6 @@ COMMENT ON COLUMN solicitud_medicina.medico_id IS 'Codigo del Medico';
 
 
 --
--- TOC entry 3058 (class 0 OID 0)
--- Dependencies: 243
 -- Name: COLUMN solicitud_medicina.persona_autorizada; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4616,8 +3762,6 @@ COMMENT ON COLUMN solicitud_medicina.persona_autorizada IS 'Persona Autorizada';
 
 
 --
--- TOC entry 3059 (class 0 OID 0)
--- Dependencies: 243
 -- Name: COLUMN solicitud_medicina.persona_cedula; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4625,8 +3769,6 @@ COMMENT ON COLUMN solicitud_medicina.persona_cedula IS 'Cedula Persona Autorizad
 
 
 --
--- TOC entry 3060 (class 0 OID 0)
--- Dependencies: 243
 -- Name: COLUMN solicitud_medicina.tipo_tratamiento; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4634,8 +3776,6 @@ COMMENT ON COLUMN solicitud_medicina.tipo_tratamiento IS 'Tipo de Tratamiento';
 
 
 --
--- TOC entry 3061 (class 0 OID 0)
--- Dependencies: 243
 -- Name: COLUMN solicitud_medicina.diagnostico; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4643,8 +3783,6 @@ COMMENT ON COLUMN solicitud_medicina.diagnostico IS 'Diagnostico';
 
 
 --
--- TOC entry 3062 (class 0 OID 0)
--- Dependencies: 243
 -- Name: COLUMN solicitud_medicina.servicio_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4652,8 +3790,6 @@ COMMENT ON COLUMN solicitud_medicina.servicio_id IS 'Codigo del Servicio';
 
 
 --
--- TOC entry 3063 (class 0 OID 0)
--- Dependencies: 243
 -- Name: COLUMN solicitud_medicina.observacion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4661,8 +3797,6 @@ COMMENT ON COLUMN solicitud_medicina.observacion IS 'Observacion';
 
 
 --
--- TOC entry 244 (class 1259 OID 104619)
--- Dependencies: 6 243
 -- Name: solicitud_medicina_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -4677,8 +3811,6 @@ CREATE SEQUENCE solicitud_medicina_id_seq
 ALTER TABLE public.solicitud_medicina_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 3064 (class 0 OID 0)
--- Dependencies: 244
 -- Name: solicitud_medicina_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -4686,8 +3818,6 @@ ALTER SEQUENCE solicitud_medicina_id_seq OWNED BY solicitud_medicina.id;
 
 
 --
--- TOC entry 245 (class 1259 OID 104621)
--- Dependencies: 2233 2234 2235 2236 6
 -- Name: solicitud_servicio; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -4715,8 +3845,6 @@ CREATE TABLE solicitud_servicio (
 ALTER TABLE public.solicitud_servicio OWNER TO jelitox;
 
 --
--- TOC entry 3065 (class 0 OID 0)
--- Dependencies: 245
 -- Name: TABLE solicitud_servicio; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4724,8 +3852,6 @@ COMMENT ON TABLE solicitud_servicio IS 'Modelo para manipular las Solicitudes de
 
 
 --
--- TOC entry 3066 (class 0 OID 0)
--- Dependencies: 245
 -- Name: COLUMN solicitud_servicio.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4733,8 +3859,6 @@ COMMENT ON COLUMN solicitud_servicio.usuario_id IS 'Usuario Editor del Registro'
 
 
 --
--- TOC entry 3067 (class 0 OID 0)
--- Dependencies: 245
 -- Name: COLUMN solicitud_servicio.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4742,8 +3866,6 @@ COMMENT ON COLUMN solicitud_servicio.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3068 (class 0 OID 0)
--- Dependencies: 245
 -- Name: COLUMN solicitud_servicio.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4751,8 +3873,6 @@ COMMENT ON COLUMN solicitud_servicio.fecha_modificado IS 'Fecha Modificacion del
 
 
 --
--- TOC entry 3069 (class 0 OID 0)
--- Dependencies: 245
 -- Name: COLUMN solicitud_servicio.estado_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4760,8 +3880,6 @@ COMMENT ON COLUMN solicitud_servicio.estado_solicitud IS 'Estado de la Solicitud
 
 
 --
--- TOC entry 3070 (class 0 OID 0)
--- Dependencies: 245
 -- Name: COLUMN solicitud_servicio.tiposolicitud_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4769,8 +3887,6 @@ COMMENT ON COLUMN solicitud_servicio.tiposolicitud_id IS 'Tipo de Solicitud';
 
 
 --
--- TOC entry 3071 (class 0 OID 0)
--- Dependencies: 245
 -- Name: COLUMN solicitud_servicio.fecha_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4778,8 +3894,6 @@ COMMENT ON COLUMN solicitud_servicio.fecha_solicitud IS 'Fecha de la Solicitud';
 
 
 --
--- TOC entry 3072 (class 0 OID 0)
--- Dependencies: 245
 -- Name: COLUMN solicitud_servicio.codigo_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4787,8 +3901,6 @@ COMMENT ON COLUMN solicitud_servicio.codigo_solicitud IS 'Codigo de la Solicitud
 
 
 --
--- TOC entry 3073 (class 0 OID 0)
--- Dependencies: 245
 -- Name: COLUMN solicitud_servicio.titular_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4796,8 +3908,6 @@ COMMENT ON COLUMN solicitud_servicio.titular_id IS 'Codigo del Titular';
 
 
 --
--- TOC entry 3074 (class 0 OID 0)
--- Dependencies: 245
 -- Name: COLUMN solicitud_servicio.beneficiario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4805,8 +3915,6 @@ COMMENT ON COLUMN solicitud_servicio.beneficiario_id IS 'Codigo del Beneficiario
 
 
 --
--- TOC entry 3075 (class 0 OID 0)
--- Dependencies: 245
 -- Name: COLUMN solicitud_servicio.beneficiario_tipo; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4814,8 +3922,6 @@ COMMENT ON COLUMN solicitud_servicio.beneficiario_tipo IS 'beneficiario de la So
 
 
 --
--- TOC entry 3076 (class 0 OID 0)
--- Dependencies: 245
 -- Name: COLUMN solicitud_servicio.patologia_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4823,8 +3929,6 @@ COMMENT ON COLUMN solicitud_servicio.patologia_id IS 'Codigo de la Patologia';
 
 
 --
--- TOC entry 3077 (class 0 OID 0)
--- Dependencies: 245
 -- Name: COLUMN solicitud_servicio.proveedor_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4832,8 +3936,6 @@ COMMENT ON COLUMN solicitud_servicio.proveedor_id IS 'Codigo del Proveedor';
 
 
 --
--- TOC entry 3078 (class 0 OID 0)
--- Dependencies: 245
 -- Name: COLUMN solicitud_servicio.medico_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4841,8 +3943,6 @@ COMMENT ON COLUMN solicitud_servicio.medico_id IS 'Codigo del Medico';
 
 
 --
--- TOC entry 3079 (class 0 OID 0)
--- Dependencies: 245
 -- Name: COLUMN solicitud_servicio.fecha_vencimiento; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4850,8 +3950,6 @@ COMMENT ON COLUMN solicitud_servicio.fecha_vencimiento IS 'Fecha Vencimiento de 
 
 
 --
--- TOC entry 3080 (class 0 OID 0)
--- Dependencies: 245
 -- Name: COLUMN solicitud_servicio.servicio_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4859,8 +3957,6 @@ COMMENT ON COLUMN solicitud_servicio.servicio_id IS 'Codigo del Servicio';
 
 
 --
--- TOC entry 3081 (class 0 OID 0)
--- Dependencies: 245
 -- Name: COLUMN solicitud_servicio.observacion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4868,8 +3964,6 @@ COMMENT ON COLUMN solicitud_servicio.observacion IS 'Observacion';
 
 
 --
--- TOC entry 246 (class 1259 OID 104628)
--- Dependencies: 245 6
 -- Name: solicitud_servicio_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -4884,8 +3978,6 @@ CREATE SEQUENCE solicitud_servicio_id_seq
 ALTER TABLE public.solicitud_servicio_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 3082 (class 0 OID 0)
--- Dependencies: 246
 -- Name: solicitud_servicio_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -4893,8 +3985,6 @@ ALTER SEQUENCE solicitud_servicio_id_seq OWNED BY solicitud_servicio.id;
 
 
 --
--- TOC entry 247 (class 1259 OID 104630)
--- Dependencies: 2238 2239 6
 -- Name: sucursal; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -4920,8 +4010,6 @@ CREATE TABLE sucursal (
 ALTER TABLE public.sucursal OWNER TO jelitox;
 
 --
--- TOC entry 3083 (class 0 OID 0)
--- Dependencies: 247
 -- Name: TABLE sucursal; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4929,8 +4017,6 @@ COMMENT ON TABLE sucursal IS 'Modelo para manipular las sucursales';
 
 
 --
--- TOC entry 3084 (class 0 OID 0)
--- Dependencies: 247
 -- Name: COLUMN sucursal.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4938,8 +4024,6 @@ COMMENT ON COLUMN sucursal.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 3085 (class 0 OID 0)
--- Dependencies: 247
 -- Name: COLUMN sucursal.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4947,8 +4031,6 @@ COMMENT ON COLUMN sucursal.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3086 (class 0 OID 0)
--- Dependencies: 247
 -- Name: COLUMN sucursal.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4956,8 +4038,6 @@ COMMENT ON COLUMN sucursal.fecha_modificado IS 'Fecha Modificacion del Registro'
 
 
 --
--- TOC entry 3087 (class 0 OID 0)
--- Dependencies: 247
 -- Name: COLUMN sucursal.empresa_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4965,8 +4045,6 @@ COMMENT ON COLUMN sucursal.empresa_id IS 'ID de la Empresa';
 
 
 --
--- TOC entry 3088 (class 0 OID 0)
--- Dependencies: 247
 -- Name: COLUMN sucursal.sucursal; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4974,8 +4052,6 @@ COMMENT ON COLUMN sucursal.sucursal IS 'Nombre de la Sucursal';
 
 
 --
--- TOC entry 3089 (class 0 OID 0)
--- Dependencies: 247
 -- Name: COLUMN sucursal.sucursal_slug; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4983,8 +4059,6 @@ COMMENT ON COLUMN sucursal.sucursal_slug IS 'Slug de la sucursal';
 
 
 --
--- TOC entry 3090 (class 0 OID 0)
--- Dependencies: 247
 -- Name: COLUMN sucursal.pais_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -4992,8 +4066,6 @@ COMMENT ON COLUMN sucursal.pais_id IS 'Id de la Pais';
 
 
 --
--- TOC entry 3091 (class 0 OID 0)
--- Dependencies: 247
 -- Name: COLUMN sucursal.estado_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5001,8 +4073,6 @@ COMMENT ON COLUMN sucursal.estado_id IS 'Id del Estado';
 
 
 --
--- TOC entry 3092 (class 0 OID 0)
--- Dependencies: 247
 -- Name: COLUMN sucursal.municipio_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5010,8 +4080,6 @@ COMMENT ON COLUMN sucursal.municipio_id IS 'Id del Municipio';
 
 
 --
--- TOC entry 3093 (class 0 OID 0)
--- Dependencies: 247
 -- Name: COLUMN sucursal.parroquia_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5019,8 +4087,6 @@ COMMENT ON COLUMN sucursal.parroquia_id IS 'Id de la Parroquia';
 
 
 --
--- TOC entry 3094 (class 0 OID 0)
--- Dependencies: 247
 -- Name: COLUMN sucursal.direccion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5028,8 +4094,6 @@ COMMENT ON COLUMN sucursal.direccion IS 'Direccion de la Sucursal';
 
 
 --
--- TOC entry 3095 (class 0 OID 0)
--- Dependencies: 247
 -- Name: COLUMN sucursal.telefono; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5037,8 +4101,6 @@ COMMENT ON COLUMN sucursal.telefono IS 'Telefono de la Sucursal';
 
 
 --
--- TOC entry 3096 (class 0 OID 0)
--- Dependencies: 247
 -- Name: COLUMN sucursal.fax; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5046,8 +4108,6 @@ COMMENT ON COLUMN sucursal.fax IS 'fax de la Sucursal';
 
 
 --
--- TOC entry 3097 (class 0 OID 0)
--- Dependencies: 247
 -- Name: COLUMN sucursal.celular; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5055,8 +4115,6 @@ COMMENT ON COLUMN sucursal.celular IS 'fax de la Sucursal';
 
 
 --
--- TOC entry 248 (class 1259 OID 104635)
--- Dependencies: 6 247
 -- Name: sucursal_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -5071,8 +4129,6 @@ CREATE SEQUENCE sucursal_id_seq
 ALTER TABLE public.sucursal_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 3098 (class 0 OID 0)
--- Dependencies: 248
 -- Name: sucursal_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -5080,8 +4136,6 @@ ALTER SEQUENCE sucursal_id_seq OWNED BY sucursal.id;
 
 
 --
--- TOC entry 249 (class 1259 OID 104637)
--- Dependencies: 2241 2242 6
 -- Name: tipoempleado; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -5098,8 +4152,6 @@ CREATE TABLE tipoempleado (
 ALTER TABLE public.tipoempleado OWNER TO jelitox;
 
 --
--- TOC entry 3099 (class 0 OID 0)
--- Dependencies: 249
 -- Name: TABLE tipoempleado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5107,8 +4159,6 @@ COMMENT ON TABLE tipoempleado IS 'Modelo para manipular las diferentes Profesion
 
 
 --
--- TOC entry 3100 (class 0 OID 0)
--- Dependencies: 249
 -- Name: COLUMN tipoempleado.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5116,8 +4166,6 @@ COMMENT ON COLUMN tipoempleado.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 3101 (class 0 OID 0)
--- Dependencies: 249
 -- Name: COLUMN tipoempleado.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5125,8 +4173,6 @@ COMMENT ON COLUMN tipoempleado.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3102 (class 0 OID 0)
--- Dependencies: 249
 -- Name: COLUMN tipoempleado.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5134,8 +4180,6 @@ COMMENT ON COLUMN tipoempleado.fecha_modificado IS 'Fecha Modificacion del Regis
 
 
 --
--- TOC entry 3103 (class 0 OID 0)
--- Dependencies: 249
 -- Name: COLUMN tipoempleado.nombre; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5143,8 +4187,6 @@ COMMENT ON COLUMN tipoempleado.nombre IS 'Nombre de la Profesion';
 
 
 --
--- TOC entry 3104 (class 0 OID 0)
--- Dependencies: 249
 -- Name: COLUMN tipoempleado.observacion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5152,8 +4194,6 @@ COMMENT ON COLUMN tipoempleado.observacion IS 'Observacion';
 
 
 --
--- TOC entry 250 (class 1259 OID 104642)
--- Dependencies: 249 6
 -- Name: tipoempleado_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -5168,8 +4208,6 @@ CREATE SEQUENCE tipoempleado_id_seq
 ALTER TABLE public.tipoempleado_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 3105 (class 0 OID 0)
--- Dependencies: 250
 -- Name: tipoempleado_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -5177,8 +4215,6 @@ ALTER SEQUENCE tipoempleado_id_seq OWNED BY tipoempleado.id;
 
 
 --
--- TOC entry 251 (class 1259 OID 104644)
--- Dependencies: 2244 2245 6
 -- Name: tiposolicitud; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -5195,8 +4231,6 @@ CREATE TABLE tiposolicitud (
 ALTER TABLE public.tiposolicitud OWNER TO jelitox;
 
 --
--- TOC entry 3106 (class 0 OID 0)
--- Dependencies: 251
 -- Name: TABLE tiposolicitud; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5204,8 +4238,6 @@ COMMENT ON TABLE tiposolicitud IS 'Modelo para manipular las diferentes Tipos de
 
 
 --
--- TOC entry 3107 (class 0 OID 0)
--- Dependencies: 251
 -- Name: COLUMN tiposolicitud.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5213,8 +4245,6 @@ COMMENT ON COLUMN tiposolicitud.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 3108 (class 0 OID 0)
--- Dependencies: 251
 -- Name: COLUMN tiposolicitud.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5222,8 +4252,6 @@ COMMENT ON COLUMN tiposolicitud.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3109 (class 0 OID 0)
--- Dependencies: 251
 -- Name: COLUMN tiposolicitud.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5231,8 +4259,6 @@ COMMENT ON COLUMN tiposolicitud.fecha_modificado IS 'Fecha Modificacion del Regi
 
 
 --
--- TOC entry 3110 (class 0 OID 0)
--- Dependencies: 251
 -- Name: COLUMN tiposolicitud.nombre; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5240,8 +4266,6 @@ COMMENT ON COLUMN tiposolicitud.nombre IS 'Nombre del Tipo Solicitud';
 
 
 --
--- TOC entry 3111 (class 0 OID 0)
--- Dependencies: 251
 -- Name: COLUMN tiposolicitud.observacion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5249,8 +4273,6 @@ COMMENT ON COLUMN tiposolicitud.observacion IS 'Observacion';
 
 
 --
--- TOC entry 252 (class 1259 OID 104649)
--- Dependencies: 251 6
 -- Name: tiposolicitud_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -5265,8 +4287,6 @@ CREATE SEQUENCE tiposolicitud_id_seq
 ALTER TABLE public.tiposolicitud_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 3112 (class 0 OID 0)
--- Dependencies: 252
 -- Name: tiposolicitud_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -5274,8 +4294,6 @@ ALTER SEQUENCE tiposolicitud_id_seq OWNED BY tiposolicitud.id;
 
 
 --
--- TOC entry 253 (class 1259 OID 104651)
--- Dependencies: 2247 2248 2249 6
 -- Name: titular; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -5297,8 +4315,6 @@ CREATE TABLE titular (
 ALTER TABLE public.titular OWNER TO jelitox;
 
 --
--- TOC entry 3113 (class 0 OID 0)
--- Dependencies: 253
 -- Name: TABLE titular; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5306,8 +4322,6 @@ COMMENT ON TABLE titular IS 'Modelo para manipular los Titulares';
 
 
 --
--- TOC entry 3114 (class 0 OID 0)
--- Dependencies: 253
 -- Name: COLUMN titular.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5315,8 +4329,6 @@ COMMENT ON COLUMN titular.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 3115 (class 0 OID 0)
--- Dependencies: 253
 -- Name: COLUMN titular.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5324,8 +4336,6 @@ COMMENT ON COLUMN titular.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3116 (class 0 OID 0)
--- Dependencies: 253
 -- Name: COLUMN titular.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5333,8 +4343,6 @@ COMMENT ON COLUMN titular.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- TOC entry 3117 (class 0 OID 0)
--- Dependencies: 253
 -- Name: COLUMN titular.tipoempleado_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5342,8 +4350,6 @@ COMMENT ON COLUMN titular.tipoempleado_id IS 'Tipo de Empleado';
 
 
 --
--- TOC entry 3118 (class 0 OID 0)
--- Dependencies: 253
 -- Name: COLUMN titular.observacion; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5351,8 +4357,6 @@ COMMENT ON COLUMN titular.observacion IS 'Observacion';
 
 
 --
--- TOC entry 254 (class 1259 OID 104657)
--- Dependencies: 6 253
 -- Name: titular_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -5367,8 +4371,6 @@ CREATE SEQUENCE titular_id_seq
 ALTER TABLE public.titular_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 3119 (class 0 OID 0)
--- Dependencies: 254
 -- Name: titular_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -5376,8 +4378,6 @@ ALTER SEQUENCE titular_id_seq OWNED BY titular.id;
 
 
 --
--- TOC entry 255 (class 1259 OID 104659)
--- Dependencies: 2251 2252 2253 2254 6
 -- Name: usuario; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -5401,8 +4401,6 @@ CREATE TABLE usuario (
 ALTER TABLE public.usuario OWNER TO jelitox;
 
 --
--- TOC entry 3120 (class 0 OID 0)
--- Dependencies: 255
 -- Name: TABLE usuario; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5410,8 +4408,6 @@ COMMENT ON TABLE usuario IS 'Modelo para manipular los usuarios';
 
 
 --
--- TOC entry 3121 (class 0 OID 0)
--- Dependencies: 255
 -- Name: COLUMN usuario.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5419,8 +4415,6 @@ COMMENT ON COLUMN usuario.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 3122 (class 0 OID 0)
--- Dependencies: 255
 -- Name: COLUMN usuario.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5428,8 +4422,6 @@ COMMENT ON COLUMN usuario.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3123 (class 0 OID 0)
--- Dependencies: 255
 -- Name: COLUMN usuario.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5437,8 +4429,6 @@ COMMENT ON COLUMN usuario.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- TOC entry 3124 (class 0 OID 0)
--- Dependencies: 255
 -- Name: COLUMN usuario.sucursal_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5446,8 +4436,6 @@ COMMENT ON COLUMN usuario.sucursal_id IS 'ID de la Sucursal';
 
 
 --
--- TOC entry 3125 (class 0 OID 0)
--- Dependencies: 255
 -- Name: COLUMN usuario.persona_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5455,8 +4443,6 @@ COMMENT ON COLUMN usuario.persona_id IS 'ID de la Persona';
 
 
 --
--- TOC entry 3126 (class 0 OID 0)
--- Dependencies: 255
 -- Name: COLUMN usuario.login; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5464,8 +4450,6 @@ COMMENT ON COLUMN usuario.login IS 'Login del usuario';
 
 
 --
--- TOC entry 3127 (class 0 OID 0)
--- Dependencies: 255
 -- Name: COLUMN usuario.password; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5473,8 +4457,6 @@ COMMENT ON COLUMN usuario.password IS 'Password del usuario';
 
 
 --
--- TOC entry 3128 (class 0 OID 0)
--- Dependencies: 255
 -- Name: COLUMN usuario.perfil_id; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5482,8 +4464,6 @@ COMMENT ON COLUMN usuario.perfil_id IS 'ID Perfil de Usuario';
 
 
 --
--- TOC entry 3129 (class 0 OID 0)
--- Dependencies: 255
 -- Name: COLUMN usuario.email; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5491,8 +4471,6 @@ COMMENT ON COLUMN usuario.email IS 'Email del usuario';
 
 
 --
--- TOC entry 3130 (class 0 OID 0)
--- Dependencies: 255
 -- Name: COLUMN usuario.tema; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5500,8 +4478,6 @@ COMMENT ON COLUMN usuario.tema IS 'Tema de la interfaz aplicable al usuario';
 
 
 --
--- TOC entry 3131 (class 0 OID 0)
--- Dependencies: 255
 -- Name: COLUMN usuario.app_ajax; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5509,8 +4485,6 @@ COMMENT ON COLUMN usuario.app_ajax IS 'Indica si la app se trabaja con ajax o pe
 
 
 --
--- TOC entry 3132 (class 0 OID 0)
--- Dependencies: 255
 -- Name: COLUMN usuario.datagrid; Type: COMMENT; Schema: public; Owner: jelitox
 --
 
@@ -5518,8 +4492,6 @@ COMMENT ON COLUMN usuario.datagrid IS 'Datos por página en los datagrid';
 
 
 --
--- TOC entry 256 (class 1259 OID 104666)
--- Dependencies: 255 6
 -- Name: usuario_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
 --
 
@@ -5534,8 +4506,6 @@ CREATE SEQUENCE usuario_id_seq
 ALTER TABLE public.usuario_id_seq OWNER TO jelitox;
 
 --
--- TOC entry 3133 (class 0 OID 0)
--- Dependencies: 256
 -- Name: usuario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
 --
 
@@ -5543,8 +4513,6 @@ ALTER SEQUENCE usuario_id_seq OWNED BY usuario.id;
 
 
 --
--- TOC entry 2118 (class 2604 OID 104668)
--- Dependencies: 162 161
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5552,8 +4520,6 @@ ALTER TABLE ONLY acceso ALTER COLUMN id SET DEFAULT nextval('acceso_id_seq'::reg
 
 
 --
--- TOC entry 2121 (class 2604 OID 104669)
--- Dependencies: 164 163
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5561,8 +4527,6 @@ ALTER TABLE ONLY backup ALTER COLUMN id SET DEFAULT nextval('backup_id_seq'::reg
 
 
 --
--- TOC entry 2125 (class 2604 OID 104670)
--- Dependencies: 166 165
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5570,8 +4534,6 @@ ALTER TABLE ONLY beneficiario ALTER COLUMN id SET DEFAULT nextval('beneficiario_
 
 
 --
--- TOC entry 2128 (class 2604 OID 104671)
--- Dependencies: 168 167
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5579,8 +4541,6 @@ ALTER TABLE ONLY beneficiario_tipo ALTER COLUMN id SET DEFAULT nextval('benefici
 
 
 --
--- TOC entry 2131 (class 2604 OID 104672)
--- Dependencies: 170 169
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5588,8 +4548,6 @@ ALTER TABLE ONLY cargo ALTER COLUMN id SET DEFAULT nextval('cargo_id_seq'::regcl
 
 
 --
--- TOC entry 2137 (class 2604 OID 104673)
--- Dependencies: 172 171
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5597,8 +4555,6 @@ ALTER TABLE ONLY cobertura ALTER COLUMN id SET DEFAULT nextval('cobertura_id_seq
 
 
 --
--- TOC entry 2140 (class 2604 OID 104674)
--- Dependencies: 174 173
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5606,8 +4562,6 @@ ALTER TABLE ONLY departamento ALTER COLUMN id SET DEFAULT nextval('departamento_
 
 
 --
--- TOC entry 2143 (class 2604 OID 104675)
--- Dependencies: 176 175
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5615,8 +4569,6 @@ ALTER TABLE ONLY discapacidad ALTER COLUMN id SET DEFAULT nextval('discapacidad_
 
 
 --
--- TOC entry 2144 (class 2604 OID 104676)
--- Dependencies: 178 177
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5624,8 +4576,6 @@ ALTER TABLE ONLY discapacidad_persona ALTER COLUMN id SET DEFAULT nextval('disca
 
 
 --
--- TOC entry 2147 (class 2604 OID 104677)
--- Dependencies: 180 179
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5633,8 +4583,6 @@ ALTER TABLE ONLY empresa ALTER COLUMN id SET DEFAULT nextval('empresa_id_seq'::r
 
 
 --
--- TOC entry 2150 (class 2604 OID 104678)
--- Dependencies: 182 181
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5642,8 +4590,6 @@ ALTER TABLE ONLY especialidad ALTER COLUMN id SET DEFAULT nextval('especialidad_
 
 
 --
--- TOC entry 2155 (class 2604 OID 104679)
--- Dependencies: 188 187
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5651,8 +4597,6 @@ ALTER TABLE ONLY estado ALTER COLUMN id SET DEFAULT nextval('estado_id_seq'::reg
 
 
 --
--- TOC entry 2158 (class 2604 OID 104680)
--- Dependencies: 190 189
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5660,8 +4604,6 @@ ALTER TABLE ONLY estado_usuario ALTER COLUMN id SET DEFAULT nextval('estado_usua
 
 
 --
--- TOC entry 2161 (class 2604 OID 104681)
--- Dependencies: 192 191
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5669,8 +4611,6 @@ ALTER TABLE ONLY medicina ALTER COLUMN id SET DEFAULT nextval('medicina_id_seq':
 
 
 --
--- TOC entry 2166 (class 2604 OID 104682)
--- Dependencies: 194 193
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5678,8 +4618,6 @@ ALTER TABLE ONLY medico ALTER COLUMN id SET DEFAULT nextval('medico_id_seq'::reg
 
 
 --
--- TOC entry 2172 (class 2604 OID 104683)
--- Dependencies: 196 195
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5687,8 +4625,6 @@ ALTER TABLE ONLY menu ALTER COLUMN id SET DEFAULT nextval('menu_id_seq'::regclas
 
 
 --
--- TOC entry 2173 (class 2604 OID 104684)
--- Dependencies: 198 197
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5696,8 +4632,6 @@ ALTER TABLE ONLY municipio ALTER COLUMN id SET DEFAULT nextval('municipio_id_seq
 
 
 --
--- TOC entry 2174 (class 2604 OID 104685)
--- Dependencies: 200 199
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5705,8 +4639,6 @@ ALTER TABLE ONLY pais ALTER COLUMN id SET DEFAULT nextval('pais_id_seq'::regclas
 
 
 --
--- TOC entry 2175 (class 2604 OID 104686)
--- Dependencies: 202 201
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5714,8 +4646,6 @@ ALTER TABLE ONLY parroquia ALTER COLUMN id SET DEFAULT nextval('parroquia_id_seq
 
 
 --
--- TOC entry 2178 (class 2604 OID 104687)
--- Dependencies: 204 203
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5723,8 +4653,6 @@ ALTER TABLE ONLY patologia ALTER COLUMN id SET DEFAULT nextval('patologia_id_seq
 
 
 --
--- TOC entry 2183 (class 2604 OID 104688)
--- Dependencies: 206 205
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5732,8 +4660,6 @@ ALTER TABLE ONLY perfil ALTER COLUMN id SET DEFAULT nextval('perfil_id_seq'::reg
 
 
 --
--- TOC entry 2190 (class 2604 OID 104689)
--- Dependencies: 208 207
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5741,8 +4667,6 @@ ALTER TABLE ONLY persona ALTER COLUMN id SET DEFAULT nextval('persona_id_seq'::r
 
 
 --
--- TOC entry 2193 (class 2604 OID 104690)
--- Dependencies: 210 209
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5750,8 +4674,6 @@ ALTER TABLE ONLY profesion ALTER COLUMN id SET DEFAULT nextval('profesion_id_seq
 
 
 --
--- TOC entry 2153 (class 2604 OID 104691)
--- Dependencies: 184 183
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5759,8 +4681,6 @@ ALTER TABLE ONLY proveedor ALTER COLUMN id SET DEFAULT nextval('proveedor_id_seq
 
 
 --
--- TOC entry 2197 (class 2604 OID 104692)
--- Dependencies: 216 213
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5768,8 +4688,6 @@ ALTER TABLE ONLY recaudo ALTER COLUMN id SET DEFAULT nextval('recaudo_id_seq'::r
 
 
 --
--- TOC entry 2199 (class 2604 OID 104693)
--- Dependencies: 218 217
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5777,8 +4695,6 @@ ALTER TABLE ONLY recaudo_reembolso ALTER COLUMN id SET DEFAULT nextval('recaudo_
 
 
 --
--- TOC entry 2200 (class 2604 OID 104694)
--- Dependencies: 220 219
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5786,8 +4702,6 @@ ALTER TABLE ONLY recaudo_solicitud_medicina ALTER COLUMN id SET DEFAULT nextval(
 
 
 --
--- TOC entry 2201 (class 2604 OID 104695)
--- Dependencies: 222 221
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5795,8 +4709,6 @@ ALTER TABLE ONLY recaudo_solicitud_servicio ALTER COLUMN id SET DEFAULT nextval(
 
 
 --
--- TOC entry 2202 (class 2604 OID 104696)
--- Dependencies: 224 223
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5804,8 +4716,6 @@ ALTER TABLE ONLY recaudo_titular ALTER COLUMN id SET DEFAULT nextval('recaudo_ti
 
 
 --
--- TOC entry 2206 (class 2604 OID 104697)
--- Dependencies: 226 225
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5813,8 +4723,6 @@ ALTER TABLE ONLY recurso ALTER COLUMN id SET DEFAULT nextval('recurso_id_seq'::r
 
 
 --
--- TOC entry 2209 (class 2604 OID 104698)
--- Dependencies: 228 227
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5822,8 +4730,6 @@ ALTER TABLE ONLY recurso_perfil ALTER COLUMN id SET DEFAULT nextval('recurso_per
 
 
 --
--- TOC entry 2213 (class 2604 OID 104699)
--- Dependencies: 230 229
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5831,8 +4737,6 @@ ALTER TABLE ONLY reembolso ALTER COLUMN id SET DEFAULT nextval('reembolso_id_seq
 
 
 --
--- TOC entry 2216 (class 2604 OID 104700)
--- Dependencies: 232 231
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5840,8 +4744,6 @@ ALTER TABLE ONLY servicio ALTER COLUMN id SET DEFAULT nextval('servicio_id_seq':
 
 
 --
--- TOC entry 2219 (class 2604 OID 104701)
--- Dependencies: 238 237
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5849,8 +4751,6 @@ ALTER TABLE ONLY solicitud_dt_factura ALTER COLUMN id SET DEFAULT nextval('solic
 
 
 --
--- TOC entry 2222 (class 2604 OID 104702)
--- Dependencies: 240 239
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5858,8 +4758,6 @@ ALTER TABLE ONLY solicitud_dt_medicina ALTER COLUMN id SET DEFAULT nextval('soli
 
 
 --
--- TOC entry 2226 (class 2604 OID 104703)
--- Dependencies: 242 241
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5867,8 +4765,6 @@ ALTER TABLE ONLY solicitud_factura ALTER COLUMN id SET DEFAULT nextval('solicitu
 
 
 --
--- TOC entry 2232 (class 2604 OID 104704)
--- Dependencies: 244 243
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5876,8 +4772,6 @@ ALTER TABLE ONLY solicitud_medicina ALTER COLUMN id SET DEFAULT nextval('solicit
 
 
 --
--- TOC entry 2237 (class 2604 OID 104705)
--- Dependencies: 246 245
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5885,8 +4779,6 @@ ALTER TABLE ONLY solicitud_servicio ALTER COLUMN id SET DEFAULT nextval('solicit
 
 
 --
--- TOC entry 2240 (class 2604 OID 104706)
--- Dependencies: 248 247
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5894,8 +4786,6 @@ ALTER TABLE ONLY sucursal ALTER COLUMN id SET DEFAULT nextval('sucursal_id_seq':
 
 
 --
--- TOC entry 2243 (class 2604 OID 104707)
--- Dependencies: 250 249
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5903,8 +4793,6 @@ ALTER TABLE ONLY tipoempleado ALTER COLUMN id SET DEFAULT nextval('tipoempleado_
 
 
 --
--- TOC entry 2246 (class 2604 OID 104708)
--- Dependencies: 252 251
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5912,8 +4800,6 @@ ALTER TABLE ONLY tiposolicitud ALTER COLUMN id SET DEFAULT nextval('tiposolicitu
 
 
 --
--- TOC entry 2250 (class 2604 OID 104709)
--- Dependencies: 254 253
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5921,8 +4807,6 @@ ALTER TABLE ONLY titular ALTER COLUMN id SET DEFAULT nextval('titular_id_seq'::r
 
 
 --
--- TOC entry 2255 (class 2604 OID 104710)
--- Dependencies: 256 255
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
@@ -5930,8 +4814,6 @@ ALTER TABLE ONLY usuario ALTER COLUMN id SET DEFAULT nextval('usuario_id_seq'::r
 
 
 --
--- TOC entry 2610 (class 0 OID 104325)
--- Dependencies: 161 2706
 -- Data for Name: acceso; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -5942,21 +4824,19 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 5	1	2014-03-13 13:51:05.455943-04:30	2014-03-13 13:51:05.455943-04:30	2	\N	\N	\N	\N	127.0.0.1
 6	1	2014-03-13 13:53:50.513476-04:30	2014-03-13 13:53:50.513476-04:30	2	\N	\N	\N	\N	127.0.0.1
 7	1	2014-03-13 14:08:31.997715-04:30	2014-03-13 14:08:31.997715-04:30	2	\N	\N	\N	\N	127.0.0.1
+8	1	2014-03-13 20:10:55.138285-04:30	2014-03-13 20:10:55.138285-04:30	2	\N	\N	\N	\N	127.0.0.1
+9	1	2014-03-13 22:19:10.784492-04:30	2014-03-13 22:19:10.784492-04:30	2	\N	\N	\N	\N	127.0.0.1
 \.
 
 
 --
--- TOC entry 3134 (class 0 OID 0)
--- Dependencies: 162
 -- Name: acceso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
-SELECT pg_catalog.setval('acceso_id_seq', 7, true);
+SELECT pg_catalog.setval('acceso_id_seq', 9, true);
 
 
 --
--- TOC entry 2612 (class 0 OID 104332)
--- Dependencies: 163 2706
 -- Data for Name: backup; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -5965,8 +4845,6 @@ COPY backup (id, usuario_id, fecha_registro, fecha_modificado, denominacion, tam
 
 
 --
--- TOC entry 3135 (class 0 OID 0)
--- Dependencies: 164
 -- Name: backup_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -5974,8 +4852,6 @@ SELECT pg_catalog.setval('backup_id_seq', 1, false);
 
 
 --
--- TOC entry 2614 (class 0 OID 104339)
--- Dependencies: 165 2706
 -- Data for Name: beneficiario; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -5984,8 +4860,6 @@ COPY beneficiario (id, usuario_id, fecha_registro, fecha_modificado, titular_id,
 
 
 --
--- TOC entry 3136 (class 0 OID 0)
--- Dependencies: 166
 -- Name: beneficiario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -5993,8 +4867,6 @@ SELECT pg_catalog.setval('beneficiario_id_seq', 1, false);
 
 
 --
--- TOC entry 2616 (class 0 OID 104347)
--- Dependencies: 167 2706
 -- Data for Name: beneficiario_tipo; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -6003,8 +4875,6 @@ COPY beneficiario_tipo (id, usuario_id, fecha_registro, fecha_modificado, descri
 
 
 --
--- TOC entry 3137 (class 0 OID 0)
--- Dependencies: 168
 -- Name: beneficiario_tipo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -6012,8 +4882,6 @@ SELECT pg_catalog.setval('beneficiario_tipo_id_seq', 1, false);
 
 
 --
--- TOC entry 2618 (class 0 OID 104354)
--- Dependencies: 169 2706
 -- Data for Name: cargo; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -6022,8 +4890,6 @@ COPY cargo (id, usuario_id, fecha_registro, fecha_modificado, nombre, observacio
 
 
 --
--- TOC entry 3138 (class 0 OID 0)
--- Dependencies: 170
 -- Name: cargo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -6031,8 +4897,6 @@ SELECT pg_catalog.setval('cargo_id_seq', 1, false);
 
 
 --
--- TOC entry 2620 (class 0 OID 104361)
--- Dependencies: 171 2706
 -- Data for Name: cobertura; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -6041,8 +4905,6 @@ COPY cobertura (id, usuario_id, fecha_registro, fecha_modificado, descripcion, t
 
 
 --
--- TOC entry 3139 (class 0 OID 0)
--- Dependencies: 172
 -- Name: cobertura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -6050,8 +4912,6 @@ SELECT pg_catalog.setval('cobertura_id_seq', 1, false);
 
 
 --
--- TOC entry 2622 (class 0 OID 104371)
--- Dependencies: 173 2706
 -- Data for Name: departamento; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -6060,8 +4920,6 @@ COPY departamento (id, usuario_id, fecha_registro, fecha_modificado, nombre, obs
 
 
 --
--- TOC entry 3140 (class 0 OID 0)
--- Dependencies: 174
 -- Name: departamento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -6069,8 +4927,6 @@ SELECT pg_catalog.setval('departamento_id_seq', 1, false);
 
 
 --
--- TOC entry 2624 (class 0 OID 104378)
--- Dependencies: 175 2706
 -- Data for Name: discapacidad; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -6079,8 +4935,6 @@ COPY discapacidad (id, usuario_id, fecha_registro, fecha_modificado, nombre, obs
 
 
 --
--- TOC entry 3141 (class 0 OID 0)
--- Dependencies: 176
 -- Name: discapacidad_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -6088,8 +4942,6 @@ SELECT pg_catalog.setval('discapacidad_id_seq', 1, false);
 
 
 --
--- TOC entry 2626 (class 0 OID 104385)
--- Dependencies: 177 2706
 -- Data for Name: discapacidad_persona; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -6098,8 +4950,6 @@ COPY discapacidad_persona (id, persona_id, discapacidad_id) FROM stdin;
 
 
 --
--- TOC entry 3142 (class 0 OID 0)
--- Dependencies: 178
 -- Name: discapacidad_persona_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -6107,19 +4957,15 @@ SELECT pg_catalog.setval('discapacidad_persona_id_seq', 1, false);
 
 
 --
--- TOC entry 2628 (class 0 OID 104390)
--- Dependencies: 179 2706
 -- Data for Name: empresa; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
-COPY empresa (id, usuario_id, fecha_registro, fecha_modificado, razon_social, rif, pais_id, estado_id, municipio_id, parroquia_id, representante_legal, pagina_web, telefono, fax, celular, logo) FROM stdin;
-1	\N	2014-03-13 12:11:18.427198-04:30	2014-03-13 12:11:18.427198-04:30	EMPRESA MIXTA SOCIALISTA ARROZ DEL ALBA	G-200054321	240	69	224	717	FRANCISCO ORTIZ	HTTP://www.arrozdelalba.gob.ve	02563361333	02563361333	\N	default.png
+COPY empresa (id, usuario_id, fecha_registro, fecha_modificado, razon_social, rif, pais_id, estado_id, municipio_id, parroquia_id, representante_legal, pagina_web, telefono, fax, celular, logo, email) FROM stdin;
+1	\N	2014-03-13 12:11:18.427198-04:30	2014-03-13 12:11:18.427198-04:30	EMPRESA MIXTA SOCIALISTA ARROZ DEL ALBA S.A.	G-200054321	240	69	224	717	Francisco Ortiz	http://www.arrozdelalba.gob.ve	02563361333	02563361333	04162546908	default.png	arrozdelalba@arrozdelalba.gob.ve
 \.
 
 
 --
--- TOC entry 3143 (class 0 OID 0)
--- Dependencies: 180
 -- Name: empresa_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -6127,8 +4973,6 @@ SELECT pg_catalog.setval('empresa_id_seq', 1, false);
 
 
 --
--- TOC entry 2630 (class 0 OID 104397)
--- Dependencies: 181 2706
 -- Data for Name: especialidad; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -6137,8 +4981,6 @@ COPY especialidad (id, usuario_id, fecha_registro, fecha_modificado, descripcion
 
 
 --
--- TOC entry 3144 (class 0 OID 0)
--- Dependencies: 182
 -- Name: especialidad_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -6146,8 +4988,6 @@ SELECT pg_catalog.setval('especialidad_id_seq', 1, false);
 
 
 --
--- TOC entry 2634 (class 0 OID 104414)
--- Dependencies: 185 2706
 -- Data for Name: especialidad_medico; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -6156,8 +4996,6 @@ COPY especialidad_medico (id, medico_id, especialidad_id) FROM stdin;
 
 
 --
--- TOC entry 3145 (class 0 OID 0)
--- Dependencies: 186
 -- Name: especialidad_medico_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -6165,8 +5003,6 @@ SELECT pg_catalog.setval('especialidad_medico_id_seq', 1, false);
 
 
 --
--- TOC entry 2636 (class 0 OID 104420)
--- Dependencies: 187 2706
 -- Data for Name: estado; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -6250,8 +5086,6 @@ COPY estado (id, codigo, pais_id, nombre) FROM stdin;
 
 
 --
--- TOC entry 3146 (class 0 OID 0)
--- Dependencies: 188
 -- Name: estado_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -6259,8 +5093,6 @@ SELECT pg_catalog.setval('estado_id_seq', 75, true);
 
 
 --
--- TOC entry 2638 (class 0 OID 104425)
--- Dependencies: 189 2706
 -- Data for Name: estado_usuario; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -6270,8 +5102,6 @@ COPY estado_usuario (id, usuario_id, fecha_registro, fecha_modificado, estado_us
 
 
 --
--- TOC entry 3147 (class 0 OID 0)
--- Dependencies: 190
 -- Name: estado_usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -6279,8 +5109,6 @@ SELECT pg_catalog.setval('estado_usuario_id_seq', 1, false);
 
 
 --
--- TOC entry 2640 (class 0 OID 104432)
--- Dependencies: 191 2706
 -- Data for Name: medicina; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -6289,8 +5117,6 @@ COPY medicina (id, usuario_id, fecha_registro, fecha_modificado, descripcion, ob
 
 
 --
--- TOC entry 3148 (class 0 OID 0)
--- Dependencies: 192
 -- Name: medicina_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -6298,8 +5124,6 @@ SELECT pg_catalog.setval('medicina_id_seq', 1, false);
 
 
 --
--- TOC entry 2642 (class 0 OID 104439)
--- Dependencies: 193 2706
 -- Data for Name: medico; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -6308,8 +5132,6 @@ COPY medico (id, usuario_id, fecha_registro, fecha_modificado, nacionalidad, ced
 
 
 --
--- TOC entry 3149 (class 0 OID 0)
--- Dependencies: 194
 -- Name: medico_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -6317,8 +5139,6 @@ SELECT pg_catalog.setval('medico_id_seq', 1, false);
 
 
 --
--- TOC entry 2644 (class 0 OID 104448)
--- Dependencies: 195 2706
 -- Data for Name: menu; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -6339,7 +5159,6 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 14	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	14	Sistema	sistema/configuracion/	911	icon-wrench	1	1
 15	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	\N	\N	Configuraciones	#	800	icon-wrench	1	1
 16	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	15	Empresa	config/empresa/	876	icon-briefcase	1	1
-17	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	16	Sucursales	config/sucursal/listar/	802	icon-sitemap	1	1
 19	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	18	Profesion	config/profesion/	803	\N	1	1
 20	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	19	Cargo	config/cargo/	804	\N	1	1
 21	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	20	Cobertura	config/cobertura/	805	\N	1	1
@@ -6348,12 +5167,11 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 24	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	23	Patologia	config/patologia/	808	\N	1	1
 25	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	24	Recaudos	config/recaudo/	809	\N	1	1
 26	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	\N	25	Personas	persona/titular/	12	\N	1	1
+17	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	16	Sucursales	config/sucursal/listar/	802	icon-sitemap	1	1
 \.
 
 
 --
--- TOC entry 3150 (class 0 OID 0)
--- Dependencies: 196
 -- Name: menu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -6361,8 +5179,6 @@ SELECT pg_catalog.setval('menu_id_seq', 1, false);
 
 
 --
--- TOC entry 2646 (class 0 OID 104458)
--- Dependencies: 197 2706
 -- Data for Name: municipio; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -6705,8 +5521,6 @@ COPY municipio (id, estado_id, codigo, nombre) FROM stdin;
 
 
 --
--- TOC entry 3151 (class 0 OID 0)
--- Dependencies: 198
 -- Name: municipio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -6714,8 +5528,6 @@ SELECT pg_catalog.setval('municipio_id_seq', 334, true);
 
 
 --
--- TOC entry 2648 (class 0 OID 104463)
--- Dependencies: 199 2706
 -- Data for Name: pais; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -6977,8 +5789,6 @@ COPY pais (id, codigo, nombre) FROM stdin;
 
 
 --
--- TOC entry 3152 (class 0 OID 0)
--- Dependencies: 200
 -- Name: pais_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -6986,8 +5796,6 @@ SELECT pg_catalog.setval('pais_id_seq', 253, true);
 
 
 --
--- TOC entry 2650 (class 0 OID 104468)
--- Dependencies: 201 2706
 -- Data for Name: parroquia; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8082,8 +6890,6 @@ COPY parroquia (id, nombre, municipio_id) FROM stdin;
 
 
 --
--- TOC entry 3153 (class 0 OID 0)
--- Dependencies: 202
 -- Name: parroquia_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8091,8 +6897,6 @@ SELECT pg_catalog.setval('parroquia_id_seq', 1086, true);
 
 
 --
--- TOC entry 2652 (class 0 OID 104473)
--- Dependencies: 203 2706
 -- Data for Name: patologia; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8101,8 +6905,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, descripcion, o
 
 
 --
--- TOC entry 3154 (class 0 OID 0)
--- Dependencies: 204
 -- Name: patologia_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8110,8 +6912,6 @@ SELECT pg_catalog.setval('patologia_id_seq', 1, false);
 
 
 --
--- TOC entry 2654 (class 0 OID 104480)
--- Dependencies: 205 2706
 -- Data for Name: perfil; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8122,8 +6922,6 @@ COPY perfil (id, usuario_id, fecha_registro, fecha_modificado, perfil, estado, p
 
 
 --
--- TOC entry 3155 (class 0 OID 0)
--- Dependencies: 206
 -- Name: perfil_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8131,8 +6929,6 @@ SELECT pg_catalog.setval('perfil_id_seq', 1, false);
 
 
 --
--- TOC entry 2656 (class 0 OID 104489)
--- Dependencies: 207 2706
 -- Data for Name: persona; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8142,8 +6938,6 @@ COPY persona (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1,
 
 
 --
--- TOC entry 3156 (class 0 OID 0)
--- Dependencies: 208
 -- Name: persona_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8151,8 +6945,6 @@ SELECT pg_catalog.setval('persona_id_seq', 1, false);
 
 
 --
--- TOC entry 2658 (class 0 OID 104500)
--- Dependencies: 209 2706
 -- Data for Name: profesion; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8161,8 +6953,6 @@ COPY profesion (id, usuario_id, fecha_registro, fecha_modificado, nombre, observ
 
 
 --
--- TOC entry 3157 (class 0 OID 0)
--- Dependencies: 210
 -- Name: profesion_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8170,8 +6960,6 @@ SELECT pg_catalog.setval('profesion_id_seq', 1, false);
 
 
 --
--- TOC entry 2632 (class 0 OID 104404)
--- Dependencies: 183 2706
 -- Data for Name: proveedor; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8180,8 +6968,6 @@ COPY proveedor (id, usuario_id, fecha_registro, fecha_modificado, rif, razon_soc
 
 
 --
--- TOC entry 3158 (class 0 OID 0)
--- Dependencies: 184
 -- Name: proveedor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8189,8 +6975,6 @@ SELECT pg_catalog.setval('proveedor_id_seq', 1, false);
 
 
 --
--- TOC entry 2660 (class 0 OID 104507)
--- Dependencies: 211 2706
 -- Data for Name: proveedor_medico; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8199,8 +6983,6 @@ COPY proveedor_medico (id, medico_id, proveedor_id) FROM stdin;
 
 
 --
--- TOC entry 3159 (class 0 OID 0)
--- Dependencies: 212
 -- Name: proveedor_medico_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8208,8 +6990,6 @@ SELECT pg_catalog.setval('proveedor_medico_id_seq', 1, false);
 
 
 --
--- TOC entry 2662 (class 0 OID 104513)
--- Dependencies: 213 2706
 -- Data for Name: recaudo; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8218,8 +6998,6 @@ COPY recaudo (id, usuario_id, fecha_registro, fecha_modificado, nombre, tipo, ob
 
 
 --
--- TOC entry 2663 (class 0 OID 104518)
--- Dependencies: 214 2706
 -- Data for Name: recaudo_beneficiario; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8228,8 +7006,6 @@ COPY recaudo_beneficiario (id, beneficiario_id, recaudo_id, estado) FROM stdin;
 
 
 --
--- TOC entry 3160 (class 0 OID 0)
--- Dependencies: 215
 -- Name: recaudo_beneficiario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8237,8 +7013,6 @@ SELECT pg_catalog.setval('recaudo_beneficiario_id_seq', 1, false);
 
 
 --
--- TOC entry 3161 (class 0 OID 0)
--- Dependencies: 216
 -- Name: recaudo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8246,8 +7020,6 @@ SELECT pg_catalog.setval('recaudo_id_seq', 1, false);
 
 
 --
--- TOC entry 2666 (class 0 OID 104526)
--- Dependencies: 217 2706
 -- Data for Name: recaudo_reembolso; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8256,8 +7028,6 @@ COPY recaudo_reembolso (id, recaudo_id, codigo_solicitud, estado) FROM stdin;
 
 
 --
--- TOC entry 3162 (class 0 OID 0)
--- Dependencies: 218
 -- Name: recaudo_reembolso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8265,8 +7035,6 @@ SELECT pg_catalog.setval('recaudo_reembolso_id_seq', 1, false);
 
 
 --
--- TOC entry 2668 (class 0 OID 104531)
--- Dependencies: 219 2706
 -- Data for Name: recaudo_solicitud_medicina; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8275,8 +7043,6 @@ COPY recaudo_solicitud_medicina (id, recaudo_id, codigo_solicitud, estado) FROM 
 
 
 --
--- TOC entry 3163 (class 0 OID 0)
--- Dependencies: 220
 -- Name: recaudo_solicitud_medicina_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8284,8 +7050,6 @@ SELECT pg_catalog.setval('recaudo_solicitud_medicina_id_seq', 1, false);
 
 
 --
--- TOC entry 2670 (class 0 OID 104536)
--- Dependencies: 221 2706
 -- Data for Name: recaudo_solicitud_servicio; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8294,8 +7058,6 @@ COPY recaudo_solicitud_servicio (id, recaudo_id, codigo_solicitud, estado) FROM 
 
 
 --
--- TOC entry 3164 (class 0 OID 0)
--- Dependencies: 222
 -- Name: recaudo_solicitud_servicio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8303,8 +7065,6 @@ SELECT pg_catalog.setval('recaudo_solicitud_servicio_id_seq', 1, false);
 
 
 --
--- TOC entry 2672 (class 0 OID 104541)
--- Dependencies: 223 2706
 -- Data for Name: recaudo_titular; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8313,8 +7073,6 @@ COPY recaudo_titular (id, titular_id, recaudo_id, estado) FROM stdin;
 
 
 --
--- TOC entry 3165 (class 0 OID 0)
--- Dependencies: 224
 -- Name: recaudo_titular_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8322,8 +7080,6 @@ SELECT pg_catalog.setval('recaudo_titular_id_seq', 1, false);
 
 
 --
--- TOC entry 2674 (class 0 OID 104546)
--- Dependencies: 225 2706
 -- Data for Name: recurso; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8356,8 +7112,6 @@ COPY recurso (id, usuario_id, fecha_registro, fecha_modificado, modulo, controla
 
 
 --
--- TOC entry 3166 (class 0 OID 0)
--- Dependencies: 226
 -- Name: recurso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8365,8 +7119,6 @@ SELECT pg_catalog.setval('recurso_id_seq', 1, false);
 
 
 --
--- TOC entry 2676 (class 0 OID 104554)
--- Dependencies: 227 2706
 -- Data for Name: recurso_perfil; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8376,8 +7128,6 @@ COPY recurso_perfil (id, usuario_id, fecha_registro, fecha_modificado, recurso_i
 
 
 --
--- TOC entry 3167 (class 0 OID 0)
--- Dependencies: 228
 -- Name: recurso_perfil_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8385,8 +7135,6 @@ SELECT pg_catalog.setval('recurso_perfil_id_seq', 1, true);
 
 
 --
--- TOC entry 2678 (class 0 OID 104561)
--- Dependencies: 229 2706
 -- Data for Name: reembolso; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8395,8 +7143,6 @@ COPY reembolso (id, usuario_id, fecha_registro, fecha_modificado, estado_solicit
 
 
 --
--- TOC entry 3168 (class 0 OID 0)
--- Dependencies: 230
 -- Name: reembolso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8404,8 +7150,6 @@ SELECT pg_catalog.setval('reembolso_id_seq', 1, false);
 
 
 --
--- TOC entry 2680 (class 0 OID 104569)
--- Dependencies: 231 2706
 -- Data for Name: servicio; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8414,8 +7158,6 @@ COPY servicio (id, usuario_id, fecha_registro, fecha_modificado, descripcion, ob
 
 
 --
--- TOC entry 3169 (class 0 OID 0)
--- Dependencies: 232
 -- Name: servicio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8423,8 +7165,6 @@ SELECT pg_catalog.setval('servicio_id_seq', 1, false);
 
 
 --
--- TOC entry 2682 (class 0 OID 104576)
--- Dependencies: 233 2706
 -- Data for Name: servicio_proveedor; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8433,8 +7173,6 @@ COPY servicio_proveedor (id, proveedor_id, servicio_id) FROM stdin;
 
 
 --
--- TOC entry 3170 (class 0 OID 0)
--- Dependencies: 234
 -- Name: servicio_proveedor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8442,8 +7180,6 @@ SELECT pg_catalog.setval('servicio_proveedor_id_seq', 1, false);
 
 
 --
--- TOC entry 2684 (class 0 OID 104582)
--- Dependencies: 235 2706
 -- Data for Name: servicio_tiposolicitud; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8452,8 +7188,6 @@ COPY servicio_tiposolicitud (id, tiposolicitud_id, servicio_id) FROM stdin;
 
 
 --
--- TOC entry 3171 (class 0 OID 0)
--- Dependencies: 236
 -- Name: servicio_tiposolicitud_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8461,8 +7195,6 @@ SELECT pg_catalog.setval('servicio_tiposolicitud_id_seq', 1, false);
 
 
 --
--- TOC entry 2686 (class 0 OID 104588)
--- Dependencies: 237 2706
 -- Data for Name: solicitud_dt_factura; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8471,8 +7203,6 @@ COPY solicitud_dt_factura (id, solicitud_factura_id, descripcion, cantidad, mont
 
 
 --
--- TOC entry 3172 (class 0 OID 0)
--- Dependencies: 238
 -- Name: solicitud_dt_factura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8480,8 +7210,6 @@ SELECT pg_catalog.setval('solicitud_dt_factura_id_seq', 1, false);
 
 
 --
--- TOC entry 2688 (class 0 OID 104593)
--- Dependencies: 239 2706
 -- Data for Name: solicitud_dt_medicina; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8490,8 +7218,6 @@ COPY solicitud_dt_medicina (id, solicitud_id, medicina_id, fecha_inicio, fecha_f
 
 
 --
--- TOC entry 3173 (class 0 OID 0)
--- Dependencies: 240
 -- Name: solicitud_dt_medicina_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8499,8 +7225,6 @@ SELECT pg_catalog.setval('solicitud_dt_medicina_id_seq', 1, false);
 
 
 --
--- TOC entry 2690 (class 0 OID 104600)
--- Dependencies: 241 2706
 -- Data for Name: solicitud_factura; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8509,8 +7233,6 @@ COPY solicitud_factura (id, usuario_id, fecha_registro, fecha_modificado, solici
 
 
 --
--- TOC entry 3174 (class 0 OID 0)
--- Dependencies: 242
 -- Name: solicitud_factura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8518,8 +7240,6 @@ SELECT pg_catalog.setval('solicitud_factura_id_seq', 1, false);
 
 
 --
--- TOC entry 2692 (class 0 OID 104608)
--- Dependencies: 243 2706
 -- Data for Name: solicitud_medicina; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8528,8 +7248,6 @@ COPY solicitud_medicina (id, usuario_id, fecha_registro, fecha_modificado, estad
 
 
 --
--- TOC entry 3175 (class 0 OID 0)
--- Dependencies: 244
 -- Name: solicitud_medicina_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8537,8 +7255,6 @@ SELECT pg_catalog.setval('solicitud_medicina_id_seq', 1, false);
 
 
 --
--- TOC entry 2694 (class 0 OID 104621)
--- Dependencies: 245 2706
 -- Data for Name: solicitud_servicio; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8547,8 +7263,6 @@ COPY solicitud_servicio (id, usuario_id, fecha_registro, fecha_modificado, estad
 
 
 --
--- TOC entry 3176 (class 0 OID 0)
--- Dependencies: 246
 -- Name: solicitud_servicio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8556,8 +7270,6 @@ SELECT pg_catalog.setval('solicitud_servicio_id_seq', 1, false);
 
 
 --
--- TOC entry 2696 (class 0 OID 104630)
--- Dependencies: 247 2706
 -- Data for Name: sucursal; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8567,8 +7279,6 @@ COPY sucursal (id, usuario_id, fecha_registro, fecha_modificado, empresa_id, suc
 
 
 --
--- TOC entry 3177 (class 0 OID 0)
--- Dependencies: 248
 -- Name: sucursal_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8576,8 +7286,6 @@ SELECT pg_catalog.setval('sucursal_id_seq', 1, true);
 
 
 --
--- TOC entry 2698 (class 0 OID 104637)
--- Dependencies: 249 2706
 -- Data for Name: tipoempleado; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8586,8 +7294,6 @@ COPY tipoempleado (id, usuario_id, fecha_registro, fecha_modificado, nombre, obs
 
 
 --
--- TOC entry 3178 (class 0 OID 0)
--- Dependencies: 250
 -- Name: tipoempleado_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8595,8 +7301,6 @@ SELECT pg_catalog.setval('tipoempleado_id_seq', 1, false);
 
 
 --
--- TOC entry 2700 (class 0 OID 104644)
--- Dependencies: 251 2706
 -- Data for Name: tiposolicitud; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8605,8 +7309,6 @@ COPY tiposolicitud (id, usuario_id, fecha_registro, fecha_modificado, nombre, ob
 
 
 --
--- TOC entry 3179 (class 0 OID 0)
--- Dependencies: 252
 -- Name: tiposolicitud_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8614,8 +7316,6 @@ SELECT pg_catalog.setval('tiposolicitud_id_seq', 1, false);
 
 
 --
--- TOC entry 2702 (class 0 OID 104651)
--- Dependencies: 253 2706
 -- Data for Name: titular; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8624,8 +7324,6 @@ COPY titular (id, usuario_id, fecha_registro, fecha_modificado, tipoempleado_id,
 
 
 --
--- TOC entry 3180 (class 0 OID 0)
--- Dependencies: 254
 -- Name: titular_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8633,8 +7331,6 @@ SELECT pg_catalog.setval('titular_id_seq', 1, false);
 
 
 --
--- TOC entry 2704 (class 0 OID 104659)
--- Dependencies: 255 2706
 -- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
@@ -8644,8 +7340,6 @@ COPY usuario (id, usuario_id, fecha_registro, fecha_modificado, sucursal_id, per
 
 
 --
--- TOC entry 3181 (class 0 OID 0)
--- Dependencies: 256
 -- Name: usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
@@ -8653,8 +7347,6 @@ SELECT pg_catalog.setval('usuario_id_seq', 1, false);
 
 
 --
--- TOC entry 2257 (class 2606 OID 104712)
--- Dependencies: 161 161 2707
 -- Name: acceso_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8663,8 +7355,6 @@ ALTER TABLE ONLY acceso
 
 
 --
--- TOC entry 2259 (class 2606 OID 104714)
--- Dependencies: 163 163 2707
 -- Name: backup_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8673,8 +7363,6 @@ ALTER TABLE ONLY backup
 
 
 --
--- TOC entry 2261 (class 2606 OID 104716)
--- Dependencies: 165 165 2707
 -- Name: beneficiario_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8683,8 +7371,6 @@ ALTER TABLE ONLY beneficiario
 
 
 --
--- TOC entry 2263 (class 2606 OID 104718)
--- Dependencies: 167 167 2707
 -- Name: beneficiario_tipo_descripcion_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8693,8 +7379,6 @@ ALTER TABLE ONLY beneficiario_tipo
 
 
 --
--- TOC entry 2265 (class 2606 OID 104720)
--- Dependencies: 167 167 2707
 -- Name: beneficiario_tipo_descripcion_unico; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8703,8 +7387,6 @@ ALTER TABLE ONLY beneficiario_tipo
 
 
 --
--- TOC entry 2267 (class 2606 OID 104722)
--- Dependencies: 167 167 2707
 -- Name: beneficiario_tipo_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8713,8 +7395,6 @@ ALTER TABLE ONLY beneficiario_tipo
 
 
 --
--- TOC entry 2269 (class 2606 OID 104724)
--- Dependencies: 169 169 2707
 -- Name: cargo_nombre_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8723,8 +7403,6 @@ ALTER TABLE ONLY cargo
 
 
 --
--- TOC entry 2271 (class 2606 OID 104726)
--- Dependencies: 169 169 2707
 -- Name: cargo_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8733,8 +7411,6 @@ ALTER TABLE ONLY cargo
 
 
 --
--- TOC entry 2273 (class 2606 OID 104728)
--- Dependencies: 171 171 2707
 -- Name: cobertura_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8743,8 +7419,6 @@ ALTER TABLE ONLY cobertura
 
 
 --
--- TOC entry 2275 (class 2606 OID 104730)
--- Dependencies: 173 173 2707
 -- Name: departamento_nombre_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8753,8 +7427,6 @@ ALTER TABLE ONLY departamento
 
 
 --
--- TOC entry 2277 (class 2606 OID 104732)
--- Dependencies: 173 173 2707
 -- Name: departamento_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8763,8 +7435,6 @@ ALTER TABLE ONLY departamento
 
 
 --
--- TOC entry 2279 (class 2606 OID 104734)
--- Dependencies: 175 175 2707
 -- Name: discapacidad_nombre_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8773,8 +7443,6 @@ ALTER TABLE ONLY discapacidad
 
 
 --
--- TOC entry 2283 (class 2606 OID 104736)
--- Dependencies: 177 177 2707
 -- Name: discapacidad_persona_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8783,8 +7451,6 @@ ALTER TABLE ONLY discapacidad_persona
 
 
 --
--- TOC entry 2281 (class 2606 OID 104738)
--- Dependencies: 175 175 2707
 -- Name: discapacidad_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8793,8 +7459,6 @@ ALTER TABLE ONLY discapacidad
 
 
 --
--- TOC entry 2285 (class 2606 OID 104740)
--- Dependencies: 179 179 2707
 -- Name: empresa_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8803,8 +7467,6 @@ ALTER TABLE ONLY empresa
 
 
 --
--- TOC entry 2287 (class 2606 OID 104742)
--- Dependencies: 181 181 2707
 -- Name: especialidad_descripcion_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8813,8 +7475,6 @@ ALTER TABLE ONLY especialidad
 
 
 --
--- TOC entry 2299 (class 2606 OID 104744)
--- Dependencies: 185 185 2707
 -- Name: especialidad_medico_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8823,8 +7483,6 @@ ALTER TABLE ONLY especialidad_medico
 
 
 --
--- TOC entry 2289 (class 2606 OID 104746)
--- Dependencies: 181 181 2707
 -- Name: especialidad_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8833,8 +7491,6 @@ ALTER TABLE ONLY especialidad
 
 
 --
--- TOC entry 2301 (class 2606 OID 104748)
--- Dependencies: 187 187 2707
 -- Name: estado_codigo_unico; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8843,8 +7499,6 @@ ALTER TABLE ONLY estado
 
 
 --
--- TOC entry 2303 (class 2606 OID 104750)
--- Dependencies: 187 187 2707
 -- Name: estado_nombre_unico; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8853,8 +7507,6 @@ ALTER TABLE ONLY estado
 
 
 --
--- TOC entry 2305 (class 2606 OID 104752)
--- Dependencies: 187 187 2707
 -- Name: estado_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8863,8 +7515,6 @@ ALTER TABLE ONLY estado
 
 
 --
--- TOC entry 2307 (class 2606 OID 104754)
--- Dependencies: 189 189 2707
 -- Name: estado_usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8873,8 +7523,6 @@ ALTER TABLE ONLY estado_usuario
 
 
 --
--- TOC entry 2309 (class 2606 OID 104756)
--- Dependencies: 191 191 2707
 -- Name: medicina_descripcion_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8883,8 +7531,6 @@ ALTER TABLE ONLY medicina
 
 
 --
--- TOC entry 2311 (class 2606 OID 104758)
--- Dependencies: 191 191 2707
 -- Name: medicina_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8893,8 +7539,6 @@ ALTER TABLE ONLY medicina
 
 
 --
--- TOC entry 2313 (class 2606 OID 104760)
--- Dependencies: 193 193 2707
 -- Name: medico_cedula_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8903,8 +7547,6 @@ ALTER TABLE ONLY medico
 
 
 --
--- TOC entry 2315 (class 2606 OID 104762)
--- Dependencies: 193 193 2707
 -- Name: medico_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8913,8 +7555,6 @@ ALTER TABLE ONLY medico
 
 
 --
--- TOC entry 2317 (class 2606 OID 104764)
--- Dependencies: 193 193 2707
 -- Name: medico_rif_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8923,8 +7563,6 @@ ALTER TABLE ONLY medico
 
 
 --
--- TOC entry 2319 (class 2606 OID 104766)
--- Dependencies: 193 193 2707
 -- Name: medico_rmpps_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8933,8 +7571,6 @@ ALTER TABLE ONLY medico
 
 
 --
--- TOC entry 2321 (class 2606 OID 104768)
--- Dependencies: 195 195 2707
 -- Name: menu_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8943,8 +7579,6 @@ ALTER TABLE ONLY menu
 
 
 --
--- TOC entry 2323 (class 2606 OID 104770)
--- Dependencies: 197 197 2707
 -- Name: municipio_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8953,8 +7587,6 @@ ALTER TABLE ONLY municipio
 
 
 --
--- TOC entry 2325 (class 2606 OID 104772)
--- Dependencies: 199 199 2707
 -- Name: pais_codigo_unico; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8963,8 +7595,6 @@ ALTER TABLE ONLY pais
 
 
 --
--- TOC entry 2327 (class 2606 OID 104774)
--- Dependencies: 199 199 2707
 -- Name: pais_nombre_unico; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8973,8 +7603,6 @@ ALTER TABLE ONLY pais
 
 
 --
--- TOC entry 2329 (class 2606 OID 104776)
--- Dependencies: 199 199 2707
 -- Name: pais_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8983,8 +7611,6 @@ ALTER TABLE ONLY pais
 
 
 --
--- TOC entry 2331 (class 2606 OID 104778)
--- Dependencies: 201 201 2707
 -- Name: parroquia_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -8993,8 +7619,6 @@ ALTER TABLE ONLY parroquia
 
 
 --
--- TOC entry 2333 (class 2606 OID 104780)
--- Dependencies: 203 203 2707
 -- Name: patologia_descripcion_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9003,8 +7627,6 @@ ALTER TABLE ONLY patologia
 
 
 --
--- TOC entry 2335 (class 2606 OID 104782)
--- Dependencies: 203 203 2707
 -- Name: patologia_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9013,8 +7635,6 @@ ALTER TABLE ONLY patologia
 
 
 --
--- TOC entry 2337 (class 2606 OID 104784)
--- Dependencies: 205 205 2707
 -- Name: perfil_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9023,8 +7643,6 @@ ALTER TABLE ONLY perfil
 
 
 --
--- TOC entry 2339 (class 2606 OID 104786)
--- Dependencies: 207 207 2707
 -- Name: persona_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9033,8 +7651,6 @@ ALTER TABLE ONLY persona
 
 
 --
--- TOC entry 2341 (class 2606 OID 104788)
--- Dependencies: 209 209 2707
 -- Name: profesion_nombre_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9043,8 +7659,6 @@ ALTER TABLE ONLY profesion
 
 
 --
--- TOC entry 2343 (class 2606 OID 104790)
--- Dependencies: 209 209 2707
 -- Name: profesion_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9053,8 +7667,6 @@ ALTER TABLE ONLY profesion
 
 
 --
--- TOC entry 2345 (class 2606 OID 104792)
--- Dependencies: 211 211 2707
 -- Name: proveedor_medico_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9063,8 +7675,6 @@ ALTER TABLE ONLY proveedor_medico
 
 
 --
--- TOC entry 2291 (class 2606 OID 104794)
--- Dependencies: 183 183 2707
 -- Name: proveedor_nombre_corto_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9073,8 +7683,6 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- TOC entry 2293 (class 2606 OID 104796)
--- Dependencies: 183 183 2707
 -- Name: proveedor_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9083,8 +7691,6 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- TOC entry 2295 (class 2606 OID 104798)
--- Dependencies: 183 183 2707
 -- Name: proveedor_razon_social_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9093,8 +7699,6 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- TOC entry 2297 (class 2606 OID 104800)
--- Dependencies: 183 183 2707
 -- Name: proveedor_rif_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9103,8 +7707,6 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- TOC entry 2351 (class 2606 OID 104802)
--- Dependencies: 214 214 2707
 -- Name: recaudo_beneficiario_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9113,8 +7715,6 @@ ALTER TABLE ONLY recaudo_beneficiario
 
 
 --
--- TOC entry 2347 (class 2606 OID 104804)
--- Dependencies: 213 213 2707
 -- Name: recaudo_nombre_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9123,8 +7723,6 @@ ALTER TABLE ONLY recaudo
 
 
 --
--- TOC entry 2349 (class 2606 OID 104806)
--- Dependencies: 213 213 2707
 -- Name: recaudo_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9133,8 +7731,6 @@ ALTER TABLE ONLY recaudo
 
 
 --
--- TOC entry 2353 (class 2606 OID 104808)
--- Dependencies: 217 217 2707
 -- Name: recaudo_reembolso_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9143,8 +7739,6 @@ ALTER TABLE ONLY recaudo_reembolso
 
 
 --
--- TOC entry 2355 (class 2606 OID 104810)
--- Dependencies: 217 217 2707
 -- Name: recaudo_reembolso_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9153,8 +7747,6 @@ ALTER TABLE ONLY recaudo_reembolso
 
 
 --
--- TOC entry 2357 (class 2606 OID 104812)
--- Dependencies: 219 219 2707
 -- Name: recaudo_solicitud_medicina_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9163,8 +7755,6 @@ ALTER TABLE ONLY recaudo_solicitud_medicina
 
 
 --
--- TOC entry 2359 (class 2606 OID 104814)
--- Dependencies: 219 219 2707
 -- Name: recaudo_solicitud_medicina_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9173,8 +7763,6 @@ ALTER TABLE ONLY recaudo_solicitud_medicina
 
 
 --
--- TOC entry 2361 (class 2606 OID 104816)
--- Dependencies: 221 221 2707
 -- Name: recaudo_solicitud_servicio_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9183,8 +7771,6 @@ ALTER TABLE ONLY recaudo_solicitud_servicio
 
 
 --
--- TOC entry 2363 (class 2606 OID 104818)
--- Dependencies: 221 221 2707
 -- Name: recaudo_solicitud_servicio_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9193,8 +7779,6 @@ ALTER TABLE ONLY recaudo_solicitud_servicio
 
 
 --
--- TOC entry 2365 (class 2606 OID 104820)
--- Dependencies: 223 223 2707
 -- Name: recaudo_titular_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9203,8 +7787,6 @@ ALTER TABLE ONLY recaudo_titular
 
 
 --
--- TOC entry 2369 (class 2606 OID 104822)
--- Dependencies: 227 227 2707
 -- Name: recurso_perfil_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9213,8 +7795,6 @@ ALTER TABLE ONLY recurso_perfil
 
 
 --
--- TOC entry 2367 (class 2606 OID 104824)
--- Dependencies: 225 225 2707
 -- Name: recurso_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9223,8 +7803,6 @@ ALTER TABLE ONLY recurso
 
 
 --
--- TOC entry 2371 (class 2606 OID 104826)
--- Dependencies: 229 229 2707
 -- Name: reembolso_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9233,8 +7811,6 @@ ALTER TABLE ONLY reembolso
 
 
 --
--- TOC entry 2373 (class 2606 OID 104828)
--- Dependencies: 229 229 2707
 -- Name: reembolso_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9243,8 +7819,6 @@ ALTER TABLE ONLY reembolso
 
 
 --
--- TOC entry 2375 (class 2606 OID 104830)
--- Dependencies: 231 231 2707
 -- Name: servicio_descripcion_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9253,8 +7827,6 @@ ALTER TABLE ONLY servicio
 
 
 --
--- TOC entry 2377 (class 2606 OID 104832)
--- Dependencies: 231 231 2707
 -- Name: servicio_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9263,8 +7835,6 @@ ALTER TABLE ONLY servicio
 
 
 --
--- TOC entry 2379 (class 2606 OID 104834)
--- Dependencies: 233 233 2707
 -- Name: servicio_proveedor_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9273,8 +7843,6 @@ ALTER TABLE ONLY servicio_proveedor
 
 
 --
--- TOC entry 2381 (class 2606 OID 104836)
--- Dependencies: 235 235 2707
 -- Name: servicio_tiposolicitud_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9283,8 +7851,6 @@ ALTER TABLE ONLY servicio_tiposolicitud
 
 
 --
--- TOC entry 2383 (class 2606 OID 104838)
--- Dependencies: 237 237 2707
 -- Name: solicitud_dt_factura_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9293,8 +7859,6 @@ ALTER TABLE ONLY solicitud_dt_factura
 
 
 --
--- TOC entry 2385 (class 2606 OID 104840)
--- Dependencies: 239 239 2707
 -- Name: solicitud_dt_medicina_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9303,8 +7867,6 @@ ALTER TABLE ONLY solicitud_dt_medicina
 
 
 --
--- TOC entry 2387 (class 2606 OID 104842)
--- Dependencies: 241 241 2707
 -- Name: solicitud_factura_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9313,8 +7875,6 @@ ALTER TABLE ONLY solicitud_factura
 
 
 --
--- TOC entry 2389 (class 2606 OID 104844)
--- Dependencies: 241 241 2707
 -- Name: solicitud_factura_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9323,8 +7883,6 @@ ALTER TABLE ONLY solicitud_factura
 
 
 --
--- TOC entry 2391 (class 2606 OID 104846)
--- Dependencies: 243 243 2707
 -- Name: solicitud_medicina_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9333,8 +7891,6 @@ ALTER TABLE ONLY solicitud_medicina
 
 
 --
--- TOC entry 2393 (class 2606 OID 104848)
--- Dependencies: 243 243 2707
 -- Name: solicitud_medicina_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9343,8 +7899,6 @@ ALTER TABLE ONLY solicitud_medicina
 
 
 --
--- TOC entry 2395 (class 2606 OID 104850)
--- Dependencies: 245 245 2707
 -- Name: solicitud_servicio_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9353,8 +7907,6 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- TOC entry 2397 (class 2606 OID 104852)
--- Dependencies: 245 245 2707
 -- Name: solicitud_servicio_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9363,8 +7915,6 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- TOC entry 2399 (class 2606 OID 104854)
--- Dependencies: 247 247 2707
 -- Name: sucursal_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9373,8 +7923,6 @@ ALTER TABLE ONLY sucursal
 
 
 --
--- TOC entry 2401 (class 2606 OID 104856)
--- Dependencies: 249 249 2707
 -- Name: tipoempleado_nombre_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9383,8 +7931,6 @@ ALTER TABLE ONLY tipoempleado
 
 
 --
--- TOC entry 2403 (class 2606 OID 104858)
--- Dependencies: 249 249 2707
 -- Name: tipoempleado_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9393,8 +7939,6 @@ ALTER TABLE ONLY tipoempleado
 
 
 --
--- TOC entry 2405 (class 2606 OID 104860)
--- Dependencies: 251 251 2707
 -- Name: tiposolicitud_nombre_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9403,8 +7947,6 @@ ALTER TABLE ONLY tiposolicitud
 
 
 --
--- TOC entry 2407 (class 2606 OID 104862)
--- Dependencies: 251 251 2707
 -- Name: tiposolicitud_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9413,8 +7955,6 @@ ALTER TABLE ONLY tiposolicitud
 
 
 --
--- TOC entry 2409 (class 2606 OID 104864)
--- Dependencies: 253 253 2707
 -- Name: titular_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9423,8 +7963,6 @@ ALTER TABLE ONLY titular
 
 
 --
--- TOC entry 2413 (class 2606 OID 104866)
--- Dependencies: 255 255 2707
 -- Name: usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9433,8 +7971,6 @@ ALTER TABLE ONLY usuario
 
 
 --
--- TOC entry 2410 (class 1259 OID 104867)
--- Dependencies: 255 2707
 -- Name: usuario_perfil_idx; Type: INDEX; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9442,8 +7978,6 @@ CREATE INDEX usuario_perfil_idx ON usuario USING btree (perfil_id);
 
 
 --
--- TOC entry 2411 (class 1259 OID 104868)
--- Dependencies: 255 2707
 -- Name: usuario_persona_idx; Type: INDEX; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9451,8 +7985,6 @@ CREATE INDEX usuario_persona_idx ON usuario USING btree (persona_id);
 
 
 --
--- TOC entry 2414 (class 1259 OID 104869)
--- Dependencies: 255 2707
 -- Name: usuario_sucursal_idx; Type: INDEX; Schema: public; Owner: jelitox; Tablespace: 
 --
 
@@ -9460,8 +7992,6 @@ CREATE INDEX usuario_sucursal_idx ON usuario USING btree (sucursal_id);
 
 
 --
--- TOC entry 2415 (class 2606 OID 104870)
--- Dependencies: 161 255 2412 2707
 -- Name: acceso_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9470,8 +8000,6 @@ ALTER TABLE ONLY acceso
 
 
 --
--- TOC entry 2416 (class 2606 OID 104875)
--- Dependencies: 255 2412 163 2707
 -- Name: backup_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9480,8 +8008,6 @@ ALTER TABLE ONLY backup
 
 
 --
--- TOC entry 2417 (class 2606 OID 104880)
--- Dependencies: 167 2266 165 2707
 -- Name: beneficiario_beneficiario_tipo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9490,8 +8016,6 @@ ALTER TABLE ONLY beneficiario
 
 
 --
--- TOC entry 2418 (class 2606 OID 104885)
--- Dependencies: 2338 207 165 2707
 -- Name: beneficiario_persona_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9500,8 +8024,6 @@ ALTER TABLE ONLY beneficiario
 
 
 --
--- TOC entry 2421 (class 2606 OID 104890)
--- Dependencies: 255 2412 167 2707
 -- Name: beneficiario_tipo_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9510,8 +8032,6 @@ ALTER TABLE ONLY beneficiario_tipo
 
 
 --
--- TOC entry 2419 (class 2606 OID 104895)
--- Dependencies: 253 165 2408 2707
 -- Name: beneficiario_titular_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9520,8 +8040,6 @@ ALTER TABLE ONLY beneficiario
 
 
 --
--- TOC entry 2420 (class 2606 OID 104900)
--- Dependencies: 2412 165 255 2707
 -- Name: beneficiario_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9530,8 +8048,6 @@ ALTER TABLE ONLY beneficiario
 
 
 --
--- TOC entry 2422 (class 2606 OID 104905)
--- Dependencies: 2412 255 169 2707
 -- Name: cargo_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9540,8 +8056,6 @@ ALTER TABLE ONLY cargo
 
 
 --
--- TOC entry 2423 (class 2606 OID 104910)
--- Dependencies: 255 2412 171 2707
 -- Name: cobertura_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9550,8 +8064,6 @@ ALTER TABLE ONLY cobertura
 
 
 --
--- TOC entry 2424 (class 2606 OID 104915)
--- Dependencies: 247 173 2398 2707
 -- Name: departamento_sucursal_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9560,8 +8072,6 @@ ALTER TABLE ONLY departamento
 
 
 --
--- TOC entry 2425 (class 2606 OID 104920)
--- Dependencies: 173 2412 255 2707
 -- Name: departamento_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9570,8 +8080,6 @@ ALTER TABLE ONLY departamento
 
 
 --
--- TOC entry 2427 (class 2606 OID 104925)
--- Dependencies: 2280 175 177 2707
 -- Name: discapacidad_persona_discapacidad_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9580,8 +8088,6 @@ ALTER TABLE ONLY discapacidad_persona
 
 
 --
--- TOC entry 2428 (class 2606 OID 104930)
--- Dependencies: 177 2338 207 2707
 -- Name: discapacidad_persona_persona_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9590,8 +8096,6 @@ ALTER TABLE ONLY discapacidad_persona
 
 
 --
--- TOC entry 2426 (class 2606 OID 104935)
--- Dependencies: 175 255 2412 2707
 -- Name: discapacidad_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9600,8 +8104,6 @@ ALTER TABLE ONLY discapacidad
 
 
 --
--- TOC entry 2429 (class 2606 OID 104940)
--- Dependencies: 187 2304 179 2707
 -- Name: empresa_estado_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9610,8 +8112,6 @@ ALTER TABLE ONLY empresa
 
 
 --
--- TOC entry 2430 (class 2606 OID 104945)
--- Dependencies: 197 2322 179 2707
 -- Name: empresa_municipio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9620,8 +8120,6 @@ ALTER TABLE ONLY empresa
 
 
 --
--- TOC entry 2431 (class 2606 OID 104950)
--- Dependencies: 199 2328 179 2707
 -- Name: empresa_pais_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9630,8 +8128,6 @@ ALTER TABLE ONLY empresa
 
 
 --
--- TOC entry 2432 (class 2606 OID 104955)
--- Dependencies: 2330 179 201 2707
 -- Name: empresa_parroquia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9640,8 +8136,6 @@ ALTER TABLE ONLY empresa
 
 
 --
--- TOC entry 2439 (class 2606 OID 104960)
--- Dependencies: 185 2288 181 2707
 -- Name: especialidad_medico_especialidad_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9650,8 +8144,6 @@ ALTER TABLE ONLY especialidad_medico
 
 
 --
--- TOC entry 2440 (class 2606 OID 104965)
--- Dependencies: 193 185 2314 2707
 -- Name: especialidad_medico_medico_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9660,8 +8152,6 @@ ALTER TABLE ONLY especialidad_medico
 
 
 --
--- TOC entry 2433 (class 2606 OID 104970)
--- Dependencies: 181 2412 255 2707
 -- Name: especialidad_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9670,8 +8160,6 @@ ALTER TABLE ONLY especialidad
 
 
 --
--- TOC entry 2441 (class 2606 OID 104975)
--- Dependencies: 2328 187 199 2707
 -- Name: estado_pais_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9680,8 +8168,6 @@ ALTER TABLE ONLY estado
 
 
 --
--- TOC entry 2442 (class 2606 OID 104980)
--- Dependencies: 189 255 2412 2707
 -- Name: estado_usuario_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9690,8 +8176,6 @@ ALTER TABLE ONLY estado_usuario
 
 
 --
--- TOC entry 2443 (class 2606 OID 104985)
--- Dependencies: 191 2412 255 2707
 -- Name: medicina_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9700,8 +8184,6 @@ ALTER TABLE ONLY medicina
 
 
 --
--- TOC entry 2444 (class 2606 OID 104990)
--- Dependencies: 2412 193 255 2707
 -- Name: medico_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9710,8 +8192,6 @@ ALTER TABLE ONLY medico
 
 
 --
--- TOC entry 2445 (class 2606 OID 104995)
--- Dependencies: 195 195 2320 2707
 -- Name: menu_menu_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9720,8 +8200,6 @@ ALTER TABLE ONLY menu
 
 
 --
--- TOC entry 2446 (class 2606 OID 105000)
--- Dependencies: 195 225 2366 2707
 -- Name: menu_recurso_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9730,8 +8208,6 @@ ALTER TABLE ONLY menu
 
 
 --
--- TOC entry 2447 (class 2606 OID 105005)
--- Dependencies: 2304 197 187 2707
 -- Name: municipio_estado_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9740,8 +8216,6 @@ ALTER TABLE ONLY municipio
 
 
 --
--- TOC entry 2448 (class 2606 OID 105010)
--- Dependencies: 197 201 2322 2707
 -- Name: parroquia_municipio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9750,8 +8224,6 @@ ALTER TABLE ONLY parroquia
 
 
 --
--- TOC entry 2449 (class 2606 OID 105015)
--- Dependencies: 2412 255 203 2707
 -- Name: patologia_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9760,8 +8232,6 @@ ALTER TABLE ONLY patologia
 
 
 --
--- TOC entry 2450 (class 2606 OID 105020)
--- Dependencies: 207 187 2304 2707
 -- Name: persona_estado_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9770,8 +8240,6 @@ ALTER TABLE ONLY persona
 
 
 --
--- TOC entry 2451 (class 2606 OID 105025)
--- Dependencies: 197 207 2322 2707
 -- Name: persona_municipio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9780,8 +8248,6 @@ ALTER TABLE ONLY persona
 
 
 --
--- TOC entry 2452 (class 2606 OID 105030)
--- Dependencies: 199 2328 207 2707
 -- Name: persona_pais_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9790,8 +8256,6 @@ ALTER TABLE ONLY persona
 
 
 --
--- TOC entry 2453 (class 2606 OID 105035)
--- Dependencies: 201 207 2330 2707
 -- Name: persona_parroquia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9800,8 +8264,6 @@ ALTER TABLE ONLY persona
 
 
 --
--- TOC entry 2454 (class 2606 OID 105040)
--- Dependencies: 207 255 2412 2707
 -- Name: persona_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9810,8 +8272,6 @@ ALTER TABLE ONLY persona
 
 
 --
--- TOC entry 2455 (class 2606 OID 105045)
--- Dependencies: 209 2412 255 2707
 -- Name: profesion_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9820,8 +8280,6 @@ ALTER TABLE ONLY profesion
 
 
 --
--- TOC entry 2434 (class 2606 OID 105050)
--- Dependencies: 2304 187 183 2707
 -- Name: proveedor_estado_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9830,8 +8288,6 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- TOC entry 2456 (class 2606 OID 105055)
--- Dependencies: 211 193 2314 2707
 -- Name: proveedor_medico_medico_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9840,8 +8296,6 @@ ALTER TABLE ONLY proveedor_medico
 
 
 --
--- TOC entry 2457 (class 2606 OID 105060)
--- Dependencies: 211 2292 183 2707
 -- Name: proveedor_medico_proveedor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9850,8 +8304,6 @@ ALTER TABLE ONLY proveedor_medico
 
 
 --
--- TOC entry 2435 (class 2606 OID 105065)
--- Dependencies: 197 183 2322 2707
 -- Name: proveedor_municipio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9860,8 +8312,6 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- TOC entry 2436 (class 2606 OID 105070)
--- Dependencies: 183 199 2328 2707
 -- Name: proveedor_pais_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9870,8 +8320,6 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- TOC entry 2437 (class 2606 OID 105075)
--- Dependencies: 201 183 2330 2707
 -- Name: proveedor_parroquia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9880,8 +8328,6 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- TOC entry 2438 (class 2606 OID 105080)
--- Dependencies: 2412 183 255 2707
 -- Name: proveedor_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9890,8 +8336,6 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- TOC entry 2459 (class 2606 OID 105085)
--- Dependencies: 2260 214 165 2707
 -- Name: recaudo_beneficiario_beneficiario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9900,8 +8344,6 @@ ALTER TABLE ONLY recaudo_beneficiario
 
 
 --
--- TOC entry 2460 (class 2606 OID 105090)
--- Dependencies: 213 214 2348 2707
 -- Name: recaudo_beneficiario_recaudo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9910,8 +8352,6 @@ ALTER TABLE ONLY recaudo_beneficiario
 
 
 --
--- TOC entry 2461 (class 2606 OID 105095)
--- Dependencies: 229 217 2370 2707
 -- Name: recaudo_reembolso_codigo_solicitud_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9920,8 +8360,6 @@ ALTER TABLE ONLY recaudo_reembolso
 
 
 --
--- TOC entry 2462 (class 2606 OID 105100)
--- Dependencies: 213 217 2348 2707
 -- Name: recaudo_reembolso_recaudo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9930,8 +8368,6 @@ ALTER TABLE ONLY recaudo_reembolso
 
 
 --
--- TOC entry 2463 (class 2606 OID 105105)
--- Dependencies: 219 2390 243 2707
 -- Name: recaudo_solicitud_medicina_codigo_solicitud_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9940,8 +8376,6 @@ ALTER TABLE ONLY recaudo_solicitud_medicina
 
 
 --
--- TOC entry 2464 (class 2606 OID 105110)
--- Dependencies: 2348 213 219 2707
 -- Name: recaudo_solicitud_medicina_recaudo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9950,8 +8384,6 @@ ALTER TABLE ONLY recaudo_solicitud_medicina
 
 
 --
--- TOC entry 2465 (class 2606 OID 105115)
--- Dependencies: 221 2394 245 2707
 -- Name: recaudo_solicitud_servicio_codigo_solicitud_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9960,8 +8392,6 @@ ALTER TABLE ONLY recaudo_solicitud_servicio
 
 
 --
--- TOC entry 2466 (class 2606 OID 105120)
--- Dependencies: 2348 213 221 2707
 -- Name: recaudo_solicitud_servicio_recaudo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9970,8 +8400,6 @@ ALTER TABLE ONLY recaudo_solicitud_servicio
 
 
 --
--- TOC entry 2467 (class 2606 OID 105125)
--- Dependencies: 223 213 2348 2707
 -- Name: recaudo_titular_recaudo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9980,8 +8408,6 @@ ALTER TABLE ONLY recaudo_titular
 
 
 --
--- TOC entry 2468 (class 2606 OID 105130)
--- Dependencies: 2408 253 223 2707
 -- Name: recaudo_titular_titular_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -9990,8 +8416,6 @@ ALTER TABLE ONLY recaudo_titular
 
 
 --
--- TOC entry 2458 (class 2606 OID 105135)
--- Dependencies: 2412 255 213 2707
 -- Name: recaudo_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10000,8 +8424,6 @@ ALTER TABLE ONLY recaudo
 
 
 --
--- TOC entry 2469 (class 2606 OID 105140)
--- Dependencies: 205 2336 227 2707
 -- Name: recurso_perfil_perfil_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10010,8 +8432,6 @@ ALTER TABLE ONLY recurso_perfil
 
 
 --
--- TOC entry 2470 (class 2606 OID 105145)
--- Dependencies: 225 2366 227 2707
 -- Name: recurso_perfil_recurso_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10020,8 +8440,6 @@ ALTER TABLE ONLY recurso_perfil
 
 
 --
--- TOC entry 2471 (class 2606 OID 105150)
--- Dependencies: 165 2260 229 2707
 -- Name: reembolso_beneficiario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10030,8 +8448,6 @@ ALTER TABLE ONLY reembolso
 
 
 --
--- TOC entry 2472 (class 2606 OID 105155)
--- Dependencies: 229 253 2408 2707
 -- Name: reembolso_titular_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10040,8 +8456,6 @@ ALTER TABLE ONLY reembolso
 
 
 --
--- TOC entry 2473 (class 2606 OID 105160)
--- Dependencies: 2412 229 255 2707
 -- Name: reembolso_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10050,8 +8464,6 @@ ALTER TABLE ONLY reembolso
 
 
 --
--- TOC entry 2475 (class 2606 OID 105165)
--- Dependencies: 233 2292 183 2707
 -- Name: servicio_proveedor_proveedor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10060,8 +8472,6 @@ ALTER TABLE ONLY servicio_proveedor
 
 
 --
--- TOC entry 2476 (class 2606 OID 105170)
--- Dependencies: 233 231 2376 2707
 -- Name: servicio_proveedor_servicio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10070,8 +8480,6 @@ ALTER TABLE ONLY servicio_proveedor
 
 
 --
--- TOC entry 2477 (class 2606 OID 105175)
--- Dependencies: 2376 235 231 2707
 -- Name: servicio_tiposolicitud_servicio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10080,8 +8488,6 @@ ALTER TABLE ONLY servicio_tiposolicitud
 
 
 --
--- TOC entry 2478 (class 2606 OID 105180)
--- Dependencies: 235 251 2406 2707
 -- Name: servicio_tiposolicitud_tiposolicitud_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10090,8 +8496,6 @@ ALTER TABLE ONLY servicio_tiposolicitud
 
 
 --
--- TOC entry 2474 (class 2606 OID 105185)
--- Dependencies: 255 231 2412 2707
 -- Name: servicio_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10100,8 +8504,6 @@ ALTER TABLE ONLY servicio
 
 
 --
--- TOC entry 2479 (class 2606 OID 105190)
--- Dependencies: 2388 237 241 2707
 -- Name: solicitud_dt_factura_solicitud_factura_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10110,8 +8512,6 @@ ALTER TABLE ONLY solicitud_dt_factura
 
 
 --
--- TOC entry 2480 (class 2606 OID 105195)
--- Dependencies: 191 2310 239 2707
 -- Name: solicitud_dt_medicina_medicina_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10120,8 +8520,6 @@ ALTER TABLE ONLY solicitud_dt_medicina
 
 
 --
--- TOC entry 2481 (class 2606 OID 105200)
--- Dependencies: 239 2392 243 2707
 -- Name: solicitud_dt_medicina_solicitud_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10130,8 +8528,6 @@ ALTER TABLE ONLY solicitud_dt_medicina
 
 
 --
--- TOC entry 2482 (class 2606 OID 105205)
--- Dependencies: 245 2394 241 2707
 -- Name: solicitud_factura_codigo_solicitud_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10140,8 +8536,6 @@ ALTER TABLE ONLY solicitud_factura
 
 
 --
--- TOC entry 2483 (class 2606 OID 105210)
--- Dependencies: 2396 241 245 2707
 -- Name: solicitud_factura_solicitud_servicio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10150,8 +8544,6 @@ ALTER TABLE ONLY solicitud_factura
 
 
 --
--- TOC entry 2484 (class 2606 OID 105215)
--- Dependencies: 2260 165 243 2707
 -- Name: solicitud_medicina_beneficiario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10160,8 +8552,6 @@ ALTER TABLE ONLY solicitud_medicina
 
 
 --
--- TOC entry 2485 (class 2606 OID 105220)
--- Dependencies: 243 193 2314 2707
 -- Name: solicitud_medicina_medico_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10170,8 +8560,6 @@ ALTER TABLE ONLY solicitud_medicina
 
 
 --
--- TOC entry 2486 (class 2606 OID 105225)
--- Dependencies: 2334 243 203 2707
 -- Name: solicitud_medicina_patologia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10180,8 +8568,6 @@ ALTER TABLE ONLY solicitud_medicina
 
 
 --
--- TOC entry 2487 (class 2606 OID 105230)
--- Dependencies: 2292 243 183 2707
 -- Name: solicitud_medicina_proveedor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10190,8 +8576,6 @@ ALTER TABLE ONLY solicitud_medicina
 
 
 --
--- TOC entry 2488 (class 2606 OID 105235)
--- Dependencies: 231 243 2376 2707
 -- Name: solicitud_medicina_servicio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10200,8 +8584,6 @@ ALTER TABLE ONLY solicitud_medicina
 
 
 --
--- TOC entry 2489 (class 2606 OID 105240)
--- Dependencies: 243 2408 253 2707
 -- Name: solicitud_medicina_titular_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10210,8 +8592,6 @@ ALTER TABLE ONLY solicitud_medicina
 
 
 --
--- TOC entry 2490 (class 2606 OID 105245)
--- Dependencies: 165 2260 245 2707
 -- Name: solicitud_servicio_beneficiario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10220,8 +8600,6 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- TOC entry 2491 (class 2606 OID 105250)
--- Dependencies: 245 2314 193 2707
 -- Name: solicitud_servicio_medico_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10230,8 +8608,6 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- TOC entry 2492 (class 2606 OID 105255)
--- Dependencies: 245 203 2334 2707
 -- Name: solicitud_servicio_patologia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10240,8 +8616,6 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- TOC entry 2493 (class 2606 OID 105260)
--- Dependencies: 2292 245 183 2707
 -- Name: solicitud_servicio_proveedor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10250,8 +8624,6 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- TOC entry 2494 (class 2606 OID 105265)
--- Dependencies: 2376 231 245 2707
 -- Name: solicitud_servicio_servicio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10260,8 +8632,6 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- TOC entry 2495 (class 2606 OID 105270)
--- Dependencies: 251 2406 245 2707
 -- Name: solicitud_servicio_tiposolicitud_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10270,8 +8640,6 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- TOC entry 2496 (class 2606 OID 105275)
--- Dependencies: 253 245 2408 2707
 -- Name: solicitud_servicio_titular_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10280,8 +8648,6 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- TOC entry 2497 (class 2606 OID 105280)
--- Dependencies: 247 2284 179 2707
 -- Name: sucursal_empresa_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10290,8 +8656,6 @@ ALTER TABLE ONLY sucursal
 
 
 --
--- TOC entry 2498 (class 2606 OID 105285)
--- Dependencies: 2304 187 247 2707
 -- Name: sucursal_estado_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10300,8 +8664,6 @@ ALTER TABLE ONLY sucursal
 
 
 --
--- TOC entry 2499 (class 2606 OID 105290)
--- Dependencies: 197 247 2322 2707
 -- Name: sucursal_municipio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10310,8 +8672,6 @@ ALTER TABLE ONLY sucursal
 
 
 --
--- TOC entry 2500 (class 2606 OID 105295)
--- Dependencies: 2328 247 199 2707
 -- Name: sucursal_pais_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10320,8 +8680,6 @@ ALTER TABLE ONLY sucursal
 
 
 --
--- TOC entry 2501 (class 2606 OID 105300)
--- Dependencies: 2330 201 247 2707
 -- Name: sucursal_parroquia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10330,8 +8688,6 @@ ALTER TABLE ONLY sucursal
 
 
 --
--- TOC entry 2502 (class 2606 OID 105305)
--- Dependencies: 2270 169 253 2707
 -- Name: titular_cargo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10340,8 +8696,6 @@ ALTER TABLE ONLY titular
 
 
 --
--- TOC entry 2503 (class 2606 OID 105310)
--- Dependencies: 2276 173 253 2707
 -- Name: titular_departamento_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10350,8 +8704,6 @@ ALTER TABLE ONLY titular
 
 
 --
--- TOC entry 2504 (class 2606 OID 105315)
--- Dependencies: 253 209 2342 2707
 -- Name: titular_profesion_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10360,8 +8712,6 @@ ALTER TABLE ONLY titular
 
 
 --
--- TOC entry 2505 (class 2606 OID 105320)
--- Dependencies: 253 249 2402 2707
 -- Name: titular_tipoempleado_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10370,8 +8720,6 @@ ALTER TABLE ONLY titular
 
 
 --
--- TOC entry 2506 (class 2606 OID 105325)
--- Dependencies: 2336 255 205 2707
 -- Name: usuario_perfil_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10380,8 +8728,6 @@ ALTER TABLE ONLY usuario
 
 
 --
--- TOC entry 2507 (class 2606 OID 105330)
--- Dependencies: 255 207 2338 2707
 -- Name: usuario_persona_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10390,8 +8736,6 @@ ALTER TABLE ONLY usuario
 
 
 --
--- TOC entry 2508 (class 2606 OID 105335)
--- Dependencies: 2398 255 247 2707
 -- Name: usuario_sucursal_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
 --
 
@@ -10400,8 +8744,6 @@ ALTER TABLE ONLY usuario
 
 
 --
--- TOC entry 2712 (class 0 OID 0)
--- Dependencies: 6
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
 
@@ -10410,8 +8752,6 @@ REVOKE ALL ON SCHEMA public FROM postgres;
 GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
-
--- Completed on 2014-03-13 15:51:13 VET
 
 --
 -- PostgreSQL database dump complete
