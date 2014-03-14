@@ -1,9 +1,6 @@
 <?php
 /**
  * Dailyscript - Web | App | Media
- *
- *
- *
  * @category
  * @package     Models
  * @subpackage
@@ -30,7 +27,7 @@ class Sucursal extends ActiveRecord {
 
         $this->validates_presence_of('sucursal', 'message: Ingresa el nombre de la sucursal');        
         $this->validates_presence_of('direccion', 'message: Ingresa la dirección de la sucursal.');
-        $this->validates_presence_of('ciudad_id', 'message: Indica la ciudad de ubicación de la sucursal.');
+        $this->validates_presence_of('parroquia_id', 'message: Indica la ciudad de ubicación de la sucursal.');
                 
     }  
     
@@ -41,8 +38,8 @@ class Sucursal extends ActiveRecord {
      */
     public function getInformacionSucursal($id, $isSlug=false) {
         $id = ($isSlug) ? Filter::get($id, 'string') : Filter::get($id, 'numeric');
-        $columnas = 'sucursal.*, empresa.razon_social, empresa.siglas, empresa.representante_legal, ciudad.ciudad';
-        $join = 'INNER JOIN empresa ON empresa.id = sucursal.empresa_id INNER JOIN ciudad ON ciudad.id = sucursal.ciudad_id';
+        $columnas = 'sucursal.*, empresa.razon_social, empresa.siglas, empresa.representante_legal, parroquia.nombre';
+        $join = 'INNER JOIN empresa ON empresa.id = sucursal.empresa_id INNER JOIN parroquia ON parroquia.id = sucursal.parroquia_id';
         $condicion = ($isSlug) ? "sucursal.slug = '$id'" : "sucursal.id = '$id'";
         return $this->find_first("columns: $columnas", "join: $join", "conditions: $condicion");
     } 
@@ -57,7 +54,7 @@ class Sucursal extends ActiveRecord {
         $empresa = Filter::get($empresa, 'int');
         
         $columns = 'sucursal.*, empresa.siglas, ciudad.ciudad';
-        $join = 'INNER JOIN empresa ON empresa.id = sucursal.empresa_id INNER JOIN ciudad ON ciudad.id = sucursal.ciudad_id';        
+        $join = 'INNER JOIN empresa ON empresa.id = sucursal.empresa_id INNER JOIN ciudad ON ciudad.id = sucursal.parroquia_id';        
         $conditions = (empty($empresa)) ? 'sucursal.id > 0' : "empresa.id = '$empresa'";
         
         $order = $this->get_order($order, 'sucursal', array('sucursal'=>array('ASC'=>'sucursal.sucursal ASC, ciudad.ciudad ASC, empresa.siglas ASC',
@@ -89,7 +86,7 @@ class Sucursal extends ActiveRecord {
             $obj->dump_result_self($optData);
         }   
         if($method!='delete') {
-            $obj->ciudad_id = Ciudad::setCiudad($obj->ciudad)->id;        
+            $obj->parroquia_id = Ciudad::setCiudad($obj->ciudad)->id;        
         }
         $rs = $obj->$method();
         
@@ -107,7 +104,7 @@ class Sucursal extends ActiveRecord {
         $this->celular = Filter::get($this->celular, 'numeric');
         $this->fax = Filter::get($this->fax, 'numeric');        
         
-        $conditions = "sucursal = '$this->sucursal' AND ciudad_id = $this->ciudad_id AND empresa_id = $this->empresa_id";
+        $conditions = "sucursal = '$this->sucursal' AND parroquia_id = $this->parroquia_id AND empresa_id = $this->empresa_id";
         $conditions.= (isset($this->id)) ? " AND id != $this->id" : '';
         if($this->count("conditions: $conditions")) {
             DwMessage::error('Lo sentimos, pero ya existe una sucursal registrada con el mismo nombre y ciudad.');

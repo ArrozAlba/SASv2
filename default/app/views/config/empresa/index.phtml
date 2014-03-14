@@ -35,28 +35,16 @@
 
                 <div class="row-fluid">
                     <div class="span6">
-                        <?php echo DwForm::text('empresa.nit', array('class'=>'input-xxlarge input-required mask-pint show-error'), NULL, 'Nit'); ?>
+                        <?php echo DwForm::text('empresa.rif', array('class'=>'input-xxlarge input-required mask-pint show-error'), NULL, 'Rif'); ?>
                     </div>
                     <div class="span6">
-                        <?php echo DwForm::number('empresa.dv', array('class'=>'input-small input-required mask-pint show-error'), NULL, 'Dígito de verificación'); ?>
-                    </div>
-                </div>
-
-                <div class="row-fluid">
-                    <div class="span12">
                         <?php echo DwForm::text('empresa.representante_legal', array('class'=>'input-xxlarge input-required mask-alphanum show-error'), NULL, 'Representante legal'); ?>
                     </div>
                 </div>
 
                 <div class="row-fluid">
-                    <div class="span6">
-                        <?php echo DwForm::number('empresa.nuip', array('class'=>'input-xxlarge input-required mask-pint show-error'), NULL, 'Nuip'); ?>
-                    </div>
-                    <div class="span6">
-                        <?php echo DwForm::dbSelect('empresa.tipo_nuip_id', 'tipo_nuip', array('params/tipo_nuip', 'getListadoTipoNuip'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Tipo de identificación'); ?>
-                    </div>
+                    
                 </div>
-
                 <div class="row-fluid">
                     <div class="span6">
                         <?php echo DwForm::url('empresa.pagina_web', array('class'=>'input-xxlarge show-error'), NULL, 'Página web'); ?>

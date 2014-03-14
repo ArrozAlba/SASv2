@@ -51,7 +51,7 @@ class SucursalController extends BackendController {
                 return DwRedirect::toAction('listar');
             }            
         } 
-        $this->ciudades = Load::model('params/ciudad')->getCiudadesToJson();
+        //$this->ciudades = Load::model('params/ciudad')->getCiudadesToJson();
         $this->page_title = 'Agregar sucursal';
     }
     
