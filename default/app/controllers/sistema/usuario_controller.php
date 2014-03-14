@@ -32,7 +32,7 @@ class UsuarioController extends BackendController {
     /**
      * Método para buscar
      */
-    public function buscar($field='nombre', $value='none', $order='order.id.asc', $page=1) {        
+    public function buscar($field='nombre1', $value='none', $order='order.id.asc', $page=1) {        
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
         $field = (Input::hasPost('field')) ? Input::post('field') : $field;
         $value = (Input::hasPost('field')) ? Input::post('value') : $value;

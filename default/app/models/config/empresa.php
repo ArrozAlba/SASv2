@@ -69,7 +69,7 @@ class Empresa extends ActiveRecord {
         //Si no está habilitado para el manejo de sucursal
         //registro la ubicación de la empresa como sucursal
         if(!APP_OFFICE && Input::hasPost('sucursal')) {             
-            Sucursal::setSucursal('save', Input::post('sucursal'), array('sucursal'=>'Oficina Principal', 'ciudad'=>Input::post('ciudad'), 'empresa_id'=>$this->id));
+            Sucursal::setSucursal('save', Input::post('sucursal'), array('sucursal'=>'Oficina Principal', 'parroquia_id'=>Input::post('parroquia_id'), 'empresa_id'=>$this->id));
         }
     }
 
