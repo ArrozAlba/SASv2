@@ -8,7 +8,7 @@
  * @copyright   Copyright (c) 2013 Dailyscript Team (http://www.dailyscript.com.co) 
  */
 
-Load::models('params/ciudad');
+Load::models('params/parroquia');
 
 class Sucursal extends ActiveRecord {
     
@@ -22,12 +22,12 @@ class Sucursal extends ActiveRecord {
      */
     protected function initialize() {
         $this->belongs_to('empresa');
-        $this->belongs_to('ciudad');
+        $this->belongs_to('parroquia');
         $this->has_many('usuario');
 
         $this->validates_presence_of('sucursal', 'message: Ingresa el nombre de la sucursal');        
         $this->validates_presence_of('direccion', 'message: Ingresa la dirección de la sucursal.');
-        $this->validates_presence_of('parroquia_id', 'message: Indica la ciudad de ubicación de la sucursal.');
+        $this->validates_presence_of('parroquia_id', 'message: Indica la parroquia de ubicación de la sucursal.');
                 
     }  
     
@@ -38,7 +38,7 @@ class Sucursal extends ActiveRecord {
      */
     public function getInformacionSucursal($id, $isSlug=false) {
         $id = ($isSlug) ? Filter::get($id, 'string') : Filter::get($id, 'numeric');
-        $columnas = 'sucursal.*, empresa.razon_social, empresa.siglas, empresa.representante_legal, parroquia.nombre';
+        $columnas = 'sucursal.*, empresa.razon_social, empresa.rif, empresa.representante_legal, parroquia.nombre';
         $join = 'INNER JOIN empresa ON empresa.id = sucursal.empresa_id INNER JOIN parroquia ON parroquia.id = sucursal.parroquia_id';
         $condicion = ($isSlug) ? "sucursal.slug = '$id'" : "sucursal.id = '$id'";
         return $this->find_first("columns: $columnas", "join: $join", "conditions: $condicion");
@@ -53,14 +53,14 @@ class Sucursal extends ActiveRecord {
     public function getListadoSucursal($order='order.sucursal.asc', $page='', $empresa=null) {
         $empresa = Filter::get($empresa, 'int');
         
-        $columns = 'sucursal.*, empresa.siglas, ciudad.ciudad';
-        $join = 'INNER JOIN empresa ON empresa.id = sucursal.empresa_id INNER JOIN ciudad ON ciudad.id = sucursal.parroquia_id';        
+        $columns = 'sucursal.*, empresa.rif, parroquia.nombre';
+        $join = 'INNER JOIN empresa ON empresa.id = sucursal.empresa_id INNER JOIN parroquia ON parroquia.id = sucursal.parroquia_id';        
         $conditions = (empty($empresa)) ? 'sucursal.id > 0' : "empresa.id = '$empresa'";
         
-        $order = $this->get_order($order, 'sucursal', array('sucursal'=>array('ASC'=>'sucursal.sucursal ASC, ciudad.ciudad ASC, empresa.siglas ASC',
+        $order = $this->get_order($order, 'sucursal', array('sucursal'=>array('ASC'=>'sucursal.sucursal ASC, parroquia.nombre ASC, empresa.rif ASC',
                                                                               'DESC'=>'sucursal.sucursal DESC, ciudad.ciudad ASC, empresa.siglas ASC'),
-                                                            'ciudad'=>array('ASC'=>'ciudad.ciudad ASC, sucursal.direccion ASC, sucursal.sucursal ASC, empresa.siglas ASC',
-                                                                              'DESC'=>'ciudad.ciudad DESC, sucursal.direccion ASC, sucursal.sucursal ASC, empresa.siglas ASC'),
+                                                            'parroquia'=>array('ASC'=>'parroquia.parroquia ASC, sucursal.direccion ASC, sucursal.sucursal ASC, empresa.rif ASC',
+                                                                              'DESC'=>'parroquia.parroquia DESC, sucursal.direccion ASC, sucursal.sucursal ASC, empresa.rif ASC'),
                                                             'telefono',
                                                             'fax',
                                                             'direccion'));
@@ -86,7 +86,7 @@ class Sucursal extends ActiveRecord {
             $obj->dump_result_self($optData);
         }   
         if($method!='delete') {
-            $obj->parroquia_id = Ciudad::setCiudad($obj->ciudad)->id;        
+            $obj->parroquia_id = Parroquia::setParroquia($obj->parroquia_id)->id;        
         }
         $rs = $obj->$method();
         
