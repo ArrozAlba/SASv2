@@ -3236,3 +3236,834 @@ LINE 1: SELECT usuario.*, perfil.perfil, persona.nombre, persona.ape...
 [Thu, 13 Mar 14 22:21:14 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
 [Thu, 13 Mar 14 22:21:14 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
 [Thu, 13 Mar 14 22:21:14 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 22:43:09 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 22:43:09 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 22:43:09 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 22:43:09 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 22:43:09 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 22:43:09 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 22:43:09 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 22:44:47 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 22:44:47 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 22:44:47 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 22:44:47 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 22:44:47 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 22:44:47 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 22:44:47 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 22:49:16 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 22:49:16 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 22:49:16 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 22:49:16 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 22:49:16 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 22:49:16 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 22:49:16 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 22:50:03 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 22:50:03 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 22:50:03 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 22:50:03 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 22:50:03 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 22:50:03 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 22:50:03 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 22:50:22 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 22:50:22 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 22:50:22 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 22:50:22 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 22:50:22 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 22:50:22 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 22:50:22 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 22:59:04 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 22:59:04 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 22:59:04 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 22:59:04 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 22:59:04 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 22:59:04 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 22:59:04 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 22:59:06 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 22:59:06 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 22:59:06 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 22:59:06 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 22:59:06 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 22:59:06 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 22:59:06 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:02:49 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:02:49 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:02:49 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:02:49 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:02:49 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:02:49 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:02:49 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:04:17 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:04:17 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:04:17 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:04:17 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:04:17 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:04:17 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:04:17 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:04:43 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:04:43 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:04:43 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:04:43 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:04:43 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:04:43 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:04:43 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:05:00 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:05:00 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:05:00 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:05:00 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:05:00 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:05:00 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:05:00 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:05:35 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:05:35 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:05:35 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:05:35 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:05:35 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:05:35 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:05:35 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:05:55 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:05:55 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:05:55 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:05:55 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:05:55 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:05:55 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:05:55 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:06:25 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:06:25 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:06:25 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:06:25 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:06:25 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:06:25 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:06:25 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:06:54 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:06:54 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:06:54 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:06:54 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:06:54 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:06:54 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:06:54 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:07:06 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:07:06 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:07:06 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:07:06 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:07:06 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:07:06 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:07:06 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:09:04 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:09:04 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:09:04 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:09:04 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:09:04 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:09:04 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:09:04 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:12:08 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:12:08 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:12:08 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:12:08 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:12:08 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:12:08 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:12:08 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:12:54 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:12:54 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:12:54 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:12:54 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:12:54 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:12:54 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:12:54 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:14:43 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:14:43 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:14:44 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:14:44 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:14:44 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:14:44 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:14:44 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:15:32 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:15:32 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:15:32 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:15:32 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:15:32 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:15:32 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:15:32 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:16:12 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:16:12 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:16:12 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:16:12 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:16:12 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:16:12 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:16:12 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:17:59 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:17:59 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:17:59 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:17:59 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:17:59 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:17:59 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:17:59 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:18:47 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:18:47 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:18:47 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:18:47 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:18:47 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:18:47 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:18:47 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:20:07 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:20:07 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:20:07 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:20:07 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:20:07 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:20:07 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:20:07 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:21:19 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:21:19 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:21:19 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:21:19 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:21:19 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:21:19 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:21:19 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:22:09 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:22:09 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:22:09 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:22:09 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:22:09 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:22:09 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:22:09 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:23:05 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:23:05 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:23:05 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:23:05 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:23:05 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:23:05 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:23:05 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:23:25 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:23:25 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:23:25 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:23:25 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:23:25 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:23:25 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:23:25 -0430][DEBUG] SELECT COUNT(*) FROM empresa WHERE  id = '1'
+[Thu, 13 Mar 14 23:23:25 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:24:07 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:24:07 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:24:07 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:24:07 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:24:07 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:24:07 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:24:07 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:24:37 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:24:37 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:24:37 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:24:37 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:24:37 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:24:37 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:24:37 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:25:12 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:25:12 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:25:12 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:25:12 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:25:12 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:25:12 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:25:12 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:25:14 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:25:14 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:25:14 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:25:14 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:25:14 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:25:14 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:25:14 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:27:07 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:27:07 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:27:07 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:27:07 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:27:07 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:27:07 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:27:07 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:27:41 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:27:41 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:27:41 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:27:41 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:27:41 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:27:41 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:27:41 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:28:09 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:28:09 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:28:09 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:28:09 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:28:09 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:28:09 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:28:09 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:28:16 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:28:16 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:28:16 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:28:16 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:28:16 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:28:16 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:28:16 -0430][DEBUG] SELECT COUNT(*) FROM empresa WHERE  id = '1'
+[Thu, 13 Mar 14 23:28:16 -0430][DEBUG] UPDATE empresa SET razon_social = 'EMPRESA MIXTA SOCIALISTA ARROZ DEL ALBA',rif = 'G-200054321',pais_id = '240',estado_id = '69',municipio_id = '224',parroquia_id = '717',representante_legal = 'FRANCISCO ORTIZ',pagina_web = 'HTTP://www.arrozdelalba.gob.ve',telefono = '02563361333',fax = '02563361333',celular = '04162546908',logo = 'default.png',email = 'arrozdelalba@arrozdelalba.gob.ve' WHERE  id = '1'
+[Thu, 13 Mar 14 23:28:16 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:28:44 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:28:44 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:28:44 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:28:44 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:28:44 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:28:44 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:28:44 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:37:29 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:37:29 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:37:29 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'perfil' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:37:29 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Thu, 13 Mar 14 23:37:29 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Thu, 13 Mar 14 23:37:29 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '2'
+[Thu, 13 Mar 14 23:37:29 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1
+[Thu, 13 Mar 14 23:41:01 -0430][DEBUG] SELECT a.attname AS Field, t.typname AS Type,
+			 	CASE WHEN attnotnull=false THEN 'YES' ELSE 'NO' END AS Null,
+			 	CASE WHEN (select cc.contype FROM pg_catalog.pg_constraint cc WHERE
+			 	cc.conrelid = c.oid AND cc.conkey[1] = a.attnum limit 1)='p' THEN 'PRI' ELSE ''
+			 	END AS Key, CASE WHEN atthasdef=true THEN TRUE ELSE NULL END AS Default 
+                FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+			 	pg_catalog.pg_type t WHERE c.relname = 'empresa' AND c.oid = a.attrelid
+			 	AND a.attnum > 0 AND t.oid = a.atttypid order by a.attnum
+[Thu, 13 Mar 14 23:41:01 -0430][DEBUG] SELECT empresa.* FROM empresa  WHERE empresa.id IS NOT NULL ORDER BY empresa.fecha_registro DESC LIMIT 1

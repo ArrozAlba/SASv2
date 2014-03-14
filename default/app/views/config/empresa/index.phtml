@@ -26,42 +26,60 @@
 
                 <div class="row-fluid">
                     <div class="span6">
-                        <?php echo DwForm::text('empresa.razon_social', array('class'=>'input-xxlarge input-required mask-alphanum show-error'), NULL, 'Nombre o razón social'); ?>
+                        <?php echo DwForm::text('empresa.razon_social', array('class'=>'input-xxlarge input-required mask-alphanum show-error'), NULL, 'Razón social'); ?>
                     </div>
                     <div class="span6">
-                        <?php echo DwForm::text('empresa.siglas', array('class'=>'input-xxlarge input-required mask-alphanum show-error'), NULL, 'Siglas o abrevación'); ?>
-                    </div>
+                        <?php echo DwForm::text('empresa.rif', array('class'=>'input-xxlarge input-required mask-alphanum show-error'), NULL, 'RIF'); ?>
+						</div>
                 </div>
 
                 <div class="row-fluid">
                     <div class="span6">
-                        <?php echo DwForm::text('empresa.rif', array('class'=>'input-xxlarge input-required mask-pint show-error'), NULL, 'Rif'); ?>
+                        <?php echo DwForm::text('empresa.pais_id', array('class'=>'input-xxlarge input-required mask-pint show-error'), NULL, 'Pais'); ?>
                     </div>
                     <div class="span6">
                         <?php echo DwForm::text('empresa.representante_legal', array('class'=>'input-xxlarge input-required mask-alphanum show-error'), NULL, 'Representante legal'); ?>
                     </div>
                 </div>
 
-                <div class="row-fluid">
-                    
+                <div class="row-fluid">                    
+
                 </div>
                 <div class="row-fluid">
                     <div class="span6">
-                        <?php echo DwForm::url('empresa.pagina_web', array('class'=>'input-xxlarge show-error'), NULL, 'Página web'); ?>
+                        <?php echo DwForm::text('empresa.estado_id', array('class'=>'input-xxlarge input-required show-error'), NULL, 'Estado'); ?>
                     </div>
                     <div class="span6">
-                        <?php echo DwForm::email('empresa.email', array('class'=>'input-xxlarge mask-email show-error'), NULL, 'Email'); ?>
+                        <?php echo DwForm::tel('empresa.celular', array('class'=>'input-xxlarge input-required show-error'), NULL, 'Celular'); ?>
                     </div>
                 </div>
                 <?php if(APP_OFFICE) { ?>
                 <div class="row-fluid">
                     <div class="span6">
-                        <?php echo DwForm::tel('empresa.telefono', array('class'=>'input-xxlarge mask-pint show-error'), NULL, 'Teléfono'); ?>
+                        <?php echo DwForm::text('empresa.municipio_id', array('class'=>'input-xxlarge input-required mask-pint show-error'), NULL, 'Municipio'); ?>
                     </div>
                     <div class="span6">
-                        <?php echo DwForm::tel('empresa.fax', array('class'=>'input-xxlarge show-error'), NULL, 'Fax'); ?>
+                        <?php echo DwForm::tel('empresa.telefono', array('class'=>'input-xxlarge input-required show-error'), NULL, 'Telefono'); ?>
                     </div>
                 </div>
+                <div class="row-fluid">
+                    <div class="span6">
+                        <?php echo DwForm::text('empresa.parroquia_id', array('class'=>'input-xxlarge input-required mask-pint show-error'), NULL, 'Parroquia'); ?>
+                    </div>
+                    <div class="span6">
+                        <?php echo DwForm::tel('empresa.fax', array('class'=>'input-xxlarge input-required show-error'), NULL, 'Telefono'); ?>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span6">
+                        <?php echo DwForm::email('empresa.email', array('class'=>'input-xxlarge input-required mask-email show-error'), NULL, 'Email'); ?>
+                    </div>
+                    <div class="span6">
+                        <?php echo DwForm::tel('empresa.pagina_web', array('class'=>'input-xxlarge input-required show-error'), NULL, 'Pagina Web'); ?>
+                    </div>
+                </div>
+
+
                 <?php } ?>
 
             </div>
