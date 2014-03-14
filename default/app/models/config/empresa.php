@@ -9,6 +9,9 @@
  * @subpackage
  * @author      Iván D. Meléndez (ivan.melendez@dailyscript.com.co)
  * @copyright   Copyright (c) 2013 Dailyscript Team (http://www.dailyscript.com.co) 
+ * 
+ * Ajustada Información para adaptarla a los requerimientos del S.A.S.
+ * 
  */
 
 class Empresa extends ActiveRecord {
@@ -19,11 +22,19 @@ class Empresa extends ActiveRecord {
     protected function initialize() {        
         //$this->belongs_to('tipo_nuip');
         $this->has_many('sucursal');                                
-        $this->validates_presence_of('razon_social', 'message: Ingresa el nombre de la empresa');
-        $this->validates_presence_of('representante_legal', 'message: Ingresa el nombre del propietario o representante legal.');
-        $this->validates_presence_of('nuip', 'message: Ingresa el NUIP o NIT de la empresa.');
-        //$this->validates_presence_of('tipo_nuip_id', 'message: Selecciona el tipo de identificación.');        
-        $this->validates_email_in('email', 'message: El correo electrónico es incorrecto.');
+        $this->validates_presence_of('razon_social', 'message: Ingresa el Nombre de la Empresa');
+        $this->validates_presence_of('rif', 'message: Ingresa el RIF de la Empresa');        
+        $this->validates_presence_of('pais_id', 'message: Ingresa el Pais de Origen de la Empresa');
+        $this->validates_presence_of('estado_id', 'message: Ingresa el Estado de Origen de la empresa');
+        $this->validates_presence_of('municipio_id', 'message: Ingresa el Municipio de Origen de la empresa');
+        $this->validates_presence_of('parroquia_id', 'message: Ingresa la Parroquia de la empresa');
+        $this->validates_presence_of('representante_legal', 'message: Ingresa el nombre del representante legal.');
+        $this->validates_presence_of('pagina_web', 'message: Ingresa la pagina Web de la empresa');
+        $this->validates_presence_of('telefono', 'message: Ingresa el nombre de la empresa');
+        $this->validates_presence_of('fax', 'message: Ingresa el nombre de la empresa');
+        $this->validates_presence_of('celular', 'message	: Ingresa el nombre de la empresa');
+        $this->validates_presence_of('email', 'message: Ingresa el Correo Electronico de la empresa');        
+        $this->validates_email_in('email', 'message: El Correo Electrónico es incorrecto.');
     }
 
     /**
@@ -67,15 +78,18 @@ class Empresa extends ActiveRecord {
      */
     public function getFiltradoEmpresa() {        
         $this->razon_social = Filter::get($this->razon_social, 'string');
-        $this->siglas = Filter::get($this->siglas, 'string');
+        $this->rif = Filter::get($this->rif, 'string');
+        $this->pais_id = Filter::get($this->pais_id, 'numeric');        
+        $this->estado_id = Filter::get($this->estado_id, 'numeric');
+        $this->municipio_id = Filter::get($this->municipio_id, 'numeric');
+        $this->parroquia_id = Filter::get($this->parroquia_id, 'numeric');
         $this->representante_legal = Filter::get($this->representante_legal, 'string');
-        $this->nit = Filter::get($this->nit, 'numeric');
-        $this->dv = Filter::get($this->dv, 'numeric');        
-        $this->nuip = Filter::get($this->nuip, 'numeric');
+        $this->pagina_web = Filter::get($this->pagina_web, 'string');
+        $this->telefono = Filter::get($this->telefono, 'string');        
+        $this->fax = Filter::get($this->fax, 'string');
+        $this->celular = Filter::get($this->celular, 'string');
         $this->email = Filter::get($this->email, 'string');
-        $this->pagina_web = Filter::get($this->pagina_web, 'string');        
     }
     
 }
 ?>
-
