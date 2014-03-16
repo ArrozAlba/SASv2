@@ -1192,60 +1192,6 @@ ALTER TABLE public.proveedor_id_seq OWNER TO jelitox;
 ALTER SEQUENCE proveedor_id_seq OWNED BY proveedor.id;
 
 
---
--- Name: especialidad_medico; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
---
-
-CREATE TABLE especialidad_medico (
-    id integer DEFAULT nextval('proveedor_id_seq'::regclass) NOT NULL,
-    medico_id integer NOT NULL,
-    especialidad_id integer NOT NULL
-);
-
-
-ALTER TABLE public.especialidad_medico OWNER TO jelitox;
-
---
--- Name: TABLE especialidad_medico; Type: COMMENT; Schema: public; Owner: jelitox
---
-
-COMMENT ON TABLE especialidad_medico IS 'Modelo para manipular la relacion especialidad-proveedors';
-
-
---
--- Name: COLUMN especialidad_medico.medico_id; Type: COMMENT; Schema: public; Owner: jelitox
---
-
-COMMENT ON COLUMN especialidad_medico.medico_id IS 'ID del medico';
-
-
---
--- Name: COLUMN especialidad_medico.especialidad_id; Type: COMMENT; Schema: public; Owner: jelitox
---
-
-COMMENT ON COLUMN especialidad_medico.especialidad_id IS 'ID de la especialidad';
-
-
---
--- Name: especialidad_medico_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
---
-
-CREATE SEQUENCE especialidad_medico_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.especialidad_medico_id_seq OWNER TO jelitox;
-
---
--- Name: especialidad_medico_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
---
-
-ALTER SEQUENCE especialidad_medico_id_seq OWNED BY especialidad_medico.id;
-
 
 --
 -- Name: estado; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
@@ -1489,7 +1435,7 @@ CREATE TABLE medico (
     celular character varying(12),
     telefono character varying(12),
     correo_electronico character varying(30),
-    observacion character varying(250) NOT NULL
+    observacion character varying(250)
 );
 
 
@@ -1634,6 +1580,60 @@ ALTER TABLE public.medico_id_seq OWNER TO jelitox;
 
 ALTER SEQUENCE medico_id_seq OWNED BY medico.id;
 
+
+--
+-- Name: especialidad_medico; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+--
+
+CREATE TABLE especialidad_medico (
+    id integer DEFAULT nextval('proveedor_id_seq'::regclass) NOT NULL,
+    medico_id integer NOT NULL,
+    especialidad_id integer NOT NULL
+);
+
+
+ALTER TABLE public.especialidad_medico OWNER TO jelitox;
+
+--
+-- Name: TABLE especialidad_medico; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON TABLE especialidad_medico IS 'Modelo para manipular la relacion especialidad-proveedors';
+
+
+--
+-- Name: COLUMN especialidad_medico.medico_id; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN especialidad_medico.medico_id IS 'ID del medico';
+
+
+--
+-- Name: COLUMN especialidad_medico.especialidad_id; Type: COMMENT; Schema: public; Owner: jelitox
+--
+
+COMMENT ON COLUMN especialidad_medico.especialidad_id IS 'ID de la especialidad';
+
+
+--
+-- Name: especialidad_medico_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+--
+
+CREATE SEQUENCE especialidad_medico_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.especialidad_medico_id_seq OWNER TO jelitox;
+
+--
+-- Name: especialidad_medico_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+--
+
+ALTER SEQUENCE especialidad_medico_id_seq OWNED BY especialidad_medico.id;
 
 --
 -- Name: menu; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
@@ -2127,7 +2127,8 @@ CREATE TABLE persona (
     celular character varying(12),
     telefono character varying(12),
     correo_electronico character varying(64),
-    grupo_sanguineo character varying(4)
+    grupo_sanguineo character varying(4) DEFAULT 'N/A'::character varying,
+    fotografia character varying(45) DEFAULT 'default.png'::character varying
 );
 
 
@@ -4826,6 +4827,30 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 7	1	2014-03-13 14:08:31.997715-04:30	2014-03-13 14:08:31.997715-04:30	2	\N	\N	\N	\N	127.0.0.1
 8	1	2014-03-13 20:10:55.138285-04:30	2014-03-13 20:10:55.138285-04:30	2	\N	\N	\N	\N	127.0.0.1
 9	1	2014-03-13 22:19:10.784492-04:30	2014-03-13 22:19:10.784492-04:30	2	\N	\N	\N	\N	127.0.0.1
+10	1	2014-03-14 11:54:21.602879-04:30	2014-03-14 11:54:21.602879-04:30	2	\N	\N	\N	\N	127.0.0.1
+11	1	2014-03-14 11:54:28.411002-04:30	2014-03-14 11:54:28.411002-04:30	1	\N	\N	\N	\N	127.0.0.1
+12	1	2014-03-14 11:54:42.093035-04:30	2014-03-14 11:54:42.093035-04:30	2	\N	\N	\N	\N	127.0.0.1
+13	1	2014-03-14 11:54:48.714039-04:30	2014-03-14 11:54:48.714039-04:30	1	\N	\N	\N	\N	127.0.0.1
+14	1	2014-03-14 12:50:56.666416-04:30	2014-03-14 12:50:56.666416-04:30	1	\N	\N	\N	\N	127.0.0.1
+15	1	2014-03-14 13:39:53.693347-04:30	2014-03-14 13:39:53.693347-04:30	1	\N	\N	\N	\N	127.0.0.1
+16	1	2014-03-15 14:02:47.133496-04:30	2014-03-15 14:02:47.133496-04:30	1	\N	\N	\N	\N	127.0.0.1
+17	1	2014-03-15 17:35:27.771259-04:30	2014-03-15 17:35:27.771259-04:30	1	\N	\N	\N	\N	127.0.0.1
+18	1	2014-03-15 18:03:08.20981-04:30	2014-03-15 18:03:08.20981-04:30	2	\N	\N	\N	\N	127.0.0.1
+19	1	2014-03-15 18:03:13.664569-04:30	2014-03-15 18:03:13.664569-04:30	1	\N	\N	\N	\N	127.0.0.1
+20	1	2014-03-15 18:07:56.430811-04:30	2014-03-15 18:07:56.430811-04:30	2	\N	\N	\N	\N	127.0.0.1
+21	1	2014-03-15 18:08:03.854353-04:30	2014-03-15 18:08:03.854353-04:30	1	\N	\N	\N	\N	127.0.0.1
+22	1	2014-03-15 18:12:23.998826-04:30	2014-03-15 18:12:23.998826-04:30	2	\N	\N	\N	\N	127.0.0.1
+23	1	2014-03-15 18:12:29.923889-04:30	2014-03-15 18:12:29.923889-04:30	1	\N	\N	\N	\N	127.0.0.1
+24	1	2014-03-15 18:12:43.85387-04:30	2014-03-15 18:12:43.85387-04:30	2	\N	\N	\N	\N	127.0.0.1
+25	1	2014-03-15 18:13:25.214322-04:30	2014-03-15 18:13:25.214322-04:30	1	\N	\N	\N	\N	127.0.0.1
+26	1	2014-03-15 22:32:28.148879-04:30	2014-03-15 22:32:28.148879-04:30	2	\N	\N	\N	\N	127.0.0.1
+27	1	2014-03-15 22:32:34.859826-04:30	2014-03-15 22:32:34.859826-04:30	1	\N	\N	\N	\N	127.0.0.1
+28	1	2014-03-15 22:34:11.264848-04:30	2014-03-15 22:34:11.264848-04:30	2	\N	\N	\N	\N	127.0.0.1
+29	1	2014-03-15 22:34:18.818627-04:30	2014-03-15 22:34:18.818627-04:30	1	\N	\N	\N	\N	127.0.0.1
+30	1	2014-03-15 22:48:12.523915-04:30	2014-03-15 22:48:12.523915-04:30	2	\N	\N	\N	\N	127.0.0.1
+31	1	2014-03-15 22:48:20.218691-04:30	2014-03-15 22:48:20.218691-04:30	1	\N	\N	\N	\N	127.0.0.1
+32	1	2014-03-15 22:49:31.389011-04:30	2014-03-15 22:49:31.389011-04:30	2	\N	\N	\N	\N	127.0.0.1
+33	1	2014-03-15 22:49:37.40785-04:30	2014-03-15 22:49:37.40785-04:30	1	\N	\N	\N	\N	127.0.0.1
 \.
 
 
@@ -4833,7 +4858,7 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 -- Name: acceso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
-SELECT pg_catalog.setval('acceso_id_seq', 9, true);
+SELECT pg_catalog.setval('acceso_id_seq', 33, true);
 
 
 --
@@ -6932,8 +6957,8 @@ SELECT pg_catalog.setval('perfil_id_seq', 1, false);
 -- Data for Name: persona; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
-COPY persona (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1, nombre2, apellido1, apellido2, nacionalidad, sexo, fecha_nacimiento, pais_id, estado_id, municipio_id, parroquia_id, direccion_habitacion, estado_civil, celular, telefono, correo_electronico, grupo_sanguineo) FROM stdin;
-1	\N	2014-03-13 12:03:49.841971-04:30	2014-03-13 12:03:49.841971-04:30	20643647	Alexis	\N	Borges	\N	V	M	1990-11-12	240	69	223	715	URB 12 DE OCTUBRE	S	04167012111	\N	tuaalexis@gmail.com	A
+COPY persona (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1, nombre2, apellido1, apellido2, nacionalidad, sexo, fecha_nacimiento, pais_id, estado_id, municipio_id, parroquia_id, direccion_habitacion, estado_civil, celular, telefono, correo_electronico, grupo_sanguineo, fotografia) FROM stdin;
+1	\N	2014-03-13 12:03:49.841971-04:30	2014-03-13 12:03:49.841971-04:30	20643647	Super	\N	Administrador	\N	V	M	1990-11-12	240	69	223	715	URB 12 DE OCTUBRE	S	04167012111	\N	tuaalexis@gmail.com	A	default.png
 \.
 
 
@@ -7335,7 +7360,7 @@ SELECT pg_catalog.setval('titular_id_seq', 1, false);
 --
 
 COPY usuario (id, usuario_id, fecha_registro, fecha_modificado, sucursal_id, persona_id, login, password, perfil_id, email, tema, app_ajax, datagrid) FROM stdin;
-1	1	2014-03-13 12:20:43.690531-04:30	2014-03-13 12:20:43.690531-04:30	1	1	alex	d93a5def7511da3d0f2d171d9c344e91	1	\N	default	1	30
+1	1	2014-03-13 12:20:43.690531-04:30	2014-03-13 12:20:43.690531-04:30	1	1	admin	d93a5def7511da3d0f2d171d9c344e91	1	\N	default	1	30
 \.
 
 

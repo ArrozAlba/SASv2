@@ -25,22 +25,37 @@
 
                 <div class="row-fluid">
                     <div class="span8">
-                        <?php echo DwForm::text('persona.nombre', array('class'=>'input-xxlarge readonly'), $usuario->nombre, 'Nombre'); ?>
-                        <?php echo DwForm::text('persona.apellido', array('class'=>'input-xxlarge readonly'), $usuario->apellido, 'Apellido'); ?>
+                        <?php echo DwForm::number('persona.cedula', array('class'=>'input-xlarge readonly'), $usuario->cedula, 'Cedula de Identidad'); ?>						
+                        <?php echo DwForm::text('persona.nombre1', array('class'=>'input-xlarge readonly'), $usuario->nombre1, 'Primer Nombre'); ?>
+                        <?php echo DwForm::text('persona.nombre2', array('class'=>'input-xlarge readonly'), $usuario->nombre2, 'Segundo Nombre'); ?>
+                        <?php echo DwForm::text('persona.apellido1', array('class'=>'input-xlarge readonly'), $usuario->apellido1, 'Primer Apellido'); ?>
+                        <?php echo DwForm::text('persona.apellido2', array('class'=>'input-xlarge readonly'), $usuario->apellido2, 'Segundo Apellido'); ?>
+						<?php echo DwForm::date('persona.fecha_nacimiento', array('class'=>'input-xlarge readonly'), $usuario->fecha_nacimiento, 'Fecha de Nacimiento'); ?>
+						<?php echo DwForm::text('persona.sexo',  array('class'=>'input-xlarge readonly'), $usuario->sexo, 'Sexo:'); ?>
+                        <?php echo DwForm::text('persona.pais_id', array('class'=>'input-xlarge readonly'), $usuario->pais_id, 'Pais'); ?>
+                        <?php echo DwForm::text('persona.estado_id', array('class'=>'input-xlarge readonly'), $usuario->estado_id, 'Estado'); ?>
+                        <?php echo DwForm::text('persona.municipio_id', array('class'=>'input-xlarge readonly'), $usuario->municipio_id, 'Municipio'); ?>
+                        <?php echo DwForm::text('persona.parroquia_id',  array('class'=>'input-xlarge readonly'), $usuario->parroquia_id, 'Parroquia'); ?>
+                        <?php echo DwForm::text('persona.direccion_habitacion', array('class'=>'input-xlarge readonly'), $usuario->direccion_habitacion, 'Dirección de Habitación'); ?>
+						<?php echo DwForm::text('persona.estado_civil', array('class'=>'input-xlarge readonly'), $usuario->estado_civil, 'Estado Civil'); ?>
+						<?php echo DwForm::text('persona.grupo_sanguineo', array('class'=>'input-xlarge  readonly'), $usuario->grupo_sanguineo, 'Grupo Sanguineo'); ?>
+						<?php echo DwForm::tel('persona.celular', array('class'=>'input-xlarge readonly'), $usuario->celular, 'Celular'); ?>
+						<?php echo DwForm::tel('persona.telefono', array('class'=>'input-xlarge readonly'), $usuario->telefono, 'Teléfono'); ?>
+                        
                     </div>
                     <div class="span4 dw-text-right">
                         <div class="span5 dw-picture-profile dw-text-center dw-text-middle dw-shadow-dark" style="margin-top: 5px">
-                            <?php echo DwHtml::img("upload/personas/$usuario->fotografia", $usuario->nombre.' '.$usuario->apellido, array('id'=>'img-persona')); ?>
+                            <?php echo DwHtml::img("upload/personas/$usuario->fotografia", $usuario->nombre1.' '.$usuario->apellido1, array('id'=>'img-persona')); ?>
                         </div>
                     </div>
                 </div>
 
                 <div class="row-fluid">
                     <div class="span6">
-                        <?php echo DwForm::number('persona.nuip', array('class'=>'input-xxlarge readonly'), $usuario->nuip, 'Nuip'); ?>
+                        <?php //echo DwForm::number('persona.nuip', array('class'=>'input-xxlarge readonly'), $usuario->nuip, 'Nuip'); ?>
                     </div>
                     <div class="span6">
-                        <?php echo DwForm::oneSelect('usuario.tipo_nuip', $usuario->tipo_nuip, array('class'=>'input-xxlarge readonly'), 'Tipo de identificación'); ?>
+                        <?php //echo DwForm::oneSelect('usuario.tipo_nuip', $usuario->tipo_nuip, array('class'=>'input-xxlarge readonly'), 'Tipo de identificación'); ?>
                     </div>
                 </div>
 

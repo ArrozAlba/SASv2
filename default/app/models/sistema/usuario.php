@@ -58,8 +58,8 @@ class Usuario extends ActiveRecord {
                             DwMessage::error('Lo sentimos pero tu cuenta se encuentra inactiva. <br />Si esta información es incorrecta contacta al administrador del sistema.');
                             return false;
                         } 
-                        Session::set('nombre', $usuario->nombre1);
-                        Session::set('apellido', $usuario->apellido1);                        
+                        Session::set('nombre1', $usuario->nombre1);
+                        Session::set('apellido1', $usuario->apellido1);                        
                         Session::set("ip", DwUtils::getIp());
                         Session::set('perfil', $usuario->perfil);
                         Session::set('tema', $usuario->tema);
@@ -68,7 +68,7 @@ class Usuario extends ActiveRecord {
                         //Registro el acceso
                         Acceso::setAcceso(Acceso::ENTRADA, $usuario->id);
                         
-                        DwMessage::info("¡ Bienvenido <strong>$usuario->login</strong> !.");     
+                        DwMessage::info("¡ Bienvenido <strong>$usuario->nombre1 $usuario->apellido1</strong> !.");     
                         return true;
                     } else {
                         DwMessage::error(DwAuth::getError());
@@ -106,7 +106,7 @@ class Usuario extends ActiveRecord {
         if(empty($perfil)) {
             return NULL;
         }
-        $columns = 'usuario.*, persona.nombre1, persona.apellido1, perfil.perfil, sucursal.sucursal';
+        $columns = 'usuario.*, persona.cedula, persona.nombre1, persona.apellido1, perfil.perfil, sucursal.sucursal';
         $join = 'INNER JOIN persona ON persona.id = usuario.persona_id ';
         $join.= 'INNER JOIN perfil ON perfil.id = usuario.perfil_id ';
         $join.= 'LEFT JOIN sucursal ON sucursal.id = usuario.sucursal_id ';
@@ -117,14 +117,18 @@ class Usuario extends ActiveRecord {
                 'ASC'=>'usuario.login ASC, persona.nombre1 ASC, persona.apellido1 DESC', 
                 'DESC'=>'usuario.login DESC, persona.nombre1 DESC, persona.apellido1 DESC'
             ),
-            'nombre' => array(
+            'nombre1' => array(
                 'ASC'=>'persona.nombre1 ASC, persona.apellido1 DESC', 
                 'DESC'=>'persona.nombre1 DESC, persona.apellido1 DESC'
             ),
-            'apellido' => array(
+            'apellido1' => array(
                 'ASC'=>'persona.apellido1 ASC, persona.nombre1 ASC', 
                 'DESC'=>'persona.apellido1 DESC, persona.nombre1 DESC'
             ),
+            'cedula' => array(
+                'ASC'=>'persona.cedula ASC, persona.apellido1 ASC, persona.nombre1 ASC', 
+                'DESC'=>'persona.cedula DESC, persona.apellido1 DESC, persona.nombre1 DESC'
+            ),            
             'email' => array(
                 'ASC'=>'usuario.email ASC, persona.apellido1 ASC, persona.nombre1 ASC', 
                 'DESC'=>'usuario.email DESC, persona.apellido1 DESC, persona.nombre1 DESC'
@@ -153,7 +157,7 @@ class Usuario extends ActiveRecord {
         if( strlen($value) <= 2 OR ($value=='none') ) {
             return NULL;
         }
-        $columns = 'usuario.*, perfil.perfil, persona.nombre1, persona.apellido1, estado_usuario.estado_usuario, estado_usuario.descripcion, sucursal.sucursal';
+        $columns = 'usuario.*, perfil.perfil, persona.cedula, persona.nombre1, persona.apellido1, estado_usuario.estado_usuario, estado_usuario.descripcion, sucursal.sucursal';
         $join = self::getInnerEstado();
         $join.= 'INNER JOIN perfil ON perfil.id = usuario.perfil_id ';
         $join.= 'INNER JOIN persona ON persona.id = usuario.persona_id ';        
@@ -165,14 +169,18 @@ class Usuario extends ActiveRecord {
                 'ASC'=>'usuario.login ASC, persona.nombre1 ASC, persona.apellido1 DESC', 
                 'DESC'=>'usuario.login DESC, persona.nombre1 DESC, persona.apellido1 DESC'
             ),
-            'nombre' => array(
+            'nombre1' => array(
                 'ASC'=>'persona.nombre1 ASC, persona.apellido1 DESC', 
                 'DESC'=>'persona.nombre1 DESC, persona.apellido1 DESC'
             ),
-            'apellido' => array(
+            'apellido1' => array(
                 'ASC'=>'persona.apellido1 ASC, persona.nombre1 ASC', 
                 'DESC'=>'persona.apellido1 DESC, persona.nombre1 DESC'
             ),
+            'cedula' => array(
+                'ASC'=>'persona.cedula ASC, persona.apellido1 ASC, persona.nombre1 ASC', 
+                'DESC'=>'persona.cedula DESC, persona.apellido1 DESC, persona.nombre1 DESC'
+            ),            
             'email' => array(
                 'ASC'=>'usuario.email ASC, persona.apellido1 ASC, persona.nombre1 ASC', 
                 'DESC'=>'usuario.email DESC, persona.apellido1 DESC, persona.nombre1 DESC'
@@ -188,7 +196,7 @@ class Usuario extends ActiveRecord {
         ));
         
         //Defino los campos habilitados para la búsqueda
-        $fields = array('login', 'nombre1', 'apellido1', 'email', 'perfil', 'sucursal', 'estado_usuario');
+        $fields = array('login', 'nombre1', 'apellido1', 'cedula', 'email', 'perfil', 'sucursal', 'estado_usuario');
         if(!in_array($field, $fields)) {
             $field = 'nombre1';
         }        
@@ -204,7 +212,7 @@ class Usuario extends ActiveRecord {
     
     
     public function getListadoUsuario($estado, $order='', $page=0) {
-        $columns = 'usuario.*, perfil.perfil, persona.nombre1, persona.apellido1, estado_usuario.estado_usuario, estado_usuario.descripcion, sucursal.sucursal';
+        $columns = 'usuario.*, perfil.perfil, persona.cedula, persona.nombre1, persona.apellido1, estado_usuario.estado_usuario, estado_usuario.descripcion, sucursal.sucursal';
         $join = self::getInnerEstado();
         $join.= 'INNER JOIN perfil ON perfil.id = usuario.perfil_id ';
         $join.= 'INNER JOIN persona ON persona.id = usuario.persona_id ';        
@@ -216,14 +224,18 @@ class Usuario extends ActiveRecord {
                 'ASC'=>'usuario.login ASC, persona.nombre1 ASC, persona.apellido1 DESC', 
                 'DESC'=>'usuario.login DESC, persona.nombre1 DESC, persona.apellido1 DESC'
             ),
-            'nombre' => array(
+            'nombre1' => array(
                 'ASC'=>'persona.nombre1 ASC, persona.apellido1 DESC', 
                 'DESC'=>'persona.nombre1 DESC, persona.apellido1 DESC'
             ),
-            'apellido' => array(
+            'apellido1' => array(
                 'ASC'=>'persona.apellido1 ASC, persona.nombre1 ASC', 
                 'DESC'=>'persona.apellido1 DESC, persona.nombre1 DESC'
             ),
+            'cedula' => array(
+                'ASC'=>'persona.cedula ASC, persona.apellido1 ASC, persona.nombre1 ASC', 
+                'DESC'=>'persona.cedula DESC, persona.apellido1 DESC, persona.nombre1 DESC'
+            ),            
             'email' => array(
                 'ASC'=>'usuario.email ASC, persona.apellido1 ASC, persona.nombre1 ASC', 
                 'DESC'=>'usuario.email DESC, persona.apellido1 DESC, persona.nombre1 DESC'
@@ -344,6 +356,10 @@ class Usuario extends ActiveRecord {
             DwMessage::error('La persona registrada ya posee una cuenta de usuario.');
             return 'cancel';
         } 
+        if($this->_getRegisteredField('persona_id', $this->persona_id, $this->cedula)) {
+            DwMessage::error('La Cedula registrada ya posee una cuenta de usuario.');
+            return 'cancel';
+        } 
         //Verifico si se encuentra el mail registrado
         if($this->_getRegisteredField('email', $this->email, $this->id)) {
             DwMessage::error('El correo electrónico ya se encuentra registrado.');
@@ -372,10 +388,10 @@ class Usuario extends ActiveRecord {
         if(!$usuario) {
             return NULL;
         }
-        $columnas = 'usuario.*, perfil.perfil, persona.cedula, persona.nombre1, persona.nombre2, persona.apellido1, persona.apellido2, persona.nacionalidad, persona.sexo,persona.fecha_nacimiento, persona.pais_id, persona.estado_id, persona.municipio_id, persona.parroquia_id,  persona.direccion_habitacion,  persona.estado_civil, persona.celular, persona.telefono, persona.correo_electronico, persona.grupo_sanguineo, persona.fotografia, estado_usuario.estado_usuario, estado_usuario.descripcion, sucursal.sucursal';
+        $columnas = 'usuario.*, perfil.perfil, persona.cedula, persona.nombre1, persona.nombre2, persona.apellido1, persona.apellido2, persona.nacionalidad, persona.sexo, persona.fecha_nacimiento, persona.pais_id, persona.estado_id, persona.municipio_id, persona.parroquia_id, persona.direccion_habitacion, persona.estado_civil, persona.celular, persona.telefono, persona.correo_electronico, persona.grupo_sanguineo, persona.fotografia, estado_usuario.estado_usuario, estado_usuario.descripcion, sucursal.sucursal';
         $join = self::getInnerEstado();
         $join.= 'INNER JOIN perfil ON perfil.id = usuario.perfil_id ';
-        $join.= 'INNER JOIN persona ON persona.id = usuario.persona_id ';        
+        $join.= 'INNER JOIN persona ON persona.id = usuario.persona_id ';               
         $join.= 'LEFT JOIN sucursal ON sucursal.id = usuario.sucursal_id ';
         $condicion = "usuario.id = $usuario";        
         return $this->find_first("columns: $columnas", "join: $join", "conditions: $condicion");

@@ -60,7 +60,7 @@ class EstadoUsuario extends ActiveRecord {
      */
     public function getListadoEstadoUsuario($usuario, $page=0) {
         $usuario = Filter::get($usuario,'numeric');
-        $sql = "SELECT id, IF(estado_usuario=1,'".self::ACTIVO."','".self::BLOQUEADO."') AS estado_usuario, descripcion, fecha_estado_at FROM estado_usuario WHERE usuario_id = '$usuario' ORDER BY id DESC";
+        $sql = "SELECT id, estado_usuario, descripcion FROM estado_usuario WHERE usuario_id = '$usuario' ORDER BY id DESC";
         return ($page) ? $this->paginated_by_sql($sql, "page: $page") : $this->find_all_by_sql($sql);        
         return false;
     } 

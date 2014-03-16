@@ -55,7 +55,7 @@ class Parroquia extends ActiveRecord {
     }
     
     /**
-     * Método para obtener las ciudades como json
+     * Método para obtener las parroquias como json
      * @return type
      */
     public function getParroquiasToJson() {

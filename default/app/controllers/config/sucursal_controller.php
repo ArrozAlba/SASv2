@@ -46,12 +46,12 @@ class SucursalController extends BackendController {
     public function agregar() {
         $empresa = Session::get('empresa', 'config');
         if(Input::hasPost('sucursal')) {
-            if(Sucursal::setSucursal('create', Input::post('sucursal'), array('empresa_id'=>$empresa->id, 'parroquia'=>Input::post('parroquia')))) {
+            if(Sucursal::setSucursal('create', Input::post('sucursal'), array('empresa_id'=>$empresa->id, 'parroquia_id'=>Input::post('parroquia_id')))) {
                 DwMessage::valid('La sucursal se ha registrado correctamente!');
                 return DwRedirect::toAction('listar');
             }            
         } 
-        //$this->parroquias = Load::model('params/parroquia')->getParroquiaToJson();
+        //$this->parroquias = Load::model('params/parroquia')->getParroquiasToJson();
         $this->page_title = 'Agregar sucursal';
     }
     
@@ -70,12 +70,12 @@ class SucursalController extends BackendController {
         }
         
         if(Input::hasPost('sucursal') && DwSecurity::isValidKey(Input::post('sucursal_id_key'), 'form_key')) {
-            if(Sucursal::setSucursal('update', Input::post('sucursal'), array('id'=>$id, 'empresa_id'=>$sucursal->empresa_id, 'parroquia'=>Input::post('parroquia')))) {
+            if(Sucursal::setSucursal('update', Input::post('sucursal'), array('id'=>$id, 'empresa_id'=>$sucursal->empresa_id, 'parroquia_id'=>Input::post('parroquia_id')))) {
                 DwMessage::valid('La sucursal se ha actualizado correctamente!');
                 return DwRedirect::toAction('listar');
             }
         } 
-        $this->ciudades = Load::model('params/parroquia')->getParroquiasToJson();
+        //$this->parroquias = Load::model('params/parroquia')->getParroquiasToJson();
         $this->sucursal = $sucursal;
         $this->page_title = 'Actualizar sucursal';        
     }
