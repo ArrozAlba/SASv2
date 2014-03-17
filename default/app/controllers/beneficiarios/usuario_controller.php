@@ -1,25 +1,25 @@
 <?php
 /**
- * S.A.S
+ * Dailyscript - Web | App | Media
  *
- * Descripcion: Controlador que se encarga de la gestión de los titulares del sistema
+ * Descripcion: Controlador que se encarga de la gestión de los usuarios del sistema
  *
  * @category    
  * @package     Controllers 
- * @author      Javier León (jel1284@gmail.com)
- * @copyright   Copyright (c) 2014 E.M.S. Arroz del Alba S.A. (http://autogestion.arrozdelalba.gob.ve)
+ * @author      Iván D. Meléndez (ivan.melendez@dailycript.com.co)
+ * @copyright   Copyright (c) 2013 Dailyscript Team (http://www.dailyscript.com.co)
  */
 
-Load::models('personas/persona', 'sistema/usuario');
+Load::models('personas/persona', 'config/sucursal');
 
-class TitularController extends BackendController {
+class UsuarioController extends BackendController {
     
     /**
      * Método que se ejecuta antes de cualquier acción
      */
     protected function before_filter() {
         //Se cambia el nombre del módulo actual
-        $this->page_module = 'Gestión de titulares';
+        $this->page_module = 'Gestión de usuarios';
     }
     
     /**
@@ -37,16 +37,16 @@ class TitularController extends BackendController {
         $field = (Input::hasPost('field')) ? Input::post('field') : $field;
         $value = (Input::hasPost('field')) ? Input::post('value') : $value;
         
-        $titular = new Titular();            
-        $titulares = $titular->getAjaxTitular($field, $value, $order, $page);        
-        if(empty($titulares->items)) {
+        $usuario = new Usuario();            
+        $usuarios = $usuario->getAjaxUsuario($field, $value, $order, $page);        
+        if(empty($usuarios->items)) {
             DwMessage::info('No se han encontrado registros');
         }
-        $this->titulares = $titulares;
+        $this->usuarios = $usuarios;
         $this->order = $order;
         $this->field = $field;
         $this->value = $value;
-        $this->page_title = 'Búsqueda de titulares del sistema';        
+        $this->page_title = 'Búsqueda de usuarios del sistema';        
     }
     
     /**
@@ -54,58 +54,56 @@ class TitularController extends BackendController {
      */
     public function listar($order='order.id.asc', $page='pag.1') { 
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
-        $titular = new Titular();
-        $this->titulares = $titular->getListadoTitular('todos', $order, $page);
+        $usuario = new Usuario();
+        $this->usuarios = $usuario->getListadoUsuario('todos', $order, $page);
         $this->order = $order;        
-        $this->page_title = 'Listado de titulares del sistema';
+        $this->page_title = 'Listado de usuarios del sistema';
     }
     
     /**
      * Método para agregar
      */
     public function agregar() {
-        if(Input::hasPost('persona') && Input::hasPost('titular') && Input::hasPost('usuario')) {
+        if(Input::hasPost('persona') && Input::hasPost('usuario')) {
             ActiveRecord::beginTrans();
             //Guardo la persona
             $persona = Persona::setPersona('create', Input::post('persona'));
-            $titular = Titular::setTitular('create', Input::post('titular'));
-            if($persona && $titular) {
+            if($persona) {
                 if(Usuario::setUsuario('create', Input::post('usuario'), array('persona_id'=>$persona->id, 'repassword'=>Input::post('repassword'), 'tema'=>'default'))) {
                     ActiveRecord::commitTrans();
-                    DwMessage::valid('El titular se ha creado correctamente.');
+                    DwMessage::valid('El usuario se ha creado correctamente.');
                     return DwRedirect::toAction('listar');
                 }
             } else {
                 ActiveRecord::rollbackTrans();
             }            
         }
-        $this->page_title = 'Agregar Titular';
+        $this->page_title = 'Agregar usuario';
     }
     
     /**
      * Método para editar
      */
     public function editar($key) {        
-        if(!$id = DwSecurity::isValidKey($key, 'upd_titular', 'int')) {
+        if(!$id = DwSecurity::isValidKey($key, 'upd_usuario', 'int')) {
             return DwRedirect::toAction('listar');
         }
         
-        $usuario = new Titular();
-        if(!$usuario->getInformacionTitular($id)) {
+        $usuario = new Usuario();
+        if(!$usuario->getInformacionUsuario($id)) {
             DwMessage::get('id_no_found');    
             return DwRedirect::toAction('listar');
         }                
         
-        if(Input::hasPost('titular')) {
-            if(DwSecurity::isValidKey(Input::post('titular_id_key'), 'form_key')) {
+        if(Input::hasPost('usuario')) {
+            if(DwSecurity::isValidKey(Input::post('usuario_id_key'), 'form_key')) {
                 ActiveRecord::beginTrans();
                 //Guardo la persona
                 $persona = Persona::setPersona('update', Input::post('persona'), array('id'=>$usuario->persona_id));
-                $titular = Titular::setTitular('update', Input::post('titular'), array('id'=>$usuario->persona_id));
-                if($persona && $titular) {
+                if($persona) {
                     if(Usuario::setUsuario('update', Input::post('usuario'), array('persona_id'=>$persona->id, 'repassword'=>Input::post('repassword'), 'id'=>$usuario->id, 'login'=>$usuario->login))) {
                         ActiveRecord::commitTrans();
-                        DwMessage::valid('El titular se ha actualizado correctamente.');
+                        DwMessage::valid('El usuario se ha actualizado correctamente.');
                         return DwRedirect::toAction('listar');
                     }
                 } else {
@@ -114,8 +112,8 @@ class TitularController extends BackendController {
             }
         }        
         $this->temas = DwUtils::getFolders(dirname(APP_PATH).'/public/css/backend/themes/');
-        $this->titular = $titular;
-        $this->page_title = 'Actualizar titular';
+        $this->usuario = $usuario;
+        $this->page_title = 'Actualizar usuario';
         
     }
     
