@@ -1,0 +1,26 @@
+[Fri, 07 Feb 14 15:48:10 -0430][DEBUG] DESCRIBE `empresa`
+[Fri, 07 Feb 14 15:48:10 -0430][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Fri, 07 Feb 14 15:48:11 -0430][DEBUG] DESCRIBE `empresa`
+[Fri, 07 Feb 14 15:48:11 -0430][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Fri, 07 Feb 14 19:19:06 -0430][DEBUG] DESCRIBE `empresa`
+[Fri, 07 Feb 14 19:19:06 -0430][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Fri, 07 Feb 14 19:19:06 -0430][DEBUG] DESCRIBE `empresa`
+[Fri, 07 Feb 14 19:19:06 -0430][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Fri, 07 Feb 14 19:19:21 -0430][DEBUG] DESCRIBE `empresa`
+[Fri, 07 Feb 14 19:19:21 -0430][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Fri, 07 Feb 14 19:19:21 -0430][DEBUG] DESCRIBE `usuario`
+[Fri, 07 Feb 14 19:19:21 -0430][DEBUG] SELECT id,sucursal_id,persona_id,login,password,perfil_id,email,tema,app_ajax,datagrid,registrado_at,modificado_in FROM usuario WHERE login = 'admin' AND password = 'd93a5def7511da3d0f2d171d9c344e91' LIMIT 1
+[Fri, 07 Feb 14 19:19:21 -0430][DEBUG] SELECT usuario.*, perfil.perfil, persona.nombre, persona.apellido, estado_usuario.estado_usuario FROM usuario INNER JOIN persona ON persona.id = usuario.persona_id INNER JOIN perfil ON perfil.id = usuario.perfil_id INNER JOIN (SELECT usuario_id, CASE estado_usuario WHEN 1 THEN 'Activo' WHEN 2 THEN 'Bloqueado' ELSE 'INDEFINIDO' END AS estado_usuario, descripcion, fecha_estado_at FROM (SELECT * FROM estado_usuario ORDER BY estado_usuario.id DESC ) AS estado_usuario GROUP BY estado_usuario.usuario_id ) AS estado_usuario ON estado_usuario.usuario_id = usuario.id  WHERE usuario.id = '2' LIMIT 1
+[Fri, 07 Feb 14 19:19:21 -0430][DEBUG] DESCRIBE `acceso`
+[Fri, 07 Feb 14 19:19:21 -0430][DEBUG] INSERT INTO acceso (usuario_id,tipo_acceso,ip,registrado_at) VALUES ('2','1','127.0.0.1','2014-02-07 19:19:21')
+[Fri, 07 Feb 14 19:19:21 -0430][DEBUG] SELECT id,usuario_id,tipo_acceso,ip,registrado_at FROM acceso WHERE id = 21 LIMIT 1
+[Fri, 07 Feb 14 19:19:21 -0430][DEBUG] DESCRIBE `empresa`
+[Fri, 07 Feb 14 19:19:21 -0430][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Fri, 07 Feb 14 19:19:21 -0430][DEBUG] DESCRIBE `perfil`
+[Fri, 07 Feb 14 19:19:21 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Fri, 07 Feb 14 19:19:21 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'
+[Fri, 07 Feb 14 19:20:15 -0430][DEBUG] DESCRIBE `empresa`
+[Fri, 07 Feb 14 19:20:15 -0430][DEBUG] SELECT empresa.*, tipo_nuip.tipo_nuip FROM empresa INNER JOIN tipo_nuip ON tipo_nuip.id = empresa.tipo_nuip_id WHERE empresa.id IS NOT NULL ORDER BY empresa.registrado_at DESC LIMIT 1
+[Fri, 07 Feb 14 19:20:15 -0430][DEBUG] DESCRIBE `perfil`
+[Fri, 07 Feb 14 19:20:15 -0430][DEBUG] SELECT perfil.*, COUNT(usuario.id) AS usuarios FROM perfil LEFT JOIN usuario ON perfil.id = usuario.perfil_id  WHERE perfil.id IS NOT NULL AND perfil.estado = 1 GROUP BY perfil.id ORDER BY perfil  ASC
+[Fri, 07 Feb 14 19:20:15 -0430][DEBUG] SELECT recurso.* FROM perfil INNER JOIN recurso_perfil ON perfil.id = recurso_perfil.perfil_id INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id  WHERE perfil.id = '1'

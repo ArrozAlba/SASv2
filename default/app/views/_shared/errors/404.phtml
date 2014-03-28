@@ -1,25 +1,24 @@
-<!DOCTYPE html>
-<html lang="es">
-    <head>
-        <meta charset='<?php echo APP_CHARSET ?>' />
-        <title><?php echo Config::get('config.application.name') ?></title>
-        <?php
-        Tag::css('backend/bootstrap');
-        Tag::css('backend/estilos');
-        echo Html::includeCss();
-        echo Tag::js('jquery/jquery.min');
-        echo Tag::js('jquery/jquery.kumbiaphp');
-        echo Tag::js('bootstrap/bootstrap');
-        echo Tag::js('global');
-        ?>
-    </head>
-    <body>
-        <?php View::partial('backend/cabecera_app') ?>
-        <div class="container">
-            <div id="contenido" class="content">
-                <b>ERROR 404</b> pagina no encontrada
-            </div>
-            <?php View::partial('backend/pie') ?>
-        </div>
-    </body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>KumbiaPHP web &amp; app Framework</title>
+    <link rel="stylesheet" href="<?php echo PUBLIC_PATH ?>css/style.css" />
+</head>
+<body>
+    <div style="text-align: center; margin: 50px; font-size: 12pt; background-color: transparent; font-family: Lucida Grande, Verdana, Sans-serif;">
+        <table align="center" id="content" style="background-color: #fff; border: #999 1px solid; padding: 10px 10px 6px 10px; width: 50%;">
+            <tbody>
+                <tr>
+                    <td style="width: 5%">
+                        <a href="http://www.kumbiaphp.com"><img src="<?php echo PUBLIC_PATH ?>img/site_logo.gif" alt="Kumbia PHP Framework"/></a>
+                    </td>
+                    <td>
+                        <h1 style="font-size: 14pt; color: #990000; margin: 0 0 4px 0;">ERROR 404</h1>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
 </html>

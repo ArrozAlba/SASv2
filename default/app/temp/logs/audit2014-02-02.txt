@@ -1,0 +1,2 @@
+[Sun, 02 Feb 14 22:27:47 -0500][INFO] [/sistema/configuracion/index/][admin][127.0.0.1] Se ha actualizado el archivo de configuración del sistema.
+[Sun, 02 Feb 14 22:27:47 -0500][INFO] [/sistema/configuracion/index/][admin][127.0.0.1] Se ha actualizado el archivo de configuración del sistema.

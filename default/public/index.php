@@ -12,7 +12,7 @@
  * obtain it through the world-wide-web, please send an email
  * to license@kumbiaphp.com so we can send you a copy immediately.
  *
- * @copyright  Copyright (c) 2005-2010 Kumbia Team (http://www.kumbiaphp.com)
+ * @copyright  Copyright (c) 2005-2012 Kumbia Team (http://www.kumbiaphp.com)
  * @license    http://wiki.kumbiaphp.com/Licencia     New BSD License
  */
 
@@ -26,7 +26,7 @@
  * Establece polí­tica de informe de errores
  */
 //error_reporting(0); // Usar este en producción, no envia errores
-error_reporting(E_ALL ^ E_STRICT);
+error_reporting(E_ALL ^ E_STRICT); // Comentar en producción
 //comentar la siguiente linea en producción
 ini_set('display_errors', 'On'); 
 
@@ -47,7 +47,6 @@ define('APP_PATH', dirname(dirname(__FILE__)) . '/app/');
 /**
  * Define el CORE_PATH
  *
-  cambio para commit
  * CORE_PATH:
  * - Ruta al directorio que contiene el núcleo de Kumbia (por defecto la ruta al directorio core)
  */
@@ -78,5 +77,5 @@ $url = isset($_GET['_url']) ? $_GET['_url'] : '/';
  *
  * @see Bootstrap
  */
-require APP_PATH . 'libs/bootstrap.php'; //bootstrap de app
-//require CORE_PATH . 'kumbia/bootstrap.php'; //bootstrap del core
+//require APP_PATH . 'libs/bootstrap.php'; //bootstrap de app
+require CORE_PATH . 'kumbia/bootstrap.php'; //bootstrap del core 

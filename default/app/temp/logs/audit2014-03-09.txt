@@ -1,0 +1,2 @@
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] [/sistema/usuario/agregar/][admin][127.0.0.1] Se activa el acceso al usuario prueba. Motivo: Activado por registro inicial.
+[Sun, 09 Mar 14 15:26:43 -0500][DEBUG] [/sistema/usuario/agregar/][admin][127.0.0.1] Se ha registrado el usuario prueba en el sistema.

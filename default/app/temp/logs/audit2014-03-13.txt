@@ -1,0 +1,2 @@
+[Thu, 13 Mar 14 20:10:19 -0430][INFO] [/sistema/configuracion/index/][alex][127.0.0.1] Se ha actualizado el archivo de configuración del sistema.
+[Thu, 13 Mar 14 20:10:19 -0430][INFO] [/sistema/configuracion/index/][alex][127.0.0.1] Se ha actualizado el archivo de configuración del sistema.
