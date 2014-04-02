@@ -9,6 +9,15 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
+-- Name: audit_log; Type: SCHEMA; Schema: -; Owner: arrozalba
+--
+
+CREATE SCHEMA audit_log;
+
+
+ALTER SCHEMA audit_log OWNER TO arrozalba;
+
+--
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
@@ -22,11 +31,144 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
+--
+-- Name: hstore; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS hstore WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION hstore; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs';
+
+
 SET search_path = public, pg_catalog;
+
+--
+-- Name: install_logger(text, text, boolean); Type: FUNCTION; Schema: public; Owner: jelitox
+--
+
+CREATE FUNCTION install_logger(schema_name text, table_name text, log_truncate boolean DEFAULT false) RETURNS boolean
+    LANGUAGE plpgsql STRICT
+    AS $$
+DECLARE
+	fq_table_name text = NULL;
+BEGIN
+	SELECT schema_name || '.' || table_name INTO fq_table_name; 
+
+	-- check if the table exists and if it doesn't get an error
+	EXECUTE 'SELECT ' || quote_literal(fq_table_name) || '::regclass';
+
+	-- drop the trigger if it  already exists and re-create it
+	-- this is easier than checking pg_triggers to see if the trigger exists
+	EXECUTE 'DROP TRIGGER IF EXISTS auditing_mod_actions ON ' || fq_table_name;
+	EXECUTE 'CREATE TRIGGER auditing_mod_actions AFTER INSERT OR UPDATE OR DELETE ' ||
+			' ON ' || fq_table_name || ' FOR EACH ROW EXECUTE PROCEDURE logger();';
+	
+	IF (log_truncate) THEN
+		EXECUTE 'DROP TRIGGER IF EXISTS auditing_truncate_actions ON ' || fq_table_name;
+		EXECUTE 'CREATE TRIGGER auditing_truncate_actions AFTER TRUNCATE ' ||
+				' ON ' || fq_table_name || ' FOR EACH STATEMENT EXECUTE PROCEDURE logger();';
+	END IF;
+
+	RETURN TRUE;
+END;
+$$;
+
+
+ALTER FUNCTION public.install_logger(schema_name text, table_name text, log_truncate boolean) OWNER TO jelitox;
+
+--
+-- Name: logger(); Type: FUNCTION; Schema: public; Owner: jelitox
+--
+
+CREATE FUNCTION logger() RETURNS trigger
+    LANGUAGE plpgsql SECURITY DEFINER
+    AS $$
+DECLARE 
+	hs_new hstore = NULL;
+	hs_old hstore = NULL;
+BEGIN
+	-- Check that the trigger for the logger should be AFTER and FOR EACH ROW
+	IF TG_WHEN = 'BEFORE' THEN
+		RAISE EXCEPTION 'Trigger for logger should be AFTER';
+	END IF; 
+
+	IF TG_LEVEL = 'STATEMENT' AND TG_OP <> 'TRUNCATE' THEN
+		RAISE EXCEPTION 'Trigger for logger should be FOR EACH ROW';
+	END IF;
+
+	-- Obtain the hstore versions of NEW and OLD, when appropiate
+	IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
+		SELECT hstore(new.*) INTO hs_new;
+	END IF;
+
+	IF TG_OP = 'DELETE' OR TG_OP = 'UPDATE' THEN
+		SELECT hstore(old.*) INTO hs_old;
+	END IF;
+
+	INSERT INTO audit_log.audit_log(log_relid, log_client_addr, log_operation, log_query, log_table, log_columns, log_old_values, log_new_values) 
+	SELECT TG_RELID, inet_client_addr(), TG_OP, current_query(), TG_TABLE_NAME, akeys(hs_old), avals(hs_old), avals(hs_new); 
+
+	RETURN NULL;
+END;
+$$;
+
+
+ALTER FUNCTION public.logger() OWNER TO jelitox;
+
+SET search_path = audit_log, pg_catalog;
 
 SET default_tablespace = '';
 
 SET default_with_oids = false;
+
+--
+-- Name: audit_log; Type: TABLE; Schema: audit_log; Owner: jelitox; Tablespace: 
+--
+
+CREATE TABLE audit_log (
+    log_id integer NOT NULL,
+    log_relid oid NOT NULL,
+    log_session_user text DEFAULT "session_user"() NOT NULL,
+    log_when timestamp with time zone DEFAULT now() NOT NULL,
+    log_client_addr inet,
+    log_operation text,
+    log_query text,
+    log_table text,
+    log_columns text[],
+    log_old_values text[],
+    log_new_values text[]
+);
+
+
+ALTER TABLE audit_log.audit_log OWNER TO jelitox;
+
+--
+-- Name: audit_log_log_id_seq; Type: SEQUENCE; Schema: audit_log; Owner: jelitox
+--
+
+CREATE SEQUENCE audit_log_log_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE audit_log.audit_log_log_id_seq OWNER TO jelitox;
+
+--
+-- Name: audit_log_log_id_seq; Type: SEQUENCE OWNED BY; Schema: audit_log; Owner: jelitox
+--
+
+ALTER SEQUENCE audit_log_log_id_seq OWNED BY audit_log.log_id;
+
+
+SET search_path = public, pg_catalog;
 
 --
 -- Name: acceso; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
@@ -130,6 +272,48 @@ ALTER TABLE public.acceso_id_seq OWNER TO jelitox;
 --
 
 ALTER SEQUENCE acceso_id_seq OWNED BY acceso.id;
+
+
+--
+-- Name: audit_log; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+--
+
+CREATE TABLE audit_log (
+    log_id integer NOT NULL,
+    log_relid oid NOT NULL,
+    log_session_user text DEFAULT "session_user"() NOT NULL,
+    log_when timestamp with time zone DEFAULT now() NOT NULL,
+    log_client_addr inet,
+    log_operation text,
+    log_query text,
+    log_table text,
+    log_columns text[],
+    log_old_values text[],
+    log_new_values text[]
+);
+
+
+ALTER TABLE public.audit_log OWNER TO jelitox;
+
+--
+-- Name: audit_log_log_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+--
+
+CREATE SEQUENCE audit_log_log_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.audit_log_log_id_seq OWNER TO jelitox;
+
+--
+-- Name: audit_log_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+--
+
+ALTER SEQUENCE audit_log_log_id_seq OWNED BY audit_log.log_id;
 
 
 --
@@ -1489,7 +1673,7 @@ CREATE TABLE medico (
     celular character varying(12),
     telefono character varying(12),
     correo_electronico character varying(30),
-    observacion character varying(250) NOT NULL
+    observacion character varying(250)
 );
 
 
@@ -2127,7 +2311,8 @@ CREATE TABLE persona (
     celular character varying(12),
     telefono character varying(12),
     correo_electronico character varying(64),
-    grupo_sanguineo character varying(4)
+    grupo_sanguineo character varying(4) DEFAULT 'N/A'::character varying,
+    fotografia character varying(45) DEFAULT 'default.png'::character varying
 );
 
 
@@ -4512,11 +4697,29 @@ ALTER TABLE public.usuario_id_seq OWNER TO jelitox;
 ALTER SEQUENCE usuario_id_seq OWNED BY usuario.id;
 
 
+SET search_path = audit_log, pg_catalog;
+
+--
+-- Name: log_id; Type: DEFAULT; Schema: audit_log; Owner: jelitox
+--
+
+ALTER TABLE ONLY audit_log ALTER COLUMN log_id SET DEFAULT nextval('audit_log_log_id_seq'::regclass);
+
+
+SET search_path = public, pg_catalog;
+
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
 --
 
 ALTER TABLE ONLY acceso ALTER COLUMN id SET DEFAULT nextval('acceso_id_seq'::regclass);
+
+
+--
+-- Name: log_id; Type: DEFAULT; Schema: public; Owner: jelitox
+--
+
+ALTER TABLE ONLY audit_log ALTER COLUMN log_id SET DEFAULT nextval('audit_log_log_id_seq'::regclass);
 
 
 --
@@ -4813,6 +5016,27 @@ ALTER TABLE ONLY titular ALTER COLUMN id SET DEFAULT nextval('titular_id_seq'::r
 ALTER TABLE ONLY usuario ALTER COLUMN id SET DEFAULT nextval('usuario_id_seq'::regclass);
 
 
+SET search_path = audit_log, pg_catalog;
+
+--
+-- Data for Name: audit_log; Type: TABLE DATA; Schema: audit_log; Owner: jelitox
+--
+
+COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, log_operation, log_query, log_table, log_columns, log_old_values, log_new_values) FROM stdin;
+1	254379	jelitox	2014-03-17 19:37:38.359201-04:30	127.0.0.1	UPDATE	UPDATE public.usuario SET email='yelix_ricarda@gmail.com'::text WHERE id = '6'::integer	usuario	{id,tema,email,login,app_ajax,datagrid,password,perfil_id,persona_id,usuario_id,sucursal_id,fecha_registro,fecha_modificado}	{6,default,yelix@gmail.com,yelix,1,30,d93a5def7511da3d0f2d171d9c344e91,3,6,NULL,NULL,"2014-03-17 19:22:19.405099-04:30","2014-03-17 19:22:19.405099-04:30"}	{6,default,yelix_ricarda@gmail.com,yelix,1,30,d93a5def7511da3d0f2d171d9c344e91,3,6,NULL,NULL,"2014-03-17 19:22:19.405099-04:30","2014-03-17 19:22:19.405099-04:30"}
+2	254379	jelitox	2014-03-17 19:38:57.531371-04:30	127.0.0.1	UPDATE	UPDATE public.usuario SET email='yelixmaria@gmail.com'::text WHERE id = '6'::integer	usuario	{id,tema,email,login,app_ajax,datagrid,password,perfil_id,persona_id,usuario_id,sucursal_id,fecha_registro,fecha_modificado}	{6,default,yelix_ricarda@gmail.com,yelix,1,30,d93a5def7511da3d0f2d171d9c344e91,3,6,NULL,NULL,"2014-03-17 19:22:19.405099-04:30","2014-03-17 19:22:19.405099-04:30"}	{6,default,yelixmaria@gmail.com,yelix,1,30,d93a5def7511da3d0f2d171d9c344e91,3,6,NULL,NULL,"2014-03-17 19:22:19.405099-04:30","2014-03-17 19:22:19.405099-04:30"}
+\.
+
+
+--
+-- Name: audit_log_log_id_seq; Type: SEQUENCE SET; Schema: audit_log; Owner: jelitox
+--
+
+SELECT pg_catalog.setval('audit_log_log_id_seq', 2, true);
+
+
+SET search_path = public, pg_catalog;
+
 --
 -- Data for Name: acceso; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
@@ -4826,6 +5050,85 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 7	1	2014-03-13 14:08:31.997715-04:30	2014-03-13 14:08:31.997715-04:30	2	\N	\N	\N	\N	127.0.0.1
 8	1	2014-03-13 20:10:55.138285-04:30	2014-03-13 20:10:55.138285-04:30	2	\N	\N	\N	\N	127.0.0.1
 9	1	2014-03-13 22:19:10.784492-04:30	2014-03-13 22:19:10.784492-04:30	2	\N	\N	\N	\N	127.0.0.1
+10	1	2014-03-14 11:54:21.602879-04:30	2014-03-14 11:54:21.602879-04:30	2	\N	\N	\N	\N	127.0.0.1
+11	1	2014-03-14 11:54:28.411002-04:30	2014-03-14 11:54:28.411002-04:30	1	\N	\N	\N	\N	127.0.0.1
+12	1	2014-03-14 11:54:42.093035-04:30	2014-03-14 11:54:42.093035-04:30	2	\N	\N	\N	\N	127.0.0.1
+13	1	2014-03-14 11:54:48.714039-04:30	2014-03-14 11:54:48.714039-04:30	1	\N	\N	\N	\N	127.0.0.1
+14	1	2014-03-14 12:50:56.666416-04:30	2014-03-14 12:50:56.666416-04:30	1	\N	\N	\N	\N	127.0.0.1
+15	1	2014-03-14 13:39:53.693347-04:30	2014-03-14 13:39:53.693347-04:30	1	\N	\N	\N	\N	127.0.0.1
+16	1	2014-03-15 14:02:47.133496-04:30	2014-03-15 14:02:47.133496-04:30	1	\N	\N	\N	\N	127.0.0.1
+17	1	2014-03-15 17:35:27.771259-04:30	2014-03-15 17:35:27.771259-04:30	1	\N	\N	\N	\N	127.0.0.1
+18	1	2014-03-15 18:03:08.20981-04:30	2014-03-15 18:03:08.20981-04:30	2	\N	\N	\N	\N	127.0.0.1
+19	1	2014-03-15 18:03:13.664569-04:30	2014-03-15 18:03:13.664569-04:30	1	\N	\N	\N	\N	127.0.0.1
+20	1	2014-03-15 18:07:56.430811-04:30	2014-03-15 18:07:56.430811-04:30	2	\N	\N	\N	\N	127.0.0.1
+21	1	2014-03-15 18:08:03.854353-04:30	2014-03-15 18:08:03.854353-04:30	1	\N	\N	\N	\N	127.0.0.1
+22	1	2014-03-15 18:12:23.998826-04:30	2014-03-15 18:12:23.998826-04:30	2	\N	\N	\N	\N	127.0.0.1
+23	1	2014-03-15 18:12:29.923889-04:30	2014-03-15 18:12:29.923889-04:30	1	\N	\N	\N	\N	127.0.0.1
+24	1	2014-03-15 18:12:43.85387-04:30	2014-03-15 18:12:43.85387-04:30	2	\N	\N	\N	\N	127.0.0.1
+25	1	2014-03-15 18:13:25.214322-04:30	2014-03-15 18:13:25.214322-04:30	1	\N	\N	\N	\N	127.0.0.1
+26	1	2014-03-15 22:32:28.148879-04:30	2014-03-15 22:32:28.148879-04:30	2	\N	\N	\N	\N	127.0.0.1
+27	1	2014-03-15 22:32:34.859826-04:30	2014-03-15 22:32:34.859826-04:30	1	\N	\N	\N	\N	127.0.0.1
+28	1	2014-03-15 22:34:11.264848-04:30	2014-03-15 22:34:11.264848-04:30	2	\N	\N	\N	\N	127.0.0.1
+29	1	2014-03-15 22:34:18.818627-04:30	2014-03-15 22:34:18.818627-04:30	1	\N	\N	\N	\N	127.0.0.1
+30	1	2014-03-15 22:48:12.523915-04:30	2014-03-15 22:48:12.523915-04:30	2	\N	\N	\N	\N	127.0.0.1
+31	1	2014-03-15 22:48:20.218691-04:30	2014-03-15 22:48:20.218691-04:30	1	\N	\N	\N	\N	127.0.0.1
+32	1	2014-03-15 22:49:31.389011-04:30	2014-03-15 22:49:31.389011-04:30	2	\N	\N	\N	\N	127.0.0.1
+33	1	2014-03-15 22:49:37.40785-04:30	2014-03-15 22:49:37.40785-04:30	1	\N	\N	\N	\N	127.0.0.1
+34	1	2014-03-16 01:20:54.756982-04:30	2014-03-16 01:20:54.756982-04:30	2	\N	\N	\N	\N	127.0.0.1
+35	4	2014-03-16 01:21:03.683843-04:30	2014-03-16 01:21:03.683843-04:30	1	\N	\N	\N	\N	127.0.0.1
+36	4	2014-03-16 01:21:21.440617-04:30	2014-03-16 01:21:21.440617-04:30	2	\N	\N	\N	\N	127.0.0.1
+37	1	2014-03-16 01:21:27.358997-04:30	2014-03-16 01:21:27.358997-04:30	1	\N	\N	\N	\N	127.0.0.1
+38	1	2014-03-16 01:22:23.129786-04:30	2014-03-16 01:22:23.129786-04:30	2	\N	\N	\N	\N	127.0.0.1
+39	4	2014-03-16 01:22:36.807659-04:30	2014-03-16 01:22:36.807659-04:30	1	\N	\N	\N	\N	127.0.0.1
+40	4	2014-03-16 01:24:02.77809-04:30	2014-03-16 01:24:02.77809-04:30	2	\N	\N	\N	\N	127.0.0.1
+41	1	2014-03-16 01:24:54.825045-04:30	2014-03-16 01:24:54.825045-04:30	1	\N	\N	\N	\N	127.0.0.1
+42	1	2014-03-16 11:53:14.760225-04:30	2014-03-16 11:53:14.760225-04:30	2	\N	\N	\N	\N	127.0.0.1
+43	1	2014-03-16 11:53:22.573651-04:30	2014-03-16 11:53:22.573651-04:30	1	\N	\N	\N	\N	127.0.0.1
+44	1	2014-03-16 12:21:08.768412-04:30	2014-03-16 12:21:08.768412-04:30	2	\N	\N	\N	\N	127.0.0.1
+45	4	2014-03-16 12:21:29.537315-04:30	2014-03-16 12:21:29.537315-04:30	1	\N	\N	\N	\N	127.0.0.1
+46	4	2014-03-16 12:23:32.794662-04:30	2014-03-16 12:23:32.794662-04:30	2	\N	\N	\N	\N	127.0.0.1
+47	1	2014-03-16 12:23:39.512138-04:30	2014-03-16 12:23:39.512138-04:30	1	\N	\N	\N	\N	127.0.0.1
+48	1	2014-03-16 12:49:35.021334-04:30	2014-03-16 12:49:35.021334-04:30	2	\N	\N	\N	\N	127.0.0.1
+49	4	2014-03-16 12:51:18.170273-04:30	2014-03-16 12:51:18.170273-04:30	1	\N	\N	\N	\N	127.0.0.1
+50	4	2014-03-16 14:20:25.609382-04:30	2014-03-16 14:20:25.609382-04:30	2	\N	\N	\N	\N	127.0.0.1
+51	4	2014-03-16 14:20:33.576394-04:30	2014-03-16 14:20:33.576394-04:30	1	\N	\N	\N	\N	127.0.0.1
+52	1	2014-03-16 15:52:29.106416-04:30	2014-03-16 15:52:29.106416-04:30	1	\N	\N	\N	\N	127.0.0.1
+53	1	2014-03-16 15:55:49.684289-04:30	2014-03-16 15:55:49.684289-04:30	2	\N	\N	\N	\N	127.0.0.1
+54	4	2014-03-16 16:42:29.513223-04:30	2014-03-16 16:42:29.513223-04:30	1	\N	\N	\N	\N	127.0.0.1
+55	4	2014-03-16 19:56:43.545508-04:30	2014-03-16 19:56:43.545508-04:30	1	\N	\N	\N	\N	127.0.0.1
+56	1	2014-03-17 18:30:51.255126-04:30	2014-03-17 18:30:51.255126-04:30	1	\N	\N	\N	\N	127.0.0.1
+57	1	2014-03-17 18:35:12.510962-04:30	2014-03-17 18:35:12.510962-04:30	2	\N	\N	\N	\N	127.0.0.1
+58	5	2014-03-17 18:35:19.368323-04:30	2014-03-17 18:35:19.368323-04:30	1	\N	\N	\N	\N	127.0.0.1
+59	5	2014-03-17 18:35:36.820656-04:30	2014-03-17 18:35:36.820656-04:30	2	\N	\N	\N	\N	127.0.0.1
+60	1	2014-03-17 18:35:42.388029-04:30	2014-03-17 18:35:42.388029-04:30	1	\N	\N	\N	\N	127.0.0.1
+61	1	2014-03-17 18:36:14.047825-04:30	2014-03-17 18:36:14.047825-04:30	2	\N	\N	\N	\N	127.0.0.1
+62	5	2014-03-17 18:36:22.923107-04:30	2014-03-17 18:36:22.923107-04:30	1	\N	\N	\N	\N	127.0.0.1
+63	5	2014-03-17 18:36:37.837872-04:30	2014-03-17 18:36:37.837872-04:30	2	\N	\N	\N	\N	127.0.0.1
+64	1	2014-03-17 18:40:00.093296-04:30	2014-03-17 18:40:00.093296-04:30	1	\N	\N	\N	\N	127.0.0.1
+65	1	2014-03-17 18:45:28.208555-04:30	2014-03-17 18:45:28.208555-04:30	2	\N	\N	\N	\N	127.0.0.1
+66	5	2014-03-17 18:45:35.243529-04:30	2014-03-17 18:45:35.243529-04:30	1	\N	\N	\N	\N	127.0.0.1
+67	5	2014-03-17 18:46:05.28751-04:30	2014-03-17 18:46:05.28751-04:30	2	\N	\N	\N	\N	127.0.0.1
+68	1	2014-03-17 18:46:11.363551-04:30	2014-03-17 18:46:11.363551-04:30	1	\N	\N	\N	\N	127.0.0.1
+69	1	2014-03-17 18:46:58.507055-04:30	2014-03-17 18:46:58.507055-04:30	2	\N	\N	\N	\N	127.0.0.1
+70	5	2014-03-17 18:47:08.929257-04:30	2014-03-17 18:47:08.929257-04:30	1	\N	\N	\N	\N	127.0.0.1
+71	5	2014-03-17 18:47:24.357866-04:30	2014-03-17 18:47:24.357866-04:30	2	\N	\N	\N	\N	127.0.0.1
+72	1	2014-03-17 18:47:29.728293-04:30	2014-03-17 18:47:29.728293-04:30	1	\N	\N	\N	\N	127.0.0.1
+73	1	2014-03-17 18:48:39.297339-04:30	2014-03-17 18:48:39.297339-04:30	2	\N	\N	\N	\N	127.0.0.1
+74	1	2014-03-17 18:51:17.476666-04:30	2014-03-17 18:51:17.476666-04:30	1	\N	\N	\N	\N	127.0.0.1
+75	1	2014-03-17 19:03:25.893554-04:30	2014-03-17 19:03:25.893554-04:30	2	\N	\N	\N	\N	127.0.0.1
+76	5	2014-03-17 19:05:20.355599-04:30	2014-03-17 19:05:20.355599-04:30	1	\N	\N	\N	\N	127.0.0.1
+77	5	2014-03-17 19:05:52.334419-04:30	2014-03-17 19:05:52.334419-04:30	2	\N	\N	\N	\N	127.0.0.1
+78	1	2014-03-17 19:08:40.890166-04:30	2014-03-17 19:08:40.890166-04:30	1	\N	\N	\N	\N	127.0.0.1
+79	1	2014-03-17 19:22:38.29172-04:30	2014-03-17 19:22:38.29172-04:30	2	\N	\N	\N	\N	127.0.0.1
+80	6	2014-03-17 19:24:31.331364-04:30	2014-03-17 19:24:31.331364-04:30	1	\N	\N	\N	\N	127.0.0.1
+81	6	2014-03-17 19:28:37.094667-04:30	2014-03-17 19:28:37.094667-04:30	2	\N	\N	\N	\N	127.0.0.1
+82	1	2014-03-17 19:36:53.419996-04:30	2014-03-17 19:36:53.419996-04:30	1	\N	\N	\N	\N	127.0.0.1
+83	1	2014-03-17 19:48:20.004717-04:30	2014-03-17 19:48:20.004717-04:30	1	\N	\N	\N	\N	127.0.0.1
+84	1	2014-03-30 12:11:14.904673-04:30	2014-03-30 12:11:14.904673-04:30	1	\N	\N	\N	\N	127.0.0.1
+85	1	2014-03-30 13:48:43.841912-04:30	2014-03-30 13:48:43.841912-04:30	1	\N	\N	\N	\N	127.0.0.1
+86	1	2014-03-30 15:19:42.197686-04:30	2014-03-30 15:19:42.197686-04:30	1	\N	\N	\N	\N	127.0.0.1
+87	1	2014-03-30 17:59:38.599591-04:30	2014-03-30 17:59:38.599591-04:30	1	\N	\N	\N	\N	127.0.0.1
+88	1	2014-03-30 22:22:13.797888-04:30	2014-03-30 22:22:13.797888-04:30	1	\N	\N	\N	\N	127.0.0.1
 \.
 
 
@@ -4833,7 +5136,22 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 -- Name: acceso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
-SELECT pg_catalog.setval('acceso_id_seq', 9, true);
+SELECT pg_catalog.setval('acceso_id_seq', 88, true);
+
+
+--
+-- Data for Name: audit_log; Type: TABLE DATA; Schema: public; Owner: jelitox
+--
+
+COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, log_operation, log_query, log_table, log_columns, log_old_values, log_new_values) FROM stdin;
+\.
+
+
+--
+-- Name: audit_log_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+--
+
+SELECT pg_catalog.setval('audit_log_log_id_seq', 1, false);
 
 
 --
@@ -5098,6 +5416,9 @@ SELECT pg_catalog.setval('estado_id_seq', 75, true);
 
 COPY estado_usuario (id, usuario_id, fecha_registro, fecha_modificado, estado_usuario, descripcion) FROM stdin;
 1	1	2014-03-13 13:35:39.596605-04:30	2014-03-13 13:35:39.596605-04:30	1	Activo por ser el Super Usuario del Sistema
+3	4	2014-03-16 01:14:45.552613-04:30	2014-03-16 01:14:45.552613-04:30	1	Activado por registro inicial
+4	5	2014-03-17 18:34:56.063814-04:30	2014-03-17 18:34:56.063814-04:30	1	Activado por registro inicial
+5	6	2014-03-17 19:22:19.405099-04:30	2014-03-17 19:22:19.405099-04:30	1	Activado por registro inicial
 \.
 
 
@@ -5105,7 +5426,7 @@ COPY estado_usuario (id, usuario_id, fecha_registro, fecha_modificado, estado_us
 -- Name: estado_usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
-SELECT pg_catalog.setval('estado_usuario_id_seq', 1, false);
+SELECT pg_catalog.setval('estado_usuario_id_seq', 5, true);
 
 
 --
@@ -5166,8 +5487,17 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 23	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	22	Discapacidad	config/discapacidad/	807	\N	1	1
 24	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	23	Patologia	config/patologia/	808	\N	1	1
 25	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	24	Recaudos	config/recaudo/	809	\N	1	1
-26	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	\N	25	Personas	persona/titular/	12	\N	1	1
 17	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	16	Sucursales	config/sucursal/listar/	802	icon-sitemap	1	1
+33	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	30	Examen de Imagenes 	solicitudes/examen_imagen/	204	icon-th	1	1
+34	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	31	Solicitud de Reembolso	solicitudes/reembolso/	205	icon-th	1	1
+35	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	32	Funeraria	solicitudes/funeraria/	206	icon-th	1	1
+28	\N	2014-03-16 12:46:04.752491-04:30	2014-03-16 12:46:04.752491-04:30	\N	\N	Beneficiarios	#	100	icon-user	1	1
+27	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	28	26	Beneficiarios	beneficiarios/beneficiario/	102	icon-user	1	1
+26	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	28	25	Titular	beneficiarios/titular/	101	icon-user	1	1
+29	\N	2014-03-16 13:23:40.74219-04:30	2014-03-16 13:23:40.74219-04:30	\N	\N	Solicitudes	#	200	icon-th	1	1
+30	\N	2014-03-16 13:24:43.632516-04:30	2014-03-16 13:24:43.632516-04:30	29	27	Orden Medicas	solicitudes/orden_medica/	201	icon-th	1	1
+31	\N	2014-03-16 13:26:21.282386-04:30	2014-03-16 13:26:21.282386-04:30	29	28	Atención Primaria	solicitudes/atencion_primaria/	202	icon-th	1	1
+32	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	29	Examen de Laboratorio	solicitudes/examen_laboratorio/	203	icon-th	1	1
 \.
 
 
@@ -5175,7 +5505,7 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 -- Name: menu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
-SELECT pg_catalog.setval('menu_id_seq', 1, false);
+SELECT pg_catalog.setval('menu_id_seq', 22, true);
 
 
 --
@@ -6918,6 +7248,7 @@ SELECT pg_catalog.setval('patologia_id_seq', 1, false);
 COPY perfil (id, usuario_id, fecha_registro, fecha_modificado, perfil, estado, plantilla) FROM stdin;
 1	\N	2014-03-13 12:19:42.852111-04:30	2014-03-13 12:19:42.852111-04:30	Super User	1	default
 2	\N	2014-03-13 12:20:07.544255-04:30	2014-03-13 12:20:07.544255-04:30	Usuario Full	1	default
+3	\N	2014-03-13 12:20:07.544255-04:30	2014-03-13 12:20:07.544255-04:30	Usuario	1	default
 \.
 
 
@@ -6925,15 +7256,18 @@ COPY perfil (id, usuario_id, fecha_registro, fecha_modificado, perfil, estado, p
 -- Name: perfil_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
-SELECT pg_catalog.setval('perfil_id_seq', 1, false);
+SELECT pg_catalog.setval('perfil_id_seq', 1, true);
 
 
 --
 -- Data for Name: persona; Type: TABLE DATA; Schema: public; Owner: jelitox
 --
 
-COPY persona (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1, nombre2, apellido1, apellido2, nacionalidad, sexo, fecha_nacimiento, pais_id, estado_id, municipio_id, parroquia_id, direccion_habitacion, estado_civil, celular, telefono, correo_electronico, grupo_sanguineo) FROM stdin;
-1	\N	2014-03-13 12:03:49.841971-04:30	2014-03-13 12:03:49.841971-04:30	20643647	Alexis	\N	Borges	\N	V	M	1990-11-12	240	69	223	715	URB 12 DE OCTUBRE	S	04167012111	\N	tuaalexis@gmail.com	A
+COPY persona (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1, nombre2, apellido1, apellido2, nacionalidad, sexo, fecha_nacimiento, pais_id, estado_id, municipio_id, parroquia_id, direccion_habitacion, estado_civil, celular, telefono, correo_electronico, grupo_sanguineo, fotografia) FROM stdin;
+1	\N	2014-03-13 12:03:49.841971-04:30	2014-03-13 12:03:49.841971-04:30	20643647	Super	\N	Administrador	\N	V	M	1990-11-12	240	69	223	715	URB 12 DE OCTUBRE	S	04167012111	\N	tuaalexis@gmail.com	A	default.png
+4	\N	2014-03-16 01:14:45.552613-04:30	2014-03-16 01:14:45.552613-04:30	16753367	Javier	Enrique	León	\N	V	M	1984-12-09	240	69	229	732	Av principal	c	04162546908	02556217013	\N	AB-	default.png
+5	\N	2014-03-17 18:34:56.063814-04:30	2014-03-17 18:34:56.063814-04:30	20389587	Rahiber	Jose	Paradas	Cardona	V	M	1991-07-05	240	69	229	732	Villa Araure 1 el bosque	S	04245457556	\N	\N	AB-	default.png
+6	\N	2014-03-17 19:22:19.405099-04:30	2014-03-17 19:22:19.405099-04:30	20543089	yelix	andreina	monsalve	la cruz	V	F	1990-03-01	240	69	229	52	las delicias	S	04165555555	\N	\N	AB-	default.png
 \.
 
 
@@ -6941,7 +7275,7 @@ COPY persona (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1,
 -- Name: persona_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
-SELECT pg_catalog.setval('persona_id_seq', 1, false);
+SELECT pg_catalog.setval('persona_id_seq', 6, true);
 
 
 --
@@ -7107,7 +7441,14 @@ COPY recurso (id, usuario_id, fecha_registro, fecha_modificado, modulo, controla
 22	\N	2014-03-13 13:24:45.006859-04:30	2014-03-13 13:24:45.006859-04:30	config	discapacidad	*	config/discapacidad/*	Gestión de la discapacidad	1
 23	\N	2014-03-13 13:24:45.006859-04:30	2014-03-13 13:24:45.006859-04:30	config	patologia	*	config/patologia/*	Gestión de las Patologias	1
 24	\N	2014-03-13 13:24:45.006859-04:30	2014-03-13 13:24:45.006859-04:30	config	recaudo	*	config/recaudo/*	Gestión de los Recaudos	1
-25	\N	2014-03-13 13:24:45.006859-04:30	2014-03-13 13:24:45.006859-04:30	persona	titular	*	persona/titular/*	Gestión del personal de la empresa	1
+25	\N	2014-03-13 13:24:45.006859-04:30	2014-03-13 13:24:45.006859-04:30	beneficiarios	titular	*	beneficiarios/titular/*	Gestión del personal de la empresa	1
+26	\N	2014-03-13 13:24:45.006859-04:30	2014-03-13 13:24:45.006859-04:30	beneficiarios	beneficiario	*	beneficiarios/beneficiario/*	Página para la gestión de beneficiarios del sistema	1
+27	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	orden_medica	*	solicitudes/orden_medica/*	Página para la gestión de Ordenes Medicas	1
+28	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	atencion_primaria	*	solicitudes/atencion_primaria/*	Página para la gestión de Ordenes Medicas	1
+29	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	examen_laboratorio	*	solicitudes/examen_laboratorio/*	Página para la gestión de Ordenes Medicas	1
+30	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	examen_imagen	*	solicitudes/examen_imagen/*	Página para la gestión de Ordenes Medicas	1
+31	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	reembolso	*	solicitudes/reembolso/*	Página para la gestión de Ordenes Medicas	1
+32	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	funeraria	*	solicitudes/funeraria/*	Página para la gestión de Ordenes Medicas	1
 \.
 
 
@@ -7115,7 +7456,7 @@ COPY recurso (id, usuario_id, fecha_registro, fecha_modificado, modulo, controla
 -- Name: recurso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
-SELECT pg_catalog.setval('recurso_id_seq', 1, false);
+SELECT pg_catalog.setval('recurso_id_seq', 6, true);
 
 
 --
@@ -7124,6 +7465,44 @@ SELECT pg_catalog.setval('recurso_id_seq', 1, false);
 
 COPY recurso_perfil (id, usuario_id, fecha_registro, fecha_modificado, recurso_id, perfil_id) FROM stdin;
 1	1	2014-03-13 14:07:07.669586-04:30	2014-03-13 14:07:07.669586-04:30	1	1
+12	\N	2014-03-16 01:22:15.711586-04:30	2014-03-16 01:22:15.711586-04:30	2	2
+241	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	1	2
+242	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	26	3
+243	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	26	2
+244	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	25	3
+245	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	25	2
+246	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	16	2
+247	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	15	3
+248	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	15	2
+249	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	18	3
+250	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	18	2
+251	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	19	2
+252	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	20	2
+253	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	21	2
+254	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	22	2
+255	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	23	2
+256	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	24	2
+185	\N	2014-03-16 15:55:00.358245-04:30	2014-03-16 15:55:00.358245-04:30	2	3
+257	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	14	2
+258	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	3	2
+259	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	4	2
+260	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	13	2
+261	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	7	2
+262	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	8	2
+263	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	9	2
+264	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	10	2
+265	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	11	2
+266	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	12	2
+267	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	5	2
+268	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	6	2
+269	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	27	3
+270	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	27	2
+271	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	28	3
+272	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	28	2
+273	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	29	3
+274	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	29	2
+275	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	30	3
+276	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	31	3
 \.
 
 
@@ -7131,7 +7510,7 @@ COPY recurso_perfil (id, usuario_id, fecha_registro, fecha_modificado, recurso_i
 -- Name: recurso_perfil_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
-SELECT pg_catalog.setval('recurso_perfil_id_seq', 1, true);
+SELECT pg_catalog.setval('recurso_perfil_id_seq', 276, true);
 
 
 --
@@ -7335,7 +7714,10 @@ SELECT pg_catalog.setval('titular_id_seq', 1, false);
 --
 
 COPY usuario (id, usuario_id, fecha_registro, fecha_modificado, sucursal_id, persona_id, login, password, perfil_id, email, tema, app_ajax, datagrid) FROM stdin;
-1	1	2014-03-13 12:20:43.690531-04:30	2014-03-13 12:20:43.690531-04:30	1	1	alex	d93a5def7511da3d0f2d171d9c344e91	1	\N	default	1	30
+1	1	2014-03-13 12:20:43.690531-04:30	2014-03-13 12:20:43.690531-04:30	1	1	admin	d93a5def7511da3d0f2d171d9c344e91	1	\N	default	1	30
+4	\N	2014-03-16 01:14:45.552613-04:30	2014-03-16 01:14:45.552613-04:30	\N	4	jelitox	d93a5def7511da3d0f2d171d9c344e91	3	jel1284@gmail.com	default	1	30
+5	\N	2014-03-17 18:34:56.063814-04:30	2014-03-17 18:34:56.063814-04:30	\N	5	rahiber	d93a5def7511da3d0f2d171d9c344e91	3	rahiber_15@gmail.com	default	1	30
+6	\N	2014-03-17 19:22:19.405099-04:30	2014-03-17 19:22:19.405099-04:30	\N	6	yelix	d93a5def7511da3d0f2d171d9c344e91	3	yelixmaria@gmail.com	default	1	30
 \.
 
 
@@ -7343,8 +7725,20 @@ COPY usuario (id, usuario_id, fecha_registro, fecha_modificado, sucursal_id, per
 -- Name: usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
 --
 
-SELECT pg_catalog.setval('usuario_id_seq', 1, false);
+SELECT pg_catalog.setval('usuario_id_seq', 6, true);
 
+
+SET search_path = audit_log, pg_catalog;
+
+--
+-- Name: audit_log_pkey; Type: CONSTRAINT; Schema: audit_log; Owner: jelitox; Tablespace: 
+--
+
+ALTER TABLE ONLY audit_log
+    ADD CONSTRAINT audit_log_pkey PRIMARY KEY (log_id);
+
+
+SET search_path = public, pg_catalog;
 
 --
 -- Name: acceso_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
@@ -7352,6 +7746,14 @@ SELECT pg_catalog.setval('usuario_id_seq', 1, false);
 
 ALTER TABLE ONLY acceso
     ADD CONSTRAINT acceso_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: audit_log_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+--
+
+ALTER TABLE ONLY audit_log
+    ADD CONSTRAINT audit_log_pkey PRIMARY KEY (log_id);
 
 
 --
@@ -7989,6 +8391,13 @@ CREATE INDEX usuario_persona_idx ON usuario USING btree (persona_id);
 --
 
 CREATE INDEX usuario_sucursal_idx ON usuario USING btree (sucursal_id);
+
+
+--
+-- Name: trg_usuario; Type: TRIGGER; Schema: public; Owner: jelitox
+--
+
+CREATE TRIGGER trg_usuario AFTER INSERT OR DELETE OR UPDATE ON usuario FOR EACH ROW EXECUTE PROCEDURE logger();
 
 
 --

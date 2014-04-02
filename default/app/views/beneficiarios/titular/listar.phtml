@@ -1,0 +1,79 @@
+<?php View::notify(); ?>
+
+<script type="text/javascript">
+    $(function() {
+        $('table').dwGrid({
+            form_search: true,
+            form_action: '<?php echo PUBLIC_PATH; ?>beneficiario/titular/buscar/',
+            form_load_data : 'dw-shell-content',
+            order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
+            order_action: $.KumbiaPHP.publicPath+"beneficiario/titular/listar/"
+        });
+    });
+</script>
+
+<div class="container-fluid dw-shell-view">
+
+    <?php View::process($page_module, $page_title, $set_title); ?>
+
+    <div class="btn-toolbar btn-toolbar-top">
+        <div class="btn-actions">
+            <?php echo DwHtml::button("beneficiario/titular/agregar/", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
+        </div>
+    </div>
+
+    <div class="dw-overflow" id="data-result">
+
+        <table class="table table-bordered table-hover table-striped table-condensed table-responsive">
+            <thead>
+                <tr>
+                    <th>NUM</th>
+                    <th class="col-collapse" data-search="cedula">CEDULA</th>
+                    <th class="col-collapse" data-search="nombre1">NOMBRE</th>
+                    <th class="col-collapse" data-search="apellido1">APELLIDO</th>
+                    <th class="col-collapse" data-search="email">EMAIL</th>
+                    <th class="col-collapse" data-search="perfil">PERFIL</th>
+                    <?if(APP_OFFICE) { //Si está activa la opción de oficinas ?>
+                    <th class="col-collapse" data-search="sucursal">SUCURSAL</th>
+                    <? } ?>
+                    <th class="col-collapse" data-search="estado_usuario">ESTADO</th>
+                    <th class="btn-actions no-responsive" style="width: 150px;">ACCIONES</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($titulares->items as $titular): ?>
+                    <?php $key_shw = DwSecurity::getKey($titular->id, 'shw_usuario'); ?>
+                    <?php $key_upd = DwSecurity::getKey($titular->id, 'upd_usuario'); ?>
+                    <?php $key_ina = DwSecurity::getKey($titular->id, 'bloquear_usuario'); ?>
+                    <?php $key_rea = DwSecurity::getKey($titular->id, 'reactivar_usuario'); ?>
+                    <tr>
+                        <td><?php echo $titulares->counter; ?></td>
+                        <td><?php echo $titular->login; ?></td>
+                        <td><?php echo $titular->nombre1; ?></td>
+                        <td><?php echo $titular->apellido1; ?></td>
+                        <td><?php echo $titular->email; ?></td>
+                        <td><?php echo $titular->perfil; ?></td>
+                        <?if(APP_OFFICE) { //Si está activa la opción de oficinas ?>
+                        <td><?php echo empty($titular->sucursal) ? 'Todas' : $titular->sucursal; ?></td>
+                        <? } ?>
+                        <td><?php // echo ($usuario->estado_usuario == EstadoUsuario::ACTIVO) ? '<span class="label label-success" title="'.$usuario->descripcion.'" rel="tooltip">Activo</span>' : '<span class="label label-important" title="'.$usuario->descripcion.'" rel="tooltip">Bloqueado</span>'; ; ?></td>
+                        <td>
+                            <?php echo DwHtml::buttonTable('Ver usuario', "beneficiario/titular/ver/$key_shw/", NULL, 'warning', 'search'); ?>
+                            <?php echo DwHtml::buttonTable('Modificar usuario', "beneficiario/titular/editar/$key_upd/", NULL, 'info', 'edit'); ?>
+                            <?php if($usuario->estado_usuario == EstadoUsuario::ACTIVO) { ?>
+                                <?php echo DwHtml::buttonTable('Bloquear usuario', "beneficiario/titular/estado/bloquear/$key_ina/", NULL, 'success', 'flag'); ?>
+                            <?php } else { ?>
+                                <?php echo DwHtml::buttonTable('Reactivar usuario', "beneficiario/titular/estado/reactivar/$key_rea/", NULL, 'danger', 'flag'); ?>
+                            <?php } ?>
+                        </td>
+                    </tr>
+                    <?php $titulares->counter++; ?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+    </div>
+
+    <?php View::partial('paginators/default', false, array('page'=>$titulares, 'url'=>"beneficiario/titular/listar/$order/")); ?>
+
+</div>

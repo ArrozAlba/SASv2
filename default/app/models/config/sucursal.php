@@ -8,8 +8,10 @@
  * @copyright   Copyright (c) 2013 Dailyscript Team (http://www.dailyscript.com.co) 
  */
 
+Load::models('params/pais');
+Load::models('params/estado');
+Load::models('params/municipio');
 Load::models('params/parroquia');
-
 class Sucursal extends ActiveRecord {
     
     /**
@@ -22,11 +24,17 @@ class Sucursal extends ActiveRecord {
      */
     protected function initialize() {
         $this->belongs_to('empresa');
+        $this->belongs_to('pais');
+        $this->belongs_to('estado');
+        $this->belongs_to('municipio');        
         $this->belongs_to('parroquia');
         $this->has_many('usuario');
 
         $this->validates_presence_of('sucursal', 'message: Ingresa el nombre de la sucursal');        
         $this->validates_presence_of('direccion', 'message: Ingresa la dirección de la sucursal.');
+		$this->validates_presence_of('pais_id', 'message: Indica el pais de ubicación de la sucursal.');
+        $this->validates_presence_of('estado_id', 'message: Indica el estado de ubicación de la sucursal.');
+		$this->validates_presence_of('municipio_id', 'message: Indica el municipio de ubicación de la sucursal.');
         $this->validates_presence_of('parroquia_id', 'message: Indica la parroquia de ubicación de la sucursal.');
                 
     }  
@@ -59,8 +67,8 @@ class Sucursal extends ActiveRecord {
         
         $order = $this->get_order($order, 'sucursal', array('sucursal'=>array('ASC'=>'sucursal.sucursal ASC, parroquia.nombre ASC, empresa.rif ASC',
                                                                               'DESC'=>'sucursal.sucursal DESC, ciudad.ciudad ASC, empresa.siglas ASC'),
-                                                            'parroquia'=>array('ASC'=>'parroquia.parroquia ASC, sucursal.direccion ASC, sucursal.sucursal ASC, empresa.rif ASC',
-                                                                              'DESC'=>'parroquia.parroquia DESC, sucursal.direccion ASC, sucursal.sucursal ASC, empresa.rif ASC'),
+                                                            'parroquia'=>array('ASC'=>'parroquia.nombre ASC, sucursal.direccion ASC, sucursal.sucursal ASC, empresa.rif ASC',
+                                                                              'DESC'=>'parroquia.nombre DESC, sucursal.direccion ASC, sucursal.sucursal ASC, empresa.rif ASC'),
                                                             'telefono',
                                                             'fax',
                                                             'direccion'));
@@ -92,13 +100,16 @@ class Sucursal extends ActiveRecord {
         
         return ($rs) ? $obj : FALSE;
     }
-
     /**
      * Método que se ejecuta antes de guardar y/o modificar     
      */
     public function before_save() {        
         $this->sucursal = Filter::get($this->sucursal, 'string');        
-        $this->slug = DwUtils::getSlug($this->sucursal); 
+        //$this->sucursal_slug = DwUtils::getSlug($this->sucursal); 
+        $this->pais_id = Filter::get($this->pais_id, 'string');
+        $this->estado_id = Filter::get($this->estado_id, 'string');
+        $this->municipio_id = Filter::get($this->municipio_id, 'string');
+        $this->parroquia_id = Filter::get($this->parroquia_id, 'string');
         $this->direccion = Filter::get($this->direccion, 'string');
         $this->telefono = Filter::get($this->telefono, 'numeric');
         $this->celular = Filter::get($this->celular, 'numeric');
@@ -107,12 +118,10 @@ class Sucursal extends ActiveRecord {
         $conditions = "sucursal = '$this->sucursal' AND parroquia_id = $this->parroquia_id AND empresa_id = $this->empresa_id";
         $conditions.= (isset($this->id)) ? " AND id != $this->id" : '';
         if($this->count("conditions: $conditions")) {
-            DwMessage::error('Lo sentimos, pero ya existe una sucursal registrada con el mismo nombre y ciudad.');
+            DwMessage::error('Lo sentimos, pero ya existe una sucursal registrada con el mismo nombre y parroquia.');
             return 'cancel';
-        }
-        
-    }
-    
+        }   
+    }   
     /**
      * Callback que se ejecuta antes de eliminar
      */
@@ -122,6 +131,4 @@ class Sucursal extends ActiveRecord {
             return 'cancel';
         }
     }
-    
-    
 }

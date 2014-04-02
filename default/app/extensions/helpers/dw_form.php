@@ -426,15 +426,15 @@ class DwForm extends Form {
      * @param boolean $help Texto de descripción del campo
      * @return string
      */
-    public static function dbSelect($field, $show=null, $data=null, $blank='Selección', $attrs=null, $value=null, $label='', $help='') {
+    public static function dbSelect($field, $show=null, $data=null, $blank='Seleccione:', $attrs=null, $value=null, $label='', $help='') {
 
         $attrs = self::_getAttrsClass($attrs, 'select');
         if(empty($data)) {
-            $data = array(''=>'Selección');
+            $data = array(''=>'Seleccione:');
         }
 
         if(empty($blank)) {
-            $blank = 'Selección';
+            $blank = 'Seleccione:';
         }
 
         $attrs2 = $attrs;

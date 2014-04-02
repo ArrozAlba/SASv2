@@ -20,7 +20,7 @@ class Persona extends ActiveRecord {
      */
     protected function initialize() {
         $this->has_one('usuario');
-        $this->belongs_to('tipo_nuip');
+        //$this->belongs_to('tipo_nuip');
     }
 
     /**
@@ -42,7 +42,7 @@ class Persona extends ActiveRecord {
                 $obj->id = $old->id; //Asigno el id del encontrado al nuevo
             } else { //Si se actualiza y existe otro con la misma información
                 if($obj->id != $old->id) {
-                    DwMessage::info('Lo sentimos, pero ya existe una persona registrada con el mismo número y tipo de identificación');
+                    DwMessage::info('Lo sentimos, pero ya existe una persona registrada con el mismo número de identificación');
                     return FALSE;
                 }
             }
@@ -59,7 +59,7 @@ class Persona extends ActiveRecord {
      * @return obj
      */
     protected function _getPersonaRegistrada($method='count') {
-        $conditions = "nuip = $this->nuip AND tipo_nuip_id = $this->tipo_nuip_id";
+        $conditions = "cedula = '$this->cedula'";
         $conditions.= (isset($this->id)) ? " AND id != $this->id" : '';
         if($method != 'count' && $method !='find_first') {
             $method = 'count';
@@ -71,11 +71,25 @@ class Persona extends ActiveRecord {
      * Callback que se ejecuta antes de guardar/modificar
      */
     public function before_save() {
-        $this->nombre = Filter::get($this->nombre, 'string');
-        $this->apellido = Filter::get($this->apellido, 'string');
-        $this->nuip = Filter::get($this->nuip, 'numeric');
+        $this->cedula = Filter::get($this->cedula, 'string');
+		$this->nacionalidad = Filter::get($this->nacionalidad, 'string');
+        $this->nombre1 = Filter::get($this->nombre1, 'string');
+        $this->nombre2 = Filter::get($this->nombre2, 'string');        
+        $this->apellido1 = Filter::get($this->apellido1, 'string');
+        $this->apellido2 = Filter::get($this->apellido2, 'string');        
+        $this->sexo = Filter::get($this->sexo, 'string'); 
+        $this->fecha_nacimiento = Filter::get($this->fecha_nacimiento, 'string'); 
+        $this->pais_id = Filter::get($this->pais_id, 'numeric');
+        $this->estado_id = Filter::get($this->estado_id, 'numeric');
+        $this->municipio_id = Filter::get($this->municipio_id, 'numeric');
+        $this->parroquia_id = Filter::get($this->parroquia_id, 'numeric');                        
+        $this->direccion_habitacion = Filter::get($this->direccion_habitacion, 'string'); 
+        $this->estado_civil = Filter::get($this->estado_civil, 'string'); 
+        $this->celular = Filter::get($this->celular, 'numeric');
         $this->telefono = Filter::get($this->telefono, 'numeric');
+        $this->correo_electronico = Filter::get($this->correo_electronico, 'string'); 
+        $this->grupo_sanguineo = Filter::get($this->grupo_sanguineo, 'string'); 
+        $this->fotografia = Filter::get($this->fotografia, 'string'); 
     }
 
 }
-

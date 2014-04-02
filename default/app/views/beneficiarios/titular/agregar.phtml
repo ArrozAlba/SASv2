@@ -15,7 +15,7 @@
         <ul class="nav nav-pills nav-stacked">
         <?php } ?>
             <li class="active"><a href="#tab1" data-toggle="tab">Información personal</a></li>
-            <li><a href="#tab2" data-toggle="tab">Información de la cuenta</a></li>
+            <li><a href="#tab2" data-toggle="tab">Información laboral</a></li>
             <li><a href="#tab3" data-toggle="tab">Cargar imagen</a></li>
         </ul>
         <div class="tab-content">
@@ -23,7 +23,7 @@
             <div class="tab-pane active" id="tab1">
                 <div class="row-fluid">
                     <div class="span6">
-                        <?php echo DwForm::number('persona.cedula', array('class'=>'input-xxlarge mask-pint input-required show-error'), NULL, 'Cedula de Identidad'); ?>
+                        <?php echo DwForm::text('persona.cedula', array('class'=>'input-xxlarge mask-pint input-numeric input-required show-error'), NULL, 'Cedula de Identidad'); ?>
                     </div>
                 
                     <div class="span6">
@@ -98,11 +98,12 @@
 
                 <div class="row-fluid">
                     <div class="span6">
-                        <?php echo DwForm::text('usuario.login', array('class'=>'input-xxlarge input-required mask-alphanum show-error input-user'), NULL, 'Usuario'); ?>
+                        <?php echo DwForm::dbSelect('titular.tipoempleado_id', 'Tipo Empleado', array('beneficiarios/titular', 'getListadoTitular'), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Tipo Empleado'); ?>
                     </div>
                     <div class="span6">
-                        <?php echo DwForm::dbSelect('usuario.perfil_id', 'perfil', array('sistema/perfil', 'getListadoPerfil', Perfil::ACTIVO), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Perfil'); ?>
+                        <?php echo DwForm::text('usuario.login', array('class'=>'input-xxlarge input-required mask-alphanum show-error input-user'), NULL, 'Usuario'); ?>
                     </div>
+
                 </div>
 
                 <div class="row-fluid">
@@ -165,7 +166,7 @@
                     <div class="form-actions">
                         <?php echo DwButton::save('Guardar usuario'); ?>
                         <?php echo DwButton::reset('form'); ?>
-                        <?php echo DwButton::cancel('sistema/usuario/listar/'); ?>
+                        <?php echo DwButton::cancel('beneficiarios/titular/listar/'); ?>
                     </div>
 
                 </div>
