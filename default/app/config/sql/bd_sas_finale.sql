@@ -48,7 +48,7 @@ COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs
 SET search_path = public, pg_catalog;
 
 --
--- Name: install_logger(text, text, boolean); Type: FUNCTION; Schema: public; Owner: jelitox
+-- Name: install_logger(text, text, boolean); Type: FUNCTION; Schema: public; Owner: arrozalba
 --
 
 CREATE FUNCTION install_logger(schema_name text, table_name text, log_truncate boolean DEFAULT false) RETURNS boolean
@@ -79,10 +79,10 @@ END;
 $$;
 
 
-ALTER FUNCTION public.install_logger(schema_name text, table_name text, log_truncate boolean) OWNER TO jelitox;
+ALTER FUNCTION public.install_logger(schema_name text, table_name text, log_truncate boolean) OWNER TO arrozalba;
 
 --
--- Name: logger(); Type: FUNCTION; Schema: public; Owner: jelitox
+-- Name: logger(); Type: FUNCTION; Schema: public; Owner: arrozalba
 --
 
 CREATE FUNCTION logger() RETURNS trigger
@@ -118,7 +118,7 @@ END;
 $$;
 
 
-ALTER FUNCTION public.logger() OWNER TO jelitox;
+ALTER FUNCTION public.logger() OWNER TO arrozalba;
 
 SET search_path = audit_log, pg_catalog;
 
@@ -127,7 +127,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: audit_log; Type: TABLE; Schema: audit_log; Owner: jelitox; Tablespace: 
+-- Name: audit_log; Type: TABLE; Schema: audit_log; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE audit_log (
@@ -145,10 +145,10 @@ CREATE TABLE audit_log (
 );
 
 
-ALTER TABLE audit_log.audit_log OWNER TO jelitox;
+ALTER TABLE audit_log.audit_log OWNER TO arrozalba;
 
 --
--- Name: audit_log_log_id_seq; Type: SEQUENCE; Schema: audit_log; Owner: jelitox
+-- Name: audit_log_log_id_seq; Type: SEQUENCE; Schema: audit_log; Owner: arrozalba
 --
 
 CREATE SEQUENCE audit_log_log_id_seq
@@ -159,10 +159,10 @@ CREATE SEQUENCE audit_log_log_id_seq
     CACHE 1;
 
 
-ALTER TABLE audit_log.audit_log_log_id_seq OWNER TO jelitox;
+ALTER TABLE audit_log.audit_log_log_id_seq OWNER TO arrozalba;
 
 --
--- Name: audit_log_log_id_seq; Type: SEQUENCE OWNED BY; Schema: audit_log; Owner: jelitox
+-- Name: audit_log_log_id_seq; Type: SEQUENCE OWNED BY; Schema: audit_log; Owner: arrozalba
 --
 
 ALTER SEQUENCE audit_log_log_id_seq OWNED BY audit_log.log_id;
@@ -171,7 +171,7 @@ ALTER SEQUENCE audit_log_log_id_seq OWNED BY audit_log.log_id;
 SET search_path = public, pg_catalog;
 
 --
--- Name: acceso; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: acceso; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE acceso (
@@ -188,73 +188,73 @@ CREATE TABLE acceso (
 );
 
 
-ALTER TABLE public.acceso OWNER TO jelitox;
+ALTER TABLE public.acceso OWNER TO arrozalba;
 
 --
--- Name: TABLE acceso; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE acceso; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE acceso IS 'Modelo para manipular los  accesos de usuarios';
 
 
 --
--- Name: COLUMN acceso.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN acceso.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN acceso.usuario_id IS 'Identificador del usuario que accede';
 
 
 --
--- Name: COLUMN acceso.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN acceso.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN acceso.fecha_registro IS 'Fecha de registro del acceso';
 
 
 --
--- Name: COLUMN acceso.tipo_acceso; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN acceso.tipo_acceso; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN acceso.tipo_acceso IS 'Tipo de acceso (entrada o salida)';
 
 
 --
--- Name: COLUMN acceso.navegador; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN acceso.navegador; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN acceso.navegador IS 'Navegador del Cliente';
 
 
 --
--- Name: COLUMN acceso.version_navegador; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN acceso.version_navegador; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN acceso.version_navegador IS 'Version del Navegador del Cliente';
 
 
 --
--- Name: COLUMN acceso.sistema_operativo; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN acceso.sistema_operativo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN acceso.sistema_operativo IS 'Sistema Operativo del Cliente';
 
 
 --
--- Name: COLUMN acceso.nombre_equipo; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN acceso.nombre_equipo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN acceso.nombre_equipo IS 'Nombre del Equipo';
 
 
 --
--- Name: COLUMN acceso.ip; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN acceso.ip; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN acceso.ip IS 'Dirección IP del usuario que ingresa';
 
 
 --
--- Name: acceso_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: acceso_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE acceso_id_seq
@@ -265,17 +265,17 @@ CREATE SEQUENCE acceso_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.acceso_id_seq OWNER TO jelitox;
+ALTER TABLE public.acceso_id_seq OWNER TO arrozalba;
 
 --
--- Name: acceso_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: acceso_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE acceso_id_seq OWNED BY acceso.id;
 
 
 --
--- Name: audit_log; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: audit_log; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE audit_log (
@@ -293,10 +293,10 @@ CREATE TABLE audit_log (
 );
 
 
-ALTER TABLE public.audit_log OWNER TO jelitox;
+ALTER TABLE public.audit_log OWNER TO arrozalba;
 
 --
--- Name: audit_log_log_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: audit_log_log_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE audit_log_log_id_seq
@@ -307,17 +307,17 @@ CREATE SEQUENCE audit_log_log_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.audit_log_log_id_seq OWNER TO jelitox;
+ALTER TABLE public.audit_log_log_id_seq OWNER TO arrozalba;
 
 --
--- Name: audit_log_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: audit_log_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE audit_log_log_id_seq OWNED BY audit_log.log_id;
 
 
 --
--- Name: backup; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: backup; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE backup (
@@ -331,45 +331,45 @@ CREATE TABLE backup (
 );
 
 
-ALTER TABLE public.backup OWNER TO jelitox;
+ALTER TABLE public.backup OWNER TO arrozalba;
 
 --
--- Name: TABLE backup; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE backup; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE backup IS 'Modelo para manipular los Backups generados por el sistema';
 
 
 --
--- Name: COLUMN backup.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN backup.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN backup.usuario_id IS 'ID del Usuario';
 
 
 --
--- Name: COLUMN backup.denominacion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN backup.denominacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN backup.denominacion IS 'Denominacion del Backup';
 
 
 --
--- Name: COLUMN backup.tamano; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN backup.tamano; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN backup.tamano IS 'Tamaño del Backup';
 
 
 --
--- Name: COLUMN backup.archivo; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN backup.archivo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN backup.archivo IS 'Nombre del Archivo';
 
 
 --
--- Name: backup_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: backup_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE backup_id_seq
@@ -380,17 +380,17 @@ CREATE SEQUENCE backup_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.backup_id_seq OWNER TO jelitox;
+ALTER TABLE public.backup_id_seq OWNER TO arrozalba;
 
 --
--- Name: backup_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: backup_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE backup_id_seq OWNED BY backup.id;
 
 
 --
--- Name: beneficiario; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: beneficiario; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE beneficiario (
@@ -406,59 +406,59 @@ CREATE TABLE beneficiario (
 );
 
 
-ALTER TABLE public.beneficiario OWNER TO jelitox;
+ALTER TABLE public.beneficiario OWNER TO arrozalba;
 
 --
--- Name: TABLE beneficiario; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE beneficiario; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE beneficiario IS 'Modelo para manipular los beneficiarios';
 
 
 --
--- Name: COLUMN beneficiario.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN beneficiario.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN beneficiario.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN beneficiario.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN beneficiario.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN beneficiario.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN beneficiario.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN beneficiario.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN beneficiario.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN beneficiario.titular_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN beneficiario.titular_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN beneficiario.titular_id IS 'Empleado Titular';
 
 
 --
--- Name: COLUMN beneficiario.parentesco; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN beneficiario.parentesco; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN beneficiario.parentesco IS 'Parentesco del beneficiario';
 
 
 --
--- Name: COLUMN beneficiario.observacion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN beneficiario.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN beneficiario.observacion IS 'Observacion';
 
 
 --
--- Name: beneficiario_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: beneficiario_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE beneficiario_id_seq
@@ -469,17 +469,17 @@ CREATE SEQUENCE beneficiario_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.beneficiario_id_seq OWNER TO jelitox;
+ALTER TABLE public.beneficiario_id_seq OWNER TO arrozalba;
 
 --
--- Name: beneficiario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: beneficiario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE beneficiario_id_seq OWNED BY beneficiario.id;
 
 
 --
--- Name: beneficiario_tipo; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: beneficiario_tipo; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE beneficiario_tipo (
@@ -492,52 +492,52 @@ CREATE TABLE beneficiario_tipo (
 );
 
 
-ALTER TABLE public.beneficiario_tipo OWNER TO jelitox;
+ALTER TABLE public.beneficiario_tipo OWNER TO arrozalba;
 
 --
--- Name: TABLE beneficiario_tipo; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE beneficiario_tipo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE beneficiario_tipo IS 'Modelo para manipular los Tipos de Beneficiarios';
 
 
 --
--- Name: COLUMN beneficiario_tipo.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN beneficiario_tipo.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN beneficiario_tipo.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN beneficiario_tipo.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN beneficiario_tipo.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN beneficiario_tipo.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN beneficiario_tipo.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN beneficiario_tipo.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN beneficiario_tipo.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN beneficiario_tipo.descripcion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN beneficiario_tipo.descripcion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN beneficiario_tipo.descripcion IS 'Descripcion del Tipo de Beneficiario';
 
 
 --
--- Name: COLUMN beneficiario_tipo.observacion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN beneficiario_tipo.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN beneficiario_tipo.observacion IS 'Observacion';
 
 
 --
--- Name: beneficiario_tipo_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: beneficiario_tipo_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE beneficiario_tipo_id_seq
@@ -548,17 +548,17 @@ CREATE SEQUENCE beneficiario_tipo_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.beneficiario_tipo_id_seq OWNER TO jelitox;
+ALTER TABLE public.beneficiario_tipo_id_seq OWNER TO arrozalba;
 
 --
--- Name: beneficiario_tipo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: beneficiario_tipo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE beneficiario_tipo_id_seq OWNED BY beneficiario_tipo.id;
 
 
 --
--- Name: cargo; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: cargo; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE cargo (
@@ -571,52 +571,52 @@ CREATE TABLE cargo (
 );
 
 
-ALTER TABLE public.cargo OWNER TO jelitox;
+ALTER TABLE public.cargo OWNER TO arrozalba;
 
 --
--- Name: TABLE cargo; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE cargo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE cargo IS 'Modelo para manipular las diferentes Profesiones';
 
 
 --
--- Name: COLUMN cargo.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN cargo.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN cargo.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN cargo.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN cargo.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN cargo.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN cargo.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN cargo.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN cargo.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN cargo.nombre; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN cargo.nombre; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN cargo.nombre IS 'Nombre de la Profesion';
 
 
 --
--- Name: COLUMN cargo.observacion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN cargo.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN cargo.observacion IS 'Observacion';
 
 
 --
--- Name: cargo_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: cargo_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE cargo_id_seq
@@ -627,17 +627,17 @@ CREATE SEQUENCE cargo_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.cargo_id_seq OWNER TO jelitox;
+ALTER TABLE public.cargo_id_seq OWNER TO arrozalba;
 
 --
--- Name: cargo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: cargo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE cargo_id_seq OWNED BY cargo.id;
 
 
 --
--- Name: cobertura; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: cobertura; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE cobertura (
@@ -654,80 +654,80 @@ CREATE TABLE cobertura (
 );
 
 
-ALTER TABLE public.cobertura OWNER TO jelitox;
+ALTER TABLE public.cobertura OWNER TO arrozalba;
 
 --
--- Name: TABLE cobertura; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE cobertura; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE cobertura IS 'Modelo para manipular las Coberturas';
 
 
 --
--- Name: COLUMN cobertura.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN cobertura.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN cobertura.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN cobertura.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN cobertura.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN cobertura.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN cobertura.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN cobertura.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN cobertura.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN cobertura.descripcion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN cobertura.descripcion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN cobertura.descripcion IS 'Descripcion de la cobertura';
 
 
 --
--- Name: COLUMN cobertura.tipo_cobertura; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN cobertura.tipo_cobertura; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN cobertura.tipo_cobertura IS 'Tipo de Cobertura (G-Grupal,I-Individual)';
 
 
 --
--- Name: COLUMN cobertura.monto_cobertura; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN cobertura.monto_cobertura; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN cobertura.monto_cobertura IS 'Monto de la Cobertura';
 
 
 --
--- Name: COLUMN cobertura.fecha_inicio; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN cobertura.fecha_inicio; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN cobertura.fecha_inicio IS 'Fecha de Inicio de la cobertura';
 
 
 --
--- Name: COLUMN cobertura.fecha_fin; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN cobertura.fecha_fin; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN cobertura.fecha_fin IS 'Fecha de Fin de la cobertura';
 
 
 --
--- Name: COLUMN cobertura.observacion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN cobertura.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN cobertura.observacion IS 'Observacion de la Cobertura';
 
 
 --
--- Name: cobertura_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: cobertura_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE cobertura_id_seq
@@ -738,17 +738,17 @@ CREATE SEQUENCE cobertura_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.cobertura_id_seq OWNER TO jelitox;
+ALTER TABLE public.cobertura_id_seq OWNER TO arrozalba;
 
 --
--- Name: cobertura_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: cobertura_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE cobertura_id_seq OWNED BY cobertura.id;
 
 
 --
--- Name: departamento; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: departamento; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE departamento (
@@ -762,52 +762,52 @@ CREATE TABLE departamento (
 );
 
 
-ALTER TABLE public.departamento OWNER TO jelitox;
+ALTER TABLE public.departamento OWNER TO arrozalba;
 
 --
--- Name: TABLE departamento; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE departamento; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE departamento IS 'Modelo para manipular los diferentes Departamentos de las UPSAS';
 
 
 --
--- Name: COLUMN departamento.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN departamento.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN departamento.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN departamento.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN departamento.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN departamento.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN departamento.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN departamento.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN departamento.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN departamento.nombre; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN departamento.nombre; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN departamento.nombre IS 'Nombre del Departamento';
 
 
 --
--- Name: COLUMN departamento.observacion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN departamento.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN departamento.observacion IS 'Observacion';
 
 
 --
--- Name: departamento_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: departamento_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE departamento_id_seq
@@ -818,17 +818,17 @@ CREATE SEQUENCE departamento_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.departamento_id_seq OWNER TO jelitox;
+ALTER TABLE public.departamento_id_seq OWNER TO arrozalba;
 
 --
--- Name: departamento_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: departamento_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE departamento_id_seq OWNED BY departamento.id;
 
 
 --
--- Name: discapacidad; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: discapacidad; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE discapacidad (
@@ -841,52 +841,52 @@ CREATE TABLE discapacidad (
 );
 
 
-ALTER TABLE public.discapacidad OWNER TO jelitox;
+ALTER TABLE public.discapacidad OWNER TO arrozalba;
 
 --
--- Name: TABLE discapacidad; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE discapacidad; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE discapacidad IS 'Modelo para manipular los diferentes Tipos de Discapacidades';
 
 
 --
--- Name: COLUMN discapacidad.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN discapacidad.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN discapacidad.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN discapacidad.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN discapacidad.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN discapacidad.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN discapacidad.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN discapacidad.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN discapacidad.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN discapacidad.nombre; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN discapacidad.nombre; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN discapacidad.nombre IS 'Nombre de la Discapacidad';
 
 
 --
--- Name: COLUMN discapacidad.observacion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN discapacidad.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN discapacidad.observacion IS 'Observacion';
 
 
 --
--- Name: discapacidad_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: discapacidad_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE discapacidad_id_seq
@@ -897,17 +897,17 @@ CREATE SEQUENCE discapacidad_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.discapacidad_id_seq OWNER TO jelitox;
+ALTER TABLE public.discapacidad_id_seq OWNER TO arrozalba;
 
 --
--- Name: discapacidad_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: discapacidad_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE discapacidad_id_seq OWNED BY discapacidad.id;
 
 
 --
--- Name: discapacidad_persona; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: discapacidad_persona; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE discapacidad_persona (
@@ -917,31 +917,31 @@ CREATE TABLE discapacidad_persona (
 );
 
 
-ALTER TABLE public.discapacidad_persona OWNER TO jelitox;
+ALTER TABLE public.discapacidad_persona OWNER TO arrozalba;
 
 --
--- Name: TABLE discapacidad_persona; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE discapacidad_persona; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE discapacidad_persona IS 'Modelo para manipular la relacion Discapacidad-Persona';
 
 
 --
--- Name: COLUMN discapacidad_persona.persona_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN discapacidad_persona.persona_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN discapacidad_persona.persona_id IS 'ID de la Persona';
 
 
 --
--- Name: COLUMN discapacidad_persona.discapacidad_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN discapacidad_persona.discapacidad_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN discapacidad_persona.discapacidad_id IS 'ID de la Discapacidad';
 
 
 --
--- Name: discapacidad_persona_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: discapacidad_persona_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE discapacidad_persona_id_seq
@@ -952,17 +952,17 @@ CREATE SEQUENCE discapacidad_persona_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.discapacidad_persona_id_seq OWNER TO jelitox;
+ALTER TABLE public.discapacidad_persona_id_seq OWNER TO arrozalba;
 
 --
--- Name: discapacidad_persona_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: discapacidad_persona_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE discapacidad_persona_id_seq OWNED BY discapacidad_persona.id;
 
 
 --
--- Name: empresa; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: empresa; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE empresa (
@@ -986,115 +986,115 @@ CREATE TABLE empresa (
 );
 
 
-ALTER TABLE public.empresa OWNER TO jelitox;
+ALTER TABLE public.empresa OWNER TO arrozalba;
 
 --
--- Name: TABLE empresa; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE empresa; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE empresa IS 'Modelo para manipular la empresa';
 
 
 --
--- Name: COLUMN empresa.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN empresa.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN empresa.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN empresa.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN empresa.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN empresa.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN empresa.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN empresa.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN empresa.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN empresa.razon_social; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN empresa.razon_social; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN empresa.razon_social IS 'Razon Social de la Empresa ';
 
 
 --
--- Name: COLUMN empresa.pais_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN empresa.pais_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN empresa.pais_id IS 'ID Pais';
 
 
 --
--- Name: COLUMN empresa.estado_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN empresa.estado_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN empresa.estado_id IS 'ID Estado';
 
 
 --
--- Name: COLUMN empresa.municipio_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN empresa.municipio_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN empresa.municipio_id IS 'ID Municipio ';
 
 
 --
--- Name: COLUMN empresa.parroquia_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN empresa.parroquia_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN empresa.parroquia_id IS 'ID Parroquia ';
 
 
 --
--- Name: COLUMN empresa.representante_legal; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN empresa.representante_legal; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN empresa.representante_legal IS 'Representante Legal de la Empresa ';
 
 
 --
--- Name: COLUMN empresa.pagina_web; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN empresa.pagina_web; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN empresa.pagina_web IS 'Pagina Web de la Empresa ';
 
 
 --
--- Name: COLUMN empresa.telefono; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN empresa.telefono; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN empresa.telefono IS 'Telefono de la Empresa ';
 
 
 --
--- Name: COLUMN empresa.fax; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN empresa.fax; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN empresa.fax IS 'Telefax de la Empresa ';
 
 
 --
--- Name: COLUMN empresa.celular; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN empresa.celular; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN empresa.celular IS 'Telefono Celular del Representante Legal ';
 
 
 --
--- Name: COLUMN empresa.logo; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN empresa.logo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN empresa.logo IS 'Logo de la Empresa ';
 
 
 --
--- Name: COLUMN empresa.email; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN empresa.email; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN empresa.email IS 'Correo Electronico de la Empresa
@@ -1102,7 +1102,7 @@ COMMENT ON COLUMN empresa.email IS 'Correo Electronico de la Empresa
 
 
 --
--- Name: empresa_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: empresa_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE empresa_id_seq
@@ -1113,17 +1113,17 @@ CREATE SEQUENCE empresa_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.empresa_id_seq OWNER TO jelitox;
+ALTER TABLE public.empresa_id_seq OWNER TO arrozalba;
 
 --
--- Name: empresa_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: empresa_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE empresa_id_seq OWNED BY empresa.id;
 
 
 --
--- Name: especialidad; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: especialidad; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE especialidad (
@@ -1136,52 +1136,52 @@ CREATE TABLE especialidad (
 );
 
 
-ALTER TABLE public.especialidad OWNER TO jelitox;
+ALTER TABLE public.especialidad OWNER TO arrozalba;
 
 --
--- Name: TABLE especialidad; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE especialidad; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE especialidad IS 'Modelo para manipular las Especialidades';
 
 
 --
--- Name: COLUMN especialidad.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN especialidad.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN especialidad.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN especialidad.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN especialidad.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN especialidad.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN especialidad.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN especialidad.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN especialidad.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN especialidad.descripcion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN especialidad.descripcion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN especialidad.descripcion IS 'Descripcion de la Especialidad';
 
 
 --
--- Name: COLUMN especialidad.observacion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN especialidad.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN especialidad.observacion IS 'Observacion de la Especialidad';
 
 
 --
--- Name: especialidad_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: especialidad_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE especialidad_id_seq
@@ -1192,17 +1192,17 @@ CREATE SEQUENCE especialidad_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.especialidad_id_seq OWNER TO jelitox;
+ALTER TABLE public.especialidad_id_seq OWNER TO arrozalba;
 
 --
--- Name: especialidad_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: especialidad_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE especialidad_id_seq OWNED BY especialidad.id;
 
 
 --
--- Name: proveedor; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: proveedor; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE proveedor (
@@ -1227,136 +1227,136 @@ CREATE TABLE proveedor (
 );
 
 
-ALTER TABLE public.proveedor OWNER TO jelitox;
+ALTER TABLE public.proveedor OWNER TO arrozalba;
 
 --
--- Name: TABLE proveedor; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE proveedor; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE proveedor IS 'Modelo para manipular los Proveedores';
 
 
 --
--- Name: COLUMN proveedor.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN proveedor.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN proveedor.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN proveedor.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN proveedor.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN proveedor.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN proveedor.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN proveedor.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN proveedor.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN proveedor.rif; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN proveedor.rif; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN proveedor.rif IS 'Rif del Proveedor';
 
 
 --
--- Name: COLUMN proveedor.razon_social; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN proveedor.razon_social; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN proveedor.razon_social IS 'Razon Social del Proveedor';
 
 
 --
--- Name: COLUMN proveedor.nombre_corto; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN proveedor.nombre_corto; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN proveedor.nombre_corto IS 'Nombre Corto Proveedor';
 
 
 --
--- Name: COLUMN proveedor.pais_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN proveedor.pais_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN proveedor.pais_id IS 'Pais Origen del Proveedor';
 
 
 --
--- Name: COLUMN proveedor.estado_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN proveedor.estado_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN proveedor.estado_id IS 'Estado de Origen del Proveedor';
 
 
 --
--- Name: COLUMN proveedor.municipio_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN proveedor.municipio_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN proveedor.municipio_id IS 'Municipio de Origen del Proveedor';
 
 
 --
--- Name: COLUMN proveedor.parroquia_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN proveedor.parroquia_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN proveedor.parroquia_id IS 'Parroquia de Origen del Proveedor';
 
 
 --
--- Name: COLUMN proveedor.direccion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN proveedor.direccion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN proveedor.direccion IS 'Direccion del Proveedor';
 
 
 --
--- Name: COLUMN proveedor.celular; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN proveedor.celular; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN proveedor.celular IS 'N° de Celular del Proveedor';
 
 
 --
--- Name: COLUMN proveedor.telefono1; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN proveedor.telefono1; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN proveedor.telefono1 IS 'N° de Telefono del Proveedor';
 
 
 --
--- Name: COLUMN proveedor.telefono2; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN proveedor.telefono2; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN proveedor.telefono2 IS 'N° de Telefono del Proveedor';
 
 
 --
--- Name: COLUMN proveedor.fax; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN proveedor.fax; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN proveedor.fax IS 'N° de Fax del Proveedor';
 
 
 --
--- Name: COLUMN proveedor.correo_electronico; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN proveedor.correo_electronico; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN proveedor.correo_electronico IS 'Direccion de Correo Electronico del Proveedor';
 
 
 --
--- Name: COLUMN proveedor.observacion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN proveedor.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN proveedor.observacion IS 'Observacion';
 
 
 --
--- Name: proveedor_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: proveedor_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE proveedor_id_seq
@@ -1367,17 +1367,17 @@ CREATE SEQUENCE proveedor_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.proveedor_id_seq OWNER TO jelitox;
+ALTER TABLE public.proveedor_id_seq OWNER TO arrozalba;
 
 --
--- Name: proveedor_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: proveedor_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE proveedor_id_seq OWNED BY proveedor.id;
 
 
 --
--- Name: especialidad_medico; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: especialidad_medico; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE especialidad_medico (
@@ -1387,31 +1387,31 @@ CREATE TABLE especialidad_medico (
 );
 
 
-ALTER TABLE public.especialidad_medico OWNER TO jelitox;
+ALTER TABLE public.especialidad_medico OWNER TO arrozalba;
 
 --
--- Name: TABLE especialidad_medico; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE especialidad_medico; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE especialidad_medico IS 'Modelo para manipular la relacion especialidad-proveedors';
 
 
 --
--- Name: COLUMN especialidad_medico.medico_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN especialidad_medico.medico_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN especialidad_medico.medico_id IS 'ID del medico';
 
 
 --
--- Name: COLUMN especialidad_medico.especialidad_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN especialidad_medico.especialidad_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN especialidad_medico.especialidad_id IS 'ID de la especialidad';
 
 
 --
--- Name: especialidad_medico_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: especialidad_medico_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE especialidad_medico_id_seq
@@ -1422,17 +1422,17 @@ CREATE SEQUENCE especialidad_medico_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.especialidad_medico_id_seq OWNER TO jelitox;
+ALTER TABLE public.especialidad_medico_id_seq OWNER TO arrozalba;
 
 --
--- Name: especialidad_medico_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: especialidad_medico_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE especialidad_medico_id_seq OWNED BY especialidad_medico.id;
 
 
 --
--- Name: estado; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: estado; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE estado (
@@ -1443,38 +1443,38 @@ CREATE TABLE estado (
 );
 
 
-ALTER TABLE public.estado OWNER TO jelitox;
+ALTER TABLE public.estado OWNER TO arrozalba;
 
 --
--- Name: TABLE estado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE estado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE estado IS 'Modelo para manipular la relación Pais Estado';
 
 
 --
--- Name: COLUMN estado.codigo; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN estado.codigo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN estado.codigo IS 'Codigo Estado';
 
 
 --
--- Name: COLUMN estado.pais_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN estado.pais_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN estado.pais_id IS 'Pais';
 
 
 --
--- Name: COLUMN estado.nombre; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN estado.nombre; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN estado.nombre IS 'Nombre Estado';
 
 
 --
--- Name: estado_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: estado_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE estado_id_seq
@@ -1485,17 +1485,17 @@ CREATE SEQUENCE estado_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.estado_id_seq OWNER TO jelitox;
+ALTER TABLE public.estado_id_seq OWNER TO arrozalba;
 
 --
--- Name: estado_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: estado_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE estado_id_seq OWNED BY estado.id;
 
 
 --
--- Name: estado_usuario; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: estado_usuario; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE estado_usuario (
@@ -1508,52 +1508,52 @@ CREATE TABLE estado_usuario (
 );
 
 
-ALTER TABLE public.estado_usuario OWNER TO jelitox;
+ALTER TABLE public.estado_usuario OWNER TO arrozalba;
 
 --
--- Name: TABLE estado_usuario; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE estado_usuario; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE estado_usuario IS 'Modelo para manipular el estado de los usuarios';
 
 
 --
--- Name: COLUMN estado_usuario.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN estado_usuario.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN estado_usuario.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN estado_usuario.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN estado_usuario.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN estado_usuario.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN estado_usuario.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN estado_usuario.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN estado_usuario.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN estado_usuario.estado_usuario; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN estado_usuario.estado_usuario; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN estado_usuario.estado_usuario IS 'ID Estado del usuario ';
 
 
 --
--- Name: COLUMN estado_usuario.descripcion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN estado_usuario.descripcion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN estado_usuario.descripcion IS 'Descripcion del estado del usuario ';
 
 
 --
--- Name: estado_usuario_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: estado_usuario_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE estado_usuario_id_seq
@@ -1564,17 +1564,17 @@ CREATE SEQUENCE estado_usuario_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.estado_usuario_id_seq OWNER TO jelitox;
+ALTER TABLE public.estado_usuario_id_seq OWNER TO arrozalba;
 
 --
--- Name: estado_usuario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: estado_usuario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE estado_usuario_id_seq OWNED BY estado_usuario.id;
 
 
 --
--- Name: medicina; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: medicina; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE medicina (
@@ -1587,52 +1587,52 @@ CREATE TABLE medicina (
 );
 
 
-ALTER TABLE public.medicina OWNER TO jelitox;
+ALTER TABLE public.medicina OWNER TO arrozalba;
 
 --
--- Name: TABLE medicina; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE medicina; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE medicina IS 'Modelo para manipular las Medicina';
 
 
 --
--- Name: COLUMN medicina.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN medicina.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN medicina.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN medicina.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN medicina.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN medicina.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN medicina.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN medicina.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN medicina.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN medicina.descripcion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN medicina.descripcion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN medicina.descripcion IS 'Descripcion de la Medicina';
 
 
 --
--- Name: COLUMN medicina.observacion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN medicina.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN medicina.observacion IS 'Observacion de la Medicina';
 
 
 --
--- Name: medicina_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: medicina_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE medicina_id_seq
@@ -1643,17 +1643,17 @@ CREATE SEQUENCE medicina_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.medicina_id_seq OWNER TO jelitox;
+ALTER TABLE public.medicina_id_seq OWNER TO arrozalba;
 
 --
--- Name: medicina_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: medicina_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE medicina_id_seq OWNED BY medicina.id;
 
 
 --
--- Name: medico; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: medico; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE medico (
@@ -1677,129 +1677,129 @@ CREATE TABLE medico (
 );
 
 
-ALTER TABLE public.medico OWNER TO jelitox;
+ALTER TABLE public.medico OWNER TO arrozalba;
 
 --
--- Name: TABLE medico; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE medico; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE medico IS 'Modelo para manipular los Medicos';
 
 
 --
--- Name: COLUMN medico.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN medico.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN medico.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN medico.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN medico.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN medico.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN medico.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN medico.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN medico.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN medico.nacionalidad; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN medico.nacionalidad; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN medico.nacionalidad IS 'Nacionalidad del Medico';
 
 
 --
--- Name: COLUMN medico.cedula; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN medico.cedula; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN medico.cedula IS 'Numero de Cedula del Medico';
 
 
 --
--- Name: COLUMN medico.rmpps; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN medico.rmpps; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN medico.rmpps IS 'Numero de Registro del MPPS del Medico';
 
 
 --
--- Name: COLUMN medico.rif; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN medico.rif; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN medico.rif IS 'Numero de Rif del Medico';
 
 
 --
--- Name: COLUMN medico.nombre1; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN medico.nombre1; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN medico.nombre1 IS 'Primer Nombre del Medico';
 
 
 --
--- Name: COLUMN medico.nombre2; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN medico.nombre2; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN medico.nombre2 IS 'Segundo Nombre del Medico';
 
 
 --
--- Name: COLUMN medico.apellido1; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN medico.apellido1; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN medico.apellido1 IS 'Primer apellido del Medico';
 
 
 --
--- Name: COLUMN medico.apellido2; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN medico.apellido2; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN medico.apellido2 IS 'Segundo apellido del Medico';
 
 
 --
--- Name: COLUMN medico.sexo; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN medico.sexo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN medico.sexo IS 'Sexo del Medico';
 
 
 --
--- Name: COLUMN medico.celular; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN medico.celular; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN medico.celular IS 'Numero Celular del Medico';
 
 
 --
--- Name: COLUMN medico.telefono; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN medico.telefono; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN medico.telefono IS 'Numero Telefono del Medico';
 
 
 --
--- Name: COLUMN medico.correo_electronico; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN medico.correo_electronico; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN medico.correo_electronico IS 'Correo Electronico del medico';
 
 
 --
--- Name: COLUMN medico.observacion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN medico.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN medico.observacion IS 'Observacion del Medico';
 
 
 --
--- Name: medico_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: medico_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE medico_id_seq
@@ -1810,17 +1810,17 @@ CREATE SEQUENCE medico_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.medico_id_seq OWNER TO jelitox;
+ALTER TABLE public.medico_id_seq OWNER TO arrozalba;
 
 --
--- Name: medico_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: medico_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE medico_id_seq OWNED BY medico.id;
 
 
 --
--- Name: menu; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: menu; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE menu (
@@ -1839,94 +1839,94 @@ CREATE TABLE menu (
 );
 
 
-ALTER TABLE public.menu OWNER TO jelitox;
+ALTER TABLE public.menu OWNER TO arrozalba;
 
 --
--- Name: TABLE menu; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE menu; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE menu IS 'Modelo para manipular menus del sistema';
 
 
 --
--- Name: COLUMN menu.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN menu.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN menu.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN menu.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN menu.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN menu.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN menu.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN menu.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN menu.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN menu.menu_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN menu.menu_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN menu.menu_id IS 'ID menu padre';
 
 
 --
--- Name: COLUMN menu.recurso_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN menu.recurso_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN menu.recurso_id IS 'ID del recurso ';
 
 
 --
--- Name: COLUMN menu.menu; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN menu.menu; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN menu.menu IS 'Texto a mostrar del menu';
 
 
 --
--- Name: COLUMN menu.url; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN menu.url; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN menu.url IS 'Url del menu';
 
 
 --
--- Name: COLUMN menu.posicion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN menu.posicion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN menu.posicion IS 'Posicion del menu dentro de otros items';
 
 
 --
--- Name: COLUMN menu.icono; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN menu.icono; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN menu.icono IS 'Icono a mostrar';
 
 
 --
--- Name: COLUMN menu.activo; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN menu.activo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN menu.activo IS 'Estado del menu (Activo o Inactivo)';
 
 
 --
--- Name: COLUMN menu.visibilidad; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN menu.visibilidad; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN menu.visibilidad IS 'Indica si el menú se muestra en el backend o en el frontend';
 
 
 --
--- Name: menu_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: menu_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE menu_id_seq
@@ -1937,17 +1937,17 @@ CREATE SEQUENCE menu_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.menu_id_seq OWNER TO jelitox;
+ALTER TABLE public.menu_id_seq OWNER TO arrozalba;
 
 --
--- Name: menu_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: menu_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE menu_id_seq OWNED BY menu.id;
 
 
 --
--- Name: municipio; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: municipio; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE municipio (
@@ -1958,38 +1958,38 @@ CREATE TABLE municipio (
 );
 
 
-ALTER TABLE public.municipio OWNER TO jelitox;
+ALTER TABLE public.municipio OWNER TO arrozalba;
 
 --
--- Name: TABLE municipio; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE municipio; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE municipio IS 'Modelo para manipular Municipios';
 
 
 --
--- Name: COLUMN municipio.estado_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN municipio.estado_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN municipio.estado_id IS 'Estado';
 
 
 --
--- Name: COLUMN municipio.codigo; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN municipio.codigo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN municipio.codigo IS 'Codigo Municipio';
 
 
 --
--- Name: COLUMN municipio.nombre; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN municipio.nombre; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN municipio.nombre IS 'Nombre Municipio';
 
 
 --
--- Name: municipio_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: municipio_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE municipio_id_seq
@@ -2000,17 +2000,17 @@ CREATE SEQUENCE municipio_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.municipio_id_seq OWNER TO jelitox;
+ALTER TABLE public.municipio_id_seq OWNER TO arrozalba;
 
 --
--- Name: municipio_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: municipio_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE municipio_id_seq OWNED BY municipio.id;
 
 
 --
--- Name: pais; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: pais; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE pais (
@@ -2020,31 +2020,31 @@ CREATE TABLE pais (
 );
 
 
-ALTER TABLE public.pais OWNER TO jelitox;
+ALTER TABLE public.pais OWNER TO arrozalba;
 
 --
--- Name: TABLE pais; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE pais; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE pais IS 'Modelo para manipular los Paises';
 
 
 --
--- Name: COLUMN pais.codigo; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN pais.codigo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN pais.codigo IS 'Codigo del Pais';
 
 
 --
--- Name: COLUMN pais.nombre; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN pais.nombre; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN pais.nombre IS 'Nombre Pais';
 
 
 --
--- Name: pais_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: pais_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE pais_id_seq
@@ -2055,17 +2055,17 @@ CREATE SEQUENCE pais_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.pais_id_seq OWNER TO jelitox;
+ALTER TABLE public.pais_id_seq OWNER TO arrozalba;
 
 --
--- Name: pais_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: pais_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE pais_id_seq OWNED BY pais.id;
 
 
 --
--- Name: parroquia; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: parroquia; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE parroquia (
@@ -2075,31 +2075,31 @@ CREATE TABLE parroquia (
 );
 
 
-ALTER TABLE public.parroquia OWNER TO jelitox;
+ALTER TABLE public.parroquia OWNER TO arrozalba;
 
 --
--- Name: TABLE parroquia; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE parroquia; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE parroquia IS 'Modelo para  manipular Parroquia';
 
 
 --
--- Name: COLUMN parroquia.nombre; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN parroquia.nombre; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN parroquia.nombre IS 'Parroquia';
 
 
 --
--- Name: COLUMN parroquia.municipio_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN parroquia.municipio_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN parroquia.municipio_id IS 'Municipio';
 
 
 --
--- Name: parroquia_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: parroquia_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE parroquia_id_seq
@@ -2110,17 +2110,17 @@ CREATE SEQUENCE parroquia_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.parroquia_id_seq OWNER TO jelitox;
+ALTER TABLE public.parroquia_id_seq OWNER TO arrozalba;
 
 --
--- Name: parroquia_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: parroquia_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE parroquia_id_seq OWNED BY parroquia.id;
 
 
 --
--- Name: patologia; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: patologia; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE patologia (
@@ -2133,52 +2133,52 @@ CREATE TABLE patologia (
 );
 
 
-ALTER TABLE public.patologia OWNER TO jelitox;
+ALTER TABLE public.patologia OWNER TO arrozalba;
 
 --
--- Name: TABLE patologia; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE patologia; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE patologia IS 'Modelo para manipular las Patologias';
 
 
 --
--- Name: COLUMN patologia.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN patologia.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN patologia.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN patologia.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN patologia.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN patologia.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN patologia.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN patologia.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN patologia.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN patologia.descripcion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN patologia.descripcion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN patologia.descripcion IS 'Descripcion de la Patologia';
 
 
 --
--- Name: COLUMN patologia.observacion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN patologia.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN patologia.observacion IS 'Observacion de la Patologia';
 
 
 --
--- Name: patologia_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: patologia_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE patologia_id_seq
@@ -2189,17 +2189,17 @@ CREATE SEQUENCE patologia_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.patologia_id_seq OWNER TO jelitox;
+ALTER TABLE public.patologia_id_seq OWNER TO arrozalba;
 
 --
--- Name: patologia_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: patologia_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE patologia_id_seq OWNED BY patologia.id;
 
 
 --
--- Name: perfil; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: perfil; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE perfil (
@@ -2213,59 +2213,59 @@ CREATE TABLE perfil (
 );
 
 
-ALTER TABLE public.perfil OWNER TO jelitox;
+ALTER TABLE public.perfil OWNER TO arrozalba;
 
 --
--- Name: TABLE perfil; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE perfil; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE perfil IS 'Modelo para manipular perfiles del sistema';
 
 
 --
--- Name: COLUMN perfil.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN perfil.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN perfil.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN perfil.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN perfil.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN perfil.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN perfil.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN perfil.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN perfil.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN perfil.perfil; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN perfil.perfil; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN perfil.perfil IS 'Nombre del Perfil';
 
 
 --
--- Name: COLUMN perfil.estado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN perfil.estado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN perfil.estado IS 'Indica si el perfil esta activo o inactivo';
 
 
 --
--- Name: COLUMN perfil.plantilla; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN perfil.plantilla; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN perfil.plantilla IS 'Plantilla para usar en el sistema';
 
 
 --
--- Name: perfil_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: perfil_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE perfil_id_seq
@@ -2276,17 +2276,17 @@ CREATE SEQUENCE perfil_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.perfil_id_seq OWNER TO jelitox;
+ALTER TABLE public.perfil_id_seq OWNER TO arrozalba;
 
 --
--- Name: perfil_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: perfil_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE perfil_id_seq OWNED BY perfil.id;
 
 
 --
--- Name: persona; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: persona; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE persona (
@@ -2316,164 +2316,164 @@ CREATE TABLE persona (
 );
 
 
-ALTER TABLE public.persona OWNER TO jelitox;
+ALTER TABLE public.persona OWNER TO arrozalba;
 
 --
--- Name: TABLE persona; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE persona; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE persona IS 'Modelo para manipular las diferentes Personas';
 
 
 --
--- Name: COLUMN persona.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN persona.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN persona.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN persona.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN persona.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN persona.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN persona.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN persona.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN persona.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN persona.cedula; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN persona.cedula; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN persona.cedula IS 'N° Cedula persona';
 
 
 --
--- Name: COLUMN persona.nombre1; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN persona.nombre1; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN persona.nombre1 IS 'N° Primer Nombre de la persona';
 
 
 --
--- Name: COLUMN persona.nombre2; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN persona.nombre2; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN persona.nombre2 IS 'N° Segundo Nombre de la persona';
 
 
 --
--- Name: COLUMN persona.apellido1; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN persona.apellido1; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN persona.apellido1 IS 'N° Primer Apellido del persona';
 
 
 --
--- Name: COLUMN persona.apellido2; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN persona.apellido2; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN persona.apellido2 IS 'N° Segundo Apellido del persona';
 
 
 --
--- Name: COLUMN persona.nacionalidad; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN persona.nacionalidad; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN persona.nacionalidad IS 'Nacionalidad de la persona';
 
 
 --
--- Name: COLUMN persona.sexo; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN persona.sexo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN persona.sexo IS 'N° Sexo del persona';
 
 
 --
--- Name: COLUMN persona.fecha_nacimiento; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN persona.fecha_nacimiento; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN persona.fecha_nacimiento IS 'Fecha de Nacimiento del persona';
 
 
 --
--- Name: COLUMN persona.pais_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN persona.pais_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN persona.pais_id IS 'Pais Origen del persona';
 
 
 --
--- Name: COLUMN persona.estado_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN persona.estado_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN persona.estado_id IS 'Estado de Origen del persona';
 
 
 --
--- Name: COLUMN persona.municipio_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN persona.municipio_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN persona.municipio_id IS 'Municipio de Origen del persona';
 
 
 --
--- Name: COLUMN persona.parroquia_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN persona.parroquia_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN persona.parroquia_id IS 'Parroquia de Origen del persona';
 
 
 --
--- Name: COLUMN persona.direccion_habitacion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN persona.direccion_habitacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN persona.direccion_habitacion IS 'Direccion de Habitacion del persona';
 
 
 --
--- Name: COLUMN persona.estado_civil; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN persona.estado_civil; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN persona.estado_civil IS 'Estado Civil del persona';
 
 
 --
--- Name: COLUMN persona.celular; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN persona.celular; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN persona.celular IS 'N° de Celular del persona';
 
 
 --
--- Name: COLUMN persona.telefono; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN persona.telefono; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN persona.telefono IS 'N° de Telefono del persona';
 
 
 --
--- Name: COLUMN persona.correo_electronico; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN persona.correo_electronico; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN persona.correo_electronico IS 'Direccion de Correo Electronico del persona';
 
 
 --
--- Name: COLUMN persona.grupo_sanguineo; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN persona.grupo_sanguineo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN persona.grupo_sanguineo IS 'Grupo Sanguineo del persona';
 
 
 --
--- Name: persona_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: persona_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE persona_id_seq
@@ -2484,17 +2484,17 @@ CREATE SEQUENCE persona_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.persona_id_seq OWNER TO jelitox;
+ALTER TABLE public.persona_id_seq OWNER TO arrozalba;
 
 --
--- Name: persona_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: persona_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE persona_id_seq OWNED BY persona.id;
 
 
 --
--- Name: profesion; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: profesion; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE profesion (
@@ -2507,52 +2507,52 @@ CREATE TABLE profesion (
 );
 
 
-ALTER TABLE public.profesion OWNER TO jelitox;
+ALTER TABLE public.profesion OWNER TO arrozalba;
 
 --
--- Name: TABLE profesion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE profesion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE profesion IS 'Modelo para manipular las diferentes Profesiones';
 
 
 --
--- Name: COLUMN profesion.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN profesion.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN profesion.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN profesion.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN profesion.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN profesion.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN profesion.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN profesion.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN profesion.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN profesion.nombre; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN profesion.nombre; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN profesion.nombre IS 'Nombre de la Profesion';
 
 
 --
--- Name: COLUMN profesion.observacion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN profesion.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN profesion.observacion IS 'Observacion';
 
 
 --
--- Name: profesion_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: profesion_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE profesion_id_seq
@@ -2563,17 +2563,17 @@ CREATE SEQUENCE profesion_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.profesion_id_seq OWNER TO jelitox;
+ALTER TABLE public.profesion_id_seq OWNER TO arrozalba;
 
 --
--- Name: profesion_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: profesion_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE profesion_id_seq OWNED BY profesion.id;
 
 
 --
--- Name: proveedor_medico; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: proveedor_medico; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE proveedor_medico (
@@ -2583,31 +2583,31 @@ CREATE TABLE proveedor_medico (
 );
 
 
-ALTER TABLE public.proveedor_medico OWNER TO jelitox;
+ALTER TABLE public.proveedor_medico OWNER TO arrozalba;
 
 --
--- Name: TABLE proveedor_medico; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE proveedor_medico; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE proveedor_medico IS 'Modelo para manipular la relacion proveedor-medico';
 
 
 --
--- Name: COLUMN proveedor_medico.medico_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN proveedor_medico.medico_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN proveedor_medico.medico_id IS 'ID del medico';
 
 
 --
--- Name: COLUMN proveedor_medico.proveedor_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN proveedor_medico.proveedor_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN proveedor_medico.proveedor_id IS 'ID del proveedor';
 
 
 --
--- Name: proveedor_medico_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: proveedor_medico_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE proveedor_medico_id_seq
@@ -2618,17 +2618,17 @@ CREATE SEQUENCE proveedor_medico_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.proveedor_medico_id_seq OWNER TO jelitox;
+ALTER TABLE public.proveedor_medico_id_seq OWNER TO arrozalba;
 
 --
--- Name: proveedor_medico_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: proveedor_medico_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE proveedor_medico_id_seq OWNED BY proveedor_medico.id;
 
 
 --
--- Name: recaudo; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: recaudo; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE recaudo (
@@ -2642,59 +2642,59 @@ CREATE TABLE recaudo (
 );
 
 
-ALTER TABLE public.recaudo OWNER TO jelitox;
+ALTER TABLE public.recaudo OWNER TO arrozalba;
 
 --
--- Name: TABLE recaudo; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE recaudo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE recaudo IS 'Modelo para manipular los diferentes Recaudos';
 
 
 --
--- Name: COLUMN recaudo.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recaudo.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recaudo.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN recaudo.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recaudo.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recaudo.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN recaudo.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recaudo.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recaudo.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN recaudo.nombre; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recaudo.nombre; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recaudo.nombre IS 'Nombre del Recaudo';
 
 
 --
--- Name: COLUMN recaudo.tipo; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recaudo.tipo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recaudo.tipo IS 'Tipo de Recaudo';
 
 
 --
--- Name: COLUMN recaudo.observacion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recaudo.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recaudo.observacion IS 'Observacion';
 
 
 --
--- Name: recaudo_beneficiario; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: recaudo_beneficiario; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE recaudo_beneficiario (
@@ -2705,38 +2705,38 @@ CREATE TABLE recaudo_beneficiario (
 );
 
 
-ALTER TABLE public.recaudo_beneficiario OWNER TO jelitox;
+ALTER TABLE public.recaudo_beneficiario OWNER TO arrozalba;
 
 --
--- Name: TABLE recaudo_beneficiario; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE recaudo_beneficiario; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE recaudo_beneficiario IS 'Modelo para manipular la relacion Recaudo-Beneficiarios';
 
 
 --
--- Name: COLUMN recaudo_beneficiario.beneficiario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recaudo_beneficiario.beneficiario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recaudo_beneficiario.beneficiario_id IS 'ID del Beneficiario';
 
 
 --
--- Name: COLUMN recaudo_beneficiario.recaudo_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recaudo_beneficiario.recaudo_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recaudo_beneficiario.recaudo_id IS 'ID del Recaudo';
 
 
 --
--- Name: COLUMN recaudo_beneficiario.estado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recaudo_beneficiario.estado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recaudo_beneficiario.estado IS 'Estado del Recaudo';
 
 
 --
--- Name: recaudo_beneficiario_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: recaudo_beneficiario_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE recaudo_beneficiario_id_seq
@@ -2747,17 +2747,17 @@ CREATE SEQUENCE recaudo_beneficiario_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.recaudo_beneficiario_id_seq OWNER TO jelitox;
+ALTER TABLE public.recaudo_beneficiario_id_seq OWNER TO arrozalba;
 
 --
--- Name: recaudo_beneficiario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: recaudo_beneficiario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE recaudo_beneficiario_id_seq OWNED BY recaudo_beneficiario.id;
 
 
 --
--- Name: recaudo_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: recaudo_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE recaudo_id_seq
@@ -2768,17 +2768,17 @@ CREATE SEQUENCE recaudo_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.recaudo_id_seq OWNER TO jelitox;
+ALTER TABLE public.recaudo_id_seq OWNER TO arrozalba;
 
 --
--- Name: recaudo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: recaudo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE recaudo_id_seq OWNED BY recaudo.id;
 
 
 --
--- Name: recaudo_reembolso; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: recaudo_reembolso; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE recaudo_reembolso (
@@ -2789,38 +2789,38 @@ CREATE TABLE recaudo_reembolso (
 );
 
 
-ALTER TABLE public.recaudo_reembolso OWNER TO jelitox;
+ALTER TABLE public.recaudo_reembolso OWNER TO arrozalba;
 
 --
--- Name: TABLE recaudo_reembolso; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE recaudo_reembolso; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE recaudo_reembolso IS 'Modelo para manipular la relacion Recaudo - Reembolsos';
 
 
 --
--- Name: COLUMN recaudo_reembolso.recaudo_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recaudo_reembolso.recaudo_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recaudo_reembolso.recaudo_id IS 'ID del Recaudo';
 
 
 --
--- Name: COLUMN recaudo_reembolso.codigo_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recaudo_reembolso.codigo_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recaudo_reembolso.codigo_solicitud IS 'Codigo de la Solicitud';
 
 
 --
--- Name: COLUMN recaudo_reembolso.estado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recaudo_reembolso.estado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recaudo_reembolso.estado IS 'Estado del Recaudo';
 
 
 --
--- Name: recaudo_reembolso_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: recaudo_reembolso_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE recaudo_reembolso_id_seq
@@ -2831,17 +2831,17 @@ CREATE SEQUENCE recaudo_reembolso_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.recaudo_reembolso_id_seq OWNER TO jelitox;
+ALTER TABLE public.recaudo_reembolso_id_seq OWNER TO arrozalba;
 
 --
--- Name: recaudo_reembolso_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: recaudo_reembolso_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE recaudo_reembolso_id_seq OWNED BY recaudo_reembolso.id;
 
 
 --
--- Name: recaudo_solicitud_medicina; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: recaudo_solicitud_medicina; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE recaudo_solicitud_medicina (
@@ -2852,38 +2852,38 @@ CREATE TABLE recaudo_solicitud_medicina (
 );
 
 
-ALTER TABLE public.recaudo_solicitud_medicina OWNER TO jelitox;
+ALTER TABLE public.recaudo_solicitud_medicina OWNER TO arrozalba;
 
 --
--- Name: TABLE recaudo_solicitud_medicina; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE recaudo_solicitud_medicina; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE recaudo_solicitud_medicina IS 'Modelo para manipular la relacion Recaudo - Solicitud Medicina';
 
 
 --
--- Name: COLUMN recaudo_solicitud_medicina.recaudo_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recaudo_solicitud_medicina.recaudo_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recaudo_solicitud_medicina.recaudo_id IS 'ID del Recaudo';
 
 
 --
--- Name: COLUMN recaudo_solicitud_medicina.codigo_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recaudo_solicitud_medicina.codigo_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recaudo_solicitud_medicina.codigo_solicitud IS 'Codigo de la Solicitud';
 
 
 --
--- Name: COLUMN recaudo_solicitud_medicina.estado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recaudo_solicitud_medicina.estado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recaudo_solicitud_medicina.estado IS 'Estado del Recaudo';
 
 
 --
--- Name: recaudo_solicitud_medicina_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: recaudo_solicitud_medicina_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE recaudo_solicitud_medicina_id_seq
@@ -2894,17 +2894,17 @@ CREATE SEQUENCE recaudo_solicitud_medicina_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.recaudo_solicitud_medicina_id_seq OWNER TO jelitox;
+ALTER TABLE public.recaudo_solicitud_medicina_id_seq OWNER TO arrozalba;
 
 --
--- Name: recaudo_solicitud_medicina_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: recaudo_solicitud_medicina_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE recaudo_solicitud_medicina_id_seq OWNED BY recaudo_solicitud_medicina.id;
 
 
 --
--- Name: recaudo_solicitud_servicio; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: recaudo_solicitud_servicio; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE recaudo_solicitud_servicio (
@@ -2915,38 +2915,38 @@ CREATE TABLE recaudo_solicitud_servicio (
 );
 
 
-ALTER TABLE public.recaudo_solicitud_servicio OWNER TO jelitox;
+ALTER TABLE public.recaudo_solicitud_servicio OWNER TO arrozalba;
 
 --
--- Name: TABLE recaudo_solicitud_servicio; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE recaudo_solicitud_servicio; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE recaudo_solicitud_servicio IS 'Modelo para manipular la relacion Recaudo - Solicitud Servicio';
 
 
 --
--- Name: COLUMN recaudo_solicitud_servicio.recaudo_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recaudo_solicitud_servicio.recaudo_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recaudo_solicitud_servicio.recaudo_id IS 'ID del Recaudo';
 
 
 --
--- Name: COLUMN recaudo_solicitud_servicio.codigo_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recaudo_solicitud_servicio.codigo_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recaudo_solicitud_servicio.codigo_solicitud IS 'Codigo de la Solicitud';
 
 
 --
--- Name: COLUMN recaudo_solicitud_servicio.estado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recaudo_solicitud_servicio.estado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recaudo_solicitud_servicio.estado IS 'Estado del Recaudo';
 
 
 --
--- Name: recaudo_solicitud_servicio_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: recaudo_solicitud_servicio_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE recaudo_solicitud_servicio_id_seq
@@ -2957,17 +2957,17 @@ CREATE SEQUENCE recaudo_solicitud_servicio_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.recaudo_solicitud_servicio_id_seq OWNER TO jelitox;
+ALTER TABLE public.recaudo_solicitud_servicio_id_seq OWNER TO arrozalba;
 
 --
--- Name: recaudo_solicitud_servicio_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: recaudo_solicitud_servicio_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE recaudo_solicitud_servicio_id_seq OWNED BY recaudo_solicitud_servicio.id;
 
 
 --
--- Name: recaudo_titular; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: recaudo_titular; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE recaudo_titular (
@@ -2978,38 +2978,38 @@ CREATE TABLE recaudo_titular (
 );
 
 
-ALTER TABLE public.recaudo_titular OWNER TO jelitox;
+ALTER TABLE public.recaudo_titular OWNER TO arrozalba;
 
 --
--- Name: TABLE recaudo_titular; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE recaudo_titular; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE recaudo_titular IS 'Modelo para manipular la relacion Recaudo-Titular';
 
 
 --
--- Name: COLUMN recaudo_titular.titular_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recaudo_titular.titular_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recaudo_titular.titular_id IS 'ID del Titular';
 
 
 --
--- Name: COLUMN recaudo_titular.recaudo_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recaudo_titular.recaudo_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recaudo_titular.recaudo_id IS 'ID del Recaudo';
 
 
 --
--- Name: COLUMN recaudo_titular.estado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recaudo_titular.estado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recaudo_titular.estado IS 'Estado del Recaudo';
 
 
 --
--- Name: recaudo_titular_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: recaudo_titular_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE recaudo_titular_id_seq
@@ -3020,17 +3020,17 @@ CREATE SEQUENCE recaudo_titular_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.recaudo_titular_id_seq OWNER TO jelitox;
+ALTER TABLE public.recaudo_titular_id_seq OWNER TO arrozalba;
 
 --
--- Name: recaudo_titular_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: recaudo_titular_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE recaudo_titular_id_seq OWNED BY recaudo_titular.id;
 
 
 --
--- Name: recurso; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: recurso; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE recurso (
@@ -3047,80 +3047,80 @@ CREATE TABLE recurso (
 );
 
 
-ALTER TABLE public.recurso OWNER TO jelitox;
+ALTER TABLE public.recurso OWNER TO arrozalba;
 
 --
--- Name: TABLE recurso; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE recurso; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE recurso IS 'Modelo para manipular recursos (controladores)';
 
 
 --
--- Name: COLUMN recurso.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recurso.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recurso.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN recurso.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recurso.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recurso.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN recurso.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recurso.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recurso.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN recurso.modulo; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recurso.modulo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recurso.modulo IS 'Nombre del Modulo';
 
 
 --
--- Name: COLUMN recurso.controlador; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recurso.controlador; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recurso.controlador IS 'Nombre del Controlador';
 
 
 --
--- Name: COLUMN recurso.accion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recurso.accion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recurso.accion IS 'Nombre de la Accion';
 
 
 --
--- Name: COLUMN recurso.recurso; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recurso.recurso; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recurso.recurso IS 'Nombre del recurso';
 
 
 --
--- Name: COLUMN recurso.descripcion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recurso.descripcion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recurso.descripcion IS 'Descripcion del Recurso';
 
 
 --
--- Name: COLUMN recurso.activo; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recurso.activo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recurso.activo IS 'Estado del Recurso';
 
 
 --
--- Name: recurso_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: recurso_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE recurso_id_seq
@@ -3131,17 +3131,17 @@ CREATE SEQUENCE recurso_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.recurso_id_seq OWNER TO jelitox;
+ALTER TABLE public.recurso_id_seq OWNER TO arrozalba;
 
 --
--- Name: recurso_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: recurso_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE recurso_id_seq OWNED BY recurso.id;
 
 
 --
--- Name: recurso_perfil; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: recurso_perfil; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE recurso_perfil (
@@ -3154,52 +3154,52 @@ CREATE TABLE recurso_perfil (
 );
 
 
-ALTER TABLE public.recurso_perfil OWNER TO jelitox;
+ALTER TABLE public.recurso_perfil OWNER TO arrozalba;
 
 --
--- Name: TABLE recurso_perfil; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE recurso_perfil; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE recurso_perfil IS 'Modelo para manipular relacion Recurso - Perfil';
 
 
 --
--- Name: COLUMN recurso_perfil.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recurso_perfil.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recurso_perfil.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN recurso_perfil.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recurso_perfil.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recurso_perfil.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN recurso_perfil.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recurso_perfil.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recurso_perfil.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN recurso_perfil.recurso_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recurso_perfil.recurso_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recurso_perfil.recurso_id IS 'ID del Recurso';
 
 
 --
--- Name: COLUMN recurso_perfil.perfil_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN recurso_perfil.perfil_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN recurso_perfil.perfil_id IS 'ID del Perfil';
 
 
 --
--- Name: recurso_perfil_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: recurso_perfil_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE recurso_perfil_id_seq
@@ -3210,17 +3210,17 @@ CREATE SEQUENCE recurso_perfil_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.recurso_perfil_id_seq OWNER TO jelitox;
+ALTER TABLE public.recurso_perfil_id_seq OWNER TO arrozalba;
 
 --
--- Name: recurso_perfil_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: recurso_perfil_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE recurso_perfil_id_seq OWNED BY recurso_perfil.id;
 
 
 --
--- Name: reembolso; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: reembolso; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE reembolso (
@@ -3238,87 +3238,87 @@ CREATE TABLE reembolso (
 );
 
 
-ALTER TABLE public.reembolso OWNER TO jelitox;
+ALTER TABLE public.reembolso OWNER TO arrozalba;
 
 --
--- Name: TABLE reembolso; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE reembolso; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE reembolso IS 'Modelo para manipular las Solicitudes de Reembolso';
 
 
 --
--- Name: COLUMN reembolso.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN reembolso.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN reembolso.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN reembolso.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN reembolso.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN reembolso.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN reembolso.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN reembolso.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN reembolso.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN reembolso.estado_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN reembolso.estado_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN reembolso.estado_solicitud IS 'Estado de la Solicitud';
 
 
 --
--- Name: COLUMN reembolso.fecha_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN reembolso.fecha_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN reembolso.fecha_solicitud IS 'Fecha de la Solicitud';
 
 
 --
--- Name: COLUMN reembolso.codigo_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN reembolso.codigo_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN reembolso.codigo_solicitud IS 'Codigo de la Solicitud';
 
 
 --
--- Name: COLUMN reembolso.titular_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN reembolso.titular_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN reembolso.titular_id IS 'Codigo del Titular';
 
 
 --
--- Name: COLUMN reembolso.beneficiario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN reembolso.beneficiario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN reembolso.beneficiario_id IS 'Codigo del Beneficiario';
 
 
 --
--- Name: COLUMN reembolso.beneficiario_tipo; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN reembolso.beneficiario_tipo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN reembolso.beneficiario_tipo IS 'beneficiario de la Solicitud';
 
 
 --
--- Name: COLUMN reembolso.observacion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN reembolso.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN reembolso.observacion IS 'Observacion';
 
 
 --
--- Name: reembolso_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: reembolso_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE reembolso_id_seq
@@ -3329,17 +3329,17 @@ CREATE SEQUENCE reembolso_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.reembolso_id_seq OWNER TO jelitox;
+ALTER TABLE public.reembolso_id_seq OWNER TO arrozalba;
 
 --
--- Name: reembolso_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: reembolso_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE reembolso_id_seq OWNED BY reembolso.id;
 
 
 --
--- Name: servicio; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: servicio; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE servicio (
@@ -3352,52 +3352,52 @@ CREATE TABLE servicio (
 );
 
 
-ALTER TABLE public.servicio OWNER TO jelitox;
+ALTER TABLE public.servicio OWNER TO arrozalba;
 
 --
--- Name: TABLE servicio; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE servicio; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE servicio IS 'Modelo para manipular los Servicios';
 
 
 --
--- Name: COLUMN servicio.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN servicio.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN servicio.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN servicio.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN servicio.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN servicio.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN servicio.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN servicio.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN servicio.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN servicio.descripcion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN servicio.descripcion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN servicio.descripcion IS 'Descripcion del Servicio';
 
 
 --
--- Name: COLUMN servicio.observacion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN servicio.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN servicio.observacion IS 'Observacion del Servicio';
 
 
 --
--- Name: servicio_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: servicio_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE servicio_id_seq
@@ -3408,17 +3408,17 @@ CREATE SEQUENCE servicio_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.servicio_id_seq OWNER TO jelitox;
+ALTER TABLE public.servicio_id_seq OWNER TO arrozalba;
 
 --
--- Name: servicio_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: servicio_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE servicio_id_seq OWNED BY servicio.id;
 
 
 --
--- Name: servicio_proveedor; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: servicio_proveedor; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE servicio_proveedor (
@@ -3428,31 +3428,31 @@ CREATE TABLE servicio_proveedor (
 );
 
 
-ALTER TABLE public.servicio_proveedor OWNER TO jelitox;
+ALTER TABLE public.servicio_proveedor OWNER TO arrozalba;
 
 --
--- Name: TABLE servicio_proveedor; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE servicio_proveedor; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE servicio_proveedor IS 'Modelo para manipular la relacion servicio-proveedors';
 
 
 --
--- Name: COLUMN servicio_proveedor.proveedor_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN servicio_proveedor.proveedor_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN servicio_proveedor.proveedor_id IS 'ID del proveedor';
 
 
 --
--- Name: COLUMN servicio_proveedor.servicio_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN servicio_proveedor.servicio_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN servicio_proveedor.servicio_id IS 'ID del servicio';
 
 
 --
--- Name: servicio_proveedor_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: servicio_proveedor_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE servicio_proveedor_id_seq
@@ -3463,17 +3463,17 @@ CREATE SEQUENCE servicio_proveedor_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.servicio_proveedor_id_seq OWNER TO jelitox;
+ALTER TABLE public.servicio_proveedor_id_seq OWNER TO arrozalba;
 
 --
--- Name: servicio_proveedor_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: servicio_proveedor_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE servicio_proveedor_id_seq OWNED BY servicio_proveedor.id;
 
 
 --
--- Name: servicio_tiposolicitud; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: servicio_tiposolicitud; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE servicio_tiposolicitud (
@@ -3483,31 +3483,31 @@ CREATE TABLE servicio_tiposolicitud (
 );
 
 
-ALTER TABLE public.servicio_tiposolicitud OWNER TO jelitox;
+ALTER TABLE public.servicio_tiposolicitud OWNER TO arrozalba;
 
 --
--- Name: TABLE servicio_tiposolicitud; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE servicio_tiposolicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE servicio_tiposolicitud IS 'Modelo para manipular la relacion Servicio - Tiposolicitud';
 
 
 --
--- Name: COLUMN servicio_tiposolicitud.tiposolicitud_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN servicio_tiposolicitud.tiposolicitud_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN servicio_tiposolicitud.tiposolicitud_id IS 'ID del tipo de solicitud';
 
 
 --
--- Name: COLUMN servicio_tiposolicitud.servicio_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN servicio_tiposolicitud.servicio_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN servicio_tiposolicitud.servicio_id IS 'ID del Servicio';
 
 
 --
--- Name: servicio_tiposolicitud_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: servicio_tiposolicitud_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE servicio_tiposolicitud_id_seq
@@ -3518,17 +3518,17 @@ CREATE SEQUENCE servicio_tiposolicitud_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.servicio_tiposolicitud_id_seq OWNER TO jelitox;
+ALTER TABLE public.servicio_tiposolicitud_id_seq OWNER TO arrozalba;
 
 --
--- Name: servicio_tiposolicitud_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: servicio_tiposolicitud_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE servicio_tiposolicitud_id_seq OWNED BY servicio_tiposolicitud.id;
 
 
 --
--- Name: solicitud_dt_factura; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: solicitud_dt_factura; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE solicitud_dt_factura (
@@ -3541,52 +3541,52 @@ CREATE TABLE solicitud_dt_factura (
 );
 
 
-ALTER TABLE public.solicitud_dt_factura OWNER TO jelitox;
+ALTER TABLE public.solicitud_dt_factura OWNER TO arrozalba;
 
 --
--- Name: TABLE solicitud_dt_factura; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE solicitud_dt_factura; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE solicitud_dt_factura IS 'Modelo para manipular el Detalle de la Facturacion de las Solicitudes de Servicios';
 
 
 --
--- Name: COLUMN solicitud_dt_factura.solicitud_factura_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_dt_factura.solicitud_factura_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_dt_factura.solicitud_factura_id IS 'Id de la Factura';
 
 
 --
--- Name: COLUMN solicitud_dt_factura.descripcion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_dt_factura.descripcion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_dt_factura.descripcion IS 'Descripcion del Item';
 
 
 --
--- Name: COLUMN solicitud_dt_factura.cantidad; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_dt_factura.cantidad; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_dt_factura.cantidad IS 'Cantidad del Item';
 
 
 --
--- Name: COLUMN solicitud_dt_factura.monto; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_dt_factura.monto; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_dt_factura.monto IS 'Monto del Item';
 
 
 --
--- Name: COLUMN solicitud_dt_factura.exento; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_dt_factura.exento; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_dt_factura.exento IS 'Item Exento del Iva';
 
 
 --
--- Name: solicitud_dt_factura_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: solicitud_dt_factura_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE solicitud_dt_factura_id_seq
@@ -3597,17 +3597,17 @@ CREATE SEQUENCE solicitud_dt_factura_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.solicitud_dt_factura_id_seq OWNER TO jelitox;
+ALTER TABLE public.solicitud_dt_factura_id_seq OWNER TO arrozalba;
 
 --
--- Name: solicitud_dt_factura_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: solicitud_dt_factura_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE solicitud_dt_factura_id_seq OWNED BY solicitud_dt_factura.id;
 
 
 --
--- Name: solicitud_dt_medicina; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: solicitud_dt_medicina; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE solicitud_dt_medicina (
@@ -3621,66 +3621,66 @@ CREATE TABLE solicitud_dt_medicina (
 );
 
 
-ALTER TABLE public.solicitud_dt_medicina OWNER TO jelitox;
+ALTER TABLE public.solicitud_dt_medicina OWNER TO arrozalba;
 
 --
--- Name: TABLE solicitud_dt_medicina; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE solicitud_dt_medicina; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE solicitud_dt_medicina IS 'Modelo para manipular los Detalles de las Solicitudes de Medicinas';
 
 
 --
--- Name: COLUMN solicitud_dt_medicina.id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_dt_medicina.id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_dt_medicina.id IS 'Id del Registro';
 
 
 --
--- Name: COLUMN solicitud_dt_medicina.solicitud_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_dt_medicina.solicitud_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_dt_medicina.solicitud_id IS 'Id la Solicitud';
 
 
 --
--- Name: COLUMN solicitud_dt_medicina.medicina_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_dt_medicina.medicina_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_dt_medicina.medicina_id IS 'Codigo de la Medicina';
 
 
 --
--- Name: COLUMN solicitud_dt_medicina.fecha_inicio; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_dt_medicina.fecha_inicio; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_dt_medicina.fecha_inicio IS 'Fecha Inicio del Tratamiento';
 
 
 --
--- Name: COLUMN solicitud_dt_medicina.fecha_fin; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_dt_medicina.fecha_fin; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_dt_medicina.fecha_fin IS 'Fecha Fin del Tratamiento';
 
 
 --
--- Name: COLUMN solicitud_dt_medicina.dosis; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_dt_medicina.dosis; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_dt_medicina.dosis IS 'Dosis de la Medicina';
 
 
 --
--- Name: COLUMN solicitud_dt_medicina.horas; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_dt_medicina.horas; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_dt_medicina.horas IS 'Dosis de la Medicina';
 
 
 --
--- Name: solicitud_dt_medicina_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: solicitud_dt_medicina_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE solicitud_dt_medicina_id_seq
@@ -3691,17 +3691,17 @@ CREATE SEQUENCE solicitud_dt_medicina_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.solicitud_dt_medicina_id_seq OWNER TO jelitox;
+ALTER TABLE public.solicitud_dt_medicina_id_seq OWNER TO arrozalba;
 
 --
--- Name: solicitud_dt_medicina_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: solicitud_dt_medicina_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE solicitud_dt_medicina_id_seq OWNED BY solicitud_dt_medicina.id;
 
 
 --
--- Name: solicitud_factura; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: solicitud_factura; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE solicitud_factura (
@@ -3718,80 +3718,80 @@ CREATE TABLE solicitud_factura (
 );
 
 
-ALTER TABLE public.solicitud_factura OWNER TO jelitox;
+ALTER TABLE public.solicitud_factura OWNER TO arrozalba;
 
 --
--- Name: TABLE solicitud_factura; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE solicitud_factura; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE solicitud_factura IS 'Modelo para manipular la Facturacion de las Solicitudes de Servicios';
 
 
 --
--- Name: COLUMN solicitud_factura.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_factura.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_factura.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN solicitud_factura.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_factura.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_factura.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN solicitud_factura.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_factura.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_factura.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN solicitud_factura.solicitud_servicio_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_factura.solicitud_servicio_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_factura.solicitud_servicio_id IS 'Id de la Solicitud';
 
 
 --
--- Name: COLUMN solicitud_factura.codigo_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_factura.codigo_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_factura.codigo_solicitud IS 'Codigo de la Solicitud';
 
 
 --
--- Name: COLUMN solicitud_factura.fecha_factura; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_factura.fecha_factura; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_factura.fecha_factura IS 'Fecha de Factura';
 
 
 --
--- Name: COLUMN solicitud_factura.nro_control; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_factura.nro_control; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_factura.nro_control IS 'Numero de Control';
 
 
 --
--- Name: COLUMN solicitud_factura.nro_factura; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_factura.nro_factura; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_factura.nro_factura IS 'Numero de Factura';
 
 
 --
--- Name: COLUMN solicitud_factura.observacion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_factura.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_factura.observacion IS 'Observacion';
 
 
 --
--- Name: solicitud_factura_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: solicitud_factura_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE solicitud_factura_id_seq
@@ -3802,17 +3802,17 @@ CREATE SEQUENCE solicitud_factura_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.solicitud_factura_id_seq OWNER TO jelitox;
+ALTER TABLE public.solicitud_factura_id_seq OWNER TO arrozalba;
 
 --
--- Name: solicitud_factura_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: solicitud_factura_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE solicitud_factura_id_seq OWNED BY solicitud_factura.id;
 
 
 --
--- Name: solicitud_medicina; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: solicitud_medicina; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE solicitud_medicina (
@@ -3839,150 +3839,150 @@ CREATE TABLE solicitud_medicina (
 );
 
 
-ALTER TABLE public.solicitud_medicina OWNER TO jelitox;
+ALTER TABLE public.solicitud_medicina OWNER TO arrozalba;
 
 --
--- Name: TABLE solicitud_medicina; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE solicitud_medicina; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE solicitud_medicina IS 'Modelo para manipular las Solicitudes de Medicinas';
 
 
 --
--- Name: COLUMN solicitud_medicina.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_medicina.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_medicina.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN solicitud_medicina.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_medicina.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_medicina.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN solicitud_medicina.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_medicina.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_medicina.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN solicitud_medicina.estado_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_medicina.estado_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_medicina.estado_solicitud IS 'Estado de la Solicitud';
 
 
 --
--- Name: COLUMN solicitud_medicina.fecha_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_medicina.fecha_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_medicina.fecha_solicitud IS 'Fecha de la Solicitud';
 
 
 --
--- Name: COLUMN solicitud_medicina.fecha_vencimiento; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_medicina.fecha_vencimiento; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_medicina.fecha_vencimiento IS 'Fecha de Vencimiento de la Solicitud';
 
 
 --
--- Name: COLUMN solicitud_medicina.codigo_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_medicina.codigo_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_medicina.codigo_solicitud IS 'Codigo de la Solicitud';
 
 
 --
--- Name: COLUMN solicitud_medicina.titular_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_medicina.titular_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_medicina.titular_id IS 'Codigo del Titular';
 
 
 --
--- Name: COLUMN solicitud_medicina.beneficiario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_medicina.beneficiario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_medicina.beneficiario_id IS 'Codigo del Beneficiario';
 
 
 --
--- Name: COLUMN solicitud_medicina.beneficiario_tipo; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_medicina.beneficiario_tipo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_medicina.beneficiario_tipo IS 'beneficiario de la Solicitud';
 
 
 --
--- Name: COLUMN solicitud_medicina.patologia_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_medicina.patologia_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_medicina.patologia_id IS 'Codigo de la Patologia';
 
 
 --
--- Name: COLUMN solicitud_medicina.proveedor_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_medicina.proveedor_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_medicina.proveedor_id IS 'Codigo del Proveedor';
 
 
 --
--- Name: COLUMN solicitud_medicina.medico_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_medicina.medico_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_medicina.medico_id IS 'Codigo del Medico';
 
 
 --
--- Name: COLUMN solicitud_medicina.persona_autorizada; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_medicina.persona_autorizada; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_medicina.persona_autorizada IS 'Persona Autorizada';
 
 
 --
--- Name: COLUMN solicitud_medicina.persona_cedula; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_medicina.persona_cedula; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_medicina.persona_cedula IS 'Cedula Persona Autorizada';
 
 
 --
--- Name: COLUMN solicitud_medicina.tipo_tratamiento; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_medicina.tipo_tratamiento; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_medicina.tipo_tratamiento IS 'Tipo de Tratamiento';
 
 
 --
--- Name: COLUMN solicitud_medicina.diagnostico; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_medicina.diagnostico; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_medicina.diagnostico IS 'Diagnostico';
 
 
 --
--- Name: COLUMN solicitud_medicina.servicio_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_medicina.servicio_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_medicina.servicio_id IS 'Codigo del Servicio';
 
 
 --
--- Name: COLUMN solicitud_medicina.observacion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_medicina.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_medicina.observacion IS 'Observacion';
 
 
 --
--- Name: solicitud_medicina_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: solicitud_medicina_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE solicitud_medicina_id_seq
@@ -3993,17 +3993,17 @@ CREATE SEQUENCE solicitud_medicina_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.solicitud_medicina_id_seq OWNER TO jelitox;
+ALTER TABLE public.solicitud_medicina_id_seq OWNER TO arrozalba;
 
 --
--- Name: solicitud_medicina_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: solicitud_medicina_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE solicitud_medicina_id_seq OWNED BY solicitud_medicina.id;
 
 
 --
--- Name: solicitud_servicio; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: solicitud_servicio; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE solicitud_servicio (
@@ -4027,129 +4027,129 @@ CREATE TABLE solicitud_servicio (
 );
 
 
-ALTER TABLE public.solicitud_servicio OWNER TO jelitox;
+ALTER TABLE public.solicitud_servicio OWNER TO arrozalba;
 
 --
--- Name: TABLE solicitud_servicio; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE solicitud_servicio; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE solicitud_servicio IS 'Modelo para manipular las Solicitudes de Servicios';
 
 
 --
--- Name: COLUMN solicitud_servicio.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_servicio.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_servicio.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN solicitud_servicio.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_servicio.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_servicio.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN solicitud_servicio.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_servicio.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_servicio.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN solicitud_servicio.estado_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_servicio.estado_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_servicio.estado_solicitud IS 'Estado de la Solicitud';
 
 
 --
--- Name: COLUMN solicitud_servicio.tiposolicitud_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_servicio.tiposolicitud_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_servicio.tiposolicitud_id IS 'Tipo de Solicitud';
 
 
 --
--- Name: COLUMN solicitud_servicio.fecha_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_servicio.fecha_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_servicio.fecha_solicitud IS 'Fecha de la Solicitud';
 
 
 --
--- Name: COLUMN solicitud_servicio.codigo_solicitud; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_servicio.codigo_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_servicio.codigo_solicitud IS 'Codigo de la Solicitud';
 
 
 --
--- Name: COLUMN solicitud_servicio.titular_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_servicio.titular_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_servicio.titular_id IS 'Codigo del Titular';
 
 
 --
--- Name: COLUMN solicitud_servicio.beneficiario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_servicio.beneficiario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_servicio.beneficiario_id IS 'Codigo del Beneficiario';
 
 
 --
--- Name: COLUMN solicitud_servicio.beneficiario_tipo; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_servicio.beneficiario_tipo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_servicio.beneficiario_tipo IS 'beneficiario de la Solicitud';
 
 
 --
--- Name: COLUMN solicitud_servicio.patologia_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_servicio.patologia_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_servicio.patologia_id IS 'Codigo de la Patologia';
 
 
 --
--- Name: COLUMN solicitud_servicio.proveedor_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_servicio.proveedor_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_servicio.proveedor_id IS 'Codigo del Proveedor';
 
 
 --
--- Name: COLUMN solicitud_servicio.medico_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_servicio.medico_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_servicio.medico_id IS 'Codigo del Medico';
 
 
 --
--- Name: COLUMN solicitud_servicio.fecha_vencimiento; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_servicio.fecha_vencimiento; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_servicio.fecha_vencimiento IS 'Fecha Vencimiento de la Solicitud';
 
 
 --
--- Name: COLUMN solicitud_servicio.servicio_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_servicio.servicio_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_servicio.servicio_id IS 'Codigo del Servicio';
 
 
 --
--- Name: COLUMN solicitud_servicio.observacion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN solicitud_servicio.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN solicitud_servicio.observacion IS 'Observacion';
 
 
 --
--- Name: solicitud_servicio_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: solicitud_servicio_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE solicitud_servicio_id_seq
@@ -4160,17 +4160,17 @@ CREATE SEQUENCE solicitud_servicio_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.solicitud_servicio_id_seq OWNER TO jelitox;
+ALTER TABLE public.solicitud_servicio_id_seq OWNER TO arrozalba;
 
 --
--- Name: solicitud_servicio_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: solicitud_servicio_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE solicitud_servicio_id_seq OWNED BY solicitud_servicio.id;
 
 
 --
--- Name: sucursal; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: sucursal; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE sucursal (
@@ -4192,115 +4192,115 @@ CREATE TABLE sucursal (
 );
 
 
-ALTER TABLE public.sucursal OWNER TO jelitox;
+ALTER TABLE public.sucursal OWNER TO arrozalba;
 
 --
--- Name: TABLE sucursal; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE sucursal; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE sucursal IS 'Modelo para manipular las sucursales';
 
 
 --
--- Name: COLUMN sucursal.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN sucursal.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN sucursal.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN sucursal.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN sucursal.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN sucursal.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN sucursal.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN sucursal.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN sucursal.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN sucursal.empresa_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN sucursal.empresa_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN sucursal.empresa_id IS 'ID de la Empresa';
 
 
 --
--- Name: COLUMN sucursal.sucursal; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN sucursal.sucursal; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN sucursal.sucursal IS 'Nombre de la Sucursal';
 
 
 --
--- Name: COLUMN sucursal.sucursal_slug; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN sucursal.sucursal_slug; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN sucursal.sucursal_slug IS 'Slug de la sucursal';
 
 
 --
--- Name: COLUMN sucursal.pais_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN sucursal.pais_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN sucursal.pais_id IS 'Id de la Pais';
 
 
 --
--- Name: COLUMN sucursal.estado_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN sucursal.estado_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN sucursal.estado_id IS 'Id del Estado';
 
 
 --
--- Name: COLUMN sucursal.municipio_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN sucursal.municipio_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN sucursal.municipio_id IS 'Id del Municipio';
 
 
 --
--- Name: COLUMN sucursal.parroquia_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN sucursal.parroquia_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN sucursal.parroquia_id IS 'Id de la Parroquia';
 
 
 --
--- Name: COLUMN sucursal.direccion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN sucursal.direccion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN sucursal.direccion IS 'Direccion de la Sucursal';
 
 
 --
--- Name: COLUMN sucursal.telefono; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN sucursal.telefono; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN sucursal.telefono IS 'Telefono de la Sucursal';
 
 
 --
--- Name: COLUMN sucursal.fax; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN sucursal.fax; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN sucursal.fax IS 'fax de la Sucursal';
 
 
 --
--- Name: COLUMN sucursal.celular; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN sucursal.celular; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN sucursal.celular IS 'fax de la Sucursal';
 
 
 --
--- Name: sucursal_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: sucursal_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE sucursal_id_seq
@@ -4311,17 +4311,17 @@ CREATE SEQUENCE sucursal_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.sucursal_id_seq OWNER TO jelitox;
+ALTER TABLE public.sucursal_id_seq OWNER TO arrozalba;
 
 --
--- Name: sucursal_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: sucursal_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE sucursal_id_seq OWNED BY sucursal.id;
 
 
 --
--- Name: tipoempleado; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: tipoempleado; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE tipoempleado (
@@ -4334,52 +4334,52 @@ CREATE TABLE tipoempleado (
 );
 
 
-ALTER TABLE public.tipoempleado OWNER TO jelitox;
+ALTER TABLE public.tipoempleado OWNER TO arrozalba;
 
 --
--- Name: TABLE tipoempleado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE tipoempleado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE tipoempleado IS 'Modelo para manipular las diferentes Profesiones';
 
 
 --
--- Name: COLUMN tipoempleado.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN tipoempleado.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN tipoempleado.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN tipoempleado.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN tipoempleado.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN tipoempleado.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN tipoempleado.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN tipoempleado.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN tipoempleado.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN tipoempleado.nombre; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN tipoempleado.nombre; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN tipoempleado.nombre IS 'Nombre de la Profesion';
 
 
 --
--- Name: COLUMN tipoempleado.observacion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN tipoempleado.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN tipoempleado.observacion IS 'Observacion';
 
 
 --
--- Name: tipoempleado_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: tipoempleado_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE tipoempleado_id_seq
@@ -4390,17 +4390,17 @@ CREATE SEQUENCE tipoempleado_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tipoempleado_id_seq OWNER TO jelitox;
+ALTER TABLE public.tipoempleado_id_seq OWNER TO arrozalba;
 
 --
--- Name: tipoempleado_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: tipoempleado_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE tipoempleado_id_seq OWNED BY tipoempleado.id;
 
 
 --
--- Name: tiposolicitud; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: tiposolicitud; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE tiposolicitud (
@@ -4413,52 +4413,52 @@ CREATE TABLE tiposolicitud (
 );
 
 
-ALTER TABLE public.tiposolicitud OWNER TO jelitox;
+ALTER TABLE public.tiposolicitud OWNER TO arrozalba;
 
 --
--- Name: TABLE tiposolicitud; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE tiposolicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE tiposolicitud IS 'Modelo para manipular las diferentes Tipos de Solicitudes';
 
 
 --
--- Name: COLUMN tiposolicitud.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN tiposolicitud.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN tiposolicitud.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN tiposolicitud.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN tiposolicitud.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN tiposolicitud.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN tiposolicitud.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN tiposolicitud.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN tiposolicitud.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN tiposolicitud.nombre; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN tiposolicitud.nombre; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN tiposolicitud.nombre IS 'Nombre del Tipo Solicitud';
 
 
 --
--- Name: COLUMN tiposolicitud.observacion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN tiposolicitud.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN tiposolicitud.observacion IS 'Observacion';
 
 
 --
--- Name: tiposolicitud_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: tiposolicitud_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE tiposolicitud_id_seq
@@ -4469,17 +4469,17 @@ CREATE SEQUENCE tiposolicitud_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tiposolicitud_id_seq OWNER TO jelitox;
+ALTER TABLE public.tiposolicitud_id_seq OWNER TO arrozalba;
 
 --
--- Name: tiposolicitud_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: tiposolicitud_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE tiposolicitud_id_seq OWNED BY tiposolicitud.id;
 
 
 --
--- Name: titular; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: titular; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE titular (
@@ -4497,52 +4497,52 @@ CREATE TABLE titular (
 );
 
 
-ALTER TABLE public.titular OWNER TO jelitox;
+ALTER TABLE public.titular OWNER TO arrozalba;
 
 --
--- Name: TABLE titular; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE titular; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE titular IS 'Modelo para manipular los Titulares';
 
 
 --
--- Name: COLUMN titular.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN titular.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN titular.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN titular.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN titular.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN titular.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN titular.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN titular.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN titular.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN titular.tipoempleado_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN titular.tipoempleado_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN titular.tipoempleado_id IS 'Tipo de Empleado';
 
 
 --
--- Name: COLUMN titular.observacion; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN titular.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN titular.observacion IS 'Observacion';
 
 
 --
--- Name: titular_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: titular_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE titular_id_seq
@@ -4553,17 +4553,17 @@ CREATE SEQUENCE titular_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.titular_id_seq OWNER TO jelitox;
+ALTER TABLE public.titular_id_seq OWNER TO arrozalba;
 
 --
--- Name: titular_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: titular_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE titular_id_seq OWNED BY titular.id;
 
 
 --
--- Name: usuario; Type: TABLE; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: usuario; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE usuario (
@@ -4583,101 +4583,101 @@ CREATE TABLE usuario (
 );
 
 
-ALTER TABLE public.usuario OWNER TO jelitox;
+ALTER TABLE public.usuario OWNER TO arrozalba;
 
 --
--- Name: TABLE usuario; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: TABLE usuario; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON TABLE usuario IS 'Modelo para manipular los usuarios';
 
 
 --
--- Name: COLUMN usuario.usuario_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN usuario.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN usuario.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- Name: COLUMN usuario.fecha_registro; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN usuario.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN usuario.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- Name: COLUMN usuario.fecha_modificado; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN usuario.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN usuario.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- Name: COLUMN usuario.sucursal_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN usuario.sucursal_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN usuario.sucursal_id IS 'ID de la Sucursal';
 
 
 --
--- Name: COLUMN usuario.persona_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN usuario.persona_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN usuario.persona_id IS 'ID de la Persona';
 
 
 --
--- Name: COLUMN usuario.login; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN usuario.login; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN usuario.login IS 'Login del usuario';
 
 
 --
--- Name: COLUMN usuario.password; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN usuario.password; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN usuario.password IS 'Password del usuario';
 
 
 --
--- Name: COLUMN usuario.perfil_id; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN usuario.perfil_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN usuario.perfil_id IS 'ID Perfil de Usuario';
 
 
 --
--- Name: COLUMN usuario.email; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN usuario.email; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN usuario.email IS 'Email del usuario';
 
 
 --
--- Name: COLUMN usuario.tema; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN usuario.tema; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN usuario.tema IS 'Tema de la interfaz aplicable al usuario';
 
 
 --
--- Name: COLUMN usuario.app_ajax; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN usuario.app_ajax; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN usuario.app_ajax IS 'Indica si la app se trabaja con ajax o peticiones normales';
 
 
 --
--- Name: COLUMN usuario.datagrid; Type: COMMENT; Schema: public; Owner: jelitox
+-- Name: COLUMN usuario.datagrid; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
 COMMENT ON COLUMN usuario.datagrid IS 'Datos por página en los datagrid';
 
 
 --
--- Name: usuario_id_seq; Type: SEQUENCE; Schema: public; Owner: jelitox
+-- Name: usuario_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
 CREATE SEQUENCE usuario_id_seq
@@ -4688,10 +4688,10 @@ CREATE SEQUENCE usuario_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.usuario_id_seq OWNER TO jelitox;
+ALTER TABLE public.usuario_id_seq OWNER TO arrozalba;
 
 --
--- Name: usuario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jelitox
+-- Name: usuario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
 ALTER SEQUENCE usuario_id_seq OWNED BY usuario.id;
@@ -4700,7 +4700,7 @@ ALTER SEQUENCE usuario_id_seq OWNED BY usuario.id;
 SET search_path = audit_log, pg_catalog;
 
 --
--- Name: log_id; Type: DEFAULT; Schema: audit_log; Owner: jelitox
+-- Name: log_id; Type: DEFAULT; Schema: audit_log; Owner: arrozalba
 --
 
 ALTER TABLE ONLY audit_log ALTER COLUMN log_id SET DEFAULT nextval('audit_log_log_id_seq'::regclass);
@@ -4709,308 +4709,308 @@ ALTER TABLE ONLY audit_log ALTER COLUMN log_id SET DEFAULT nextval('audit_log_lo
 SET search_path = public, pg_catalog;
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY acceso ALTER COLUMN id SET DEFAULT nextval('acceso_id_seq'::regclass);
 
 
 --
--- Name: log_id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: log_id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY audit_log ALTER COLUMN log_id SET DEFAULT nextval('audit_log_log_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY backup ALTER COLUMN id SET DEFAULT nextval('backup_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY beneficiario ALTER COLUMN id SET DEFAULT nextval('beneficiario_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY beneficiario_tipo ALTER COLUMN id SET DEFAULT nextval('beneficiario_tipo_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY cargo ALTER COLUMN id SET DEFAULT nextval('cargo_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY cobertura ALTER COLUMN id SET DEFAULT nextval('cobertura_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY departamento ALTER COLUMN id SET DEFAULT nextval('departamento_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY discapacidad ALTER COLUMN id SET DEFAULT nextval('discapacidad_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY discapacidad_persona ALTER COLUMN id SET DEFAULT nextval('discapacidad_persona_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY empresa ALTER COLUMN id SET DEFAULT nextval('empresa_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY especialidad ALTER COLUMN id SET DEFAULT nextval('especialidad_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY estado ALTER COLUMN id SET DEFAULT nextval('estado_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY estado_usuario ALTER COLUMN id SET DEFAULT nextval('estado_usuario_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY medicina ALTER COLUMN id SET DEFAULT nextval('medicina_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY medico ALTER COLUMN id SET DEFAULT nextval('medico_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY menu ALTER COLUMN id SET DEFAULT nextval('menu_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY municipio ALTER COLUMN id SET DEFAULT nextval('municipio_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY pais ALTER COLUMN id SET DEFAULT nextval('pais_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY parroquia ALTER COLUMN id SET DEFAULT nextval('parroquia_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY patologia ALTER COLUMN id SET DEFAULT nextval('patologia_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY perfil ALTER COLUMN id SET DEFAULT nextval('perfil_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY persona ALTER COLUMN id SET DEFAULT nextval('persona_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY profesion ALTER COLUMN id SET DEFAULT nextval('profesion_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY proveedor ALTER COLUMN id SET DEFAULT nextval('proveedor_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY recaudo ALTER COLUMN id SET DEFAULT nextval('recaudo_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY recaudo_reembolso ALTER COLUMN id SET DEFAULT nextval('recaudo_reembolso_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY recaudo_solicitud_medicina ALTER COLUMN id SET DEFAULT nextval('recaudo_solicitud_medicina_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY recaudo_solicitud_servicio ALTER COLUMN id SET DEFAULT nextval('recaudo_solicitud_servicio_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY recaudo_titular ALTER COLUMN id SET DEFAULT nextval('recaudo_titular_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY recurso ALTER COLUMN id SET DEFAULT nextval('recurso_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY recurso_perfil ALTER COLUMN id SET DEFAULT nextval('recurso_perfil_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY reembolso ALTER COLUMN id SET DEFAULT nextval('reembolso_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY servicio ALTER COLUMN id SET DEFAULT nextval('servicio_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY solicitud_dt_factura ALTER COLUMN id SET DEFAULT nextval('solicitud_dt_factura_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY solicitud_dt_medicina ALTER COLUMN id SET DEFAULT nextval('solicitud_dt_medicina_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY solicitud_factura ALTER COLUMN id SET DEFAULT nextval('solicitud_factura_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY solicitud_medicina ALTER COLUMN id SET DEFAULT nextval('solicitud_medicina_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY solicitud_servicio ALTER COLUMN id SET DEFAULT nextval('solicitud_servicio_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY sucursal ALTER COLUMN id SET DEFAULT nextval('sucursal_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY tipoempleado ALTER COLUMN id SET DEFAULT nextval('tipoempleado_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY tiposolicitud ALTER COLUMN id SET DEFAULT nextval('tiposolicitud_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY titular ALTER COLUMN id SET DEFAULT nextval('titular_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: jelitox
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY usuario ALTER COLUMN id SET DEFAULT nextval('usuario_id_seq'::regclass);
@@ -5019,17 +5019,17 @@ ALTER TABLE ONLY usuario ALTER COLUMN id SET DEFAULT nextval('usuario_id_seq'::r
 SET search_path = audit_log, pg_catalog;
 
 --
--- Data for Name: audit_log; Type: TABLE DATA; Schema: audit_log; Owner: jelitox
+-- Data for Name: audit_log; Type: TABLE DATA; Schema: audit_log; Owner: arrozalba
 --
 
 COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, log_operation, log_query, log_table, log_columns, log_old_values, log_new_values) FROM stdin;
-1	254379	jelitox	2014-03-17 19:37:38.359201-04:30	127.0.0.1	UPDATE	UPDATE public.usuario SET email='yelix_ricarda@gmail.com'::text WHERE id = '6'::integer	usuario	{id,tema,email,login,app_ajax,datagrid,password,perfil_id,persona_id,usuario_id,sucursal_id,fecha_registro,fecha_modificado}	{6,default,yelix@gmail.com,yelix,1,30,d93a5def7511da3d0f2d171d9c344e91,3,6,NULL,NULL,"2014-03-17 19:22:19.405099-04:30","2014-03-17 19:22:19.405099-04:30"}	{6,default,yelix_ricarda@gmail.com,yelix,1,30,d93a5def7511da3d0f2d171d9c344e91,3,6,NULL,NULL,"2014-03-17 19:22:19.405099-04:30","2014-03-17 19:22:19.405099-04:30"}
-2	254379	jelitox	2014-03-17 19:38:57.531371-04:30	127.0.0.1	UPDATE	UPDATE public.usuario SET email='yelixmaria@gmail.com'::text WHERE id = '6'::integer	usuario	{id,tema,email,login,app_ajax,datagrid,password,perfil_id,persona_id,usuario_id,sucursal_id,fecha_registro,fecha_modificado}	{6,default,yelix_ricarda@gmail.com,yelix,1,30,d93a5def7511da3d0f2d171d9c344e91,3,6,NULL,NULL,"2014-03-17 19:22:19.405099-04:30","2014-03-17 19:22:19.405099-04:30"}	{6,default,yelixmaria@gmail.com,yelix,1,30,d93a5def7511da3d0f2d171d9c344e91,3,6,NULL,NULL,"2014-03-17 19:22:19.405099-04:30","2014-03-17 19:22:19.405099-04:30"}
+1	254379	arrozalba	2014-03-17 19:37:38.359201-04:30	127.0.0.1	UPDATE	UPDATE public.usuario SET email='yelix_ricarda@gmail.com'::text WHERE id = '6'::integer	usuario	{id,tema,email,login,app_ajax,datagrid,password,perfil_id,persona_id,usuario_id,sucursal_id,fecha_registro,fecha_modificado}	{6,default,yelix@gmail.com,yelix,1,30,d93a5def7511da3d0f2d171d9c344e91,3,6,NULL,NULL,"2014-03-17 19:22:19.405099-04:30","2014-03-17 19:22:19.405099-04:30"}	{6,default,yelix_ricarda@gmail.com,yelix,1,30,d93a5def7511da3d0f2d171d9c344e91,3,6,NULL,NULL,"2014-03-17 19:22:19.405099-04:30","2014-03-17 19:22:19.405099-04:30"}
+2	254379	arrozalba	2014-03-17 19:38:57.531371-04:30	127.0.0.1	UPDATE	UPDATE public.usuario SET email='yelixmaria@gmail.com'::text WHERE id = '6'::integer	usuario	{id,tema,email,login,app_ajax,datagrid,password,perfil_id,persona_id,usuario_id,sucursal_id,fecha_registro,fecha_modificado}	{6,default,yelix_ricarda@gmail.com,yelix,1,30,d93a5def7511da3d0f2d171d9c344e91,3,6,NULL,NULL,"2014-03-17 19:22:19.405099-04:30","2014-03-17 19:22:19.405099-04:30"}	{6,default,yelixmaria@gmail.com,yelix,1,30,d93a5def7511da3d0f2d171d9c344e91,3,6,NULL,NULL,"2014-03-17 19:22:19.405099-04:30","2014-03-17 19:22:19.405099-04:30"}
 \.
 
 
 --
--- Name: audit_log_log_id_seq; Type: SEQUENCE SET; Schema: audit_log; Owner: jelitox
+-- Name: audit_log_log_id_seq; Type: SEQUENCE SET; Schema: audit_log; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('audit_log_log_id_seq', 2, true);
@@ -5038,7 +5038,7 @@ SELECT pg_catalog.setval('audit_log_log_id_seq', 2, true);
 SET search_path = public, pg_catalog;
 
 --
--- Data for Name: acceso; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: acceso; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, navegador, version_navegador, sistema_operativo, nombre_equipo, ip) FROM stdin;
@@ -5133,14 +5133,14 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 
 
 --
--- Name: acceso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: acceso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('acceso_id_seq', 88, true);
 
 
 --
--- Data for Name: audit_log; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: audit_log; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, log_operation, log_query, log_table, log_columns, log_old_values, log_new_values) FROM stdin;
@@ -5148,14 +5148,14 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 
 
 --
--- Name: audit_log_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: audit_log_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('audit_log_log_id_seq', 1, false);
 
 
 --
--- Data for Name: backup; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: backup; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY backup (id, usuario_id, fecha_registro, fecha_modificado, denominacion, tamano, archivo) FROM stdin;
@@ -5163,14 +5163,14 @@ COPY backup (id, usuario_id, fecha_registro, fecha_modificado, denominacion, tam
 
 
 --
--- Name: backup_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: backup_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('backup_id_seq', 1, false);
 
 
 --
--- Data for Name: beneficiario; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: beneficiario; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY beneficiario (id, usuario_id, fecha_registro, fecha_modificado, titular_id, persona_id, parentesco, beneficiario_tipo_id, observacion) FROM stdin;
@@ -5178,14 +5178,14 @@ COPY beneficiario (id, usuario_id, fecha_registro, fecha_modificado, titular_id,
 
 
 --
--- Name: beneficiario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: beneficiario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('beneficiario_id_seq', 1, false);
 
 
 --
--- Data for Name: beneficiario_tipo; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: beneficiario_tipo; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY beneficiario_tipo (id, usuario_id, fecha_registro, fecha_modificado, descripcion, observacion) FROM stdin;
@@ -5193,14 +5193,14 @@ COPY beneficiario_tipo (id, usuario_id, fecha_registro, fecha_modificado, descri
 
 
 --
--- Name: beneficiario_tipo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: beneficiario_tipo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('beneficiario_tipo_id_seq', 1, false);
 
 
 --
--- Data for Name: cargo; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: cargo; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY cargo (id, usuario_id, fecha_registro, fecha_modificado, nombre, observacion) FROM stdin;
@@ -5208,14 +5208,14 @@ COPY cargo (id, usuario_id, fecha_registro, fecha_modificado, nombre, observacio
 
 
 --
--- Name: cargo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: cargo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('cargo_id_seq', 1, false);
 
 
 --
--- Data for Name: cobertura; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: cobertura; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY cobertura (id, usuario_id, fecha_registro, fecha_modificado, descripcion, tipo_cobertura, monto_cobertura, fecha_inicio, fecha_fin, observacion) FROM stdin;
@@ -5223,14 +5223,14 @@ COPY cobertura (id, usuario_id, fecha_registro, fecha_modificado, descripcion, t
 
 
 --
--- Name: cobertura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: cobertura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('cobertura_id_seq', 1, false);
 
 
 --
--- Data for Name: departamento; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: departamento; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY departamento (id, usuario_id, fecha_registro, fecha_modificado, nombre, observacion, sucursal_id) FROM stdin;
@@ -5238,14 +5238,14 @@ COPY departamento (id, usuario_id, fecha_registro, fecha_modificado, nombre, obs
 
 
 --
--- Name: departamento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: departamento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('departamento_id_seq', 1, false);
 
 
 --
--- Data for Name: discapacidad; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: discapacidad; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY discapacidad (id, usuario_id, fecha_registro, fecha_modificado, nombre, observacion) FROM stdin;
@@ -5253,14 +5253,14 @@ COPY discapacidad (id, usuario_id, fecha_registro, fecha_modificado, nombre, obs
 
 
 --
--- Name: discapacidad_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: discapacidad_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('discapacidad_id_seq', 1, false);
 
 
 --
--- Data for Name: discapacidad_persona; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: discapacidad_persona; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY discapacidad_persona (id, persona_id, discapacidad_id) FROM stdin;
@@ -5268,14 +5268,14 @@ COPY discapacidad_persona (id, persona_id, discapacidad_id) FROM stdin;
 
 
 --
--- Name: discapacidad_persona_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: discapacidad_persona_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('discapacidad_persona_id_seq', 1, false);
 
 
 --
--- Data for Name: empresa; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: empresa; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY empresa (id, usuario_id, fecha_registro, fecha_modificado, razon_social, rif, pais_id, estado_id, municipio_id, parroquia_id, representante_legal, pagina_web, telefono, fax, celular, logo, email) FROM stdin;
@@ -5284,14 +5284,14 @@ COPY empresa (id, usuario_id, fecha_registro, fecha_modificado, razon_social, ri
 
 
 --
--- Name: empresa_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: empresa_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('empresa_id_seq', 1, false);
 
 
 --
--- Data for Name: especialidad; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: especialidad; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY especialidad (id, usuario_id, fecha_registro, fecha_modificado, descripcion, observacion) FROM stdin;
@@ -5299,14 +5299,14 @@ COPY especialidad (id, usuario_id, fecha_registro, fecha_modificado, descripcion
 
 
 --
--- Name: especialidad_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: especialidad_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('especialidad_id_seq', 1, false);
 
 
 --
--- Data for Name: especialidad_medico; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: especialidad_medico; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY especialidad_medico (id, medico_id, especialidad_id) FROM stdin;
@@ -5314,14 +5314,14 @@ COPY especialidad_medico (id, medico_id, especialidad_id) FROM stdin;
 
 
 --
--- Name: especialidad_medico_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: especialidad_medico_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('especialidad_medico_id_seq', 1, false);
 
 
 --
--- Data for Name: estado; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: estado; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY estado (id, codigo, pais_id, nombre) FROM stdin;
@@ -5404,14 +5404,14 @@ COPY estado (id, codigo, pais_id, nombre) FROM stdin;
 
 
 --
--- Name: estado_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: estado_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('estado_id_seq', 75, true);
 
 
 --
--- Data for Name: estado_usuario; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: estado_usuario; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY estado_usuario (id, usuario_id, fecha_registro, fecha_modificado, estado_usuario, descripcion) FROM stdin;
@@ -5423,14 +5423,14 @@ COPY estado_usuario (id, usuario_id, fecha_registro, fecha_modificado, estado_us
 
 
 --
--- Name: estado_usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: estado_usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('estado_usuario_id_seq', 5, true);
 
 
 --
--- Data for Name: medicina; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: medicina; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY medicina (id, usuario_id, fecha_registro, fecha_modificado, descripcion, observacion) FROM stdin;
@@ -5438,14 +5438,14 @@ COPY medicina (id, usuario_id, fecha_registro, fecha_modificado, descripcion, ob
 
 
 --
--- Name: medicina_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: medicina_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('medicina_id_seq', 1, false);
 
 
 --
--- Data for Name: medico; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: medico; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY medico (id, usuario_id, fecha_registro, fecha_modificado, nacionalidad, cedula, rmpps, rif, nombre1, nombre2, apellido1, apellido2, sexo, celular, telefono, correo_electronico, observacion) FROM stdin;
@@ -5453,14 +5453,14 @@ COPY medico (id, usuario_id, fecha_registro, fecha_modificado, nacionalidad, ced
 
 
 --
--- Name: medico_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: medico_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('medico_id_seq', 1, false);
 
 
 --
--- Data for Name: menu; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: menu; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id, menu, url, posicion, icono, activo, visibilidad) FROM stdin;
@@ -5502,14 +5502,14 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 
 
 --
--- Name: menu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: menu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('menu_id_seq', 22, true);
 
 
 --
--- Data for Name: municipio; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: municipio; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY municipio (id, estado_id, codigo, nombre) FROM stdin;
@@ -5851,14 +5851,14 @@ COPY municipio (id, estado_id, codigo, nombre) FROM stdin;
 
 
 --
--- Name: municipio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: municipio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('municipio_id_seq', 334, true);
 
 
 --
--- Data for Name: pais; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: pais; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY pais (id, codigo, nombre) FROM stdin;
@@ -6119,14 +6119,14 @@ COPY pais (id, codigo, nombre) FROM stdin;
 
 
 --
--- Name: pais_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: pais_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('pais_id_seq', 253, true);
 
 
 --
--- Data for Name: parroquia; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: parroquia; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY parroquia (id, nombre, municipio_id) FROM stdin;
@@ -7220,14 +7220,14 @@ COPY parroquia (id, nombre, municipio_id) FROM stdin;
 
 
 --
--- Name: parroquia_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: parroquia_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('parroquia_id_seq', 1086, true);
 
 
 --
--- Data for Name: patologia; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: patologia; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, descripcion, observacion) FROM stdin;
@@ -7235,14 +7235,14 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, descripcion, o
 
 
 --
--- Name: patologia_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: patologia_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('patologia_id_seq', 1, false);
 
 
 --
--- Data for Name: perfil; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: perfil; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY perfil (id, usuario_id, fecha_registro, fecha_modificado, perfil, estado, plantilla) FROM stdin;
@@ -7253,14 +7253,14 @@ COPY perfil (id, usuario_id, fecha_registro, fecha_modificado, perfil, estado, p
 
 
 --
--- Name: perfil_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: perfil_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('perfil_id_seq', 1, true);
 
 
 --
--- Data for Name: persona; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: persona; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY persona (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1, nombre2, apellido1, apellido2, nacionalidad, sexo, fecha_nacimiento, pais_id, estado_id, municipio_id, parroquia_id, direccion_habitacion, estado_civil, celular, telefono, correo_electronico, grupo_sanguineo, fotografia) FROM stdin;
@@ -7272,14 +7272,14 @@ COPY persona (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1,
 
 
 --
--- Name: persona_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: persona_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('persona_id_seq', 6, true);
 
 
 --
--- Data for Name: profesion; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: profesion; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY profesion (id, usuario_id, fecha_registro, fecha_modificado, nombre, observacion) FROM stdin;
@@ -7287,14 +7287,14 @@ COPY profesion (id, usuario_id, fecha_registro, fecha_modificado, nombre, observ
 
 
 --
--- Name: profesion_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: profesion_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('profesion_id_seq', 1, false);
 
 
 --
--- Data for Name: proveedor; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: proveedor; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY proveedor (id, usuario_id, fecha_registro, fecha_modificado, rif, razon_social, nombre_corto, pais_id, estado_id, municipio_id, parroquia_id, direccion, celular, telefono1, telefono2, fax, correo_electronico, observacion) FROM stdin;
@@ -7302,14 +7302,14 @@ COPY proveedor (id, usuario_id, fecha_registro, fecha_modificado, rif, razon_soc
 
 
 --
--- Name: proveedor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: proveedor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('proveedor_id_seq', 1, false);
 
 
 --
--- Data for Name: proveedor_medico; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: proveedor_medico; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY proveedor_medico (id, medico_id, proveedor_id) FROM stdin;
@@ -7317,14 +7317,14 @@ COPY proveedor_medico (id, medico_id, proveedor_id) FROM stdin;
 
 
 --
--- Name: proveedor_medico_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: proveedor_medico_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('proveedor_medico_id_seq', 1, false);
 
 
 --
--- Data for Name: recaudo; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: recaudo; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY recaudo (id, usuario_id, fecha_registro, fecha_modificado, nombre, tipo, observacion) FROM stdin;
@@ -7332,7 +7332,7 @@ COPY recaudo (id, usuario_id, fecha_registro, fecha_modificado, nombre, tipo, ob
 
 
 --
--- Data for Name: recaudo_beneficiario; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: recaudo_beneficiario; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY recaudo_beneficiario (id, beneficiario_id, recaudo_id, estado) FROM stdin;
@@ -7340,21 +7340,21 @@ COPY recaudo_beneficiario (id, beneficiario_id, recaudo_id, estado) FROM stdin;
 
 
 --
--- Name: recaudo_beneficiario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: recaudo_beneficiario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('recaudo_beneficiario_id_seq', 1, false);
 
 
 --
--- Name: recaudo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: recaudo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('recaudo_id_seq', 1, false);
 
 
 --
--- Data for Name: recaudo_reembolso; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: recaudo_reembolso; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY recaudo_reembolso (id, recaudo_id, codigo_solicitud, estado) FROM stdin;
@@ -7362,14 +7362,14 @@ COPY recaudo_reembolso (id, recaudo_id, codigo_solicitud, estado) FROM stdin;
 
 
 --
--- Name: recaudo_reembolso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: recaudo_reembolso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('recaudo_reembolso_id_seq', 1, false);
 
 
 --
--- Data for Name: recaudo_solicitud_medicina; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: recaudo_solicitud_medicina; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY recaudo_solicitud_medicina (id, recaudo_id, codigo_solicitud, estado) FROM stdin;
@@ -7377,14 +7377,14 @@ COPY recaudo_solicitud_medicina (id, recaudo_id, codigo_solicitud, estado) FROM 
 
 
 --
--- Name: recaudo_solicitud_medicina_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: recaudo_solicitud_medicina_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('recaudo_solicitud_medicina_id_seq', 1, false);
 
 
 --
--- Data for Name: recaudo_solicitud_servicio; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: recaudo_solicitud_servicio; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY recaudo_solicitud_servicio (id, recaudo_id, codigo_solicitud, estado) FROM stdin;
@@ -7392,14 +7392,14 @@ COPY recaudo_solicitud_servicio (id, recaudo_id, codigo_solicitud, estado) FROM 
 
 
 --
--- Name: recaudo_solicitud_servicio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: recaudo_solicitud_servicio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('recaudo_solicitud_servicio_id_seq', 1, false);
 
 
 --
--- Data for Name: recaudo_titular; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: recaudo_titular; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY recaudo_titular (id, titular_id, recaudo_id, estado) FROM stdin;
@@ -7407,14 +7407,14 @@ COPY recaudo_titular (id, titular_id, recaudo_id, estado) FROM stdin;
 
 
 --
--- Name: recaudo_titular_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: recaudo_titular_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('recaudo_titular_id_seq', 1, false);
 
 
 --
--- Data for Name: recurso; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: recurso; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY recurso (id, usuario_id, fecha_registro, fecha_modificado, modulo, controlador, accion, recurso, descripcion, activo) FROM stdin;
@@ -7453,14 +7453,14 @@ COPY recurso (id, usuario_id, fecha_registro, fecha_modificado, modulo, controla
 
 
 --
--- Name: recurso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: recurso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('recurso_id_seq', 6, true);
 
 
 --
--- Data for Name: recurso_perfil; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: recurso_perfil; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY recurso_perfil (id, usuario_id, fecha_registro, fecha_modificado, recurso_id, perfil_id) FROM stdin;
@@ -7507,14 +7507,14 @@ COPY recurso_perfil (id, usuario_id, fecha_registro, fecha_modificado, recurso_i
 
 
 --
--- Name: recurso_perfil_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: recurso_perfil_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('recurso_perfil_id_seq', 276, true);
 
 
 --
--- Data for Name: reembolso; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: reembolso; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY reembolso (id, usuario_id, fecha_registro, fecha_modificado, estado_solicitud, fecha_solicitud, codigo_solicitud, titular_id, beneficiario_id, beneficiario_tipo, observacion) FROM stdin;
@@ -7522,14 +7522,14 @@ COPY reembolso (id, usuario_id, fecha_registro, fecha_modificado, estado_solicit
 
 
 --
--- Name: reembolso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: reembolso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('reembolso_id_seq', 1, false);
 
 
 --
--- Data for Name: servicio; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: servicio; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY servicio (id, usuario_id, fecha_registro, fecha_modificado, descripcion, observacion) FROM stdin;
@@ -7537,14 +7537,14 @@ COPY servicio (id, usuario_id, fecha_registro, fecha_modificado, descripcion, ob
 
 
 --
--- Name: servicio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: servicio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('servicio_id_seq', 1, false);
 
 
 --
--- Data for Name: servicio_proveedor; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: servicio_proveedor; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY servicio_proveedor (id, proveedor_id, servicio_id) FROM stdin;
@@ -7552,14 +7552,14 @@ COPY servicio_proveedor (id, proveedor_id, servicio_id) FROM stdin;
 
 
 --
--- Name: servicio_proveedor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: servicio_proveedor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('servicio_proveedor_id_seq', 1, false);
 
 
 --
--- Data for Name: servicio_tiposolicitud; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: servicio_tiposolicitud; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY servicio_tiposolicitud (id, tiposolicitud_id, servicio_id) FROM stdin;
@@ -7567,14 +7567,14 @@ COPY servicio_tiposolicitud (id, tiposolicitud_id, servicio_id) FROM stdin;
 
 
 --
--- Name: servicio_tiposolicitud_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: servicio_tiposolicitud_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('servicio_tiposolicitud_id_seq', 1, false);
 
 
 --
--- Data for Name: solicitud_dt_factura; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: solicitud_dt_factura; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY solicitud_dt_factura (id, solicitud_factura_id, descripcion, cantidad, monto, exento) FROM stdin;
@@ -7582,14 +7582,14 @@ COPY solicitud_dt_factura (id, solicitud_factura_id, descripcion, cantidad, mont
 
 
 --
--- Name: solicitud_dt_factura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: solicitud_dt_factura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('solicitud_dt_factura_id_seq', 1, false);
 
 
 --
--- Data for Name: solicitud_dt_medicina; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: solicitud_dt_medicina; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY solicitud_dt_medicina (id, solicitud_id, medicina_id, fecha_inicio, fecha_fin, dosis, horas) FROM stdin;
@@ -7597,14 +7597,14 @@ COPY solicitud_dt_medicina (id, solicitud_id, medicina_id, fecha_inicio, fecha_f
 
 
 --
--- Name: solicitud_dt_medicina_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: solicitud_dt_medicina_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('solicitud_dt_medicina_id_seq', 1, false);
 
 
 --
--- Data for Name: solicitud_factura; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: solicitud_factura; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY solicitud_factura (id, usuario_id, fecha_registro, fecha_modificado, solicitud_servicio_id, codigo_solicitud, fecha_factura, nro_control, nro_factura, observacion) FROM stdin;
@@ -7612,14 +7612,14 @@ COPY solicitud_factura (id, usuario_id, fecha_registro, fecha_modificado, solici
 
 
 --
--- Name: solicitud_factura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: solicitud_factura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('solicitud_factura_id_seq', 1, false);
 
 
 --
--- Data for Name: solicitud_medicina; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: solicitud_medicina; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY solicitud_medicina (id, usuario_id, fecha_registro, fecha_modificado, estado_solicitud, fecha_solicitud, fecha_vencimiento, codigo_solicitud, titular_id, beneficiario_id, beneficiario_tipo, patologia_id, proveedor_id, medico_id, persona_autorizada, persona_cedula, tipo_tratamiento, diagnostico, servicio_id, observacion) FROM stdin;
@@ -7627,14 +7627,14 @@ COPY solicitud_medicina (id, usuario_id, fecha_registro, fecha_modificado, estad
 
 
 --
--- Name: solicitud_medicina_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: solicitud_medicina_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('solicitud_medicina_id_seq', 1, false);
 
 
 --
--- Data for Name: solicitud_servicio; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: solicitud_servicio; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY solicitud_servicio (id, usuario_id, fecha_registro, fecha_modificado, estado_solicitud, tiposolicitud_id, fecha_solicitud, codigo_solicitud, titular_id, beneficiario_id, beneficiario_tipo, patologia_id, proveedor_id, medico_id, fecha_vencimiento, servicio_id, observacion) FROM stdin;
@@ -7642,14 +7642,14 @@ COPY solicitud_servicio (id, usuario_id, fecha_registro, fecha_modificado, estad
 
 
 --
--- Name: solicitud_servicio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: solicitud_servicio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('solicitud_servicio_id_seq', 1, false);
 
 
 --
--- Data for Name: sucursal; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: sucursal; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY sucursal (id, usuario_id, fecha_registro, fecha_modificado, empresa_id, sucursal, sucursal_slug, pais_id, estado_id, municipio_id, parroquia_id, direccion, telefono, fax, celular) FROM stdin;
@@ -7658,14 +7658,14 @@ COPY sucursal (id, usuario_id, fecha_registro, fecha_modificado, empresa_id, suc
 
 
 --
--- Name: sucursal_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: sucursal_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('sucursal_id_seq', 1, true);
 
 
 --
--- Data for Name: tipoempleado; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: tipoempleado; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY tipoempleado (id, usuario_id, fecha_registro, fecha_modificado, nombre, observacion) FROM stdin;
@@ -7673,14 +7673,14 @@ COPY tipoempleado (id, usuario_id, fecha_registro, fecha_modificado, nombre, obs
 
 
 --
--- Name: tipoempleado_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: tipoempleado_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('tipoempleado_id_seq', 1, false);
 
 
 --
--- Data for Name: tiposolicitud; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: tiposolicitud; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY tiposolicitud (id, usuario_id, fecha_registro, fecha_modificado, nombre, observacion) FROM stdin;
@@ -7688,14 +7688,14 @@ COPY tiposolicitud (id, usuario_id, fecha_registro, fecha_modificado, nombre, ob
 
 
 --
--- Name: tiposolicitud_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: tiposolicitud_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('tiposolicitud_id_seq', 1, false);
 
 
 --
--- Data for Name: titular; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: titular; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY titular (id, usuario_id, fecha_registro, fecha_modificado, tipoempleado_id, persona_id, fecha_ingreso, profesion_id, departamento_id, cargo_id, observacion) FROM stdin;
@@ -7703,26 +7703,26 @@ COPY titular (id, usuario_id, fecha_registro, fecha_modificado, tipoempleado_id,
 
 
 --
--- Name: titular_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: titular_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('titular_id_seq', 1, false);
 
 
 --
--- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: jelitox
+-- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY usuario (id, usuario_id, fecha_registro, fecha_modificado, sucursal_id, persona_id, login, password, perfil_id, email, tema, app_ajax, datagrid) FROM stdin;
 1	1	2014-03-13 12:20:43.690531-04:30	2014-03-13 12:20:43.690531-04:30	1	1	admin	d93a5def7511da3d0f2d171d9c344e91	1	\N	default	1	30
-4	\N	2014-03-16 01:14:45.552613-04:30	2014-03-16 01:14:45.552613-04:30	\N	4	jelitox	d93a5def7511da3d0f2d171d9c344e91	3	jel1284@gmail.com	default	1	30
+4	\N	2014-03-16 01:14:45.552613-04:30	2014-03-16 01:14:45.552613-04:30	\N	4	arrozalba	d93a5def7511da3d0f2d171d9c344e91	3	jel1284@gmail.com	default	1	30
 5	\N	2014-03-17 18:34:56.063814-04:30	2014-03-17 18:34:56.063814-04:30	\N	5	rahiber	d93a5def7511da3d0f2d171d9c344e91	3	rahiber_15@gmail.com	default	1	30
 6	\N	2014-03-17 19:22:19.405099-04:30	2014-03-17 19:22:19.405099-04:30	\N	6	yelix	d93a5def7511da3d0f2d171d9c344e91	3	yelixmaria@gmail.com	default	1	30
 \.
 
 
 --
--- Name: usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jelitox
+-- Name: usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('usuario_id_seq', 6, true);
@@ -7731,7 +7731,7 @@ SELECT pg_catalog.setval('usuario_id_seq', 6, true);
 SET search_path = audit_log, pg_catalog;
 
 --
--- Name: audit_log_pkey; Type: CONSTRAINT; Schema: audit_log; Owner: jelitox; Tablespace: 
+-- Name: audit_log_pkey; Type: CONSTRAINT; Schema: audit_log; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY audit_log
@@ -7741,7 +7741,7 @@ ALTER TABLE ONLY audit_log
 SET search_path = public, pg_catalog;
 
 --
--- Name: acceso_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: acceso_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY acceso
@@ -7749,7 +7749,7 @@ ALTER TABLE ONLY acceso
 
 
 --
--- Name: audit_log_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: audit_log_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY audit_log
@@ -7757,7 +7757,7 @@ ALTER TABLE ONLY audit_log
 
 
 --
--- Name: backup_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: backup_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY backup
@@ -7765,7 +7765,7 @@ ALTER TABLE ONLY backup
 
 
 --
--- Name: beneficiario_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: beneficiario_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY beneficiario
@@ -7773,7 +7773,7 @@ ALTER TABLE ONLY beneficiario
 
 
 --
--- Name: beneficiario_tipo_descripcion_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: beneficiario_tipo_descripcion_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY beneficiario_tipo
@@ -7781,7 +7781,7 @@ ALTER TABLE ONLY beneficiario_tipo
 
 
 --
--- Name: beneficiario_tipo_descripcion_unico; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: beneficiario_tipo_descripcion_unico; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY beneficiario_tipo
@@ -7789,7 +7789,7 @@ ALTER TABLE ONLY beneficiario_tipo
 
 
 --
--- Name: beneficiario_tipo_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: beneficiario_tipo_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY beneficiario_tipo
@@ -7797,7 +7797,7 @@ ALTER TABLE ONLY beneficiario_tipo
 
 
 --
--- Name: cargo_nombre_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: cargo_nombre_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY cargo
@@ -7805,7 +7805,7 @@ ALTER TABLE ONLY cargo
 
 
 --
--- Name: cargo_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: cargo_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY cargo
@@ -7813,7 +7813,7 @@ ALTER TABLE ONLY cargo
 
 
 --
--- Name: cobertura_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: cobertura_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY cobertura
@@ -7821,7 +7821,7 @@ ALTER TABLE ONLY cobertura
 
 
 --
--- Name: departamento_nombre_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: departamento_nombre_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY departamento
@@ -7829,7 +7829,7 @@ ALTER TABLE ONLY departamento
 
 
 --
--- Name: departamento_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: departamento_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY departamento
@@ -7837,7 +7837,7 @@ ALTER TABLE ONLY departamento
 
 
 --
--- Name: discapacidad_nombre_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: discapacidad_nombre_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY discapacidad
@@ -7845,7 +7845,7 @@ ALTER TABLE ONLY discapacidad
 
 
 --
--- Name: discapacidad_persona_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: discapacidad_persona_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY discapacidad_persona
@@ -7853,7 +7853,7 @@ ALTER TABLE ONLY discapacidad_persona
 
 
 --
--- Name: discapacidad_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: discapacidad_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY discapacidad
@@ -7861,7 +7861,7 @@ ALTER TABLE ONLY discapacidad
 
 
 --
--- Name: empresa_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: empresa_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY empresa
@@ -7869,7 +7869,7 @@ ALTER TABLE ONLY empresa
 
 
 --
--- Name: especialidad_descripcion_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: especialidad_descripcion_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY especialidad
@@ -7877,7 +7877,7 @@ ALTER TABLE ONLY especialidad
 
 
 --
--- Name: especialidad_medico_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: especialidad_medico_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY especialidad_medico
@@ -7885,7 +7885,7 @@ ALTER TABLE ONLY especialidad_medico
 
 
 --
--- Name: especialidad_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: especialidad_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY especialidad
@@ -7893,7 +7893,7 @@ ALTER TABLE ONLY especialidad
 
 
 --
--- Name: estado_codigo_unico; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: estado_codigo_unico; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY estado
@@ -7901,7 +7901,7 @@ ALTER TABLE ONLY estado
 
 
 --
--- Name: estado_nombre_unico; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: estado_nombre_unico; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY estado
@@ -7909,7 +7909,7 @@ ALTER TABLE ONLY estado
 
 
 --
--- Name: estado_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: estado_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY estado
@@ -7917,7 +7917,7 @@ ALTER TABLE ONLY estado
 
 
 --
--- Name: estado_usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: estado_usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY estado_usuario
@@ -7925,7 +7925,7 @@ ALTER TABLE ONLY estado_usuario
 
 
 --
--- Name: medicina_descripcion_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: medicina_descripcion_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY medicina
@@ -7933,7 +7933,7 @@ ALTER TABLE ONLY medicina
 
 
 --
--- Name: medicina_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: medicina_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY medicina
@@ -7941,7 +7941,7 @@ ALTER TABLE ONLY medicina
 
 
 --
--- Name: medico_cedula_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: medico_cedula_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY medico
@@ -7949,7 +7949,7 @@ ALTER TABLE ONLY medico
 
 
 --
--- Name: medico_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: medico_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY medico
@@ -7957,7 +7957,7 @@ ALTER TABLE ONLY medico
 
 
 --
--- Name: medico_rif_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: medico_rif_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY medico
@@ -7965,7 +7965,7 @@ ALTER TABLE ONLY medico
 
 
 --
--- Name: medico_rmpps_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: medico_rmpps_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY medico
@@ -7973,7 +7973,7 @@ ALTER TABLE ONLY medico
 
 
 --
--- Name: menu_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: menu_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY menu
@@ -7981,7 +7981,7 @@ ALTER TABLE ONLY menu
 
 
 --
--- Name: municipio_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: municipio_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY municipio
@@ -7989,7 +7989,7 @@ ALTER TABLE ONLY municipio
 
 
 --
--- Name: pais_codigo_unico; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: pais_codigo_unico; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY pais
@@ -7997,7 +7997,7 @@ ALTER TABLE ONLY pais
 
 
 --
--- Name: pais_nombre_unico; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: pais_nombre_unico; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY pais
@@ -8005,7 +8005,7 @@ ALTER TABLE ONLY pais
 
 
 --
--- Name: pais_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: pais_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY pais
@@ -8013,7 +8013,7 @@ ALTER TABLE ONLY pais
 
 
 --
--- Name: parroquia_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: parroquia_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY parroquia
@@ -8021,7 +8021,7 @@ ALTER TABLE ONLY parroquia
 
 
 --
--- Name: patologia_descripcion_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: patologia_descripcion_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY patologia
@@ -8029,7 +8029,7 @@ ALTER TABLE ONLY patologia
 
 
 --
--- Name: patologia_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: patologia_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY patologia
@@ -8037,7 +8037,7 @@ ALTER TABLE ONLY patologia
 
 
 --
--- Name: perfil_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: perfil_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY perfil
@@ -8045,7 +8045,7 @@ ALTER TABLE ONLY perfil
 
 
 --
--- Name: persona_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: persona_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY persona
@@ -8053,7 +8053,7 @@ ALTER TABLE ONLY persona
 
 
 --
--- Name: profesion_nombre_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: profesion_nombre_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY profesion
@@ -8061,7 +8061,7 @@ ALTER TABLE ONLY profesion
 
 
 --
--- Name: profesion_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: profesion_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY profesion
@@ -8069,7 +8069,7 @@ ALTER TABLE ONLY profesion
 
 
 --
--- Name: proveedor_medico_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: proveedor_medico_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY proveedor_medico
@@ -8077,7 +8077,7 @@ ALTER TABLE ONLY proveedor_medico
 
 
 --
--- Name: proveedor_nombre_corto_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: proveedor_nombre_corto_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY proveedor
@@ -8085,7 +8085,7 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- Name: proveedor_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: proveedor_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY proveedor
@@ -8093,7 +8093,7 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- Name: proveedor_razon_social_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: proveedor_razon_social_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY proveedor
@@ -8101,7 +8101,7 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- Name: proveedor_rif_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: proveedor_rif_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY proveedor
@@ -8109,7 +8109,7 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- Name: recaudo_beneficiario_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: recaudo_beneficiario_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY recaudo_beneficiario
@@ -8117,7 +8117,7 @@ ALTER TABLE ONLY recaudo_beneficiario
 
 
 --
--- Name: recaudo_nombre_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: recaudo_nombre_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY recaudo
@@ -8125,7 +8125,7 @@ ALTER TABLE ONLY recaudo
 
 
 --
--- Name: recaudo_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: recaudo_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY recaudo
@@ -8133,7 +8133,7 @@ ALTER TABLE ONLY recaudo
 
 
 --
--- Name: recaudo_reembolso_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: recaudo_reembolso_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY recaudo_reembolso
@@ -8141,7 +8141,7 @@ ALTER TABLE ONLY recaudo_reembolso
 
 
 --
--- Name: recaudo_reembolso_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: recaudo_reembolso_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY recaudo_reembolso
@@ -8149,7 +8149,7 @@ ALTER TABLE ONLY recaudo_reembolso
 
 
 --
--- Name: recaudo_solicitud_medicina_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: recaudo_solicitud_medicina_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY recaudo_solicitud_medicina
@@ -8157,7 +8157,7 @@ ALTER TABLE ONLY recaudo_solicitud_medicina
 
 
 --
--- Name: recaudo_solicitud_medicina_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: recaudo_solicitud_medicina_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY recaudo_solicitud_medicina
@@ -8165,7 +8165,7 @@ ALTER TABLE ONLY recaudo_solicitud_medicina
 
 
 --
--- Name: recaudo_solicitud_servicio_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: recaudo_solicitud_servicio_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY recaudo_solicitud_servicio
@@ -8173,7 +8173,7 @@ ALTER TABLE ONLY recaudo_solicitud_servicio
 
 
 --
--- Name: recaudo_solicitud_servicio_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: recaudo_solicitud_servicio_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY recaudo_solicitud_servicio
@@ -8181,7 +8181,7 @@ ALTER TABLE ONLY recaudo_solicitud_servicio
 
 
 --
--- Name: recaudo_titular_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: recaudo_titular_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY recaudo_titular
@@ -8189,7 +8189,7 @@ ALTER TABLE ONLY recaudo_titular
 
 
 --
--- Name: recurso_perfil_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: recurso_perfil_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY recurso_perfil
@@ -8197,7 +8197,7 @@ ALTER TABLE ONLY recurso_perfil
 
 
 --
--- Name: recurso_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: recurso_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY recurso
@@ -8205,7 +8205,7 @@ ALTER TABLE ONLY recurso
 
 
 --
--- Name: reembolso_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: reembolso_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY reembolso
@@ -8213,7 +8213,7 @@ ALTER TABLE ONLY reembolso
 
 
 --
--- Name: reembolso_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: reembolso_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY reembolso
@@ -8221,7 +8221,7 @@ ALTER TABLE ONLY reembolso
 
 
 --
--- Name: servicio_descripcion_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: servicio_descripcion_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY servicio
@@ -8229,7 +8229,7 @@ ALTER TABLE ONLY servicio
 
 
 --
--- Name: servicio_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: servicio_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY servicio
@@ -8237,7 +8237,7 @@ ALTER TABLE ONLY servicio
 
 
 --
--- Name: servicio_proveedor_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: servicio_proveedor_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY servicio_proveedor
@@ -8245,7 +8245,7 @@ ALTER TABLE ONLY servicio_proveedor
 
 
 --
--- Name: servicio_tiposolicitud_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: servicio_tiposolicitud_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY servicio_tiposolicitud
@@ -8253,7 +8253,7 @@ ALTER TABLE ONLY servicio_tiposolicitud
 
 
 --
--- Name: solicitud_dt_factura_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: solicitud_dt_factura_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY solicitud_dt_factura
@@ -8261,7 +8261,7 @@ ALTER TABLE ONLY solicitud_dt_factura
 
 
 --
--- Name: solicitud_dt_medicina_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: solicitud_dt_medicina_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY solicitud_dt_medicina
@@ -8269,7 +8269,7 @@ ALTER TABLE ONLY solicitud_dt_medicina
 
 
 --
--- Name: solicitud_factura_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: solicitud_factura_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY solicitud_factura
@@ -8277,7 +8277,7 @@ ALTER TABLE ONLY solicitud_factura
 
 
 --
--- Name: solicitud_factura_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: solicitud_factura_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY solicitud_factura
@@ -8285,7 +8285,7 @@ ALTER TABLE ONLY solicitud_factura
 
 
 --
--- Name: solicitud_medicina_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: solicitud_medicina_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY solicitud_medicina
@@ -8293,7 +8293,7 @@ ALTER TABLE ONLY solicitud_medicina
 
 
 --
--- Name: solicitud_medicina_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: solicitud_medicina_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY solicitud_medicina
@@ -8301,7 +8301,7 @@ ALTER TABLE ONLY solicitud_medicina
 
 
 --
--- Name: solicitud_servicio_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: solicitud_servicio_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY solicitud_servicio
@@ -8309,7 +8309,7 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- Name: solicitud_servicio_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: solicitud_servicio_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY solicitud_servicio
@@ -8317,7 +8317,7 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- Name: sucursal_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: sucursal_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY sucursal
@@ -8325,7 +8325,7 @@ ALTER TABLE ONLY sucursal
 
 
 --
--- Name: tipoempleado_nombre_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: tipoempleado_nombre_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY tipoempleado
@@ -8333,7 +8333,7 @@ ALTER TABLE ONLY tipoempleado
 
 
 --
--- Name: tipoempleado_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: tipoempleado_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY tipoempleado
@@ -8341,7 +8341,7 @@ ALTER TABLE ONLY tipoempleado
 
 
 --
--- Name: tiposolicitud_nombre_key; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: tiposolicitud_nombre_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY tiposolicitud
@@ -8349,7 +8349,7 @@ ALTER TABLE ONLY tiposolicitud
 
 
 --
--- Name: tiposolicitud_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: tiposolicitud_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY tiposolicitud
@@ -8357,7 +8357,7 @@ ALTER TABLE ONLY tiposolicitud
 
 
 --
--- Name: titular_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: titular_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY titular
@@ -8365,7 +8365,7 @@ ALTER TABLE ONLY titular
 
 
 --
--- Name: usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY usuario
@@ -8373,35 +8373,35 @@ ALTER TABLE ONLY usuario
 
 
 --
--- Name: usuario_perfil_idx; Type: INDEX; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: usuario_perfil_idx; Type: INDEX; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE INDEX usuario_perfil_idx ON usuario USING btree (perfil_id);
 
 
 --
--- Name: usuario_persona_idx; Type: INDEX; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: usuario_persona_idx; Type: INDEX; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE INDEX usuario_persona_idx ON usuario USING btree (persona_id);
 
 
 --
--- Name: usuario_sucursal_idx; Type: INDEX; Schema: public; Owner: jelitox; Tablespace: 
+-- Name: usuario_sucursal_idx; Type: INDEX; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 CREATE INDEX usuario_sucursal_idx ON usuario USING btree (sucursal_id);
 
 
 --
--- Name: trg_usuario; Type: TRIGGER; Schema: public; Owner: jelitox
+-- Name: trg_usuario; Type: TRIGGER; Schema: public; Owner: arrozalba
 --
 
 CREATE TRIGGER trg_usuario AFTER INSERT OR DELETE OR UPDATE ON usuario FOR EACH ROW EXECUTE PROCEDURE logger();
 
 
 --
--- Name: acceso_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: acceso_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY acceso
@@ -8409,7 +8409,7 @@ ALTER TABLE ONLY acceso
 
 
 --
--- Name: backup_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: backup_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY backup
@@ -8417,7 +8417,7 @@ ALTER TABLE ONLY backup
 
 
 --
--- Name: beneficiario_beneficiario_tipo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: beneficiario_beneficiario_tipo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY beneficiario
@@ -8425,7 +8425,7 @@ ALTER TABLE ONLY beneficiario
 
 
 --
--- Name: beneficiario_persona_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: beneficiario_persona_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY beneficiario
@@ -8433,7 +8433,7 @@ ALTER TABLE ONLY beneficiario
 
 
 --
--- Name: beneficiario_tipo_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: beneficiario_tipo_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY beneficiario_tipo
@@ -8441,7 +8441,7 @@ ALTER TABLE ONLY beneficiario_tipo
 
 
 --
--- Name: beneficiario_titular_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: beneficiario_titular_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY beneficiario
@@ -8449,7 +8449,7 @@ ALTER TABLE ONLY beneficiario
 
 
 --
--- Name: beneficiario_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: beneficiario_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY beneficiario
@@ -8457,7 +8457,7 @@ ALTER TABLE ONLY beneficiario
 
 
 --
--- Name: cargo_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: cargo_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY cargo
@@ -8465,7 +8465,7 @@ ALTER TABLE ONLY cargo
 
 
 --
--- Name: cobertura_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: cobertura_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY cobertura
@@ -8473,7 +8473,7 @@ ALTER TABLE ONLY cobertura
 
 
 --
--- Name: departamento_sucursal_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: departamento_sucursal_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY departamento
@@ -8481,7 +8481,7 @@ ALTER TABLE ONLY departamento
 
 
 --
--- Name: departamento_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: departamento_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY departamento
@@ -8489,7 +8489,7 @@ ALTER TABLE ONLY departamento
 
 
 --
--- Name: discapacidad_persona_discapacidad_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: discapacidad_persona_discapacidad_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY discapacidad_persona
@@ -8497,7 +8497,7 @@ ALTER TABLE ONLY discapacidad_persona
 
 
 --
--- Name: discapacidad_persona_persona_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: discapacidad_persona_persona_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY discapacidad_persona
@@ -8505,7 +8505,7 @@ ALTER TABLE ONLY discapacidad_persona
 
 
 --
--- Name: discapacidad_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: discapacidad_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY discapacidad
@@ -8513,7 +8513,7 @@ ALTER TABLE ONLY discapacidad
 
 
 --
--- Name: empresa_estado_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: empresa_estado_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY empresa
@@ -8521,7 +8521,7 @@ ALTER TABLE ONLY empresa
 
 
 --
--- Name: empresa_municipio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: empresa_municipio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY empresa
@@ -8529,7 +8529,7 @@ ALTER TABLE ONLY empresa
 
 
 --
--- Name: empresa_pais_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: empresa_pais_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY empresa
@@ -8537,7 +8537,7 @@ ALTER TABLE ONLY empresa
 
 
 --
--- Name: empresa_parroquia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: empresa_parroquia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY empresa
@@ -8545,7 +8545,7 @@ ALTER TABLE ONLY empresa
 
 
 --
--- Name: especialidad_medico_especialidad_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: especialidad_medico_especialidad_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY especialidad_medico
@@ -8553,7 +8553,7 @@ ALTER TABLE ONLY especialidad_medico
 
 
 --
--- Name: especialidad_medico_medico_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: especialidad_medico_medico_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY especialidad_medico
@@ -8561,7 +8561,7 @@ ALTER TABLE ONLY especialidad_medico
 
 
 --
--- Name: especialidad_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: especialidad_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY especialidad
@@ -8569,7 +8569,7 @@ ALTER TABLE ONLY especialidad
 
 
 --
--- Name: estado_pais_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: estado_pais_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY estado
@@ -8577,7 +8577,7 @@ ALTER TABLE ONLY estado
 
 
 --
--- Name: estado_usuario_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: estado_usuario_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY estado_usuario
@@ -8585,7 +8585,7 @@ ALTER TABLE ONLY estado_usuario
 
 
 --
--- Name: medicina_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: medicina_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY medicina
@@ -8593,7 +8593,7 @@ ALTER TABLE ONLY medicina
 
 
 --
--- Name: medico_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: medico_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY medico
@@ -8601,7 +8601,7 @@ ALTER TABLE ONLY medico
 
 
 --
--- Name: menu_menu_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: menu_menu_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY menu
@@ -8609,7 +8609,7 @@ ALTER TABLE ONLY menu
 
 
 --
--- Name: menu_recurso_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: menu_recurso_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY menu
@@ -8617,7 +8617,7 @@ ALTER TABLE ONLY menu
 
 
 --
--- Name: municipio_estado_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: municipio_estado_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY municipio
@@ -8625,7 +8625,7 @@ ALTER TABLE ONLY municipio
 
 
 --
--- Name: parroquia_municipio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: parroquia_municipio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY parroquia
@@ -8633,7 +8633,7 @@ ALTER TABLE ONLY parroquia
 
 
 --
--- Name: patologia_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: patologia_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY patologia
@@ -8641,7 +8641,7 @@ ALTER TABLE ONLY patologia
 
 
 --
--- Name: persona_estado_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: persona_estado_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY persona
@@ -8649,7 +8649,7 @@ ALTER TABLE ONLY persona
 
 
 --
--- Name: persona_municipio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: persona_municipio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY persona
@@ -8657,7 +8657,7 @@ ALTER TABLE ONLY persona
 
 
 --
--- Name: persona_pais_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: persona_pais_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY persona
@@ -8665,7 +8665,7 @@ ALTER TABLE ONLY persona
 
 
 --
--- Name: persona_parroquia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: persona_parroquia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY persona
@@ -8673,7 +8673,7 @@ ALTER TABLE ONLY persona
 
 
 --
--- Name: persona_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: persona_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY persona
@@ -8681,7 +8681,7 @@ ALTER TABLE ONLY persona
 
 
 --
--- Name: profesion_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: profesion_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY profesion
@@ -8689,7 +8689,7 @@ ALTER TABLE ONLY profesion
 
 
 --
--- Name: proveedor_estado_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: proveedor_estado_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY proveedor
@@ -8697,7 +8697,7 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- Name: proveedor_medico_medico_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: proveedor_medico_medico_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY proveedor_medico
@@ -8705,7 +8705,7 @@ ALTER TABLE ONLY proveedor_medico
 
 
 --
--- Name: proveedor_medico_proveedor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: proveedor_medico_proveedor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY proveedor_medico
@@ -8713,7 +8713,7 @@ ALTER TABLE ONLY proveedor_medico
 
 
 --
--- Name: proveedor_municipio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: proveedor_municipio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY proveedor
@@ -8721,7 +8721,7 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- Name: proveedor_pais_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: proveedor_pais_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY proveedor
@@ -8729,7 +8729,7 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- Name: proveedor_parroquia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: proveedor_parroquia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY proveedor
@@ -8737,7 +8737,7 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- Name: proveedor_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: proveedor_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY proveedor
@@ -8745,7 +8745,7 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- Name: recaudo_beneficiario_beneficiario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: recaudo_beneficiario_beneficiario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY recaudo_beneficiario
@@ -8753,7 +8753,7 @@ ALTER TABLE ONLY recaudo_beneficiario
 
 
 --
--- Name: recaudo_beneficiario_recaudo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: recaudo_beneficiario_recaudo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY recaudo_beneficiario
@@ -8761,7 +8761,7 @@ ALTER TABLE ONLY recaudo_beneficiario
 
 
 --
--- Name: recaudo_reembolso_codigo_solicitud_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: recaudo_reembolso_codigo_solicitud_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY recaudo_reembolso
@@ -8769,7 +8769,7 @@ ALTER TABLE ONLY recaudo_reembolso
 
 
 --
--- Name: recaudo_reembolso_recaudo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: recaudo_reembolso_recaudo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY recaudo_reembolso
@@ -8777,7 +8777,7 @@ ALTER TABLE ONLY recaudo_reembolso
 
 
 --
--- Name: recaudo_solicitud_medicina_codigo_solicitud_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: recaudo_solicitud_medicina_codigo_solicitud_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY recaudo_solicitud_medicina
@@ -8785,7 +8785,7 @@ ALTER TABLE ONLY recaudo_solicitud_medicina
 
 
 --
--- Name: recaudo_solicitud_medicina_recaudo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: recaudo_solicitud_medicina_recaudo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY recaudo_solicitud_medicina
@@ -8793,7 +8793,7 @@ ALTER TABLE ONLY recaudo_solicitud_medicina
 
 
 --
--- Name: recaudo_solicitud_servicio_codigo_solicitud_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: recaudo_solicitud_servicio_codigo_solicitud_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY recaudo_solicitud_servicio
@@ -8801,7 +8801,7 @@ ALTER TABLE ONLY recaudo_solicitud_servicio
 
 
 --
--- Name: recaudo_solicitud_servicio_recaudo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: recaudo_solicitud_servicio_recaudo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY recaudo_solicitud_servicio
@@ -8809,7 +8809,7 @@ ALTER TABLE ONLY recaudo_solicitud_servicio
 
 
 --
--- Name: recaudo_titular_recaudo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: recaudo_titular_recaudo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY recaudo_titular
@@ -8817,7 +8817,7 @@ ALTER TABLE ONLY recaudo_titular
 
 
 --
--- Name: recaudo_titular_titular_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: recaudo_titular_titular_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY recaudo_titular
@@ -8825,7 +8825,7 @@ ALTER TABLE ONLY recaudo_titular
 
 
 --
--- Name: recaudo_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: recaudo_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY recaudo
@@ -8833,7 +8833,7 @@ ALTER TABLE ONLY recaudo
 
 
 --
--- Name: recurso_perfil_perfil_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: recurso_perfil_perfil_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY recurso_perfil
@@ -8841,7 +8841,7 @@ ALTER TABLE ONLY recurso_perfil
 
 
 --
--- Name: recurso_perfil_recurso_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: recurso_perfil_recurso_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY recurso_perfil
@@ -8849,7 +8849,7 @@ ALTER TABLE ONLY recurso_perfil
 
 
 --
--- Name: reembolso_beneficiario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: reembolso_beneficiario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY reembolso
@@ -8857,7 +8857,7 @@ ALTER TABLE ONLY reembolso
 
 
 --
--- Name: reembolso_titular_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: reembolso_titular_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY reembolso
@@ -8865,7 +8865,7 @@ ALTER TABLE ONLY reembolso
 
 
 --
--- Name: reembolso_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: reembolso_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY reembolso
@@ -8873,7 +8873,7 @@ ALTER TABLE ONLY reembolso
 
 
 --
--- Name: servicio_proveedor_proveedor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: servicio_proveedor_proveedor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY servicio_proveedor
@@ -8881,7 +8881,7 @@ ALTER TABLE ONLY servicio_proveedor
 
 
 --
--- Name: servicio_proveedor_servicio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: servicio_proveedor_servicio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY servicio_proveedor
@@ -8889,7 +8889,7 @@ ALTER TABLE ONLY servicio_proveedor
 
 
 --
--- Name: servicio_tiposolicitud_servicio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: servicio_tiposolicitud_servicio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY servicio_tiposolicitud
@@ -8897,7 +8897,7 @@ ALTER TABLE ONLY servicio_tiposolicitud
 
 
 --
--- Name: servicio_tiposolicitud_tiposolicitud_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: servicio_tiposolicitud_tiposolicitud_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY servicio_tiposolicitud
@@ -8905,7 +8905,7 @@ ALTER TABLE ONLY servicio_tiposolicitud
 
 
 --
--- Name: servicio_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: servicio_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY servicio
@@ -8913,7 +8913,7 @@ ALTER TABLE ONLY servicio
 
 
 --
--- Name: solicitud_dt_factura_solicitud_factura_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: solicitud_dt_factura_solicitud_factura_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY solicitud_dt_factura
@@ -8921,7 +8921,7 @@ ALTER TABLE ONLY solicitud_dt_factura
 
 
 --
--- Name: solicitud_dt_medicina_medicina_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: solicitud_dt_medicina_medicina_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY solicitud_dt_medicina
@@ -8929,7 +8929,7 @@ ALTER TABLE ONLY solicitud_dt_medicina
 
 
 --
--- Name: solicitud_dt_medicina_solicitud_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: solicitud_dt_medicina_solicitud_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY solicitud_dt_medicina
@@ -8937,7 +8937,7 @@ ALTER TABLE ONLY solicitud_dt_medicina
 
 
 --
--- Name: solicitud_factura_codigo_solicitud_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: solicitud_factura_codigo_solicitud_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY solicitud_factura
@@ -8945,7 +8945,7 @@ ALTER TABLE ONLY solicitud_factura
 
 
 --
--- Name: solicitud_factura_solicitud_servicio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: solicitud_factura_solicitud_servicio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY solicitud_factura
@@ -8953,7 +8953,7 @@ ALTER TABLE ONLY solicitud_factura
 
 
 --
--- Name: solicitud_medicina_beneficiario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: solicitud_medicina_beneficiario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY solicitud_medicina
@@ -8961,7 +8961,7 @@ ALTER TABLE ONLY solicitud_medicina
 
 
 --
--- Name: solicitud_medicina_medico_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: solicitud_medicina_medico_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY solicitud_medicina
@@ -8969,7 +8969,7 @@ ALTER TABLE ONLY solicitud_medicina
 
 
 --
--- Name: solicitud_medicina_patologia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: solicitud_medicina_patologia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY solicitud_medicina
@@ -8977,7 +8977,7 @@ ALTER TABLE ONLY solicitud_medicina
 
 
 --
--- Name: solicitud_medicina_proveedor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: solicitud_medicina_proveedor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY solicitud_medicina
@@ -8985,7 +8985,7 @@ ALTER TABLE ONLY solicitud_medicina
 
 
 --
--- Name: solicitud_medicina_servicio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: solicitud_medicina_servicio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY solicitud_medicina
@@ -8993,7 +8993,7 @@ ALTER TABLE ONLY solicitud_medicina
 
 
 --
--- Name: solicitud_medicina_titular_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: solicitud_medicina_titular_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY solicitud_medicina
@@ -9001,7 +9001,7 @@ ALTER TABLE ONLY solicitud_medicina
 
 
 --
--- Name: solicitud_servicio_beneficiario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: solicitud_servicio_beneficiario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY solicitud_servicio
@@ -9009,7 +9009,7 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- Name: solicitud_servicio_medico_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: solicitud_servicio_medico_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY solicitud_servicio
@@ -9017,7 +9017,7 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- Name: solicitud_servicio_patologia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: solicitud_servicio_patologia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY solicitud_servicio
@@ -9025,7 +9025,7 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- Name: solicitud_servicio_proveedor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: solicitud_servicio_proveedor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY solicitud_servicio
@@ -9033,7 +9033,7 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- Name: solicitud_servicio_servicio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: solicitud_servicio_servicio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY solicitud_servicio
@@ -9041,7 +9041,7 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- Name: solicitud_servicio_tiposolicitud_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: solicitud_servicio_tiposolicitud_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY solicitud_servicio
@@ -9049,7 +9049,7 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- Name: solicitud_servicio_titular_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: solicitud_servicio_titular_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY solicitud_servicio
@@ -9057,7 +9057,7 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- Name: sucursal_empresa_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: sucursal_empresa_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY sucursal
@@ -9065,7 +9065,7 @@ ALTER TABLE ONLY sucursal
 
 
 --
--- Name: sucursal_estado_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: sucursal_estado_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY sucursal
@@ -9073,7 +9073,7 @@ ALTER TABLE ONLY sucursal
 
 
 --
--- Name: sucursal_municipio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: sucursal_municipio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY sucursal
@@ -9081,7 +9081,7 @@ ALTER TABLE ONLY sucursal
 
 
 --
--- Name: sucursal_pais_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: sucursal_pais_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY sucursal
@@ -9089,7 +9089,7 @@ ALTER TABLE ONLY sucursal
 
 
 --
--- Name: sucursal_parroquia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: sucursal_parroquia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY sucursal
@@ -9097,7 +9097,7 @@ ALTER TABLE ONLY sucursal
 
 
 --
--- Name: titular_cargo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: titular_cargo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY titular
@@ -9105,7 +9105,7 @@ ALTER TABLE ONLY titular
 
 
 --
--- Name: titular_departamento_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: titular_departamento_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY titular
@@ -9113,7 +9113,7 @@ ALTER TABLE ONLY titular
 
 
 --
--- Name: titular_profesion_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: titular_profesion_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY titular
@@ -9121,7 +9121,7 @@ ALTER TABLE ONLY titular
 
 
 --
--- Name: titular_tipoempleado_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: titular_tipoempleado_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY titular
@@ -9129,7 +9129,7 @@ ALTER TABLE ONLY titular
 
 
 --
--- Name: usuario_perfil_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: usuario_perfil_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY usuario
@@ -9137,7 +9137,7 @@ ALTER TABLE ONLY usuario
 
 
 --
--- Name: usuario_persona_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: usuario_persona_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY usuario
@@ -9145,7 +9145,7 @@ ALTER TABLE ONLY usuario
 
 
 --
--- Name: usuario_sucursal_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jelitox
+-- Name: usuario_sucursal_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY usuario
