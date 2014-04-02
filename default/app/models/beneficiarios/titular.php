@@ -11,7 +11,7 @@
  * @copyright   Copyright (c) 2014 UPTP / E.M.S. Arroz del Alba S.A. (http://autogestion.arrozdelalba.gob.ve) 
  */
 
-Load::models('sistema/usuario', 'personas/persona');
+//Load::models('sistema/usuario', 'personas/persona');
 
 class Titular extends ActiveRecord {
     
@@ -19,11 +19,19 @@ class Titular extends ActiveRecord {
      * Método para definir las relaciones y validaciones
      */
     protected function initialize() {
-        $this->has_one('usuario');
-        $this->has_one('persona');
+		$this->belongs_to('persona');
+      //  $this->has_one('usuario');
+      //  $this->has_one('persona');
 
     }
-    
+   /**
+     * Método que devuelve el inner join con el estado_usuario
+     * @return string
+     */
+//    public static function getInnerEstado() {
+//        return "INNER JOIN (SELECT usuario_id, CASE estado_usuario WHEN ".EstadoUsuario::COD_ACTIVO." THEN '".EstadoUsuario::ACTIVO."' WHEN ".EstadoUsuario::COD_BLOQUEADO." THEN '".EstadoUsuario::BLOQUEADO."' ELSE 'INDEFINIDO' END AS estado_usuario, descripcion FROM (SELECT * FROM estado_usuario ORDER BY estado_usuario.id DESC ) AS estado_usuario GROUP BY estado_usuario.usuario_id,estado_usuario.estado_usuario, descripcion) AS estado_usuario ON estado_usuario.usuario_id = usuario.id ";        
+//    }
+        
     /**
      * Método para setear un Objeto
      * @param string    $method     Método a ejecutar (create, update)
@@ -53,6 +61,49 @@ class Titular extends ActiveRecord {
         }
         $rs = $obj->$method();
         return ($rs) ? $obj : FALSE;
+    }
+
+    /**
+     * Método para listar titulares
+     * @return obj
+     */
+
+    public function getListadoTitular($estado, $order='', $page=0) {
+        $columns = 'titular.tipoempleado_id, titular.persona_id, titular.fecha_ingreso, titular.profesion_id,titular.departamento_id, 
+					titular.cargo_id,persona.cedula, persona.nombre1, persona.apellido1';
+        $join= 'INNER JOIN titular ON persona.cedula = titular.persona_id ';
+//        $join.= 'INNER JOIN persona ON titular.titular_persona_id = titular.persona_id ';        
+//        $join.= 'LEFT JOIN sucursal ON sucursal.id = usuario.sucursal_id ';
+        $conditions = "persona.id > '2'";//Por el super usuario
+                
+        $order = $this->get_order($order, 'nombre1', array(                        
+            'titular' => array(
+                'ASC'=>'titular.persona_id ASC, persona.nombre1 ASC, persona.apellido1 DESC', 
+                'DESC'=>'titular.persona_id DESC, persona.nombre1 DESC, persona.apellido1 DESC'
+            ),
+            'nombre1' => array(
+                'ASC'=>'persona.nombre1 ASC, persona.apellido1 DESC', 
+                'DESC'=>'persona.nombre1 DESC, persona.apellido1 DESC'
+            ),
+            'apellido1' => array(
+                'ASC'=>'persona.apellido1 ASC, persona.nombre1 ASC', 
+                'DESC'=>'persona.apellido1 DESC, persona.nombre1 DESC'
+            ),
+            'cedula' => array(
+                'ASC'=>'persona.cedula ASC, persona.apellido1 ASC, persona.nombre1 ASC', 
+                'DESC'=>'persona.cedula DESC, persona.apellido1 DESC, persona.nombre1 DESC'
+            ),            
+//            'sucursal' => array(
+//                'ASC'=>'sucursal.sucursal ASC, persona.apellido1 ASC, persona.nombre1 ASC', 
+//                'DESC'=>'sucursal.sucursal DESC, persona.apellido1 DESC, persona.nombre1 DESC'
+//            ),
+        ));         
+        
+        if($page) {
+            return $this->paginated("columns: $columns", "join: $join", "conditions: $conditions", "order: $order", "page: $page");
+        } else {
+            return $this->find("columns: $columns", "join: $join", "conditions: $conditions", "order: $order");
+        }  
     }
 
     /**

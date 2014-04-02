@@ -10,7 +10,7 @@
  * @copyright   Copyright (c) 2014 E.M.S. Arroz del Alba S.A. (http://autogestion.arrozdelalba.gob.ve)
  */
 
-Load::models('personas/persona', 'sistema/usuario');
+Load::models('beneficiarios/titular','personas/persona', 'sistema/usuario');
 
 class TitularController extends BackendController {
     
