@@ -11,7 +11,7 @@
  * @revision    1.0
  */
 
-Load::models('sistema/usuario');
+Load::models('sistema/usuario','beneficiarios/titular');
 
 class Persona extends ActiveRecord {
 
@@ -20,6 +20,7 @@ class Persona extends ActiveRecord {
      */
     protected function initialize() {
         $this->has_one('usuario');
+        $this->has_one('titular');
         //$this->belongs_to('tipo_nuip');
     }
 

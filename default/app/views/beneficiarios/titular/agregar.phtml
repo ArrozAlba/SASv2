@@ -98,10 +98,10 @@
 
                 <div class="row-fluid">
                     <div class="span6">
-                        <?php echo DwForm::dbSelect('titular.tipoempleado_id', 'Tipo Empleado', array('beneficiarios/titular', 'getListadoTitular'), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Tipo Empleado'); ?>
+                        <?php echo DwForm::dbSelect('titular.tipoempleado_id', 'nombre', array('config/tipoempleado', 'getListadoTipoempleado'), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Tipo Empleado'); ?>
                     </div>
                     <div class="span6">
-                        <?php echo DwForm::text('usuario.login', array('class'=>'input-xxlarge input-required mask-alphanum show-error input-user'), NULL, 'Usuario'); ?>
+                        <?php echo DwForm::dbSelect('usuario.sucursal_id', array('sucursal', 'parroquia'), array('config/sucursal', 'getListadoSucursal'), array('todas'=>'Todas'), array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Sucursal / UPSA'); ?>
                     </div>
 
                 </div>
@@ -109,16 +109,16 @@
                 <div class="row-fluid">
                     <?php if(APP_OFFICE) { ?>
                     <div class="span6">
-                        <?php echo DwForm::dbSelect('usuario.sucursal_id', array('sucursal', 'parroquia'), array('config/sucursal', 'getListadoSucursal'), array('todas'=>'Todas'), array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Sucursal / UPSA'); ?>
+						<?php echo DwForm::dbSelect('titular.departamento_id', 'nombre', array('config/departamento', 'getListadoDepartamento'), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Departamento'); ?>
                     </div>
                     <?php } ?>
                     <div class="span6">
-                        <?php echo DwForm::email('usuario.email', array('class'=>'input-xxlarge mask-email show-error'), NULL, 'Email'); ?>
+						<?php echo DwForm::dbSelect('titular.cargo_id', 'nombre', array('config/cargo', 'getListadoCargo'), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Cargo'); ?>
                     </div>
                 </div>
                 <div class="row-fluid">
                     <div class="span6">
-                        <?php echo DwForm::number('usuario.datagrid', array('class'=>'input-numeric show-error input-required'), 30, 'Cantidad de datos por página', 'Esta información se utiliza en los listados de informaciones y reportes'); ?>
+						<?php echo DwForm::dbSelect('titular.profesion_id', 'nombre', array('config/profesion', 'getListadoCargo'), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Profesión'); ?>
                     </div>
                 </div>
 

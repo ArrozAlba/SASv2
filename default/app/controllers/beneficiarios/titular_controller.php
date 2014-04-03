@@ -64,13 +64,12 @@ class TitularController extends BackendController {
      * Método para agregar
      */
     public function agregar() {
-        if(Input::hasPost('persona') && Input::hasPost('titular') && Input::hasPost('usuario')) {
+        if(Input::hasPost('persona') && Input::hasPost('titular')) {
             ActiveRecord::beginTrans();
             //Guardo la persona
             $persona = Persona::setPersona('create', Input::post('persona'));
-            $titular = Titular::setTitular('create', Input::post('titular'));
-            if($persona && $titular) {
-                if(Usuario::setUsuario('create', Input::post('usuario'), array('persona_id'=>$persona->id, 'repassword'=>Input::post('repassword'), 'tema'=>'default'))) {
+            if($persona) {
+                if(Titular::setTitular('create', Input::post('titular'), array('persona_id'=>$persona->id))) {
                     ActiveRecord::commitTrans();
                     DwMessage::valid('El titular se ha creado correctamente.');
                     return DwRedirect::toAction('listar');
