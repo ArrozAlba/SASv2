@@ -11,23 +11,23 @@
                 <?php echo DwForm::text('cobertura.descripcion', array('class'=>'input-xxlarge input-required input-alphanum mask-alphanum show-error'), NULL, 'Descripcion'); ?>
             </div>
             <div class="span6">
-                <?php echo DwForm::Select('cobertura.tipocobertura', array('Seleccione','Grupal', 'Individual'), array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Tipo Cobertura'); ?>
+                <?php echo DwForm::Select('cobertura.tipo_cobertura', array('Seleccione','Grupal', 'Individual'), array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Tipo Cobertura'); ?>
             </div>
         </div>
         <div class="row-fluid">
             <div class="span6">
-                <?php echo DwForm::date('cobertura.fechainicio', array('class'=>'input-required mask-date input-date show-errors'), date("Y-m-d"), 'Fecha Inicio'); ?>
+                <?php echo DwForm::date('cobertura.fecha_inicio', array('class'=>'input-required mask-date input-date show-errors'), date("Y-m-d"), 'Fecha Inicio'); ?>
             </div>
             <div class="span6">
-                <?php echo DwForm::date('cobertura.fechafin', array('class'=>'input-required mask-date input-date show-errors'), date("Y-m-d"), 'Fecha Fin'); ?>
+                <?php echo DwForm::date('cobertura.fecha_fin', array('class'=>'input-required mask-date input-date show-errors'), date("Y-m-d"), 'Fecha Fin'); ?>
             </div>
         </div>
         <div class="row-fluid">
             <div class="span6">
-                <?php echo DwForm::text('cobertura.monto', array('class'=>'input-xxlarge input-required input-alphanum mask-alphanum show-error'), NULL, 'Monto'); ?>
+                <?php echo DwForm::text('cobertura.monto_cobertura', array('class'=>'input-xxlarge input-required input-alphanum mask-alphanum show-error'), NULL, 'Monto'); ?>
             </div>
             <div class="span6">
-                <?php echo DwForm::text('cobertura.observacion', array('class'=>'input-xxlarge input-required input-alphanum mask-alphanum show-error'), NULL, 'Observacion'); ?>
+                <?php echo DwForm::text('cobertura.observacion', array('class'=>'input-xxlarge input-alphanum mask-alphanum show-error'), NULL, 'Observacion'); ?>
             </div>
         </div>
 

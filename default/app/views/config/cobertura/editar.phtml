@@ -17,34 +17,39 @@
 
         <div class="row-fluid">
             <div class="span6">
-                <?php echo DwForm::text('sucursal.sucursal', array('class'=>'input-xxlarge input-required input-alphanum mask-alphanum show-error'), $sucursal->sucursal, 'Nombre de la sucursal'); ?>
+                <?php echo DwForm::text('cobertura.descripcion', array('class'=>'input-xxlarge input-required input-alphanum mask-alphanum show-error'), $cobertura->descripcion, 'Nombre de la Cobertura'); ?>
             </div>
+            <div class="span6">
+                <?php echo DwForm::Select('cobertura.tipo_cobertura', array('Seleccione','Grupal', 'Individual'), array('class'=>'input-xxlarge input-required mask-pint show-errors'), $cobertura->tipo_cobertura, 'Tipo Cobertura'); ?>
+            </div>
+           
         </div>
         <div class="row-fluid">
             <div class="span6">
-                <?php echo DwForm::text('sucursal.direccion', array('class'=>'input-xxlarge input-required input-alphanum mask-alphanum show-error'), $sucursal->direccion, 'Dirección'); ?>
+                <?php echo DwForm::date('cobertura.fecha_inicio', array('class'=>'input-required mask-date input-date show-errors'), date("Y-m-d"), 'Fecha Inicio'); ?>
             </div>
             <div class="span6">
-                <?php echo DwForm::text('ciudad', array('class'=>'input-xxlarge input-required input-alphanum mask-alphanum show-error', 'autocomplete'=>'off'), $sucursal->ciudad, 'Ciudad'); ?>
+                <?php echo DwForm::date('cobertura.fecha_fin', array('class'=>'input-required mask-date input-date show-errors'), date("Y-m-d"), 'Fecha Fin'); ?>
             </div>
         </div>
-        <div class="row-fluid">
-            <div class="span4">
-                <?php echo DwForm::tel('sucursal.celular', array('class'=>'input-numeric mask-pint show-error'), $sucursal->celular, 'Celular'); ?>
-            </div>
-            <div class="span4">
-                <?php echo DwForm::tel('sucursal.telefono', array('class'=>'input-numeric mask-pint show-error'), $sucursal->telefono, 'Teléfono'); ?>
-            </div>
-            <div class="span4">
-                <?php echo DwForm::tel('sucursal.fax', array('class'=>'input-numeric mask-pint show-error'), $sucursal->fax, 'Fax'); ?>
-            </div>
 
-            <?php echo DwForm::hiddenKey('sucursal.id', $sucursal->id); ?>
+        <div class="row-fluid">
+            <div class="span6">
+                <?php echo DwForm::text('cobertura.monto_cobertura', array('class'=>'input-xxlarge input-required input-alphanum mask-alphanum show-error', 'autocomplete'=>'off'), $cobertura->monto_cobertura, 'Monto de Cobertura'); ?>
+            </div>
+            <div class="span6">
+                <?php echo DwForm::text('cobertura.observacion', array('class'=>'input-xxlarge input-alphanum mask-alphanum show-error'),  $cobertura->observacion,, 'Observacion'); ?>
+            </div>
+        </div>
+
+        </div>
+
+            <?php echo DwForm::hiddenKey('cobertura.id', $cobertura->id); ?>
         </div>
 
         <div class="row-fluid">
             <div class="form-actions">
-                <?php echo DwButton::save('Guardar sucursal'); ?>
+                <?php echo DwButton::save('Guardar Cobertura'); ?>
                 <?php echo DwButton::reset('form'); ?>
                 <?php echo DwButton::cancel(); ?>
             </div>

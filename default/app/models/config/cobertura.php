@@ -3,7 +3,7 @@
  * infoalex
  *
  * @category
- * @package     Models
+ * @package     Models Cobertura
  * @subpackage
  * @author      alexis borges
  * @copyright    
@@ -20,14 +20,14 @@ class Cobertura extends ActiveRecord {
      * Método para definir las relaciones y validaciones
      */
     protected function initialize() {
-        $this->belongs_to('empresa');
+       /* $this->belongs_to('empresa');
         $this->belongs_to('ciudad');
         $this->has_many('usuario');
 
         $this->validates_presence_of('sucursal', 'message: Ingresa el nombre de la sucursal');        
         $this->validates_presence_of('direccion', 'message: Ingresa la dirección de la sucursal.');
         $this->validates_presence_of('ciudad_id', 'message: Indica la ciudad de ubicación de la sucursal.');
-                
+      */          
     }  
     
     /**
@@ -37,9 +37,9 @@ class Cobertura extends ActiveRecord {
      */
     public function getInformacionCobertura($id, $isSlug=false) {
         $id = ($isSlug) ? Filter::get($id, 'string') : Filter::get($id, 'numeric');
-        $columnas = 'sas_profesion.*';
+        $columnas = 'cobertura.*';
         $join = '';
-        $condicion = ($isSlug) ? "sucursal.slug = '$id'" : "sucursal.id = '$id'";
+        $condicion = "cobertura.id = '$id'";
         return $this->find_first("columns: $columnas", "join: $join", "conditions: $condicion");
     } 
     
@@ -49,19 +49,18 @@ class Cobertura extends ActiveRecord {
      * @param int $page 
      * @return ActiveRecord
      */
-    public function getListadoCobertura($order='order.nombre.asc', $page='', $empresa=null) {
-          
-        $columns = 'sas_profesion.*';
+    public function getListadoCobertura($order='order.descripcion.asc', $page='', $empresa=null) {
+        $columns = 'cobertura.*';
         $join = '';        
         $conditions = "";
-        
-        $order = $this->get_order($order, 'sas_profesion', array('sas_profesion'=>array('ASC'=>'sas_profesion.nombre ASC, sas_profesion.descripcion ASC',
-                                                                              'DESC'=>'sas_profesion.nombre DESC, sas_profesion.descripcion ASC'),
-                                                            'descripcion'));
+        $order = $this->get_order($order, 'cobertura', array('cobertura'=>array('ASC'=>'cobertura.descripcion ASC, cobertura.tipo_cobertura ASC',
+                                                                              'DESC'=>'cobertura.descripcion DESC, cobertura.tipo_cobertura ASC',
+                                                                              ),
+                                                            'descripcion', 'tipo_cobertura', 'monto_cobertura','fecha_inicio', 'fecha_fin', 'observacion'));
         if($page) {                
-            return $this->paginated("columns: $columns", "join: $join", "conditions: $conditions", "order: $order", "page: $page");
+            return $this->paginated("columns: $columns", "order: $order", "page: $page");
         } else {
-            return $this->find("columns: $columns", "join: $join", "conditions: $conditions", "order: $order", "page: $page");            
+            return $this->find("columns: $columns", "order: $order", "page: $page");            
         }
     }
     
@@ -74,14 +73,15 @@ class Cobertura extends ActiveRecord {
      */
     public static function setCobertura($method, $data, $optData=null) {
         //Se aplica la autocarga
-        $obj = new Sucursal($data);
+        $obj = new Cobertura($data);
         //Se verifica si contiene una data adicional para autocargar
         if ($optData) {
             $obj->dump_result_self($optData);
         }   
-        if($method!='delete') {
+        
+        /*if($method!='delete') {
             $obj->ciudad_id = Ciudad::setCiudad($obj->ciudad)->id;        
-        }
+        }*/
         $rs = $obj->$method();
         
         return ($rs) ? $obj : FALSE;
@@ -91,7 +91,7 @@ class Cobertura extends ActiveRecord {
      * Método que se ejecuta antes de guardar y/o modificar     
      */
     public function before_save() {        
-        $this->sucursal = Filter::get($this->sucursal, 'string');        
+        /* 
         $this->slug = DwUtils::getSlug($this->sucursal); 
         $this->direccion = Filter::get($this->direccion, 'string');
         $this->telefono = Filter::get($this->telefono, 'numeric');
@@ -104,17 +104,17 @@ class Cobertura extends ActiveRecord {
             DwMessage::error('Lo sentimos, pero ya existe una sucursal registrada con el mismo nombre y ciudad.');
             return 'cancel';
         }
-        
+   */     
     }
     
     /**
      * Callback que se ejecuta antes de eliminar
      */
     public function before_delete() {
-        if($this->id == 1) { //Para no eliminar la información de sucursal
+        /*if($this->id == 1) { //Para no eliminar la información de sucursal
             DwMessage::warning('Lo sentimos, pero esta sucursal no se puede eliminar.');
             return 'cancel';
-        }
+        }*/
     }
     
 }

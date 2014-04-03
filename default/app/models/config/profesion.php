@@ -7,7 +7,6 @@
  * @author      alexis borges
  * @copyright    
  */
-
 class Profesion extends ActiveRecord {
     
     /**
@@ -28,7 +27,6 @@ class Profesion extends ActiveRecord {
         $this->validates_presence_of('ciudad_id', 'message: Indica la ciudad de ubicación de la sucursal.');
     */            
     }  
-    
     /**
      * Método para ver la información de una sucursal
      * @param int|string $id
