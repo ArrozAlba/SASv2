@@ -26,7 +26,7 @@ class ProfesionController extends BackendController {
      * Método principal
      */
     public function index() {
-        DwRedirect::toAction('agregar');
+        DwRedirect::toAction('listar');
     }
     
     /**
@@ -34,7 +34,7 @@ class ProfesionController extends BackendController {
      */
     public function listar($order='order.nombre.asc', $page='pag.1') { 
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
-        $profesion = new SasProfesion();        
+        $profesion = new Profesion();        
         $this->profesiones = $profesion->getListadoProfesion($order, $page);
         $this->order = $order;        
         $this->page_title = 'Listado de Profesiones';
@@ -44,9 +44,9 @@ class ProfesionController extends BackendController {
      * Método para agregar
      */
     public function agregar() {
-        $empresa = Session::get('empresa', 'config');
+    //    $empresa = Session::get('empresa', 'config');
         if(Input::hasPost('profesion')) {
-            if(Profesion::setProfesion('create', Input::post('profesion'), array('empresa_id'=>$empresa->id, 'ciudad'=>Input::post('ciudad')))) {
+            if(Profesion::setProfesion('create', Input::post('profesion'))) {
                 DwMessage::valid('La profesion se ha registrado correctamente!');
                 return DwRedirect::toAction('listar');
             }            
@@ -58,17 +58,17 @@ class ProfesionController extends BackendController {
      * Método para editar
      */
     public function editar($key) {        
-        if(!$id = DwSecurity::isValidKey($key, 'upd_sucursal', 'int')) {
+        if(!$id = DwSecurity::isValidKey($key, 'upd_profesion', 'int')) {
             return DwRedirect::toAction('listar');
         }        
         
-        $sucursal = new Sucursal();
-        if(!$sucursal->getInformacionSucursal($id)) {            
+        $sucursal = new Profesion();
+        if(!$sucursal->getInformacionProfesion($id)) {            
             DwMessage::get('id_no_found');
             return DwRedirect::toAction('listar');
         }
         
-        if(Input::hasPost('sucursal') && DwSecurity::isValidKey(Input::post('sucursal_id_key'), 'form_key')) {
+        if(Input::hasPost('sucursal') && DwSecurity::isValidKey(Input::post('profesion_id_key'), 'form_key')) {
             if(Sucursal::setSucursal('update', Input::post('sucursal'), array('id'=>$id, 'empresa_id'=>$sucursal->empresa_id, 'ciudad'=>Input::post('ciudad')))) {
                 DwMessage::valid('La sucursal se ha actualizado correctamente!');
                 return DwRedirect::toAction('listar');
@@ -88,7 +88,7 @@ class ProfesionController extends BackendController {
         }        
         
         $sucursal = new Sucursal();
-        if(!$sucursal->getInformacionSucursal($id)) {            
+        if(!$sucursal->getInformacionProfesion($id)) {            
             DwMessage::get('id_no_found');
             return DwRedirect::toAction('listar');
         }                
