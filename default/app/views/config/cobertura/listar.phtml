@@ -35,8 +35,8 @@
             </thead>
             <tbody>
                 <?php foreach($coberturas->items as $cobertura): ?>
-                    <?php $key_upd = DwSecurity::getKey($cobertura->id, 'upd_sucursal'); ?>
-                    <?php $key_del = DwSecurity::getKey($cobertura->id, 'del_sucursal'); ?>
+                    <?php $key_upd = DwSecurity::getKey($cobertura->id, 'upd_cobertura'); ?>
+                    <?php $key_del = DwSecurity::getKey($cobertura->id, 'del_cobertura'); ?>
                     <tr>
                         <td><?php echo $coberturas->counter; ?></td>
                         <td><?php echo $cobertura->descripcion; ?></td>
@@ -49,7 +49,7 @@
                             <?php echo DwHtml::buttonTable('Eliminar Cobertura', "config/cobertura/eliminar/$key_del/", array('class'=>'js-confirm', 'confirm-title'=>'Eliminar cobertura', 'confirm-body'=>'Está seguro de eliminar esta cobertura? <br />Recuerda que esta operación no se puede reversar.'), 'danger', 'ban-circle'); ?>
                         </td>
                     </tr>
-                    <?php $cobertura->counter++; ?>
+                    <?php $coberturas->counter++; ?>
                 <?php endforeach; ?>
             </tbody>
         </table>

@@ -26,10 +26,10 @@
         </div>
         <div class="row-fluid">
             <div class="span6">
-                <?php echo DwForm::date('cobertura.fecha_inicio', array('class'=>'input-required mask-date input-date show-errors'), date("Y-m-d"), 'Fecha Inicio'); ?>
+                <?php echo DwForm::date('cobertura.fecha_inicio', array('class'=>'input-required mask-date input-date show-errors'), $cobertura->fecha_inicio, 'Fecha Inicio'); ?>
             </div>
             <div class="span6">
-                <?php echo DwForm::date('cobertura.fecha_fin', array('class'=>'input-required mask-date input-date show-errors'), date("Y-m-d"), 'Fecha Fin'); ?>
+                <?php echo DwForm::date('cobertura.fecha_fin', array('class'=>'input-required mask-date input-date show-errors'), $cobertura->fecha_fin,'Fecha Fin'); ?>
             </div>
         </div>
 
@@ -38,7 +38,7 @@
                 <?php echo DwForm::text('cobertura.monto_cobertura', array('class'=>'input-xxlarge input-required input-alphanum mask-alphanum show-error', 'autocomplete'=>'off'), $cobertura->monto_cobertura, 'Monto de Cobertura'); ?>
             </div>
             <div class="span6">
-                <?php echo DwForm::text('cobertura.observacion', array('class'=>'input-xxlarge input-alphanum mask-alphanum show-error'),  $cobertura->observacion,, 'Observacion'); ?>
+                <?php echo DwForm::text('cobertura.observacion', array('class'=>'input-xxlarge input-alphanum mask-alphanum show-error'),  $cobertura->observacion,'Observacion'); ?>
             </div>
         </div>
 
