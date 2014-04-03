@@ -62,45 +62,44 @@ class ProfesionController extends BackendController {
             return DwRedirect::toAction('listar');
         }        
         
-        $sucursal = new Profesion();
-        if(!$sucursal->getInformacionProfesion($id)) {            
+        $profesion = new Profesion();
+        if(!$profesion->getInformacionProfesion($id)) {            
             DwMessage::get('id_no_found');
             return DwRedirect::toAction('listar');
         }
         
-        if(Input::hasPost('sucursal') && DwSecurity::isValidKey(Input::post('profesion_id_key'), 'form_key')) {
-            if(Sucursal::setSucursal('update', Input::post('sucursal'), array('id'=>$id, 'empresa_id'=>$sucursal->empresa_id, 'ciudad'=>Input::post('ciudad')))) {
-                DwMessage::valid('La sucursal se ha actualizado correctamente!');
+        if(Input::hasPost('profesion') && DwSecurity::isValidKey(Input::post('profesion_id_key'), 'form_key')) {
+            if(Profesion::setProfesion('update', Input::post('profesion'))){
+                DwMessage::valid('La profesion se ha actualizado correctamente!');
                 return DwRedirect::toAction('listar');
             }
         } 
-        $this->ciudades = Load::model('params/ciudad')->getCiudadesToJson();
-        $this->sucursal = $sucursal;
-        $this->page_title = 'Actualizar sucursal';        
+        //$this->ciudades = Load::model('params/ciudad')->getCiudadesToJson();
+        $this->profesion = $profesion;
+        $this->page_title = 'Actualizar profesion';        
     }
     
     /**
      * Método para eliminar
      */
     public function eliminar($key) {         
-        if(!$id = DwSecurity::isValidKey($key, 'del_sucursal', 'int')) {
+        if(!$id = DwSecurity::isValidKey($key, 'del_profesion', 'int')) {
             return DwRedirect::toAction('listar');
         }        
         
-        $sucursal = new Sucursal();
-        if(!$sucursal->getInformacionProfesion($id)) {            
+        $profesion = new Profesion();
+        if(!$profesion->getInformacionProfesion($id)) {            
             DwMessage::get('id_no_found');
             return DwRedirect::toAction('listar');
         }                
         try {
-            if(Sucursal::setSucursal('delete', array('id'=>$sucursal->id))) {
-                DwMessage::valid('La sucursal se ha eliminado correctamente!');
+            if(Profesion::setProfesion('delete', array('id'=>$profesion->id))) {
+                DwMessage::valid('La profesion se ha eliminado correctamente!');
             }
         } catch(KumbiaException $e) {
-            DwMessage::error('Esta sucursal no se puede eliminar porque se encuentra relacionada con otro registro.');
+            DwMessage::error('Esta profesion no se puede eliminar porque se encuentra relacionada con otro registro.');
         }
         
         return DwRedirect::toAction('listar');
     }
-    
 }

@@ -4,7 +4,7 @@
     $(function() {
         $('table').dwGrid({
             order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
-            order_action: $.KumbiaPHP.publicPath+"config/profesion/listar/"
+            order_action: $.KumbiaPHP.publicPath+"config/cobertura/listar/"
         });
     });
 </script>
@@ -15,7 +15,7 @@
 
     <div class="btn-toolbar btn-toolbar-top">
         <div class="btn-actions">
-            <?php echo DwHtml::button("config/profesion/agregar/", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
+            <?php echo DwHtml::button("config/cobertura/agregar/", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
         </div>
     </div>
 
@@ -25,35 +25,37 @@
             <thead>
                 <tr>
                     <th>NUM</th>
-                    <th class="col-collapse" data-search="sucursal">NOMBRE</th>
-                    <th class="col-collapse" data-search="direccion">DESCRIPCION</th>
+                    <th class="col-collapse" data-search="nombre">DESCRIPCION</th>
+                    <th class="col-collapse" data-search="direccion">MONTO COBERTURA</th>
+                    <th class="col-collapse" data-search="direccion">FECHA INICIO</th>
+                    <th class="col-collapse" data-search="direccion">FECHA FIN</th>
+                    <th class="col-collapse" data-search="direccion">OBSERVACION</th>
                     <th class="btn-actions no-responsive" style="width: 100px;">ACCIONES</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($sucursales->items as $sucursal): ?>
-                    <?php $key_upd = DwSecurity::getKey($sucursal->id, 'upd_sucursal'); ?>
-                    <?php $key_del = DwSecurity::getKey($sucursal->id, 'del_sucursal'); ?>
+                <?php foreach($coberturas->items as $cobertura): ?>
+                    <?php $key_upd = DwSecurity::getKey($cobertura->id, 'upd_sucursal'); ?>
+                    <?php $key_del = DwSecurity::getKey($cobertura->id, 'del_sucursal'); ?>
                     <tr>
-                        <td><?php echo $sucursales->counter; ?></td>
-                        <td><?php echo $sucursal->sucursal; ?></td>
-                        <td><?php echo $sucursal->direccion; ?></td>
-                        <td><?php echo $sucursal->ciudad; ?></td>
-                        <td><?php echo $sucursal->celular; ?></td>
-                        <td><?php echo $sucursal->telefono; ?></td>
-                        <td><?php echo $sucursal->fax; ?></td>
+                        <td><?php echo $coberturas->counter; ?></td>
+                        <td><?php echo $cobertura->descripcion; ?></td>
+                        <td><?php echo $cobertura->monto_cobertura; ?></td>
+                        <td><?php echo $cobertura->fecha_inicio; ?></td>
+                        <td><?php echo $cobertura->fecha_fin; ?></td>
+                        <td><?php echo $cobertura->observacion; ?></td>
                         <td>
-                            <?php echo DwHtml::buttonTable('Modificar Profeson', "config/profesion/editar/$key_upd/", null, 'info', 'edit'); ?>
-                            <?php echo DwHtml::buttonTable('Eliminar Profesion', "config/profesion/eliminar/$key_del/", array('class'=>'js-confirm', 'confirm-title'=>'Eliminar profesion', 'confirm-body'=>'Está seguro de eliminar esta sucursal? <br />Recuerda que esta operación no se puede reversar.'), 'danger', 'ban-circle'); ?>
+                            <?php echo DwHtml::buttonTable('Modificar Cobertura', "config/cobertura/editar/$key_upd/", null, 'info', 'edit'); ?>
+                            <?php echo DwHtml::buttonTable('Eliminar Cobertura', "config/cobertura/eliminar/$key_del/", array('class'=>'js-confirm', 'confirm-title'=>'Eliminar cobertura', 'confirm-body'=>'Está seguro de eliminar esta cobertura? <br />Recuerda que esta operación no se puede reversar.'), 'danger', 'ban-circle'); ?>
                         </td>
                     </tr>
-                    <?php $sucursal->counter++; ?>
+                    <?php $cobertura->counter++; ?>
                 <?php endforeach; ?>
             </tbody>
         </table>
 
     </div>
 
-    <?php View::partial('paginators/default', false, array('page'=>$sucursales, 'url'=>"config/profesion/listar/$order/")); ?>
+    <?php View::partial('paginators/default', false, array('page'=>$coberturas, 'url'=>"config/cobertura/listar/$order/")); ?>
 
 </div>
