@@ -9,7 +9,7 @@
  * @copyright   Copyright (c) 2014  
  */
 
-class Departamento extends ActiveRecord {
+class Tipoempleado extends ActiveRecord {
 
     /**
      * Método que se ejecuta antes de inicializar cualquier acción
@@ -25,12 +25,12 @@ class Departamento extends ActiveRecord {
      * @param array $data
      * @return
      */
-    public static function setDepartamento($name) {
+    public static function setTipoempleado($name) {
         //Se aplica la autocarga
-        $obj = new Departamento();        
-        $obj->Departamento = ucfirst(Filter::get($name, 'string'));
+        $obj = new Tipoempleado();        
+        $obj->tipoempleado = ucfirst(Filter::get($name, 'string'));
         //Verifico si existe otra ciudad bajo el mismo nombre
-        $old = new Departamento();
+        $old = new Tipoempleado();
         if($old->find_first("parroquia LIKE '%$obj->parroquia%'")) {
             return $old;
         }        
@@ -42,7 +42,7 @@ class Departamento extends ActiveRecord {
      * @param int $pag Número de página a mostrar.
      * @return ActiveRecord
      */
-    public function getListadoDepartamento($order='order.nombre.asc', $page=0) {        
+    public function getListadoTipoempleado($order='order.nombre.asc', $page=0) {        
         $order = $this->get_order($order, 'nombre');
         if($page) {
             return $this->paginated("order: $order", "page: $page");

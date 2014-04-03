@@ -69,40 +69,19 @@ class Titular extends ActiveRecord {
      */
 
     public function getListadoTitular($estado, $order='', $page=0) {
-        $columns = 'titular.tipoempleado_id, titular.persona_id, titular.fecha_ingreso, titular.profesion_id,titular.departamento_id, 
-					titular.cargo_id,persona.cedula, persona.nombre1, persona.apellido1';
-        $join= 'INNER JOIN titular ON persona.cedula = titular.persona_id ';
-//        $join.= 'INNER JOIN persona ON titular.titular_persona_id = titular.persona_id ';        
-//        $join.= 'LEFT JOIN sucursal ON sucursal.id = usuario.sucursal_id ';
-        $conditions = "persona.id > '2'";//Por el super usuario
-                
-        $order = $this->get_order($order, 'nombre1', array(                        
-            'titular' => array(
-                'ASC'=>'titular.persona_id ASC, persona.nombre1 ASC, persona.apellido1 DESC', 
-                'DESC'=>'titular.persona_id DESC, persona.nombre1 DESC, persona.apellido1 DESC'
-            ),
-            'nombre1' => array(
-                'ASC'=>'persona.nombre1 ASC, persona.apellido1 DESC', 
-                'DESC'=>'persona.nombre1 DESC, persona.apellido1 DESC'
-            ),
-            'apellido1' => array(
-                'ASC'=>'persona.apellido1 ASC, persona.nombre1 ASC', 
-                'DESC'=>'persona.apellido1 DESC, persona.nombre1 DESC'
-            ),
-            'cedula' => array(
-                'ASC'=>'persona.cedula ASC, persona.apellido1 ASC, persona.nombre1 ASC', 
-                'DESC'=>'persona.cedula DESC, persona.apellido1 DESC, persona.nombre1 DESC'
-            ),            
-//            'sucursal' => array(
-//                'ASC'=>'sucursal.sucursal ASC, persona.apellido1 ASC, persona.nombre1 ASC', 
-//                'DESC'=>'sucursal.sucursal DESC, persona.apellido1 DESC, persona.nombre1 DESC'
-//            ),
-        ));         
+        $columns = 'titular.*, persona.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';
+        $join= 'INNER JOIN persona ON persona.id = titular.persona_id ';        
+        $join.= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
+        $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';   
+
+        $conditions = "";//Por el super usuario
+                       
+           
         
         if($page) {
-            return $this->paginated("columns: $columns", "join: $join", "conditions: $conditions", "order: $order", "page: $page");
+            return $this->paginated("columns: $columns", "join: $join", "page: $page");
         } else {
-            return $this->find("columns: $columns", "join: $join", "conditions: $conditions", "order: $order");
+            return $this->find("columns: $columns", "join: $join");
         }  
     }
 

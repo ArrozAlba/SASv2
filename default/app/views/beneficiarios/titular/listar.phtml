@@ -18,7 +18,7 @@
 
     <div class="btn-toolbar btn-toolbar-top">
         <div class="btn-actions">
-            <?php echo DwHtml::button("beneficiario/titular/agregar/", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
+            <?php echo DwHtml::button("beneficiarios/titular/agregar/", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
         </div>
     </div>
 
@@ -31,8 +31,8 @@
                     <th class="col-collapse" data-search="cedula">CEDULA</th>
                     <th class="col-collapse" data-search="nombre1">NOMBRE</th>
                     <th class="col-collapse" data-search="apellido1">APELLIDO</th>
-                    <th class="col-collapse" data-search="email">EMAIL</th>
-                    <th class="col-collapse" data-search="perfil">PERFIL</th>
+                    <th class="col-collapse" data-search="nomina">NOMINA</th>
+                    <th class="col-collapse" data-search="departamento">DEPARTAMENTO</th>
                     <?if(APP_OFFICE) { //Si está activa la opción de oficinas ?>
                     <th class="col-collapse" data-search="sucursal">SUCURSAL</th>
                     <? } ?>
@@ -48,11 +48,11 @@
                     <?php $key_rea = DwSecurity::getKey($titular->id, 'reactivar_usuario'); ?>
                     <tr>
                         <td><?php echo $titulares->counter; ?></td>
-                        <td><?php echo $titular->login; ?></td>
+                        <td><?php echo $titular->cedula; ?></td>
                         <td><?php echo $titular->nombre1; ?></td>
                         <td><?php echo $titular->apellido1; ?></td>
-                        <td><?php echo $titular->email; ?></td>
-                        <td><?php echo $titular->perfil; ?></td>
+                        <td><?php echo $titular->tipoe; ?></td>
+                        <td><?php echo $titular->departamento; ?></td>
                         <?if(APP_OFFICE) { //Si está activa la opción de oficinas ?>
                         <td><?php echo empty($titular->sucursal) ? 'Todas' : $titular->sucursal; ?></td>
                         <? } ?>
@@ -60,11 +60,7 @@
                         <td>
                             <?php echo DwHtml::buttonTable('Ver usuario', "beneficiario/titular/ver/$key_shw/", NULL, 'warning', 'search'); ?>
                             <?php echo DwHtml::buttonTable('Modificar usuario', "beneficiario/titular/editar/$key_upd/", NULL, 'info', 'edit'); ?>
-                            <?php if($usuario->estado_usuario == EstadoUsuario::ACTIVO) { ?>
-                                <?php echo DwHtml::buttonTable('Bloquear usuario', "beneficiario/titular/estado/bloquear/$key_ina/", NULL, 'success', 'flag'); ?>
-                            <?php } else { ?>
-                                <?php echo DwHtml::buttonTable('Reactivar usuario', "beneficiario/titular/estado/reactivar/$key_rea/", NULL, 'danger', 'flag'); ?>
-                            <?php } ?>
+                            
                         </td>
                     </tr>
                     <?php $titulares->counter++; ?>
