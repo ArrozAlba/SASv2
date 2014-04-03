@@ -1,8 +1,8 @@
 <?php
 /**
- * Dailyscript - Web | App | Media
+ * Alexis
  *
- * Descripcion: Controlador que se encarga de la gestión de las profesiones de la empresa
+ * Descripcion: Controlador que se encarga de la gestión de los Cargos de la empresa
  *
  * @category    
  * @package     Controllers 
@@ -26,7 +26,7 @@ class CargoController extends BackendController {
      * Método principal
      */
     public function index() {
-        DwRedirect::toAction('agregar');
+        DwRedirect::toAction('listar');
     }
     
     /**
@@ -34,8 +34,8 @@ class CargoController extends BackendController {
      */
     public function listar($order='order.nombre.asc', $page='pag.1') { 
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
-        $cargo = new SasProfesion();        
-        $this->profesiones = $cargo->getListadoProfesion($order, $page);
+        $cargo = new Cargo();        
+        $this->cargos = $cargo->getListadoCargo($order, $page);
         $this->order = $order;        
         $this->page_title = 'Listado de Cargo';
     }
@@ -44,10 +44,10 @@ class CargoController extends BackendController {
      * Método para agregar
      */
     public function agregar() {
-        $empresa = Session::get('empresa', 'config');
+    //    $empresa = Session::get('empresa', 'config');
         if(Input::hasPost('cargo')) {
-            if(Profesion::setProfesion('create', Input::post('cargo'), array('empresa_id'=>$empresa->id, 'ciudad'=>Input::post('ciudad')))) {
-                DwMessage::valid('La profesion se ha registrado correctamente!');
+            if(Cargo::setCargo('create', Input::post('cargo'))) {
+                DwMessage::valid('La cargo se ha registrado correctamente!');
                 return DwRedirect::toAction('listar');
             }            
         } 
@@ -58,49 +58,48 @@ class CargoController extends BackendController {
      * Método para editar
      */
     public function editar($key) {        
-        if(!$id = DwSecurity::isValidKey($key, 'upd_sucursal', 'int')) {
+        if(!$id = DwSecurity::isValidKey($key, 'upd_cargo', 'int')) {
             return DwRedirect::toAction('listar');
         }        
         
-        $sucursal = new Sucursal();
-        if(!$sucursal->getInformacionSucursal($id)) {            
+        $cargo = new Cargo();
+        if(!$cargo->getInformacionCargo($id)) {            
             DwMessage::get('id_no_found');
             return DwRedirect::toAction('listar');
         }
         
-        if(Input::hasPost('sucursal') && DwSecurity::isValidKey(Input::post('sucursal_id_key'), 'form_key')) {
-            if(Sucursal::setSucursal('update', Input::post('sucursal'), array('id'=>$id, 'empresa_id'=>$sucursal->empresa_id, 'ciudad'=>Input::post('ciudad')))) {
-                DwMessage::valid('La sucursal se ha actualizado correctamente!');
+        if(Input::hasPost('cargo') && DwSecurity::isValidKey(Input::post('cargo_id_key'), 'form_key')) {
+            if(Cargo::setCargo('update', Input::post('cargo'))){
+                DwMessage::valid('La cargo se ha actualizado correctamente!');
                 return DwRedirect::toAction('listar');
             }
         } 
-        $this->ciudades = Load::model('params/ciudad')->getCiudadesToJson();
-        $this->sucursal = $sucursal;
-        $this->page_title = 'Actualizar sucursal';        
+        //$this->ciudades = Load::model('params/ciudad')->getCiudadesToJson();
+        $this->cargo = $cargo;
+        $this->page_title = 'Actualizar cargo';        
     }
     
     /**
      * Método para eliminar
      */
     public function eliminar($key) {         
-        if(!$id = DwSecurity::isValidKey($key, 'del_sucursal', 'int')) {
+        if(!$id = DwSecurity::isValidKey($key, 'del_cargo', 'int')) {
             return DwRedirect::toAction('listar');
         }        
         
-        $sucursal = new Sucursal();
-        if(!$sucursal->getInformacionSucursal($id)) {            
+        $cargo = new Cargo();
+        if(!$cargo->getInformacionCargo($id)) {            
             DwMessage::get('id_no_found');
             return DwRedirect::toAction('listar');
         }                
         try {
-            if(Sucursal::setSucursal('delete', array('id'=>$sucursal->id))) {
-                DwMessage::valid('La sucursal se ha eliminado correctamente!');
+            if(Cargo::setCargo('delete', array('id'=>$cargo->id))) {
+                DwMessage::valid('La cargo se ha eliminado correctamente!');
             }
         } catch(KumbiaException $e) {
-            DwMessage::error('Esta sucursal no se puede eliminar porque se encuentra relacionada con otro registro.');
+            DwMessage::error('Esta cargo no se puede eliminar porque se encuentra relacionada con otro registro.');
         }
         
         return DwRedirect::toAction('listar');
     }
-    
 }

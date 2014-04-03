@@ -26,7 +26,7 @@ class CoberturaController extends BackendController {
      * Método principal
      */
     public function index() {
-        DwRedirect::toAction('agregar');
+        DwRedirect::toAction('listar');
     }
     
     /**
@@ -34,8 +34,8 @@ class CoberturaController extends BackendController {
      */
     public function listar($order='order.nombre.asc', $page='pag.1') { 
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
-        $cobertura = new SasProfesion();        
-        $this->profesiones = $cobertura->getListadoProfesion($order, $page);
+        $cobertura = new Cobertura();        
+        $this->coberturas = $cobertura->getListadoCobertura($order, $page);
         $this->order = $order;        
         $this->page_title = 'Listado de Coberturas';
     }
@@ -46,7 +46,7 @@ class CoberturaController extends BackendController {
     public function agregar() {
         $empresa = Session::get('empresa', 'config');
         if(Input::hasPost('cobertura')) {
-            if(Profesion::setProfesion('create', Input::post('cobertura'), array('empresa_id'=>$empresa->id, 'ciudad'=>Input::post('ciudad')))) {
+            if(Cobertura::setCobertura('create', Input::post('cobertura'), array('empresa_id'=>$empresa->id, 'ciudad'=>Input::post('ciudad')))) {
                 DwMessage::valid('La cobertura se ha registrado correctamente!');
                 return DwRedirect::toAction('listar');
             }            

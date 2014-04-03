@@ -402,7 +402,7 @@ CREATE TABLE beneficiario (
     persona_id integer NOT NULL,
     parentesco character varying(1) DEFAULT 'M'::character varying NOT NULL,
     beneficiario_tipo_id integer NOT NULL,
-    observacion character varying(250) NOT NULL
+    observacion character varying(250) NULL
 );
 
 
@@ -488,7 +488,7 @@ CREATE TABLE beneficiario_tipo (
     fecha_registro timestamp with time zone DEFAULT now() NOT NULL,
     fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
     descripcion character varying(64) NOT NULL,
-    observacion character varying(250) NOT NULL
+    observacion character varying(250) NULL
 );
 
 
@@ -567,7 +567,7 @@ CREATE TABLE cargo (
     fecha_registro timestamp with time zone DEFAULT now() NOT NULL,
     fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
     nombre character varying(64) NOT NULL,
-    observacion character varying(250) NOT NULL
+    observacion character varying(250) NULL
 );
 
 
@@ -650,7 +650,7 @@ CREATE TABLE cobertura (
     monto_cobertura numeric(11,2) DEFAULT 0.0 NOT NULL,
     fecha_inicio date DEFAULT '1900-01-01'::date,
     fecha_fin date DEFAULT '1900-01-01'::date,
-    observacion character varying(250) NOT NULL
+    observacion character varying(250) NULL
 );
 
 
@@ -757,7 +757,7 @@ CREATE TABLE departamento (
     fecha_registro timestamp with time zone DEFAULT now() NOT NULL,
     fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
     nombre character varying(64) NOT NULL,
-    observacion character varying(250) NOT NULL,
+    observacion character varying(250) NULL,
     sucursal_id integer NOT NULL
 );
 
@@ -837,7 +837,7 @@ CREATE TABLE discapacidad (
     fecha_registro timestamp with time zone DEFAULT now() NOT NULL,
     fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
     nombre character varying(64) NOT NULL,
-    observacion character varying(250) NOT NULL
+    observacion character varying(250) NULL
 );
 
 
@@ -1132,7 +1132,7 @@ CREATE TABLE especialidad (
     fecha_registro timestamp with time zone DEFAULT now() NOT NULL,
     fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
     descripcion character varying(150) NOT NULL,
-    observacion character varying(250) NOT NULL
+    observacion character varying(250) NULL
 );
 
 
@@ -1223,7 +1223,7 @@ CREATE TABLE proveedor (
     telefono2 character varying(12),
     fax character varying(12),
     correo_electronico character varying(64),
-    observacion character varying(250) NOT NULL
+    observacion character varying(250) NULL
 );
 
 
@@ -1583,7 +1583,7 @@ CREATE TABLE medicina (
     fecha_registro timestamp with time zone DEFAULT now() NOT NULL,
     fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
     descripcion character varying(150) NOT NULL,
-    observacion character varying(250) NOT NULL
+    observacion character varying(250) NULL
 );
 
 
@@ -3234,7 +3234,7 @@ CREATE TABLE reembolso (
     titular_id integer NOT NULL,
     beneficiario_id integer NOT NULL,
     beneficiario_tipo character(1) NOT NULL,
-    observacion character varying(250) NOT NULL
+    observacion character varying(250) NULL
 );
 
 
@@ -3714,7 +3714,7 @@ CREATE TABLE solicitud_factura (
     fecha_factura date DEFAULT '1900-01-01'::date,
     nro_control integer,
     nro_factura integer,
-    observacion character varying(250) NOT NULL
+    observacion character varying(250) NULL
 );
 
 
@@ -3835,7 +3835,7 @@ CREATE TABLE solicitud_medicina (
     tipo_tratamiento character varying(1) DEFAULT 'T'::character varying NOT NULL,
     diagnostico character varying(250) NOT NULL,
     servicio_id integer NOT NULL,
-    observacion character varying(250) NOT NULL
+    observacion character varying(250) NULL
 );
 
 
@@ -4023,7 +4023,7 @@ CREATE TABLE solicitud_servicio (
     medico_id integer NOT NULL,
     fecha_vencimiento date DEFAULT '1900-01-01'::date,
     servicio_id integer NOT NULL,
-    observacion character varying(250) NOT NULL
+    observacion character varying(250) NULL
 );
 
 
@@ -4330,7 +4330,7 @@ CREATE TABLE tipoempleado (
     fecha_registro timestamp with time zone DEFAULT now() NOT NULL,
     fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
     nombre character varying(64) NOT NULL,
-    observacion character varying(250) NOT NULL
+    observacion character varying(250) NULL
 );
 
 
@@ -4409,7 +4409,7 @@ CREATE TABLE tiposolicitud (
     fecha_registro timestamp with time zone DEFAULT now() NOT NULL,
     fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
     nombre character varying(64) NOT NULL,
-    observacion character varying(250) NOT NULL
+    observacion character varying(250) NULL
 );
 
 
@@ -4493,7 +4493,7 @@ CREATE TABLE titular (
     profesion_id integer NOT NULL,
     departamento_id integer NOT NULL,
     cargo_id integer NOT NULL,
-    observacion character varying(250) NOT NULL
+    observacion character varying(250) NULL
 );
 
 

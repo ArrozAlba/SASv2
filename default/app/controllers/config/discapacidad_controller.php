@@ -26,7 +26,7 @@ class DiscapacidadController extends BackendController {
      * Método principal
      */
     public function index() {
-        DwRedirect::toAction('agregar');
+        DwRedirect::toAction('listar');
     }
     
     /**
@@ -35,7 +35,7 @@ class DiscapacidadController extends BackendController {
     public function listar($order='order.nombre.asc', $page='pag.1') { 
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
         $discapacidad = new Discapacidad();        
-        $this->profesiones = $discapacidad->getListadoDiscapacidad($order, $page);
+        $this->discapacidades = $discapacidad->getListadoDiscapacidad($order, $page);
         $this->order = $order;        
         $this->page_title = 'Listado de Discapacidades';
     }
@@ -44,9 +44,9 @@ class DiscapacidadController extends BackendController {
      * Método para agregar
      */
     public function agregar() {
-        $empresa = Session::get('empresa', 'config');
+    //    $empresa = Session::get('empresa', 'config');
         if(Input::hasPost('discapacidad')) {
-            if(Discapacidad::setDiscapacidad('create', Input::post('discapacidad'), array('empresa_id'=>$empresa->id, 'ciudad'=>Input::post('ciudad')))) {
+            if(Discapacidad::setDiscapacidad('create', Input::post('discapacidad'))) {
                 DwMessage::valid('La discapacidad se ha registrado correctamente!');
                 return DwRedirect::toAction('listar');
             }            
@@ -58,49 +58,48 @@ class DiscapacidadController extends BackendController {
      * Método para editar
      */
     public function editar($key) {        
-        if(!$id = DwSecurity::isValidKey($key, 'upd_sucursal', 'int')) {
+        if(!$id = DwSecurity::isValidKey($key, 'upd_discapacidad', 'int')) {
             return DwRedirect::toAction('listar');
         }        
         
-        $sucursal = new Sucursal();
-        if(!$sucursal->getInformacionSucursal($id)) {            
+        $discapacidad = new Discapacidad();
+        if(!$discapacidad->getInformacionDiscapacidad($id)) {            
             DwMessage::get('id_no_found');
             return DwRedirect::toAction('listar');
         }
         
-        if(Input::hasPost('sucursal') && DwSecurity::isValidKey(Input::post('sucursal_id_key'), 'form_key')) {
-            if(Sucursal::setSucursal('update', Input::post('sucursal'), array('id'=>$id, 'empresa_id'=>$sucursal->empresa_id, 'ciudad'=>Input::post('ciudad')))) {
-                DwMessage::valid('La sucursal se ha actualizado correctamente!');
+        if(Input::hasPost('discapacidad') && DwSecurity::isValidKey(Input::post('discapacidad_id_key'), 'form_key')) {
+            if(Discapacidad::setDiscapacidad('update', Input::post('discapacidad'))){
+                DwMessage::valid('La discapacidad se ha actualizado correctamente!');
                 return DwRedirect::toAction('listar');
             }
         } 
-        $this->ciudades = Load::model('params/ciudad')->getCiudadesToJson();
-        $this->sucursal = $sucursal;
-        $this->page_title = 'Actualizar sucursal';        
+        //$this->ciudades = Load::model('params/ciudad')->getCiudadesToJson();
+        $this->discapacidad = $discapacidad;
+        $this->page_title = 'Actualizar discapacidad';        
     }
     
     /**
      * Método para eliminar
      */
     public function eliminar($key) {         
-        if(!$id = DwSecurity::isValidKey($key, 'del_sucursal', 'int')) {
+        if(!$id = DwSecurity::isValidKey($key, 'del_discapacidad', 'int')) {
             return DwRedirect::toAction('listar');
         }        
         
-        $sucursal = new Sucursal();
-        if(!$sucursal->getInformacionSucursal($id)) {            
+        $discapacidad = new Discapacidad();
+        if(!$discapacidad->getInformacionDiscapacidad($id)) {            
             DwMessage::get('id_no_found');
             return DwRedirect::toAction('listar');
         }                
         try {
-            if(Sucursal::setSucursal('delete', array('id'=>$sucursal->id))) {
-                DwMessage::valid('La sucursal se ha eliminado correctamente!');
+            if(Discapacidad::setDiscapacidad('delete', array('id'=>$discapacidad->id))) {
+                DwMessage::valid('La discapacidad se ha eliminado correctamente!');
             }
         } catch(KumbiaException $e) {
-            DwMessage::error('Esta sucursal no se puede eliminar porque se encuentra relacionada con otro registro.');
+            DwMessage::error('Esta discapacidad no se puede eliminar porque se encuentra relacionada con otro registro.');
         }
         
         return DwRedirect::toAction('listar');
     }
-    
 }
