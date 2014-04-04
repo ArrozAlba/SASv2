@@ -42,8 +42,8 @@
             </thead>
             <tbody>
                 <?php foreach($titulares->items as $titular): ?>
-                    <?php $key_shw = DwSecurity::getKey($titular->id, 'shw_usuario'); ?>
-                    <?php $key_upd = DwSecurity::getKey($titular->id, 'upd_usuario'); ?>
+                    <?php $key_shw = DwSecurity::getKey($titular->id, 'shw_titular'); ?>
+                    <?php $key_upd = DwSecurity::getKey($titular->id, 'upd_titular'); ?>
                     <?php $key_ina = DwSecurity::getKey($titular->id, 'bloquear_usuario'); ?>
                     <?php $key_rea = DwSecurity::getKey($titular->id, 'reactivar_usuario'); ?>
                     <tr>
@@ -58,8 +58,8 @@
                         <? } ?>
                         <td><?php // echo ($usuario->estado_usuario == EstadoUsuario::ACTIVO) ? '<span class="label label-success" title="'.$usuario->descripcion.'" rel="tooltip">Activo</span>' : '<span class="label label-important" title="'.$usuario->descripcion.'" rel="tooltip">Bloqueado</span>'; ; ?></td>
                         <td>
-                            <?php echo DwHtml::buttonTable('Ver usuario', "beneficiario/titular/ver/$key_shw/", NULL, 'warning', 'search'); ?>
-                            <?php echo DwHtml::buttonTable('Modificar usuario', "beneficiario/titular/editar/$key_upd/", NULL, 'info', 'edit'); ?>
+                            <?php echo DwHtml::buttonTable('Ver usuario', "beneficiarios/titular/ver/$key_shw/", NULL, 'warning', 'search'); ?>
+                            <?php echo DwHtml::buttonTable('Modificar usuario', "beneficiarios/titular/editar/$key_upd/", NULL, 'info', 'edit'); ?>
                             
                         </td>
                     </tr>

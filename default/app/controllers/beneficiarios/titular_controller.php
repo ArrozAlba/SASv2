@@ -89,8 +89,8 @@ class TitularController extends BackendController {
             return DwRedirect::toAction('listar');
         }
         
-        $usuario = new Titular();
-        if(!$usuario->getInformacionTitular($id)) {
+        $titular = new Titular();
+        if(!$titular->getInformacionTitular($id)) {
             DwMessage::get('id_no_found');    
             return DwRedirect::toAction('listar');
         }                
@@ -99,10 +99,9 @@ class TitularController extends BackendController {
             if(DwSecurity::isValidKey(Input::post('titular_id_key'), 'form_key')) {
                 ActiveRecord::beginTrans();
                 //Guardo la persona
-                $persona = Persona::setPersona('update', Input::post('persona'), array('id'=>$usuario->persona_id));
-                $titular = Titular::setTitular('update', Input::post('titular'), array('id'=>$usuario->persona_id));
-                if($persona && $titular) {
-                    if(Usuario::setUsuario('update', Input::post('usuario'), array('persona_id'=>$persona->id, 'repassword'=>Input::post('repassword'), 'id'=>$usuario->id, 'login'=>$usuario->login))) {
+                $persona = Persona::setPersona('update', Input::post('persona'), array('id'=>$titular->persona_id));
+                if($persona) {
+                    if(Titular::setTitular('update', Input::post('titular'), array('id'=>$titular->persona_id))) {
                         ActiveRecord::commitTrans();
                         DwMessage::valid('El titular se ha actualizado correctamente.');
                         return DwRedirect::toAction('listar');
@@ -154,24 +153,24 @@ class TitularController extends BackendController {
      * Método para ver
      */
     public function ver($key) {        
-        if(!$id = DwSecurity::isValidKey($key, 'shw_usuario', 'int')) {
+        if(!$id = DwSecurity::isValidKey($key, 'shw_titular', 'int')) {
             return DwRedirect::toAction('listar');
         }
         
-        $usuario = new Usuario();
-        if(!$usuario->getInformacionUsuario($id)) {
+        $titular = new Titular();
+        if(!$titular->getInformacionTitular($id)) {
             DwMessage::get('id_no_found');    
             return DwRedirect::toAction('listar');
         }                
         
-        $estado = new EstadoUsuario();
-        $this->estados = $estado->getListadoEstadoUsuario($usuario->id);
+        //$estado = new EstadoUsuario();
+        //$this->estados = $estado->getListadoEstadoUsuario($usuario->id);
         
-        $acceso = new Acceso();
-        $this->accesos = $acceso->getListadoAcceso($usuario->id, 'todos', 'order.fecha.desc');
+        //$acceso = new Acceso();
+        //$this->accesos = $acceso->getListadoAcceso($usuario->id, 'todos', 'order.fecha.desc');
         
-        $this->usuario = $usuario;
-        $this->page_title = 'Información del usuario';
+        $this->titular = $titular;
+        $this->page_title = 'Información del titular';
         
     }
     
