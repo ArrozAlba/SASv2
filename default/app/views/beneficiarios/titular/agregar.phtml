@@ -118,17 +118,12 @@
                 </div>
                 <div class="row-fluid">
                     <div class="span6">
-						<?php echo DwForm::dbSelect('titular.profesion_id', 'nombre', array('config/profesion', 'getListadoCargo'), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Profesión'); ?>
+						<?php echo DwForm::dbSelect('titular.profesion_id', 'nombre', array('config/profesion', 'getListadoProfesion'), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Profesión'); ?>
                     </div>
                 </div>
 
                 <div class="row-fluid">
-                    <div class="span6">
-                        <?php echo DwForm::pass('usuario.password', array('class'=>'input-xxlarge input-required input-pass show-error'), '', 'Contraseña'); ?>
-                    </div>
-                    <div class="span6">
-                        <?php echo DwForm::pass('repassword', array('class'=>'input-xxlarge input-required input-repass show-error'), '', 'Confirmación'); ?>
-                    </div>
+                    
                 </div>
 
             </div>

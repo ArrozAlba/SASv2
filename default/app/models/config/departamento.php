@@ -25,43 +25,34 @@ class Departamento extends ActiveRecord {
      * @param array $data
      * @return
      */
-    public static function setDepartamento($name) {
+     public static function setDepartamento($method, $data, $optData=null) {
         //Se aplica la autocarga
-        $obj = new Departamento();        
-        $obj->Departamento = ucfirst(Filter::get($name, 'string'));
-        //Verifico si existe otra ciudad bajo el mismo nombre
-        $old = new Departamento();
-        if($old->find_first("parroquia LIKE '%$obj->parroquia%'")) {
-            return $old;
-        }        
-        return $obj->create() ? $obj : FALSE;        
+        $obj = new Departamento($data);
+        //Se verifica si contiene una data adicional para autocargar
+        if ($optData) {
+            $obj->dump_result_self($optData);
+        }   
+        /*if($method!='delete') {
+            $obj->ciudad_id = Ciudad::setCiudad($obj->ciudad)->id;        
+        }*/
+        $rs = $obj->$method();
+        
+        return ($rs) ? $obj : FALSE;
     }
-    
     /**
-     * Método que devuelve las ciudades paginadas o para un select
+     * Método que devuelve los departamentos paginadas o para un select
      * @param int $pag Número de página a mostrar.
      * @return ActiveRecord
      */
     public function getListadoDepartamento($order='order.nombre.asc', $page=0) {        
         $order = $this->get_order($order, 'nombre');
+        $columns = 'sucursal.id, sucursal.sucursal, departamento.id, departamento.nombre, departamento.observacion';
+        $join= 'INNER JOIN sucursal ON sucursal.id = departamento.sucursal_id ';           
+           
         if($page) {
-            return $this->paginated("order: $order", "page: $page");
+            return $this->paginated("columns: $columns", "join: $join", "page: $page");
         } else {
-            return $this->find("order: $order");
-        }         
+            return $this->find("columns: $columns", "join: $join");
+        }    
     }
-    
-    /**
-     * Método para obtener las parroquias como json
-     * @return type
-     */
-    public function getParroquiasToJson() {
-        $rs =  $this->find("columns: parroquia", 'group: parroquia', 'order: parroquia ASC');
-        $parroquias = array();
-        foreach($rs as $parroquia) {            
-            $parroquias[] = $parroquia->parroquia; 
-        }
-        return json_encode($parroquias);
-    }
-    
 }

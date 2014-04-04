@@ -75,8 +75,6 @@ class Titular extends ActiveRecord {
         $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';   
 
         $conditions = "";//Por el super usuario
-                       
-           
         
         if($page) {
             return $this->paginated("columns: $columns", "join: $join", "page: $page");
