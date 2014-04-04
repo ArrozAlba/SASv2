@@ -1,15 +1,13 @@
 <?php
 /**
  * infoalex
- *
  * @category
  * @package     Models
  * @subpackage
  * @author      alexis borges
  * @copyright    
  */
-
-class Cargo extends ActiveRecord {
+class Recaudo extends ActiveRecord {
     
     /**
      * Constante para definir el id de la oficina principal
@@ -20,26 +18,25 @@ class Cargo extends ActiveRecord {
      * Método para definir las relaciones y validaciones
      */
     protected function initialize() {
-        $this->belongs_to('empresa');
+  /*      $this->belongs_to('empresa');
         $this->belongs_to('ciudad');
         $this->has_many('usuario');
 
         $this->validates_presence_of('sucursal', 'message: Ingresa el nombre de la sucursal');        
         $this->validates_presence_of('direccion', 'message: Ingresa la dirección de la sucursal.');
         $this->validates_presence_of('ciudad_id', 'message: Indica la ciudad de ubicación de la sucursal.');
-                
+    */            
     }  
-    
     /**
      * Método para ver la información de una sucursal
      * @param int|string $id
      * @return Sucursal
      */
-    public function getInformacionCargo($id, $isSlug=false) {
+    public function getInformacionRecaudo($id, $isSlug=false) {
         $id = ($isSlug) ? Filter::get($id, 'string') : Filter::get($id, 'numeric');
-        $columnas = 'sas_profesion.*';
+        $columnas = 'recaudo.*';
         $join = '';
-        $condicion = ($isSlug) ? "sucursal.slug = '$id'" : "sucursal.id = '$id'";
+        $condicion ="recaudo.id = '$id'";
         return $this->find_first("columns: $columnas", "join: $join", "conditions: $condicion");
     } 
     
@@ -49,19 +46,17 @@ class Cargo extends ActiveRecord {
      * @param int $page 
      * @return ActiveRecord
      */
-    public function getListadoCargo($order='order.nombre.asc', $page='', $empresa=null) {
-          
-        $columns = 'sas_profesion.*';
+    public function getListadoRecaudo($order='order.nombre.asc', $page='', $empresa=null) {
+        $columns = 'recaudo.*';
         $join = '';        
-        $conditions = "";
-        
-        $order = $this->get_order($order, 'sas_profesion', array('sas_profesion'=>array('ASC'=>'sas_profesion.nombre ASC, sas_profesion.descripcion ASC',
-                                                                              'DESC'=>'sas_profesion.nombre DESC, sas_profesion.descripcion ASC'),
-                                                            'descripcion'));
+        //$conditions 
+        $order = $this->get_order($order, 'recaudo', array('recaudo'=>array('ASC'=>'recaudo.nombre ASC, recaudo.observacion ASC',
+                                                                              'DESC'=>'recaudo.nombre DESC, recaudo.observacion ASC'),
+                                                            'observacion'));
         if($page) {                
-            return $this->paginated("columns: $columns", "join: $join", "conditions: $conditions", "order: $order", "page: $page");
+            return $this->paginated("columns: $columns", "join: $join", "order: $order", "page: $page");
         } else {
-            return $this->find("columns: $columns", "join: $join", "conditions: $conditions", "order: $order", "page: $page");            
+            return $this->find("columns: $columns", "join: $join", "order: $order", "page: $page");            
         }
     }
     
@@ -72,15 +67,15 @@ class Cargo extends ActiveRecord {
      * @param array $otherData Array con datos adicionales
      * @return Obj
      */
-    public static function setCargo($method, $data, $optData=null) {
+    public static function setRecaudo($method, $data, $optData=null) {
         //Se aplica la autocarga
-        $obj = new Sucursal($data);
+        $obj = new Recaudo($data);
         //Se verifica si contiene una data adicional para autocargar
         if ($optData) {
             $obj->dump_result_self($optData);
         }   
         if($method!='delete') {
-            $obj->ciudad_id = Ciudad::setCiudad($obj->ciudad)->id;        
+            //$obj->ciudad_id = Ciudad::setCiudad($obj->ciudad)->id;        
         }
         $rs = $obj->$method();
         
@@ -91,14 +86,10 @@ class Cargo extends ActiveRecord {
      * Método que se ejecuta antes de guardar y/o modificar     
      */
     public function before_save() {        
-        $this->sucursal = Filter::get($this->sucursal, 'string');        
-        $this->slug = DwUtils::getSlug($this->sucursal); 
-        $this->direccion = Filter::get($this->direccion, 'string');
-        $this->telefono = Filter::get($this->telefono, 'numeric');
-        $this->celular = Filter::get($this->celular, 'numeric');
-        $this->fax = Filter::get($this->fax, 'numeric');        
-        
-        $conditions = "sucursal = '$this->sucursal' AND ciudad_id = $this->ciudad_id AND empresa_id = $this->empresa_id";
+        $this->nombre = Filter::get($this->nombre, 'string');
+        $this->observacion = Filter::get($this->observacion, 'string');
+           
+        $conditions = "nombre = '$this->nombre'";
         $conditions.= (isset($this->id)) ? " AND id != $this->id" : '';
         if($this->count("conditions: $conditions")) {
             DwMessage::error('Lo sentimos, pero ya existe una sucursal registrada con el mismo nombre y ciudad.');
@@ -106,7 +97,6 @@ class Cargo extends ActiveRecord {
         }
         
     }
-    
     /**
      * Callback que se ejecuta antes de eliminar
      */
