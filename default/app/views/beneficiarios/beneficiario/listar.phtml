@@ -4,10 +4,10 @@
     $(function() {
         $('table').dwGrid({
             form_search: true,
-            form_action: '<?php echo PUBLIC_PATH; ?>beneficiario/titular/buscar/',
+            form_action: '<?php echo PUBLIC_PATH; ?>beneficiario/beneficiario/buscar/',
             form_load_data : 'dw-shell-content',
             order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
-            order_action: $.KumbiaPHP.publicPath+"beneficiario/titular/listar/"
+            order_action: $.KumbiaPHP.publicPath+"beneficiario/beneficiario/listar/"
         });
     });
 </script>
@@ -18,7 +18,7 @@
 
     <div class="btn-toolbar btn-toolbar-top">
         <div class="btn-actions">
-            <?php echo DwHtml::button("beneficiarios/titular/agregar/", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
+            <?php echo DwHtml::button("beneficiarios/beneficiario/agregar/", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
         </div>
     </div>
 
@@ -31,8 +31,8 @@
                     <th class="col-collapse" data-search="cedula">CEDULA</th>
                     <th class="col-collapse" data-search="nombre1">NOMBRE</th>
                     <th class="col-collapse" data-search="apellido1">APELLIDO</th>
-                    <th class="col-collapse" data-search="nomina">NOMINA</th>
-                    <th class="col-collapse" data-search="departamento">DEPARTAMENTO</th>
+                    <th class="col-collapse" data-search="titular">TITULAR</th>
+                    <th class="col-collapse" data-search="parentesco">PARENTESCO</th>
                     <?if(APP_OFFICE) { //Si está activa la opción de oficinas ?>
                     <th class="col-collapse" data-search="sucursal">SUCURSAL</th>
                     <? } ?>
@@ -41,35 +41,35 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($titulares->items as $titular): ?>
-                    <?php $key_shw = DwSecurity::getKey($titular->id, 'shw_titular'); ?>
-                    <?php $key_upd = DwSecurity::getKey($titular->id, 'upd_titular'); ?>
-                    <?php $key_ina = DwSecurity::getKey($titular->id, 'bloquear_usuario'); ?>
-                    <?php $key_rea = DwSecurity::getKey($titular->id, 'reactivar_usuario'); ?>
+                <?php foreach($beneficiarios->items as $beneficiario): ?>
+                    <?php $key_shw = DwSecurity::getKey($beneficiario->id, 'shw_beneficiario'); ?>
+                    <?php $key_upd = DwSecurity::getKey($beneficiario->id, 'upd_beneficiario'); ?>
+                    <?php $key_ina = DwSecurity::getKey($beneficiario->id, 'bloquear_usuario'); ?>
+                    <?php $key_rea = DwSecurity::getKey($beneficiario->id, 'reactivar_usuario'); ?>
                     <tr>
-                        <td><?php echo $titulares->counter; ?></td>
-                        <td><?php echo $titular->cedula; ?></td>
-                        <td><?php echo $titular->nombre1; ?></td>
-                        <td><?php echo $titular->apellido1; ?></td>
-                        <td><?php echo $titular->tipoe; ?></td>
-                        <td><?php echo $titular->departamento; ?></td>
+                        <td><?php echo $beneficiarios->counter; ?></td>
+                        <td><?php echo $beneficiario->cedula; ?></td>
+                        <td><?php echo $beneficiario->nombre1; ?></td>
+                        <td><?php echo $beneficiario->apellido1; ?></td>
+                        <td><?php echo $beneficiario->titular_id; ?></td>
+                        <td><?php echo $beneficiario->parentesco; ?></td>
                         <?if(APP_OFFICE) { //Si está activa la opción de oficinas ?>
-                        <td><?php echo empty($titular->sucursal) ? 'Todas' : $titular->sucursal; ?></td>
+                        <td><?php echo empty($beneficiario->sucursal) ? 'Todas' : $beneficiario->sucursal; ?></td>
                         <? } ?>
                         <td><?php // echo ($usuario->estado_usuario == EstadoUsuario::ACTIVO) ? '<span class="label label-success" title="'.$usuario->descripcion.'" rel="tooltip">Activo</span>' : '<span class="label label-important" title="'.$usuario->descripcion.'" rel="tooltip">Bloqueado</span>'; ; ?></td>
                         <td>
-                            <?php echo DwHtml::buttonTable('Ver titular', "beneficiarios/titular/ver/$key_shw/", NULL, 'warning', 'search'); ?>
-                            <?php echo DwHtml::buttonTable('Modificar titular', "beneficiarios/titular/editar/$key_upd/", NULL, 'info', 'edit'); ?>
+                            <?php echo DwHtml::buttonTable('Ver beneficiario', "beneficiarios/beneficiario/ver/$key_shw/", NULL, 'warning', 'search'); ?>
+                            <?php echo DwHtml::buttonTable('Modificar beneficiario', "beneficiarios/beneficiario/editar/$key_upd/", NULL, 'info', 'edit'); ?>
                             
                         </td>
                     </tr>
-                    <?php $titulares->counter++; ?>
+                    <?php $beneficiarios->counter++; ?>
                 <?php endforeach; ?>
             </tbody>
         </table>
 
     </div>
 
-    <?php View::partial('paginators/default', false, array('page'=>$titulares, 'url'=>"beneficiarios/titular/listar/$order/")); ?>
+    <?php View::partial('paginators/default', false, array('page'=>$beneficiarios, 'url'=>"beneficiarios/beneficiario/listar/$order/")); ?>
 
 </div>
