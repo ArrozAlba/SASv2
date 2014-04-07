@@ -34,9 +34,9 @@ class Parroquia extends ActiveRecord {
         $obj->parroquia = ucfirst(Filter::get($name, 'string'));
         //Verifico si existe otra ciudad bajo el mismo nombre
         $old = new Parroquia();
-        if($old->find_first("parroquia LIKE '%$obj->parroquia%'")) {
+        /*if($old->find_first("parroquia LIKE '%$obj->parroquia%'")) {
             return $old;
-        }        
+        } */       
         return $obj->create() ? $obj : FALSE;        
     }
     

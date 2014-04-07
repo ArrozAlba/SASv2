@@ -25,7 +25,26 @@ Listados de Servicios (Titulares, Beneficiarios, Reembolsos, HCM, Funeraria entr
 Reportes enfocados para toma de decisiones sumamente graficos.
 reportes graficos comparativos entre periodos, patologias, proveedores y usuarios.
 
+
+
  
 
 INFORMACION ADICIONAL 
 1) agregar baremos y gacetas de precios maximos para comparativos (gaceta 40196 precios de clinicas).
+
+
+
+Observacions:
+
+
+1) Definir fecha_egreso en tabla titular 
+2) Validar:  * No tener dos conyugues.
+			 * Tomar cuenta que se encuentre registrada 6 mesees antes del embarazo
+			 * Si el hijo es mayor de 18 años, fueraaaa.. A menos que se encuentre discapacitado
+			 * En x dias del año se puede registrar y hacer uso de polizas para matrimonio
+			 * Maternidad aplica solo al conyugue o titular
+			 
+3) Tipo de Sucursal ( UPSA, Biceabasto, Unidad de mecanizacion, etc ectg cetc cetce cetc ectec etc )
+4) Validar fechas de facturas para reembolsos.
+
+			 
