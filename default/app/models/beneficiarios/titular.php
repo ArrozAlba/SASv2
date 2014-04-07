@@ -45,7 +45,8 @@ class Titular extends ActiveRecord {
         }
         //Creo otro objeto para comparar si existe
         $old = new Titular($data);
-        $check = $old->_getTitularRegistrado('find_first');
+        //$check = $old->_getTitularRegistrado('find_first');
+        $check = false;
         if($check) { //Si existe
             if(empty($obj->id)) {
                 $obj->id = $old->id; //Asigno el id del encontrado al nuevo
@@ -107,5 +108,28 @@ class Titular extends ActiveRecord {
         $this->cargo_id = Filter::get($this->cargo_id, 'numeric'); 
         $this->observacion = Filter::get($this->observacion, 'string');
     }    
+
+    
+    /**
+     * Método para obtener la información de un usuario
+     * @return type
+     */
+    public function getInformacionTitular($titular) {
+        $titular = Filter::get($titular, 'int');
+        if(!$titular) {
+            return NULL;
+        }
+        $columns = 'titular.*, persona.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';
+        $join= 'INNER JOIN persona ON persona.id = titular.persona_id ';        
+        $join.= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
+        $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';   
+//        $columnas = 'titular.*, persona.cedula, persona.nombre1, persona.nombre2, persona.apellido1, persona.apellido2, persona.nacionalidad, persona.sexo, persona.fecha_nacimiento, persona.pais_id, persona.estado_id, persona.municipio_id, persona.parroquia_id, persona.direccion_habitacion, persona.estado_civil, persona.celular, persona.telefono, persona.correo_electronico, persona.grupo_sanguineo, persona.fotografia, estado_usuario.estado_usuario, estado_usuario.descripcion, sucursal.sucursal';
+  //      $join = self::getInnerEstado();
+//        $join.= 'INNER JOIN perfil ON perfil.id = usuario.perfil_id ';
+//        $join.= 'INNER JOIN persona ON persona.id = usuario.persona_id ';               
+//        $join.= 'LEFT JOIN sucursal ON sucursal.id = usuario.sucursal_id ';
+        $condicion = "titular.id = $titular";        
+        return $this->find_first("columns: $columns", "join: $join", "conditions: $condicion");
+    } 
 }
 ?>

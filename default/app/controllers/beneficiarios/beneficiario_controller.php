@@ -2,7 +2,7 @@
 /**
  * S.A.S
  *
- * Descripcion: Controlador que se encarga de la gestión de los titulares del sistema
+ * Descripcion: Controlador que se encarga de la gestión de los beneficiarioes del sistema
  *
  * @category    
  * @package     Controllers 
@@ -10,16 +10,16 @@
  * @copyright   Copyright (c) 2014 E.M.S. Arroz del Alba S.A. (http://autogestion.arrozdelalba.gob.ve)
  */
 
-Load::models('beneficiarios/titular','personas/persona', 'sistema/usuario');
+Load::models('beneficiarios/beneficiario','personas/persona', 'sistema/usuario');
 
-class TitularController extends BackendController {
+class beneficiarioController extends BackendController {
     
     /**
      * Método que se ejecuta antes de cualquier acción
      */
     protected function before_filter() {
         //Se cambia el nombre del módulo actual
-        $this->page_module = 'Gestión de titulares';
+        $this->page_module = 'Gestión de beneficiarios';
     }
     
     /**
@@ -37,16 +37,16 @@ class TitularController extends BackendController {
         $field = (Input::hasPost('field')) ? Input::post('field') : $field;
         $value = (Input::hasPost('field')) ? Input::post('value') : $value;
         
-        $titular = new Titular();            
-        $titulares = $titular->getAjaxTitular($field, $value, $order, $page);        
-        if(empty($titulares->items)) {
+        $beneficiario = new beneficiario();            
+        $beneficiarioes = $beneficiario->getAjaxbeneficiario($field, $value, $order, $page);        
+        if(empty($beneficiarioes->items)) {
             DwMessage::info('No se han encontrado registros');
         }
-        $this->titulares = $titulares;
+        $this->beneficiarios = $beneficiarios;
         $this->order = $order;
         $this->field = $field;
         $this->value = $value;
-        $this->page_title = 'Búsqueda de titulares del sistema';        
+        $this->page_title = 'Búsqueda de beneficiarios del sistema';        
     }
     
     /**
@@ -54,56 +54,56 @@ class TitularController extends BackendController {
      */
     public function listar($order='order.id.asc', $page='pag.1') { 
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
-        $titular = new Titular();
-        $this->titulares = $titular->getListadoTitular('todos', $order, $page);
+        $beneficiario = new beneficiario();
+        $this->beneficiarios = $beneficiario->getListadobeneficiario('todos', $order, $page);
         $this->order = $order;        
-        $this->page_title = 'Listado de titulares del sistema';
+        $this->page_title = 'Listado de beneficiarios del sistema';
     }
     
     /**
      * Método para agregar
      */
     public function agregar() {
-        if(Input::hasPost('persona') && Input::hasPost('titular')) {
+        if(Input::hasPost('persona') && Input::hasPost('beneficiario')) {
             ActiveRecord::beginTrans();
             //Guardo la persona
             $persona = Persona::setPersona('create', Input::post('persona'));
             if($persona) {
-                if(Titular::setTitular('create', Input::post('titular'), array('persona_id'=>$persona->id))) {
+                if(beneficiario::setbeneficiario('create', Input::post('beneficiario'), array('persona_id'=>$persona->id))) {
                     ActiveRecord::commitTrans();
-                    DwMessage::valid('El titular se ha creado correctamente.');
+                    DwMessage::valid('El beneficiario se ha creado correctamente.');
                     return DwRedirect::toAction('listar');
                 }
             } else {
                 ActiveRecord::rollbackTrans();
             }            
         }
-        $this->page_title = 'Agregar Titular';
+        $this->page_title = 'Agregar beneficiario';
     }
     
     /**
      * Método para editar
      */
     public function editar($key) {        
-        if(!$id = DwSecurity::isValidKey($key, 'upd_titular', 'int')) {
+        if(!$id = DwSecurity::isValidKey($key, 'upd_beneficiario', 'int')) {
             return DwRedirect::toAction('listar');
         }
         
-        $titular = new Titular();
-        if(!$titular->getInformacionTitular($id)) {
+        $beneficiario = new beneficiario();
+        if(!$beneficiario->getInformacionbeneficiario($id)) {
             DwMessage::get('id_no_found');    
             return DwRedirect::toAction('listar');
         }                
         
-        if(Input::hasPost('titular')) {
-            if(DwSecurity::isValidKey(Input::post('titular_id_key'), 'form_key')) {
+        if(Input::hasPost('beneficiario')) {
+            if(DwSecurity::isValidKey(Input::post('beneficiario_id_key'), 'form_key')) {
                 ActiveRecord::beginTrans();
                 //Guardo la persona
-                $persona = Persona::setPersona('update', Input::post('persona'), array('id'=>$titular->persona_id));
+                $persona = Persona::setPersona('update', Input::post('persona'), array('id'=>$beneficiario->persona_id));
                 if($persona) {
-                    if(Titular::setTitular('update', Input::post('titular'), array('id'=>$titular->persona_id))) {
+                    if(beneficiario::setbeneficiario('update', Input::post('beneficiario'), array('id'=>$beneficiario->persona_id))) {
                         ActiveRecord::commitTrans();
-                        DwMessage::valid('El titular se ha actualizado correctamente.');
+                        DwMessage::valid('El beneficiario se ha actualizado correctamente.');
                         return DwRedirect::toAction('listar');
                     }
                 } else {
@@ -112,8 +112,8 @@ class TitularController extends BackendController {
             }
         }        
         $this->temas = DwUtils::getFolders(dirname(APP_PATH).'/public/css/backend/themes/');
-        $this->titular = $titular;
-        $this->page_title = 'Actualizar titular';
+        $this->beneficiario = $beneficiario;
+        $this->page_title = 'Actualizar beneficiario';
         
     }
     
@@ -153,12 +153,12 @@ class TitularController extends BackendController {
      * Método para ver
      */
     public function ver($key) {        
-        if(!$id = DwSecurity::isValidKey($key, 'shw_titular', 'int')) {
+        if(!$id = DwSecurity::isValidKey($key, 'shw_beneficiario', 'int')) {
             return DwRedirect::toAction('listar');
         }
         
-        $titular = new Titular();
-        if(!$titular->getInformacionTitular($id)) {
+        $beneficiario = new beneficiario();
+        if(!$beneficiario->getInformacionbeneficiario($id)) {
             DwMessage::get('id_no_found');    
             return DwRedirect::toAction('listar');
         }                
@@ -169,8 +169,8 @@ class TitularController extends BackendController {
         //$acceso = new Acceso();
         //$this->accesos = $acceso->getListadoAcceso($usuario->id, 'todos', 'order.fecha.desc');
         
-        $this->titular = $titular;
-        $this->page_title = 'Información del titular';
+        $this->beneficiario = $beneficiario;
+        $this->page_title = 'Información del beneficiario';
         
     }
     
