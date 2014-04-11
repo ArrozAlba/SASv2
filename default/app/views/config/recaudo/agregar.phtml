@@ -7,17 +7,20 @@
     <?php echo DwForm::open('', 'post', array('id'=>'form', 'class'=>'dw-validate')); ?>
 
         <div class="row-fluid">
-            <div class="span6">
-                <?php echo DwForm::text('profesion.nombre', array('class'=>'input-xxlarge input-required input-alphanum mask-alphanum show-error'), NULL, 'Nombre'); ?>
+            <div class="span4">
+                <?php echo DwForm::text('recaudo.nombre', array('class'=>'input-xlarge input-required show-error'), NULL, 'Nombre'); ?>
             </div>
-            <div class="span6">
-                <?php echo DwForm::text('profesion.observacion', array('class'=>'input-xxlarge input-alphanum mask-alphanum show-error', 'autocomplete'=>'off'), NULL, 'Observacion'); ?>
+            <div class="span4">
+                <?php echo DwForm::text('recaudo.tipo', array('class'=>'input-xlarge input-required show-error', 'autocomplete'=>'off'), NULL, 'Tipo'); ?>
+            </div>
+            <div class="span4">
+                <?php echo DwForm::text('recaudo.observacion', array('class'=>'input-xlarge show-error', 'autocomplete'=>'off'), NULL, 'Observacion'); ?>
             </div>
         </div>
 
         <div class="row-fluid">
             <div class="form-actions">
-                <?php echo DwButton::save('Guardar Profesion'); ?>
+                <?php echo DwButton::save('Guardar Recaudo'); ?>
                 <?php echo DwButton::reset('form'); ?>
                 <?php echo DwButton::cancel(); ?>
             </div>
