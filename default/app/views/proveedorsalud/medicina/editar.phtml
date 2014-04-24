@@ -8,16 +8,18 @@
 
         <div class="row-fluid">
             <div class="span6">
-                <?php echo DwForm::text('profesion.nombre', array('class'=>'input-xxlarge input-required show-error'), NULL, 'Nombre'); ?>
+                <?php echo DwForm::text('medicina.descripcion', array('class'=>'input-xxlarge input-required show-error'), $medicina->descripcion, 'Nombre'); ?>
             </div>
             <div class="span6">
-                <?php echo DwForm::text('profesion.observacion', array('class'=>'input-xxlarge input-alphanum mask-alphanum show-error', 'autocomplete'=>'off'), NULL, 'Observacion'); ?>
+                <?php echo DwForm::textarea('medicina.observacion', array('class'=>'input-xxlarge input-required show-error'), $medicina->observacion, 'Observación'); ?>
             </div>
+        </div>
+            <?php echo DwForm::hiddenKey('medicina.id', $medicina->id); ?>
         </div>
 
         <div class="row-fluid">
             <div class="form-actions">
-                <?php echo DwButton::save('Guardar Profesion'); ?>
+                <?php echo DwButton::save('Guardar Medicina'); ?>
                 <?php echo DwButton::reset('form'); ?>
                 <?php echo DwButton::cancel(); ?>
             </div>

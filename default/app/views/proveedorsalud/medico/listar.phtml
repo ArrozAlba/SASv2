@@ -1,0 +1,60 @@
+<?php View::notify(); ?>
+
+<script type="text/javascript">
+    $(function() {
+        $('table').dwGrid({
+            order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
+            order_action: $.KumbiaPHP.publicPath+"proveedorsalud/medico/listar/"
+        });
+    });
+</script>
+
+<div class="container-fluid dw-shell-view">
+
+    <?php View::process($page_module, $page_title, $set_title); ?>
+
+    <div class="btn-toolbar btn-toolbar-top">
+        <div class="btn-actions">
+            <?php echo DwHtml::button("proveedorsalud/medico/agregar/", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
+        </div>
+    </div>
+
+    <div class="dw-overflow">
+
+        <table class="table table-bordered table-hover table-striped table-condensed table-responsive">
+            <thead>
+                <tr>
+                    <th>NUM</th>
+                    <th class="col-collapse" data-search="rif">RIF</th>
+                    <th class="col-collapse" data-search="observacion">RMPPS</th>
+                    <th class="col-collapse" data-search="nombre">NOMBRE</th>
+                    <th class="col-collapse" data-search="correo">TELEFONO</th>
+                    <th class="col-collapse" data-search="correo">CORREO</th>
+                    <th class="btn-actions no-responsive" style="width: 100px;">ACCIONES</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($medicos->items as $medico): ?>
+                    <?php $key_upd = DwSecurity::getKey($medico->id, 'upd_medico'); ?>
+                    <?php $key_del = DwSecurity::getKey($medico->id, 'del_medico'); ?>
+                    <tr>
+                        <td><?php echo $medicos->counter; ?></td>
+                        <td><?php echo $medico->rif; ?></td>
+                        <td><?php echo $medico->rmpps; ?></td>
+                        <td><?php echo $medico->nombre1. " ".$medico->apellido1; ?></td>
+                        <td><?php echo $medico->telefono; ?></td>
+                        <td><?php echo $medico->correo_electronico; ?></td>
+                        <td>
+                            <?php echo DwHtml::buttonTable('Modificar Medico', "proveedorsalud/medico/editar/$key_upd/", null, 'info', 'edit'); ?>
+                            <?php echo DwHtml::buttonTable('Eliminar Medico', "proveedorsalud/medico/eliminar/$key_del/", array('class'=>'js-confirm', 'confirm-title'=>'Eliminar medico', 'confirm-body'=>'Está seguro de eliminar este medico? <br />Recuerda que esta operación no se puede reversar.'), 'danger', 'ban-circle'); ?>
+                        </td>
+                    </tr>
+                    <?php $medicos->counter++; ?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+    </div>
+
+    <?php View::partial('paginators/default', false, array('page'=>$medicos, 'url'=>"proveedorsalud/medico/listar/$order/")); ?>
+</div>
