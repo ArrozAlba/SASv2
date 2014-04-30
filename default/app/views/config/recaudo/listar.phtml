@@ -4,7 +4,7 @@
     $(function() {
         $('table').dwGrid({
             order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
-            order_action: $.KumbiaPHP.publicPath+"config/profesion/listar/"
+            order_action: $.KumbiaPHP.publicPath+"config/recaudo/listar/"
         });
     });
 </script>
@@ -15,7 +15,7 @@
 
     <div class="btn-toolbar btn-toolbar-top">
         <div class="btn-actions">
-            <?php echo DwHtml::button("config/profesion/agregar/", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
+            <?php echo DwHtml::button("config/recaudo/agregar/", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
         </div>
     </div>
 
@@ -25,31 +25,33 @@
             <thead>
                 <tr>
                     <th>NUM</th>
-                    <th class="col-collapse" data-search="profesion">NOMBRE</th>
-                    <th class="col-collapse" data-search="direccion">OBSERVACION</th>
+                    <th class="col-collapse" data-search="recaudo">NOMBRE</th>
+                    <th class="col-collapse" data-search="tipo">TIPO RECAUDO</th>
+                    <th class="col-collapse" data-search="observacion">OBSERVACION</th>
                     <th class="btn-actions no-responsive" style="width: 100px;">ACCIONES</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($profesiones->items as $profesion): ?>
-                    <?php $key_upd = DwSecurity::getKey($profesion->id, 'upd_profesion'); ?>
-                    <?php $key_del = DwSecurity::getKey($profesion->id, 'del_profesion'); ?>
+                <?php foreach($recaudos->items as $recaudo): ?>
+                    <?php $key_upd = DwSecurity::getKey($recaudo->id, 'upd_recaudo'); ?>
+                    <?php $key_del = DwSecurity::getKey($recaudo->id, 'del_recaudo'); ?>
                     <tr>
-                        <td><?php echo $profesiones->counter; ?></td>
-                        <td><?php echo $profesion->nombre; ?></td>
-                        <td><?php echo $profesion->observacion; ?></td>
+                        <td><?php echo $recaudos->counter; ?></td>
+                        <td><?php echo $recaudo->nombre; ?></td>
+                        <td><?php echo $recaudo->tipo; ?></td>
+                        <td><?php echo $recaudo->observacion; ?></td>
                         <td>
-                            <?php echo DwHtml::buttonTable('Modificar Profeson', "config/profesion/editar/$key_upd/", null, 'info', 'edit'); ?>
-                            <?php echo DwHtml::buttonTable('Eliminar Profesion', "config/profesion/eliminar/$key_del/", array('class'=>'js-confirm', 'confirm-title'=>'Eliminar profesion', 'confirm-body'=>'Está seguro de eliminar esta profesion? <br />Recuerda que esta operación no se puede reversar.'), 'danger', 'ban-circle'); ?>
+                            <?php echo DwHtml::buttonTable('Modificar Profeson', "config/recaudo/editar/$key_upd/", null, 'info', 'edit'); ?>
+                            <?php echo DwHtml::buttonTable('Eliminar Profesion', "config/recaudo/eliminar/$key_del/", array('class'=>'js-confirm', 'confirm-title'=>'Eliminar recaudo', 'confirm-body'=>'Está seguro de eliminar este recaudo? <br />Recuerda que esta operación no se puede reversar.'), 'danger', 'ban-circle'); ?>
                         </td>
                     </tr>
-                    <?php $profesiones->counter++; ?>
+                    <?php $recaudos->counter++; ?>
                 <?php endforeach; ?>
             </tbody>
         </table>
 
     </div>
 
-    <?php View::partial('paginators/default', false, array('page'=>$profesiones, 'url'=>"config/profesion/listar/$order/")); ?>
+    <?php View::partial('paginators/default', false, array('page'=>$recaudos, 'url'=>"config/recaudo/listar/$order/")); ?>
 
 </div>

@@ -1,0 +1,55 @@
+<?php View::notify(); ?>
+
+<script type="text/javascript">
+    $(function() {
+        $('table').dwGrid({
+            order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
+            order_action: $.KumbiaPHP.publicPath+"proveedorsalud/especialidad/listar/"
+        });
+    });
+</script>
+
+<div class="container-fluid dw-shell-view">
+
+    <?php View::process($page_module, $page_title, $set_title); ?>
+
+    <div class="btn-toolbar btn-toolbar-top">
+        <div class="btn-actions">
+            <?php echo DwHtml::button("proveedorsalud/especialidad/agregar/", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
+        </div>
+    </div>
+
+    <div class="dw-overflow">
+
+        <table class="table table-bordered table-hover table-striped table-condensed table-responsive">
+            <thead>
+                <tr>
+                    <th>NUM</th>
+                    <th class="col-collapse" data-search="nombre">NOMBRE</th>
+                    <th class="col-collapse" data-search="observacion">OBSERVACION</th>
+                    <th class="btn-actions no-responsive" style="width: 100px;">ACCIONES</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($especialidades->items as $especialidad): ?>
+                    <?php $key_upd = DwSecurity::getKey($especialidad->id, 'upd_especialidad'); ?>
+                    <?php $key_del = DwSecurity::getKey($especialidad->id, 'del_especialidad'); ?>
+                    <tr>
+                        <td><?php echo $especialidades->counter; ?></td>
+                        <td><?php echo $especialidad->descripcion; ?></td>
+                        <td><?php echo $especialidad->observacion; ?></td>
+                        <td>
+                            <?php echo DwHtml::buttonTable('Modificar Proveedor', "proveedorsalud/especialidad/editar/$key_upd/", null, 'info', 'edit'); ?>
+                            <?php echo DwHtml::buttonTable('Eliminar Proveedor', "proveedorsalud/especialidad/eliminar/$key_del/", array('class'=>'js-confirm', 'confirm-title'=>'Eliminar especialidad', 'confirm-body'=>'Está seguro de eliminar este especialidad? <br />Recuerda que esta operación no se puede reversar.'), 'danger', 'ban-circle'); ?>
+                        </td>
+                    </tr>
+                    <?php $especialidades->counter++; ?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+    </div>
+
+    <?php View::partial('paginators/default', false, array('page'=>$especialidades, 'url'=>"proveedorsalud/especialidad/listar/$order/")); ?>
+
+</div>

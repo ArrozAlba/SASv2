@@ -130,6 +130,8 @@ class Titular extends ActiveRecord {
 //        $join.= 'LEFT JOIN sucursal ON sucursal.id = usuario.sucursal_id ';
         $condicion = "titular.id = $titular";        
         return $this->find_first("columns: $columns", "join: $join", "conditions: $condicion");
-    } 
+    }
+
+
 }
 ?>
