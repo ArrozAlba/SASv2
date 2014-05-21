@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.1.13
 -- Dumped by pg_dump version 9.1.13
--- Started on 2014-05-21 02:13:07 VET
+-- Started on 2014-05-21 03:48:11 VET
 
 SET statement_timeout = 0;
 SET client_encoding = 'UTF8';
@@ -6304,6 +6304,15 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 103	1	2014-04-11 19:34:43.112541-04:30	2014-04-11 19:34:43.112541-04:30	1	\N	\N	\N	\N	127.0.0.1
 104	1	2014-05-01 10:48:57.847256-04:30	2014-05-01 10:48:57.847256-04:30	1	\N	\N	\N	\N	127.0.0.1
 105	1	2014-05-10 10:45:59.007974-04:30	2014-05-10 10:45:59.007974-04:30	1	\N	\N	\N	\N	127.0.0.1
+106	1	2014-05-21 02:44:48.486627-04:30	2014-05-21 02:44:48.486627-04:30	2	\N	\N	\N	\N	127.0.0.1
+107	1	2014-05-21 02:44:53.318599-04:30	2014-05-21 02:44:53.318599-04:30	1	\N	\N	\N	\N	127.0.0.1
+108	1	2014-05-21 02:45:01.307721-04:30	2014-05-21 02:45:01.307721-04:30	2	\N	\N	\N	\N	127.0.0.1
+109	1	2014-05-21 02:45:22.462648-04:30	2014-05-21 02:45:22.462648-04:30	1	\N	\N	\N	\N	127.0.0.1
+110	1	2014-05-21 03:08:41.463212-04:30	2014-05-21 03:08:41.463212-04:30	2	\N	\N	\N	\N	127.0.0.1
+111	1	2014-05-21 03:08:46.4133-04:30	2014-05-21 03:08:46.4133-04:30	1	\N	\N	\N	\N	127.0.0.1
+112	1	2014-05-21 03:10:55.760724-04:30	2014-05-21 03:10:55.760724-04:30	2	\N	\N	\N	\N	127.0.0.1
+113	1	2014-05-21 03:10:59.813962-04:30	2014-05-21 03:10:59.813962-04:30	1	\N	\N	\N	\N	127.0.0.1
+114	1	2014-05-21 03:43:50.711664-04:30	2014-05-21 03:43:50.711664-04:30	1	\N	\N	\N	\N	127.0.0.1
 \.
 
 
@@ -6313,7 +6322,7 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 -- Name: acceso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('acceso_id_seq', 105, true);
+SELECT pg_catalog.setval('acceso_id_seq', 114, true);
 
 
 --
@@ -11133,7 +11142,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2014-05-21 02:13:13 VET
+-- Completed on 2014-05-21 03:48:18 VET
 
 --
 -- PostgreSQL database dump complete
