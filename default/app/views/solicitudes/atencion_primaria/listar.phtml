@@ -4,7 +4,7 @@
     $(function() {
         $('table').dwGrid({
             order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
-            order_action: $.KumbiaPHP.publicPath+"solicitudes/solicitud_medicina/listar/"
+            order_action: $.KumbiaPHP.publicPath+"solicitudes/atencion_primaria/listar/"
         });
     });
 </script>
@@ -15,7 +15,7 @@
 
     <div class="btn-toolbar btn-toolbar-top">
         <div class="btn-actions">
-            <?php echo DwHtml::button("solicitudes/solicitud_medicina/agregar/", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
+            <?php echo DwHtml::button("solicitudes/atencion_primaria/agregar/", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
         </div>
     </div>
 
@@ -31,25 +31,25 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($solicitud_medicinas->items as $solicitud_medicina): ?>
-                    <?php $key_upd = DwSecurity::getKey($solicitud_medicina->id, 'upd_solicitud_medicina'); ?>
-                    <?php $key_del = DwSecurity::getKey($solicitud_medicina->id, 'del_solicitud_medicina'); ?>
+                <?php foreach($solicitud_servicio->items as $solicitud_servicio): ?>
+                    <?php $key_upd = DwSecurity::getKey($solicitud_servicio->id, 'upd_solicitud_servicio'); ?>
+                    <?php $key_del = DwSecurity::getKey($solicitud_servicio->id, 'del_solicitud_servicio'); ?>
                     <tr>
-                        <td><?php echo $solicitud_medicinas->counter; ?></td>
-                        <td><?php echo $solicitud_medicina->descripcion; ?></td>
-                        <td><?php echo $solicitud_medicina->observacion; ?></td>
+                        <td><?php echo $solicitud_servicios->counter; ?></td>
+                        <td><?php echo $solicitud_servicio->descripcion; ?></td>
+                        <td><?php echo $solicitud_servicio->observacion; ?></td>
                         <td>
-                            <?php echo DwHtml::buttonTable('Modificar Proveedor', "solicitudes/solicitud_medicina/editar/$key_upd/", null, 'info', 'edit'); ?>
-                            <?php echo DwHtml::buttonTable('Eliminar Proveedor', "solicitudes/solicitud_medicina/eliminar/$key_del/", array('class'=>'js-confirm', 'confirm-title'=>'Eliminar solicitud_medicina', 'confirm-body'=>'Está seguro de eliminar este solicitud_medicina? <br />Recuerda que esta operación no se puede reversar.'), 'danger', 'ban-circle'); ?>
+                            <?php echo DwHtml::buttonTable('Modificar Solicitud', "solicitudes/atencion_primaria/editar/$key_upd/", null, 'info', 'edit'); ?>
+                            <?php echo DwHtml::buttonTable('Eliminar Solicitud', "solicitudes/atencion_primaria/eliminar/$key_del/", array('class'=>'js-confirm', 'confirm-title'=>'Eliminar solicitud_medicina', 'confirm-body'=>'Está seguro de eliminar este solicitud_medicina? <br />Recuerda que esta operación no se puede reversar.'), 'danger', 'ban-circle'); ?>
                         </td>
                     </tr>
-                    <?php $solicitud_medicinas->counter++; ?>
+                    <?php $solicitud_servicios->counter++; ?>
                 <?php endforeach; ?>
             </tbody>
         </table>
 
     </div>
 
-    <?php View::partial('paginators/default', false, array('page'=>$solicitud_medicinas, 'url'=>"solicitudes/solicitud_medicina/listar/$order/")); ?>
+    <?php View::partial('paginators/default', false, array('page'=>$solicitud_servicioss, 'url'=>"solicitudes/atencion_primaria/listar/$order/")); ?>
 
 </div>

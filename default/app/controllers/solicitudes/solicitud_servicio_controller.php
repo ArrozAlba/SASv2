@@ -10,9 +10,9 @@
  * @copyright   Copyright (c) 2014 UPTP - (PNFI Team) (https://github.com/ArrozAlba/SASv2)
  */
 
-Load::models('solicitudes/atencion_primaria');
+Load::models('solicitudes/solicitud_servicio');
 
-class AtencionPrimariaController extends BackendController {
+class SolicitudServicioController extends BackendController {
     
     /**
      * Método que se ejecuta antes de cualquier acción
@@ -34,8 +34,8 @@ class AtencionPrimariaController extends BackendController {
      */
     public function listar($order='order.nombre.asc', $page='pag.1') { 
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
-        $solicitud_servicio = new AtencionPrimaria();        
-        $this->solicitud_servicios = $solicitud_servicio->getListadoAtencionPrimaria($order, $page);
+        $solicitud_servicio = new SolicitudServicio();        
+        $this->solicitud_servicios = $solicitud_servicio->getListadoSolicitudServicio($order, $page);
         $this->order = $order;        
         $this->page_title = 'Listado de Solicitudes de Atención Primaria';
     }
@@ -46,12 +46,12 @@ class AtencionPrimariaController extends BackendController {
     public function agregar() {
         $empresa = Session::get('empresa', 'config');
         if(Input::hasPost('solicitud_servicio')) {
-            if(AtencionPrimaria::setAtencionPrimaria('create', Input::post('solicitud_servicio'), array('empresa_id'=>$empresa->id, 'ciudad'=>Input::post('ciudad')))) {
+            if(SolicitudServicio::setSolicitudServicio('create', Input::post('solicitud_servicio'))) {
                 DwMessage::valid('La solicitud se ha registrado correctamente!');
                 return DwRedirect::toAction('listar');
             }            
         } 
-        $this->personas = Load::model('beneficiarios/titular')->getTitularesToJson();
+       // $this->personas = Load::model('beneficiarios/titular')->getTitularesToJson();
         $this->page_title = 'Agregar Solicitud de Servicio';
     }
     
@@ -63,14 +63,14 @@ class AtencionPrimariaController extends BackendController {
             return DwRedirect::toAction('listar');
         }        
         
-        $solicitud_servicio = new AtencionPrimaria();
-        if(!$solicitud_servicio->getInformacionAtencionPrimaria($id)) {            
+        $solicitud_servicio = new SolicitudServicio();
+        if(!$solicitud_servicio->getInformacionSolicitudServicio($id)) {            
             DwMessage::get('id_no_found');
             return DwRedirect::toAction('listar');
         }
         
         if(Input::hasPost('solicitud_servicio') && DwSecurity::isValidKey(Input::post('solicitud_servicio_id_key'), 'form_key')) {
-            if(AtencionPrimaria::setAtencionPrimaria('update', Input::post('solicitud_servicio'), array('id'=>$id))){
+            if(SolicitudServicio::setSolicitudServicio('update', Input::post('solicitud_servicio'), array('id'=>$id))){
                 DwMessage::valid('La solicitud se ha actualizado correctamente!');
                 return DwRedirect::toAction('listar');
             }
@@ -87,13 +87,13 @@ class AtencionPrimariaController extends BackendController {
             return DwRedirect::toAction('listar');
         }        
         
-        $solicitud_servicio = new AtencionPrimaria();
-        if(!$solicitud_servicio->getInformacionAtencionPrimaria($id)) {            
+        $solicitud_servicio = new SolicitudServicio();
+        if(!$solicitud_servicio->getInformacionSolicitudServicio($id)) {            
             DwMessage::get('id_no_found');
             return DwRedirect::toAction('listar');
         }                
         try {
-            if(AtencionPrimaria::setAtencionPrimaria('delete', array('id'=>$solicitud_servicio->id))) {
+            if(SolicitudServicio::setSolicitudServicio('delete', array('id'=>$solicitud_servicio->id))) {
                 DwMessage::valid('La solicitud se ha eliminado correctamente!');
             }
         } catch(KumbiaException $e) {

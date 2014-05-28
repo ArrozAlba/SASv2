@@ -8,7 +8,7 @@
 host = localhost
 username = arrozalba
 password = arrozalba
-name = autogestion
+name = autogestion2
 type = pgsql
 charset = utf8 ; este valor es necesario para abrir conexiones UTF-8
 
@@ -16,7 +16,7 @@ charset = utf8 ; este valor es necesario para abrir conexiones UTF-8
 host = localhost
 username = arrozalba
 password = arrozalba
-name = autogestion
+name = autogestion2
 type = pgsql
 charset = utf8 ; este valor es necesario para abrir conexiones UTF-8
 
