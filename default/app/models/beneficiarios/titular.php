@@ -85,6 +85,25 @@ class Titular extends ActiveRecord {
     }
 
     /**
+     * Método para obtener titulares
+     * @return obj
+     */
+   public function obtener_titulares($titular) {
+        if ($titular != '') {
+            $titular = stripcslashes($titular);
+            $res = $this->find('columns: titular', "cedula like '%{$cedula}%'");
+            if ($res) {
+                foreach ($res as $titular) {
+                    $titulares[] = $titular->titular;
+                }
+                return $titulares;
+            }
+        }
+        return array('no hubo coincidencias');
+    }
+  
+
+    /**
      * Método para verificar si una persona ya se encuentra registrada
      * @return obj
      */

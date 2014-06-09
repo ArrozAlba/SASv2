@@ -48,7 +48,21 @@ class TitularController extends BackendController {
         $this->value = $value;
         $this->page_title = 'Búsqueda de titulares del sistema';        
     }
+/**
+     * Método para obtener titulares
+     */
     
+        //accion que busca en los titulares y devuelve el json con los datos
+    public function autocomplete() {
+        View::template(NULL);
+        View::select(NULL);
+        if (Input::isAjax()) { //solo devolvemos los estados si se accede desde ajax 
+            $busqueda = Input::post('busqueda');
+            $estados = Load::model('titular')->obtener_titulares($busqueda);
+            die(json_encode($titulares)); // solo devolvemos los datos, sin template ni vista
+            //json_encode nos devolverá el array en formato json ["aragua","carabobo","..."]
+        }
+    }
     /**
      * Método para listar
      */
