@@ -16,6 +16,7 @@
     <div class="btn-toolbar btn-toolbar-top">
         <div class="btn-actions">
             <?php echo DwHtml::button("solicitudes/solicitud_servicio/Registrar Nueva Solicitud", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
+            
         </div>
     </div>
 
@@ -33,6 +34,7 @@
                     <th class="col-collapse" data-search="servicio">SERVICIO</th>
                     <th class="col-collapse" data-search="patologia">PATOLOGIA</th>
                     <th class="col-collapse" data-search="observacion">OBSERVACION</th>
+                    <th class="col-collapse" data-search="tiposolicitud">TIPO SOLICITUD</th>
                     <th class="col-collapse" data-search="estado">ESTADO</th>
                     <th class="btn-actions no-responsive" style="width: 100px;">ACCIONES</th>
                 </tr>
@@ -41,16 +43,18 @@
                 <?php foreach($solicitud_servicios->items as $solicitud_servicio): ?>
                     <?php $key_upd = DwSecurity::getKey($solicitud_servicio->id, 'upd_solicitud_servicio'); ?>
                     <?php $key_del = DwSecurity::getKey($solicitud_servicio->id, 'del_solicitud_servicio'); ?>
+                    
                     <tr>
                         <td><?php echo $solicitud_servicios->counter; ?></td>
                         <td><?php echo $solicitud_servicio->fecha_solicitud; ?></td>
                         <td><?php echo $solicitud_servicio->codigo_solicitud; ?></td>
                         <td><?php echo $solicitud_servicio->fecha_ingreso; ?></td>
                         <td><?php echo $solicitud_servicio->beneficiario_id; ?></td>
-                        <td><?php echo $solicitud_servicio->proveedor_id; ?></td>
-                        <td><?php echo $solicitud_servicio->servicio_id; ?></td>
-                        <td><?php echo $solicitud_servicio->patologia_id; ?></td>
+                        <td><?php echo $solicitud_servicio->proveedor; ?></td>
+                        <td><?php echo $solicitud_servicio->servicio; ?></td>
+                        <td><?php echo $solicitud_servicio->patologia; ?></td>
                         <td><?php echo $solicitud_servicio->observacion; ?></td>
+                        <td><?php echo $solicitud_servicio->tiposolicitud; ?></td>
                         <td><?php echo $solicitud_servicio->estado_solicitud; ?></td>
                         <td>
                             <?php echo DwHtml::buttonTable('Modificar Solicitud', "solicitudes/solicitud_servicio/editar/$key_upd/", null, 'info', 'edit'); ?>
