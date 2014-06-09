@@ -41,6 +41,38 @@ class SolicitudServicioController extends BackendController {
     }
     
     /**
+     * Método para registro
+     */
+    public function registro($order='order.nombre.asc', $page='pag.1') { 
+        $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
+        $solicitud_servicio = new SolicitudServicio();        
+        $this->solicitud_servicios = $solicitud_servicio->getListadoSolicitudServicio($order, $page);
+        $this->order = $order;        
+        $this->page_title = 'Registro de Solicitudes de Atención Primaria';
+    }
+    /**
+     * Método para aprobacion
+     */
+    public function aprobacion($order='order.nombre.asc', $page='pag.1') { 
+        $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
+        $solicitud_servicio = new SolicitudServicio();        
+        $this->solicitud_servicios = $solicitud_servicio->getListadoSolicitudServicio($order, $page);
+        $this->order = $order;        
+        $this->page_title = 'Aprobación de Solicitudes de Atención Primaria';
+    }
+    /**
+     * Método para contabilizar
+     */
+    public function contabilizar($order='order.nombre.asc', $page='pag.1') { 
+        $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
+        $solicitud_servicio = new SolicitudServicio();        
+        $this->solicitud_servicios = $solicitud_servicio->getListadoSolicitudServicio($order, $page);
+        $this->order = $order;        
+        $this->page_title = 'Contabilizar Solicitudes de Atención Primaria';
+    }
+
+
+    /**
      * Método para agregar
      */
     public function agregar() {

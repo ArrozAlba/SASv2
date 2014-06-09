@@ -19,6 +19,14 @@ class SolicitudServicio extends ActiveRecord {
      * Método para definir las relaciones y validaciones
      */
     protected function initialize() {
+        $this->has_one('titular');
+        $this->has_one('beneficiario');
+        $this->has_one('servicio');
+        $this->has_one('patologia');
+        $this->has_one('proveedor');
+        $this->has_one('proveedor_medico');
+        //$this->has_one('titular');
+
     }  
     
     /**
@@ -28,8 +36,10 @@ class SolicitudServicio extends ActiveRecord {
      */
     public function getInformacionSolicitudServicio($id, $isSlug=false) {
         $id = ($isSlug) ? Filter::get($id, 'string') : Filter::get($id, 'numeric');
-        $columnas = 'solicitud_servicio.*';
-        $join = '';
+        $columnas = 'solicitud_servicio.*,persona.*,titular.*,beneficiario.*,proveedor.*,servicio.*,patologia.*,persona.id, persona.cedula,persona.nombre1 as persona';//
+        $join= 'INNER JOIN titular ON titular.id = solicitud_servicio.titular_id';
+        $join.= 'LEFT JOIN beneficiario ON solicitud_servicio.beneficiario_id = beneficiario.id';        
+        $join.= 'LEFT JOIN proveedor ON solicitud_servicio.proveedor_id = proveedor.id ';   
         $condicion = "solicitud_servicio.id = '$id'";
         return $this->find_first("columns: $columnas", "join: $join", "conditions: $condicion");
     } 
@@ -41,7 +51,7 @@ class SolicitudServicio extends ActiveRecord {
      * @return ActiveRecord
      */
     public function getListadoSolicitudServicio($order='order.descripcion.asc', $page='', $empresa=null) {
-        $columns = 'solicitud_servicio.*';
+        $columns = 'solicitud_servicio.*';//,persona.*,titular.*,beneficiario.*,proveedor.*,servicio.*,patologia.*
         $join = '';        
         $conditions = "";
         $order = $this->get_order($order, 'solicitud_servicio', array('solicitud_servicio'=>array('ASC'=>'solicitud_servicio.descripcion ASC, solicitud_servicio.tipo_solicitud_servicio ASC',
