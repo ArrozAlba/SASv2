@@ -1,3 +1,4 @@
+PENDIENTES POR HACER:
 BASE DE DATOS:
 1) Tablas demograficas Pais/Estados/Municipios/Parroquias.
 sas_pais
