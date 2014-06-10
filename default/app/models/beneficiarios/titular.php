@@ -69,7 +69,7 @@ class Titular extends ActiveRecord {
      * @return obj
      */
 
-    public function getListadoTitular($estado, $order='', $page=0) {
+    public function getListadoTitular() {
         $columns = 'titular.*, persona.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';
         $join= 'INNER JOIN persona ON persona.id = titular.persona_id ';        
         $join.= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
@@ -77,11 +77,9 @@ class Titular extends ActiveRecord {
 
         $conditions = "";//Por el super usuario
         
-        if($page) {
-            return $this->paginated("columns: $columns", "join: $join", "page: $page");
-        } else {
+        
             return $this->find("columns: $columns", "join: $join");
-        }  
+          
     }
 
     /**

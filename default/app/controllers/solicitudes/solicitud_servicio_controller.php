@@ -46,7 +46,7 @@ class SolicitudServicioController extends BackendController {
     public function registro($order='order.nombre.asc', $page='pag.1') { 
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
         $solicitud_servicio = new SolicitudServicio();        
-        $this->solicitud_servicios = $solicitud_servicio->getListadoSolicitudServicio($order, $page);
+        $this->solicitud_servicios = $solicitud_servicio->getListadoRegistroSolicitudServicio($order, $page);
         $this->order = $order;        
         $this->page_title = 'Registro de Solicitudes de Atención Primaria';
     }
@@ -56,7 +56,7 @@ class SolicitudServicioController extends BackendController {
     public function aprobacion($order='order.nombre.asc', $page='pag.1') { 
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
         $solicitud_servicio = new SolicitudServicio();        
-        $this->solicitud_servicios = $solicitud_servicio->getListadoSolicitudServicio($order, $page);
+        $this->solicitud_servicios = $solicitud_servicio->getListadoAprobacionSolicitudServicio($order, $page);
         $this->order = $order;        
         $this->page_title = 'Aprobación de Solicitudes de Atención Primaria';
     }
@@ -66,7 +66,7 @@ class SolicitudServicioController extends BackendController {
     public function contabilizar($order='order.nombre.asc', $page='pag.1') { 
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
         $solicitud_servicio = new SolicitudServicio();        
-        $this->solicitud_servicios = $solicitud_servicio->getListadoSolicitudServicio($order, $page);
+        $this->solicitud_servicios = $solicitud_servicio->getListadoContabilizarSolicitudServicio($order, $page);
         $this->order = $order;        
         $this->page_title = 'Contabilizar Solicitudes de Atención Primaria';
     }
@@ -92,19 +92,19 @@ class SolicitudServicioController extends BackendController {
      */
     public function editar($key) {        
         if(!$id = DwSecurity::isValidKey($key, 'upd_solicitud_servicio', 'int')) {
-            return DwRedirect::toAction('listar');
+            return DwRedirect::toAction('registro');
         }        
         
         $solicitud_servicio = new SolicitudServicio();
         if(!$solicitud_servicio->getInformacionSolicitudServicio($id)) {            
             DwMessage::get('id_no_found');
-            return DwRedirect::toAction('listar');
+            return DwRedirect::toAction('registro');
         }
         
         if(Input::hasPost('solicitud_servicio') && DwSecurity::isValidKey(Input::post('solicitud_servicio_id_key'), 'form_key')) {
             if(SolicitudServicio::setSolicitudServicio('update', Input::post('solicitud_servicio'), array('id'=>$id))){
                 DwMessage::valid('La solicitud se ha actualizado correctamente!');
-                return DwRedirect::toAction('listar');
+                return DwRedirect::toAction('contabilizar');
             }
         } 
         $this->solicitud_servicio = $solicitud_servicio;

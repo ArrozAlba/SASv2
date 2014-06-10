@@ -26,7 +26,8 @@
 
         <div class="row-fluid">
             <div class="span6">
-                <?php echo DwForm::text('solicitud_servicio.titular_id', array('class'=>'input-xxlarge input-required '), NULL, 'Cedula Titular'); ?>
+                <?php echo DwForm::dbSelect('solicitud_servicio.titular_id', 'cedula', array('beneficiarios/titular', 'getListadoTitular'), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Titular'); ?>
+                <?php //echo DwForm::text('solicitud_servicio.titular_id', array('class'=>'input-xxlarge input-required '), NULL, 'Cedula Titular'); ?>
             </div>
             <div class="span6">
 

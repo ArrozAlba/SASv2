@@ -15,7 +15,7 @@
 
     <div class="btn-toolbar btn-toolbar-top">
         <div class="btn-actions">
-            <?php echo DwHtml::button("solicitudes/solicitud_servicio/Registrar Nueva Solicitud", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
+            <?php echo DwHtml::button("solicitudes/solicitud_servicio/agregar", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
             
         </div>
     </div>
@@ -48,14 +48,15 @@
                         <td><?php echo $solicitud_servicios->counter; ?></td>
                         <td><?php echo $solicitud_servicio->fecha_solicitud; ?></td>
                         <td><?php echo $solicitud_servicio->codigo_solicitud; ?></td>
-                        <td><?php echo $solicitud_servicio->fecha_ingreso; ?></td>
-                        <td><?php echo $solicitud_servicio->beneficiario_id; ?></td>
+                        <td><?php echo $solicitud_servicio->nombre; echo ' '; echo $solicitud_servicio->apellido;?></td>
+                        <td><?php echo $solicitud_servicio->nombre; echo ' '; echo $solicitud_servicio->apellido;?></td>
                         <td><?php echo $solicitud_servicio->proveedor; ?></td>
                         <td><?php echo $solicitud_servicio->servicio; ?></td>
                         <td><?php echo $solicitud_servicio->patologia; ?></td>
                         <td><?php echo $solicitud_servicio->observacion; ?></td>
                         <td><?php echo $solicitud_servicio->tiposolicitud; ?></td>
-                        <td><?php echo $solicitud_servicio->estado_solicitud; ?></td>
+                        <td><?php echo ($solicitud_servicio->estado_solicitud == 'R') ? '<span class="label label-success" title="'.$solicitud_servicio->tiposolicitud.' Pendiente por Aprobar" rel="tooltip">Registrada</span>' : '<span class="label label-important" title="'.$solicitud_servicio->estado_solicitud.'" rel="tooltip">Emitida</span>'; ; ?></td>
+</td>
                         <td>
                             <?php echo DwHtml::buttonTable('Modificar Solicitud', "solicitudes/solicitud_servicio/editar/$key_upd/", null, 'info', 'edit'); ?>
                             <?php echo DwHtml::buttonTable('Eliminar Solicitud', "solicitudes/solicitud_servicio/eliminar/$key_del/", array('class'=>'js-confirm', 'confirm-title'=>'Eliminar solicitud_medicina', 'confirm-body'=>'Está seguro de eliminar este solicitud_medicina? <br />Recuerda que esta operación no se puede reversar.'), 'danger', 'ban-circle'); ?>
