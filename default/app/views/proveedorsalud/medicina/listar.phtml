@@ -1,0 +1,55 @@
+<?php View::notify(); ?>
+
+<script type="text/javascript">
+    $(function() {
+        $('table').dwGrid({
+            order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
+            order_action: $.KumbiaPHP.publicPath+"proveedorsalud/medicina/listar/"
+        });
+    });
+</script>
+
+<div class="container-fluid dw-shell-view">
+
+    <?php View::process($page_module, $page_title, $set_title); ?>
+
+    <div class="btn-toolbar btn-toolbar-top">
+        <div class="btn-actions">
+            <?php echo DwHtml::button("proveedorsalud/medicina/agregar/", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
+        </div>
+    </div>
+
+    <div class="dw-overflow">
+
+        <table class="table table-bordered table-hover table-striped table-condensed table-responsive">
+            <thead>
+                <tr>
+                    <th>NUM</th>
+                    <th class="col-collapse" data-search="nombre">NOMBRE</th>
+                    <th class="col-collapse" data-search="rif">OBSERVACION</th>
+                    <th class="btn-actions no-responsive" style="width: 100px;">ACCIONES</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($medicinas->items as $medicina): ?>
+                    <?php $key_upd = DwSecurity::getKey($medicina->id, 'upd_medicina'); ?>
+                    <?php $key_del = DwSecurity::getKey($medicina->id, 'del_medicina'); ?>
+                    <tr>
+                        <td><?php echo $medicinas->counter; ?></td>
+                        <td><?php echo $medicina->descripcion; ?></td>
+                        <td><?php echo $medicina->observacion; ?></td>
+                        <td>
+                            <?php echo DwHtml::buttonTable('Modificar Proveedor', "proveedorsalud/medicina/editar/$key_upd/", null, 'info', 'edit'); ?>
+                            <?php echo DwHtml::buttonTable('Eliminar Proveedor', "proveedorsalud/medicina/eliminar/$key_del/", array('class'=>'js-confirm', 'confirm-title'=>'Eliminar medicina', 'confirm-body'=>'Está seguro de eliminar este medicina? <br />Recuerda que esta operación no se puede reversar.'), 'danger', 'ban-circle'); ?>
+                        </td>
+                    </tr>
+                    <?php $medicinas->counter++; ?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+    </div>
+
+    <?php View::partial('paginators/default', false, array('page'=>$medicinas, 'url'=>"proveedorsalud/medicina/listar/$order/")); ?>
+
+</div>

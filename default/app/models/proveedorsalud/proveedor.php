@@ -7,7 +7,7 @@
  * @author      alexis borges
  * @copyright    
  */
-class Patologia extends ActiveRecord {
+class Proveedor extends ActiveRecord {
     
     /**
      * Constante para definir el id de la oficina principal
@@ -18,7 +18,7 @@ class Patologia extends ActiveRecord {
      * Método para definir las relaciones y validaciones
      */
     protected function initialize() {
-    /*  $this->belongs_to('empresa');
+  /*      $this->belongs_to('empresa');
         $this->belongs_to('ciudad');
         $this->has_many('usuario');
 
@@ -32,11 +32,11 @@ class Patologia extends ActiveRecord {
      * @param int|string $id
      * @return Sucursal
      */
-    public function getInformacionPatologia($id, $isSlug=false) {
+    public function getInformacionProveedor($id, $isSlug=false) {
         $id = ($isSlug) ? Filter::get($id, 'string') : Filter::get($id, 'numeric');
-        $columnas = 'patologia.*';
+        $columnas = 'proveedor.*';
         $join = '';
-        $condicion ="patologia.id = '$id'";
+        $condicion ="proveedor.id = '$id'";
         return $this->find_first("columns: $columnas", "join: $join", "conditions: $condicion");
     } 
     
@@ -46,13 +46,13 @@ class Patologia extends ActiveRecord {
      * @param int $page 
      * @return ActiveRecord
      */
-    public function getListadoPatologia($order='order.nombre.asc', $page='', $empresa=null) {
-        $columns = 'patologia.*';
+    public function getListadoProveedor($order='order.nombre_corto.asc', $page='', $empresa=null) {
+        $columns = 'proveedor.*';
         $join = '';        
         //$conditions 
-        $order = $this->get_order($order, 'patologia', array('patologia'=>array('ASC'=>'patologia.nombre ASC, patologia.observacion ASC',
-                                                                              'DESC'=>'patologia.nombre DESC, patologia.observacion ASC'),
-                                                            'observacion'));
+        $order = $this->get_order($order, 'proveedor', array('proveedor'=>array('ASC'=>'proveedor.nombre_corto ASC, proveedor.rif ASC',
+                                                                        'DESC'=>'proveedor.nombre_corto DESC, proveedor.rif ASC'),
+                                                            'razon_social,correo_electronico'));
         if($page) {                
             return $this->paginated("columns: $columns", "join: $join", "order: $order", "page: $page");
         } else {
@@ -67,9 +67,9 @@ class Patologia extends ActiveRecord {
      * @param array $otherData Array con datos adicionales
      * @return Obj
      */
-    public static function setPatologia($method, $data, $optData=null) {
+    public static function setProveedor($method, $data, $optData=null) {
         //Se aplica la autocarga
-        $obj = new Patologia($data);
+        $obj = new Proveedor($data);
         //Se verifica si contiene una data adicional para autocargar
         if ($optData) {
             $obj->dump_result_self($optData);
@@ -86,14 +86,13 @@ class Patologia extends ActiveRecord {
      * Método que se ejecuta antes de guardar y/o modificar     
      */
     public function before_save() {        
-        $this->descripcion = Filter::get($this->codigo, 'string');
-        $this->descripcion = Filter::get($this->descripcion, 'string');
-        $this->observacion = Filter::get($this->observacion, 'string');
+        $this->rif = Filter::get($this->rif, 'string');
+        $this->razon_social = Filter::get($this->razon_social, 'string');
            
-        $conditions = "descripcion = '$this->descripcion'";
+        $conditions = "rif = '$this->rif'";
         $conditions.= (isset($this->id)) ? " AND id != $this->id" : '';
         if($this->count("conditions: $conditions")) {
-            DwMessage::error('Lo sentimos, pero ya existe una sucursal registrada con el mismo nombre y ciudad.');
+            DwMessage::error('Lo sentimos, pero ya existe un Proveedor registrada con el mismo rif.');
             return 'cancel';
         }
         

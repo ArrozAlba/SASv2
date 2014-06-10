@@ -6,17 +6,17 @@
 
 [development]
 host = localhost
-username = infoalex
-password = 20643647
-name = sas_pp
+username = arrozalba
+password = arrozalba
+name = autogestion2
 type = pgsql
 charset = utf8 ; este valor es necesario para abrir conexiones UTF-8
 
 [production]
 host = localhost
-username = infoalex
-password = 20643647
-name = sas_pp
+username = arrozalba
+password = arrozalba
+name = autogestion2
 type = pgsql
 charset = utf8 ; este valor es necesario para abrir conexiones UTF-8
 

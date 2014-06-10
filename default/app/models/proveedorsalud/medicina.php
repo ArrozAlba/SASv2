@@ -7,7 +7,7 @@
  * @author      alexis borges
  * @copyright    
  */
-class Patologia extends ActiveRecord {
+class Medicina extends ActiveRecord {
     
     /**
      * Constante para definir el id de la oficina principal
@@ -18,7 +18,7 @@ class Patologia extends ActiveRecord {
      * Método para definir las relaciones y validaciones
      */
     protected function initialize() {
-    /*  $this->belongs_to('empresa');
+  /*      $this->belongs_to('empresa');
         $this->belongs_to('ciudad');
         $this->has_many('usuario');
 
@@ -32,11 +32,11 @@ class Patologia extends ActiveRecord {
      * @param int|string $id
      * @return Sucursal
      */
-    public function getInformacionPatologia($id, $isSlug=false) {
+    public function getInformacionMedicina($id, $isSlug=false) {
         $id = ($isSlug) ? Filter::get($id, 'string') : Filter::get($id, 'numeric');
-        $columnas = 'patologia.*';
+        $columnas = 'medicina.*';
         $join = '';
-        $condicion ="patologia.id = '$id'";
+        $condicion ="medicina.id = '$id'";
         return $this->find_first("columns: $columnas", "join: $join", "conditions: $condicion");
     } 
     
@@ -46,13 +46,12 @@ class Patologia extends ActiveRecord {
      * @param int $page 
      * @return ActiveRecord
      */
-    public function getListadoPatologia($order='order.nombre.asc', $page='', $empresa=null) {
-        $columns = 'patologia.*';
+    public function getListadoMedicina($order='order.descripcion.asc', $page='', $empresa=null) {
+        $columns = 'medicina.*';
         $join = '';        
         //$conditions 
-        $order = $this->get_order($order, 'patologia', array('patologia'=>array('ASC'=>'patologia.nombre ASC, patologia.observacion ASC',
-                                                                              'DESC'=>'patologia.nombre DESC, patologia.observacion ASC'),
-                                                            'observacion'));
+        $order = $this->get_order($order, 'medicina', array('medicina'=>array('ASC'=>'medicina.descripcion ASC, medicina.observacion ASC',
+                                                                        'DESC'=>'medicina.descripcion DESC, medicina.observacion ASC')));
         if($page) {                
             return $this->paginated("columns: $columns", "join: $join", "order: $order", "page: $page");
         } else {
@@ -67,9 +66,9 @@ class Patologia extends ActiveRecord {
      * @param array $otherData Array con datos adicionales
      * @return Obj
      */
-    public static function setPatologia($method, $data, $optData=null) {
+    public static function setMedicina($method, $data, $optData=null) {
         //Se aplica la autocarga
-        $obj = new Patologia($data);
+        $obj = new Medicina($data);
         //Se verifica si contiene una data adicional para autocargar
         if ($optData) {
             $obj->dump_result_self($optData);
@@ -86,14 +85,11 @@ class Patologia extends ActiveRecord {
      * Método que se ejecuta antes de guardar y/o modificar     
      */
     public function before_save() {        
-        $this->descripcion = Filter::get($this->codigo, 'string');
         $this->descripcion = Filter::get($this->descripcion, 'string');
-        $this->observacion = Filter::get($this->observacion, 'string');
-           
         $conditions = "descripcion = '$this->descripcion'";
         $conditions.= (isset($this->id)) ? " AND id != $this->id" : '';
         if($this->count("conditions: $conditions")) {
-            DwMessage::error('Lo sentimos, pero ya existe una sucursal registrada con el mismo nombre y ciudad.');
+            DwMessage::error('Lo sentimos, pero ya existe una Medicina registrada con el mismo nombre.');
             return 'cancel';
         }
         

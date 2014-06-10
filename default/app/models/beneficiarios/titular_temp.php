@@ -69,7 +69,7 @@ class Titular extends ActiveRecord {
      * @return obj
      */
 
-    public function getListadoTitular() {
+    public function getListadoTitular($estado, $order='', $page=0) {
         $columns = 'titular.*, persona.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';
         $join= 'INNER JOIN persona ON persona.id = titular.persona_id ';        
         $join.= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
@@ -77,29 +77,12 @@ class Titular extends ActiveRecord {
 
         $conditions = "";//Por el super usuario
         
-        
+        if($page) {
+            return $this->paginated("columns: $columns", "join: $join", "page: $page");
+        } else {
             return $this->find("columns: $columns", "join: $join");
-          
+        }  
     }
-
-    /**
-     * Método para obtener titulares
-     * @return obj
-     */
-   public function obtener_titulares($titular) {
-        if ($titular != '') {
-            $titular = stripcslashes($titular);
-            $res = $this->find('columns: titular', "cedula like '%{$cedula}%'");
-            if ($res) {
-                foreach ($res as $titular) {
-                    $titulares[] = $titular->titular;
-                }
-                return $titulares;
-            }
-        }
-        return array('no hubo coincidencias');
-    }
-  
 
     /**
      * Método para verificar si una persona ya se encuentra registrada
