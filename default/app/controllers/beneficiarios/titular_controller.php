@@ -11,6 +11,7 @@
  */
 
 Load::models('beneficiarios/titular','personas/persona', 'sistema/usuario');
+Load::models('params/pais', 'params/estado', 'params/municipio', 'params/parroquia');
 
 class TitularController extends BackendController {
     
@@ -77,6 +78,10 @@ class TitularController extends BackendController {
      * Método para agregar
      */
     public function agregar() {
+
+        $pais = new Pais(); 
+        $estado = new Estado(); 
+        $municipio = new Municipio();
         if(Input::hasPost('persona') && Input::hasPost('titular')) {
             ActiveRecord::beginTrans();
             //Guardo la persona
@@ -89,7 +94,10 @@ class TitularController extends BackendController {
                 }
             } else {
                 ActiveRecord::rollbackTrans();
-            }            
+            }
+            $this->pais = $pais->getListadoPais();           
+            $this->estado = $estado->getListadoEstado(); 
+            $this->municipio = $municipio->getListadoMunicipio(); 
         }
         $this->page_title = 'Agregar Titular';
     }
@@ -201,6 +209,23 @@ class TitularController extends BackendController {
         sleep(1);//Por la velocidad del script no permite que se actualize el archivo
         View::json($data);
     }
-    
+
+
+    public function getEstadoPais(){
+       View::response('view'); 
+       $this->pais_id=Input::post('pais_id');
+    }
+
+
+    public function getMunicipioEstado(){
+       View::response('view'); 
+       $this->estado_id=Input::post('estado_id');
+    }
+
+     public function getParroquiaMunicipio(){
+       View::response('view'); 
+       $this->municipio_id=Input::post('municipio_id');
+    }
+
 }
 

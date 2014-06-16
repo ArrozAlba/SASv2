@@ -11,8 +11,6 @@
  * @copyright   Copyright (c) 2014 UPTP / E.M.S. Arroz del Alba S.A. (http://autogestion.arrozdelalba.gob.ve) 
  */
 
-//Load::models('sistema/usuario', 'personas/persona');
-
 class Titular extends ActiveRecord {
     
     /**
@@ -140,6 +138,7 @@ class Titular extends ActiveRecord {
         $condicion = "titular.id = $titular";        
         return $this->find_first("columns: $columns", "join: $join", "conditions: $condicion");
     }
+<<<<<<< HEAD
 
     /**
      * Método para buscar Titular
@@ -213,5 +212,7 @@ class Titular extends ActiveRecord {
     }    
 
 
+=======
+>>>>>>> alexis/master
 }
 ?>

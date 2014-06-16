@@ -29,5 +29,9 @@ class Municipio extends ActiveRecord {
         return $this->find('order: nombre ASC');
     }
 
+    public function buscar($estado_id){
+        return $this->find("estado_id = $estado_id", 'order: nombre');
+    }
+
 }
 ?>
