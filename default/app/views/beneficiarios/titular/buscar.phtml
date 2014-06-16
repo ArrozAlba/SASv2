@@ -4,10 +4,10 @@
     $(function() {
         $('table').dwGrid({
             form_search: true,
-            form_action: '<?php echo PUBLIC_PATH; ?>sistema/usuario/buscar/',
+            form_action: '<?php echo PUBLIC_PATH; ?>beneficiarios/titular/buscar/',
             form_load_data : 'dw-shell-content',
             order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
-            order_action: $.KumbiaPHP.publicPath+"sistema/usuario/buscar/<?php echo $field.'/'.$value.'/'; ?>"
+            order_action: $.KumbiaPHP.publicPath+"beneficiarios/titular/buscar/<?php echo $field.'/'.$value.'/'; ?>"
         });
     });
 </script>
@@ -18,8 +18,8 @@
 
     <div class="btn-toolbar btn-toolbar-top">
         <div class="btn-actions">
-            <?php echo DwHtml::button("sistema/usuario/agregar/", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
-            <?php echo DwHtml::button("sistema/usuario/listar/", 'listar', array('class'=>'btn-warning'), 'ok', APP_AJAX); ?>
+            <?php echo DwHtml::button("beneficiarios/titular/agregar/", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
+            <?php echo DwHtml::button("beneficiarios/titular/listar/", 'listar', array('class'=>'btn-warning'), 'ok', APP_AJAX); ?>
         </div>
     </div>
 
@@ -29,7 +29,7 @@
             <thead>
                 <tr>
                     <th>NUM</th>
-                    <th class="col-collapse" data-search="login">LOGIN</th>
+                    <th class="col-collapse" data-search="cedula">CEDULA</th>
                     <th class="col-collapse" data-search="nombre1">NOMBRE</th>
                     <th class="col-collapse" data-search="apellido1">APELLIDO</th>
                     <th class="col-collapse" data-search="email">EMAIL</th>
@@ -42,32 +42,32 @@
                 </tr>
             </thead>
             <tbody>
-                <?php if($usuarios) { ?>
-                <?php foreach($usuarios->items as $usuario): ?>
-                    <?php $key_upd = DwSecurity::getKey($usuario->id, 'upd_usuario'); ?>
-                    <?php $key_ina = DwSecurity::getKey($usuario->id, 'bloquear_usuario'); ?>
-                    <?php $key_rea = DwSecurity::getKey($usuario->id, 'reactivar_usuario'); ?>
+                <?php if($titulares) { ?>
+                <?php foreach($titulares->items as $titular): ?>
+                    <?php $key_upd = DwSecurity::getKey($titular->id, 'upd_usuario'); ?>
+                    <?php $key_ina = DwSecurity::getKey($titular->id, 'bloquear_usuario'); ?>
+                    <?php $key_rea = DwSecurity::getKey($titular->id, 'reactivar_usuario'); ?>
                     <tr>
-                        <td><?php echo $usuarios->counter; ?></td>
-                        <td><?php echo ($field=='login') ? DwUtils::resaltar($value, $usuario->login) : $usuario->login; ?></td>
-                        <td><?php echo ($field=='nombre1') ? DwUtils::resaltar($value, $usuario->nombre1) : $usuario->nombre1; ?></td>
-                        <td><?php echo ($field=='apellido1') ? DwUtils::resaltar($value, $usuario->apellido1) : $usuario->apellido1; ?></td>
-                        <td><?php echo ($field=='email') ? DwUtils::resaltar($value, $usuario->email) : $usuario->email; ?></td>
-                        <td><?php echo ($field=='perfil') ? DwUtils::resaltar($value, $usuario->perfil) : $usuario->perfil; ?></td>
+                        <td><?php echo $titulares->counter; ?></td>
+                        <td><?php echo ($field=='cedula') ? DwUtils::resaltar($value, $titular->login) : $titular->login; ?></td>
+                        <td><?php echo ($field=='nombre1') ? DwUtils::resaltar($value, $titular->nombre1) : $titular->nombre1; ?></td>
+                        <td><?php echo ($field=='apellido1') ? DwUtils::resaltar($value, $titular->apellido1) : $titular->apellido1; ?></td>
+                        <td><?php echo ($field=='email') ? DwUtils::resaltar($value, $titular->email) : $titular->email; ?></td>
+                        <td><?php echo ($field=='perfil') ? DwUtils::resaltar($value, $titular->perfil) : $titular->perfil; ?></td>
                         <?if(APP_OFFICE) { //Si está activa la opción de oficinas ?>
-                        <td><?php echo empty($usuario->sucursal) ? ( ($value=='todas' ) ? DwUtils::resaltar($value, 'Todas') : 'Todas') : DwUtils::resaltar($value, $usuario->sucursal); ?></td>
+                        <td><?php echo empty($titular->sucursal) ? ( ($value=='todas' ) ? DwUtils::resaltar($value, 'Todas') : 'Todas') : DwUtils::resaltar($value, $titular->sucursal); ?></td>
                         <? } ?>
-                        <td><?php echo ($usuario->estado_usuario == EstadoUsuario::ACTIVO) ? '<span class="label label-success">Activo</span>' : '<span class="label label-important">Bloqueado</span>'; ; ?></td>
+                        <td><?php echo ($titular->estado_usuario == EstadoUsuario::ACTIVO) ? '<span class="label label-success">Activo</span>' : '<span class="label label-important">Bloqueado</span>'; ; ?></td>
                         <td>
                             <?php echo DwHtml::buttonTable('Modificar usuario', "sistema/usuario/editar/$key_upd/", null, 'info', 'edit'); ?>
-                            <?php if($usuario->estado_usuario == EstadoUsuario::ACTIVO) { ?>
+                            <?php if($titular->estado_usuario == EstadoUsuario::ACTIVO) { ?>
                                 <?php echo DwHtml::buttonTable('Bloquear usuario', "sistema/usuario/estado/bloquear/$key_ina/", null, 'success', 'flag'); ?>
                             <?php } else { ?>
                                 <?php echo DwHtml::buttonTable('Reactivar usuario', "sistema/usuario/estado/reactivar/$key_rea/", null, 'danger', 'flag'); ?>
                             <?php } ?>
                         </td>
                     </tr>
-                    <?php $usuarios->counter++; ?>
+                    <?php $titulares->counter++; ?>
                 <?php endforeach; ?>
             </tbody>
             <?php } ?>
@@ -75,6 +75,6 @@
 
     </div>
 
-    <?php View::partial('paginators/default', false, array('page'=>$usuarios, 'url'=>"sistema/usuario/buscar/$field/$value/$order/")); ?>
+    <?php View::partial('paginators/default', false, array('page'=>$titulares, 'url'=>"beneficiarios/titular/buscar/$field/$value/$order/")); ?>
 
 </div>

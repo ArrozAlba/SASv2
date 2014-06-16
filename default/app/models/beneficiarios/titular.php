@@ -63,21 +63,25 @@ class Titular extends ActiveRecord {
     }
 
     /**
-     * Método para listar titulares
+     * Método para listar Titulares
      * @return obj
      */
 
-    public function getListadoTitular() {
+    public function getListadotitular($estado, $order='', $page=0) {
         $columns = 'titular.*, persona.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';
         $join= 'INNER JOIN persona ON persona.id = titular.persona_id ';        
         $join.= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
         $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';   
 
         $conditions = "";//Por el super usuario
+                       
+           
         
-        
+        if($page) {
+            return $this->paginated("columns: $columns", "join: $join", "page: $page");
+        } else {
             return $this->find("columns: $columns", "join: $join");
-          
+        }  
     }
 
     /**
@@ -87,10 +91,10 @@ class Titular extends ActiveRecord {
    public function obtener_titulares($titular) {
         if ($titular != '') {
             $titular = stripcslashes($titular);
-            $res = $this->find('columns: titular', "cedula like '%{$cedula}%'");
+            $res = $this->find('columns: titular', "observacion like '%{$observacion}%'");
             if ($res) {
                 foreach ($res as $titular) {
-                    $titulares[] = $titular->titular;
+                    $titulares[] = $titular->observacion;
                 }
                 return $titulares;
             }
@@ -111,18 +115,6 @@ class Titular extends ActiveRecord {
         }
         return $this->$method("conditions: $conditions");
     }
-
-    /**
-     * Callback que se ejecuta antes de guardar/modificar
-     */
-    public function before_save() {
-        $this->tipoempleado_id = Filter::get($this->tipoempleado_id, 'numeric');
-        $this->fecha_ingreso = Filter::get($this->fecha_ingreso, 'string'); 
-        $this->profesion_id = Filter::get($this->profesion_id, 'numeric');
-        $this->departamento_id = Filter::get($this->departamento_id, 'numeric');
-        $this->cargo_id = Filter::get($this->cargo_id, 'numeric'); 
-        $this->observacion = Filter::get($this->observacion, 'string');
-    }    
 
     
     /**
@@ -146,5 +138,81 @@ class Titular extends ActiveRecord {
         $condicion = "titular.id = $titular";        
         return $this->find_first("columns: $columns", "join: $join", "conditions: $condicion");
     }
+<<<<<<< HEAD
+
+    /**
+     * Método para buscar Titular
+     */
+    public function getAjaxTitular($field, $value, $order='', $page=0) {
+        $value = Filter::get($value, 'string');
+        if( strlen($value) <= 2 OR ($value=='none') ) {
+            return NULL;
+        }
+        $columns = 'titular.*, persona.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';
+        $join= 'INNER JOIN persona ON persona.id = titular.persona_id ';        
+        $join.= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
+        $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';   
+        //$conditions = "";//Por el super usuario
+        
+        $order = $this->get_order($order, 'nombre1', array(                        
+            'login' => array(
+                'ASC'=>'usuario.login ASC, persona.nombre1 ASC, persona.apellido1 DESC', 
+                'DESC'=>'usuario.login DESC, persona.nombre1 DESC, persona.apellido1 DESC'
+            ),
+            'nombre1' => array(
+                'ASC'=>'persona.nombre1 ASC, persona.apellido1 DESC', 
+                'DESC'=>'persona.nombre1 DESC, persona.apellido1 DESC'
+            ),
+            'apellido1' => array(
+                'ASC'=>'persona.apellido1 ASC, persona.nombre1 ASC', 
+                'DESC'=>'persona.apellido1 DESC, persona.nombre1 DESC'
+            ),
+            'cedula' => array(
+                'ASC'=>'persona.cedula ASC, persona.apellido1 ASC, persona.nombre1 ASC', 
+                'DESC'=>'persona.cedula DESC, persona.apellido1 DESC, persona.nombre1 DESC'
+            ),            
+            'email' => array(
+                'ASC'=>'usuario.email ASC, persona.apellido1 ASC, persona.nombre1 ASC', 
+                'DESC'=>'usuario.email DESC, persona.apellido1 DESC, persona.nombre1 DESC'
+            ),
+            'sucursal' => array(
+                'ASC'=>'sucursal.sucursal ASC, persona.apellido1 ASC, persona.nombre1 ASC', 
+                'DESC'=>'sucursal.sucursal DESC, persona.apellido1 DESC, persona.nombre1 DESC'
+            ),
+            'estado_usuario' => array(
+                'ASC'=>'estado_usuario.estado_usuario ASC, persona.apellido1 ASC, persona.nombre1 ASC', 
+                'DESC'=>'estado_usuario.estado_usuario DESC, persona.apellido1 DESC, persona.nombre1 DESC'
+            )
+        ));
+        
+        //Defino los campos habilitados para la búsqueda
+        $fields = array('login', 'nombre1', 'apellido1', 'cedula', 'email', 'perfil', 'sucursal', 'estado_usuario');
+        if(!in_array($field, $fields)) {
+            $field = 'nombre1';
+        }        
+        if(! ($field=='sucursal' && $value=='todas') ) {
+           // $conditions.= " AND $field LIKE '%$value%'";
+        }        
+        if($page) {
+            return $this->paginated("columns: $columns", "join: $join",/* "conditions: $conditions",*/ "order: $order", "page: $page");
+        } else {
+            return $this->find("columns: $columns", "join: $join", /* "conditions: $conditions",*/ "order: $order");
+        }  
+    }
+    /**
+     * Callback que se ejecuta antes de guardar/modificar
+     */
+    public function before_save() {
+        $this->tipoempleado_id = Filter::get($this->tipoempleado_id, 'numeric');
+        $this->fecha_ingreso = Filter::get($this->fecha_ingreso, 'string'); 
+        $this->profesion_id = Filter::get($this->profesion_id, 'numeric');
+        $this->departamento_id = Filter::get($this->departamento_id, 'numeric');
+        $this->cargo_id = Filter::get($this->cargo_id, 'numeric'); 
+        $this->observacion = Filter::get($this->observacion, 'string');
+    }    
+
+
+=======
+>>>>>>> alexis/master
 }
 ?>

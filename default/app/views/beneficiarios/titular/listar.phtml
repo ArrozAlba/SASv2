@@ -4,10 +4,10 @@
     $(function() {
         $('table').dwGrid({
             form_search: true,
-            form_action: '<?php echo PUBLIC_PATH; ?>beneficiario/titular/buscar/',
+            form_action: '<?php echo PUBLIC_PATH; ?>beneficiarios/titular/buscar/',
             form_load_data : 'dw-shell-content',
             order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
-            order_action: $.KumbiaPHP.publicPath+"beneficiario/titular/listar/"
+            order_action: $.KumbiaPHP.publicPath+"beneficiarios/titular/listar/"
         });
     });
 </script>
@@ -71,5 +71,25 @@
     </div>
 
     <?php View::partial('paginators/default', false, array('page'=>$titulares, 'url'=>"beneficiarios/titular/listar/$order/")); ?>
+
+<?php echo Form::text('autocomplete') ?>
+ 
+<script type="text/javascript" > 
+    $(document).ready(function(){
+        $('input#autocomplete').autocomplete({
+ 
+            minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
+ 
+            source : function( request , response ){
+ 
+                var url = "<?php echo PUBLIC_PATH ?>beneficiarios/titular/autocomplete";   //url donde buscará los estados
+ 
+                $.post(url, { 'busqueda' : request.term }, response, 'json');
+ 
+                //busqueda es la varible que mandaremos por post con el contenido del input
+            }
+        });
+    });
+</script>
 
 </div>
