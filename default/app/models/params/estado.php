@@ -29,5 +29,9 @@ class Estado extends ActiveRecord {
         return $this->find('order: nombre ASC');
     }
 
+    public function buscar($pais_id){
+        return $this->find("pais_id = $pais_id", 'order: nombre');
+    }
+
 }
 ?>

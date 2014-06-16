@@ -1,0 +1,17 @@
+<?php
+    echo Form::dbSelect("persona.municipio_id", 'nombre', array('municipio','buscar',$estado_id), '           -  Seleccione  -           ');
+?>		
+ 
+<script type='text/javascript'>
+$("#persona_municipio_id").change(function(){
+    var municipio_id     =   $('#persona_municipio_id').val();
+        $.ajax({
+          type: "POST",
+          url: "<?php echo PUBLIC_PATH . 'beneficiarios/titular/getParroquiaMunicipio/'; ?>",
+          data: "municipio_id=" + municipio_id,
+          success: function(html){
+            $("#div_parroquia").html(html);
+          }
+        });
+});
+</script>

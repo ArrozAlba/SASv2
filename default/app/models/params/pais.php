@@ -29,5 +29,7 @@ class Pais extends ActiveRecord {
         return $this->find('order: nombre ASC');
     }
 
+
+
 }
 ?>
