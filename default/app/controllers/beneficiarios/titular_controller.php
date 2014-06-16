@@ -36,8 +36,7 @@ class TitularController extends BackendController {
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
         $field = (Input::hasPost('field')) ? Input::post('field') : $field;
         $value = (Input::hasPost('field')) ? Input::post('value') : $value;
-        
-        $titular = new Titular();            
+        $titular = new Titular();
         $titulares = $titular->getAjaxTitular($field, $value, $order, $page);        
         if(empty($titulares->items)) {
             DwMessage::info('No se han encontrado registros');
@@ -58,7 +57,7 @@ class TitularController extends BackendController {
         View::select(NULL);
         if (Input::isAjax()) { //solo devolvemos los estados si se accede desde ajax 
             $busqueda = Input::post('busqueda');
-            $estados = Load::model('titular')->obtener_titulares($busqueda);
+            $titulares = Load::model('titular')->obtener_titulares($busqueda);
             die(json_encode($titulares)); // solo devolvemos los datos, sin template ni vista
             //json_encode nos devolverá el array en formato json ["aragua","carabobo","..."]
         }
