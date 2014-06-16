@@ -57,22 +57,32 @@
 						<?php echo DwForm::select('persona.sexo', array(''=>'Seleccione:', 'M'=>'Masculino', 'F'=>'Femenino'), array('class'=>'input-xxlarge input-required show-error'), NULL, 'Sexo:'); ?>
                     </div>
                 </div>
-             <div class="row-fluid">
+                
+
+                <div class="row-fluid">
                     <div class="span6">
                         <?php echo DwForm::dbSelect('persona.pais_id', 'nombre', array('params/pais', 'getListadoPais'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Pais'); ?>
                     </div>
                     <div class="span6">
-                        <?php echo DwForm::dbSelect('persona.estado_id', 'nombre', array('params/estado', 'getListadoEstado'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Estado'); ?>
+                        <label>Estado</label>
+                        <div id='div_estado'></div>
+                        
                     </div>
                 </div>
-             <div class="row-fluid">
+                <div class="row-fluid">
                     <div class="span6">
-                        <?php echo DwForm::dbSelect('persona.municipio_id', 'nombre', array('params/municipio', 'getListadoMunicipio'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Municipio'); ?>
+                        <label>Municipio</label>
+                        <div id='div_municipio'></div>
                     </div>
+
                     <div class="span6">
-                        <?php echo DwForm::dbSelect('persona.parroquia_id', 'nombre', array('params/parroquia', 'getListadoParroquia'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Parroquia'); ?>
+                        <label>Parroquia</label>
+                        <div id='div_parroquia'></div>  
                     </div>
                 </div>
+
+
+                
              <div class="row-fluid">
                     <div class="span6">
                         <?php echo DwForm::text('persona.direccion_habitacion', array('class'=>'input-xxlarge input-required mask-alphanum show-error'), NULL, 'Dirección de Habitación'); ?>
@@ -123,12 +133,11 @@
                 </div>
 
                 <div class="row-fluid">
-<<<<<<< HEAD
+
                     <div class="span12">
 						<?php echo DwForm::textarea('titular.observacion', array('class'=>'input-xxlarge input-required mask-alphanum show-error'), NULL, 'Observación'); ?>
                     </div>
-=======
->>>>>>> 387e4001a7d3c953fcee8bf5e29dceb79b2f5d2c
+
                     
                 </div>
 
@@ -180,6 +189,20 @@
 </div>
 
 <?php View::partial('jquery.file-upload'); ?>
+<script type='text/javascript'>
+$("#persona_pais_id").change(function(){
+    var pais_id     =   $('#persona_pais_id').val();
+        $.ajax({
+          type: "POST",
+          url: "<?php echo PUBLIC_PATH . 'beneficiarios/titular/getEstadoPais/'; ?>",
+          data: "pais_id=" + pais_id,
+          success: function(html){
+            $("#div_estado").html(html);
+          }
+        });
+});
+</script>
+
 
 <script type="text/javascript">
     $('#fotografia').fileupload({
@@ -227,3 +250,5 @@
         }
     });
 </script>
+
+

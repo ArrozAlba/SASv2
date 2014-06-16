@@ -66,5 +66,10 @@ class Parroquia extends ActiveRecord {
         }
         return json_encode($parroquias);
     }
+
+    public function buscar($municipio_id){
+        return $this->find("municipio_id = $municipio_id", 'order: nombre');
+    }
+
     
 }
