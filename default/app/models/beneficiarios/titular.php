@@ -91,10 +91,10 @@ class Titular extends ActiveRecord {
    public function obtener_titulares($titular) {
         if ($titular != '') {
             $titular = stripcslashes($titular);
-            $res = $this->find('columns: titular', "observacion like '%{$observacion}%'");
+            $res = $this->find('columns: titular', "observacion like '%{$titular}%'");
             if ($res) {
                 foreach ($res as $titular) {
-                    $titulares[] = $titular->observacion;
+                    $titulares[] = $titular->titular;
                 }
                 return $titulares;
             }
