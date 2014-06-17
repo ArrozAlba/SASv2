@@ -48,6 +48,24 @@ class SolicitudServicio extends ActiveRecord {
     } 
     
     /**
+     * Método para obtener patologias
+     * @return obj
+     */
+   public function obtener_patologias($patologia) {
+        if ($patologia != '') {
+            $patologia = stripcslashes($patologia);
+            $res = $this->find('columns: patologia', "descripcion like '%{$patologia}%'");
+            if ($res) {
+                foreach ($res as $patologia) {
+                    $patologias[] = $patologia->patologia;
+                }
+                return $patologias;
+            }
+        }
+        return array('no hubo coincidencias');
+    }
+    
+    /**
      * Método que devuelve las sucursales
      * @param string $order
      * @param int $page 
