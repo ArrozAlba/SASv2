@@ -39,7 +39,21 @@ class DepartamentoController extends BackendController {
         $this->order = $order;        
         $this->page_title = 'Listado de Departamentos';
     }
+     /**
+     * Método para obtener departamentos
+     */
     
+        //accion que busca en los departamentos y devuelve el json con los datos
+    public function autocomplete() {
+        View::template(NULL);
+        View::select(NULL);
+        if (Input::isAjax()) { //solo devolvemos los estados si se accede desde ajax 
+            $busqueda = Input::post('busqueda');
+            $departamentos = Load::model('config/departamento')->obtener_departamentos($busqueda);
+            die(json_encode($departamentos)); // solo devolvemos los datos, sin template ni vista
+            //json_encode nos devolverá el array en formato json ["aragua","carabobo","..."]
+        }
+    }        
     /**
      * Método para agregar
      */

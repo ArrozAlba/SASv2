@@ -39,7 +39,21 @@ class EspecialidadController extends BackendController {
         $this->order = $order;        
         $this->page_title = 'Listado de Especialidades';
     }
+     /**
+     * Método para obtener especialidades
+     */
     
+        //accion que busca en las especialidades y devuelve el json con los datos
+    public function autocomplete() {
+        View::template(NULL);
+        View::select(NULL);
+        if (Input::isAjax()) { //solo devolvemos los estados si se accede desde ajax 
+            $busqueda = Input::post('busqueda');
+            $especialidades = Load::model('proveedorsalud/especialidad')->obtener_especialidades($busqueda);
+            die(json_encode($especialidades)); // solo devolvemos los datos, sin template ni vista
+            //json_encode nos devolverá el array en formato json ["aragua","carabobo","..."]
+        }
+    }        
     /**
      * Método para agregar
      */

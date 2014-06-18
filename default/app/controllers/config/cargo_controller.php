@@ -53,7 +53,21 @@ class CargoController extends BackendController {
         } 
         $this->page_title = 'Agregar Cargo';
     }
+     /**
+     * Método para obtener cargos
+     */
     
+        //accion que busca en los cargos y devuelve el json con los datos
+    public function autocomplete() {
+        View::template(NULL);
+        View::select(NULL);
+        if (Input::isAjax()) { //solo devolvemos los estados si se accede desde ajax 
+            $busqueda = Input::post('busqueda');
+            $cargos = Load::model('config/cargo')->obtener_cargos($busqueda);
+            die(json_encode($cargos)); // solo devolvemos los datos, sin template ni vista
+            //json_encode nos devolverá el array en formato json ["aragua","carabobo","..."]
+        }
+    }    
     /**
      * Método para editar
      */

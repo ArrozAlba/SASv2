@@ -28,6 +28,23 @@ class Especialidad extends ActiveRecord {
     */            
     }  
     /**
+     * Método para obtener especialidades
+     * @return obj
+     */
+   public function obtener_especialidades($especialidad) {
+        if ($especialidad != '') {
+            $especialidad = stripcslashes($especialidad);
+            $res = $this->find('columns: descripcion', "descripcion like '%{$especialidad}%'");
+            if ($res) {
+                foreach ($res as $especialidad) {
+                    $especialidades[] = $especialidad->descripcion;
+                }
+                return $especialidades;
+            }
+        }
+        return array('no hubo coincidencias');
+    }
+    /**
      * Método para ver la información de una sucursal
      * @param int|string $id
      * @return Sucursal

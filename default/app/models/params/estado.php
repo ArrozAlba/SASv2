@@ -32,6 +32,18 @@ class Estado extends ActiveRecord {
     public function buscar($pais_id){
         return $this->find("pais_id = $pais_id", 'order: nombre');
     }
-
+public function obtener_estados($estado) {
+        if ($estado != '') {
+            $estado = stripcslashes($estado);
+            $res = $this->find('columns: nombre', "nombre like '%{$estado}%'");
+            if ($res) {
+                foreach ($res as $estado) {
+                    $estados[] = $estado->nombre;
+                }
+                return $estados;
+            }
+        }
+        return array('no hubo coincidencias');
+    }
 }
 ?>

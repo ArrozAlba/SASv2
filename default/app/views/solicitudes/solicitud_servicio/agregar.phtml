@@ -83,3 +83,20 @@
 
     <?php echo DwForm::close(); ?>
 </div>
+<script type="text/javascript" >
+    $(document).ready(function(){
+        $('input#solicitud_servicio_patologia_id').autocomplete({
+ 
+            minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
+ 
+            source : function( request , response ){
+ 
+                var url = "<?php echo PUBLIC_PATH ?>config/patologia/autocomplete";   //url donde buscará los estados
+ 
+                $.post(url, { 'busqueda' : request.term }, response, 'json');
+ 
+                //busqueda es la varible que mandaremos por post con el contenido del input
+            }
+        });
+    });
+</script>

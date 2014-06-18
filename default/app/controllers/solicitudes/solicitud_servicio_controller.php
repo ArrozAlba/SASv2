@@ -26,7 +26,7 @@ class SolicitudServicioController extends BackendController {
      * Método principal
      */
     public function index() {
-        DwRedirect::toAction('listar');
+        DwRedirect::toAction('registro');
     }
     
     /**
@@ -39,21 +39,7 @@ class SolicitudServicioController extends BackendController {
         $this->order = $order;        
         $this->page_title = 'Listado de Solicitudes de Atención Primaria';
     }
-/**
-     * Método para obtener patologias
-     */
-    
-        //accion que busca en las patologias y devuelve el json con los datos
-    public function autocomplete() {
-        View::template(NULL);
-        View::select(NULL);
-        if (Input::isAjax()) { //solo devolvemos los estados si se accede desde ajax 
-            $busqueda = Input::post('busqueda');
-            $patologias = Load::model('patologia')->obtener_patologias($busqueda);
-            die(json_encode($patologias)); // solo devolvemos los datos, sin template ni vista
-            //json_encode nos devolverá el array en formato json ["aragua","carabobo","..."]
-        }
-    }
+
     
     /**
      * Método para registro

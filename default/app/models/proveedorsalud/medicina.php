@@ -39,7 +39,23 @@ class Medicina extends ActiveRecord {
         $condicion ="medicina.id = '$id'";
         return $this->find_first("columns: $columnas", "join: $join", "conditions: $condicion");
     } 
-    
+    /**
+     * Método para obtener medicinas
+     * @return obj
+     */
+   public function obtener_medicinas($medicina) {
+        if ($medicina != '') {
+            $medicina = stripcslashes($medicina);
+            $res = $this->find('columns: descripcion', "descripcion like '%{$medicina}%'");
+            if ($res) {
+                foreach ($res as $medicina) {
+                    $medicinas[] = $medicina->descripcion;
+                }
+                return $medicinas;
+            }
+        }
+        return array('no hubo coincidencias');
+    }    
     /**
      * Método que devuelve las sucursales
      * @param string $order

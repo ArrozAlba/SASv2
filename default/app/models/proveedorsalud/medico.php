@@ -59,7 +59,23 @@ class Medico extends ActiveRecord {
             return $this->find("columns: $columns", "join: $join", "order: $order", "page: $page");            
         }
     }
-    
+    /**
+     * Método para obtener medicos
+     * @return obj
+     */
+   public function obtener_medicos($medico) {
+        if ($medico != '') {
+            $medico = stripcslashes($medico);
+            $res = $this->find('columns: nombre1,apellido1', "nombre1 like '%{$medico}%' or apellido1 like '%{$medico}%'");
+            if ($res) {
+                foreach ($res as $medico) {
+                    $medicos[] = $medico->nombre1.' '.$medico->apellido1;
+                }
+                return $medicos;
+            }
+        }
+        return array('no hubo coincidencias');
+    }        
     /**
      * Método para setear
      * @param string $method Método a ejecutar (create, update, save)

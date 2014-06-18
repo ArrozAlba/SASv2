@@ -39,7 +39,23 @@ class Proveedor extends ActiveRecord {
         $condicion ="proveedor.id = '$id'";
         return $this->find_first("columns: $columnas", "join: $join", "conditions: $condicion");
     } 
-    
+    /**
+     * Método para obtener proveedores
+     * @return obj
+     */
+   public function obtener_proveedores($proveedor) {
+        if ($proveedor != '') {
+            $proveedor = stripcslashes($proveedor);
+            $res = $this->find('columns: nombre_corto, razon_social', "nombre_corto like '%{$proveedor}%' or razon_social like '%{$proveedor}%'");
+            if ($res) {
+                foreach ($res as $proveedor) {
+                    $proveedores[] = $proveedor->nombre_corto;
+                }
+                return $proveedores;
+            }
+        }
+        return array('no hubo coincidencias');
+    }        
     /**
      * Método que devuelve las sucursales
      * @param string $order

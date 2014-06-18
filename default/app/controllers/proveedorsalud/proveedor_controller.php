@@ -40,6 +40,21 @@ class ProveedorController extends BackendController {
         $this->page_title = 'Listado de Proveedores';
     }
     
+     /**
+     * Método para obtener proveedores
+     */
+    
+        //accion que busca en los proveedores y devuelve el json con los datos
+    public function autocomplete() {
+        View::template(NULL);
+        View::select(NULL);
+        if (Input::isAjax()) { //solo devolvemos los estados si se accede desde ajax 
+            $busqueda = Input::post('busqueda');
+            $proveedores = Load::model('proveedorsalud/proveedor')->obtener_proveedores($busqueda);
+            die(json_encode($proveedores)); // solo devolvemos los datos, sin template ni vista
+            //json_encode nos devolverá el array en formato json ["aragua","carabobo","..."]
+        }
+    }            
     /**
      * Método para agregar
      */

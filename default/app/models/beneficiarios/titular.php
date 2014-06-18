@@ -91,18 +91,33 @@ class Titular extends ActiveRecord {
    public function obtener_titulares($titular) {
         if ($titular != '') {
             $titular = stripcslashes($titular);
-            $res = $this->find('columns: titular', "observacion like '%{$titular}%'");
+            $res = $this->find('columns: id', "observacion like '%{$titular}%'");
             if ($res) {
                 foreach ($res as $titular) {
-                    $titulares[] = $titular->titular;
+                    $titulares[] = $titular->observacion;
                 }
                 return $titulares;
             }
         }
         return array('no hubo coincidencias');
     }
-  
-
+    /**
+     * Método para obtener patologias
+     * @return obj
+     */
+   public function obtener_patologias($patologia) {
+        if ($patologia != '') {
+            $patologia = stripcslashes($patologia);
+            $res = $this->find('columns: titular', "observacion like '%{$patologia}%'");
+            if ($res) {
+                foreach ($res as $patologia) {
+                    $patologias[] = $patologia->patologia;
+                }
+                return $patologias;
+            }
+        }
+        return array('no hubo coincidencias');
+    }
     /**
      * Método para verificar si una persona ya se encuentra registrada
      * @return obj
