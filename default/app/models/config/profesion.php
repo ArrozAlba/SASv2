@@ -28,6 +28,23 @@ class Profesion extends ActiveRecord {
     */            
     }  
     /**
+     * Método para obtener profesiones
+     * @return obj
+     */
+   public function obtener_profesiones($profesion) {
+        if ($profesion != '') {
+            $profesion = stripcslashes($profesion);
+            $res = $this->find('columns: nombre', "nombre like '%{$profesion}%'");
+            if ($res) {
+                foreach ($res as $profesion) {
+                    $profesiones[] = $profesion->nombre;
+                }
+                return $profesiones;
+            }
+        }
+        return array('no hubo coincidencias');
+    }
+    /**
      * Método para ver la información de una sucursal
      * @param int|string $id
      * @return Sucursal

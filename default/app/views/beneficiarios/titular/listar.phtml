@@ -93,3 +93,27 @@
 </script>
 
 </div>
+
+
+
+<?php echo Form::text('autocomplete2') ?>
+<script type="text/javascript" > 
+    $(document).ready(function(){
+        $('input#autocomplete2').autocomplete({
+ 
+            minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
+ 
+            source : function( request , response ){
+ 
+                var url = "<?php echo PUBLIC_PATH ?>solicitudes/solicitud_servicio/agregar/autocomplete2";   //url donde buscará los estados
+ 
+                $.post(url, { 'busqueda' : request.term }, response, 'json');
+ 
+                //busqueda es la varible que mandaremos por post con el contenido del input
+            }
+        });
+    });
+</script>
+
+
+

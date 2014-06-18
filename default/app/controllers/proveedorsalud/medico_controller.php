@@ -40,6 +40,21 @@ class MedicoController extends BackendController {
         $this->page_title = 'Listado de Medicos';
     }
     
+     /**
+     * Método para obtener medicos
+     */
+    
+        //accion que busca en los medicos y devuelve el json con los datos
+    public function autocomplete() {
+        View::template(NULL);
+        View::select(NULL);
+        if (Input::isAjax()) { //solo devolvemos los estados si se accede desde ajax 
+            $busqueda = Input::post('busqueda');
+            $medicos = Load::model('proveedorsalud/medico')->obtener_medicos($busqueda);
+            die(json_encode($medicos)); // solo devolvemos los datos, sin template ni vista
+            //json_encode nos devolverá el array en formato json ["aragua","carabobo","..."]
+        }
+    }            
     /**
      * Método para agregar
      */

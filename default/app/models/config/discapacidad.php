@@ -81,7 +81,23 @@ class Discapacidad extends ActiveRecord {
         
         return ($rs) ? $obj : FALSE;
     }
-
+    /**
+     * Método para obtener discapacidades
+     * @return obj
+     */
+   public function obtener_discapacidades($discapacidad) {
+        if ($discapacidad != '') {
+            $discapacidad = stripcslashes($discapacidad);
+            $res = $this->find('columns: nombre', "nombre like '%{$discapacidad}%'");
+            if ($res) {
+                foreach ($res as $discapacidad) {
+                    $discapacidades[] = $discapacidad->nombre;
+                }
+                return $discapacidades;
+            }
+        }
+        return array('no hubo coincidencias');
+    }
     /**
      * Método que se ejecuta antes de guardar y/o modificar     
      */

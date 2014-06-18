@@ -40,6 +40,23 @@ class Departamento extends ActiveRecord {
         return ($rs) ? $obj : FALSE;
     }
     /**
+     * Método para obtener departamentos
+     * @return obj
+     */
+   public function obtener_departamentos($departamento) {
+        if ($departamento != '') {
+            $departamento = stripcslashes($departamento);
+            $res = $this->find('columns: nombre', "nombre like '%{$departamento}%'");
+            if ($res) {
+                foreach ($res as $departamento) {
+                    $departamentos[] = $departamento->nombre;
+                }
+                return $departamentos;
+            }
+        }
+        return array('no hubo coincidencias');
+    }
+    /**
      * Método que devuelve los departamentos paginadas o para un select
      * @param int $pag Número de página a mostrar.
      * @return ActiveRecord

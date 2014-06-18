@@ -66,21 +66,3 @@
 
     <?php View::partial('paginators/default', false, array('page'=>$solicitud_servicios, 'url'=>"solicitudes/solicitud_servicio/listar/$order/")); ?>
 </div>
-				<?php echo Form::text('autocomplete') ?>
-				<script type="text/javascript" > 
-					$(document).ready(function(){
-						$('input#autocomplete').autocomplete({
-				 
-							minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
-				 
-							source : function( request , response ){
-				 
-								var url = "<?php echo PUBLIC_PATH ?>solicitudes/solicitud_servicio/listar/autocomplete";   //url donde buscará los estados
-				 
-								$.post(url, { 'busqueda' : request.term }, response, 'json');
-				 
-								//busqueda es la varible que mandaremos por post con el contenido del input
-							}
-						});
-					});
-				</script>

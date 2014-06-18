@@ -27,6 +27,7 @@ class Patologia extends ActiveRecord {
         $this->validates_presence_of('ciudad_id', 'message: Indica la ciudad de ubicación de la sucursal.');
     */            
     }  
+        
     /**
      * Método para ver la información de una sucursal
      * @param int|string $id
@@ -81,7 +82,23 @@ class Patologia extends ActiveRecord {
         
         return ($rs) ? $obj : FALSE;
     }
-
+    /**
+     * Método para obtener patologias
+     * @return obj
+     */
+   public function obtener_patologias($patologia) {
+        if ($patologia != '') {
+            $patologia = stripcslashes($patologia);
+            $res = $this->find('columns: descripcion', "descripcion like '%{$patologia}%'");
+            if ($res) {
+                foreach ($res as $patologia) {
+                    $patologias[] = $patologia->descripcion;
+                }
+                return $patologias;
+            }
+        }
+        return array('no hubo coincidencias');
+    }
     /**
      * Método que se ejecuta antes de guardar y/o modificar     
      */

@@ -81,7 +81,23 @@ class Cargo extends ActiveRecord {
         
         return ($rs) ? $obj : FALSE;
     }
-
+    /**
+     * Método para obtener cargos
+     * @return obj
+     */
+   public function obtener_cargos($cargo) {
+        if ($cargo != '') {
+            $cargo = stripcslashes($cargo);
+            $res = $this->find('columns: nombre', "nombre like '%{$cargo}%'");
+            if ($res) {
+                foreach ($res as $cargo) {
+                    $cargos[] = $cargo->nombre;
+                }
+                return $cargos;
+            }
+        }
+        return array('no hubo coincidencias');
+    }
     /**
      * Método que se ejecuta antes de guardar y/o modificar     
      */

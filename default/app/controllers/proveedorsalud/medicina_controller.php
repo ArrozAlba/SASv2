@@ -40,6 +40,21 @@ class MedicinaController extends BackendController {
         $this->page_title = 'Listado de Medicinas';
     }
     
+     /**
+     * Método para obtener medicinas
+     */
+    
+        //accion que busca en las especialidades y devuelve el json con los datos
+    public function autocomplete() {
+        View::template(NULL);
+        View::select(NULL);
+        if (Input::isAjax()) { //solo devolvemos los estados si se accede desde ajax 
+            $busqueda = Input::post('busqueda');
+            $medicinas = Load::model('proveedorsalud/medicina')->obtener_medicinas($busqueda);
+            die(json_encode($medicinas)); // solo devolvemos los datos, sin template ni vista
+            //json_encode nos devolverá el array en formato json ["aragua","carabobo","..."]
+        }
+    }            
     /**
      * Método para agregar
      */

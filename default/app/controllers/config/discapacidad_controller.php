@@ -39,7 +39,21 @@ class DiscapacidadController extends BackendController {
         $this->order = $order;        
         $this->page_title = 'Listado de Discapacidades';
     }
+     /**
+     * Método para obtener discapacidades
+     */
     
+        //accion que busca en las discapacidades y devuelve el json con los datos
+    public function autocomplete() {
+        View::template(NULL);
+        View::select(NULL);
+        if (Input::isAjax()) { //solo devolvemos los estados si se accede desde ajax 
+            $busqueda = Input::post('busqueda');
+            $discapacidades = Load::model('config/discapacidad')->obtener_discapacidades($busqueda);
+            die(json_encode($discapacidades)); // solo devolvemos los datos, sin template ni vista
+            //json_encode nos devolverá el array en formato json ["aragua","carabobo","..."]
+        }
+    }        
     /**
      * Método para agregar
      */
