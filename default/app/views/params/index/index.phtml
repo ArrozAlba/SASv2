@@ -11,7 +11,7 @@
  
             source : function( request , response ){
  
-                var url = "<?php echo PUBLIC_PATH ?>proveedorsalud/medico/autocomplete";   //url donde buscará los estados
+                var url = "<?php echo PUBLIC_PATH ?>beneficiarios/titular/autocomplete";   //url donde buscará los estados
  
                 $.post(url, { 'busqueda' : request.term }, response, 'json');
  

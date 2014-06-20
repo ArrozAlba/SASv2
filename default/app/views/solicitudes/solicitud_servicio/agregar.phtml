@@ -26,8 +26,8 @@
 
         <div class="row-fluid">
             <div class="span6">
-                <?php echo DwForm::dbSelect('solicitud_servicio.titular_id', 'cedula', array('beneficiarios/titular', 'getListadoTitular'), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Titular'); ?>
-                <?php //echo DwForm::text('solicitud_servicio.titular_id', array('class'=>'input-xxlarge input-required '), NULL, 'Cedula Titular'); ?>
+                <?php //echo DwForm::dbSelect('solicitud_servicio.titular_id', 'cedula', array('beneficiarios/titular', 'getListadoTitular'), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Titular'); ?>
+                <?php echo DwForm::text('solicitud_servicio.titular_id', array('class'=>'input-xxlarge input-required '), NULL, 'Cedula Titular'); ?>
             </div>
             <div class="span6">
 
@@ -85,6 +85,34 @@
 </div>
 <script type="text/javascript" >
     $(document).ready(function(){
+        $('input#solicitud_servicio_beneficiario_id').autocomplete({
+ 
+            minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
+ 
+            source : function( request , response ){
+ 
+                var url = "<?php echo PUBLIC_PATH ?>beneficiarios/titular/autocomplete";   //url donde buscará los estados
+ 
+                $.post(url, { 'busqueda' : request.term }, response, 'json');
+ 
+                //busqueda es la varible que mandaremos por post con el contenido del input
+            }
+        });
+
+        $('input#solicitud_servicio_titular_id').autocomplete({
+ 
+            minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
+ 
+            source : function( request , response ){
+ 
+                var url = "<?php echo PUBLIC_PATH ?>beneficiarios/titular/autocomplete";   //url donde buscará los estados
+ 
+                $.post(url, { 'busqueda' : request.term }, response, 'json');
+ 
+                //busqueda es la varible que mandaremos por post con el contenido del input
+            }
+        });
+
         $('input#solicitud_servicio_patologia_id').autocomplete({
  
             minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
@@ -98,5 +126,46 @@
                 //busqueda es la varible que mandaremos por post con el contenido del input
             }
         });
+$('input#solicitud_servicio_proveedor_id').autocomplete({
+ 
+            minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
+ 
+            source : function( request , response ){
+ 
+                var url = "<?php echo PUBLIC_PATH ?>proveedorsalud/proveedor/autocomplete";   //url donde buscará los estados
+ 
+                $.post(url, { 'busqueda' : request.term }, response, 'json');
+ 
+                //busqueda es la varible que mandaremos por post con el contenido del input
+            }
+        });
+$('input#solicitud_servicio_medico_id').autocomplete({
+ 
+            minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
+ 
+            source : function( request , response ){
+ 
+                var url = "<?php echo PUBLIC_PATH ?>proveedorsalud/medico/autocomplete";   //url donde buscará los estados
+ 
+                $.post(url, { 'busqueda' : request.term }, response, 'json');
+ 
+                //busqueda es la varible que mandaremos por post con el contenido del input
+            }
+        });
+$('input#solicitud_servicio_patologia_id').autocomplete({
+ 
+            minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
+ 
+            source : function( request , response ){
+ 
+                var url = "<?php echo PUBLIC_PATH ?>config/patologia/autocomplete";   //url donde buscará los estados
+ 
+                $.post(url, { 'busqueda' : request.term }, response, 'json');
+ 
+                //busqueda es la varible que mandaremos por post con el contenido del input
+            }
+        });
+
+
     });
 </script>
