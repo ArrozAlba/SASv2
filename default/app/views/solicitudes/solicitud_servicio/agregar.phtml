@@ -6,63 +6,61 @@
     <?php echo DwForm::open('', 'post', array('id'=>'form', 'class'=>'dw-validate')); ?>
 
         <div class="row-fluid">
-            <div class="span6">
-                <?php echo DwForm::dbSelect('solicitud_servicio.tiposolicitud_id', 'nombre', array('config/tiposolicitud', 'getListadoTiposolicitud'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Tipo de Solicitud'); ?>
+            <div class="span4">
+				<?php echo DwForm::text('solicitud_servicio.codigo_solicitud', array('class'=>'input-xlarge '),NULL, 'Código:'); ?>
+				<?php echo DwForm::hidden('solicitud_servicio.tiposolicitud_id', NULL, '1'); ?>
+                <?php // echo DwForm::dbSelect('solicitud_servicio.tiposolicitud_id', 'nombre', array('config/tiposolicitud', 'getListadoTiposolicitud'), NULL, array('class'=>'input-xxlarge disabled mask-pint show-errors'), NULL, 'Tipo de Solicitud'); ?>
             </div>
-            <div class="span6">
-                <?php echo DwForm::text('solicitud_servicio.fecha_solicitud', array('class'=>'input-xxlarge  show-error'), date("Y/m/d"), 'Fecha Solicitud'); ?>
+            <div class="span4">
+                <?php echo DwForm::text('solicitud_servicio.fecha_solicitud', array('class'=>'input-xlarge  show-error'), date("Y/m/d"), 'Fecha Solicitud'); ?>
+            </div>
+            <div class="span4">
+                <?php echo DwForm::text('solicitud_servicio.fecha_vencimiento', array('class'=>'input-xlarge  show-error'), date("Y/m/d"), 'Fecha Vencimiento'); ?>
             </div>
         </div>
         <div>
         
         <div class="row-fluid">
             <div class="span6">
-            <?php echo DwForm::text('solicitud_servicio.codigo_solicitud', array('class'=>'input-xxlarge '),NULL, 'Código:'); ?>
+
             </div>
             <div class="span6">
-                <?php echo DwForm::text('solicitud_servicio.fecha_solicitud', array('class'=>'input-xxlarge  show-error'), date("Y/m/d"), 'Fecha Vencimiento'); ?>
+
             </div>
         </div>
 
         <div class="row-fluid">
             <div class="span6">
-                <?php echo DwForm::dbSelect('solicitud_servicio.titular_id', 'cedula', array('beneficiarios/titular', 'getListadoTitular'), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Titular'); ?>
-                <?php //echo DwForm::text('solicitud_servicio.titular_id', array('class'=>'input-xxlarge input-required '), NULL, 'Cedula Titular'); ?>
+                <?php //echo DwForm::dbSelect('solicitud_servicio.titular_id', 'cedula', array('beneficiarios/titular', 'getListadoTitular'), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Titular'); ?>
+                <?php echo DwForm::text('solicitud_servicio.titular_id', array('class'=>'input-xxlarge input-required '), NULL, 'Cedula Titular'); ?>
             </div>
             <div class="span6">
-
+                <?php echo DwForm::text('solicitud_servicio.beneficiario_id', array('class'=>'input-xxlarge input-required '), NULL, 'Cedula Beneficiario'); ?>
             </div>
         </div>
         <div>
         <div class="row-fluid">
             <div class="span6">
-                <?php echo DwForm::text('solicitud_servicio.beneficiario_id', array('class'=>'input-xxlarge input-required '), NULL, 'Cedula Beneficiario'); ?>
+                <?php echo DwForm::text('solicitud_servicio.proveedor_id', array('class'=>'input-xxlarge input-required '), NULL, 'Proveedor'); ?>
             </div>
             <div class="span6">
-                <?php echo DwForm::text('solicitud_servicio.proveedor_id', array('class'=>'input-xxlarge input-required '), NULL, 'Proveedor'); ?>
+               <?php echo DwForm::text('solicitud_servicio.medico_id', array('class'=>'input-xxlarge input-required '), NULL, 'Medico'); ?>
             </div>
         </div>
         <div>
          </div>
         <div class="row-fluid">
             <div class="span6">
-               <?php echo DwForm::text('solicitud_servicio.medico_id', array('class'=>'input-xxlarge input-required '), NULL, 'Medico'); ?>
-
+                <?php echo DwForm::text('solicitud_servicio.servicio_id', array('class'=>'input-xxlarge input-required '), NULL, 'Servicio'); ?>
                 <?php // DwForm::dbSelect('solicitud_servicio.patologia_id', 'descripcion', array('config/patologia', 'getListadoPatologia'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Patologia'); ?>
             </div>
             <div class="span6">
-                <?php echo DwForm::text('solicitud_servicio.servicio_id', array('class'=>'input-xxlarge input-required '), NULL, 'Servicio'); ?>
+               <?php echo DwForm::text('solicitud_servicio.patologia_id', array('class'=>'input-xxlarge input-required '), NULL, 'Patologia'); ?>
                 <?php //echo DwForm::dbSelect('solicitud_servicio.patologia_id', 'descripcion', array('config/patologia', 'getListadoPatologia'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Patologia'); ?>
             </div>
         </div>
         <div class="row-fluid">
-            <div class="span6">
-
-               <?php echo DwForm::text('solicitud_servicio.patologia_id', array('class'=>'input-xxlarge input-required '), NULL, 'Patologia'); ?>
-
-                <?php // DwForm::dbSelect('solicitud_servicio.patologia_id', 'descripcion', array('config/patologia', 'getListadoPatologia'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Patologia'); ?>
-            </div>
-            <div class="span6">
+            <div class="span12">
                 <?php echo DwForm::textarea('solicitud_servicio.observacion_id', array('class'=>'input-required mask-text show-error input-xxlarge'), NULL, 'Observacion'); ?>
                 <?php //echo DwForm::dbSelect('solicitud_servicio.patologia_id', 'descripcion', array('config/patologia', 'getListadoPatologia'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Patologia'); ?>
             </div>
@@ -85,6 +83,34 @@
 </div>
 <script type="text/javascript" >
     $(document).ready(function(){
+        $('input#solicitud_servicio_beneficiario_id').autocomplete({
+ 
+            minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
+ 
+            source : function( request , response ){
+ 
+                var url = "<?php echo PUBLIC_PATH ?>beneficiarios/titular/autocomplete";   //url donde buscará los estados
+ 
+                $.post(url, { 'busqueda' : request.term }, response, 'json');
+ 
+                //busqueda es la varible que mandaremos por post con el contenido del input
+            }
+        });
+
+        $('input#solicitud_servicio_titular_id').autocomplete({
+ 
+            minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
+ 
+            source : function( request , response ){
+ 
+                var url = "<?php echo PUBLIC_PATH ?>beneficiarios/titular/autocomplete";   //url donde buscará los estados
+ 
+                $.post(url, { 'busqueda' : request.term }, response, 'json');
+ 
+                //busqueda es la varible que mandaremos por post con el contenido del input
+            }
+        });
+
         $('input#solicitud_servicio_patologia_id').autocomplete({
  
             minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
@@ -98,5 +124,46 @@
                 //busqueda es la varible que mandaremos por post con el contenido del input
             }
         });
+$('input#solicitud_servicio_proveedor_id').autocomplete({
+ 
+            minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
+ 
+            source : function( request , response ){
+ 
+                var url = "<?php echo PUBLIC_PATH ?>proveedorsalud/proveedor/autocomplete";   //url donde buscará los estados
+ 
+                $.post(url, { 'busqueda' : request.term }, response, 'json');
+ 
+                //busqueda es la varible que mandaremos por post con el contenido del input
+            }
+        });
+$('input#solicitud_servicio_medico_id').autocomplete({
+ 
+            minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
+ 
+            source : function( request , response ){
+ 
+                var url = "<?php echo PUBLIC_PATH ?>proveedorsalud/medico/autocomplete";   //url donde buscará los estados
+ 
+                $.post(url, { 'busqueda' : request.term }, response, 'json');
+ 
+                //busqueda es la varible que mandaremos por post con el contenido del input
+            }
+        });
+$('input#solicitud_servicio_patologia_id').autocomplete({
+ 
+            minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
+ 
+            source : function( request , response ){
+ 
+                var url = "<?php echo PUBLIC_PATH ?>config/patologia/autocomplete";   //url donde buscará los estados
+ 
+                $.post(url, { 'busqueda' : request.term }, response, 'json');
+ 
+                //busqueda es la varible que mandaremos por post con el contenido del input
+            }
+        });
+
+
     });
 </script>
