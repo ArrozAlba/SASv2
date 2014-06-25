@@ -2,10 +2,6 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.1.13
--- Dumped by pg_dump version 9.1.13
--- Started on 2014-06-20 21:27:24 VET
-
 SET statement_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
@@ -13,7 +9,6 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- TOC entry 6 (class 2615 OID 397182)
 -- Name: audit_log; Type: SCHEMA; Schema: -; Owner: arrozalba
 --
 
@@ -23,7 +18,6 @@ CREATE SCHEMA audit_log;
 ALTER SCHEMA audit_log OWNER TO arrozalba;
 
 --
--- TOC entry 264 (class 3079 OID 11725)
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
@@ -31,8 +25,6 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2859 (class 0 OID 0)
--- Dependencies: 264
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
 
@@ -40,8 +32,6 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
 --
--- TOC entry 265 (class 3079 OID 397183)
--- Dependencies: 7
 -- Name: hstore; Type: EXTENSION; Schema: -; Owner: 
 --
 
@@ -49,8 +39,6 @@ CREATE EXTENSION IF NOT EXISTS hstore WITH SCHEMA public;
 
 
 --
--- TOC entry 2860 (class 0 OID 0)
--- Dependencies: 265
 -- Name: EXTENSION hstore; Type: COMMENT; Schema: -; Owner: 
 --
 
@@ -60,8 +48,6 @@ COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs
 SET search_path = public, pg_catalog;
 
 --
--- TOC entry 330 (class 1255 OID 397301)
--- Dependencies: 858 7
 -- Name: install_logger(text, text, boolean); Type: FUNCTION; Schema: public; Owner: arrozalba
 --
 
@@ -96,8 +82,6 @@ $$;
 ALTER FUNCTION public.install_logger(schema_name text, table_name text, log_truncate boolean) OWNER TO arrozalba;
 
 --
--- TOC entry 331 (class 1255 OID 397302)
--- Dependencies: 7 858
 -- Name: logger(); Type: FUNCTION; Schema: public; Owner: arrozalba
 --
 
@@ -143,8 +127,6 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 162 (class 1259 OID 397303)
--- Dependencies: 2234 2235 6
 -- Name: audit_log; Type: TABLE; Schema: audit_log; Owner: arrozalba; Tablespace: 
 --
 
@@ -166,8 +148,6 @@ CREATE TABLE audit_log (
 ALTER TABLE audit_log.audit_log OWNER TO arrozalba;
 
 --
--- TOC entry 163 (class 1259 OID 397311)
--- Dependencies: 6 162
 -- Name: audit_log_log_id_seq; Type: SEQUENCE; Schema: audit_log; Owner: arrozalba
 --
 
@@ -182,8 +162,6 @@ CREATE SEQUENCE audit_log_log_id_seq
 ALTER TABLE audit_log.audit_log_log_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 2861 (class 0 OID 0)
--- Dependencies: 163
 -- Name: audit_log_log_id_seq; Type: SEQUENCE OWNED BY; Schema: audit_log; Owner: arrozalba
 --
 
@@ -193,8 +171,6 @@ ALTER SEQUENCE audit_log_log_id_seq OWNED BY audit_log.log_id;
 SET search_path = public, pg_catalog;
 
 --
--- TOC entry 164 (class 1259 OID 397313)
--- Dependencies: 2237 2238 7
 -- Name: acceso; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -215,8 +191,6 @@ CREATE TABLE acceso (
 ALTER TABLE public.acceso OWNER TO arrozalba;
 
 --
--- TOC entry 2862 (class 0 OID 0)
--- Dependencies: 164
 -- Name: TABLE acceso; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -224,8 +198,6 @@ COMMENT ON TABLE acceso IS 'Modelo para manipular los  accesos de usuarios';
 
 
 --
--- TOC entry 2863 (class 0 OID 0)
--- Dependencies: 164
 -- Name: COLUMN acceso.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -233,8 +205,6 @@ COMMENT ON COLUMN acceso.usuario_id IS 'Identificador del usuario que accede';
 
 
 --
--- TOC entry 2864 (class 0 OID 0)
--- Dependencies: 164
 -- Name: COLUMN acceso.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -242,8 +212,6 @@ COMMENT ON COLUMN acceso.fecha_registro IS 'Fecha de registro del acceso';
 
 
 --
--- TOC entry 2865 (class 0 OID 0)
--- Dependencies: 164
 -- Name: COLUMN acceso.tipo_acceso; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -251,8 +219,6 @@ COMMENT ON COLUMN acceso.tipo_acceso IS 'Tipo de acceso (entrada o salida)';
 
 
 --
--- TOC entry 2866 (class 0 OID 0)
--- Dependencies: 164
 -- Name: COLUMN acceso.navegador; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -260,8 +226,6 @@ COMMENT ON COLUMN acceso.navegador IS 'Navegador del Cliente';
 
 
 --
--- TOC entry 2867 (class 0 OID 0)
--- Dependencies: 164
 -- Name: COLUMN acceso.version_navegador; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -269,8 +233,6 @@ COMMENT ON COLUMN acceso.version_navegador IS 'Version del Navegador del Cliente
 
 
 --
--- TOC entry 2868 (class 0 OID 0)
--- Dependencies: 164
 -- Name: COLUMN acceso.sistema_operativo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -278,8 +240,6 @@ COMMENT ON COLUMN acceso.sistema_operativo IS 'Sistema Operativo del Cliente';
 
 
 --
--- TOC entry 2869 (class 0 OID 0)
--- Dependencies: 164
 -- Name: COLUMN acceso.nombre_equipo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -287,8 +247,6 @@ COMMENT ON COLUMN acceso.nombre_equipo IS 'Nombre del Equipo';
 
 
 --
--- TOC entry 2870 (class 0 OID 0)
--- Dependencies: 164
 -- Name: COLUMN acceso.ip; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -296,8 +254,6 @@ COMMENT ON COLUMN acceso.ip IS 'Dirección IP del usuario que ingresa';
 
 
 --
--- TOC entry 165 (class 1259 OID 397318)
--- Dependencies: 164 7
 -- Name: acceso_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -312,8 +268,6 @@ CREATE SEQUENCE acceso_id_seq
 ALTER TABLE public.acceso_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 2871 (class 0 OID 0)
--- Dependencies: 165
 -- Name: acceso_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -321,8 +275,6 @@ ALTER SEQUENCE acceso_id_seq OWNED BY acceso.id;
 
 
 --
--- TOC entry 166 (class 1259 OID 397320)
--- Dependencies: 2240 2241 7
 -- Name: audit_log; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -344,8 +296,6 @@ CREATE TABLE audit_log (
 ALTER TABLE public.audit_log OWNER TO arrozalba;
 
 --
--- TOC entry 167 (class 1259 OID 397328)
--- Dependencies: 166 7
 -- Name: audit_log_log_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -360,8 +310,6 @@ CREATE SEQUENCE audit_log_log_id_seq
 ALTER TABLE public.audit_log_log_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 2872 (class 0 OID 0)
--- Dependencies: 167
 -- Name: audit_log_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -369,8 +317,6 @@ ALTER SEQUENCE audit_log_log_id_seq OWNED BY audit_log.log_id;
 
 
 --
--- TOC entry 168 (class 1259 OID 397330)
--- Dependencies: 2243 2244 7
 -- Name: backup; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -388,8 +334,6 @@ CREATE TABLE backup (
 ALTER TABLE public.backup OWNER TO arrozalba;
 
 --
--- TOC entry 2873 (class 0 OID 0)
--- Dependencies: 168
 -- Name: TABLE backup; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -397,8 +341,6 @@ COMMENT ON TABLE backup IS 'Modelo para manipular los Backups generados por el s
 
 
 --
--- TOC entry 2874 (class 0 OID 0)
--- Dependencies: 168
 -- Name: COLUMN backup.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -406,8 +348,6 @@ COMMENT ON COLUMN backup.usuario_id IS 'ID del Usuario';
 
 
 --
--- TOC entry 2875 (class 0 OID 0)
--- Dependencies: 168
 -- Name: COLUMN backup.denominacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -415,8 +355,6 @@ COMMENT ON COLUMN backup.denominacion IS 'Denominacion del Backup';
 
 
 --
--- TOC entry 2876 (class 0 OID 0)
--- Dependencies: 168
 -- Name: COLUMN backup.tamano; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -424,8 +362,6 @@ COMMENT ON COLUMN backup.tamano IS 'Tamaño del Backup';
 
 
 --
--- TOC entry 2877 (class 0 OID 0)
--- Dependencies: 168
 -- Name: COLUMN backup.archivo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -433,8 +369,6 @@ COMMENT ON COLUMN backup.archivo IS 'Nombre del Archivo';
 
 
 --
--- TOC entry 169 (class 1259 OID 397335)
--- Dependencies: 168 7
 -- Name: backup_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -449,8 +383,6 @@ CREATE SEQUENCE backup_id_seq
 ALTER TABLE public.backup_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 2878 (class 0 OID 0)
--- Dependencies: 169
 -- Name: backup_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -458,8 +390,6 @@ ALTER SEQUENCE backup_id_seq OWNED BY backup.id;
 
 
 --
--- TOC entry 170 (class 1259 OID 397337)
--- Dependencies: 2246 2247 2248 7
 -- Name: beneficiario; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -479,8 +409,6 @@ CREATE TABLE beneficiario (
 ALTER TABLE public.beneficiario OWNER TO arrozalba;
 
 --
--- TOC entry 2879 (class 0 OID 0)
--- Dependencies: 170
 -- Name: TABLE beneficiario; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -488,8 +416,6 @@ COMMENT ON TABLE beneficiario IS 'Modelo para manipular los beneficiarios';
 
 
 --
--- TOC entry 2880 (class 0 OID 0)
--- Dependencies: 170
 -- Name: COLUMN beneficiario.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -497,8 +423,6 @@ COMMENT ON COLUMN beneficiario.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2881 (class 0 OID 0)
--- Dependencies: 170
 -- Name: COLUMN beneficiario.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -506,8 +430,6 @@ COMMENT ON COLUMN beneficiario.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2882 (class 0 OID 0)
--- Dependencies: 170
 -- Name: COLUMN beneficiario.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -515,8 +437,6 @@ COMMENT ON COLUMN beneficiario.fecha_modificado IS 'Fecha Modificacion del Regis
 
 
 --
--- TOC entry 2883 (class 0 OID 0)
--- Dependencies: 170
 -- Name: COLUMN beneficiario.titular_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -524,8 +444,6 @@ COMMENT ON COLUMN beneficiario.titular_id IS 'Empleado Titular';
 
 
 --
--- TOC entry 2884 (class 0 OID 0)
--- Dependencies: 170
 -- Name: COLUMN beneficiario.parentesco; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -533,8 +451,6 @@ COMMENT ON COLUMN beneficiario.parentesco IS 'Parentesco del beneficiario';
 
 
 --
--- TOC entry 2885 (class 0 OID 0)
--- Dependencies: 170
 -- Name: COLUMN beneficiario.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -542,8 +458,6 @@ COMMENT ON COLUMN beneficiario.observacion IS 'Observacion';
 
 
 --
--- TOC entry 171 (class 1259 OID 397343)
--- Dependencies: 7 170
 -- Name: beneficiario_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -558,8 +472,6 @@ CREATE SEQUENCE beneficiario_id_seq
 ALTER TABLE public.beneficiario_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 2886 (class 0 OID 0)
--- Dependencies: 171
 -- Name: beneficiario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -567,8 +479,6 @@ ALTER SEQUENCE beneficiario_id_seq OWNED BY beneficiario.id;
 
 
 --
--- TOC entry 172 (class 1259 OID 397345)
--- Dependencies: 2250 2251 7
 -- Name: beneficiario_tipo; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -585,8 +495,6 @@ CREATE TABLE beneficiario_tipo (
 ALTER TABLE public.beneficiario_tipo OWNER TO arrozalba;
 
 --
--- TOC entry 2887 (class 0 OID 0)
--- Dependencies: 172
 -- Name: TABLE beneficiario_tipo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -594,8 +502,6 @@ COMMENT ON TABLE beneficiario_tipo IS 'Modelo para manipular los Tipos de Benefi
 
 
 --
--- TOC entry 2888 (class 0 OID 0)
--- Dependencies: 172
 -- Name: COLUMN beneficiario_tipo.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -603,8 +509,6 @@ COMMENT ON COLUMN beneficiario_tipo.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2889 (class 0 OID 0)
--- Dependencies: 172
 -- Name: COLUMN beneficiario_tipo.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -612,8 +516,6 @@ COMMENT ON COLUMN beneficiario_tipo.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2890 (class 0 OID 0)
--- Dependencies: 172
 -- Name: COLUMN beneficiario_tipo.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -621,8 +523,6 @@ COMMENT ON COLUMN beneficiario_tipo.fecha_modificado IS 'Fecha Modificacion del 
 
 
 --
--- TOC entry 2891 (class 0 OID 0)
--- Dependencies: 172
 -- Name: COLUMN beneficiario_tipo.descripcion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -630,8 +530,6 @@ COMMENT ON COLUMN beneficiario_tipo.descripcion IS 'Descripcion del Tipo de Bene
 
 
 --
--- TOC entry 2892 (class 0 OID 0)
--- Dependencies: 172
 -- Name: COLUMN beneficiario_tipo.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -639,8 +537,6 @@ COMMENT ON COLUMN beneficiario_tipo.observacion IS 'Observacion';
 
 
 --
--- TOC entry 173 (class 1259 OID 397350)
--- Dependencies: 7 172
 -- Name: beneficiario_tipo_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -655,8 +551,6 @@ CREATE SEQUENCE beneficiario_tipo_id_seq
 ALTER TABLE public.beneficiario_tipo_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 2893 (class 0 OID 0)
--- Dependencies: 173
 -- Name: beneficiario_tipo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -664,8 +558,6 @@ ALTER SEQUENCE beneficiario_tipo_id_seq OWNED BY beneficiario_tipo.id;
 
 
 --
--- TOC entry 174 (class 1259 OID 397352)
--- Dependencies: 2253 2254 7
 -- Name: cargo; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -682,8 +574,6 @@ CREATE TABLE cargo (
 ALTER TABLE public.cargo OWNER TO arrozalba;
 
 --
--- TOC entry 2894 (class 0 OID 0)
--- Dependencies: 174
 -- Name: TABLE cargo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -691,8 +581,6 @@ COMMENT ON TABLE cargo IS 'Modelo para manipular las diferentes Profesiones';
 
 
 --
--- TOC entry 2895 (class 0 OID 0)
--- Dependencies: 174
 -- Name: COLUMN cargo.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -700,8 +588,6 @@ COMMENT ON COLUMN cargo.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2896 (class 0 OID 0)
--- Dependencies: 174
 -- Name: COLUMN cargo.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -709,8 +595,6 @@ COMMENT ON COLUMN cargo.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2897 (class 0 OID 0)
--- Dependencies: 174
 -- Name: COLUMN cargo.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -718,8 +602,6 @@ COMMENT ON COLUMN cargo.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- TOC entry 2898 (class 0 OID 0)
--- Dependencies: 174
 -- Name: COLUMN cargo.nombre; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -727,8 +609,6 @@ COMMENT ON COLUMN cargo.nombre IS 'Nombre de la Profesion';
 
 
 --
--- TOC entry 2899 (class 0 OID 0)
--- Dependencies: 174
 -- Name: COLUMN cargo.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -736,8 +616,6 @@ COMMENT ON COLUMN cargo.observacion IS 'Observacion';
 
 
 --
--- TOC entry 175 (class 1259 OID 397357)
--- Dependencies: 174 7
 -- Name: cargo_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -752,8 +630,6 @@ CREATE SEQUENCE cargo_id_seq
 ALTER TABLE public.cargo_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 2900 (class 0 OID 0)
--- Dependencies: 175
 -- Name: cargo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -761,8 +637,6 @@ ALTER SEQUENCE cargo_id_seq OWNED BY cargo.id;
 
 
 --
--- TOC entry 176 (class 1259 OID 397359)
--- Dependencies: 2256 2257 2258 2259 2260 7
 -- Name: cobertura; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -783,8 +657,6 @@ CREATE TABLE cobertura (
 ALTER TABLE public.cobertura OWNER TO arrozalba;
 
 --
--- TOC entry 2901 (class 0 OID 0)
--- Dependencies: 176
 -- Name: TABLE cobertura; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -792,8 +664,6 @@ COMMENT ON TABLE cobertura IS 'Modelo para manipular las Coberturas';
 
 
 --
--- TOC entry 2902 (class 0 OID 0)
--- Dependencies: 176
 -- Name: COLUMN cobertura.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -801,8 +671,6 @@ COMMENT ON COLUMN cobertura.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2903 (class 0 OID 0)
--- Dependencies: 176
 -- Name: COLUMN cobertura.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -810,8 +678,6 @@ COMMENT ON COLUMN cobertura.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2904 (class 0 OID 0)
--- Dependencies: 176
 -- Name: COLUMN cobertura.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -819,8 +685,6 @@ COMMENT ON COLUMN cobertura.fecha_modificado IS 'Fecha Modificacion del Registro
 
 
 --
--- TOC entry 2905 (class 0 OID 0)
--- Dependencies: 176
 -- Name: COLUMN cobertura.descripcion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -828,8 +692,6 @@ COMMENT ON COLUMN cobertura.descripcion IS 'Descripcion de la cobertura';
 
 
 --
--- TOC entry 2906 (class 0 OID 0)
--- Dependencies: 176
 -- Name: COLUMN cobertura.tipo_cobertura; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -837,8 +699,6 @@ COMMENT ON COLUMN cobertura.tipo_cobertura IS 'Tipo de Cobertura (G-Grupal,I-Ind
 
 
 --
--- TOC entry 2907 (class 0 OID 0)
--- Dependencies: 176
 -- Name: COLUMN cobertura.monto_cobertura; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -846,8 +706,6 @@ COMMENT ON COLUMN cobertura.monto_cobertura IS 'Monto de la Cobertura';
 
 
 --
--- TOC entry 2908 (class 0 OID 0)
--- Dependencies: 176
 -- Name: COLUMN cobertura.fecha_inicio; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -855,8 +713,6 @@ COMMENT ON COLUMN cobertura.fecha_inicio IS 'Fecha de Inicio de la cobertura';
 
 
 --
--- TOC entry 2909 (class 0 OID 0)
--- Dependencies: 176
 -- Name: COLUMN cobertura.fecha_fin; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -864,8 +720,6 @@ COMMENT ON COLUMN cobertura.fecha_fin IS 'Fecha de Fin de la cobertura';
 
 
 --
--- TOC entry 2910 (class 0 OID 0)
--- Dependencies: 176
 -- Name: COLUMN cobertura.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -873,8 +727,6 @@ COMMENT ON COLUMN cobertura.observacion IS 'Observacion de la Cobertura';
 
 
 --
--- TOC entry 177 (class 1259 OID 397367)
--- Dependencies: 7 176
 -- Name: cobertura_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -889,8 +741,6 @@ CREATE SEQUENCE cobertura_id_seq
 ALTER TABLE public.cobertura_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 2911 (class 0 OID 0)
--- Dependencies: 177
 -- Name: cobertura_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -898,8 +748,6 @@ ALTER SEQUENCE cobertura_id_seq OWNED BY cobertura.id;
 
 
 --
--- TOC entry 178 (class 1259 OID 397369)
--- Dependencies: 2262 2263 7
 -- Name: departamento; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -917,8 +765,6 @@ CREATE TABLE departamento (
 ALTER TABLE public.departamento OWNER TO arrozalba;
 
 --
--- TOC entry 2912 (class 0 OID 0)
--- Dependencies: 178
 -- Name: TABLE departamento; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -926,8 +772,6 @@ COMMENT ON TABLE departamento IS 'Modelo para manipular los diferentes Departame
 
 
 --
--- TOC entry 2913 (class 0 OID 0)
--- Dependencies: 178
 -- Name: COLUMN departamento.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -935,8 +779,6 @@ COMMENT ON COLUMN departamento.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2914 (class 0 OID 0)
--- Dependencies: 178
 -- Name: COLUMN departamento.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -944,8 +786,6 @@ COMMENT ON COLUMN departamento.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2915 (class 0 OID 0)
--- Dependencies: 178
 -- Name: COLUMN departamento.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -953,8 +793,6 @@ COMMENT ON COLUMN departamento.fecha_modificado IS 'Fecha Modificacion del Regis
 
 
 --
--- TOC entry 2916 (class 0 OID 0)
--- Dependencies: 178
 -- Name: COLUMN departamento.nombre; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -962,8 +800,6 @@ COMMENT ON COLUMN departamento.nombre IS 'Nombre del Departamento';
 
 
 --
--- TOC entry 2917 (class 0 OID 0)
--- Dependencies: 178
 -- Name: COLUMN departamento.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -971,8 +807,6 @@ COMMENT ON COLUMN departamento.observacion IS 'Observacion';
 
 
 --
--- TOC entry 179 (class 1259 OID 397374)
--- Dependencies: 7 178
 -- Name: departamento_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -987,8 +821,6 @@ CREATE SEQUENCE departamento_id_seq
 ALTER TABLE public.departamento_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 2918 (class 0 OID 0)
--- Dependencies: 179
 -- Name: departamento_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -996,8 +828,6 @@ ALTER SEQUENCE departamento_id_seq OWNED BY departamento.id;
 
 
 --
--- TOC entry 180 (class 1259 OID 397376)
--- Dependencies: 2265 2266 7
 -- Name: discapacidad; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -1014,8 +844,6 @@ CREATE TABLE discapacidad (
 ALTER TABLE public.discapacidad OWNER TO arrozalba;
 
 --
--- TOC entry 2919 (class 0 OID 0)
--- Dependencies: 180
 -- Name: TABLE discapacidad; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1023,8 +851,6 @@ COMMENT ON TABLE discapacidad IS 'Modelo para manipular los diferentes Tipos de 
 
 
 --
--- TOC entry 2920 (class 0 OID 0)
--- Dependencies: 180
 -- Name: COLUMN discapacidad.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1032,8 +858,6 @@ COMMENT ON COLUMN discapacidad.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2921 (class 0 OID 0)
--- Dependencies: 180
 -- Name: COLUMN discapacidad.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1041,8 +865,6 @@ COMMENT ON COLUMN discapacidad.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2922 (class 0 OID 0)
--- Dependencies: 180
 -- Name: COLUMN discapacidad.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1050,8 +872,6 @@ COMMENT ON COLUMN discapacidad.fecha_modificado IS 'Fecha Modificacion del Regis
 
 
 --
--- TOC entry 2923 (class 0 OID 0)
--- Dependencies: 180
 -- Name: COLUMN discapacidad.nombre; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1059,8 +879,6 @@ COMMENT ON COLUMN discapacidad.nombre IS 'Nombre de la Discapacidad';
 
 
 --
--- TOC entry 2924 (class 0 OID 0)
--- Dependencies: 180
 -- Name: COLUMN discapacidad.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1068,8 +886,6 @@ COMMENT ON COLUMN discapacidad.observacion IS 'Observacion';
 
 
 --
--- TOC entry 181 (class 1259 OID 397381)
--- Dependencies: 180 7
 -- Name: discapacidad_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -1084,8 +900,6 @@ CREATE SEQUENCE discapacidad_id_seq
 ALTER TABLE public.discapacidad_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 2925 (class 0 OID 0)
--- Dependencies: 181
 -- Name: discapacidad_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -1093,8 +907,6 @@ ALTER SEQUENCE discapacidad_id_seq OWNED BY discapacidad.id;
 
 
 --
--- TOC entry 182 (class 1259 OID 397383)
--- Dependencies: 7
 -- Name: discapacidad_persona; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -1108,8 +920,6 @@ CREATE TABLE discapacidad_persona (
 ALTER TABLE public.discapacidad_persona OWNER TO arrozalba;
 
 --
--- TOC entry 2926 (class 0 OID 0)
--- Dependencies: 182
 -- Name: TABLE discapacidad_persona; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1117,8 +927,6 @@ COMMENT ON TABLE discapacidad_persona IS 'Modelo para manipular la relacion Disc
 
 
 --
--- TOC entry 2927 (class 0 OID 0)
--- Dependencies: 182
 -- Name: COLUMN discapacidad_persona.persona_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1126,8 +934,6 @@ COMMENT ON COLUMN discapacidad_persona.persona_id IS 'ID de la Persona';
 
 
 --
--- TOC entry 2928 (class 0 OID 0)
--- Dependencies: 182
 -- Name: COLUMN discapacidad_persona.discapacidad_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1135,8 +941,6 @@ COMMENT ON COLUMN discapacidad_persona.discapacidad_id IS 'ID de la Discapacidad
 
 
 --
--- TOC entry 183 (class 1259 OID 397386)
--- Dependencies: 182 7
 -- Name: discapacidad_persona_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -1151,8 +955,6 @@ CREATE SEQUENCE discapacidad_persona_id_seq
 ALTER TABLE public.discapacidad_persona_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 2929 (class 0 OID 0)
--- Dependencies: 183
 -- Name: discapacidad_persona_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -1160,8 +962,6 @@ ALTER SEQUENCE discapacidad_persona_id_seq OWNED BY discapacidad_persona.id;
 
 
 --
--- TOC entry 184 (class 1259 OID 397388)
--- Dependencies: 2269 2270 7
 -- Name: empresa; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -1189,8 +989,6 @@ CREATE TABLE empresa (
 ALTER TABLE public.empresa OWNER TO arrozalba;
 
 --
--- TOC entry 2930 (class 0 OID 0)
--- Dependencies: 184
 -- Name: TABLE empresa; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1198,8 +996,6 @@ COMMENT ON TABLE empresa IS 'Modelo para manipular la empresa';
 
 
 --
--- TOC entry 2931 (class 0 OID 0)
--- Dependencies: 184
 -- Name: COLUMN empresa.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1207,8 +1003,6 @@ COMMENT ON COLUMN empresa.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2932 (class 0 OID 0)
--- Dependencies: 184
 -- Name: COLUMN empresa.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1216,8 +1010,6 @@ COMMENT ON COLUMN empresa.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2933 (class 0 OID 0)
--- Dependencies: 184
 -- Name: COLUMN empresa.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1225,8 +1017,6 @@ COMMENT ON COLUMN empresa.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- TOC entry 2934 (class 0 OID 0)
--- Dependencies: 184
 -- Name: COLUMN empresa.razon_social; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1234,8 +1024,6 @@ COMMENT ON COLUMN empresa.razon_social IS 'Razon Social de la Empresa ';
 
 
 --
--- TOC entry 2935 (class 0 OID 0)
--- Dependencies: 184
 -- Name: COLUMN empresa.pais_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1243,8 +1031,6 @@ COMMENT ON COLUMN empresa.pais_id IS 'ID Pais';
 
 
 --
--- TOC entry 2936 (class 0 OID 0)
--- Dependencies: 184
 -- Name: COLUMN empresa.estado_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1252,8 +1038,6 @@ COMMENT ON COLUMN empresa.estado_id IS 'ID Estado';
 
 
 --
--- TOC entry 2937 (class 0 OID 0)
--- Dependencies: 184
 -- Name: COLUMN empresa.municipio_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1261,8 +1045,6 @@ COMMENT ON COLUMN empresa.municipio_id IS 'ID Municipio ';
 
 
 --
--- TOC entry 2938 (class 0 OID 0)
--- Dependencies: 184
 -- Name: COLUMN empresa.parroquia_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1270,8 +1052,6 @@ COMMENT ON COLUMN empresa.parroquia_id IS 'ID Parroquia ';
 
 
 --
--- TOC entry 2939 (class 0 OID 0)
--- Dependencies: 184
 -- Name: COLUMN empresa.representante_legal; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1279,8 +1059,6 @@ COMMENT ON COLUMN empresa.representante_legal IS 'Representante Legal de la Empr
 
 
 --
--- TOC entry 2940 (class 0 OID 0)
--- Dependencies: 184
 -- Name: COLUMN empresa.pagina_web; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1288,8 +1066,6 @@ COMMENT ON COLUMN empresa.pagina_web IS 'Pagina Web de la Empresa ';
 
 
 --
--- TOC entry 2941 (class 0 OID 0)
--- Dependencies: 184
 -- Name: COLUMN empresa.telefono; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1297,8 +1073,6 @@ COMMENT ON COLUMN empresa.telefono IS 'Telefono de la Empresa ';
 
 
 --
--- TOC entry 2942 (class 0 OID 0)
--- Dependencies: 184
 -- Name: COLUMN empresa.fax; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1306,8 +1080,6 @@ COMMENT ON COLUMN empresa.fax IS 'Telefax de la Empresa ';
 
 
 --
--- TOC entry 2943 (class 0 OID 0)
--- Dependencies: 184
 -- Name: COLUMN empresa.celular; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1315,8 +1087,6 @@ COMMENT ON COLUMN empresa.celular IS 'Telefono Celular del Representante Legal '
 
 
 --
--- TOC entry 2944 (class 0 OID 0)
--- Dependencies: 184
 -- Name: COLUMN empresa.logo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1324,8 +1094,6 @@ COMMENT ON COLUMN empresa.logo IS 'Logo de la Empresa ';
 
 
 --
--- TOC entry 2945 (class 0 OID 0)
--- Dependencies: 184
 -- Name: COLUMN empresa.email; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1334,8 +1102,6 @@ COMMENT ON COLUMN empresa.email IS 'Correo Electronico de la Empresa
 
 
 --
--- TOC entry 185 (class 1259 OID 397393)
--- Dependencies: 184 7
 -- Name: empresa_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -1350,8 +1116,6 @@ CREATE SEQUENCE empresa_id_seq
 ALTER TABLE public.empresa_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 2946 (class 0 OID 0)
--- Dependencies: 185
 -- Name: empresa_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -1359,8 +1123,6 @@ ALTER SEQUENCE empresa_id_seq OWNED BY empresa.id;
 
 
 --
--- TOC entry 186 (class 1259 OID 397395)
--- Dependencies: 2272 2273 7
 -- Name: especialidad; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -1377,8 +1139,6 @@ CREATE TABLE especialidad (
 ALTER TABLE public.especialidad OWNER TO arrozalba;
 
 --
--- TOC entry 2947 (class 0 OID 0)
--- Dependencies: 186
 -- Name: TABLE especialidad; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1386,8 +1146,6 @@ COMMENT ON TABLE especialidad IS 'Modelo para manipular las Especialidades';
 
 
 --
--- TOC entry 2948 (class 0 OID 0)
--- Dependencies: 186
 -- Name: COLUMN especialidad.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1395,8 +1153,6 @@ COMMENT ON COLUMN especialidad.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2949 (class 0 OID 0)
--- Dependencies: 186
 -- Name: COLUMN especialidad.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1404,8 +1160,6 @@ COMMENT ON COLUMN especialidad.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2950 (class 0 OID 0)
--- Dependencies: 186
 -- Name: COLUMN especialidad.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1413,8 +1167,6 @@ COMMENT ON COLUMN especialidad.fecha_modificado IS 'Fecha Modificacion del Regis
 
 
 --
--- TOC entry 2951 (class 0 OID 0)
--- Dependencies: 186
 -- Name: COLUMN especialidad.descripcion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1422,8 +1174,6 @@ COMMENT ON COLUMN especialidad.descripcion IS 'Descripcion de la Especialidad';
 
 
 --
--- TOC entry 2952 (class 0 OID 0)
--- Dependencies: 186
 -- Name: COLUMN especialidad.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1431,8 +1181,6 @@ COMMENT ON COLUMN especialidad.observacion IS 'Observacion de la Especialidad';
 
 
 --
--- TOC entry 187 (class 1259 OID 397400)
--- Dependencies: 186 7
 -- Name: especialidad_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -1447,8 +1195,6 @@ CREATE SEQUENCE especialidad_id_seq
 ALTER TABLE public.especialidad_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 2953 (class 0 OID 0)
--- Dependencies: 187
 -- Name: especialidad_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -1456,8 +1202,6 @@ ALTER SEQUENCE especialidad_id_seq OWNED BY especialidad.id;
 
 
 --
--- TOC entry 188 (class 1259 OID 397402)
--- Dependencies: 2275 2276 7
 -- Name: proveedor; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -1486,8 +1230,6 @@ CREATE TABLE proveedor (
 ALTER TABLE public.proveedor OWNER TO arrozalba;
 
 --
--- TOC entry 2954 (class 0 OID 0)
--- Dependencies: 188
 -- Name: TABLE proveedor; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1495,8 +1237,6 @@ COMMENT ON TABLE proveedor IS 'Modelo para manipular los Proveedores';
 
 
 --
--- TOC entry 2955 (class 0 OID 0)
--- Dependencies: 188
 -- Name: COLUMN proveedor.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1504,8 +1244,6 @@ COMMENT ON COLUMN proveedor.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2956 (class 0 OID 0)
--- Dependencies: 188
 -- Name: COLUMN proveedor.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1513,8 +1251,6 @@ COMMENT ON COLUMN proveedor.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2957 (class 0 OID 0)
--- Dependencies: 188
 -- Name: COLUMN proveedor.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1522,8 +1258,6 @@ COMMENT ON COLUMN proveedor.fecha_modificado IS 'Fecha Modificacion del Registro
 
 
 --
--- TOC entry 2958 (class 0 OID 0)
--- Dependencies: 188
 -- Name: COLUMN proveedor.rif; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1531,8 +1265,6 @@ COMMENT ON COLUMN proveedor.rif IS 'Rif del Proveedor';
 
 
 --
--- TOC entry 2959 (class 0 OID 0)
--- Dependencies: 188
 -- Name: COLUMN proveedor.razon_social; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1540,8 +1272,6 @@ COMMENT ON COLUMN proveedor.razon_social IS 'Razon Social del Proveedor';
 
 
 --
--- TOC entry 2960 (class 0 OID 0)
--- Dependencies: 188
 -- Name: COLUMN proveedor.nombre_corto; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1549,8 +1279,6 @@ COMMENT ON COLUMN proveedor.nombre_corto IS 'Nombre Corto Proveedor';
 
 
 --
--- TOC entry 2961 (class 0 OID 0)
--- Dependencies: 188
 -- Name: COLUMN proveedor.pais_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1558,8 +1286,6 @@ COMMENT ON COLUMN proveedor.pais_id IS 'Pais Origen del Proveedor';
 
 
 --
--- TOC entry 2962 (class 0 OID 0)
--- Dependencies: 188
 -- Name: COLUMN proveedor.estado_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1567,8 +1293,6 @@ COMMENT ON COLUMN proveedor.estado_id IS 'Estado de Origen del Proveedor';
 
 
 --
--- TOC entry 2963 (class 0 OID 0)
--- Dependencies: 188
 -- Name: COLUMN proveedor.municipio_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1576,8 +1300,6 @@ COMMENT ON COLUMN proveedor.municipio_id IS 'Municipio de Origen del Proveedor';
 
 
 --
--- TOC entry 2964 (class 0 OID 0)
--- Dependencies: 188
 -- Name: COLUMN proveedor.parroquia_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1585,8 +1307,6 @@ COMMENT ON COLUMN proveedor.parroquia_id IS 'Parroquia de Origen del Proveedor';
 
 
 --
--- TOC entry 2965 (class 0 OID 0)
--- Dependencies: 188
 -- Name: COLUMN proveedor.direccion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1594,8 +1314,6 @@ COMMENT ON COLUMN proveedor.direccion IS 'Direccion del Proveedor';
 
 
 --
--- TOC entry 2966 (class 0 OID 0)
--- Dependencies: 188
 -- Name: COLUMN proveedor.celular; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1603,8 +1321,6 @@ COMMENT ON COLUMN proveedor.celular IS 'N° de Celular del Proveedor';
 
 
 --
--- TOC entry 2967 (class 0 OID 0)
--- Dependencies: 188
 -- Name: COLUMN proveedor.telefono1; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1612,8 +1328,6 @@ COMMENT ON COLUMN proveedor.telefono1 IS 'N° de Telefono del Proveedor';
 
 
 --
--- TOC entry 2968 (class 0 OID 0)
--- Dependencies: 188
 -- Name: COLUMN proveedor.telefono2; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1621,8 +1335,6 @@ COMMENT ON COLUMN proveedor.telefono2 IS 'N° de Telefono del Proveedor';
 
 
 --
--- TOC entry 2969 (class 0 OID 0)
--- Dependencies: 188
 -- Name: COLUMN proveedor.fax; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1630,8 +1342,6 @@ COMMENT ON COLUMN proveedor.fax IS 'N° de Fax del Proveedor';
 
 
 --
--- TOC entry 2970 (class 0 OID 0)
--- Dependencies: 188
 -- Name: COLUMN proveedor.correo_electronico; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1639,8 +1349,6 @@ COMMENT ON COLUMN proveedor.correo_electronico IS 'Direccion de Correo Electroni
 
 
 --
--- TOC entry 2971 (class 0 OID 0)
--- Dependencies: 188
 -- Name: COLUMN proveedor.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1648,8 +1356,6 @@ COMMENT ON COLUMN proveedor.observacion IS 'Observacion';
 
 
 --
--- TOC entry 189 (class 1259 OID 397410)
--- Dependencies: 188 7
 -- Name: proveedor_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -1664,8 +1370,6 @@ CREATE SEQUENCE proveedor_id_seq
 ALTER TABLE public.proveedor_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 2972 (class 0 OID 0)
--- Dependencies: 189
 -- Name: proveedor_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -1673,8 +1377,6 @@ ALTER SEQUENCE proveedor_id_seq OWNED BY proveedor.id;
 
 
 --
--- TOC entry 190 (class 1259 OID 397412)
--- Dependencies: 2278 7
 -- Name: especialidad_medico; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -1688,8 +1390,6 @@ CREATE TABLE especialidad_medico (
 ALTER TABLE public.especialidad_medico OWNER TO arrozalba;
 
 --
--- TOC entry 2973 (class 0 OID 0)
--- Dependencies: 190
 -- Name: TABLE especialidad_medico; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1697,8 +1397,6 @@ COMMENT ON TABLE especialidad_medico IS 'Modelo para manipular la relacion espec
 
 
 --
--- TOC entry 2974 (class 0 OID 0)
--- Dependencies: 190
 -- Name: COLUMN especialidad_medico.medico_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1706,8 +1404,6 @@ COMMENT ON COLUMN especialidad_medico.medico_id IS 'ID del medico';
 
 
 --
--- TOC entry 2975 (class 0 OID 0)
--- Dependencies: 190
 -- Name: COLUMN especialidad_medico.especialidad_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1715,8 +1411,6 @@ COMMENT ON COLUMN especialidad_medico.especialidad_id IS 'ID de la especialidad'
 
 
 --
--- TOC entry 191 (class 1259 OID 397416)
--- Dependencies: 7 190
 -- Name: especialidad_medico_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -1731,8 +1425,6 @@ CREATE SEQUENCE especialidad_medico_id_seq
 ALTER TABLE public.especialidad_medico_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 2976 (class 0 OID 0)
--- Dependencies: 191
 -- Name: especialidad_medico_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -1740,8 +1432,6 @@ ALTER SEQUENCE especialidad_medico_id_seq OWNED BY especialidad_medico.id;
 
 
 --
--- TOC entry 192 (class 1259 OID 397418)
--- Dependencies: 7
 -- Name: estado; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -1756,8 +1446,6 @@ CREATE TABLE estado (
 ALTER TABLE public.estado OWNER TO arrozalba;
 
 --
--- TOC entry 2977 (class 0 OID 0)
--- Dependencies: 192
 -- Name: TABLE estado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1765,8 +1453,6 @@ COMMENT ON TABLE estado IS 'Modelo para manipular la relación Pais Estado';
 
 
 --
--- TOC entry 2978 (class 0 OID 0)
--- Dependencies: 192
 -- Name: COLUMN estado.codigo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1774,8 +1460,6 @@ COMMENT ON COLUMN estado.codigo IS 'Codigo Estado';
 
 
 --
--- TOC entry 2979 (class 0 OID 0)
--- Dependencies: 192
 -- Name: COLUMN estado.pais_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1783,8 +1467,6 @@ COMMENT ON COLUMN estado.pais_id IS 'Pais';
 
 
 --
--- TOC entry 2980 (class 0 OID 0)
--- Dependencies: 192
 -- Name: COLUMN estado.nombre; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1792,8 +1474,6 @@ COMMENT ON COLUMN estado.nombre IS 'Nombre Estado';
 
 
 --
--- TOC entry 193 (class 1259 OID 397421)
--- Dependencies: 7 192
 -- Name: estado_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -1808,8 +1488,6 @@ CREATE SEQUENCE estado_id_seq
 ALTER TABLE public.estado_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 2981 (class 0 OID 0)
--- Dependencies: 193
 -- Name: estado_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -1817,8 +1495,6 @@ ALTER SEQUENCE estado_id_seq OWNED BY estado.id;
 
 
 --
--- TOC entry 194 (class 1259 OID 397423)
--- Dependencies: 2280 2281 7
 -- Name: estado_usuario; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -1835,8 +1511,6 @@ CREATE TABLE estado_usuario (
 ALTER TABLE public.estado_usuario OWNER TO arrozalba;
 
 --
--- TOC entry 2982 (class 0 OID 0)
--- Dependencies: 194
 -- Name: TABLE estado_usuario; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1844,8 +1518,6 @@ COMMENT ON TABLE estado_usuario IS 'Modelo para manipular el estado de los usuar
 
 
 --
--- TOC entry 2983 (class 0 OID 0)
--- Dependencies: 194
 -- Name: COLUMN estado_usuario.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1853,8 +1525,6 @@ COMMENT ON COLUMN estado_usuario.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2984 (class 0 OID 0)
--- Dependencies: 194
 -- Name: COLUMN estado_usuario.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1862,8 +1532,6 @@ COMMENT ON COLUMN estado_usuario.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2985 (class 0 OID 0)
--- Dependencies: 194
 -- Name: COLUMN estado_usuario.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1871,8 +1539,6 @@ COMMENT ON COLUMN estado_usuario.fecha_modificado IS 'Fecha Modificacion del Reg
 
 
 --
--- TOC entry 2986 (class 0 OID 0)
--- Dependencies: 194
 -- Name: COLUMN estado_usuario.estado_usuario; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1880,8 +1546,6 @@ COMMENT ON COLUMN estado_usuario.estado_usuario IS 'ID Estado del usuario ';
 
 
 --
--- TOC entry 2987 (class 0 OID 0)
--- Dependencies: 194
 -- Name: COLUMN estado_usuario.descripcion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1889,8 +1553,6 @@ COMMENT ON COLUMN estado_usuario.descripcion IS 'Descripcion del estado del usua
 
 
 --
--- TOC entry 195 (class 1259 OID 397428)
--- Dependencies: 194 7
 -- Name: estado_usuario_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -1905,8 +1567,6 @@ CREATE SEQUENCE estado_usuario_id_seq
 ALTER TABLE public.estado_usuario_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 2988 (class 0 OID 0)
--- Dependencies: 195
 -- Name: estado_usuario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -1914,8 +1574,6 @@ ALTER SEQUENCE estado_usuario_id_seq OWNED BY estado_usuario.id;
 
 
 --
--- TOC entry 196 (class 1259 OID 397430)
--- Dependencies: 2283 2284 7
 -- Name: medicina; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -1932,8 +1590,6 @@ CREATE TABLE medicina (
 ALTER TABLE public.medicina OWNER TO arrozalba;
 
 --
--- TOC entry 2989 (class 0 OID 0)
--- Dependencies: 196
 -- Name: TABLE medicina; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1941,8 +1597,6 @@ COMMENT ON TABLE medicina IS 'Modelo para manipular las Medicina';
 
 
 --
--- TOC entry 2990 (class 0 OID 0)
--- Dependencies: 196
 -- Name: COLUMN medicina.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1950,8 +1604,6 @@ COMMENT ON COLUMN medicina.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2991 (class 0 OID 0)
--- Dependencies: 196
 -- Name: COLUMN medicina.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1959,8 +1611,6 @@ COMMENT ON COLUMN medicina.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2992 (class 0 OID 0)
--- Dependencies: 196
 -- Name: COLUMN medicina.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1968,8 +1618,6 @@ COMMENT ON COLUMN medicina.fecha_modificado IS 'Fecha Modificacion del Registro'
 
 
 --
--- TOC entry 2993 (class 0 OID 0)
--- Dependencies: 196
 -- Name: COLUMN medicina.descripcion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1977,8 +1625,6 @@ COMMENT ON COLUMN medicina.descripcion IS 'Descripcion de la Medicina';
 
 
 --
--- TOC entry 2994 (class 0 OID 0)
--- Dependencies: 196
 -- Name: COLUMN medicina.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -1986,8 +1632,6 @@ COMMENT ON COLUMN medicina.observacion IS 'Observacion de la Medicina';
 
 
 --
--- TOC entry 197 (class 1259 OID 397435)
--- Dependencies: 7 196
 -- Name: medicina_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -2002,8 +1646,6 @@ CREATE SEQUENCE medicina_id_seq
 ALTER TABLE public.medicina_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 2995 (class 0 OID 0)
--- Dependencies: 197
 -- Name: medicina_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -2011,8 +1653,6 @@ ALTER SEQUENCE medicina_id_seq OWNED BY medicina.id;
 
 
 --
--- TOC entry 198 (class 1259 OID 397437)
--- Dependencies: 2286 2287 2288 2289 7
 -- Name: medico; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -2040,8 +1680,6 @@ CREATE TABLE medico (
 ALTER TABLE public.medico OWNER TO arrozalba;
 
 --
--- TOC entry 2996 (class 0 OID 0)
--- Dependencies: 198
 -- Name: TABLE medico; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2049,8 +1687,6 @@ COMMENT ON TABLE medico IS 'Modelo para manipular los Medicos';
 
 
 --
--- TOC entry 2997 (class 0 OID 0)
--- Dependencies: 198
 -- Name: COLUMN medico.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2058,8 +1694,6 @@ COMMENT ON COLUMN medico.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 2998 (class 0 OID 0)
--- Dependencies: 198
 -- Name: COLUMN medico.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2067,8 +1701,6 @@ COMMENT ON COLUMN medico.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 2999 (class 0 OID 0)
--- Dependencies: 198
 -- Name: COLUMN medico.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2076,8 +1708,6 @@ COMMENT ON COLUMN medico.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- TOC entry 3000 (class 0 OID 0)
--- Dependencies: 198
 -- Name: COLUMN medico.nacionalidad; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2085,8 +1715,6 @@ COMMENT ON COLUMN medico.nacionalidad IS 'Nacionalidad del Medico';
 
 
 --
--- TOC entry 3001 (class 0 OID 0)
--- Dependencies: 198
 -- Name: COLUMN medico.cedula; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2094,8 +1722,6 @@ COMMENT ON COLUMN medico.cedula IS 'Numero de Cedula del Medico';
 
 
 --
--- TOC entry 3002 (class 0 OID 0)
--- Dependencies: 198
 -- Name: COLUMN medico.rmpps; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2103,8 +1729,6 @@ COMMENT ON COLUMN medico.rmpps IS 'Numero de Registro del MPPS del Medico';
 
 
 --
--- TOC entry 3003 (class 0 OID 0)
--- Dependencies: 198
 -- Name: COLUMN medico.rif; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2112,8 +1736,6 @@ COMMENT ON COLUMN medico.rif IS 'Numero de Rif del Medico';
 
 
 --
--- TOC entry 3004 (class 0 OID 0)
--- Dependencies: 198
 -- Name: COLUMN medico.nombre1; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2121,8 +1743,6 @@ COMMENT ON COLUMN medico.nombre1 IS 'Primer Nombre del Medico';
 
 
 --
--- TOC entry 3005 (class 0 OID 0)
--- Dependencies: 198
 -- Name: COLUMN medico.nombre2; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2130,8 +1750,6 @@ COMMENT ON COLUMN medico.nombre2 IS 'Segundo Nombre del Medico';
 
 
 --
--- TOC entry 3006 (class 0 OID 0)
--- Dependencies: 198
 -- Name: COLUMN medico.apellido1; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2139,8 +1757,6 @@ COMMENT ON COLUMN medico.apellido1 IS 'Primer apellido del Medico';
 
 
 --
--- TOC entry 3007 (class 0 OID 0)
--- Dependencies: 198
 -- Name: COLUMN medico.apellido2; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2148,8 +1764,6 @@ COMMENT ON COLUMN medico.apellido2 IS 'Segundo apellido del Medico';
 
 
 --
--- TOC entry 3008 (class 0 OID 0)
--- Dependencies: 198
 -- Name: COLUMN medico.sexo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2157,8 +1771,6 @@ COMMENT ON COLUMN medico.sexo IS 'Sexo del Medico';
 
 
 --
--- TOC entry 3009 (class 0 OID 0)
--- Dependencies: 198
 -- Name: COLUMN medico.celular; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2166,8 +1778,6 @@ COMMENT ON COLUMN medico.celular IS 'Numero Celular del Medico';
 
 
 --
--- TOC entry 3010 (class 0 OID 0)
--- Dependencies: 198
 -- Name: COLUMN medico.telefono; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2175,8 +1785,6 @@ COMMENT ON COLUMN medico.telefono IS 'Numero Telefono del Medico';
 
 
 --
--- TOC entry 3011 (class 0 OID 0)
--- Dependencies: 198
 -- Name: COLUMN medico.correo_electronico; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2184,8 +1792,6 @@ COMMENT ON COLUMN medico.correo_electronico IS 'Correo Electronico del medico';
 
 
 --
--- TOC entry 3012 (class 0 OID 0)
--- Dependencies: 198
 -- Name: COLUMN medico.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2193,8 +1799,6 @@ COMMENT ON COLUMN medico.observacion IS 'Observacion del Medico';
 
 
 --
--- TOC entry 199 (class 1259 OID 397444)
--- Dependencies: 198 7
 -- Name: medico_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -2209,8 +1813,6 @@ CREATE SEQUENCE medico_id_seq
 ALTER TABLE public.medico_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3013 (class 0 OID 0)
--- Dependencies: 199
 -- Name: medico_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -2218,8 +1820,6 @@ ALTER SEQUENCE medico_id_seq OWNED BY medico.id;
 
 
 --
--- TOC entry 200 (class 1259 OID 397446)
--- Dependencies: 2291 2292 2293 2294 2295 7
 -- Name: menu; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -2242,8 +1842,6 @@ CREATE TABLE menu (
 ALTER TABLE public.menu OWNER TO arrozalba;
 
 --
--- TOC entry 3014 (class 0 OID 0)
--- Dependencies: 200
 -- Name: TABLE menu; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2251,8 +1849,6 @@ COMMENT ON TABLE menu IS 'Modelo para manipular menus del sistema';
 
 
 --
--- TOC entry 3015 (class 0 OID 0)
--- Dependencies: 200
 -- Name: COLUMN menu.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2260,8 +1856,6 @@ COMMENT ON COLUMN menu.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 3016 (class 0 OID 0)
--- Dependencies: 200
 -- Name: COLUMN menu.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2269,8 +1863,6 @@ COMMENT ON COLUMN menu.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3017 (class 0 OID 0)
--- Dependencies: 200
 -- Name: COLUMN menu.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2278,8 +1870,6 @@ COMMENT ON COLUMN menu.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- TOC entry 3018 (class 0 OID 0)
--- Dependencies: 200
 -- Name: COLUMN menu.menu_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2287,8 +1877,6 @@ COMMENT ON COLUMN menu.menu_id IS 'ID menu padre';
 
 
 --
--- TOC entry 3019 (class 0 OID 0)
--- Dependencies: 200
 -- Name: COLUMN menu.recurso_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2296,8 +1884,6 @@ COMMENT ON COLUMN menu.recurso_id IS 'ID del recurso ';
 
 
 --
--- TOC entry 3020 (class 0 OID 0)
--- Dependencies: 200
 -- Name: COLUMN menu.menu; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2305,8 +1891,6 @@ COMMENT ON COLUMN menu.menu IS 'Texto a mostrar del menu';
 
 
 --
--- TOC entry 3021 (class 0 OID 0)
--- Dependencies: 200
 -- Name: COLUMN menu.url; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2314,8 +1898,6 @@ COMMENT ON COLUMN menu.url IS 'Url del menu';
 
 
 --
--- TOC entry 3022 (class 0 OID 0)
--- Dependencies: 200
 -- Name: COLUMN menu.posicion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2323,8 +1905,6 @@ COMMENT ON COLUMN menu.posicion IS 'Posicion del menu dentro de otros items';
 
 
 --
--- TOC entry 3023 (class 0 OID 0)
--- Dependencies: 200
 -- Name: COLUMN menu.icono; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2332,8 +1912,6 @@ COMMENT ON COLUMN menu.icono IS 'Icono a mostrar';
 
 
 --
--- TOC entry 3024 (class 0 OID 0)
--- Dependencies: 200
 -- Name: COLUMN menu.activo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2341,8 +1919,6 @@ COMMENT ON COLUMN menu.activo IS 'Estado del menu (Activo o Inactivo)';
 
 
 --
--- TOC entry 3025 (class 0 OID 0)
--- Dependencies: 200
 -- Name: COLUMN menu.visibilidad; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2350,8 +1926,6 @@ COMMENT ON COLUMN menu.visibilidad IS 'Indica si el menú se muestra en el backe
 
 
 --
--- TOC entry 201 (class 1259 OID 397454)
--- Dependencies: 200 7
 -- Name: menu_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -2366,8 +1940,6 @@ CREATE SEQUENCE menu_id_seq
 ALTER TABLE public.menu_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3026 (class 0 OID 0)
--- Dependencies: 201
 -- Name: menu_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -2375,8 +1947,6 @@ ALTER SEQUENCE menu_id_seq OWNED BY menu.id;
 
 
 --
--- TOC entry 202 (class 1259 OID 397456)
--- Dependencies: 7
 -- Name: municipio; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -2391,8 +1961,6 @@ CREATE TABLE municipio (
 ALTER TABLE public.municipio OWNER TO arrozalba;
 
 --
--- TOC entry 3027 (class 0 OID 0)
--- Dependencies: 202
 -- Name: TABLE municipio; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2400,8 +1968,6 @@ COMMENT ON TABLE municipio IS 'Modelo para manipular Municipios';
 
 
 --
--- TOC entry 3028 (class 0 OID 0)
--- Dependencies: 202
 -- Name: COLUMN municipio.estado_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2409,8 +1975,6 @@ COMMENT ON COLUMN municipio.estado_id IS 'Estado';
 
 
 --
--- TOC entry 3029 (class 0 OID 0)
--- Dependencies: 202
 -- Name: COLUMN municipio.codigo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2418,8 +1982,6 @@ COMMENT ON COLUMN municipio.codigo IS 'Codigo Municipio';
 
 
 --
--- TOC entry 3030 (class 0 OID 0)
--- Dependencies: 202
 -- Name: COLUMN municipio.nombre; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2427,8 +1989,6 @@ COMMENT ON COLUMN municipio.nombre IS 'Nombre Municipio';
 
 
 --
--- TOC entry 203 (class 1259 OID 397459)
--- Dependencies: 7 202
 -- Name: municipio_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -2443,8 +2003,6 @@ CREATE SEQUENCE municipio_id_seq
 ALTER TABLE public.municipio_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3031 (class 0 OID 0)
--- Dependencies: 203
 -- Name: municipio_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -2452,8 +2010,6 @@ ALTER SEQUENCE municipio_id_seq OWNED BY municipio.id;
 
 
 --
--- TOC entry 204 (class 1259 OID 397461)
--- Dependencies: 7
 -- Name: pais; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -2467,8 +2023,6 @@ CREATE TABLE pais (
 ALTER TABLE public.pais OWNER TO arrozalba;
 
 --
--- TOC entry 3032 (class 0 OID 0)
--- Dependencies: 204
 -- Name: TABLE pais; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2476,8 +2030,6 @@ COMMENT ON TABLE pais IS 'Modelo para manipular los Paises';
 
 
 --
--- TOC entry 3033 (class 0 OID 0)
--- Dependencies: 204
 -- Name: COLUMN pais.codigo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2485,8 +2037,6 @@ COMMENT ON COLUMN pais.codigo IS 'Codigo del Pais';
 
 
 --
--- TOC entry 3034 (class 0 OID 0)
--- Dependencies: 204
 -- Name: COLUMN pais.nombre; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2494,8 +2044,6 @@ COMMENT ON COLUMN pais.nombre IS 'Nombre Pais';
 
 
 --
--- TOC entry 205 (class 1259 OID 397464)
--- Dependencies: 204 7
 -- Name: pais_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -2510,8 +2058,6 @@ CREATE SEQUENCE pais_id_seq
 ALTER TABLE public.pais_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3035 (class 0 OID 0)
--- Dependencies: 205
 -- Name: pais_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -2519,8 +2065,6 @@ ALTER SEQUENCE pais_id_seq OWNED BY pais.id;
 
 
 --
--- TOC entry 206 (class 1259 OID 397466)
--- Dependencies: 7
 -- Name: parroquia; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -2534,8 +2078,6 @@ CREATE TABLE parroquia (
 ALTER TABLE public.parroquia OWNER TO arrozalba;
 
 --
--- TOC entry 3036 (class 0 OID 0)
--- Dependencies: 206
 -- Name: TABLE parroquia; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2543,8 +2085,6 @@ COMMENT ON TABLE parroquia IS 'Modelo para  manipular Parroquia';
 
 
 --
--- TOC entry 3037 (class 0 OID 0)
--- Dependencies: 206
 -- Name: COLUMN parroquia.nombre; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2552,8 +2092,6 @@ COMMENT ON COLUMN parroquia.nombre IS 'Parroquia';
 
 
 --
--- TOC entry 3038 (class 0 OID 0)
--- Dependencies: 206
 -- Name: COLUMN parroquia.municipio_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2561,8 +2099,6 @@ COMMENT ON COLUMN parroquia.municipio_id IS 'Municipio';
 
 
 --
--- TOC entry 207 (class 1259 OID 397469)
--- Dependencies: 206 7
 -- Name: parroquia_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -2577,8 +2113,6 @@ CREATE SEQUENCE parroquia_id_seq
 ALTER TABLE public.parroquia_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3039 (class 0 OID 0)
--- Dependencies: 207
 -- Name: parroquia_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -2586,8 +2120,6 @@ ALTER SEQUENCE parroquia_id_seq OWNED BY parroquia.id;
 
 
 --
--- TOC entry 210 (class 1259 OID 397478)
--- Dependencies: 2303 2304 7
 -- Name: patologia; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -2606,8 +2138,6 @@ CREATE TABLE patologia (
 ALTER TABLE public.patologia OWNER TO arrozalba;
 
 --
--- TOC entry 3040 (class 0 OID 0)
--- Dependencies: 210
 -- Name: TABLE patologia; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2615,8 +2145,6 @@ COMMENT ON TABLE patologia IS 'Modelo para manipular las Patologias';
 
 
 --
--- TOC entry 3041 (class 0 OID 0)
--- Dependencies: 210
 -- Name: COLUMN patologia.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2624,8 +2152,6 @@ COMMENT ON COLUMN patologia.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 3042 (class 0 OID 0)
--- Dependencies: 210
 -- Name: COLUMN patologia.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2633,8 +2159,6 @@ COMMENT ON COLUMN patologia.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3043 (class 0 OID 0)
--- Dependencies: 210
 -- Name: COLUMN patologia.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2642,8 +2166,6 @@ COMMENT ON COLUMN patologia.fecha_modificado IS 'Fecha Modificacion del Registro
 
 
 --
--- TOC entry 3044 (class 0 OID 0)
--- Dependencies: 210
 -- Name: COLUMN patologia.categoria; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2651,8 +2173,6 @@ COMMENT ON COLUMN patologia.categoria IS 'Categoria de la Patologia';
 
 
 --
--- TOC entry 3045 (class 0 OID 0)
--- Dependencies: 210
 -- Name: COLUMN patologia.codigo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2660,8 +2180,6 @@ COMMENT ON COLUMN patologia.codigo IS 'Descripcion de la Patologia';
 
 
 --
--- TOC entry 3046 (class 0 OID 0)
--- Dependencies: 210
 -- Name: COLUMN patologia.descripcion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2669,8 +2187,6 @@ COMMENT ON COLUMN patologia.descripcion IS 'Descripcion de la Patologia';
 
 
 --
--- TOC entry 3047 (class 0 OID 0)
--- Dependencies: 210
 -- Name: COLUMN patologia.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2678,8 +2194,6 @@ COMMENT ON COLUMN patologia.observacion IS 'Observacion de la Patologia';
 
 
 --
--- TOC entry 208 (class 1259 OID 397471)
--- Dependencies: 2300 2301 7
 -- Name: patologia_categoria; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -2698,8 +2212,6 @@ CREATE TABLE patologia_categoria (
 ALTER TABLE public.patologia_categoria OWNER TO arrozalba;
 
 --
--- TOC entry 3048 (class 0 OID 0)
--- Dependencies: 208
 -- Name: TABLE patologia_categoria; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2707,8 +2219,6 @@ COMMENT ON TABLE patologia_categoria IS 'Modelo para manipular las patologia_cat
 
 
 --
--- TOC entry 3049 (class 0 OID 0)
--- Dependencies: 208
 -- Name: COLUMN patologia_categoria.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2716,8 +2226,6 @@ COMMENT ON COLUMN patologia_categoria.usuario_id IS 'Usuario Editor del Registro
 
 
 --
--- TOC entry 3050 (class 0 OID 0)
--- Dependencies: 208
 -- Name: COLUMN patologia_categoria.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2725,8 +2233,6 @@ COMMENT ON COLUMN patologia_categoria.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3051 (class 0 OID 0)
--- Dependencies: 208
 -- Name: COLUMN patologia_categoria.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2734,8 +2240,6 @@ COMMENT ON COLUMN patologia_categoria.fecha_modificado IS 'Fecha Modificacion de
 
 
 --
--- TOC entry 3052 (class 0 OID 0)
--- Dependencies: 208
 -- Name: COLUMN patologia_categoria.activo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2743,8 +2247,6 @@ COMMENT ON COLUMN patologia_categoria.activo IS 'Establece si la Categoria en Ge
 
 
 --
--- TOC entry 3053 (class 0 OID 0)
--- Dependencies: 208
 -- Name: COLUMN patologia_categoria.padre_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2752,8 +2254,6 @@ COMMENT ON COLUMN patologia_categoria.padre_id IS 'ID Padre de la categoria';
 
 
 --
--- TOC entry 3054 (class 0 OID 0)
--- Dependencies: 208
 -- Name: COLUMN patologia_categoria.descripcion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2761,8 +2261,6 @@ COMMENT ON COLUMN patologia_categoria.descripcion IS 'Descripcion de la patologi
 
 
 --
--- TOC entry 3055 (class 0 OID 0)
--- Dependencies: 208
 -- Name: COLUMN patologia_categoria.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2770,8 +2268,6 @@ COMMENT ON COLUMN patologia_categoria.observacion IS 'Observacion de la patologi
 
 
 --
--- TOC entry 209 (class 1259 OID 397476)
--- Dependencies: 7 208
 -- Name: patologia_categoria_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -2786,8 +2282,6 @@ CREATE SEQUENCE patologia_categoria_id_seq
 ALTER TABLE public.patologia_categoria_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3056 (class 0 OID 0)
--- Dependencies: 209
 -- Name: patologia_categoria_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -2795,8 +2289,6 @@ ALTER SEQUENCE patologia_categoria_id_seq OWNED BY patologia_categoria.id;
 
 
 --
--- TOC entry 211 (class 1259 OID 397483)
--- Dependencies: 7 210
 -- Name: patologia_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -2811,8 +2303,6 @@ CREATE SEQUENCE patologia_id_seq
 ALTER TABLE public.patologia_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3057 (class 0 OID 0)
--- Dependencies: 211
 -- Name: patologia_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -2820,8 +2310,6 @@ ALTER SEQUENCE patologia_id_seq OWNED BY patologia.id;
 
 
 --
--- TOC entry 212 (class 1259 OID 397485)
--- Dependencies: 2306 2307 2308 2309 7
 -- Name: perfil; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -2839,8 +2327,6 @@ CREATE TABLE perfil (
 ALTER TABLE public.perfil OWNER TO arrozalba;
 
 --
--- TOC entry 3058 (class 0 OID 0)
--- Dependencies: 212
 -- Name: TABLE perfil; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2848,8 +2334,6 @@ COMMENT ON TABLE perfil IS 'Modelo para manipular perfiles del sistema';
 
 
 --
--- TOC entry 3059 (class 0 OID 0)
--- Dependencies: 212
 -- Name: COLUMN perfil.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2857,8 +2341,6 @@ COMMENT ON COLUMN perfil.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 3060 (class 0 OID 0)
--- Dependencies: 212
 -- Name: COLUMN perfil.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2866,8 +2348,6 @@ COMMENT ON COLUMN perfil.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3061 (class 0 OID 0)
--- Dependencies: 212
 -- Name: COLUMN perfil.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2875,8 +2355,6 @@ COMMENT ON COLUMN perfil.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- TOC entry 3062 (class 0 OID 0)
--- Dependencies: 212
 -- Name: COLUMN perfil.perfil; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2884,8 +2362,6 @@ COMMENT ON COLUMN perfil.perfil IS 'Nombre del Perfil';
 
 
 --
--- TOC entry 3063 (class 0 OID 0)
--- Dependencies: 212
 -- Name: COLUMN perfil.estado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2893,8 +2369,6 @@ COMMENT ON COLUMN perfil.estado IS 'Indica si el perfil esta activo o inactivo';
 
 
 --
--- TOC entry 3064 (class 0 OID 0)
--- Dependencies: 212
 -- Name: COLUMN perfil.plantilla; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2902,8 +2376,6 @@ COMMENT ON COLUMN perfil.plantilla IS 'Plantilla para usar en el sistema';
 
 
 --
--- TOC entry 213 (class 1259 OID 397492)
--- Dependencies: 7 212
 -- Name: perfil_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -2918,8 +2390,6 @@ CREATE SEQUENCE perfil_id_seq
 ALTER TABLE public.perfil_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3065 (class 0 OID 0)
--- Dependencies: 213
 -- Name: perfil_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -2927,8 +2397,6 @@ ALTER SEQUENCE perfil_id_seq OWNED BY perfil.id;
 
 
 --
--- TOC entry 214 (class 1259 OID 397494)
--- Dependencies: 2311 2312 2313 2314 2315 2316 2317 2318 7
 -- Name: persona; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -2937,7 +2405,7 @@ CREATE TABLE persona (
     usuario_id integer,
     fecha_registro timestamp with time zone DEFAULT now() NOT NULL,
     fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
-    cedula character varying(8) NOT NULL,
+    cedula character varying(11) NOT NULL,
     nombre1 character varying(30) NOT NULL,
     nombre2 character varying(30),
     apellido1 character varying(30) NOT NULL,
@@ -2962,8 +2430,6 @@ CREATE TABLE persona (
 ALTER TABLE public.persona OWNER TO arrozalba;
 
 --
--- TOC entry 3066 (class 0 OID 0)
--- Dependencies: 214
 -- Name: TABLE persona; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2971,8 +2437,6 @@ COMMENT ON TABLE persona IS 'Modelo para manipular las diferentes Personas';
 
 
 --
--- TOC entry 3067 (class 0 OID 0)
--- Dependencies: 214
 -- Name: COLUMN persona.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2980,8 +2444,6 @@ COMMENT ON COLUMN persona.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 3068 (class 0 OID 0)
--- Dependencies: 214
 -- Name: COLUMN persona.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2989,8 +2451,6 @@ COMMENT ON COLUMN persona.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3069 (class 0 OID 0)
--- Dependencies: 214
 -- Name: COLUMN persona.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -2998,8 +2458,6 @@ COMMENT ON COLUMN persona.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- TOC entry 3070 (class 0 OID 0)
--- Dependencies: 214
 -- Name: COLUMN persona.cedula; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3007,8 +2465,6 @@ COMMENT ON COLUMN persona.cedula IS 'N° Cedula persona';
 
 
 --
--- TOC entry 3071 (class 0 OID 0)
--- Dependencies: 214
 -- Name: COLUMN persona.nombre1; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3016,8 +2472,6 @@ COMMENT ON COLUMN persona.nombre1 IS 'N° Primer Nombre de la persona';
 
 
 --
--- TOC entry 3072 (class 0 OID 0)
--- Dependencies: 214
 -- Name: COLUMN persona.nombre2; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3025,8 +2479,6 @@ COMMENT ON COLUMN persona.nombre2 IS 'N° Segundo Nombre de la persona';
 
 
 --
--- TOC entry 3073 (class 0 OID 0)
--- Dependencies: 214
 -- Name: COLUMN persona.apellido1; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3034,8 +2486,6 @@ COMMENT ON COLUMN persona.apellido1 IS 'N° Primer Apellido del persona';
 
 
 --
--- TOC entry 3074 (class 0 OID 0)
--- Dependencies: 214
 -- Name: COLUMN persona.apellido2; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3043,8 +2493,6 @@ COMMENT ON COLUMN persona.apellido2 IS 'N° Segundo Apellido del persona';
 
 
 --
--- TOC entry 3075 (class 0 OID 0)
--- Dependencies: 214
 -- Name: COLUMN persona.nacionalidad; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3052,8 +2500,6 @@ COMMENT ON COLUMN persona.nacionalidad IS 'Nacionalidad de la persona';
 
 
 --
--- TOC entry 3076 (class 0 OID 0)
--- Dependencies: 214
 -- Name: COLUMN persona.sexo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3061,8 +2507,6 @@ COMMENT ON COLUMN persona.sexo IS 'N° Sexo del persona';
 
 
 --
--- TOC entry 3077 (class 0 OID 0)
--- Dependencies: 214
 -- Name: COLUMN persona.fecha_nacimiento; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3070,8 +2514,6 @@ COMMENT ON COLUMN persona.fecha_nacimiento IS 'Fecha de Nacimiento del persona';
 
 
 --
--- TOC entry 3078 (class 0 OID 0)
--- Dependencies: 214
 -- Name: COLUMN persona.pais_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3079,8 +2521,6 @@ COMMENT ON COLUMN persona.pais_id IS 'Pais Origen del persona';
 
 
 --
--- TOC entry 3079 (class 0 OID 0)
--- Dependencies: 214
 -- Name: COLUMN persona.estado_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3088,8 +2528,6 @@ COMMENT ON COLUMN persona.estado_id IS 'Estado de Origen del persona';
 
 
 --
--- TOC entry 3080 (class 0 OID 0)
--- Dependencies: 214
 -- Name: COLUMN persona.municipio_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3097,8 +2535,6 @@ COMMENT ON COLUMN persona.municipio_id IS 'Municipio de Origen del persona';
 
 
 --
--- TOC entry 3081 (class 0 OID 0)
--- Dependencies: 214
 -- Name: COLUMN persona.parroquia_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3106,8 +2542,6 @@ COMMENT ON COLUMN persona.parroquia_id IS 'Parroquia de Origen del persona';
 
 
 --
--- TOC entry 3082 (class 0 OID 0)
--- Dependencies: 214
 -- Name: COLUMN persona.direccion_habitacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3115,8 +2549,6 @@ COMMENT ON COLUMN persona.direccion_habitacion IS 'Direccion de Habitacion del p
 
 
 --
--- TOC entry 3083 (class 0 OID 0)
--- Dependencies: 214
 -- Name: COLUMN persona.estado_civil; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3124,8 +2556,6 @@ COMMENT ON COLUMN persona.estado_civil IS 'Estado Civil del persona';
 
 
 --
--- TOC entry 3084 (class 0 OID 0)
--- Dependencies: 214
 -- Name: COLUMN persona.celular; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3133,8 +2563,6 @@ COMMENT ON COLUMN persona.celular IS 'N° de Celular del persona';
 
 
 --
--- TOC entry 3085 (class 0 OID 0)
--- Dependencies: 214
 -- Name: COLUMN persona.telefono; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3142,8 +2570,6 @@ COMMENT ON COLUMN persona.telefono IS 'N° de Telefono del persona';
 
 
 --
--- TOC entry 3086 (class 0 OID 0)
--- Dependencies: 214
 -- Name: COLUMN persona.correo_electronico; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3151,8 +2577,6 @@ COMMENT ON COLUMN persona.correo_electronico IS 'Direccion de Correo Electronico
 
 
 --
--- TOC entry 3087 (class 0 OID 0)
--- Dependencies: 214
 -- Name: COLUMN persona.grupo_sanguineo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3160,8 +2584,6 @@ COMMENT ON COLUMN persona.grupo_sanguineo IS 'Grupo Sanguineo del persona';
 
 
 --
--- TOC entry 215 (class 1259 OID 397508)
--- Dependencies: 7 214
 -- Name: persona_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -3176,8 +2598,6 @@ CREATE SEQUENCE persona_id_seq
 ALTER TABLE public.persona_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3088 (class 0 OID 0)
--- Dependencies: 215
 -- Name: persona_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -3185,8 +2605,6 @@ ALTER SEQUENCE persona_id_seq OWNED BY persona.id;
 
 
 --
--- TOC entry 216 (class 1259 OID 397510)
--- Dependencies: 2320 2321 7
 -- Name: profesion; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -3203,8 +2621,6 @@ CREATE TABLE profesion (
 ALTER TABLE public.profesion OWNER TO arrozalba;
 
 --
--- TOC entry 3089 (class 0 OID 0)
--- Dependencies: 216
 -- Name: TABLE profesion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3212,8 +2628,6 @@ COMMENT ON TABLE profesion IS 'Modelo para manipular las diferentes Profesiones'
 
 
 --
--- TOC entry 3090 (class 0 OID 0)
--- Dependencies: 216
 -- Name: COLUMN profesion.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3221,8 +2635,6 @@ COMMENT ON COLUMN profesion.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 3091 (class 0 OID 0)
--- Dependencies: 216
 -- Name: COLUMN profesion.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3230,8 +2642,6 @@ COMMENT ON COLUMN profesion.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3092 (class 0 OID 0)
--- Dependencies: 216
 -- Name: COLUMN profesion.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3239,8 +2649,6 @@ COMMENT ON COLUMN profesion.fecha_modificado IS 'Fecha Modificacion del Registro
 
 
 --
--- TOC entry 3093 (class 0 OID 0)
--- Dependencies: 216
 -- Name: COLUMN profesion.nombre; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3248,8 +2656,6 @@ COMMENT ON COLUMN profesion.nombre IS 'Nombre de la Profesion';
 
 
 --
--- TOC entry 3094 (class 0 OID 0)
--- Dependencies: 216
 -- Name: COLUMN profesion.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3257,8 +2663,6 @@ COMMENT ON COLUMN profesion.observacion IS 'Observacion';
 
 
 --
--- TOC entry 217 (class 1259 OID 397515)
--- Dependencies: 7 216
 -- Name: profesion_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -3273,8 +2677,6 @@ CREATE SEQUENCE profesion_id_seq
 ALTER TABLE public.profesion_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3095 (class 0 OID 0)
--- Dependencies: 217
 -- Name: profesion_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -3282,8 +2684,6 @@ ALTER SEQUENCE profesion_id_seq OWNED BY profesion.id;
 
 
 --
--- TOC entry 218 (class 1259 OID 397517)
--- Dependencies: 2323 7
 -- Name: proveedor_medico; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -3297,8 +2697,6 @@ CREATE TABLE proveedor_medico (
 ALTER TABLE public.proveedor_medico OWNER TO arrozalba;
 
 --
--- TOC entry 3096 (class 0 OID 0)
--- Dependencies: 218
 -- Name: TABLE proveedor_medico; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3306,8 +2704,6 @@ COMMENT ON TABLE proveedor_medico IS 'Modelo para manipular la relacion proveedo
 
 
 --
--- TOC entry 3097 (class 0 OID 0)
--- Dependencies: 218
 -- Name: COLUMN proveedor_medico.medico_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3315,8 +2711,6 @@ COMMENT ON COLUMN proveedor_medico.medico_id IS 'ID del medico';
 
 
 --
--- TOC entry 3098 (class 0 OID 0)
--- Dependencies: 218
 -- Name: COLUMN proveedor_medico.proveedor_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3324,8 +2718,6 @@ COMMENT ON COLUMN proveedor_medico.proveedor_id IS 'ID del proveedor';
 
 
 --
--- TOC entry 219 (class 1259 OID 397521)
--- Dependencies: 218 7
 -- Name: proveedor_medico_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -3340,8 +2732,6 @@ CREATE SEQUENCE proveedor_medico_id_seq
 ALTER TABLE public.proveedor_medico_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3099 (class 0 OID 0)
--- Dependencies: 219
 -- Name: proveedor_medico_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -3349,8 +2739,6 @@ ALTER SEQUENCE proveedor_medico_id_seq OWNED BY proveedor_medico.id;
 
 
 --
--- TOC entry 220 (class 1259 OID 397523)
--- Dependencies: 2324 2325 7
 -- Name: recaudo; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -3368,8 +2756,6 @@ CREATE TABLE recaudo (
 ALTER TABLE public.recaudo OWNER TO arrozalba;
 
 --
--- TOC entry 3100 (class 0 OID 0)
--- Dependencies: 220
 -- Name: TABLE recaudo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3377,8 +2763,6 @@ COMMENT ON TABLE recaudo IS 'Modelo para manipular los diferentes Recaudos';
 
 
 --
--- TOC entry 3101 (class 0 OID 0)
--- Dependencies: 220
 -- Name: COLUMN recaudo.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3386,8 +2770,6 @@ COMMENT ON COLUMN recaudo.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 3102 (class 0 OID 0)
--- Dependencies: 220
 -- Name: COLUMN recaudo.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3395,8 +2777,6 @@ COMMENT ON COLUMN recaudo.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3103 (class 0 OID 0)
--- Dependencies: 220
 -- Name: COLUMN recaudo.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3404,8 +2784,6 @@ COMMENT ON COLUMN recaudo.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- TOC entry 3104 (class 0 OID 0)
--- Dependencies: 220
 -- Name: COLUMN recaudo.nombre; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3413,8 +2791,6 @@ COMMENT ON COLUMN recaudo.nombre IS 'Nombre del Recaudo';
 
 
 --
--- TOC entry 3105 (class 0 OID 0)
--- Dependencies: 220
 -- Name: COLUMN recaudo.tipo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3422,8 +2798,6 @@ COMMENT ON COLUMN recaudo.tipo IS 'Tipo de Recaudo';
 
 
 --
--- TOC entry 3106 (class 0 OID 0)
--- Dependencies: 220
 -- Name: COLUMN recaudo.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3431,8 +2805,6 @@ COMMENT ON COLUMN recaudo.observacion IS 'Observacion';
 
 
 --
--- TOC entry 221 (class 1259 OID 397528)
--- Dependencies: 2327 7
 -- Name: recaudo_beneficiario; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -3447,8 +2819,6 @@ CREATE TABLE recaudo_beneficiario (
 ALTER TABLE public.recaudo_beneficiario OWNER TO arrozalba;
 
 --
--- TOC entry 3107 (class 0 OID 0)
--- Dependencies: 221
 -- Name: TABLE recaudo_beneficiario; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3456,8 +2826,6 @@ COMMENT ON TABLE recaudo_beneficiario IS 'Modelo para manipular la relacion Reca
 
 
 --
--- TOC entry 3108 (class 0 OID 0)
--- Dependencies: 221
 -- Name: COLUMN recaudo_beneficiario.beneficiario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3465,8 +2833,6 @@ COMMENT ON COLUMN recaudo_beneficiario.beneficiario_id IS 'ID del Beneficiario';
 
 
 --
--- TOC entry 3109 (class 0 OID 0)
--- Dependencies: 221
 -- Name: COLUMN recaudo_beneficiario.recaudo_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3474,8 +2840,6 @@ COMMENT ON COLUMN recaudo_beneficiario.recaudo_id IS 'ID del Recaudo';
 
 
 --
--- TOC entry 3110 (class 0 OID 0)
--- Dependencies: 221
 -- Name: COLUMN recaudo_beneficiario.estado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3483,8 +2847,6 @@ COMMENT ON COLUMN recaudo_beneficiario.estado IS 'Estado del Recaudo';
 
 
 --
--- TOC entry 222 (class 1259 OID 397532)
--- Dependencies: 7 221
 -- Name: recaudo_beneficiario_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -3499,8 +2861,6 @@ CREATE SEQUENCE recaudo_beneficiario_id_seq
 ALTER TABLE public.recaudo_beneficiario_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3111 (class 0 OID 0)
--- Dependencies: 222
 -- Name: recaudo_beneficiario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -3508,8 +2868,6 @@ ALTER SEQUENCE recaudo_beneficiario_id_seq OWNED BY recaudo_beneficiario.id;
 
 
 --
--- TOC entry 223 (class 1259 OID 397534)
--- Dependencies: 7 220
 -- Name: recaudo_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -3524,8 +2882,6 @@ CREATE SEQUENCE recaudo_id_seq
 ALTER TABLE public.recaudo_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3112 (class 0 OID 0)
--- Dependencies: 223
 -- Name: recaudo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -3533,8 +2889,6 @@ ALTER SEQUENCE recaudo_id_seq OWNED BY recaudo.id;
 
 
 --
--- TOC entry 224 (class 1259 OID 397536)
--- Dependencies: 7
 -- Name: recaudo_reembolso; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -3549,8 +2903,6 @@ CREATE TABLE recaudo_reembolso (
 ALTER TABLE public.recaudo_reembolso OWNER TO arrozalba;
 
 --
--- TOC entry 3113 (class 0 OID 0)
--- Dependencies: 224
 -- Name: TABLE recaudo_reembolso; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3558,8 +2910,6 @@ COMMENT ON TABLE recaudo_reembolso IS 'Modelo para manipular la relacion Recaudo
 
 
 --
--- TOC entry 3114 (class 0 OID 0)
--- Dependencies: 224
 -- Name: COLUMN recaudo_reembolso.recaudo_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3567,8 +2917,6 @@ COMMENT ON COLUMN recaudo_reembolso.recaudo_id IS 'ID del Recaudo';
 
 
 --
--- TOC entry 3115 (class 0 OID 0)
--- Dependencies: 224
 -- Name: COLUMN recaudo_reembolso.codigo_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3576,8 +2924,6 @@ COMMENT ON COLUMN recaudo_reembolso.codigo_solicitud IS 'Codigo de la Solicitud'
 
 
 --
--- TOC entry 3116 (class 0 OID 0)
--- Dependencies: 224
 -- Name: COLUMN recaudo_reembolso.estado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3585,8 +2931,6 @@ COMMENT ON COLUMN recaudo_reembolso.estado IS 'Estado del Recaudo';
 
 
 --
--- TOC entry 225 (class 1259 OID 397539)
--- Dependencies: 7 224
 -- Name: recaudo_reembolso_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -3601,8 +2945,6 @@ CREATE SEQUENCE recaudo_reembolso_id_seq
 ALTER TABLE public.recaudo_reembolso_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3117 (class 0 OID 0)
--- Dependencies: 225
 -- Name: recaudo_reembolso_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -3610,8 +2952,6 @@ ALTER SEQUENCE recaudo_reembolso_id_seq OWNED BY recaudo_reembolso.id;
 
 
 --
--- TOC entry 226 (class 1259 OID 397541)
--- Dependencies: 7
 -- Name: recaudo_solicitud_medicina; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -3626,8 +2966,6 @@ CREATE TABLE recaudo_solicitud_medicina (
 ALTER TABLE public.recaudo_solicitud_medicina OWNER TO arrozalba;
 
 --
--- TOC entry 3118 (class 0 OID 0)
--- Dependencies: 226
 -- Name: TABLE recaudo_solicitud_medicina; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3635,8 +2973,6 @@ COMMENT ON TABLE recaudo_solicitud_medicina IS 'Modelo para manipular la relacio
 
 
 --
--- TOC entry 3119 (class 0 OID 0)
--- Dependencies: 226
 -- Name: COLUMN recaudo_solicitud_medicina.recaudo_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3644,8 +2980,6 @@ COMMENT ON COLUMN recaudo_solicitud_medicina.recaudo_id IS 'ID del Recaudo';
 
 
 --
--- TOC entry 3120 (class 0 OID 0)
--- Dependencies: 226
 -- Name: COLUMN recaudo_solicitud_medicina.codigo_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3653,8 +2987,6 @@ COMMENT ON COLUMN recaudo_solicitud_medicina.codigo_solicitud IS 'Codigo de la S
 
 
 --
--- TOC entry 3121 (class 0 OID 0)
--- Dependencies: 226
 -- Name: COLUMN recaudo_solicitud_medicina.estado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3662,8 +2994,6 @@ COMMENT ON COLUMN recaudo_solicitud_medicina.estado IS 'Estado del Recaudo';
 
 
 --
--- TOC entry 227 (class 1259 OID 397544)
--- Dependencies: 7 226
 -- Name: recaudo_solicitud_medicina_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -3678,8 +3008,6 @@ CREATE SEQUENCE recaudo_solicitud_medicina_id_seq
 ALTER TABLE public.recaudo_solicitud_medicina_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3122 (class 0 OID 0)
--- Dependencies: 227
 -- Name: recaudo_solicitud_medicina_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -3687,8 +3015,6 @@ ALTER SEQUENCE recaudo_solicitud_medicina_id_seq OWNED BY recaudo_solicitud_medi
 
 
 --
--- TOC entry 228 (class 1259 OID 397546)
--- Dependencies: 7
 -- Name: recaudo_solicitud_servicio; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -3703,8 +3029,6 @@ CREATE TABLE recaudo_solicitud_servicio (
 ALTER TABLE public.recaudo_solicitud_servicio OWNER TO arrozalba;
 
 --
--- TOC entry 3123 (class 0 OID 0)
--- Dependencies: 228
 -- Name: TABLE recaudo_solicitud_servicio; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3712,8 +3036,6 @@ COMMENT ON TABLE recaudo_solicitud_servicio IS 'Modelo para manipular la relacio
 
 
 --
--- TOC entry 3124 (class 0 OID 0)
--- Dependencies: 228
 -- Name: COLUMN recaudo_solicitud_servicio.recaudo_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3721,8 +3043,6 @@ COMMENT ON COLUMN recaudo_solicitud_servicio.recaudo_id IS 'ID del Recaudo';
 
 
 --
--- TOC entry 3125 (class 0 OID 0)
--- Dependencies: 228
 -- Name: COLUMN recaudo_solicitud_servicio.codigo_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3730,8 +3050,6 @@ COMMENT ON COLUMN recaudo_solicitud_servicio.codigo_solicitud IS 'Codigo de la S
 
 
 --
--- TOC entry 3126 (class 0 OID 0)
--- Dependencies: 228
 -- Name: COLUMN recaudo_solicitud_servicio.estado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3739,8 +3057,6 @@ COMMENT ON COLUMN recaudo_solicitud_servicio.estado IS 'Estado del Recaudo';
 
 
 --
--- TOC entry 229 (class 1259 OID 397549)
--- Dependencies: 7 228
 -- Name: recaudo_solicitud_servicio_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -3755,8 +3071,6 @@ CREATE SEQUENCE recaudo_solicitud_servicio_id_seq
 ALTER TABLE public.recaudo_solicitud_servicio_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3127 (class 0 OID 0)
--- Dependencies: 229
 -- Name: recaudo_solicitud_servicio_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -3764,8 +3078,6 @@ ALTER SEQUENCE recaudo_solicitud_servicio_id_seq OWNED BY recaudo_solicitud_serv
 
 
 --
--- TOC entry 230 (class 1259 OID 397551)
--- Dependencies: 7
 -- Name: recaudo_titular; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -3780,8 +3092,6 @@ CREATE TABLE recaudo_titular (
 ALTER TABLE public.recaudo_titular OWNER TO arrozalba;
 
 --
--- TOC entry 3128 (class 0 OID 0)
--- Dependencies: 230
 -- Name: TABLE recaudo_titular; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3789,8 +3099,6 @@ COMMENT ON TABLE recaudo_titular IS 'Modelo para manipular la relacion Recaudo-T
 
 
 --
--- TOC entry 3129 (class 0 OID 0)
--- Dependencies: 230
 -- Name: COLUMN recaudo_titular.titular_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3798,8 +3106,6 @@ COMMENT ON COLUMN recaudo_titular.titular_id IS 'ID del Titular';
 
 
 --
--- TOC entry 3130 (class 0 OID 0)
--- Dependencies: 230
 -- Name: COLUMN recaudo_titular.recaudo_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3807,8 +3113,6 @@ COMMENT ON COLUMN recaudo_titular.recaudo_id IS 'ID del Recaudo';
 
 
 --
--- TOC entry 3131 (class 0 OID 0)
--- Dependencies: 230
 -- Name: COLUMN recaudo_titular.estado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3816,8 +3120,6 @@ COMMENT ON COLUMN recaudo_titular.estado IS 'Estado del Recaudo';
 
 
 --
--- TOC entry 231 (class 1259 OID 397554)
--- Dependencies: 7 230
 -- Name: recaudo_titular_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -3832,8 +3134,6 @@ CREATE SEQUENCE recaudo_titular_id_seq
 ALTER TABLE public.recaudo_titular_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3132 (class 0 OID 0)
--- Dependencies: 231
 -- Name: recaudo_titular_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -3841,8 +3141,6 @@ ALTER SEQUENCE recaudo_titular_id_seq OWNED BY recaudo_titular.id;
 
 
 --
--- TOC entry 232 (class 1259 OID 397556)
--- Dependencies: 2332 2333 2334 7
 -- Name: recurso; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -3863,8 +3161,6 @@ CREATE TABLE recurso (
 ALTER TABLE public.recurso OWNER TO arrozalba;
 
 --
--- TOC entry 3133 (class 0 OID 0)
--- Dependencies: 232
 -- Name: TABLE recurso; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3872,8 +3168,6 @@ COMMENT ON TABLE recurso IS 'Modelo para manipular recursos (controladores)';
 
 
 --
--- TOC entry 3134 (class 0 OID 0)
--- Dependencies: 232
 -- Name: COLUMN recurso.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3881,8 +3175,6 @@ COMMENT ON COLUMN recurso.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 3135 (class 0 OID 0)
--- Dependencies: 232
 -- Name: COLUMN recurso.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3890,8 +3182,6 @@ COMMENT ON COLUMN recurso.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3136 (class 0 OID 0)
--- Dependencies: 232
 -- Name: COLUMN recurso.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3899,8 +3189,6 @@ COMMENT ON COLUMN recurso.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- TOC entry 3137 (class 0 OID 0)
--- Dependencies: 232
 -- Name: COLUMN recurso.modulo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3908,8 +3196,6 @@ COMMENT ON COLUMN recurso.modulo IS 'Nombre del Modulo';
 
 
 --
--- TOC entry 3138 (class 0 OID 0)
--- Dependencies: 232
 -- Name: COLUMN recurso.controlador; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3917,8 +3203,6 @@ COMMENT ON COLUMN recurso.controlador IS 'Nombre del Controlador';
 
 
 --
--- TOC entry 3139 (class 0 OID 0)
--- Dependencies: 232
 -- Name: COLUMN recurso.accion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3926,8 +3210,6 @@ COMMENT ON COLUMN recurso.accion IS 'Nombre de la Accion';
 
 
 --
--- TOC entry 3140 (class 0 OID 0)
--- Dependencies: 232
 -- Name: COLUMN recurso.recurso; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3935,8 +3217,6 @@ COMMENT ON COLUMN recurso.recurso IS 'Nombre del recurso';
 
 
 --
--- TOC entry 3141 (class 0 OID 0)
--- Dependencies: 232
 -- Name: COLUMN recurso.descripcion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3944,8 +3224,6 @@ COMMENT ON COLUMN recurso.descripcion IS 'Descripcion del Recurso';
 
 
 --
--- TOC entry 3142 (class 0 OID 0)
--- Dependencies: 232
 -- Name: COLUMN recurso.activo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -3953,8 +3231,6 @@ COMMENT ON COLUMN recurso.activo IS 'Estado del Recurso';
 
 
 --
--- TOC entry 233 (class 1259 OID 397562)
--- Dependencies: 7 232
 -- Name: recurso_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -3969,8 +3245,6 @@ CREATE SEQUENCE recurso_id_seq
 ALTER TABLE public.recurso_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3143 (class 0 OID 0)
--- Dependencies: 233
 -- Name: recurso_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -3978,8 +3252,6 @@ ALTER SEQUENCE recurso_id_seq OWNED BY recurso.id;
 
 
 --
--- TOC entry 234 (class 1259 OID 397564)
--- Dependencies: 2336 2337 7
 -- Name: recurso_perfil; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -3996,8 +3268,6 @@ CREATE TABLE recurso_perfil (
 ALTER TABLE public.recurso_perfil OWNER TO arrozalba;
 
 --
--- TOC entry 3144 (class 0 OID 0)
--- Dependencies: 234
 -- Name: TABLE recurso_perfil; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4005,8 +3275,6 @@ COMMENT ON TABLE recurso_perfil IS 'Modelo para manipular relacion Recurso - Per
 
 
 --
--- TOC entry 3145 (class 0 OID 0)
--- Dependencies: 234
 -- Name: COLUMN recurso_perfil.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4014,8 +3282,6 @@ COMMENT ON COLUMN recurso_perfil.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 3146 (class 0 OID 0)
--- Dependencies: 234
 -- Name: COLUMN recurso_perfil.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4023,8 +3289,6 @@ COMMENT ON COLUMN recurso_perfil.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3147 (class 0 OID 0)
--- Dependencies: 234
 -- Name: COLUMN recurso_perfil.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4032,8 +3296,6 @@ COMMENT ON COLUMN recurso_perfil.fecha_modificado IS 'Fecha Modificacion del Reg
 
 
 --
--- TOC entry 3148 (class 0 OID 0)
--- Dependencies: 234
 -- Name: COLUMN recurso_perfil.recurso_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4041,8 +3303,6 @@ COMMENT ON COLUMN recurso_perfil.recurso_id IS 'ID del Recurso';
 
 
 --
--- TOC entry 3149 (class 0 OID 0)
--- Dependencies: 234
 -- Name: COLUMN recurso_perfil.perfil_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4050,8 +3310,6 @@ COMMENT ON COLUMN recurso_perfil.perfil_id IS 'ID del Perfil';
 
 
 --
--- TOC entry 235 (class 1259 OID 397569)
--- Dependencies: 7 234
 -- Name: recurso_perfil_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -4066,8 +3324,6 @@ CREATE SEQUENCE recurso_perfil_id_seq
 ALTER TABLE public.recurso_perfil_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3150 (class 0 OID 0)
--- Dependencies: 235
 -- Name: recurso_perfil_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -4075,8 +3331,6 @@ ALTER SEQUENCE recurso_perfil_id_seq OWNED BY recurso_perfil.id;
 
 
 --
--- TOC entry 236 (class 1259 OID 397571)
--- Dependencies: 2339 2340 2341 7
 -- Name: reembolso; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -4098,8 +3352,6 @@ CREATE TABLE reembolso (
 ALTER TABLE public.reembolso OWNER TO arrozalba;
 
 --
--- TOC entry 3151 (class 0 OID 0)
--- Dependencies: 236
 -- Name: TABLE reembolso; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4107,8 +3359,6 @@ COMMENT ON TABLE reembolso IS 'Modelo para manipular las Solicitudes de Reembols
 
 
 --
--- TOC entry 3152 (class 0 OID 0)
--- Dependencies: 236
 -- Name: COLUMN reembolso.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4116,8 +3366,6 @@ COMMENT ON COLUMN reembolso.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 3153 (class 0 OID 0)
--- Dependencies: 236
 -- Name: COLUMN reembolso.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4125,8 +3373,6 @@ COMMENT ON COLUMN reembolso.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3154 (class 0 OID 0)
--- Dependencies: 236
 -- Name: COLUMN reembolso.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4134,8 +3380,6 @@ COMMENT ON COLUMN reembolso.fecha_modificado IS 'Fecha Modificacion del Registro
 
 
 --
--- TOC entry 3155 (class 0 OID 0)
--- Dependencies: 236
 -- Name: COLUMN reembolso.estado_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4143,8 +3387,6 @@ COMMENT ON COLUMN reembolso.estado_solicitud IS 'Estado de la Solicitud';
 
 
 --
--- TOC entry 3156 (class 0 OID 0)
--- Dependencies: 236
 -- Name: COLUMN reembolso.fecha_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4152,8 +3394,6 @@ COMMENT ON COLUMN reembolso.fecha_solicitud IS 'Fecha de la Solicitud';
 
 
 --
--- TOC entry 3157 (class 0 OID 0)
--- Dependencies: 236
 -- Name: COLUMN reembolso.codigo_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4161,8 +3401,6 @@ COMMENT ON COLUMN reembolso.codigo_solicitud IS 'Codigo de la Solicitud';
 
 
 --
--- TOC entry 3158 (class 0 OID 0)
--- Dependencies: 236
 -- Name: COLUMN reembolso.titular_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4170,8 +3408,6 @@ COMMENT ON COLUMN reembolso.titular_id IS 'Codigo del Titular';
 
 
 --
--- TOC entry 3159 (class 0 OID 0)
--- Dependencies: 236
 -- Name: COLUMN reembolso.beneficiario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4179,8 +3415,6 @@ COMMENT ON COLUMN reembolso.beneficiario_id IS 'Codigo del Beneficiario';
 
 
 --
--- TOC entry 3160 (class 0 OID 0)
--- Dependencies: 236
 -- Name: COLUMN reembolso.beneficiario_tipo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4188,8 +3422,6 @@ COMMENT ON COLUMN reembolso.beneficiario_tipo IS 'beneficiario de la Solicitud';
 
 
 --
--- TOC entry 3161 (class 0 OID 0)
--- Dependencies: 236
 -- Name: COLUMN reembolso.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4197,8 +3429,6 @@ COMMENT ON COLUMN reembolso.observacion IS 'Observacion';
 
 
 --
--- TOC entry 237 (class 1259 OID 397577)
--- Dependencies: 7 236
 -- Name: reembolso_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -4213,8 +3443,6 @@ CREATE SEQUENCE reembolso_id_seq
 ALTER TABLE public.reembolso_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3162 (class 0 OID 0)
--- Dependencies: 237
 -- Name: reembolso_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -4222,8 +3450,6 @@ ALTER SEQUENCE reembolso_id_seq OWNED BY reembolso.id;
 
 
 --
--- TOC entry 238 (class 1259 OID 397580)
--- Dependencies: 2343 2344 7
 -- Name: servicio; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -4240,8 +3466,6 @@ CREATE TABLE servicio (
 ALTER TABLE public.servicio OWNER TO arrozalba;
 
 --
--- TOC entry 3163 (class 0 OID 0)
--- Dependencies: 238
 -- Name: TABLE servicio; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4249,8 +3473,6 @@ COMMENT ON TABLE servicio IS 'Modelo para manipular los Servicios';
 
 
 --
--- TOC entry 3164 (class 0 OID 0)
--- Dependencies: 238
 -- Name: COLUMN servicio.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4258,8 +3480,6 @@ COMMENT ON COLUMN servicio.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 3165 (class 0 OID 0)
--- Dependencies: 238
 -- Name: COLUMN servicio.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4267,8 +3487,6 @@ COMMENT ON COLUMN servicio.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3166 (class 0 OID 0)
--- Dependencies: 238
 -- Name: COLUMN servicio.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4276,8 +3494,6 @@ COMMENT ON COLUMN servicio.fecha_modificado IS 'Fecha Modificacion del Registro'
 
 
 --
--- TOC entry 3167 (class 0 OID 0)
--- Dependencies: 238
 -- Name: COLUMN servicio.descripcion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4285,8 +3501,6 @@ COMMENT ON COLUMN servicio.descripcion IS 'Descripcion del Servicio';
 
 
 --
--- TOC entry 3168 (class 0 OID 0)
--- Dependencies: 238
 -- Name: COLUMN servicio.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4294,8 +3508,6 @@ COMMENT ON COLUMN servicio.observacion IS 'Observacion del Servicio';
 
 
 --
--- TOC entry 239 (class 1259 OID 397585)
--- Dependencies: 7 238
 -- Name: servicio_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -4310,8 +3522,6 @@ CREATE SEQUENCE servicio_id_seq
 ALTER TABLE public.servicio_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3169 (class 0 OID 0)
--- Dependencies: 239
 -- Name: servicio_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -4319,8 +3529,6 @@ ALTER SEQUENCE servicio_id_seq OWNED BY servicio.id;
 
 
 --
--- TOC entry 240 (class 1259 OID 397587)
--- Dependencies: 2346 7
 -- Name: servicio_proveedor; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -4334,8 +3542,6 @@ CREATE TABLE servicio_proveedor (
 ALTER TABLE public.servicio_proveedor OWNER TO arrozalba;
 
 --
--- TOC entry 3170 (class 0 OID 0)
--- Dependencies: 240
 -- Name: TABLE servicio_proveedor; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4343,8 +3549,6 @@ COMMENT ON TABLE servicio_proveedor IS 'Modelo para manipular la relacion servic
 
 
 --
--- TOC entry 3171 (class 0 OID 0)
--- Dependencies: 240
 -- Name: COLUMN servicio_proveedor.proveedor_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4352,8 +3556,6 @@ COMMENT ON COLUMN servicio_proveedor.proveedor_id IS 'ID del proveedor';
 
 
 --
--- TOC entry 3172 (class 0 OID 0)
--- Dependencies: 240
 -- Name: COLUMN servicio_proveedor.servicio_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4361,8 +3563,6 @@ COMMENT ON COLUMN servicio_proveedor.servicio_id IS 'ID del servicio';
 
 
 --
--- TOC entry 241 (class 1259 OID 397591)
--- Dependencies: 240 7
 -- Name: servicio_proveedor_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -4377,8 +3577,6 @@ CREATE SEQUENCE servicio_proveedor_id_seq
 ALTER TABLE public.servicio_proveedor_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3173 (class 0 OID 0)
--- Dependencies: 241
 -- Name: servicio_proveedor_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -4386,8 +3584,6 @@ ALTER SEQUENCE servicio_proveedor_id_seq OWNED BY servicio_proveedor.id;
 
 
 --
--- TOC entry 242 (class 1259 OID 397593)
--- Dependencies: 2347 7
 -- Name: servicio_tiposolicitud; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -4401,8 +3597,6 @@ CREATE TABLE servicio_tiposolicitud (
 ALTER TABLE public.servicio_tiposolicitud OWNER TO arrozalba;
 
 --
--- TOC entry 3174 (class 0 OID 0)
--- Dependencies: 242
 -- Name: TABLE servicio_tiposolicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4410,8 +3604,6 @@ COMMENT ON TABLE servicio_tiposolicitud IS 'Modelo para manipular la relacion Se
 
 
 --
--- TOC entry 3175 (class 0 OID 0)
--- Dependencies: 242
 -- Name: COLUMN servicio_tiposolicitud.tiposolicitud_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4419,8 +3611,6 @@ COMMENT ON COLUMN servicio_tiposolicitud.tiposolicitud_id IS 'ID del tipo de sol
 
 
 --
--- TOC entry 3176 (class 0 OID 0)
--- Dependencies: 242
 -- Name: COLUMN servicio_tiposolicitud.servicio_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4428,8 +3618,6 @@ COMMENT ON COLUMN servicio_tiposolicitud.servicio_id IS 'ID del Servicio';
 
 
 --
--- TOC entry 243 (class 1259 OID 397597)
--- Dependencies: 7 242
 -- Name: servicio_tiposolicitud_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -4444,8 +3632,6 @@ CREATE SEQUENCE servicio_tiposolicitud_id_seq
 ALTER TABLE public.servicio_tiposolicitud_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3177 (class 0 OID 0)
--- Dependencies: 243
 -- Name: servicio_tiposolicitud_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -4453,8 +3639,6 @@ ALTER SEQUENCE servicio_tiposolicitud_id_seq OWNED BY servicio_tiposolicitud.id;
 
 
 --
--- TOC entry 244 (class 1259 OID 397599)
--- Dependencies: 7
 -- Name: solicitud_dt_factura; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -4471,8 +3655,6 @@ CREATE TABLE solicitud_dt_factura (
 ALTER TABLE public.solicitud_dt_factura OWNER TO arrozalba;
 
 --
--- TOC entry 3178 (class 0 OID 0)
--- Dependencies: 244
 -- Name: TABLE solicitud_dt_factura; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4480,8 +3662,6 @@ COMMENT ON TABLE solicitud_dt_factura IS 'Modelo para manipular el Detalle de la
 
 
 --
--- TOC entry 3179 (class 0 OID 0)
--- Dependencies: 244
 -- Name: COLUMN solicitud_dt_factura.solicitud_factura_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4489,8 +3669,6 @@ COMMENT ON COLUMN solicitud_dt_factura.solicitud_factura_id IS 'Id de la Factura
 
 
 --
--- TOC entry 3180 (class 0 OID 0)
--- Dependencies: 244
 -- Name: COLUMN solicitud_dt_factura.descripcion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4498,8 +3676,6 @@ COMMENT ON COLUMN solicitud_dt_factura.descripcion IS 'Descripcion del Item';
 
 
 --
--- TOC entry 3181 (class 0 OID 0)
--- Dependencies: 244
 -- Name: COLUMN solicitud_dt_factura.cantidad; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4507,8 +3683,6 @@ COMMENT ON COLUMN solicitud_dt_factura.cantidad IS 'Cantidad del Item';
 
 
 --
--- TOC entry 3182 (class 0 OID 0)
--- Dependencies: 244
 -- Name: COLUMN solicitud_dt_factura.monto; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4516,8 +3690,6 @@ COMMENT ON COLUMN solicitud_dt_factura.monto IS 'Monto del Item';
 
 
 --
--- TOC entry 3183 (class 0 OID 0)
--- Dependencies: 244
 -- Name: COLUMN solicitud_dt_factura.exento; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4525,8 +3697,6 @@ COMMENT ON COLUMN solicitud_dt_factura.exento IS 'Item Exento del Iva';
 
 
 --
--- TOC entry 245 (class 1259 OID 397602)
--- Dependencies: 7 244
 -- Name: solicitud_dt_factura_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -4541,8 +3711,6 @@ CREATE SEQUENCE solicitud_dt_factura_id_seq
 ALTER TABLE public.solicitud_dt_factura_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3184 (class 0 OID 0)
--- Dependencies: 245
 -- Name: solicitud_dt_factura_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -4550,8 +3718,6 @@ ALTER SEQUENCE solicitud_dt_factura_id_seq OWNED BY solicitud_dt_factura.id;
 
 
 --
--- TOC entry 246 (class 1259 OID 397604)
--- Dependencies: 2349 2350 7
 -- Name: solicitud_dt_medicina; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -4569,8 +3735,6 @@ CREATE TABLE solicitud_dt_medicina (
 ALTER TABLE public.solicitud_dt_medicina OWNER TO arrozalba;
 
 --
--- TOC entry 3185 (class 0 OID 0)
--- Dependencies: 246
 -- Name: TABLE solicitud_dt_medicina; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4578,8 +3742,6 @@ COMMENT ON TABLE solicitud_dt_medicina IS 'Modelo para manipular los Detalles de
 
 
 --
--- TOC entry 3186 (class 0 OID 0)
--- Dependencies: 246
 -- Name: COLUMN solicitud_dt_medicina.id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4587,8 +3749,6 @@ COMMENT ON COLUMN solicitud_dt_medicina.id IS 'Id del Registro';
 
 
 --
--- TOC entry 3187 (class 0 OID 0)
--- Dependencies: 246
 -- Name: COLUMN solicitud_dt_medicina.solicitud_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4596,8 +3756,6 @@ COMMENT ON COLUMN solicitud_dt_medicina.solicitud_id IS 'Id la Solicitud';
 
 
 --
--- TOC entry 3188 (class 0 OID 0)
--- Dependencies: 246
 -- Name: COLUMN solicitud_dt_medicina.medicina_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4605,8 +3763,6 @@ COMMENT ON COLUMN solicitud_dt_medicina.medicina_id IS 'Codigo de la Medicina';
 
 
 --
--- TOC entry 3189 (class 0 OID 0)
--- Dependencies: 246
 -- Name: COLUMN solicitud_dt_medicina.fecha_inicio; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4614,8 +3770,6 @@ COMMENT ON COLUMN solicitud_dt_medicina.fecha_inicio IS 'Fecha Inicio del Tratam
 
 
 --
--- TOC entry 3190 (class 0 OID 0)
--- Dependencies: 246
 -- Name: COLUMN solicitud_dt_medicina.fecha_fin; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4623,8 +3777,6 @@ COMMENT ON COLUMN solicitud_dt_medicina.fecha_fin IS 'Fecha Fin del Tratamiento'
 
 
 --
--- TOC entry 3191 (class 0 OID 0)
--- Dependencies: 246
 -- Name: COLUMN solicitud_dt_medicina.dosis; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4632,8 +3784,6 @@ COMMENT ON COLUMN solicitud_dt_medicina.dosis IS 'Dosis de la Medicina';
 
 
 --
--- TOC entry 3192 (class 0 OID 0)
--- Dependencies: 246
 -- Name: COLUMN solicitud_dt_medicina.horas; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4641,8 +3791,6 @@ COMMENT ON COLUMN solicitud_dt_medicina.horas IS 'Dosis de la Medicina';
 
 
 --
--- TOC entry 247 (class 1259 OID 397609)
--- Dependencies: 7 246
 -- Name: solicitud_dt_medicina_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -4657,8 +3805,6 @@ CREATE SEQUENCE solicitud_dt_medicina_id_seq
 ALTER TABLE public.solicitud_dt_medicina_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3193 (class 0 OID 0)
--- Dependencies: 247
 -- Name: solicitud_dt_medicina_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -4666,8 +3812,6 @@ ALTER SEQUENCE solicitud_dt_medicina_id_seq OWNED BY solicitud_dt_medicina.id;
 
 
 --
--- TOC entry 248 (class 1259 OID 397611)
--- Dependencies: 2352 2353 2354 7
 -- Name: solicitud_factura; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -4688,8 +3832,6 @@ CREATE TABLE solicitud_factura (
 ALTER TABLE public.solicitud_factura OWNER TO arrozalba;
 
 --
--- TOC entry 3194 (class 0 OID 0)
--- Dependencies: 248
 -- Name: TABLE solicitud_factura; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4697,8 +3839,6 @@ COMMENT ON TABLE solicitud_factura IS 'Modelo para manipular la Facturacion de l
 
 
 --
--- TOC entry 3195 (class 0 OID 0)
--- Dependencies: 248
 -- Name: COLUMN solicitud_factura.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4706,8 +3846,6 @@ COMMENT ON COLUMN solicitud_factura.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 3196 (class 0 OID 0)
--- Dependencies: 248
 -- Name: COLUMN solicitud_factura.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4715,8 +3853,6 @@ COMMENT ON COLUMN solicitud_factura.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3197 (class 0 OID 0)
--- Dependencies: 248
 -- Name: COLUMN solicitud_factura.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4724,8 +3860,6 @@ COMMENT ON COLUMN solicitud_factura.fecha_modificado IS 'Fecha Modificacion del 
 
 
 --
--- TOC entry 3198 (class 0 OID 0)
--- Dependencies: 248
 -- Name: COLUMN solicitud_factura.solicitud_servicio_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4733,8 +3867,6 @@ COMMENT ON COLUMN solicitud_factura.solicitud_servicio_id IS 'Id de la Solicitud
 
 
 --
--- TOC entry 3199 (class 0 OID 0)
--- Dependencies: 248
 -- Name: COLUMN solicitud_factura.codigo_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4742,8 +3874,6 @@ COMMENT ON COLUMN solicitud_factura.codigo_solicitud IS 'Codigo de la Solicitud'
 
 
 --
--- TOC entry 3200 (class 0 OID 0)
--- Dependencies: 248
 -- Name: COLUMN solicitud_factura.fecha_factura; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4751,8 +3881,6 @@ COMMENT ON COLUMN solicitud_factura.fecha_factura IS 'Fecha de Factura';
 
 
 --
--- TOC entry 3201 (class 0 OID 0)
--- Dependencies: 248
 -- Name: COLUMN solicitud_factura.nro_control; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4760,8 +3888,6 @@ COMMENT ON COLUMN solicitud_factura.nro_control IS 'Numero de Control';
 
 
 --
--- TOC entry 3202 (class 0 OID 0)
--- Dependencies: 248
 -- Name: COLUMN solicitud_factura.nro_factura; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4769,8 +3895,6 @@ COMMENT ON COLUMN solicitud_factura.nro_factura IS 'Numero de Factura';
 
 
 --
--- TOC entry 3203 (class 0 OID 0)
--- Dependencies: 248
 -- Name: COLUMN solicitud_factura.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4778,8 +3902,6 @@ COMMENT ON COLUMN solicitud_factura.observacion IS 'Observacion';
 
 
 --
--- TOC entry 249 (class 1259 OID 397617)
--- Dependencies: 7 248
 -- Name: solicitud_factura_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -4794,8 +3916,6 @@ CREATE SEQUENCE solicitud_factura_id_seq
 ALTER TABLE public.solicitud_factura_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3204 (class 0 OID 0)
--- Dependencies: 249
 -- Name: solicitud_factura_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -4803,8 +3923,6 @@ ALTER SEQUENCE solicitud_factura_id_seq OWNED BY solicitud_factura.id;
 
 
 --
--- TOC entry 250 (class 1259 OID 397619)
--- Dependencies: 2356 2357 2358 2359 2360 7
 -- Name: solicitud_medicina; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -4835,8 +3953,6 @@ CREATE TABLE solicitud_medicina (
 ALTER TABLE public.solicitud_medicina OWNER TO arrozalba;
 
 --
--- TOC entry 3205 (class 0 OID 0)
--- Dependencies: 250
 -- Name: TABLE solicitud_medicina; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4844,8 +3960,6 @@ COMMENT ON TABLE solicitud_medicina IS 'Modelo para manipular las Solicitudes de
 
 
 --
--- TOC entry 3206 (class 0 OID 0)
--- Dependencies: 250
 -- Name: COLUMN solicitud_medicina.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4853,8 +3967,6 @@ COMMENT ON COLUMN solicitud_medicina.usuario_id IS 'Usuario Editor del Registro'
 
 
 --
--- TOC entry 3207 (class 0 OID 0)
--- Dependencies: 250
 -- Name: COLUMN solicitud_medicina.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4862,8 +3974,6 @@ COMMENT ON COLUMN solicitud_medicina.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3208 (class 0 OID 0)
--- Dependencies: 250
 -- Name: COLUMN solicitud_medicina.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4871,8 +3981,6 @@ COMMENT ON COLUMN solicitud_medicina.fecha_modificado IS 'Fecha Modificacion del
 
 
 --
--- TOC entry 3209 (class 0 OID 0)
--- Dependencies: 250
 -- Name: COLUMN solicitud_medicina.estado_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4880,8 +3988,6 @@ COMMENT ON COLUMN solicitud_medicina.estado_solicitud IS 'Estado de la Solicitud
 
 
 --
--- TOC entry 3210 (class 0 OID 0)
--- Dependencies: 250
 -- Name: COLUMN solicitud_medicina.fecha_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4889,8 +3995,6 @@ COMMENT ON COLUMN solicitud_medicina.fecha_solicitud IS 'Fecha de la Solicitud';
 
 
 --
--- TOC entry 3211 (class 0 OID 0)
--- Dependencies: 250
 -- Name: COLUMN solicitud_medicina.fecha_vencimiento; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4898,8 +4002,6 @@ COMMENT ON COLUMN solicitud_medicina.fecha_vencimiento IS 'Fecha de Vencimiento 
 
 
 --
--- TOC entry 3212 (class 0 OID 0)
--- Dependencies: 250
 -- Name: COLUMN solicitud_medicina.codigo_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4907,8 +4009,6 @@ COMMENT ON COLUMN solicitud_medicina.codigo_solicitud IS 'Codigo de la Solicitud
 
 
 --
--- TOC entry 3213 (class 0 OID 0)
--- Dependencies: 250
 -- Name: COLUMN solicitud_medicina.titular_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4916,8 +4016,6 @@ COMMENT ON COLUMN solicitud_medicina.titular_id IS 'Codigo del Titular';
 
 
 --
--- TOC entry 3214 (class 0 OID 0)
--- Dependencies: 250
 -- Name: COLUMN solicitud_medicina.beneficiario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4925,8 +4023,6 @@ COMMENT ON COLUMN solicitud_medicina.beneficiario_id IS 'Codigo del Beneficiario
 
 
 --
--- TOC entry 3215 (class 0 OID 0)
--- Dependencies: 250
 -- Name: COLUMN solicitud_medicina.beneficiario_tipo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4934,8 +4030,6 @@ COMMENT ON COLUMN solicitud_medicina.beneficiario_tipo IS 'beneficiario de la So
 
 
 --
--- TOC entry 3216 (class 0 OID 0)
--- Dependencies: 250
 -- Name: COLUMN solicitud_medicina.patologia_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4943,8 +4037,6 @@ COMMENT ON COLUMN solicitud_medicina.patologia_id IS 'Codigo de la Patologia';
 
 
 --
--- TOC entry 3217 (class 0 OID 0)
--- Dependencies: 250
 -- Name: COLUMN solicitud_medicina.proveedor_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4952,8 +4044,6 @@ COMMENT ON COLUMN solicitud_medicina.proveedor_id IS 'Codigo del Proveedor';
 
 
 --
--- TOC entry 3218 (class 0 OID 0)
--- Dependencies: 250
 -- Name: COLUMN solicitud_medicina.medico_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4961,8 +4051,6 @@ COMMENT ON COLUMN solicitud_medicina.medico_id IS 'Codigo del Medico';
 
 
 --
--- TOC entry 3219 (class 0 OID 0)
--- Dependencies: 250
 -- Name: COLUMN solicitud_medicina.persona_autorizada; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4970,8 +4058,6 @@ COMMENT ON COLUMN solicitud_medicina.persona_autorizada IS 'Persona Autorizada';
 
 
 --
--- TOC entry 3220 (class 0 OID 0)
--- Dependencies: 250
 -- Name: COLUMN solicitud_medicina.persona_cedula; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4979,8 +4065,6 @@ COMMENT ON COLUMN solicitud_medicina.persona_cedula IS 'Cedula Persona Autorizad
 
 
 --
--- TOC entry 3221 (class 0 OID 0)
--- Dependencies: 250
 -- Name: COLUMN solicitud_medicina.tipo_tratamiento; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4988,8 +4072,6 @@ COMMENT ON COLUMN solicitud_medicina.tipo_tratamiento IS 'Tipo de Tratamiento';
 
 
 --
--- TOC entry 3222 (class 0 OID 0)
--- Dependencies: 250
 -- Name: COLUMN solicitud_medicina.diagnostico; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -4997,8 +4079,6 @@ COMMENT ON COLUMN solicitud_medicina.diagnostico IS 'Diagnostico';
 
 
 --
--- TOC entry 3223 (class 0 OID 0)
--- Dependencies: 250
 -- Name: COLUMN solicitud_medicina.servicio_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5006,8 +4086,6 @@ COMMENT ON COLUMN solicitud_medicina.servicio_id IS 'Codigo del Servicio';
 
 
 --
--- TOC entry 3224 (class 0 OID 0)
--- Dependencies: 250
 -- Name: COLUMN solicitud_medicina.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5015,8 +4093,6 @@ COMMENT ON COLUMN solicitud_medicina.observacion IS 'Observacion';
 
 
 --
--- TOC entry 251 (class 1259 OID 397630)
--- Dependencies: 7 250
 -- Name: solicitud_medicina_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -5031,8 +4107,6 @@ CREATE SEQUENCE solicitud_medicina_id_seq
 ALTER TABLE public.solicitud_medicina_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3225 (class 0 OID 0)
--- Dependencies: 251
 -- Name: solicitud_medicina_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -5040,8 +4114,6 @@ ALTER SEQUENCE solicitud_medicina_id_seq OWNED BY solicitud_medicina.id;
 
 
 --
--- TOC entry 252 (class 1259 OID 397632)
--- Dependencies: 2362 2363 2364 2365 2367 2368 7
 -- Name: solicitud_servicio; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -5069,8 +4141,6 @@ CREATE TABLE solicitud_servicio (
 ALTER TABLE public.solicitud_servicio OWNER TO arrozalba;
 
 --
--- TOC entry 3226 (class 0 OID 0)
--- Dependencies: 252
 -- Name: TABLE solicitud_servicio; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5078,8 +4148,6 @@ COMMENT ON TABLE solicitud_servicio IS 'Modelo para manipular las Solicitudes de
 
 
 --
--- TOC entry 3227 (class 0 OID 0)
--- Dependencies: 252
 -- Name: COLUMN solicitud_servicio.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5087,8 +4155,6 @@ COMMENT ON COLUMN solicitud_servicio.usuario_id IS 'Usuario Editor del Registro'
 
 
 --
--- TOC entry 3228 (class 0 OID 0)
--- Dependencies: 252
 -- Name: COLUMN solicitud_servicio.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5096,8 +4162,6 @@ COMMENT ON COLUMN solicitud_servicio.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3229 (class 0 OID 0)
--- Dependencies: 252
 -- Name: COLUMN solicitud_servicio.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5105,8 +4169,6 @@ COMMENT ON COLUMN solicitud_servicio.fecha_modificado IS 'Fecha Modificacion del
 
 
 --
--- TOC entry 3230 (class 0 OID 0)
--- Dependencies: 252
 -- Name: COLUMN solicitud_servicio.estado_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5114,8 +4176,6 @@ COMMENT ON COLUMN solicitud_servicio.estado_solicitud IS 'Estado de la Solicitud
 
 
 --
--- TOC entry 3231 (class 0 OID 0)
--- Dependencies: 252
 -- Name: COLUMN solicitud_servicio.tiposolicitud_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5123,8 +4183,6 @@ COMMENT ON COLUMN solicitud_servicio.tiposolicitud_id IS 'Tipo de Solicitud';
 
 
 --
--- TOC entry 3232 (class 0 OID 0)
--- Dependencies: 252
 -- Name: COLUMN solicitud_servicio.fecha_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5132,8 +4190,6 @@ COMMENT ON COLUMN solicitud_servicio.fecha_solicitud IS 'Fecha de la Solicitud';
 
 
 --
--- TOC entry 3233 (class 0 OID 0)
--- Dependencies: 252
 -- Name: COLUMN solicitud_servicio.codigo_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5141,8 +4197,6 @@ COMMENT ON COLUMN solicitud_servicio.codigo_solicitud IS 'Codigo de la Solicitud
 
 
 --
--- TOC entry 3234 (class 0 OID 0)
--- Dependencies: 252
 -- Name: COLUMN solicitud_servicio.titular_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5150,8 +4204,6 @@ COMMENT ON COLUMN solicitud_servicio.titular_id IS 'Codigo del Titular';
 
 
 --
--- TOC entry 3235 (class 0 OID 0)
--- Dependencies: 252
 -- Name: COLUMN solicitud_servicio.beneficiario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5159,8 +4211,6 @@ COMMENT ON COLUMN solicitud_servicio.beneficiario_id IS 'Codigo del Beneficiario
 
 
 --
--- TOC entry 3236 (class 0 OID 0)
--- Dependencies: 252
 -- Name: COLUMN solicitud_servicio.beneficiario_tipo; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5168,8 +4218,6 @@ COMMENT ON COLUMN solicitud_servicio.beneficiario_tipo IS 'beneficiario de la So
 
 
 --
--- TOC entry 3237 (class 0 OID 0)
--- Dependencies: 252
 -- Name: COLUMN solicitud_servicio.patologia_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5177,8 +4225,6 @@ COMMENT ON COLUMN solicitud_servicio.patologia_id IS 'Codigo de la Patologia';
 
 
 --
--- TOC entry 3238 (class 0 OID 0)
--- Dependencies: 252
 -- Name: COLUMN solicitud_servicio.proveedor_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5186,8 +4232,6 @@ COMMENT ON COLUMN solicitud_servicio.proveedor_id IS 'Codigo del Proveedor';
 
 
 --
--- TOC entry 3239 (class 0 OID 0)
--- Dependencies: 252
 -- Name: COLUMN solicitud_servicio.medico_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5195,8 +4239,6 @@ COMMENT ON COLUMN solicitud_servicio.medico_id IS 'Codigo del Medico';
 
 
 --
--- TOC entry 3240 (class 0 OID 0)
--- Dependencies: 252
 -- Name: COLUMN solicitud_servicio.fecha_vencimiento; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5204,8 +4246,6 @@ COMMENT ON COLUMN solicitud_servicio.fecha_vencimiento IS 'Fecha Vencimiento de 
 
 
 --
--- TOC entry 3241 (class 0 OID 0)
--- Dependencies: 252
 -- Name: COLUMN solicitud_servicio.servicio_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5213,8 +4253,6 @@ COMMENT ON COLUMN solicitud_servicio.servicio_id IS 'Codigo del Servicio';
 
 
 --
--- TOC entry 3242 (class 0 OID 0)
--- Dependencies: 252
 -- Name: COLUMN solicitud_servicio.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5222,8 +4260,6 @@ COMMENT ON COLUMN solicitud_servicio.observacion IS 'Observacion';
 
 
 --
--- TOC entry 253 (class 1259 OID 397639)
--- Dependencies: 7 252
 -- Name: solicitud_servicio_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -5238,8 +4274,6 @@ CREATE SEQUENCE solicitud_servicio_id_seq
 ALTER TABLE public.solicitud_servicio_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3243 (class 0 OID 0)
--- Dependencies: 253
 -- Name: solicitud_servicio_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -5247,8 +4281,6 @@ ALTER SEQUENCE solicitud_servicio_id_seq OWNED BY solicitud_servicio.id;
 
 
 --
--- TOC entry 254 (class 1259 OID 397641)
--- Dependencies: 2369 2370 7
 -- Name: sucursal; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -5274,8 +4306,6 @@ CREATE TABLE sucursal (
 ALTER TABLE public.sucursal OWNER TO arrozalba;
 
 --
--- TOC entry 3244 (class 0 OID 0)
--- Dependencies: 254
 -- Name: TABLE sucursal; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5283,8 +4313,6 @@ COMMENT ON TABLE sucursal IS 'Modelo para manipular las sucursales';
 
 
 --
--- TOC entry 3245 (class 0 OID 0)
--- Dependencies: 254
 -- Name: COLUMN sucursal.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5292,8 +4320,6 @@ COMMENT ON COLUMN sucursal.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 3246 (class 0 OID 0)
--- Dependencies: 254
 -- Name: COLUMN sucursal.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5301,8 +4327,6 @@ COMMENT ON COLUMN sucursal.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3247 (class 0 OID 0)
--- Dependencies: 254
 -- Name: COLUMN sucursal.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5310,8 +4334,6 @@ COMMENT ON COLUMN sucursal.fecha_modificado IS 'Fecha Modificacion del Registro'
 
 
 --
--- TOC entry 3248 (class 0 OID 0)
--- Dependencies: 254
 -- Name: COLUMN sucursal.empresa_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5319,8 +4341,6 @@ COMMENT ON COLUMN sucursal.empresa_id IS 'ID de la Empresa';
 
 
 --
--- TOC entry 3249 (class 0 OID 0)
--- Dependencies: 254
 -- Name: COLUMN sucursal.sucursal; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5328,8 +4348,6 @@ COMMENT ON COLUMN sucursal.sucursal IS 'Nombre de la Sucursal';
 
 
 --
--- TOC entry 3250 (class 0 OID 0)
--- Dependencies: 254
 -- Name: COLUMN sucursal.sucursal_slug; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5337,8 +4355,6 @@ COMMENT ON COLUMN sucursal.sucursal_slug IS 'Slug de la sucursal';
 
 
 --
--- TOC entry 3251 (class 0 OID 0)
--- Dependencies: 254
 -- Name: COLUMN sucursal.pais_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5346,8 +4362,6 @@ COMMENT ON COLUMN sucursal.pais_id IS 'Id de la Pais';
 
 
 --
--- TOC entry 3252 (class 0 OID 0)
--- Dependencies: 254
 -- Name: COLUMN sucursal.estado_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5355,8 +4369,6 @@ COMMENT ON COLUMN sucursal.estado_id IS 'Id del Estado';
 
 
 --
--- TOC entry 3253 (class 0 OID 0)
--- Dependencies: 254
 -- Name: COLUMN sucursal.municipio_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5364,8 +4376,6 @@ COMMENT ON COLUMN sucursal.municipio_id IS 'Id del Municipio';
 
 
 --
--- TOC entry 3254 (class 0 OID 0)
--- Dependencies: 254
 -- Name: COLUMN sucursal.parroquia_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5373,8 +4383,6 @@ COMMENT ON COLUMN sucursal.parroquia_id IS 'Id de la Parroquia';
 
 
 --
--- TOC entry 3255 (class 0 OID 0)
--- Dependencies: 254
 -- Name: COLUMN sucursal.direccion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5382,8 +4390,6 @@ COMMENT ON COLUMN sucursal.direccion IS 'Direccion de la Sucursal';
 
 
 --
--- TOC entry 3256 (class 0 OID 0)
--- Dependencies: 254
 -- Name: COLUMN sucursal.telefono; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5391,8 +4397,6 @@ COMMENT ON COLUMN sucursal.telefono IS 'Telefono de la Sucursal';
 
 
 --
--- TOC entry 3257 (class 0 OID 0)
--- Dependencies: 254
 -- Name: COLUMN sucursal.fax; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5400,8 +4404,6 @@ COMMENT ON COLUMN sucursal.fax IS 'fax de la Sucursal';
 
 
 --
--- TOC entry 3258 (class 0 OID 0)
--- Dependencies: 254
 -- Name: COLUMN sucursal.celular; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5409,8 +4411,6 @@ COMMENT ON COLUMN sucursal.celular IS 'fax de la Sucursal';
 
 
 --
--- TOC entry 255 (class 1259 OID 397646)
--- Dependencies: 7 254
 -- Name: sucursal_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -5425,8 +4425,6 @@ CREATE SEQUENCE sucursal_id_seq
 ALTER TABLE public.sucursal_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3259 (class 0 OID 0)
--- Dependencies: 255
 -- Name: sucursal_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -5434,8 +4432,6 @@ ALTER SEQUENCE sucursal_id_seq OWNED BY sucursal.id;
 
 
 --
--- TOC entry 256 (class 1259 OID 397648)
--- Dependencies: 2372 2373 7
 -- Name: tipoempleado; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -5452,8 +4448,6 @@ CREATE TABLE tipoempleado (
 ALTER TABLE public.tipoempleado OWNER TO arrozalba;
 
 --
--- TOC entry 3260 (class 0 OID 0)
--- Dependencies: 256
 -- Name: TABLE tipoempleado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5461,8 +4455,6 @@ COMMENT ON TABLE tipoempleado IS 'Modelo para manipular las diferentes Profesion
 
 
 --
--- TOC entry 3261 (class 0 OID 0)
--- Dependencies: 256
 -- Name: COLUMN tipoempleado.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5470,8 +4462,6 @@ COMMENT ON COLUMN tipoempleado.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 3262 (class 0 OID 0)
--- Dependencies: 256
 -- Name: COLUMN tipoempleado.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5479,8 +4469,6 @@ COMMENT ON COLUMN tipoempleado.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3263 (class 0 OID 0)
--- Dependencies: 256
 -- Name: COLUMN tipoempleado.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5488,8 +4476,6 @@ COMMENT ON COLUMN tipoempleado.fecha_modificado IS 'Fecha Modificacion del Regis
 
 
 --
--- TOC entry 3264 (class 0 OID 0)
--- Dependencies: 256
 -- Name: COLUMN tipoempleado.nombre; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5497,8 +4483,6 @@ COMMENT ON COLUMN tipoempleado.nombre IS 'Nombre de la Profesion';
 
 
 --
--- TOC entry 3265 (class 0 OID 0)
--- Dependencies: 256
 -- Name: COLUMN tipoempleado.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5506,8 +4490,6 @@ COMMENT ON COLUMN tipoempleado.observacion IS 'Observacion';
 
 
 --
--- TOC entry 257 (class 1259 OID 397653)
--- Dependencies: 7 256
 -- Name: tipoempleado_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -5522,8 +4504,6 @@ CREATE SEQUENCE tipoempleado_id_seq
 ALTER TABLE public.tipoempleado_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3266 (class 0 OID 0)
--- Dependencies: 257
 -- Name: tipoempleado_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -5531,8 +4511,6 @@ ALTER SEQUENCE tipoempleado_id_seq OWNED BY tipoempleado.id;
 
 
 --
--- TOC entry 258 (class 1259 OID 397655)
--- Dependencies: 2375 2376 7
 -- Name: tiposolicitud; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -5542,15 +4520,14 @@ CREATE TABLE tiposolicitud (
     fecha_registro timestamp with time zone DEFAULT now() NOT NULL,
     fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
     nombre character varying(64) NOT NULL,
-    observacion character varying(250)
+    observacion character varying(250),
+    correlativo character varying(20)
 );
 
 
 ALTER TABLE public.tiposolicitud OWNER TO arrozalba;
 
 --
--- TOC entry 3267 (class 0 OID 0)
--- Dependencies: 258
 -- Name: TABLE tiposolicitud; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5558,8 +4535,6 @@ COMMENT ON TABLE tiposolicitud IS 'Modelo para manipular las diferentes Tipos de
 
 
 --
--- TOC entry 3268 (class 0 OID 0)
--- Dependencies: 258
 -- Name: COLUMN tiposolicitud.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5567,8 +4542,6 @@ COMMENT ON COLUMN tiposolicitud.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 3269 (class 0 OID 0)
--- Dependencies: 258
 -- Name: COLUMN tiposolicitud.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5576,8 +4549,6 @@ COMMENT ON COLUMN tiposolicitud.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3270 (class 0 OID 0)
--- Dependencies: 258
 -- Name: COLUMN tiposolicitud.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5585,8 +4556,6 @@ COMMENT ON COLUMN tiposolicitud.fecha_modificado IS 'Fecha Modificacion del Regi
 
 
 --
--- TOC entry 3271 (class 0 OID 0)
--- Dependencies: 258
 -- Name: COLUMN tiposolicitud.nombre; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5594,8 +4563,6 @@ COMMENT ON COLUMN tiposolicitud.nombre IS 'Nombre del Tipo Solicitud';
 
 
 --
--- TOC entry 3272 (class 0 OID 0)
--- Dependencies: 258
 -- Name: COLUMN tiposolicitud.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5603,8 +4570,6 @@ COMMENT ON COLUMN tiposolicitud.observacion IS 'Observacion';
 
 
 --
--- TOC entry 259 (class 1259 OID 397660)
--- Dependencies: 7 258
 -- Name: tiposolicitud_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -5619,8 +4584,6 @@ CREATE SEQUENCE tiposolicitud_id_seq
 ALTER TABLE public.tiposolicitud_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3273 (class 0 OID 0)
--- Dependencies: 259
 -- Name: tiposolicitud_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -5628,8 +4591,6 @@ ALTER SEQUENCE tiposolicitud_id_seq OWNED BY tiposolicitud.id;
 
 
 --
--- TOC entry 260 (class 1259 OID 397662)
--- Dependencies: 2378 2379 2380 7
 -- Name: titular; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -5651,8 +4612,6 @@ CREATE TABLE titular (
 ALTER TABLE public.titular OWNER TO arrozalba;
 
 --
--- TOC entry 3274 (class 0 OID 0)
--- Dependencies: 260
 -- Name: TABLE titular; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5660,8 +4619,6 @@ COMMENT ON TABLE titular IS 'Modelo para manipular los Titulares';
 
 
 --
--- TOC entry 3275 (class 0 OID 0)
--- Dependencies: 260
 -- Name: COLUMN titular.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5669,8 +4626,6 @@ COMMENT ON COLUMN titular.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 3276 (class 0 OID 0)
--- Dependencies: 260
 -- Name: COLUMN titular.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5678,8 +4633,6 @@ COMMENT ON COLUMN titular.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3277 (class 0 OID 0)
--- Dependencies: 260
 -- Name: COLUMN titular.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5687,8 +4640,6 @@ COMMENT ON COLUMN titular.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- TOC entry 3278 (class 0 OID 0)
--- Dependencies: 260
 -- Name: COLUMN titular.tipoempleado_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5696,8 +4647,6 @@ COMMENT ON COLUMN titular.tipoempleado_id IS 'Tipo de Empleado';
 
 
 --
--- TOC entry 3279 (class 0 OID 0)
--- Dependencies: 260
 -- Name: COLUMN titular.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5705,8 +4654,6 @@ COMMENT ON COLUMN titular.observacion IS 'Observacion';
 
 
 --
--- TOC entry 261 (class 1259 OID 397668)
--- Dependencies: 7 260
 -- Name: titular_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -5721,8 +4668,6 @@ CREATE SEQUENCE titular_id_seq
 ALTER TABLE public.titular_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3280 (class 0 OID 0)
--- Dependencies: 261
 -- Name: titular_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -5730,8 +4675,6 @@ ALTER SEQUENCE titular_id_seq OWNED BY titular.id;
 
 
 --
--- TOC entry 262 (class 1259 OID 397670)
--- Dependencies: 2382 2383 2384 2385 7
 -- Name: usuario; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -5755,8 +4698,6 @@ CREATE TABLE usuario (
 ALTER TABLE public.usuario OWNER TO arrozalba;
 
 --
--- TOC entry 3281 (class 0 OID 0)
--- Dependencies: 262
 -- Name: TABLE usuario; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5764,8 +4705,6 @@ COMMENT ON TABLE usuario IS 'Modelo para manipular los usuarios';
 
 
 --
--- TOC entry 3282 (class 0 OID 0)
--- Dependencies: 262
 -- Name: COLUMN usuario.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5773,8 +4712,6 @@ COMMENT ON COLUMN usuario.usuario_id IS 'Usuario Editor del Registro';
 
 
 --
--- TOC entry 3283 (class 0 OID 0)
--- Dependencies: 262
 -- Name: COLUMN usuario.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5782,8 +4719,6 @@ COMMENT ON COLUMN usuario.fecha_registro IS 'Fecha del Registro';
 
 
 --
--- TOC entry 3284 (class 0 OID 0)
--- Dependencies: 262
 -- Name: COLUMN usuario.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5791,8 +4726,6 @@ COMMENT ON COLUMN usuario.fecha_modificado IS 'Fecha Modificacion del Registro';
 
 
 --
--- TOC entry 3285 (class 0 OID 0)
--- Dependencies: 262
 -- Name: COLUMN usuario.sucursal_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5800,8 +4733,6 @@ COMMENT ON COLUMN usuario.sucursal_id IS 'ID de la Sucursal';
 
 
 --
--- TOC entry 3286 (class 0 OID 0)
--- Dependencies: 262
 -- Name: COLUMN usuario.persona_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5809,8 +4740,6 @@ COMMENT ON COLUMN usuario.persona_id IS 'ID de la Persona';
 
 
 --
--- TOC entry 3287 (class 0 OID 0)
--- Dependencies: 262
 -- Name: COLUMN usuario.login; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5818,8 +4747,6 @@ COMMENT ON COLUMN usuario.login IS 'Login del usuario';
 
 
 --
--- TOC entry 3288 (class 0 OID 0)
--- Dependencies: 262
 -- Name: COLUMN usuario.password; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5827,8 +4754,6 @@ COMMENT ON COLUMN usuario.password IS 'Password del usuario';
 
 
 --
--- TOC entry 3289 (class 0 OID 0)
--- Dependencies: 262
 -- Name: COLUMN usuario.perfil_id; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5836,8 +4761,6 @@ COMMENT ON COLUMN usuario.perfil_id IS 'ID Perfil de Usuario';
 
 
 --
--- TOC entry 3290 (class 0 OID 0)
--- Dependencies: 262
 -- Name: COLUMN usuario.email; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5845,8 +4768,6 @@ COMMENT ON COLUMN usuario.email IS 'Email del usuario';
 
 
 --
--- TOC entry 3291 (class 0 OID 0)
--- Dependencies: 262
 -- Name: COLUMN usuario.tema; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5854,8 +4775,6 @@ COMMENT ON COLUMN usuario.tema IS 'Tema de la interfaz aplicable al usuario';
 
 
 --
--- TOC entry 3292 (class 0 OID 0)
--- Dependencies: 262
 -- Name: COLUMN usuario.app_ajax; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5863,8 +4782,6 @@ COMMENT ON COLUMN usuario.app_ajax IS 'Indica si la app se trabaja con ajax o pe
 
 
 --
--- TOC entry 3293 (class 0 OID 0)
--- Dependencies: 262
 -- Name: COLUMN usuario.datagrid; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
@@ -5872,8 +4789,6 @@ COMMENT ON COLUMN usuario.datagrid IS 'Datos por página en los datagrid';
 
 
 --
--- TOC entry 263 (class 1259 OID 397677)
--- Dependencies: 7 262
 -- Name: usuario_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -5888,8 +4803,6 @@ CREATE SEQUENCE usuario_id_seq
 ALTER TABLE public.usuario_id_seq OWNER TO arrozalba;
 
 --
--- TOC entry 3294 (class 0 OID 0)
--- Dependencies: 263
 -- Name: usuario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
@@ -5899,8 +4812,6 @@ ALTER SEQUENCE usuario_id_seq OWNED BY usuario.id;
 SET search_path = audit_log, pg_catalog;
 
 --
--- TOC entry 2236 (class 2604 OID 397679)
--- Dependencies: 163 162
 -- Name: log_id; Type: DEFAULT; Schema: audit_log; Owner: arrozalba
 --
 
@@ -5910,8 +4821,6 @@ ALTER TABLE ONLY audit_log ALTER COLUMN log_id SET DEFAULT nextval('audit_log_lo
 SET search_path = public, pg_catalog;
 
 --
--- TOC entry 2239 (class 2604 OID 397680)
--- Dependencies: 165 164
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -5919,8 +4828,6 @@ ALTER TABLE ONLY acceso ALTER COLUMN id SET DEFAULT nextval('acceso_id_seq'::reg
 
 
 --
--- TOC entry 2242 (class 2604 OID 397681)
--- Dependencies: 167 166
 -- Name: log_id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -5928,8 +4835,6 @@ ALTER TABLE ONLY audit_log ALTER COLUMN log_id SET DEFAULT nextval('audit_log_lo
 
 
 --
--- TOC entry 2245 (class 2604 OID 397682)
--- Dependencies: 169 168
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -5937,8 +4842,6 @@ ALTER TABLE ONLY backup ALTER COLUMN id SET DEFAULT nextval('backup_id_seq'::reg
 
 
 --
--- TOC entry 2249 (class 2604 OID 397683)
--- Dependencies: 171 170
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -5946,8 +4849,6 @@ ALTER TABLE ONLY beneficiario ALTER COLUMN id SET DEFAULT nextval('beneficiario_
 
 
 --
--- TOC entry 2252 (class 2604 OID 397684)
--- Dependencies: 173 172
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -5955,8 +4856,6 @@ ALTER TABLE ONLY beneficiario_tipo ALTER COLUMN id SET DEFAULT nextval('benefici
 
 
 --
--- TOC entry 2255 (class 2604 OID 397685)
--- Dependencies: 175 174
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -5964,8 +4863,6 @@ ALTER TABLE ONLY cargo ALTER COLUMN id SET DEFAULT nextval('cargo_id_seq'::regcl
 
 
 --
--- TOC entry 2261 (class 2604 OID 397686)
--- Dependencies: 177 176
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -5973,8 +4870,6 @@ ALTER TABLE ONLY cobertura ALTER COLUMN id SET DEFAULT nextval('cobertura_id_seq
 
 
 --
--- TOC entry 2264 (class 2604 OID 397687)
--- Dependencies: 179 178
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -5982,8 +4877,6 @@ ALTER TABLE ONLY departamento ALTER COLUMN id SET DEFAULT nextval('departamento_
 
 
 --
--- TOC entry 2267 (class 2604 OID 397688)
--- Dependencies: 181 180
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -5991,8 +4884,6 @@ ALTER TABLE ONLY discapacidad ALTER COLUMN id SET DEFAULT nextval('discapacidad_
 
 
 --
--- TOC entry 2268 (class 2604 OID 397689)
--- Dependencies: 183 182
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6000,8 +4891,6 @@ ALTER TABLE ONLY discapacidad_persona ALTER COLUMN id SET DEFAULT nextval('disca
 
 
 --
--- TOC entry 2271 (class 2604 OID 397690)
--- Dependencies: 185 184
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6009,8 +4898,6 @@ ALTER TABLE ONLY empresa ALTER COLUMN id SET DEFAULT nextval('empresa_id_seq'::r
 
 
 --
--- TOC entry 2274 (class 2604 OID 397691)
--- Dependencies: 187 186
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6018,8 +4905,6 @@ ALTER TABLE ONLY especialidad ALTER COLUMN id SET DEFAULT nextval('especialidad_
 
 
 --
--- TOC entry 2279 (class 2604 OID 397692)
--- Dependencies: 193 192
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6027,8 +4912,6 @@ ALTER TABLE ONLY estado ALTER COLUMN id SET DEFAULT nextval('estado_id_seq'::reg
 
 
 --
--- TOC entry 2282 (class 2604 OID 397693)
--- Dependencies: 195 194
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6036,8 +4919,6 @@ ALTER TABLE ONLY estado_usuario ALTER COLUMN id SET DEFAULT nextval('estado_usua
 
 
 --
--- TOC entry 2285 (class 2604 OID 397694)
--- Dependencies: 197 196
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6045,8 +4926,6 @@ ALTER TABLE ONLY medicina ALTER COLUMN id SET DEFAULT nextval('medicina_id_seq':
 
 
 --
--- TOC entry 2290 (class 2604 OID 397695)
--- Dependencies: 199 198
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6054,8 +4933,6 @@ ALTER TABLE ONLY medico ALTER COLUMN id SET DEFAULT nextval('medico_id_seq'::reg
 
 
 --
--- TOC entry 2296 (class 2604 OID 397696)
--- Dependencies: 201 200
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6063,8 +4940,6 @@ ALTER TABLE ONLY menu ALTER COLUMN id SET DEFAULT nextval('menu_id_seq'::regclas
 
 
 --
--- TOC entry 2297 (class 2604 OID 397697)
--- Dependencies: 203 202
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6072,8 +4947,6 @@ ALTER TABLE ONLY municipio ALTER COLUMN id SET DEFAULT nextval('municipio_id_seq
 
 
 --
--- TOC entry 2298 (class 2604 OID 397698)
--- Dependencies: 205 204
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6081,8 +4954,6 @@ ALTER TABLE ONLY pais ALTER COLUMN id SET DEFAULT nextval('pais_id_seq'::regclas
 
 
 --
--- TOC entry 2299 (class 2604 OID 397699)
--- Dependencies: 207 206
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6090,8 +4961,6 @@ ALTER TABLE ONLY parroquia ALTER COLUMN id SET DEFAULT nextval('parroquia_id_seq
 
 
 --
--- TOC entry 2305 (class 2604 OID 397701)
--- Dependencies: 211 210
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6099,8 +4968,6 @@ ALTER TABLE ONLY patologia ALTER COLUMN id SET DEFAULT nextval('patologia_id_seq
 
 
 --
--- TOC entry 2302 (class 2604 OID 397700)
--- Dependencies: 209 208
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6108,8 +4975,6 @@ ALTER TABLE ONLY patologia_categoria ALTER COLUMN id SET DEFAULT nextval('patolo
 
 
 --
--- TOC entry 2310 (class 2604 OID 397702)
--- Dependencies: 213 212
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6117,8 +4982,6 @@ ALTER TABLE ONLY perfil ALTER COLUMN id SET DEFAULT nextval('perfil_id_seq'::reg
 
 
 --
--- TOC entry 2319 (class 2604 OID 397703)
--- Dependencies: 215 214
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6126,8 +4989,6 @@ ALTER TABLE ONLY persona ALTER COLUMN id SET DEFAULT nextval('persona_id_seq'::r
 
 
 --
--- TOC entry 2322 (class 2604 OID 397704)
--- Dependencies: 217 216
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6135,8 +4996,6 @@ ALTER TABLE ONLY profesion ALTER COLUMN id SET DEFAULT nextval('profesion_id_seq
 
 
 --
--- TOC entry 2277 (class 2604 OID 397705)
--- Dependencies: 189 188
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6144,8 +5003,6 @@ ALTER TABLE ONLY proveedor ALTER COLUMN id SET DEFAULT nextval('proveedor_id_seq
 
 
 --
--- TOC entry 2326 (class 2604 OID 397706)
--- Dependencies: 223 220
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6153,8 +5010,6 @@ ALTER TABLE ONLY recaudo ALTER COLUMN id SET DEFAULT nextval('recaudo_id_seq'::r
 
 
 --
--- TOC entry 2328 (class 2604 OID 397707)
--- Dependencies: 225 224
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6162,8 +5017,6 @@ ALTER TABLE ONLY recaudo_reembolso ALTER COLUMN id SET DEFAULT nextval('recaudo_
 
 
 --
--- TOC entry 2329 (class 2604 OID 397708)
--- Dependencies: 227 226
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6171,8 +5024,6 @@ ALTER TABLE ONLY recaudo_solicitud_medicina ALTER COLUMN id SET DEFAULT nextval(
 
 
 --
--- TOC entry 2330 (class 2604 OID 397709)
--- Dependencies: 229 228
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6180,8 +5031,6 @@ ALTER TABLE ONLY recaudo_solicitud_servicio ALTER COLUMN id SET DEFAULT nextval(
 
 
 --
--- TOC entry 2331 (class 2604 OID 397710)
--- Dependencies: 231 230
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6189,8 +5038,6 @@ ALTER TABLE ONLY recaudo_titular ALTER COLUMN id SET DEFAULT nextval('recaudo_ti
 
 
 --
--- TOC entry 2335 (class 2604 OID 397711)
--- Dependencies: 233 232
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6198,8 +5045,6 @@ ALTER TABLE ONLY recurso ALTER COLUMN id SET DEFAULT nextval('recurso_id_seq'::r
 
 
 --
--- TOC entry 2338 (class 2604 OID 397712)
--- Dependencies: 235 234
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6207,8 +5052,6 @@ ALTER TABLE ONLY recurso_perfil ALTER COLUMN id SET DEFAULT nextval('recurso_per
 
 
 --
--- TOC entry 2342 (class 2604 OID 397713)
--- Dependencies: 237 236
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6216,8 +5059,6 @@ ALTER TABLE ONLY reembolso ALTER COLUMN id SET DEFAULT nextval('reembolso_id_seq
 
 
 --
--- TOC entry 2345 (class 2604 OID 397714)
--- Dependencies: 239 238
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6225,8 +5066,6 @@ ALTER TABLE ONLY servicio ALTER COLUMN id SET DEFAULT nextval('servicio_id_seq':
 
 
 --
--- TOC entry 2348 (class 2604 OID 397715)
--- Dependencies: 245 244
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6234,8 +5073,6 @@ ALTER TABLE ONLY solicitud_dt_factura ALTER COLUMN id SET DEFAULT nextval('solic
 
 
 --
--- TOC entry 2351 (class 2604 OID 397716)
--- Dependencies: 247 246
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6243,8 +5080,6 @@ ALTER TABLE ONLY solicitud_dt_medicina ALTER COLUMN id SET DEFAULT nextval('soli
 
 
 --
--- TOC entry 2355 (class 2604 OID 397717)
--- Dependencies: 249 248
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6252,8 +5087,6 @@ ALTER TABLE ONLY solicitud_factura ALTER COLUMN id SET DEFAULT nextval('solicitu
 
 
 --
--- TOC entry 2361 (class 2604 OID 397718)
--- Dependencies: 251 250
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6261,8 +5094,6 @@ ALTER TABLE ONLY solicitud_medicina ALTER COLUMN id SET DEFAULT nextval('solicit
 
 
 --
--- TOC entry 2366 (class 2604 OID 397719)
--- Dependencies: 253 252
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6270,8 +5101,6 @@ ALTER TABLE ONLY solicitud_servicio ALTER COLUMN id SET DEFAULT nextval('solicit
 
 
 --
--- TOC entry 2371 (class 2604 OID 397720)
--- Dependencies: 255 254
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6279,8 +5108,6 @@ ALTER TABLE ONLY sucursal ALTER COLUMN id SET DEFAULT nextval('sucursal_id_seq':
 
 
 --
--- TOC entry 2374 (class 2604 OID 397721)
--- Dependencies: 257 256
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6288,8 +5115,6 @@ ALTER TABLE ONLY tipoempleado ALTER COLUMN id SET DEFAULT nextval('tipoempleado_
 
 
 --
--- TOC entry 2377 (class 2604 OID 397722)
--- Dependencies: 259 258
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6297,8 +5122,6 @@ ALTER TABLE ONLY tiposolicitud ALTER COLUMN id SET DEFAULT nextval('tiposolicitu
 
 
 --
--- TOC entry 2381 (class 2604 OID 397723)
--- Dependencies: 261 260
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6306,8 +5129,6 @@ ALTER TABLE ONLY titular ALTER COLUMN id SET DEFAULT nextval('titular_id_seq'::r
 
 
 --
--- TOC entry 2386 (class 2604 OID 397724)
--- Dependencies: 263 262
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
@@ -6317,8 +5138,6 @@ ALTER TABLE ONLY usuario ALTER COLUMN id SET DEFAULT nextval('usuario_id_seq'::r
 SET search_path = audit_log, pg_catalog;
 
 --
--- TOC entry 2750 (class 0 OID 397303)
--- Dependencies: 162 2852
 -- Data for Name: audit_log; Type: TABLE DATA; Schema: audit_log; Owner: arrozalba
 --
 
@@ -6329,8 +5148,6 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 
 
 --
--- TOC entry 3295 (class 0 OID 0)
--- Dependencies: 163
 -- Name: audit_log_log_id_seq; Type: SEQUENCE SET; Schema: audit_log; Owner: arrozalba
 --
 
@@ -6340,8 +5157,6 @@ SELECT pg_catalog.setval('audit_log_log_id_seq', 2, true);
 SET search_path = public, pg_catalog;
 
 --
--- TOC entry 2752 (class 0 OID 397313)
--- Dependencies: 164 2852
 -- Data for Name: acceso; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -6494,21 +5309,29 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 147	1	2014-06-20 12:59:37.456644-04:30	2014-06-20 12:59:37.456644-04:30	1	\N	\N	\N	\N	127.0.0.1
 148	1	2014-06-20 14:11:41.079103-04:30	2014-06-20 14:11:41.079103-04:30	1	\N	\N	\N	\N	127.0.0.1
 149	1	2014-06-20 20:52:52.797081-04:30	2014-06-20 20:52:52.797081-04:30	1	\N	\N	\N	\N	127.0.0.1
+150	1	2014-06-21 00:08:25.152441-04:30	2014-06-21 00:08:25.152441-04:30	1	\N	\N	\N	\N	127.0.0.1
+151	1	2014-06-23 12:29:32.270897-04:30	2014-06-23 12:29:32.270897-04:30	1	\N	\N	\N	\N	127.0.0.1
+152	1	2014-06-23 13:43:46.249784-04:30	2014-06-23 13:43:46.249784-04:30	1	\N	\N	\N	\N	127.0.0.1
+153	1	2014-06-23 19:27:32.104237-04:30	2014-06-23 19:27:32.104237-04:30	1	\N	\N	\N	\N	127.0.0.1
+154	1	2014-06-23 19:29:21.182252-04:30	2014-06-23 19:29:21.182252-04:30	2	\N	\N	\N	\N	127.0.0.1
+155	1	2014-06-23 19:29:26.048363-04:30	2014-06-23 19:29:26.048363-04:30	1	\N	\N	\N	\N	127.0.0.1
+156	1	2014-06-24 14:32:44.237385-04:30	2014-06-24 14:32:44.237385-04:30	1	\N	\N	\N	\N	127.0.0.1
+157	1	2014-06-24 15:25:24.343439-04:30	2014-06-24 15:25:24.343439-04:30	1	\N	\N	\N	\N	127.0.0.1
+158	1	2014-06-24 17:54:26.436219-04:30	2014-06-24 17:54:26.436219-04:30	1	\N	\N	\N	\N	127.0.0.1
+159	1	2014-06-24 19:34:46.400686-04:30	2014-06-24 19:34:46.400686-04:30	1	\N	\N	\N	\N	127.0.0.1
+160	1	2014-06-24 22:08:04.652082-04:30	2014-06-24 22:08:04.652082-04:30	1	\N	\N	\N	\N	127.0.0.1
+161	1	2014-06-25 01:12:07.934534-04:30	2014-06-25 01:12:07.934534-04:30	1	\N	\N	\N	\N	127.0.0.1
 \.
 
 
 --
--- TOC entry 3296 (class 0 OID 0)
--- Dependencies: 165
 -- Name: acceso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('acceso_id_seq', 149, true);
+SELECT pg_catalog.setval('acceso_id_seq', 161, true);
 
 
 --
--- TOC entry 2754 (class 0 OID 397320)
--- Dependencies: 166 2852
 -- Data for Name: audit_log; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -6517,8 +5340,6 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 
 
 --
--- TOC entry 3297 (class 0 OID 0)
--- Dependencies: 167
 -- Name: audit_log_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -6526,8 +5347,6 @@ SELECT pg_catalog.setval('audit_log_log_id_seq', 1, false);
 
 
 --
--- TOC entry 2756 (class 0 OID 397330)
--- Dependencies: 168 2852
 -- Data for Name: backup; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -6536,8 +5355,6 @@ COPY backup (id, usuario_id, fecha_registro, fecha_modificado, denominacion, tam
 
 
 --
--- TOC entry 3298 (class 0 OID 0)
--- Dependencies: 169
 -- Name: backup_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -6545,28 +5362,23 @@ SELECT pg_catalog.setval('backup_id_seq', 1, false);
 
 
 --
--- TOC entry 2758 (class 0 OID 397337)
--- Dependencies: 170 2852
 -- Data for Name: beneficiario; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY beneficiario (id, usuario_id, fecha_registro, fecha_modificado, titular_id, persona_id, parentesco, beneficiario_tipo_id, observacion) FROM stdin;
 1	\N	2014-06-02 18:45:57.537604-04:30	2014-06-02 18:45:57.537604-04:30	1	4	H	1	\N
+4	\N	2014-06-23 17:44:53.903527-04:30	2014-06-23 17:44:53.903527-04:30	1	6	H	1	\N
 \.
 
 
 --
--- TOC entry 3299 (class 0 OID 0)
--- Dependencies: 171
 -- Name: beneficiario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('beneficiario_id_seq', 3, true);
+SELECT pg_catalog.setval('beneficiario_id_seq', 4, true);
 
 
 --
--- TOC entry 2760 (class 0 OID 397345)
--- Dependencies: 172 2852
 -- Data for Name: beneficiario_tipo; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -6577,8 +5389,6 @@ COPY beneficiario_tipo (id, usuario_id, fecha_registro, fecha_modificado, descri
 
 
 --
--- TOC entry 3300 (class 0 OID 0)
--- Dependencies: 173
 -- Name: beneficiario_tipo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -6586,8 +5396,6 @@ SELECT pg_catalog.setval('beneficiario_tipo_id_seq', 2, true);
 
 
 --
--- TOC entry 2762 (class 0 OID 397352)
--- Dependencies: 174 2852
 -- Data for Name: cargo; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -6616,8 +5424,6 @@ COPY cargo (id, usuario_id, fecha_registro, fecha_modificado, nombre, observacio
 
 
 --
--- TOC entry 3301 (class 0 OID 0)
--- Dependencies: 175
 -- Name: cargo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -6625,8 +5431,6 @@ SELECT pg_catalog.setval('cargo_id_seq', 21, true);
 
 
 --
--- TOC entry 2764 (class 0 OID 397359)
--- Dependencies: 176 2852
 -- Data for Name: cobertura; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -6636,8 +5440,6 @@ COPY cobertura (id, usuario_id, fecha_registro, fecha_modificado, descripcion, t
 
 
 --
--- TOC entry 3302 (class 0 OID 0)
--- Dependencies: 177
 -- Name: cobertura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -6645,8 +5447,6 @@ SELECT pg_catalog.setval('cobertura_id_seq', 1, true);
 
 
 --
--- TOC entry 2766 (class 0 OID 397369)
--- Dependencies: 178 2852
 -- Data for Name: departamento; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -6696,8 +5496,6 @@ COPY departamento (id, usuario_id, fecha_registro, fecha_modificado, nombre, obs
 
 
 --
--- TOC entry 3303 (class 0 OID 0)
--- Dependencies: 179
 -- Name: departamento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -6705,8 +5503,6 @@ SELECT pg_catalog.setval('departamento_id_seq', 41, true);
 
 
 --
--- TOC entry 2768 (class 0 OID 397376)
--- Dependencies: 180 2852
 -- Data for Name: discapacidad; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -6715,8 +5511,6 @@ COPY discapacidad (id, usuario_id, fecha_registro, fecha_modificado, nombre, obs
 
 
 --
--- TOC entry 3304 (class 0 OID 0)
--- Dependencies: 181
 -- Name: discapacidad_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -6724,8 +5518,6 @@ SELECT pg_catalog.setval('discapacidad_id_seq', 1, false);
 
 
 --
--- TOC entry 2770 (class 0 OID 397383)
--- Dependencies: 182 2852
 -- Data for Name: discapacidad_persona; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -6734,8 +5526,6 @@ COPY discapacidad_persona (id, persona_id, discapacidad_id) FROM stdin;
 
 
 --
--- TOC entry 3305 (class 0 OID 0)
--- Dependencies: 183
 -- Name: discapacidad_persona_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -6743,19 +5533,15 @@ SELECT pg_catalog.setval('discapacidad_persona_id_seq', 1, false);
 
 
 --
--- TOC entry 2772 (class 0 OID 397388)
--- Dependencies: 184 2852
 -- Data for Name: empresa; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
 COPY empresa (id, usuario_id, fecha_registro, fecha_modificado, razon_social, rif, pais_id, estado_id, municipio_id, parroquia_id, representante_legal, pagina_web, telefono, fax, celular, logo, email) FROM stdin;
-1	\N	2014-03-13 12:11:18.427198-04:30	2014-03-13 12:11:18.427198-04:30	EMPRESA MIXTA SOCIALISTA ARROZ DEL ALBA S.A.	G-200054321	240	69	224	717	Francisco Ortiz	http://www.arrozdelalba.gob.ve	02563361333	02563361333	04162546908	default.png	arrozdelalba@arrozdelalba.gob.ve
+1	\N	2014-03-13 12:11:18.427198-04:30	2014-03-13 12:11:18.427198-04:30	EMPRESA MIXTA SOCIALISTA ARROZ DEL ALBA S.A.	G-200054321	240	69	224	717	Francisco Ortiz	http://www.arrozdelalba.gob.ve	02563361333	02563361333	 04162546908	default.png	arrozdelalba@arrozdelalba.gob.ve
 \.
 
 
 --
--- TOC entry 3306 (class 0 OID 0)
--- Dependencies: 185
 -- Name: empresa_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -6763,8 +5549,6 @@ SELECT pg_catalog.setval('empresa_id_seq', 1, false);
 
 
 --
--- TOC entry 2774 (class 0 OID 397395)
--- Dependencies: 186 2852
 -- Data for Name: especialidad; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -6773,8 +5557,6 @@ COPY especialidad (id, usuario_id, fecha_registro, fecha_modificado, descripcion
 
 
 --
--- TOC entry 3307 (class 0 OID 0)
--- Dependencies: 187
 -- Name: especialidad_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -6782,8 +5564,6 @@ SELECT pg_catalog.setval('especialidad_id_seq', 1, false);
 
 
 --
--- TOC entry 2778 (class 0 OID 397412)
--- Dependencies: 190 2852
 -- Data for Name: especialidad_medico; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -6792,8 +5572,6 @@ COPY especialidad_medico (id, medico_id, especialidad_id) FROM stdin;
 
 
 --
--- TOC entry 3308 (class 0 OID 0)
--- Dependencies: 191
 -- Name: especialidad_medico_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -6801,8 +5579,6 @@ SELECT pg_catalog.setval('especialidad_medico_id_seq', 1, false);
 
 
 --
--- TOC entry 2780 (class 0 OID 397418)
--- Dependencies: 192 2852
 -- Data for Name: estado; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -6886,8 +5662,6 @@ COPY estado (id, codigo, pais_id, nombre) FROM stdin;
 
 
 --
--- TOC entry 3309 (class 0 OID 0)
--- Dependencies: 193
 -- Name: estado_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -6895,8 +5669,6 @@ SELECT pg_catalog.setval('estado_id_seq', 75, true);
 
 
 --
--- TOC entry 2782 (class 0 OID 397423)
--- Dependencies: 194 2852
 -- Data for Name: estado_usuario; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -6909,8 +5681,6 @@ COPY estado_usuario (id, usuario_id, fecha_registro, fecha_modificado, estado_us
 
 
 --
--- TOC entry 3310 (class 0 OID 0)
--- Dependencies: 195
 -- Name: estado_usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -6918,8 +5688,6 @@ SELECT pg_catalog.setval('estado_usuario_id_seq', 4, true);
 
 
 --
--- TOC entry 2784 (class 0 OID 397430)
--- Dependencies: 196 2852
 -- Data for Name: medicina; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -6928,8 +5696,6 @@ COPY medicina (id, usuario_id, fecha_registro, fecha_modificado, descripcion, ob
 
 
 --
--- TOC entry 3311 (class 0 OID 0)
--- Dependencies: 197
 -- Name: medicina_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -6937,8 +5703,6 @@ SELECT pg_catalog.setval('medicina_id_seq', 1, false);
 
 
 --
--- TOC entry 2786 (class 0 OID 397437)
--- Dependencies: 198 2852
 -- Data for Name: medico; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -6948,8 +5712,6 @@ COPY medico (id, usuario_id, fecha_registro, fecha_modificado, nacionalidad, ced
 
 
 --
--- TOC entry 3312 (class 0 OID 0)
--- Dependencies: 199
 -- Name: medico_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -6957,8 +5719,6 @@ SELECT pg_catalog.setval('medico_id_seq', 1, true);
 
 
 --
--- TOC entry 2788 (class 0 OID 397446)
--- Dependencies: 200 2852
 -- Data for Name: menu; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -6996,31 +5756,29 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 33	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	30	Exámenes Médicos 	solicitudes/examenes_medicos/listar	204	icon-th	1	1
 34	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	31	Solicitudes de Reembolso	solicitudes/reembolso/listar	205	icon-th	1	1
 35	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	32	Funeraria	solicitudes/funeraria/listar	206	icon-th	1	1
-36	\N	2014-04-22 09:51:53.400012-04:30	2014-04-22 09:51:53.400012-04:30	\N	\N	Provedores de Salud	#	600	icon-group	1	1
-37	\N	2014-04-22 09:57:03.54549-04:30	2014-04-22 09:57:03.54549-04:30	37	34	Proveedor	proveedorsalud/proveedor/	602	icon-briefcase	1	1
-38	\N	2014-04-22 10:09:02.242857-04:30	2014-04-22 10:09:02.242857-04:30	37	36	Especialidad	proveedorsalud/especialidad/	601	icon-magic	1	1
-39	\N	2014-04-22 10:09:32.70358-04:30	2014-04-22 10:09:32.70358-04:30	37	35	Medico	proveedorsalud/medico/	603	icon-user	1	1
-40	\N	2014-04-22 14:52:02.983257-04:30	2014-04-22 14:52:02.983257-04:30	37	37	Medicinas	proveedorsalud/medicina/	0	\N	1	1
 31	\N	2014-03-16 13:26:21.282386-04:30	2014-03-16 13:26:21.282386-04:30	29	28	Atención Primaria	solicitudes/solicitud_servicio/listar	202	icon-th	1	1
 41	\N	2014-06-09 10:57:40.852716-04:30	2014-06-09 10:57:40.852716-04:30	31	38	Registro	solicitudes/solicitud_servicio/registro	302	icon-plus-sign	1	1
 42	\N	2014-06-09 11:28:23.150623-04:30	2014-06-09 11:28:23.150623-04:30	31	39	Aprobación	solicitudes/solicitud_servicio/aprobacion	303	icon-ok-sign	1	1
 43	\N	2014-06-09 11:28:56.829577-04:30	2014-06-09 11:28:56.829577-04:30	31	40	Contabilizar	solicitudes/solicitud_servicio/contabilizar	304	icon-check	1	1
 44	\N	2014-06-09 11:31:13.991409-04:30	2014-06-09 11:31:13.991409-04:30	31	41	Anular	solicitudes/solicitud_servicio/anular	305	icon-remove-sign	1	1
+36	\N	2014-04-22 09:51:53.400012-04:30	2014-04-22 09:51:53.400012-04:30	\N	\N	Provedores de Salud	#	600	icon-group	1	1
+37	\N	2014-04-22 09:57:03.54549-04:30	2014-04-22 09:57:03.54549-04:30	36	34	Proveedor	proveedorsalud/proveedor/	602	icon-briefcase	1	1
+38	\N	2014-04-22 10:09:02.242857-04:30	2014-04-22 10:09:02.242857-04:30	36	36	Especialidad	proveedorsalud/especialidad/	601	icon-magic	1	1
+39	\N	2014-04-22 10:09:32.70358-04:30	2014-04-22 10:09:32.70358-04:30	36	35	Medico	proveedorsalud/medico/	603	icon-user	1	1
+40	\N	2014-04-22 14:52:02.983257-04:30	2014-04-22 14:52:02.983257-04:30	36	37	Medicinas	proveedorsalud/medicina/	604	icon-th	1	1
+45	\N	2014-06-24 15:51:37.984221-04:30	2014-06-24 15:51:37.984221-04:30	36	42	Servicio	proveedorsalud/servicio/	605	icon-th	1	1
+46	\N	2014-06-24 23:52:34.310536-04:30	2014-06-24 23:52:34.310536-04:30	15	43	Tipo de Solicitudes	config/tiposolicitud/listar	810	icon-th	1	1
 \.
 
 
 --
--- TOC entry 3313 (class 0 OID 0)
--- Dependencies: 201
 -- Name: menu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('menu_id_seq', 44, true);
+SELECT pg_catalog.setval('menu_id_seq', 46, true);
 
 
 --
--- TOC entry 2790 (class 0 OID 397456)
--- Dependencies: 202 2852
 -- Data for Name: municipio; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -7363,8 +6121,6 @@ COPY municipio (id, estado_id, codigo, nombre) FROM stdin;
 
 
 --
--- TOC entry 3314 (class 0 OID 0)
--- Dependencies: 203
 -- Name: municipio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -7372,8 +6128,6 @@ SELECT pg_catalog.setval('municipio_id_seq', 334, true);
 
 
 --
--- TOC entry 2792 (class 0 OID 397461)
--- Dependencies: 204 2852
 -- Data for Name: pais; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -7635,8 +6389,6 @@ COPY pais (id, codigo, nombre) FROM stdin;
 
 
 --
--- TOC entry 3315 (class 0 OID 0)
--- Dependencies: 205
 -- Name: pais_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -7644,8 +6396,6 @@ SELECT pg_catalog.setval('pais_id_seq', 253, true);
 
 
 --
--- TOC entry 2794 (class 0 OID 397466)
--- Dependencies: 206 2852
 -- Data for Name: parroquia; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -8740,8 +7490,6 @@ COPY parroquia (id, nombre, municipio_id) FROM stdin;
 
 
 --
--- TOC entry 3316 (class 0 OID 0)
--- Dependencies: 207
 -- Name: parroquia_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -8749,8 +7497,6 @@ SELECT pg_catalog.setval('parroquia_id_seq', 1086, true);
 
 
 --
--- TOC entry 2798 (class 0 OID 397478)
--- Dependencies: 210 2852
 -- Data for Name: patologia; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -22956,8 +21702,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria, cod
 
 
 --
--- TOC entry 2796 (class 0 OID 397471)
--- Dependencies: 208 2852
 -- Data for Name: patologia_categoria; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -23250,8 +21994,6 @@ COPY patologia_categoria (id, usuario_id, fecha_registro, fecha_modificado, acti
 
 
 --
--- TOC entry 3317 (class 0 OID 0)
--- Dependencies: 209
 -- Name: patologia_categoria_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -23259,8 +22001,6 @@ SELECT pg_catalog.setval('patologia_categoria_id_seq', 575, true);
 
 
 --
--- TOC entry 3318 (class 0 OID 0)
--- Dependencies: 211
 -- Name: patologia_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -23268,8 +22008,6 @@ SELECT pg_catalog.setval('patologia_id_seq', 28385, true);
 
 
 --
--- TOC entry 2800 (class 0 OID 397485)
--- Dependencies: 212 2852
 -- Data for Name: perfil; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -23281,8 +22019,6 @@ COPY perfil (id, usuario_id, fecha_registro, fecha_modificado, perfil, estado, p
 
 
 --
--- TOC entry 3319 (class 0 OID 0)
--- Dependencies: 213
 -- Name: perfil_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -23290,8 +22026,6 @@ SELECT pg_catalog.setval('perfil_id_seq', 3, true);
 
 
 --
--- TOC entry 2802 (class 0 OID 397494)
--- Dependencies: 214 2852
 -- Data for Name: persona; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -23299,23 +22033,20 @@ COPY persona (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1,
 1	\N	2014-03-13 12:03:49.841971-04:30	2014-03-13 12:03:49.841971-04:30	20643647	Alexis	jose	Borges	\N	V	M	1990-12-11	240	69	223	28	Villa Araure 1 el bosque	S	\N	\N	\N	\N	default.png
 2	\N	2014-03-16 01:14:45.552613-04:30	2014-03-16 01:14:45.552613-04:30	16753367	Javier	Enrique	León	\N	V	M	1984-12-09	240	69	229	732	Av principal	c	04162546908	02556217013	\N	AB-	default.png
 3	\N	2014-03-17 19:22:19.405099-04:30	2014-03-17 19:22:19.405099-04:30	20543089	yelix	andreina	monsalve	la cruz	V	F	1990-03-01	240	69	229	52	las delicias	S	04165555555	\N	\N	AB-	default.png
-4	\N	2014-04-04 15:18:00.894791-04:30	2014-04-04 15:18:00.894791-04:30	123	pedro	jose	Lopéz	la cruz	E	M	2013-12-11	16	2	198	2	Av principal	c	04162546908	02556217013	\N	AB-	default.png
 5	\N	2014-03-17 18:34:56.063814-04:30	2014-03-17 18:34:56.063814-04:30	20389587	Rahiber	jose	monsalve	Cardona	V	M	1980-04-01	20	8	250	11	Av principal	c	04165555555	02556217013	\N	AB-	default.png
+6	\N	2014-06-23 17:43:06.825569-04:30	2014-06-23 17:43:06.825569-04:30	206436472	Antonio	Ramon	Borges	\N	V	M	2010-01-01	240	69	223	28	Villa	S	\N	\N	\N	N/A	default.png
+4	\N	2014-04-04 15:18:00.894791-04:30	2014-04-04 15:18:00.894791-04:30	2064364721	pedro	jose	Lopéz	la cruz	E	M	2013-12-11	16	2	198	2	Av principal	c	04162546908	02556217013	\N	AB-	default.png
 \.
 
 
 --
--- TOC entry 3320 (class 0 OID 0)
--- Dependencies: 215
 -- Name: persona_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('persona_id_seq', 5, true);
+SELECT pg_catalog.setval('persona_id_seq', 12, true);
 
 
 --
--- TOC entry 2804 (class 0 OID 397510)
--- Dependencies: 216 2852
 -- Data for Name: profesion; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -23506,8 +22237,6 @@ COPY profesion (id, usuario_id, fecha_registro, fecha_modificado, nombre, observ
 
 
 --
--- TOC entry 3321 (class 0 OID 0)
--- Dependencies: 217
 -- Name: profesion_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -23515,8 +22244,6 @@ SELECT pg_catalog.setval('profesion_id_seq', 182, true);
 
 
 --
--- TOC entry 2776 (class 0 OID 397402)
--- Dependencies: 188 2852
 -- Data for Name: proveedor; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -23526,8 +22253,6 @@ COPY proveedor (id, usuario_id, fecha_registro, fecha_modificado, rif, razon_soc
 
 
 --
--- TOC entry 3322 (class 0 OID 0)
--- Dependencies: 189
 -- Name: proveedor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -23535,8 +22260,6 @@ SELECT pg_catalog.setval('proveedor_id_seq', 1, true);
 
 
 --
--- TOC entry 2806 (class 0 OID 397517)
--- Dependencies: 218 2852
 -- Data for Name: proveedor_medico; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -23545,8 +22268,6 @@ COPY proveedor_medico (id, medico_id, proveedor_id) FROM stdin;
 
 
 --
--- TOC entry 3323 (class 0 OID 0)
--- Dependencies: 219
 -- Name: proveedor_medico_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -23554,8 +22275,6 @@ SELECT pg_catalog.setval('proveedor_medico_id_seq', 1, false);
 
 
 --
--- TOC entry 2808 (class 0 OID 397523)
--- Dependencies: 220 2852
 -- Data for Name: recaudo; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -23564,8 +22283,6 @@ COPY recaudo (id, usuario_id, fecha_registro, fecha_modificado, nombre, tipo, ob
 
 
 --
--- TOC entry 2809 (class 0 OID 397528)
--- Dependencies: 221 2852
 -- Data for Name: recaudo_beneficiario; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -23574,8 +22291,6 @@ COPY recaudo_beneficiario (id, beneficiario_id, recaudo_id, estado) FROM stdin;
 
 
 --
--- TOC entry 3324 (class 0 OID 0)
--- Dependencies: 222
 -- Name: recaudo_beneficiario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -23583,8 +22298,6 @@ SELECT pg_catalog.setval('recaudo_beneficiario_id_seq', 1, false);
 
 
 --
--- TOC entry 3325 (class 0 OID 0)
--- Dependencies: 223
 -- Name: recaudo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -23592,8 +22305,6 @@ SELECT pg_catalog.setval('recaudo_id_seq', 1, false);
 
 
 --
--- TOC entry 2812 (class 0 OID 397536)
--- Dependencies: 224 2852
 -- Data for Name: recaudo_reembolso; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -23602,8 +22313,6 @@ COPY recaudo_reembolso (id, recaudo_id, codigo_solicitud, estado) FROM stdin;
 
 
 --
--- TOC entry 3326 (class 0 OID 0)
--- Dependencies: 225
 -- Name: recaudo_reembolso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -23611,8 +22320,6 @@ SELECT pg_catalog.setval('recaudo_reembolso_id_seq', 1, false);
 
 
 --
--- TOC entry 2814 (class 0 OID 397541)
--- Dependencies: 226 2852
 -- Data for Name: recaudo_solicitud_medicina; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -23621,8 +22328,6 @@ COPY recaudo_solicitud_medicina (id, recaudo_id, codigo_solicitud, estado) FROM 
 
 
 --
--- TOC entry 3327 (class 0 OID 0)
--- Dependencies: 227
 -- Name: recaudo_solicitud_medicina_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -23630,8 +22335,6 @@ SELECT pg_catalog.setval('recaudo_solicitud_medicina_id_seq', 1, false);
 
 
 --
--- TOC entry 2816 (class 0 OID 397546)
--- Dependencies: 228 2852
 -- Data for Name: recaudo_solicitud_servicio; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -23640,8 +22343,6 @@ COPY recaudo_solicitud_servicio (id, recaudo_id, codigo_solicitud, estado) FROM 
 
 
 --
--- TOC entry 3328 (class 0 OID 0)
--- Dependencies: 229
 -- Name: recaudo_solicitud_servicio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -23649,8 +22350,6 @@ SELECT pg_catalog.setval('recaudo_solicitud_servicio_id_seq', 1, false);
 
 
 --
--- TOC entry 2818 (class 0 OID 397551)
--- Dependencies: 230 2852
 -- Data for Name: recaudo_titular; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -23659,8 +22358,6 @@ COPY recaudo_titular (id, titular_id, recaudo_id, estado) FROM stdin;
 
 
 --
--- TOC entry 3329 (class 0 OID 0)
--- Dependencies: 231
 -- Name: recaudo_titular_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -23668,8 +22365,6 @@ SELECT pg_catalog.setval('recaudo_titular_id_seq', 1, false);
 
 
 --
--- TOC entry 2820 (class 0 OID 397556)
--- Dependencies: 232 2852
 -- Data for Name: recurso; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -23713,21 +22408,19 @@ COPY recurso (id, usuario_id, fecha_registro, fecha_modificado, modulo, controla
 39	\N	2014-06-09 11:26:54.260015-04:30	2014-06-09 11:26:54.260015-04:30	solicitudes	solicitud_servicio	aprobacion	solicitudes/solicitud_servicio/aprobacion	Aprobacion de las Solicitudes de Servicio de Atención Primaria	1
 40	\N	2014-06-09 11:27:18.560757-04:30	2014-06-09 11:27:18.560757-04:30	solicitudes	solicitud_servicio	contabilizar	solicitudes/solicitud_servicio/contabilizar	Contabilizar las Solicitudes de Atención Primaria	1
 41	\N	2014-06-09 11:30:37.965083-04:30	2014-06-09 11:30:37.965083-04:30	solicitudes	solicitud_servicio	anular	solicitudes/solicitud_servicio/anular	Anular Solicitudes de Servicio Atención Primaria	1
+42	\N	2014-06-24 15:50:26.79701-04:30	2014-06-24 15:50:26.79701-04:30	proveedorsalud	servicio	*	proveedorsalud/servicio/*	Modulo para el registro de servicios profesionales	1
+43	\N	2014-06-24 23:50:31.046028-04:30	2014-06-24 23:50:31.046028-04:30	config	tiposolicitud	*	config/tiposolicitud/*	Gestionar los tipos de solicitudes dentro del sistema	1
 \.
 
 
 --
--- TOC entry 3330 (class 0 OID 0)
--- Dependencies: 233
 -- Name: recurso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('recurso_id_seq', 41, true);
+SELECT pg_catalog.setval('recurso_id_seq', 43, true);
 
 
 --
--- TOC entry 2822 (class 0 OID 397564)
--- Dependencies: 234 2852
 -- Data for Name: recurso_perfil; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -23775,8 +22468,6 @@ COPY recurso_perfil (id, usuario_id, fecha_registro, fecha_modificado, recurso_i
 
 
 --
--- TOC entry 3331 (class 0 OID 0)
--- Dependencies: 235
 -- Name: recurso_perfil_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -23784,8 +22475,6 @@ SELECT pg_catalog.setval('recurso_perfil_id_seq', 276, true);
 
 
 --
--- TOC entry 2824 (class 0 OID 397571)
--- Dependencies: 236 2852
 -- Data for Name: reembolso; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -23794,8 +22483,6 @@ COPY reembolso (id, usuario_id, fecha_registro, fecha_modificado, estado_solicit
 
 
 --
--- TOC entry 3332 (class 0 OID 0)
--- Dependencies: 237
 -- Name: reembolso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -23803,8 +22490,6 @@ SELECT pg_catalog.setval('reembolso_id_seq', 1, false);
 
 
 --
--- TOC entry 2826 (class 0 OID 397580)
--- Dependencies: 238 2852
 -- Data for Name: servicio; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -23814,8 +22499,6 @@ COPY servicio (id, usuario_id, fecha_registro, fecha_modificado, descripcion, ob
 
 
 --
--- TOC entry 3333 (class 0 OID 0)
--- Dependencies: 239
 -- Name: servicio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -23823,8 +22506,6 @@ SELECT pg_catalog.setval('servicio_id_seq', 1, true);
 
 
 --
--- TOC entry 2828 (class 0 OID 397587)
--- Dependencies: 240 2852
 -- Data for Name: servicio_proveedor; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -23833,8 +22514,6 @@ COPY servicio_proveedor (id, proveedor_id, servicio_id) FROM stdin;
 
 
 --
--- TOC entry 3334 (class 0 OID 0)
--- Dependencies: 241
 -- Name: servicio_proveedor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -23842,8 +22521,6 @@ SELECT pg_catalog.setval('servicio_proveedor_id_seq', 1, false);
 
 
 --
--- TOC entry 2830 (class 0 OID 397593)
--- Dependencies: 242 2852
 -- Data for Name: servicio_tiposolicitud; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -23852,8 +22529,6 @@ COPY servicio_tiposolicitud (id, tiposolicitud_id, servicio_id) FROM stdin;
 
 
 --
--- TOC entry 3335 (class 0 OID 0)
--- Dependencies: 243
 -- Name: servicio_tiposolicitud_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -23861,8 +22536,6 @@ SELECT pg_catalog.setval('servicio_tiposolicitud_id_seq', 1, false);
 
 
 --
--- TOC entry 2832 (class 0 OID 397599)
--- Dependencies: 244 2852
 -- Data for Name: solicitud_dt_factura; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -23871,8 +22544,6 @@ COPY solicitud_dt_factura (id, solicitud_factura_id, descripcion, cantidad, mont
 
 
 --
--- TOC entry 3336 (class 0 OID 0)
--- Dependencies: 245
 -- Name: solicitud_dt_factura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -23880,8 +22551,6 @@ SELECT pg_catalog.setval('solicitud_dt_factura_id_seq', 1, false);
 
 
 --
--- TOC entry 2834 (class 0 OID 397604)
--- Dependencies: 246 2852
 -- Data for Name: solicitud_dt_medicina; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -23890,8 +22559,6 @@ COPY solicitud_dt_medicina (id, solicitud_id, medicina_id, fecha_inicio, fecha_f
 
 
 --
--- TOC entry 3337 (class 0 OID 0)
--- Dependencies: 247
 -- Name: solicitud_dt_medicina_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -23899,8 +22566,6 @@ SELECT pg_catalog.setval('solicitud_dt_medicina_id_seq', 1, false);
 
 
 --
--- TOC entry 2836 (class 0 OID 397611)
--- Dependencies: 248 2852
 -- Data for Name: solicitud_factura; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -23909,8 +22574,6 @@ COPY solicitud_factura (id, usuario_id, fecha_registro, fecha_modificado, solici
 
 
 --
--- TOC entry 3338 (class 0 OID 0)
--- Dependencies: 249
 -- Name: solicitud_factura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -23918,8 +22581,6 @@ SELECT pg_catalog.setval('solicitud_factura_id_seq', 1, false);
 
 
 --
--- TOC entry 2838 (class 0 OID 397619)
--- Dependencies: 250 2852
 -- Data for Name: solicitud_medicina; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -23928,8 +22589,6 @@ COPY solicitud_medicina (id, usuario_id, fecha_registro, fecha_modificado, estad
 
 
 --
--- TOC entry 3339 (class 0 OID 0)
--- Dependencies: 251
 -- Name: solicitud_medicina_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -23937,8 +22596,6 @@ SELECT pg_catalog.setval('solicitud_medicina_id_seq', 1, false);
 
 
 --
--- TOC entry 2840 (class 0 OID 397632)
--- Dependencies: 252 2852
 -- Data for Name: solicitud_servicio; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -23946,21 +22603,20 @@ COPY solicitud_servicio (id, usuario_id, fecha_registro, fecha_modificado, estad
 11	\N	2014-06-02 18:50:47.769075-04:30	2014-06-02 18:50:47.769075-04:30	R	1	2014-06-02	1	1	1	1	14189	1	1	1900-01-01	1	asd
 12	\N	2014-06-02 18:51:21.767053-04:30	2014-06-02 18:51:21.767053-04:30	A	1	2014-06-02	2	1	1	1	14189	1	1	1900-01-01	1	asd
 13	\N	2014-06-09 19:41:36.084029-04:30	2014-06-09 19:41:36.084029-04:30	A	2	2014-06-09	3	1	1	1	14189	1	1	1900-01-01	1	asd
+16	\N	2014-06-23 17:24:37.71975-04:30	2014-06-23 17:24:37.71975-04:30	R	1	2014-06-23	4	1	1	1	16802	1	1	2014-06-23	1	prueba
+17	\N	2014-06-23 17:29:07.203539-04:30	2014-06-23 17:29:07.203539-04:30	R	1	2014-06-23	5	1	1	1	18129	1	1	2014-06-23	1	probando 2
+20	\N	2014-06-23 19:36:22.226111-04:30	2014-06-23 19:36:22.226111-04:30	R	1	2014-06-23	6	1	1	1	24763	1	1	2014-06-23	1	Pa
 \.
 
 
 --
--- TOC entry 3340 (class 0 OID 0)
--- Dependencies: 253
 -- Name: solicitud_servicio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('solicitud_servicio_id_seq', 14, true);
+SELECT pg_catalog.setval('solicitud_servicio_id_seq', 20, true);
 
 
 --
--- TOC entry 2842 (class 0 OID 397641)
--- Dependencies: 254 2852
 -- Data for Name: sucursal; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -23970,8 +22626,6 @@ COPY sucursal (id, usuario_id, fecha_registro, fecha_modificado, empresa_id, suc
 
 
 --
--- TOC entry 3341 (class 0 OID 0)
--- Dependencies: 255
 -- Name: sucursal_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -23979,8 +22633,6 @@ SELECT pg_catalog.setval('sucursal_id_seq', 1, true);
 
 
 --
--- TOC entry 2844 (class 0 OID 397648)
--- Dependencies: 256 2852
 -- Data for Name: tipoempleado; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -23994,8 +22646,6 @@ COPY tipoempleado (id, usuario_id, fecha_registro, fecha_modificado, nombre, obs
 
 
 --
--- TOC entry 3342 (class 0 OID 0)
--- Dependencies: 257
 -- Name: tipoempleado_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -24003,23 +22653,19 @@ SELECT pg_catalog.setval('tipoempleado_id_seq', 8, true);
 
 
 --
--- TOC entry 2846 (class 0 OID 397655)
--- Dependencies: 258 2852
 -- Data for Name: tiposolicitud; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
-COPY tiposolicitud (id, usuario_id, fecha_registro, fecha_modificado, nombre, observacion) FROM stdin;
-1	\N	2014-06-02 16:39:48.736278-04:30	2014-06-02 16:39:48.736278-04:30	Consulta Medica	\N
-2	\N	2014-06-02 16:42:11.530463-04:30	2014-06-02 16:42:11.530463-04:30	Consulta Odontologica	\N
-3	\N	2014-06-02 16:42:25.511351-04:30	2014-06-02 16:42:25.511351-04:30	Examenes de Laboratorio	\N
-4	\N	2014-06-02 16:42:33.182268-04:30	2014-06-02 16:42:33.182268-04:30	Examenes Especiales	\N
-5	\N	2014-06-02 16:44:56.932481-04:30	2014-06-02 16:44:56.932481-04:30	Servicios Funerarios	\N
+COPY tiposolicitud (id, usuario_id, fecha_registro, fecha_modificado, nombre, observacion, correlativo) FROM stdin;
+1	\N	2014-06-02 16:39:48.736278-04:30	2014-06-02 16:39:48.736278-04:30	Consulta Medica	\N	SASCM-0
+2	\N	2014-06-02 16:42:11.530463-04:30	2014-06-02 16:42:11.530463-04:30	Consulta Odontologica	\N	SASCO-0
+3	\N	2014-06-02 16:42:25.511351-04:30	2014-06-02 16:42:25.511351-04:30	Examenes de Laboratorio	\N	SASEL-0
+4	\N	2014-06-02 16:42:33.182268-04:30	2014-06-02 16:42:33.182268-04:30	Examenes Especiales	\N	SASEE-0
+5	\N	2014-06-02 16:44:56.932481-04:30	2014-06-02 16:44:56.932481-04:30	Servicios Funerarios	\N	SASSF-0
 \.
 
 
 --
--- TOC entry 3343 (class 0 OID 0)
--- Dependencies: 259
 -- Name: tiposolicitud_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -24027,8 +22673,6 @@ SELECT pg_catalog.setval('tiposolicitud_id_seq', 5, true);
 
 
 --
--- TOC entry 2848 (class 0 OID 397662)
--- Dependencies: 260 2852
 -- Data for Name: titular; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -24036,14 +22680,11 @@ COPY titular (id, usuario_id, fecha_registro, fecha_modificado, tipoempleado_id,
 1	1	2014-04-03 10:44:52.776632-04:30	2014-04-03 10:44:52.776632-04:30	1	1	1900-01-01	1	1	4	Prueba
 3	\N	2014-04-04 15:18:00.894791-04:30	2014-04-04 15:18:00.894791-04:30	1	3	1900-01-01	1	1	4	fgdfgdfg
 2	1	2014-04-03 11:12:19.553918-04:30	2014-04-03 11:12:19.553918-04:30	1	2	1900-01-01	1	1	4	probando
-4	\N	2014-04-04 18:03:48.428044-04:30	2014-04-04 18:03:48.428044-04:30	1	4	1900-01-01	1	1	4	 asd asd ads
-5	\N	2014-04-11 19:44:50.762273-04:30	2014-04-11 19:44:50.762273-04:30	1	0	1900-01-01	22	15	17	a ver que lo q
+4	\N	2014-04-04 18:03:48.428044-04:30	2014-04-04 18:03:48.428044-04:30	1	5	1900-01-01	1	1	4	 asd asd ads
 \.
 
 
 --
--- TOC entry 3344 (class 0 OID 0)
--- Dependencies: 261
 -- Name: titular_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -24051,8 +22692,6 @@ SELECT pg_catalog.setval('titular_id_seq', 5, true);
 
 
 --
--- TOC entry 2850 (class 0 OID 397670)
--- Dependencies: 262 2852
 -- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -24065,8 +22704,6 @@ COPY usuario (id, usuario_id, fecha_registro, fecha_modificado, sucursal_id, per
 
 
 --
--- TOC entry 3345 (class 0 OID 0)
--- Dependencies: 263
 -- Name: usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -24076,8 +22713,6 @@ SELECT pg_catalog.setval('usuario_id_seq', 4, true);
 SET search_path = audit_log, pg_catalog;
 
 --
--- TOC entry 2388 (class 2606 OID 397726)
--- Dependencies: 162 162 2853
 -- Name: audit_log_pkey; Type: CONSTRAINT; Schema: audit_log; Owner: arrozalba; Tablespace: 
 --
 
@@ -24088,8 +22723,6 @@ ALTER TABLE ONLY audit_log
 SET search_path = public, pg_catalog;
 
 --
--- TOC entry 2390 (class 2606 OID 397728)
--- Dependencies: 164 164 2853
 -- Name: acceso_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24098,8 +22731,6 @@ ALTER TABLE ONLY acceso
 
 
 --
--- TOC entry 2392 (class 2606 OID 397730)
--- Dependencies: 166 166 2853
 -- Name: audit_log_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24108,8 +22739,6 @@ ALTER TABLE ONLY audit_log
 
 
 --
--- TOC entry 2394 (class 2606 OID 397732)
--- Dependencies: 168 168 2853
 -- Name: backup_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24118,8 +22747,6 @@ ALTER TABLE ONLY backup
 
 
 --
--- TOC entry 2396 (class 2606 OID 397734)
--- Dependencies: 170 170 2853
 -- Name: beneficiario_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24128,8 +22755,6 @@ ALTER TABLE ONLY beneficiario
 
 
 --
--- TOC entry 2398 (class 2606 OID 397736)
--- Dependencies: 172 172 2853
 -- Name: beneficiario_tipo_descripcion_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24138,8 +22763,6 @@ ALTER TABLE ONLY beneficiario_tipo
 
 
 --
--- TOC entry 2400 (class 2606 OID 397738)
--- Dependencies: 172 172 2853
 -- Name: beneficiario_tipo_descripcion_unico; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24148,8 +22771,6 @@ ALTER TABLE ONLY beneficiario_tipo
 
 
 --
--- TOC entry 2402 (class 2606 OID 397740)
--- Dependencies: 172 172 2853
 -- Name: beneficiario_tipo_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24158,8 +22779,6 @@ ALTER TABLE ONLY beneficiario_tipo
 
 
 --
--- TOC entry 2404 (class 2606 OID 397742)
--- Dependencies: 174 174 2853
 -- Name: cargo_nombre_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24168,8 +22787,6 @@ ALTER TABLE ONLY cargo
 
 
 --
--- TOC entry 2406 (class 2606 OID 397744)
--- Dependencies: 174 174 2853
 -- Name: cargo_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24178,8 +22795,6 @@ ALTER TABLE ONLY cargo
 
 
 --
--- TOC entry 2408 (class 2606 OID 397746)
--- Dependencies: 176 176 2853
 -- Name: cobertura_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24188,8 +22803,6 @@ ALTER TABLE ONLY cobertura
 
 
 --
--- TOC entry 2410 (class 2606 OID 397748)
--- Dependencies: 178 178 2853
 -- Name: departamento_nombre_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24198,8 +22811,6 @@ ALTER TABLE ONLY departamento
 
 
 --
--- TOC entry 2412 (class 2606 OID 397750)
--- Dependencies: 178 178 2853
 -- Name: departamento_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24208,8 +22819,6 @@ ALTER TABLE ONLY departamento
 
 
 --
--- TOC entry 2414 (class 2606 OID 397752)
--- Dependencies: 180 180 2853
 -- Name: discapacidad_nombre_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24218,8 +22827,6 @@ ALTER TABLE ONLY discapacidad
 
 
 --
--- TOC entry 2418 (class 2606 OID 397754)
--- Dependencies: 182 182 2853
 -- Name: discapacidad_persona_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24228,8 +22835,6 @@ ALTER TABLE ONLY discapacidad_persona
 
 
 --
--- TOC entry 2416 (class 2606 OID 397756)
--- Dependencies: 180 180 2853
 -- Name: discapacidad_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24238,8 +22843,6 @@ ALTER TABLE ONLY discapacidad
 
 
 --
--- TOC entry 2420 (class 2606 OID 397758)
--- Dependencies: 184 184 2853
 -- Name: empresa_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24248,8 +22851,6 @@ ALTER TABLE ONLY empresa
 
 
 --
--- TOC entry 2422 (class 2606 OID 397760)
--- Dependencies: 186 186 2853
 -- Name: especialidad_descripcion_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24258,8 +22859,6 @@ ALTER TABLE ONLY especialidad
 
 
 --
--- TOC entry 2434 (class 2606 OID 397762)
--- Dependencies: 190 190 2853
 -- Name: especialidad_medico_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24268,8 +22867,6 @@ ALTER TABLE ONLY especialidad_medico
 
 
 --
--- TOC entry 2424 (class 2606 OID 397764)
--- Dependencies: 186 186 2853
 -- Name: especialidad_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24278,8 +22875,6 @@ ALTER TABLE ONLY especialidad
 
 
 --
--- TOC entry 2436 (class 2606 OID 397766)
--- Dependencies: 192 192 2853
 -- Name: estado_codigo_unico; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24288,8 +22883,6 @@ ALTER TABLE ONLY estado
 
 
 --
--- TOC entry 2438 (class 2606 OID 397768)
--- Dependencies: 192 192 2853
 -- Name: estado_nombre_unico; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24298,8 +22891,6 @@ ALTER TABLE ONLY estado
 
 
 --
--- TOC entry 2440 (class 2606 OID 397770)
--- Dependencies: 192 192 2853
 -- Name: estado_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24308,8 +22899,6 @@ ALTER TABLE ONLY estado
 
 
 --
--- TOC entry 2442 (class 2606 OID 397772)
--- Dependencies: 194 194 2853
 -- Name: estado_usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24318,8 +22907,6 @@ ALTER TABLE ONLY estado_usuario
 
 
 --
--- TOC entry 2444 (class 2606 OID 397774)
--- Dependencies: 196 196 2853
 -- Name: medicina_descripcion_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24328,8 +22915,6 @@ ALTER TABLE ONLY medicina
 
 
 --
--- TOC entry 2446 (class 2606 OID 397776)
--- Dependencies: 196 196 2853
 -- Name: medicina_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24338,8 +22923,6 @@ ALTER TABLE ONLY medicina
 
 
 --
--- TOC entry 2448 (class 2606 OID 397778)
--- Dependencies: 198 198 2853
 -- Name: medico_cedula_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24348,8 +22931,6 @@ ALTER TABLE ONLY medico
 
 
 --
--- TOC entry 2450 (class 2606 OID 397780)
--- Dependencies: 198 198 2853
 -- Name: medico_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24358,8 +22939,6 @@ ALTER TABLE ONLY medico
 
 
 --
--- TOC entry 2452 (class 2606 OID 397782)
--- Dependencies: 198 198 2853
 -- Name: medico_rif_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24368,8 +22947,6 @@ ALTER TABLE ONLY medico
 
 
 --
--- TOC entry 2454 (class 2606 OID 397784)
--- Dependencies: 198 198 2853
 -- Name: medico_rmpps_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24378,8 +22955,6 @@ ALTER TABLE ONLY medico
 
 
 --
--- TOC entry 2456 (class 2606 OID 397786)
--- Dependencies: 200 200 2853
 -- Name: menu_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24388,8 +22963,6 @@ ALTER TABLE ONLY menu
 
 
 --
--- TOC entry 2458 (class 2606 OID 397788)
--- Dependencies: 202 202 2853
 -- Name: municipio_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24398,8 +22971,6 @@ ALTER TABLE ONLY municipio
 
 
 --
--- TOC entry 2460 (class 2606 OID 397790)
--- Dependencies: 204 204 2853
 -- Name: pais_codigo_unico; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24408,8 +22979,6 @@ ALTER TABLE ONLY pais
 
 
 --
--- TOC entry 2462 (class 2606 OID 397792)
--- Dependencies: 204 204 2853
 -- Name: pais_nombre_unico; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24418,8 +22987,6 @@ ALTER TABLE ONLY pais
 
 
 --
--- TOC entry 2464 (class 2606 OID 397794)
--- Dependencies: 204 204 2853
 -- Name: pais_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24428,8 +22995,6 @@ ALTER TABLE ONLY pais
 
 
 --
--- TOC entry 2466 (class 2606 OID 397796)
--- Dependencies: 206 206 2853
 -- Name: parroquia_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24438,8 +23003,6 @@ ALTER TABLE ONLY parroquia
 
 
 --
--- TOC entry 2469 (class 2606 OID 397798)
--- Dependencies: 208 208 2853
 -- Name: patologia_categoria_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24448,8 +23011,6 @@ ALTER TABLE ONLY patologia_categoria
 
 
 --
--- TOC entry 2471 (class 2606 OID 397806)
--- Dependencies: 210 210 2853
 -- Name: patologia_codigo_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24458,8 +23019,6 @@ ALTER TABLE ONLY patologia
 
 
 --
--- TOC entry 2473 (class 2606 OID 397808)
--- Dependencies: 210 210 2853
 -- Name: patologia_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24468,8 +23027,6 @@ ALTER TABLE ONLY patologia
 
 
 --
--- TOC entry 2475 (class 2606 OID 397810)
--- Dependencies: 212 212 2853
 -- Name: perfil_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24478,8 +23035,6 @@ ALTER TABLE ONLY perfil
 
 
 --
--- TOC entry 2477 (class 2606 OID 397812)
--- Dependencies: 214 214 2853
 -- Name: persona_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24488,8 +23043,6 @@ ALTER TABLE ONLY persona
 
 
 --
--- TOC entry 2479 (class 2606 OID 397814)
--- Dependencies: 216 216 2853
 -- Name: profesion_nombre_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24498,8 +23051,6 @@ ALTER TABLE ONLY profesion
 
 
 --
--- TOC entry 2481 (class 2606 OID 397816)
--- Dependencies: 216 216 2853
 -- Name: profesion_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24508,8 +23059,6 @@ ALTER TABLE ONLY profesion
 
 
 --
--- TOC entry 2483 (class 2606 OID 397818)
--- Dependencies: 218 218 2853
 -- Name: proveedor_medico_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24518,8 +23067,6 @@ ALTER TABLE ONLY proveedor_medico
 
 
 --
--- TOC entry 2426 (class 2606 OID 397820)
--- Dependencies: 188 188 2853
 -- Name: proveedor_nombre_corto_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24528,8 +23075,6 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- TOC entry 2428 (class 2606 OID 397822)
--- Dependencies: 188 188 2853
 -- Name: proveedor_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24538,8 +23083,6 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- TOC entry 2430 (class 2606 OID 397824)
--- Dependencies: 188 188 2853
 -- Name: proveedor_razon_social_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24548,8 +23091,6 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- TOC entry 2432 (class 2606 OID 397826)
--- Dependencies: 188 188 2853
 -- Name: proveedor_rif_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24558,8 +23099,6 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- TOC entry 2489 (class 2606 OID 397828)
--- Dependencies: 221 221 2853
 -- Name: recaudo_beneficiario_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24568,8 +23107,6 @@ ALTER TABLE ONLY recaudo_beneficiario
 
 
 --
--- TOC entry 2485 (class 2606 OID 397830)
--- Dependencies: 220 220 2853
 -- Name: recaudo_nombre_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24578,8 +23115,6 @@ ALTER TABLE ONLY recaudo
 
 
 --
--- TOC entry 2487 (class 2606 OID 397832)
--- Dependencies: 220 220 2853
 -- Name: recaudo_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24588,8 +23123,6 @@ ALTER TABLE ONLY recaudo
 
 
 --
--- TOC entry 2491 (class 2606 OID 397834)
--- Dependencies: 224 224 2853
 -- Name: recaudo_reembolso_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24598,8 +23131,6 @@ ALTER TABLE ONLY recaudo_reembolso
 
 
 --
--- TOC entry 2493 (class 2606 OID 397836)
--- Dependencies: 224 224 2853
 -- Name: recaudo_reembolso_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24608,8 +23139,6 @@ ALTER TABLE ONLY recaudo_reembolso
 
 
 --
--- TOC entry 2495 (class 2606 OID 397838)
--- Dependencies: 226 226 2853
 -- Name: recaudo_solicitud_medicina_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24618,8 +23147,6 @@ ALTER TABLE ONLY recaudo_solicitud_medicina
 
 
 --
--- TOC entry 2497 (class 2606 OID 397840)
--- Dependencies: 226 226 2853
 -- Name: recaudo_solicitud_medicina_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24628,8 +23155,6 @@ ALTER TABLE ONLY recaudo_solicitud_medicina
 
 
 --
--- TOC entry 2499 (class 2606 OID 397842)
--- Dependencies: 228 228 2853
 -- Name: recaudo_solicitud_servicio_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24638,8 +23163,6 @@ ALTER TABLE ONLY recaudo_solicitud_servicio
 
 
 --
--- TOC entry 2501 (class 2606 OID 397844)
--- Dependencies: 228 228 2853
 -- Name: recaudo_solicitud_servicio_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24648,8 +23171,6 @@ ALTER TABLE ONLY recaudo_solicitud_servicio
 
 
 --
--- TOC entry 2503 (class 2606 OID 397846)
--- Dependencies: 230 230 2853
 -- Name: recaudo_titular_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24658,8 +23179,6 @@ ALTER TABLE ONLY recaudo_titular
 
 
 --
--- TOC entry 2507 (class 2606 OID 397848)
--- Dependencies: 234 234 2853
 -- Name: recurso_perfil_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24668,8 +23187,6 @@ ALTER TABLE ONLY recurso_perfil
 
 
 --
--- TOC entry 2505 (class 2606 OID 397850)
--- Dependencies: 232 232 2853
 -- Name: recurso_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24678,8 +23195,6 @@ ALTER TABLE ONLY recurso
 
 
 --
--- TOC entry 2509 (class 2606 OID 397852)
--- Dependencies: 236 236 2853
 -- Name: reembolso_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24688,8 +23203,6 @@ ALTER TABLE ONLY reembolso
 
 
 --
--- TOC entry 2511 (class 2606 OID 397854)
--- Dependencies: 236 236 2853
 -- Name: reembolso_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24698,8 +23211,6 @@ ALTER TABLE ONLY reembolso
 
 
 --
--- TOC entry 2513 (class 2606 OID 397856)
--- Dependencies: 238 238 2853
 -- Name: servicio_descripcion_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24708,8 +23219,6 @@ ALTER TABLE ONLY servicio
 
 
 --
--- TOC entry 2515 (class 2606 OID 397858)
--- Dependencies: 238 238 2853
 -- Name: servicio_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24718,8 +23227,6 @@ ALTER TABLE ONLY servicio
 
 
 --
--- TOC entry 2517 (class 2606 OID 397860)
--- Dependencies: 240 240 2853
 -- Name: servicio_proveedor_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24728,8 +23235,6 @@ ALTER TABLE ONLY servicio_proveedor
 
 
 --
--- TOC entry 2519 (class 2606 OID 397862)
--- Dependencies: 242 242 2853
 -- Name: servicio_tiposolicitud_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24738,8 +23243,6 @@ ALTER TABLE ONLY servicio_tiposolicitud
 
 
 --
--- TOC entry 2521 (class 2606 OID 397864)
--- Dependencies: 244 244 2853
 -- Name: solicitud_dt_factura_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24748,8 +23251,6 @@ ALTER TABLE ONLY solicitud_dt_factura
 
 
 --
--- TOC entry 2523 (class 2606 OID 397866)
--- Dependencies: 246 246 2853
 -- Name: solicitud_dt_medicina_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24758,8 +23259,6 @@ ALTER TABLE ONLY solicitud_dt_medicina
 
 
 --
--- TOC entry 2525 (class 2606 OID 397868)
--- Dependencies: 248 248 2853
 -- Name: solicitud_factura_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24768,8 +23267,6 @@ ALTER TABLE ONLY solicitud_factura
 
 
 --
--- TOC entry 2527 (class 2606 OID 397870)
--- Dependencies: 248 248 2853
 -- Name: solicitud_factura_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24778,8 +23275,6 @@ ALTER TABLE ONLY solicitud_factura
 
 
 --
--- TOC entry 2529 (class 2606 OID 397872)
--- Dependencies: 250 250 2853
 -- Name: solicitud_medicina_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24788,8 +23283,6 @@ ALTER TABLE ONLY solicitud_medicina
 
 
 --
--- TOC entry 2531 (class 2606 OID 397874)
--- Dependencies: 250 250 2853
 -- Name: solicitud_medicina_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24798,8 +23291,6 @@ ALTER TABLE ONLY solicitud_medicina
 
 
 --
--- TOC entry 2533 (class 2606 OID 397876)
--- Dependencies: 252 252 2853
 -- Name: solicitud_servicio_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24808,8 +23299,6 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- TOC entry 2535 (class 2606 OID 397878)
--- Dependencies: 252 252 2853
 -- Name: solicitud_servicio_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24818,8 +23307,6 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- TOC entry 2537 (class 2606 OID 397880)
--- Dependencies: 254 254 2853
 -- Name: sucursal_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24828,8 +23315,6 @@ ALTER TABLE ONLY sucursal
 
 
 --
--- TOC entry 2539 (class 2606 OID 397882)
--- Dependencies: 256 256 2853
 -- Name: tipoempleado_nombre_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24838,8 +23323,6 @@ ALTER TABLE ONLY tipoempleado
 
 
 --
--- TOC entry 2541 (class 2606 OID 397884)
--- Dependencies: 256 256 2853
 -- Name: tipoempleado_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24848,8 +23331,6 @@ ALTER TABLE ONLY tipoempleado
 
 
 --
--- TOC entry 2543 (class 2606 OID 397886)
--- Dependencies: 258 258 2853
 -- Name: tiposolicitud_nombre_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24858,8 +23339,6 @@ ALTER TABLE ONLY tiposolicitud
 
 
 --
--- TOC entry 2545 (class 2606 OID 397888)
--- Dependencies: 258 258 2853
 -- Name: tiposolicitud_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24868,8 +23347,6 @@ ALTER TABLE ONLY tiposolicitud
 
 
 --
--- TOC entry 2547 (class 2606 OID 397890)
--- Dependencies: 260 260 2853
 -- Name: titular_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24878,8 +23355,6 @@ ALTER TABLE ONLY titular
 
 
 --
--- TOC entry 2551 (class 2606 OID 397892)
--- Dependencies: 262 262 2853
 -- Name: usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24888,8 +23363,6 @@ ALTER TABLE ONLY usuario
 
 
 --
--- TOC entry 2467 (class 1259 OID 397799)
--- Dependencies: 208 2853
 -- Name: patologia_categoria_padre_id_index; Type: INDEX; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24897,8 +23370,6 @@ CREATE INDEX patologia_categoria_padre_id_index ON patologia_categoria USING btr
 
 
 --
--- TOC entry 2548 (class 1259 OID 397893)
--- Dependencies: 262 2853
 -- Name: usuario_perfil_idx; Type: INDEX; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24906,8 +23377,6 @@ CREATE INDEX usuario_perfil_idx ON usuario USING btree (perfil_id);
 
 
 --
--- TOC entry 2549 (class 1259 OID 397894)
--- Dependencies: 262 2853
 -- Name: usuario_persona_idx; Type: INDEX; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24915,8 +23384,6 @@ CREATE INDEX usuario_persona_idx ON usuario USING btree (persona_id);
 
 
 --
--- TOC entry 2552 (class 1259 OID 397895)
--- Dependencies: 262 2853
 -- Name: usuario_sucursal_idx; Type: INDEX; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24924,8 +23391,6 @@ CREATE INDEX usuario_sucursal_idx ON usuario USING btree (sucursal_id);
 
 
 --
--- TOC entry 2648 (class 2620 OID 397896)
--- Dependencies: 262 331 2853
 -- Name: trg_usuario; Type: TRIGGER; Schema: public; Owner: arrozalba
 --
 
@@ -24933,8 +23398,6 @@ CREATE TRIGGER trg_usuario AFTER INSERT OR DELETE OR UPDATE ON usuario FOR EACH 
 
 
 --
--- TOC entry 2553 (class 2606 OID 397897)
--- Dependencies: 164 2550 262 2853
 -- Name: acceso_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -24943,8 +23406,6 @@ ALTER TABLE ONLY acceso
 
 
 --
--- TOC entry 2554 (class 2606 OID 397902)
--- Dependencies: 2550 262 168 2853
 -- Name: backup_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -24953,8 +23414,6 @@ ALTER TABLE ONLY backup
 
 
 --
--- TOC entry 2555 (class 2606 OID 397907)
--- Dependencies: 2401 170 172 2853
 -- Name: beneficiario_beneficiario_tipo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -24963,8 +23422,6 @@ ALTER TABLE ONLY beneficiario
 
 
 --
--- TOC entry 2556 (class 2606 OID 397912)
--- Dependencies: 170 214 2476 2853
 -- Name: beneficiario_persona_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -24973,8 +23430,6 @@ ALTER TABLE ONLY beneficiario
 
 
 --
--- TOC entry 2559 (class 2606 OID 397917)
--- Dependencies: 262 172 2550 2853
 -- Name: beneficiario_tipo_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -24983,8 +23438,6 @@ ALTER TABLE ONLY beneficiario_tipo
 
 
 --
--- TOC entry 2557 (class 2606 OID 397922)
--- Dependencies: 260 2546 170 2853
 -- Name: beneficiario_titular_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -24993,8 +23446,6 @@ ALTER TABLE ONLY beneficiario
 
 
 --
--- TOC entry 2558 (class 2606 OID 397927)
--- Dependencies: 170 262 2550 2853
 -- Name: beneficiario_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25003,8 +23454,6 @@ ALTER TABLE ONLY beneficiario
 
 
 --
--- TOC entry 2560 (class 2606 OID 397932)
--- Dependencies: 262 174 2550 2853
 -- Name: cargo_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25013,8 +23462,6 @@ ALTER TABLE ONLY cargo
 
 
 --
--- TOC entry 2561 (class 2606 OID 397937)
--- Dependencies: 176 2550 262 2853
 -- Name: cobertura_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25023,8 +23470,6 @@ ALTER TABLE ONLY cobertura
 
 
 --
--- TOC entry 2562 (class 2606 OID 397942)
--- Dependencies: 2536 254 178 2853
 -- Name: departamento_sucursal_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25033,8 +23478,6 @@ ALTER TABLE ONLY departamento
 
 
 --
--- TOC entry 2563 (class 2606 OID 397947)
--- Dependencies: 262 2550 178 2853
 -- Name: departamento_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25043,8 +23486,6 @@ ALTER TABLE ONLY departamento
 
 
 --
--- TOC entry 2565 (class 2606 OID 397952)
--- Dependencies: 182 2415 180 2853
 -- Name: discapacidad_persona_discapacidad_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25053,8 +23494,6 @@ ALTER TABLE ONLY discapacidad_persona
 
 
 --
--- TOC entry 2566 (class 2606 OID 397957)
--- Dependencies: 182 214 2476 2853
 -- Name: discapacidad_persona_persona_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25063,8 +23502,6 @@ ALTER TABLE ONLY discapacidad_persona
 
 
 --
--- TOC entry 2564 (class 2606 OID 397962)
--- Dependencies: 2550 180 262 2853
 -- Name: discapacidad_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25073,8 +23510,6 @@ ALTER TABLE ONLY discapacidad
 
 
 --
--- TOC entry 2567 (class 2606 OID 397967)
--- Dependencies: 192 184 2439 2853
 -- Name: empresa_estado_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25083,8 +23518,6 @@ ALTER TABLE ONLY empresa
 
 
 --
--- TOC entry 2568 (class 2606 OID 397972)
--- Dependencies: 202 2457 184 2853
 -- Name: empresa_municipio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25093,8 +23526,6 @@ ALTER TABLE ONLY empresa
 
 
 --
--- TOC entry 2569 (class 2606 OID 397977)
--- Dependencies: 204 184 2463 2853
 -- Name: empresa_pais_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25103,8 +23534,6 @@ ALTER TABLE ONLY empresa
 
 
 --
--- TOC entry 2570 (class 2606 OID 397982)
--- Dependencies: 2465 184 206 2853
 -- Name: empresa_parroquia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25113,8 +23542,6 @@ ALTER TABLE ONLY empresa
 
 
 --
--- TOC entry 2577 (class 2606 OID 397987)
--- Dependencies: 186 190 2423 2853
 -- Name: especialidad_medico_especialidad_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25123,8 +23550,6 @@ ALTER TABLE ONLY especialidad_medico
 
 
 --
--- TOC entry 2578 (class 2606 OID 397992)
--- Dependencies: 2449 198 190 2853
 -- Name: especialidad_medico_medico_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25133,8 +23558,6 @@ ALTER TABLE ONLY especialidad_medico
 
 
 --
--- TOC entry 2571 (class 2606 OID 397997)
--- Dependencies: 186 262 2550 2853
 -- Name: especialidad_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25143,8 +23566,6 @@ ALTER TABLE ONLY especialidad
 
 
 --
--- TOC entry 2579 (class 2606 OID 398002)
--- Dependencies: 2463 192 204 2853
 -- Name: estado_pais_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25153,8 +23574,6 @@ ALTER TABLE ONLY estado
 
 
 --
--- TOC entry 2580 (class 2606 OID 398007)
--- Dependencies: 194 2550 262 2853
 -- Name: estado_usuario_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25163,8 +23582,6 @@ ALTER TABLE ONLY estado_usuario
 
 
 --
--- TOC entry 2581 (class 2606 OID 398012)
--- Dependencies: 2550 262 196 2853
 -- Name: medicina_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25173,8 +23590,6 @@ ALTER TABLE ONLY medicina
 
 
 --
--- TOC entry 2582 (class 2606 OID 398017)
--- Dependencies: 198 2550 262 2853
 -- Name: medico_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25183,8 +23598,6 @@ ALTER TABLE ONLY medico
 
 
 --
--- TOC entry 2583 (class 2606 OID 398022)
--- Dependencies: 200 2455 200 2853
 -- Name: menu_menu_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25193,8 +23606,6 @@ ALTER TABLE ONLY menu
 
 
 --
--- TOC entry 2584 (class 2606 OID 398027)
--- Dependencies: 200 2504 232 2853
 -- Name: menu_recurso_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25203,8 +23614,6 @@ ALTER TABLE ONLY menu
 
 
 --
--- TOC entry 2585 (class 2606 OID 398032)
--- Dependencies: 2439 192 202 2853
 -- Name: municipio_estado_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25213,8 +23622,6 @@ ALTER TABLE ONLY municipio
 
 
 --
--- TOC entry 2586 (class 2606 OID 398037)
--- Dependencies: 206 2457 202 2853
 -- Name: parroquia_municipio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25223,8 +23630,6 @@ ALTER TABLE ONLY parroquia
 
 
 --
--- TOC entry 2587 (class 2606 OID 397800)
--- Dependencies: 208 208 2468 2853
 -- Name: patologia_categoria_padre_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25233,8 +23638,6 @@ ALTER TABLE ONLY patologia_categoria
 
 
 --
--- TOC entry 2588 (class 2606 OID 398042)
--- Dependencies: 210 262 2550 2853
 -- Name: patologia_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25243,8 +23646,6 @@ ALTER TABLE ONLY patologia
 
 
 --
--- TOC entry 2589 (class 2606 OID 398047)
--- Dependencies: 214 192 2439 2853
 -- Name: persona_estado_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25253,8 +23654,6 @@ ALTER TABLE ONLY persona
 
 
 --
--- TOC entry 2590 (class 2606 OID 398052)
--- Dependencies: 214 202 2457 2853
 -- Name: persona_municipio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25263,8 +23662,6 @@ ALTER TABLE ONLY persona
 
 
 --
--- TOC entry 2591 (class 2606 OID 398057)
--- Dependencies: 2463 214 204 2853
 -- Name: persona_pais_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25273,8 +23670,6 @@ ALTER TABLE ONLY persona
 
 
 --
--- TOC entry 2592 (class 2606 OID 398062)
--- Dependencies: 2465 206 214 2853
 -- Name: persona_parroquia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25283,8 +23678,6 @@ ALTER TABLE ONLY persona
 
 
 --
--- TOC entry 2593 (class 2606 OID 398067)
--- Dependencies: 262 2550 214 2853
 -- Name: persona_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25293,8 +23686,6 @@ ALTER TABLE ONLY persona
 
 
 --
--- TOC entry 2594 (class 2606 OID 398072)
--- Dependencies: 216 2550 262 2853
 -- Name: profesion_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25303,8 +23694,6 @@ ALTER TABLE ONLY profesion
 
 
 --
--- TOC entry 2572 (class 2606 OID 398077)
--- Dependencies: 188 192 2439 2853
 -- Name: proveedor_estado_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25313,8 +23702,6 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- TOC entry 2595 (class 2606 OID 398082)
--- Dependencies: 2449 218 198 2853
 -- Name: proveedor_medico_medico_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25323,8 +23710,6 @@ ALTER TABLE ONLY proveedor_medico
 
 
 --
--- TOC entry 2596 (class 2606 OID 398087)
--- Dependencies: 188 218 2427 2853
 -- Name: proveedor_medico_proveedor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25333,8 +23718,6 @@ ALTER TABLE ONLY proveedor_medico
 
 
 --
--- TOC entry 2573 (class 2606 OID 398092)
--- Dependencies: 188 202 2457 2853
 -- Name: proveedor_municipio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25343,8 +23726,6 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- TOC entry 2574 (class 2606 OID 398097)
--- Dependencies: 2463 204 188 2853
 -- Name: proveedor_pais_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25353,8 +23734,6 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- TOC entry 2575 (class 2606 OID 398102)
--- Dependencies: 188 2465 206 2853
 -- Name: proveedor_parroquia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25363,8 +23742,6 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- TOC entry 2576 (class 2606 OID 398107)
--- Dependencies: 188 2550 262 2853
 -- Name: proveedor_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25373,8 +23750,6 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- TOC entry 2598 (class 2606 OID 398112)
--- Dependencies: 170 2395 221 2853
 -- Name: recaudo_beneficiario_beneficiario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25383,8 +23758,6 @@ ALTER TABLE ONLY recaudo_beneficiario
 
 
 --
--- TOC entry 2599 (class 2606 OID 398117)
--- Dependencies: 2486 221 220 2853
 -- Name: recaudo_beneficiario_recaudo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25393,8 +23766,6 @@ ALTER TABLE ONLY recaudo_beneficiario
 
 
 --
--- TOC entry 2600 (class 2606 OID 398122)
--- Dependencies: 236 224 2508 2853
 -- Name: recaudo_reembolso_codigo_solicitud_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25403,8 +23774,6 @@ ALTER TABLE ONLY recaudo_reembolso
 
 
 --
--- TOC entry 2601 (class 2606 OID 398127)
--- Dependencies: 2486 224 220 2853
 -- Name: recaudo_reembolso_recaudo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25413,8 +23782,6 @@ ALTER TABLE ONLY recaudo_reembolso
 
 
 --
--- TOC entry 2602 (class 2606 OID 398132)
--- Dependencies: 226 250 2528 2853
 -- Name: recaudo_solicitud_medicina_codigo_solicitud_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25423,8 +23790,6 @@ ALTER TABLE ONLY recaudo_solicitud_medicina
 
 
 --
--- TOC entry 2603 (class 2606 OID 398137)
--- Dependencies: 226 2486 220 2853
 -- Name: recaudo_solicitud_medicina_recaudo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25433,8 +23798,6 @@ ALTER TABLE ONLY recaudo_solicitud_medicina
 
 
 --
--- TOC entry 2604 (class 2606 OID 398142)
--- Dependencies: 228 252 2532 2853
 -- Name: recaudo_solicitud_servicio_codigo_solicitud_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25443,8 +23806,6 @@ ALTER TABLE ONLY recaudo_solicitud_servicio
 
 
 --
--- TOC entry 2605 (class 2606 OID 398147)
--- Dependencies: 2486 220 228 2853
 -- Name: recaudo_solicitud_servicio_recaudo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25453,8 +23814,6 @@ ALTER TABLE ONLY recaudo_solicitud_servicio
 
 
 --
--- TOC entry 2606 (class 2606 OID 398152)
--- Dependencies: 220 2486 230 2853
 -- Name: recaudo_titular_recaudo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25463,8 +23822,6 @@ ALTER TABLE ONLY recaudo_titular
 
 
 --
--- TOC entry 2607 (class 2606 OID 398157)
--- Dependencies: 230 260 2546 2853
 -- Name: recaudo_titular_titular_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25473,8 +23830,6 @@ ALTER TABLE ONLY recaudo_titular
 
 
 --
--- TOC entry 2597 (class 2606 OID 398162)
--- Dependencies: 2550 262 220 2853
 -- Name: recaudo_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25483,8 +23838,6 @@ ALTER TABLE ONLY recaudo
 
 
 --
--- TOC entry 2608 (class 2606 OID 398167)
--- Dependencies: 2474 234 212 2853
 -- Name: recurso_perfil_perfil_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25493,8 +23846,6 @@ ALTER TABLE ONLY recurso_perfil
 
 
 --
--- TOC entry 2609 (class 2606 OID 398172)
--- Dependencies: 234 232 2504 2853
 -- Name: recurso_perfil_recurso_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25503,8 +23854,6 @@ ALTER TABLE ONLY recurso_perfil
 
 
 --
--- TOC entry 2610 (class 2606 OID 398177)
--- Dependencies: 170 2395 236 2853
 -- Name: reembolso_beneficiario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25513,8 +23862,6 @@ ALTER TABLE ONLY reembolso
 
 
 --
--- TOC entry 2611 (class 2606 OID 398182)
--- Dependencies: 236 260 2546 2853
 -- Name: reembolso_titular_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25523,8 +23870,6 @@ ALTER TABLE ONLY reembolso
 
 
 --
--- TOC entry 2612 (class 2606 OID 398187)
--- Dependencies: 236 2550 262 2853
 -- Name: reembolso_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25533,8 +23878,6 @@ ALTER TABLE ONLY reembolso
 
 
 --
--- TOC entry 2614 (class 2606 OID 398192)
--- Dependencies: 2427 188 240 2853
 -- Name: servicio_proveedor_proveedor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25543,8 +23886,6 @@ ALTER TABLE ONLY servicio_proveedor
 
 
 --
--- TOC entry 2615 (class 2606 OID 398197)
--- Dependencies: 240 2514 238 2853
 -- Name: servicio_proveedor_servicio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25553,8 +23894,6 @@ ALTER TABLE ONLY servicio_proveedor
 
 
 --
--- TOC entry 2616 (class 2606 OID 398202)
--- Dependencies: 238 2514 242 2853
 -- Name: servicio_tiposolicitud_servicio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25563,8 +23902,6 @@ ALTER TABLE ONLY servicio_tiposolicitud
 
 
 --
--- TOC entry 2617 (class 2606 OID 398207)
--- Dependencies: 242 2544 258 2853
 -- Name: servicio_tiposolicitud_tiposolicitud_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25573,8 +23910,6 @@ ALTER TABLE ONLY servicio_tiposolicitud
 
 
 --
--- TOC entry 2613 (class 2606 OID 398212)
--- Dependencies: 2550 262 238 2853
 -- Name: servicio_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25583,8 +23918,6 @@ ALTER TABLE ONLY servicio
 
 
 --
--- TOC entry 2618 (class 2606 OID 398217)
--- Dependencies: 244 248 2526 2853
 -- Name: solicitud_dt_factura_solicitud_factura_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25593,8 +23926,6 @@ ALTER TABLE ONLY solicitud_dt_factura
 
 
 --
--- TOC entry 2619 (class 2606 OID 398222)
--- Dependencies: 2445 196 246 2853
 -- Name: solicitud_dt_medicina_medicina_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25603,8 +23934,6 @@ ALTER TABLE ONLY solicitud_dt_medicina
 
 
 --
--- TOC entry 2620 (class 2606 OID 398227)
--- Dependencies: 250 2530 246 2853
 -- Name: solicitud_dt_medicina_solicitud_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25613,8 +23942,6 @@ ALTER TABLE ONLY solicitud_dt_medicina
 
 
 --
--- TOC entry 2621 (class 2606 OID 398232)
--- Dependencies: 2532 248 252 2853
 -- Name: solicitud_factura_codigo_solicitud_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25623,8 +23950,6 @@ ALTER TABLE ONLY solicitud_factura
 
 
 --
--- TOC entry 2622 (class 2606 OID 398237)
--- Dependencies: 2534 248 252 2853
 -- Name: solicitud_factura_solicitud_servicio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25633,8 +23958,6 @@ ALTER TABLE ONLY solicitud_factura
 
 
 --
--- TOC entry 2623 (class 2606 OID 398242)
--- Dependencies: 2395 170 250 2853
 -- Name: solicitud_medicina_beneficiario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25643,8 +23966,6 @@ ALTER TABLE ONLY solicitud_medicina
 
 
 --
--- TOC entry 2624 (class 2606 OID 398247)
--- Dependencies: 250 2449 198 2853
 -- Name: solicitud_medicina_medico_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25653,8 +23974,6 @@ ALTER TABLE ONLY solicitud_medicina
 
 
 --
--- TOC entry 2625 (class 2606 OID 398252)
--- Dependencies: 2472 250 210 2853
 -- Name: solicitud_medicina_patologia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25663,8 +23982,6 @@ ALTER TABLE ONLY solicitud_medicina
 
 
 --
--- TOC entry 2626 (class 2606 OID 398257)
--- Dependencies: 188 2427 250 2853
 -- Name: solicitud_medicina_proveedor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25673,8 +23990,6 @@ ALTER TABLE ONLY solicitud_medicina
 
 
 --
--- TOC entry 2627 (class 2606 OID 398262)
--- Dependencies: 238 250 2514 2853
 -- Name: solicitud_medicina_servicio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25683,8 +23998,6 @@ ALTER TABLE ONLY solicitud_medicina
 
 
 --
--- TOC entry 2628 (class 2606 OID 398267)
--- Dependencies: 2546 260 250 2853
 -- Name: solicitud_medicina_titular_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25693,8 +24006,6 @@ ALTER TABLE ONLY solicitud_medicina
 
 
 --
--- TOC entry 2629 (class 2606 OID 398272)
--- Dependencies: 252 2395 170 2853
 -- Name: solicitud_servicio_beneficiario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25703,8 +24014,6 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- TOC entry 2630 (class 2606 OID 398277)
--- Dependencies: 198 252 2449 2853
 -- Name: solicitud_servicio_medico_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25713,8 +24022,6 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- TOC entry 2631 (class 2606 OID 398282)
--- Dependencies: 210 2472 252 2853
 -- Name: solicitud_servicio_patologia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25723,8 +24030,6 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- TOC entry 2632 (class 2606 OID 398287)
--- Dependencies: 2427 188 252 2853
 -- Name: solicitud_servicio_proveedor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25733,8 +24038,6 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- TOC entry 2633 (class 2606 OID 398292)
--- Dependencies: 252 2514 238 2853
 -- Name: solicitud_servicio_servicio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25743,8 +24046,6 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- TOC entry 2634 (class 2606 OID 398297)
--- Dependencies: 252 258 2544 2853
 -- Name: solicitud_servicio_tiposolicitud_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25753,8 +24054,6 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- TOC entry 2635 (class 2606 OID 398302)
--- Dependencies: 2546 260 252 2853
 -- Name: solicitud_servicio_titular_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25763,8 +24062,6 @@ ALTER TABLE ONLY solicitud_servicio
 
 
 --
--- TOC entry 2636 (class 2606 OID 398307)
--- Dependencies: 254 184 2419 2853
 -- Name: sucursal_empresa_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25773,8 +24070,6 @@ ALTER TABLE ONLY sucursal
 
 
 --
--- TOC entry 2637 (class 2606 OID 398312)
--- Dependencies: 254 2439 192 2853
 -- Name: sucursal_estado_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25783,8 +24078,6 @@ ALTER TABLE ONLY sucursal
 
 
 --
--- TOC entry 2638 (class 2606 OID 398317)
--- Dependencies: 202 254 2457 2853
 -- Name: sucursal_municipio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25793,8 +24086,6 @@ ALTER TABLE ONLY sucursal
 
 
 --
--- TOC entry 2639 (class 2606 OID 398322)
--- Dependencies: 2463 254 204 2853
 -- Name: sucursal_pais_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25803,8 +24094,6 @@ ALTER TABLE ONLY sucursal
 
 
 --
--- TOC entry 2640 (class 2606 OID 398327)
--- Dependencies: 254 2465 206 2853
 -- Name: sucursal_parroquia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25813,8 +24102,6 @@ ALTER TABLE ONLY sucursal
 
 
 --
--- TOC entry 2641 (class 2606 OID 398332)
--- Dependencies: 2405 174 260 2853
 -- Name: titular_cargo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25823,8 +24110,6 @@ ALTER TABLE ONLY titular
 
 
 --
--- TOC entry 2642 (class 2606 OID 398337)
--- Dependencies: 260 178 2411 2853
 -- Name: titular_departamento_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25833,8 +24118,6 @@ ALTER TABLE ONLY titular
 
 
 --
--- TOC entry 2643 (class 2606 OID 398342)
--- Dependencies: 260 216 2480 2853
 -- Name: titular_profesion_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25843,8 +24126,6 @@ ALTER TABLE ONLY titular
 
 
 --
--- TOC entry 2644 (class 2606 OID 398347)
--- Dependencies: 260 256 2540 2853
 -- Name: titular_tipoempleado_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25853,8 +24134,6 @@ ALTER TABLE ONLY titular
 
 
 --
--- TOC entry 2645 (class 2606 OID 398352)
--- Dependencies: 2474 212 262 2853
 -- Name: usuario_perfil_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25863,8 +24142,6 @@ ALTER TABLE ONLY usuario
 
 
 --
--- TOC entry 2646 (class 2606 OID 398357)
--- Dependencies: 2476 262 214 2853
 -- Name: usuario_persona_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25873,8 +24150,6 @@ ALTER TABLE ONLY usuario
 
 
 --
--- TOC entry 2647 (class 2606 OID 398362)
--- Dependencies: 262 2536 254 2853
 -- Name: usuario_sucursal_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -25883,8 +24158,6 @@ ALTER TABLE ONLY usuario
 
 
 --
--- TOC entry 2858 (class 0 OID 0)
--- Dependencies: 7
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
 
@@ -25893,8 +24166,6 @@ REVOKE ALL ON SCHEMA public FROM postgres;
 GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
-
--- Completed on 2014-06-20 21:27:31 VET
 
 --
 -- PostgreSQL database dump complete

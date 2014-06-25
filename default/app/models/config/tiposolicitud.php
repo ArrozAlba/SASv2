@@ -18,7 +18,17 @@ class Tiposolicitud extends ActiveRecord {
        // $this->has_many('sucursal');        
        // $this->validates_presence_of('parroquia', 'message: Ingresa el nombre de la parroquia');        
     }
-
+    /**
+     * Método para obtener codigo_solicitud
+     * @return obj
+     */
+    public function getCorrelativo($a) {
+        $numero_registros = $this->find("tiposolicitud_id = 1");
+        $siglas = 'SASCO-00000';
+        $numero_registros = $numero_registros+1;
+        $a= array('codid'=>$siglas,'codvalue'=>$numero_registros);;
+        return json_encode($a);
+        }    
     /**
      * Método para setear
      * 

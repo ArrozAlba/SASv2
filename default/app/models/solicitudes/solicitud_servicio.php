@@ -36,23 +36,7 @@ class SolicitudServicio extends ActiveRecord {
         $this->validates_presence_of('servicio_id', 'message: Ingresa el nombre del representante legal.');
         $this->validates_presence_of('observacion', 'message: Ingresa la pagina Web de la empresa');
     }  
-    /**
-     * Método para obtener codigo_solicitud
-     * @return obj
-     */
-    public function getCodigoSolicitud1() {
-        $numero_registros = $this->count("tiposolicitud_id = 1");
-        $siglas = 'SASCO-00000';
-        $numero_registros = $numero_registros+1;
-        $a= array('codid'=>$siglas,'codvalue'=>$numero_registros);;
-        return json_encode($a);
-        }    
-    public function getCodigoSolicitud2() {
-        $numero_registros = $this->count("tiposolicitud_id = 1");
-        $siglas = 'SASCM-00000';
-        $numero_registros = $siglas.($numero_registros+1);
-        return $numero_registros;
-        }    
+
     
     /**
      * Método para ver la información de una sucursal
