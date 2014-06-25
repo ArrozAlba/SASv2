@@ -78,10 +78,14 @@ class SolicitudServicioController extends BackendController {
      */
     public function agregar() {
         $empresa = Session::get('empresa', 'config');
+        $solicitud_servicio = new SolicitudServicio();
+        $ppp1 = $solicitud_servicio->getCodigoSolicitud1();
+        $solicitud_servicio->getCodigoSolicitud2();
+        var_dump($ppp1);
         if(Input::hasPost('solicitud_servicio')) {
             if(SolicitudServicio::setSolicitudServicio('create', Input::post('solicitud_servicio'))) {
                 DwMessage::valid('La solicitud se ha registrado correctamente!');
-                return DwRedirect::toAction('listar');
+                return DwRedirect::toAction('registro');
             }            
         } 
        // $this->personas = Load::model('beneficiarios/titular')->getTitularesToJson();

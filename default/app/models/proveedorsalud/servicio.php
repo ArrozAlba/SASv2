@@ -7,7 +7,7 @@
  * @author      alexis borges
  * @copyright    
  */
-class Medico extends ActiveRecord {
+class Servicio extends ActiveRecord {
     
     /**
      * Constante para definir el id de la oficina principal
@@ -28,15 +28,32 @@ class Medico extends ActiveRecord {
     */            
     }  
     /**
+     * Método para obtener servicioes
+     * @return obj
+     */
+   public function obtener_servicios($servicio) {
+        if ($servicio != '') {
+            $servicio = stripcslashes($servicio);
+            $res = $this->find('columns: descripcion', "descripcion like '%{$servicio}%'");
+            if ($res) {
+                foreach ($res as $servicio) {
+                    $servicios[] = array('id'=>$servicio->id,'value'=>$servicio->descripcion);
+                }
+                return $servicios;
+            }
+        }
+        return array('no hubo coincidencias');
+    }
+    /**
      * Método para ver la información de una sucursal
      * @param int|string $id
      * @return Sucursal
      */
-    public function getInformacionMedico($id, $isSlug=false) {
+    public function getInformacionservicio($id, $isSlug=false) {
         $id = ($isSlug) ? Filter::get($id, 'string') : Filter::get($id, 'numeric');
-        $columnas = 'medico.*';
+        $columnas = 'servicio.*';
         $join = '';
-        $condicion ="medico.id = '$id'";
+        $condicion ="servicio.id = '$id'";
         return $this->find_first("columns: $columnas", "join: $join", "conditions: $condicion");
     } 
     
@@ -46,36 +63,19 @@ class Medico extends ActiveRecord {
      * @param int $page 
      * @return ActiveRecord
      */
-    public function getListadoMedico($order='order.rif.asc', $page='', $empresa=null) {
-        $columns = 'medico.*';
+    public function getListadoservicio($order='order.nombre_corto.asc', $page='', $empresa=null) {
+        $columns = 'servicio.*';
         $join = '';        
         //$conditions 
-        $order = $this->get_order($order, 'medico', array('medico'=>array('ASC'=>'medico.rmpss ASC, medico.rif ASC, medico.nombre1', 
-                                                                        'DESC'=>'medico.rmpss DESC, medico.rif ASC, medico.nombre1'),
-                                                            'nombre2,apellido1, apellido2, correo_electronico'));
+        $order = $this->get_order($order, 'servicio', array('servicio'=>array('ASC'=>'servicio.descripcion ASC, servicio.observacion ASC',
+                                                                        'DESC'=>'servicio.descripcion DESC, servicio.observacion ASC')));
         if($page) {                
             return $this->paginated("columns: $columns", "join: $join", "order: $order", "page: $page");
         } else {
             return $this->find("columns: $columns", "join: $join", "order: $order", "page: $page");            
         }
     }
-    /**
-     * Método para obtener medicos
-     * @return obj
-     */
-   public function obtener_medicos($medico) {
-        if ($medico != '') {
-            $medico = stripcslashes($medico);
-            $res = $this->find('columns: id,nombre1,apellido1', "nombre1 like '%{$medico}%' or apellido1 like '%{$medico}%'");
-            if ($res) {
-                foreach ($res as $medico) {
-                    $medicos[] = array('id'=>$medico->id,'value'=>$medico->nombre1.' '.$medico->apellido1);
-                }
-                return $medicos;
-            }
-        }
-        return array('no hubo coincidencias');
-    }        
+    
     /**
      * Método para setear
      * @param string $method Método a ejecutar (create, update, save)
@@ -83,9 +83,9 @@ class Medico extends ActiveRecord {
      * @param array $otherData Array con datos adicionales
      * @return Obj
      */
-    public static function setMedico($method, $data, $optData=null) {
+    public static function setservicio($method, $data, $optData=null) {
         //Se aplica la autocarga
-        $obj = new Medico($data);
+        $obj = new servicio($data);
         //Se verifica si contiene una data adicional para autocargar
         if ($optData) {
             $obj->dump_result_self($optData);
@@ -102,12 +102,12 @@ class Medico extends ActiveRecord {
      * Método que se ejecuta antes de guardar y/o modificar     
      */
     public function before_save() {        
-        $this->rif = Filter::get($this->rif, 'string');
-           
-        $conditions = "rif = '$this->rif'";
+        $this->descripcion = Filter::get($this->descripcion, 'string');
+  
+        $conditions = "descripcion = '$this->descripcion'";
         $conditions.= (isset($this->id)) ? " AND id != $this->id" : '';
         if($this->count("conditions: $conditions")) {
-            DwMessage::error('Lo sentimos, pero ya existe un Medico registrada con el mismo RIF.');
+            DwMessage::error('Lo sentimos, pero ya existe una servicio registrada con el mismo nombre.');
             return 'cancel';
         }
         
@@ -118,7 +118,7 @@ class Medico extends ActiveRecord {
      */
     public function before_delete() {
         if($this->id == 1) { //Para no eliminar la información de sucursal
-            DwMessage::warning('Lo sentimos, pero esta sucursal no se puede eliminar.');
+            DwMessage::warning('Lo sentimos, pero esta especialdad no se puede eliminar.');
             return 'cancel';
         }
     }

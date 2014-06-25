@@ -1,67 +1,84 @@
-PENDIENTES POR HACER:
-BASE DE DATOS:
-1) Tablas demograficas Pais/Estados/Municipios/Parroquias.
-sas_pais
-sas_estado
-sas_municipio
-sas_parroquia
-2)Creación de Tablas Auxiliares.
-3)Creación Tablas Titular y Beneficiario. 
+PENDIENTES POR HACER INFRAESTRUCTURA:
+*** BASE DE DATOS: ***
+1) Tablas demograficas Pais/Estados/Municipios/Parroquias.(LISTO! Se crearon las tablas y sus distintas relaciones y se realizo el proceso de ETL)
+2)Creación de Tablas Auxiliares. (LISTO!)
+3)Creación Tablas Titular y Beneficiario. (LISTO! se crearon las estructuras para ser relacionadas con la tabla persona)
+4) ETL Patologias (LISTO! Se ajusto la estructura de la tabla de patologias para realizar el proceso de ETL de la data de patologias de la OMS)
+5) ETL Medicinas (Pendiente realizar el ETL de la data de Medicinas del SQL de la farmacia) 
+6) Definir fecha_egreso y observacion_egreso en tabla titular
+7) Campo estado_registro en solicitud_servicio cambiar default por R
+8) CREAR TABLA DE MOTIVOS DE CAMBIO DE ESTADOS O VALORES EN EL SISTEMA (COMBOBOX EN FORMULARIO)
 
-DESARROLLO: 
-kumbia
-modelo de seguridad con kumbia
+*** DESARROLLO: ***
+kumbia (LISTO!)
 bootstrap framework maquetacion css
+1) Ajustar Tema definitivo tomando como premisa el diseño y los colores del sistema Huyra. 
 
-PLATAFORMA: 
+*** PLATAFORMA: ***
 apache2 
 php5
 github
 
 
-
-REPORTES: 
+*** REPORTES: ***
 -----------------------
-Listados de Servicios (Titulares, Beneficiarios, Reembolsos, HCM, Funeraria entre otros.)
-Reportes enfocados para toma de decisiones sumamente graficos.
-reportes graficos comparativos entre periodos, patologias, proveedores y usuarios.
+1) Listados de Servicios (Titulares, Beneficiarios, Reembolsos, HCM, Funeraria entre otros.)
+2) Reportes enfocados para toma de decisiones sumamente graficos.
+3) reportes graficos comparativos entre periodos, patologias, proveedores y usuarios.
+4) IMPLEMENTAR ADVERTENCIAS VISUALES EN LISTADOS EN DASHBOARD ORDENAMIENTO POR ANTIGUEDAD (QUE PERMITA SUPERVISAR AL COORDINADOR EL FLUJO DEL TRABAJO DE CADA ENLACE DE RRHH)
 
 
 
  
 
-INFORMACION ADICIONAL 
+*** INFORMACION ADICIONAL REQUERIDA ***
 1) agregar baremos y gacetas de precios maximos para comparativos (gaceta 40196 precios de clinicas).
-2) Flujo de Solicitud de consulta Medica -> Registro -> Aprobación -> Contabilizado / Consolidado -> Anulación ->  
+2) Realizar la incorporación de firma digital (como elemento de seguridad para la aprobacion de las ordenes y solicitudes)
+3) Agregar la posibilidad de enviar un SMS al generarse algun proceso en el sistema.
 
-
-
-Observaciones:
-
-
+*** PENDIENTES POR MODULOS ***
+(ALEXIS)
+*** MODULO DE REGISTRO DE TITULARES/BENEFICIARIOS *** 
 1) Definir fecha_egreso y observacion_egreso en tabla titular 
-
 2) Validar:  * No tener dos conyugues.
-			 * Tomar cuenta que se encuentre registrada 6 mesees antes del embarazo
+			 * Tomar cuenta que se encuentre registrada 6 meses antes del embarazo
 			 * Si el hijo es mayor de 18 años, fueraaaa.. A menos que se encuentre discapacitado
 			 * En x dias del año se puede registrar y hacer uso de polizas para matrimonio
 			 * Maternidad aplica solo al conyugue o titular
-			 
-3) Tipo de Sucursal ( UPSA, Biceabasto, Unidad de mecanizacion, etc ectg cetc cetce cetc ectec etc )
-4) Validar fechas de facturas para reembolsos.
-5) POSIBILIDAD DE REALIZAR LAS SOLICITUDES EN LINEA DE PARTE DE LOS TITULARES 
-6) EL SISTEMA DEBE PERMITIR ADJUNTAR DE MANERA OPCIONAL LOS RECAUDOS DIGITALIZADOS 
-7) EL SISTEMA DEBE TENER LA POSIBILIDAD DE ANULAR POR MEDIO DE DISPARADORES DE BD AUTOMATICAMENTE LAS SOLICITUDES QUE TENGAN MAS TIEMPO DEL DEFINIDO (VENCIMIENTO)
-8) VERIFICAR FLUJOS DE PROCESOS MANEJANDO ESTADOS REGISTRO -> EMITIDO -> APROBACION -> RECHAZO -> ANULACION -> CONTABILIZADO
-9) PERMITIR MOSTRAR VISUALMENTE AL USUARIO(TITULAR) LOS ESTATUS DE LAS SOLICITUDES VERIFICAR EN QUE DEPARTAMENTO SE ENCUENTRA  
-10) IMPLEMENTAR ADVERTENCIAS VISUALES EN LISTADOS EN DASHBOARD ORDENAMIENTO POR ANTIGUEDAD (QUE PERMITA SUPERVISAR AL COORDINADOR EL FLUJO DEL TRABAJO DE CADA ENLACE DE RRHH)
-11)
-12) CREAR TABLA DE MOTIVOS DE CAMBIO DE ESTADOS O VALORES EN EL SISTEMA (COMBOBOX EN FORMULARIO)
-13) IMPLEMENTAR VERIFICACION MEDICA Y VERIFICACION LEGAL AUTOMATIZADA (LISTADOS DE APROBACION O NEGACION DE SOLICITUDES
-14) DEFINIR ESTADOS DEL SISTEMA (RECEPCION DE DOCUMENTOS, ENVIADO/DIGITALIZADO, VERIFICACION MEDICA, VERIFICACION LEGAL, PENDIENTE POR PAGO, 	 PAGADO)
-15) INCLUIR REGISTRO DIGITAL DE LOS DOCUMENTOS RELACIONADOS (CEDULA, CARNET, ACTA DE MATRIMONIO, PARTIDA DE NACIMIENTO) 
-16) PROGRAMAR CAMPOS INTELIGENTES PARA BUSQUEDAS RELACIONALES Y ADICIONALMENTE HELPERS PARA REGISTRO DE DATOS NO EXISTENTES.
-17) AGREGAR FLUJOS A TODOS LAS VISTAS DE PROCESOS DE SOLICITUDES
+3) EL SISTEMA DEBE PERMITIR ADJUNTAR DE MANERA OPCIONAL LOS RECAUDOS DIGITALIZADOS (ver punto 4) 
+4) INCLUIR REGISTRO DIGITAL DE LOS DOCUMENTOS RELACIONADOS (CEDULA, CARNET, ACTA DE MATRIMONIO, PARTIDA DE NACIMIENTO)
+5) AGREGAR POSIBILIDAD DE SUSPENDER A UN TITULAR O BENEFICIARIO. 
+6) POSIBILIDAD DE MODIFICAR INFORMACION DE TITULAR O BENEFICIARIO POR MEDIO DE LA CUENTA DE USUARIO DEL TITULAR
+7) GENERAR AUTOMATICAMENTE DURANTE EL PROCESO DE REGISTRO DE TITULARES UN ACCESO DE USUARIO AL SISTEMA 
+8) RELACIONAR REGISTRO TITULAR -> REGISTRO BENEFICIARIO  
+9) AGREGAR COMBOBOX DINAMICO DE PAIS-ESTADO-MUNICIPIO-CIUDAD EN TABLAS DE TITULAR, BENEFICIARIO, USUARIO, PROVEEDORES, Y CONFIG QUE LAS REQUIERA
+(/ALEXIS) 
+
+(JAVIER)			 
+*** MODULO DE REGISTRO DE SOLICITUDES *** 
+1) Validar fechas de facturas para reembolsos.
+2) POSIBILIDAD DE REALIZAR LAS SOLICITUDES EN LINEA DE PARTE DE LOS TITULARES 
+3) EL SISTEMA DEBE TENER LA POSIBILIDAD DE ANULAR POR MEDIO DE DISPARADORES DE BD AUTOMATICAMENTE LAS SOLICITUDES QUE TENGAN MAS TIEMPO DEL DEFINIDO (VENCIMIENTO)
+4) VERIFICAR FLUJOS DE PROCESOS MANEJANDO ESTADOS REGISTRO -> EMITIDO -> APROBACION -> RECHAZO -> ANULACION -> CONTABILIZADO
+5) PERMITIR MOSTRAR VISUALMENTE AL USUARIO(TITULAR) LOS ESTATUS DE LAS SOLICITUDES VERIFICAR EN QUE DEPARTAMENTO SE ENCUENTRA  
+6) IMPLEMENTAR VERIFICACION MEDICA Y VERIFICACION LEGAL AUTOMATIZADA (LISTADOS DE APROBACION O NEGACION DE SOLICITUDES
+7) DEFINIR ESTADOS DEL SISTEMA (RECEPCION DE DOCUMENTOS, ENVIADO/DIGITALIZADO, VERIFICACION MEDICA, VERIFICACION LEGAL, PENDIENTE POR PAGO, 	 PAGADO)
+8) PROGRAMAR CAMPOS INTELIGENTES PARA BUSQUEDAS RELACIONALES Y ADICIONALMENTE HELPERS PARA REGISTRO DE DATOS NO EXISTENTES.
+9) AGREGAR FLUJOS A TODOS LAS VISTAS DE PROCESOS DE SOLICITUDES
+(/JAVIER)			 
+
+*** MODULO DE CONFIGURACION *** 
+1) Tipo de Sucursal ( UPSA, Biceabasto, Unidad de mecanizacion, etc ectg cetc cetce cetc ectec etc )
+
+*** MODULO DE SISTEMA *** 
+modelo de seguridad con kumbia:
+1) Recuperacion de contraseña a traves de correo electronico
+2) Validacion de Pregunta Secreta 
+3) Cambio de Clave Al primer Inicio de Sesion y creacion de metodo para este procedimiento
+4) AGREGAR POSIBILIDAD DE RECUPERACION DE CUENTA DE USUARIO POR MEDIO DE LA VALIDACION DE UNA PREGUNTA SECRETA ESTABLECIDA POR EL USUARIO
+
+
+
 
 
 			 
