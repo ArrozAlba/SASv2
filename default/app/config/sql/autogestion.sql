@@ -2405,7 +2405,7 @@ CREATE TABLE persona (
     usuario_id integer,
     fecha_registro timestamp with time zone DEFAULT now() NOT NULL,
     fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
-    cedula character varying(8) NOT NULL,
+    cedula character varying(11) NOT NULL,
     nombre1 character varying(30) NOT NULL,
     nombre2 character varying(30),
     apellido1 character varying(30) NOT NULL,
@@ -4520,7 +4520,8 @@ CREATE TABLE tiposolicitud (
     fecha_registro timestamp with time zone DEFAULT now() NOT NULL,
     fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
     nombre character varying(64) NOT NULL,
-    observacion character varying(250)
+    observacion character varying(250),
+    correlativo character varying(20)
 );
 
 
@@ -5274,6 +5275,52 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 113	1	2014-06-02 19:20:16.420803-04:30	2014-06-02 19:20:16.420803-04:30	1	\N	\N	\N	\N	127.0.0.1
 114	1	2014-06-02 19:41:31.84955-04:30	2014-06-02 19:41:31.84955-04:30	1	\N	\N	\N	\N	127.0.0.1
 115	1	2014-06-09 10:50:00.151108-04:30	2014-06-09 10:50:00.151108-04:30	1	\N	\N	\N	\N	127.0.0.1
+116	1	2014-06-09 19:08:03.777427-04:30	2014-06-09 19:08:03.777427-04:30	2	\N	\N	\N	\N	127.0.0.1
+117	1	2014-06-09 19:17:32.468779-04:30	2014-06-09 19:17:32.468779-04:30	1	\N	\N	\N	\N	127.0.0.1
+118	1	2014-06-09 19:29:23.022172-04:30	2014-06-09 19:29:23.022172-04:30	2	\N	\N	\N	\N	127.0.0.1
+119	1	2014-06-09 19:29:26.590316-04:30	2014-06-09 19:29:26.590316-04:30	1	\N	\N	\N	\N	127.0.0.1
+120	1	2014-06-09 19:32:53.6784-04:30	2014-06-09 19:32:53.6784-04:30	2	\N	\N	\N	\N	127.0.0.1
+121	1	2014-06-09 19:33:31.974651-04:30	2014-06-09 19:33:31.974651-04:30	1	\N	\N	\N	\N	127.0.0.1
+122	1	2014-06-09 20:13:48.714014-04:30	2014-06-09 20:13:48.714014-04:30	2	\N	\N	\N	\N	127.0.0.1
+123	1	2014-06-10 12:42:29.396868-04:30	2014-06-10 12:42:29.396868-04:30	1	\N	\N	\N	\N	127.0.0.1
+124	1	2014-06-12 22:38:49.196114-04:30	2014-06-12 22:38:49.196114-04:30	1	\N	\N	\N	\N	127.0.0.1
+125	1	2014-06-14 21:22:59.444125-04:30	2014-06-14 21:22:59.444125-04:30	1	\N	\N	\N	\N	127.0.0.1
+126	1	2014-06-14 22:55:25.654463-04:30	2014-06-14 22:55:25.654463-04:30	1	\N	\N	\N	\N	127.0.0.1
+127	1	2014-06-15 01:32:53.309046-04:30	2014-06-15 01:32:53.309046-04:30	1	\N	\N	\N	\N	127.0.0.1
+128	1	2014-06-15 01:46:22.535579-04:30	2014-06-15 01:46:22.535579-04:30	2	\N	\N	\N	\N	127.0.0.1
+129	1	2014-06-15 01:46:27.112781-04:30	2014-06-15 01:46:27.112781-04:30	1	\N	\N	\N	\N	127.0.0.1
+130	1	2014-06-15 01:53:16.759788-04:30	2014-06-15 01:53:16.759788-04:30	1	\N	\N	\N	\N	127.0.0.1
+131	1	2014-06-15 04:32:14.937921-04:30	2014-06-15 04:32:14.937921-04:30	1	\N	\N	\N	\N	127.0.0.1
+132	1	2014-06-16 14:08:27.244306-04:30	2014-06-16 14:08:27.244306-04:30	1	\N	\N	\N	\N	127.0.0.1
+133	1	2014-06-16 14:40:40.851672-04:30	2014-06-16 14:40:40.851672-04:30	1	\N	\N	\N	\N	127.0.0.1
+134	1	2014-06-16 21:29:10.817346-04:30	2014-06-16 21:29:10.817346-04:30	1	\N	\N	\N	\N	127.0.0.1
+135	1	2014-06-16 22:56:05.068143-04:30	2014-06-16 22:56:05.068143-04:30	1	\N	\N	\N	\N	127.0.0.1
+136	1	2014-06-16 23:30:51.416503-04:30	2014-06-16 23:30:51.416503-04:30	1	\N	\N	\N	\N	127.0.0.1
+137	1	2014-06-17 00:24:04.6321-04:30	2014-06-17 00:24:04.6321-04:30	1	\N	\N	\N	\N	127.0.0.1
+138	1	2014-06-17 11:03:00.818391-04:30	2014-06-17 11:03:00.818391-04:30	1	\N	\N	\N	\N	127.0.0.1
+139	1	2014-06-17 23:45:54.673314-04:30	2014-06-17 23:45:54.673314-04:30	1	\N	\N	\N	\N	127.0.0.1
+140	1	2014-06-17 23:46:42.975915-04:30	2014-06-17 23:46:42.975915-04:30	1	\N	\N	\N	\N	127.0.0.1
+141	1	2014-06-18 01:43:38.393128-04:30	2014-06-18 01:43:38.393128-04:30	1	\N	\N	\N	\N	127.0.0.1
+142	1	2014-06-19 13:50:42.806403-04:30	2014-06-19 13:50:42.806403-04:30	1	\N	\N	\N	\N	127.0.0.1
+143	1	2014-06-19 14:52:04.66635-04:30	2014-06-19 14:52:04.66635-04:30	1	\N	\N	\N	\N	127.0.0.1
+144	1	2014-06-19 15:51:00.802609-04:30	2014-06-19 15:51:00.802609-04:30	1	\N	\N	\N	\N	127.0.0.1
+145	1	2014-06-19 22:01:28.054185-04:30	2014-06-19 22:01:28.054185-04:30	1	\N	\N	\N	\N	127.0.0.1
+146	1	2014-06-19 22:03:13.155771-04:30	2014-06-19 22:03:13.155771-04:30	1	\N	\N	\N	\N	127.0.0.1
+147	1	2014-06-20 12:59:37.456644-04:30	2014-06-20 12:59:37.456644-04:30	1	\N	\N	\N	\N	127.0.0.1
+148	1	2014-06-20 14:11:41.079103-04:30	2014-06-20 14:11:41.079103-04:30	1	\N	\N	\N	\N	127.0.0.1
+149	1	2014-06-20 20:52:52.797081-04:30	2014-06-20 20:52:52.797081-04:30	1	\N	\N	\N	\N	127.0.0.1
+150	1	2014-06-21 00:08:25.152441-04:30	2014-06-21 00:08:25.152441-04:30	1	\N	\N	\N	\N	127.0.0.1
+151	1	2014-06-23 12:29:32.270897-04:30	2014-06-23 12:29:32.270897-04:30	1	\N	\N	\N	\N	127.0.0.1
+152	1	2014-06-23 13:43:46.249784-04:30	2014-06-23 13:43:46.249784-04:30	1	\N	\N	\N	\N	127.0.0.1
+153	1	2014-06-23 19:27:32.104237-04:30	2014-06-23 19:27:32.104237-04:30	1	\N	\N	\N	\N	127.0.0.1
+154	1	2014-06-23 19:29:21.182252-04:30	2014-06-23 19:29:21.182252-04:30	2	\N	\N	\N	\N	127.0.0.1
+155	1	2014-06-23 19:29:26.048363-04:30	2014-06-23 19:29:26.048363-04:30	1	\N	\N	\N	\N	127.0.0.1
+156	1	2014-06-24 14:32:44.237385-04:30	2014-06-24 14:32:44.237385-04:30	1	\N	\N	\N	\N	127.0.0.1
+157	1	2014-06-24 15:25:24.343439-04:30	2014-06-24 15:25:24.343439-04:30	1	\N	\N	\N	\N	127.0.0.1
+158	1	2014-06-24 17:54:26.436219-04:30	2014-06-24 17:54:26.436219-04:30	1	\N	\N	\N	\N	127.0.0.1
+159	1	2014-06-24 19:34:46.400686-04:30	2014-06-24 19:34:46.400686-04:30	1	\N	\N	\N	\N	127.0.0.1
+160	1	2014-06-24 22:08:04.652082-04:30	2014-06-24 22:08:04.652082-04:30	1	\N	\N	\N	\N	127.0.0.1
+161	1	2014-06-25 01:12:07.934534-04:30	2014-06-25 01:12:07.934534-04:30	1	\N	\N	\N	\N	127.0.0.1
 \.
 
 
@@ -5281,7 +5328,7 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 -- Name: acceso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('acceso_id_seq', 115, true);
+SELECT pg_catalog.setval('acceso_id_seq', 161, true);
 
 
 --
@@ -5319,7 +5366,8 @@ SELECT pg_catalog.setval('backup_id_seq', 1, false);
 --
 
 COPY beneficiario (id, usuario_id, fecha_registro, fecha_modificado, titular_id, persona_id, parentesco, beneficiario_tipo_id, observacion) FROM stdin;
-1	\N	2014-06-02 18:45:57.537604-04:30	2014-06-02 18:45:57.537604-04:30	1	1	H	1	\N
+1	\N	2014-06-02 18:45:57.537604-04:30	2014-06-02 18:45:57.537604-04:30	1	4	H	1	\N
+4	\N	2014-06-23 17:44:53.903527-04:30	2014-06-23 17:44:53.903527-04:30	1	6	H	1	\N
 \.
 
 
@@ -5327,7 +5375,7 @@ COPY beneficiario (id, usuario_id, fecha_registro, fecha_modificado, titular_id,
 -- Name: beneficiario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('beneficiario_id_seq', 3, true);
+SELECT pg_catalog.setval('beneficiario_id_seq', 4, true);
 
 
 --
@@ -5489,7 +5537,7 @@ SELECT pg_catalog.setval('discapacidad_persona_id_seq', 1, false);
 --
 
 COPY empresa (id, usuario_id, fecha_registro, fecha_modificado, razon_social, rif, pais_id, estado_id, municipio_id, parroquia_id, representante_legal, pagina_web, telefono, fax, celular, logo, email) FROM stdin;
-1	\N	2014-03-13 12:11:18.427198-04:30	2014-03-13 12:11:18.427198-04:30	EMPRESA MIXTA SOCIALISTA ARROZ DEL ALBA S.A.	G-200054321	240	69	224	717	Francisco Ortiz	http://www.arrozdelalba.gob.ve	02563361333	02563361333	04162546908	default.png	arrozdelalba@arrozdelalba.gob.ve
+1	\N	2014-03-13 12:11:18.427198-04:30	2014-03-13 12:11:18.427198-04:30	EMPRESA MIXTA SOCIALISTA ARROZ DEL ALBA S.A.	G-200054321	240	69	224	717	Francisco Ortiz	http://www.arrozdelalba.gob.ve	02563361333	02563361333	 04162546908	default.png	arrozdelalba@arrozdelalba.gob.ve
 \.
 
 
@@ -5708,16 +5756,18 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 33	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	30	Exámenes Médicos 	solicitudes/examenes_medicos/listar	204	icon-th	1	1
 34	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	31	Solicitudes de Reembolso	solicitudes/reembolso/listar	205	icon-th	1	1
 35	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	32	Funeraria	solicitudes/funeraria/listar	206	icon-th	1	1
-36	\N	2014-04-22 09:51:53.400012-04:30	2014-04-22 09:51:53.400012-04:30	\N	\N	Provedores de Salud	#	600	icon-group	1	1
-37	\N	2014-04-22 09:57:03.54549-04:30	2014-04-22 09:57:03.54549-04:30	37	34	Proveedor	proveedorsalud/proveedor/	602	icon-briefcase	1	1
-38	\N	2014-04-22 10:09:02.242857-04:30	2014-04-22 10:09:02.242857-04:30	37	36	Especialidad	proveedorsalud/especialidad/	601	icon-magic	1	1
-39	\N	2014-04-22 10:09:32.70358-04:30	2014-04-22 10:09:32.70358-04:30	37	35	Medico	proveedorsalud/medico/	603	icon-user	1	1
-40	\N	2014-04-22 14:52:02.983257-04:30	2014-04-22 14:52:02.983257-04:30	37	37	Medicinas	proveedorsalud/medicina/	0	\N	1	1
 31	\N	2014-03-16 13:26:21.282386-04:30	2014-03-16 13:26:21.282386-04:30	29	28	Atención Primaria	solicitudes/solicitud_servicio/listar	202	icon-th	1	1
 41	\N	2014-06-09 10:57:40.852716-04:30	2014-06-09 10:57:40.852716-04:30	31	38	Registro	solicitudes/solicitud_servicio/registro	302	icon-plus-sign	1	1
 42	\N	2014-06-09 11:28:23.150623-04:30	2014-06-09 11:28:23.150623-04:30	31	39	Aprobación	solicitudes/solicitud_servicio/aprobacion	303	icon-ok-sign	1	1
 43	\N	2014-06-09 11:28:56.829577-04:30	2014-06-09 11:28:56.829577-04:30	31	40	Contabilizar	solicitudes/solicitud_servicio/contabilizar	304	icon-check	1	1
 44	\N	2014-06-09 11:31:13.991409-04:30	2014-06-09 11:31:13.991409-04:30	31	41	Anular	solicitudes/solicitud_servicio/anular	305	icon-remove-sign	1	1
+36	\N	2014-04-22 09:51:53.400012-04:30	2014-04-22 09:51:53.400012-04:30	\N	\N	Provedores de Salud	#	600	icon-group	1	1
+37	\N	2014-04-22 09:57:03.54549-04:30	2014-04-22 09:57:03.54549-04:30	36	34	Proveedor	proveedorsalud/proveedor/	602	icon-briefcase	1	1
+38	\N	2014-04-22 10:09:02.242857-04:30	2014-04-22 10:09:02.242857-04:30	36	36	Especialidad	proveedorsalud/especialidad/	601	icon-magic	1	1
+39	\N	2014-04-22 10:09:32.70358-04:30	2014-04-22 10:09:32.70358-04:30	36	35	Medico	proveedorsalud/medico/	603	icon-user	1	1
+40	\N	2014-04-22 14:52:02.983257-04:30	2014-04-22 14:52:02.983257-04:30	36	37	Medicinas	proveedorsalud/medicina/	604	icon-th	1	1
+45	\N	2014-06-24 15:51:37.984221-04:30	2014-06-24 15:51:37.984221-04:30	36	42	Servicio	proveedorsalud/servicio/	605	icon-th	1	1
+46	\N	2014-06-24 23:52:34.310536-04:30	2014-06-24 23:52:34.310536-04:30	15	43	Tipo de Solicitudes	config/tiposolicitud/listar	810	icon-th	1	1
 \.
 
 
@@ -5725,7 +5775,7 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 -- Name: menu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('menu_id_seq', 44, true);
+SELECT pg_catalog.setval('menu_id_seq', 46, true);
 
 
 --
@@ -21983,8 +22033,9 @@ COPY persona (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1,
 1	\N	2014-03-13 12:03:49.841971-04:30	2014-03-13 12:03:49.841971-04:30	20643647	Alexis	jose	Borges	\N	V	M	1990-12-11	240	69	223	28	Villa Araure 1 el bosque	S	\N	\N	\N	\N	default.png
 2	\N	2014-03-16 01:14:45.552613-04:30	2014-03-16 01:14:45.552613-04:30	16753367	Javier	Enrique	León	\N	V	M	1984-12-09	240	69	229	732	Av principal	c	04162546908	02556217013	\N	AB-	default.png
 3	\N	2014-03-17 19:22:19.405099-04:30	2014-03-17 19:22:19.405099-04:30	20543089	yelix	andreina	monsalve	la cruz	V	F	1990-03-01	240	69	229	52	las delicias	S	04165555555	\N	\N	AB-	default.png
-4	\N	2014-04-04 15:18:00.894791-04:30	2014-04-04 15:18:00.894791-04:30	123	pedro	jose	Lopéz	la cruz	E	M	2013-12-11	16	2	198	2	Av principal	c	04162546908	02556217013	\N	AB-	default.png
 5	\N	2014-03-17 18:34:56.063814-04:30	2014-03-17 18:34:56.063814-04:30	20389587	Rahiber	jose	monsalve	Cardona	V	M	1980-04-01	20	8	250	11	Av principal	c	04165555555	02556217013	\N	AB-	default.png
+6	\N	2014-06-23 17:43:06.825569-04:30	2014-06-23 17:43:06.825569-04:30	206436472	Antonio	Ramon	Borges	\N	V	M	2010-01-01	240	69	223	28	Villa	S	\N	\N	\N	N/A	default.png
+4	\N	2014-04-04 15:18:00.894791-04:30	2014-04-04 15:18:00.894791-04:30	2064364721	pedro	jose	Lopéz	la cruz	E	M	2013-12-11	16	2	198	2	Av principal	c	04162546908	02556217013	\N	AB-	default.png
 \.
 
 
@@ -21992,7 +22043,7 @@ COPY persona (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1,
 -- Name: persona_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('persona_id_seq', 5, true);
+SELECT pg_catalog.setval('persona_id_seq', 12, true);
 
 
 --
@@ -22357,6 +22408,8 @@ COPY recurso (id, usuario_id, fecha_registro, fecha_modificado, modulo, controla
 39	\N	2014-06-09 11:26:54.260015-04:30	2014-06-09 11:26:54.260015-04:30	solicitudes	solicitud_servicio	aprobacion	solicitudes/solicitud_servicio/aprobacion	Aprobacion de las Solicitudes de Servicio de Atención Primaria	1
 40	\N	2014-06-09 11:27:18.560757-04:30	2014-06-09 11:27:18.560757-04:30	solicitudes	solicitud_servicio	contabilizar	solicitudes/solicitud_servicio/contabilizar	Contabilizar las Solicitudes de Atención Primaria	1
 41	\N	2014-06-09 11:30:37.965083-04:30	2014-06-09 11:30:37.965083-04:30	solicitudes	solicitud_servicio	anular	solicitudes/solicitud_servicio/anular	Anular Solicitudes de Servicio Atención Primaria	1
+42	\N	2014-06-24 15:50:26.79701-04:30	2014-06-24 15:50:26.79701-04:30	proveedorsalud	servicio	*	proveedorsalud/servicio/*	Modulo para el registro de servicios profesionales	1
+43	\N	2014-06-24 23:50:31.046028-04:30	2014-06-24 23:50:31.046028-04:30	config	tiposolicitud	*	config/tiposolicitud/*	Gestionar los tipos de solicitudes dentro del sistema	1
 \.
 
 
@@ -22364,7 +22417,7 @@ COPY recurso (id, usuario_id, fecha_registro, fecha_modificado, modulo, controla
 -- Name: recurso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('recurso_id_seq', 41, true);
+SELECT pg_catalog.setval('recurso_id_seq', 43, true);
 
 
 --
@@ -22547,8 +22600,12 @@ SELECT pg_catalog.setval('solicitud_medicina_id_seq', 1, false);
 --
 
 COPY solicitud_servicio (id, usuario_id, fecha_registro, fecha_modificado, estado_solicitud, tiposolicitud_id, fecha_solicitud, codigo_solicitud, titular_id, beneficiario_id, beneficiario_tipo, patologia_id, proveedor_id, medico_id, fecha_vencimiento, servicio_id, observacion) FROM stdin;
-11	\N	2014-06-02 18:50:47.769075-04:30	2014-06-02 18:50:47.769075-04:30	1	1	2014-06-02	1	1	1	1	14189	1	1	1900-01-01	1	\N
-12	\N	2014-06-02 18:51:21.767053-04:30	2014-06-02 18:51:21.767053-04:30	1	1	2014-06-02	2	1	1	1	14189	1	1	1900-01-01	1	\N
+11	\N	2014-06-02 18:50:47.769075-04:30	2014-06-02 18:50:47.769075-04:30	R	1	2014-06-02	1	1	1	1	14189	1	1	1900-01-01	1	asd
+12	\N	2014-06-02 18:51:21.767053-04:30	2014-06-02 18:51:21.767053-04:30	A	1	2014-06-02	2	1	1	1	14189	1	1	1900-01-01	1	asd
+13	\N	2014-06-09 19:41:36.084029-04:30	2014-06-09 19:41:36.084029-04:30	A	2	2014-06-09	3	1	1	1	14189	1	1	1900-01-01	1	asd
+16	\N	2014-06-23 17:24:37.71975-04:30	2014-06-23 17:24:37.71975-04:30	R	1	2014-06-23	4	1	1	1	16802	1	1	2014-06-23	1	prueba
+17	\N	2014-06-23 17:29:07.203539-04:30	2014-06-23 17:29:07.203539-04:30	R	1	2014-06-23	5	1	1	1	18129	1	1	2014-06-23	1	probando 2
+20	\N	2014-06-23 19:36:22.226111-04:30	2014-06-23 19:36:22.226111-04:30	R	1	2014-06-23	6	1	1	1	24763	1	1	2014-06-23	1	Pa
 \.
 
 
@@ -22556,7 +22613,7 @@ COPY solicitud_servicio (id, usuario_id, fecha_registro, fecha_modificado, estad
 -- Name: solicitud_servicio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('solicitud_servicio_id_seq', 12, true);
+SELECT pg_catalog.setval('solicitud_servicio_id_seq', 20, true);
 
 
 --
@@ -22599,12 +22656,12 @@ SELECT pg_catalog.setval('tipoempleado_id_seq', 8, true);
 -- Data for Name: tiposolicitud; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
-COPY tiposolicitud (id, usuario_id, fecha_registro, fecha_modificado, nombre, observacion) FROM stdin;
-1	\N	2014-06-02 16:39:48.736278-04:30	2014-06-02 16:39:48.736278-04:30	Consulta Medica	\N
-2	\N	2014-06-02 16:42:11.530463-04:30	2014-06-02 16:42:11.530463-04:30	Consulta Odontologica	\N
-3	\N	2014-06-02 16:42:25.511351-04:30	2014-06-02 16:42:25.511351-04:30	Examenes de Laboratorio	\N
-4	\N	2014-06-02 16:42:33.182268-04:30	2014-06-02 16:42:33.182268-04:30	Examenes Especiales	\N
-5	\N	2014-06-02 16:44:56.932481-04:30	2014-06-02 16:44:56.932481-04:30	Servicios Funerarios	\N
+COPY tiposolicitud (id, usuario_id, fecha_registro, fecha_modificado, nombre, observacion, correlativo) FROM stdin;
+1	\N	2014-06-02 16:39:48.736278-04:30	2014-06-02 16:39:48.736278-04:30	Consulta Medica	\N	SASCM-0
+2	\N	2014-06-02 16:42:11.530463-04:30	2014-06-02 16:42:11.530463-04:30	Consulta Odontologica	\N	SASCO-0
+3	\N	2014-06-02 16:42:25.511351-04:30	2014-06-02 16:42:25.511351-04:30	Examenes de Laboratorio	\N	SASEL-0
+4	\N	2014-06-02 16:42:33.182268-04:30	2014-06-02 16:42:33.182268-04:30	Examenes Especiales	\N	SASEE-0
+5	\N	2014-06-02 16:44:56.932481-04:30	2014-06-02 16:44:56.932481-04:30	Servicios Funerarios	\N	SASSF-0
 \.
 
 
@@ -22621,10 +22678,9 @@ SELECT pg_catalog.setval('tiposolicitud_id_seq', 5, true);
 
 COPY titular (id, usuario_id, fecha_registro, fecha_modificado, tipoempleado_id, persona_id, fecha_ingreso, profesion_id, departamento_id, cargo_id, observacion) FROM stdin;
 1	1	2014-04-03 10:44:52.776632-04:30	2014-04-03 10:44:52.776632-04:30	1	1	1900-01-01	1	1	4	Prueba
-2	1	2014-04-03 11:12:19.553918-04:30	2014-04-03 11:12:19.553918-04:30	1	2	1900-01-01	1	1	4	p
 3	\N	2014-04-04 15:18:00.894791-04:30	2014-04-04 15:18:00.894791-04:30	1	3	1900-01-01	1	1	4	fgdfgdfg
-4	\N	2014-04-04 18:03:48.428044-04:30	2014-04-04 18:03:48.428044-04:30	1	4	1900-01-01	1	1	4	asd
-5	\N	2014-04-11 19:44:50.762273-04:30	2014-04-11 19:44:50.762273-04:30	1	1	1900-01-01	22	15	17	a ver que lo q
+2	1	2014-04-03 11:12:19.553918-04:30	2014-04-03 11:12:19.553918-04:30	1	2	1900-01-01	1	1	4	probando
+4	\N	2014-04-04 18:03:48.428044-04:30	2014-04-04 18:03:48.428044-04:30	1	5	1900-01-01	1	1	4	 asd asd ads
 \.
 
 

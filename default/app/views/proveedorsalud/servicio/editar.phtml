@@ -1,0 +1,28 @@
+<?php View::notify(); ?>
+
+<div class="container-fluid dw-shell-view">
+
+    <?php View::process($page_module, $page_title, $set_title); ?>
+
+    <?php echo DwForm::open('', 'post', array('id'=>'form', 'class'=>'dw-validate')); ?>
+
+        <div class="row-fluid">
+            <div class="span6">
+                <?php echo DwForm::text('servicio.descripcion', array('class'=>'input-xxlarge input-required show-error'), $servicio->descripcion, 'Nombre'); ?>
+            </div>
+            <div class="span6">
+                <?php echo DwForm::text('servicio.observacion', array('class'=>'input-xxlarge show-error'), $servicio->observacion, 'Observación'); ?>
+            </div>
+        </div>
+        <?php echo DwForm::hiddenKey('servicio.id', $servicio->id); ?>
+
+        <div class="row-fluid">
+            <div class="form-actions">
+                <?php echo DwButton::save('Guardar servicio'); ?>
+                <?php echo DwButton::reset('form'); ?>
+                <?php echo DwButton::cancel(); ?>
+            </div>
+        </div>
+
+    <?php echo DwForm::close(); ?>
+</div>

@@ -89,10 +89,10 @@ class Patologia extends ActiveRecord {
    public function obtener_patologias($patologia) {
         if ($patologia != '') {
             $patologia = stripcslashes($patologia);
-            $res = $this->find('columns: descripcion', "descripcion like '%{$patologia}%'");
+            $res = $this->find('columns: id,descripcion', "descripcion like '%{$patologia}%'");
             if ($res) {
                 foreach ($res as $patologia) {
-                    $patologias[] = $patologia->descripcion;
+                    $patologias[] = array('id'=>$patologia->id,'value'=>$patologia->descripcion);
                 }
                 return $patologias;
             }

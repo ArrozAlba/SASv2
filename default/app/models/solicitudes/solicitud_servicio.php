@@ -26,8 +26,17 @@ class SolicitudServicio extends ActiveRecord {
         $this->has_one('proveedor');
         $this->has_one('proveedor_medico');
         //$this->has_one('titular');
-
+        $this->validates_presence_of('fecha_solicitud', 'message: Ingresa la fecha de Solicitud');
+        $this->validates_presence_of('fecha_vencimiento', 'message: Ingresa la fecha de Vencimiento de la Solicitud');
+        $this->validates_presence_of('titular_id', 'message: Ingresa la Cedula del Titular');        
+        $this->validates_presence_of('beneficiario_id', 'message: Ingresa la Cedula del Beneficiario');
+        $this->validates_presence_of('proveedor_id', 'message: Ingresa el Estado de Origen de la empresa');
+        $this->validates_presence_of('medico_id', 'message: Ingresa el Municipio de Origen de la empresa');
+        $this->validates_presence_of('patologia_id', 'message: Ingresa la Parroquia de la empresa');
+        $this->validates_presence_of('servicio_id', 'message: Ingresa el nombre del representante legal.');
+        $this->validates_presence_of('observacion', 'message: Ingresa la pagina Web de la empresa');
     }  
+
     
     /**
      * Método para ver la información de una sucursal

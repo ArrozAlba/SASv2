@@ -1,0 +1,57 @@
+<?php View::notify(); ?>
+
+<script type="text/javascript">
+    $(function() {
+        $('table').dwGrid({
+            order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
+            order_action: $.KumbiaPHP.publicPath+"config/tiposolicitud/listar/"
+        });
+    });
+</script>
+
+<div class="container-fluid dw-shell-view">
+
+    <?php View::process($page_module, $page_title, $set_title); ?>
+
+    <div class="btn-toolbar btn-toolbar-top">
+        <div class="btn-actions">
+            <?php echo DwHtml::button("config/tiposolicitud/agregar/", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
+        </div>
+    </div>
+
+    <div class="dw-overflow">
+
+        <table class="table table-bordered table-hover table-striped table-condensed table-responsive">
+            <thead>
+                <tr>
+                    <th>NUM</th>
+                    <th class="col-collapse" data-search="tiposolicitud">NOMBRE</th>
+                    <th class="col-collapse" data-search="tiposolicitud">CORRELATIVO / PREFIJO</th>                    
+                    <th class="col-collapse" data-search="observacion">OBSERVACION</th>
+                    <th class="btn-actions no-responsive" style="width: 100px;">ACCIONES</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($tiposolicitudes->items as $tiposolicitud): ?>
+                    <?php $key_upd = DwSecurity::getKey($tiposolicitud->id, 'upd_tiposolicitud'); ?>
+                    <?php $key_del = DwSecurity::getKey($tiposolicitud->id, 'del_tiposolicitud'); ?>
+                    <tr>
+                        <td><?php echo $tiposolicitudes->counter; ?></td>
+                        <td><?php echo $tiposolicitud->nombre; ?></td>
+                        <td><?php echo $tiposolicitud->correlativo; ?></td>                        
+                        <td><?php echo $tiposolicitud->observacion; ?></td>
+                        <td>
+                            <?php echo DwHtml::buttonTable('Modificar Tipo de Solicitud', "config/tiposolicitud/editar/$key_upd/", null, 'info', 'edit'); ?>
+                            <?php echo DwHtml::buttonTable('Eliminar Tipo de Solicitud', "config/tiposolicitud/eliminar/$key_del/", array('class'=>'js-confirm', 'confirm-title'=>'Eliminar tiposolicitud', 'confirm-body'=>'Está seguro de eliminar este tiposolicitud? <br />Recuerda que esta operación no se puede reversar.'), 'danger', 'ban-circle'); ?>
+                        </td>
+                    </tr>
+                    <?php $tiposolicitudes->counter++; ?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+    </div>
+
+    <?php View::partial('paginators/default', false, array('page'=>$tiposolicitudes, 'url'=>"config/tiposolicitud/listar/$order/")); ?>
+
+</div>
