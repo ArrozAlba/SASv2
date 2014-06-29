@@ -7,7 +7,7 @@
 
         <div class="row-fluid">
             <div class="span4">
-                <?php echo DwForm::text('solicitud_servicio.codigo_solicitud', array('class'=>'input-xlarge '),NULL, 'Código:'); ?>
+                <?php echo DwForm::text('solicitud_servicio.codigo_solicitud', array('class'=>'input-xlarge disabled'),$codigodd, 'Código:'); ?>
                 <?php echo DwForm::hidden('solicitud_servicio.tiposolicitud_id', NULL, '1'); ?>
                 <?php echo DwForm::hidden('solicitud_servicio.estado_solicitud', NULL, 'R'); ?>
                 <?php ?>
