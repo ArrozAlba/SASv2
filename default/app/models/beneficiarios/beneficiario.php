@@ -33,6 +33,20 @@ class beneficiario extends ActiveRecord {
 //        return "INNER JOIN (SELECT usuario_id, CASE estado_usuario WHEN ".EstadoUsuario::COD_ACTIVO." THEN '".EstadoUsuario::ACTIVO."' WHEN ".EstadoUsuario::COD_BLOQUEADO." THEN '".EstadoUsuario::BLOQUEADO."' ELSE 'INDEFINIDO' END AS estado_usuario, descripcion FROM (SELECT * FROM estado_usuario ORDER BY estado_usuario.id DESC ) AS estado_usuario GROUP BY estado_usuario.usuario_id,estado_usuario.estado_usuario, descripcion) AS estado_usuario ON estado_usuario.usuario_id = usuario.id ";        
 //    }
     /**
+     * Método para listar los tipos de identificación
+     * @return array
+     */
+    public function getListBeneficiario() {
+        return $this->find_all_by_sql("select beneficiario.id,beneficiario.titular_id,beneficiario.persona_id,persona.nombre1,persona.apellido1,
+cast(persona.cedula as integer) 
+from beneficiario,persona where beneficiario.persona_id = persona.id");
+    }
+    public function buscar($titular_id){
+        return $this->find_all_by_sql("select beneficiario.id,beneficiario.titular_id,beneficiario.persona_id,(persona.nombre1 || ' ' || persona.apellido1) as nombrefull,
+cast(persona.cedula as integer) 
+from beneficiario,persona where  beneficiario.titular_id = '{$titular_id}' and beneficiario.persona_id = persona.id");
+    }    
+    /**
      * Método para obtener titulares
      * @return obj
      */

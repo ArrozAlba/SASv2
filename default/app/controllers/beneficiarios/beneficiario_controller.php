@@ -48,7 +48,10 @@ class beneficiarioController extends BackendController {
         $this->value = $value;
         $this->page_title = 'Búsqueda de beneficiarios del sistema';        
     }
-    
+    public function getBeneficiarios(){
+       View::response('view'); 
+       $this->titular_id=Input::post('titular_id');
+    }    
 /**
      * Método para obtener beneficiarios
      */

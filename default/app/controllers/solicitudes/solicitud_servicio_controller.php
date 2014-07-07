@@ -12,6 +12,7 @@
 
 Load::models('solicitudes/solicitud_servicio');
 Load::models('config/tiposolicitud');
+Load::models('beneficiarios/beneficiario');
 
 class SolicitudServicioController extends BackendController {
     
@@ -88,7 +89,8 @@ class SolicitudServicioController extends BackendController {
                     $this->cargoas[] = $cargoa->correlativo;
                 }
         $this->codigodd=$this->cargoas[0].'00'.$this->codigods;
-;                
+        $beneficiario = new beneficiario(); 
+        $this->beneficiario = $beneficiario->getListBeneficiario();              
         //$a= array('codid'=>$siglas,'codvalue'=>$numero_registros);;
          
 //        $solicitud_servicio = new SolicitudServicio();
