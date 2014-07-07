@@ -32,6 +32,27 @@ class beneficiario extends ActiveRecord {
 //    public static function getInnerEstado() {
 //        return "INNER JOIN (SELECT usuario_id, CASE estado_usuario WHEN ".EstadoUsuario::COD_ACTIVO." THEN '".EstadoUsuario::ACTIVO."' WHEN ".EstadoUsuario::COD_BLOQUEADO." THEN '".EstadoUsuario::BLOQUEADO."' ELSE 'INDEFINIDO' END AS estado_usuario, descripcion FROM (SELECT * FROM estado_usuario ORDER BY estado_usuario.id DESC ) AS estado_usuario GROUP BY estado_usuario.usuario_id,estado_usuario.estado_usuario, descripcion) AS estado_usuario ON estado_usuario.usuario_id = usuario.id ";        
 //    }
+    /**
+     * Método para obtener titulares
+     * @return obj
+     */
+   public function obtener_beneficiarios($beneficiario) {
+        if ($beneficiario != '') {
+            $beneficiario = stripcslashes($beneficiario);
+            $res = $this->find_all_by_sql("
+select beneficiario.id,beneficiario.titular_id,beneficiario.persona_id,persona.nombre1,persona.apellido1,cast(persona.cedula as integer) 
+from titular,beneficiario,persona where beneficiario.titular_id in (select id from titular) and persona.cedula like '%{$beneficiario}%' 
+and beneficiario.persona_id = persona.id ");
+            
+            if ($res) {
+                foreach ($res as $beneficiario) {
+                    $beneficiarios[] = array('id'=>$beneficiario->id,'value'=>$beneficiario->cedula,'idnombre'=>$beneficiario->nombre1.' '.$beneficiario->nombre2.' '.$beneficiario->apellido1.' '.$beneficiario->apellido2);
+                }
+                return $beneficiarios;
+            }
+        }
+        return array('no hubo coincidencias');
+    }
         
     /**
      * Método para setear un Objeto

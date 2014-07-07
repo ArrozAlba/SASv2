@@ -31,20 +31,24 @@
         </div>
 
         <div class="row-fluid">
-            <div class="span6">
+            <div class="span4">
                 <?php //echo DwForm::dbSelect('solicitud_servicio.titular_id', 'cedula', array('beneficiarios/titular', 'getListadoTitular'), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Titular'); ?>
-                <?php echo DwForm::text('solicitud_servicio.titular', array('class'=>'input-xxlarge input-required '), NULL, 'Cedula Titular'); ?>
+                <?php echo DwForm::text('solicitud_servicio.titular', array('class'=>'input-xlarge input-required '), NULL, 'Cedula Titular'); ?>
                 <?php echo DwForm::hidden('solicitud_servicio.titular_id', NULL, ''); ?>
-
-
             </div>
-            <div class="span6">
-                <?php echo DwForm::text('solicitud_servicio.beneficiario', array('class'=>'input-xxlarge input-required '), NULL, 'Cedula Beneficiario'); ?>
-                <?php echo DwForm::hidden('solicitud_servicio.beneficiario_id', NULL, ''); ?>
-
+            <div class="span8">
+                <?php echo DwForm::text('solicitud_servicio.titular_idnombre', array('class'=>'input-xxlarge disabled input-required '), NULL, 'Nombre Titular:'); ?>
             </div>
         </div>
-        <div>
+        <div class="row-fluid">
+            <div class="span4">
+                <?php echo DwForm::text('solicitud_servicio.beneficiario', array('class'=>'input-xlarge input-required '), NULL, 'Cedula Beneficiario'); ?>
+                <?php echo DwForm::hidden('solicitud_servicio.beneficiario_id', NULL, ''); ?>
+            </div>
+            <div class="span8">
+                <?php echo DwForm::text('solicitud_servicio.beneficiario_idnombre', array('class'=>'input-xxlarge disabled input-required '), NULL, 'Nombre Beneficiario:'); ?>
+            </div>
+        </div>
         <div class="row-fluid">
             <div class="span6">
                 <?php echo DwForm::text('solicitud_servicio.proveedor', array('class'=>'input-xxlarge input-required '), NULL, 'Proveedor'); ?>
@@ -55,7 +59,6 @@
                <?php echo DwForm::hidden('solicitud_servicio.medico_id', NULL, ''); ?>
             </div>
         </div>
-        <div>
          </div>
         <div class="row-fluid">
             <div class="span6">
@@ -97,7 +100,7 @@ $(document).ready(function(){
                  
               }
     $('input#solicitud_servicio_titular').autocomplete({
-            minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
+            minLength : 3 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
             source: function(request, response) {
                 $.ajax({
                   url: "<?php echo PUBLIC_PATH ?>beneficiarios/titular/autocomplete",
@@ -111,6 +114,7 @@ $(document).ready(function(){
               },
               select: function(event, ui) {
                   $('input#solicitud_servicio_titular_id').val(ui.item.id);// Asignacion de Id en Campo
+                  $('input#solicitud_servicio_titular_idnombre').val(ui.item.idnombre);// Asignacion de Id en Campo
                  // $('textarea#solicitud_servicio_observacion').val(ui.item.id);// Asignacion de Id en Campo
                  
               }
@@ -120,7 +124,7 @@ $(document).ready(function(){
             minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
             source: function(request, response) {
                 $.ajax({
-                  url: "<?php echo PUBLIC_PATH ?>beneficiarios/titular/autocomplete",
+                  url: "<?php echo PUBLIC_PATH ?>beneficiarios/beneficiario/autocomplete",
                   data: {'busqueda':request.term},
                   dataType: "json",
                   type: "POST",
@@ -131,6 +135,7 @@ $(document).ready(function(){
               },
               select: function(event, ui) {
                   $('input#solicitud_servicio_beneficiario_id').val(ui.item.id);// Asignacion de Id en Campo
+                  $('input#solicitud_servicio_beneficiario_idnombre').val(ui.item.idnombre);// Asignacion de Id en Campo
               }
     });
  
