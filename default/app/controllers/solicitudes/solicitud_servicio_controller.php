@@ -11,6 +11,7 @@
  */
 
 Load::models('solicitudes/solicitud_servicio');
+Load::models('config/tiposolicitud');
 
 class SolicitudServicioController extends BackendController {
     
@@ -79,8 +80,17 @@ class SolicitudServicioController extends BackendController {
     public function agregar() {
         $empresa = Session::get('empresa', 'config');
         $solicitud_servicio = new SolicitudServicio();
-		$a = $solicitud_servicio->count("tiposolicitud_id = 1");
-         print $a+1;
+        $nroids = $solicitud_servicio->count("tiposolicitud_id = 1");
+        $this->codigods=$nroids+1;
+		$correlativ= new Tiposolicitud();
+        $codigocorrelativo = $correlativ->find("columns: correlativo","conditions: id=1 ", "limit: 1 ");
+         foreach ($codigocorrelativo as $cargoa) {
+                    $this->cargoas[] = $cargoa->correlativo;
+                }
+        $this->codigodd=$this->cargoas[0].'00'.$this->codigods;
+;                
+        //$a= array('codid'=>$siglas,'codvalue'=>$numero_registros);;
+         
 //        $solicitud_servicio = new SolicitudServicio();
 //        $ppp1 = $solicitud_servicio->getCodigoSolicitud1();
 //        $solicitud_servicio->getCodigoSolicitud2();

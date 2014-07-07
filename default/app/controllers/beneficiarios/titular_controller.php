@@ -58,8 +58,8 @@ class TitularController extends BackendController {
         View::select(NULL);
         if (Input::isAjax()) { //solo devolvemos los estados si se accede desde ajax 
             $busqueda = Input::post('busqueda');
-            $personas = Load::model('personas/persona')->obtener_personas($busqueda);
-            die(json_encode($personas)); // solo devolvemos los datos, sin template ni vista
+            $titulares = Load::model('beneficiarios/titular')->obtener_titulares($busqueda);
+            die(json_encode($titulares)); // solo devolvemos los datos, sin template ni vista
             //json_encode nos devolverá el array en formato json ["aragua","carabobo","..."]
         }
     }

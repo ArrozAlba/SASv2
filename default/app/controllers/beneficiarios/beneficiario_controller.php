@@ -49,6 +49,22 @@ class beneficiarioController extends BackendController {
         $this->page_title = 'Búsqueda de beneficiarios del sistema';        
     }
     
+/**
+     * Método para obtener beneficiarios
+     */
+    
+        //accion que busca en los beneficiarios y devuelve el json con los datos
+    public function autocomplete() {
+        View::template(NULL);
+        View::select(NULL);
+        if (Input::isAjax()) { //solo devolvemos los estados si se accede desde ajax 
+            $busqueda = Input::post('busqueda');
+            $beneficiarios = Load::model('beneficiarios/beneficiario')->obtener_beneficiarios($busqueda);
+            die(json_encode($beneficiarios)); // solo devolvemos los datos, sin template ni vista
+            //json_encode nos devolverá el array en formato json ["aragua","carabobo","..."]
+        }
+    }
+
     /**
      * Método para listar
      */

@@ -91,10 +91,14 @@ class Titular extends ActiveRecord {
    public function obtener_titulares($titular) {
         if ($titular != '') {
             $titular = stripcslashes($titular);
-            $res = $this->find_by_sql("select titular.id,titular.persona_id,persona.nombre1,persona.apellido1,cast(persona.cedula as integer) from titular,persona where persona.cedula like '%{$titular}%' or persona.nombre1 like '%{$titular}%' or persona.nombre2 like '%{$titular}%' or persona.apellido1 like '%{$titular}%' or persona.apellido2 like '%{$titular}%' and titular.persona_id = persona.id");
+            $res = $this->find_all_by_sql("
+select titular.id,titular.persona_id,persona.nombre1,persona.apellido1,cast(persona.cedula as integer) 
+from titular,persona where persona.cedula like '%{$titular}%' 
+and titular.persona_id = persona.id");
+            
             if ($res) {
                 foreach ($res as $titular) {
-                    $titulares[] = array('id'=>$titular->id,'value'=>$titular->nombre1.' '.$titular->nombre2.' '.$titular->apellido1.' '.$titular->apellido2);
+                    $titulares[] = array('id'=>$titular->id,'value'=>$titular->cedula,'idnombre'=>$titular->nombre1.' '.$titular->nombre2.' '.$titular->apellido1.' '.$titular->apellido2);
                 }
                 return $titulares;
             }
