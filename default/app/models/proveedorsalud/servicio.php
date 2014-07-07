@@ -34,7 +34,7 @@ class Servicio extends ActiveRecord {
    public function obtener_servicios($servicio) {
         if ($servicio != '') {
             $servicio = stripcslashes($servicio);
-            $res = $this->find('columns: descripcion', "descripcion like '%{$servicio}%'");
+            $res = $this->find('columns: id,descripcion', "descripcion like '%{$servicio}%'");
             if ($res) {
                 foreach ($res as $servicio) {
                     $servicios[] = array('id'=>$servicio->id,'value'=>$servicio->descripcion);
