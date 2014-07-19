@@ -45,7 +45,7 @@ class SolicitudServicio extends ActiveRecord {
      */
     public function getInformacionSolicitudServicio($id, $isSlug=false) {
         $id = ($isSlug) ? Filter::get($id, 'string') : Filter::get($id, 'numeric');
-        $columnas = 'solicitud_servicio.*, persona.nombre1 as nombre,persona.apellido1 as apellido, titular.id, proveedor.id, proveedor.nombre_corto as proveedor, servicio.id, servicio.descripcion as servicio, patologia.id, patologia.descripcion as patologia, tiposolicitud.id, tiposolicitud.nombre as tiposolicitud ';
+        $columnas = 'solicitud_servicio.id, solicitud_servicio.estado_solicitud, solicitud_servicio.tiposolicitud_id, solicitud_servicio.fecha_solicitud, solicitud_servicio.codigo_solicitud, solicitud_servicio.titular_id, solicitud_servicio.beneficiario_id, solicitud_servicio.patologia_id, solicitud_servicio.proveedor_id, solicitud_servicio.medico_id, solicitud_servicio.servicio_id, solicitud_servicio.fecha_vencimiento, solicitud_servicio.observacion, persona.nombre1 as nombre,persona.apellido1 as apellido, titular.id as idtitular, proveedor.id idproveedor, proveedor.nombre_corto as proveedor, servicio.id as idservicio, servicio.descripcion as servicio, patologia.id idpatologia, patologia.descripcion as patologia, tiposolicitud.id idtiposolicitud, tiposolicitud.nombre as tiposolicitud ';
         $join= 'INNER JOIN proveedor ON proveedor.id = solicitud_servicio.proveedor_id ';
         $join.= 'INNER JOIN servicio ON servicio.id = solicitud_servicio.servicio_id ';        
         $join.= 'INNER JOIN patologia ON patologia.id = solicitud_servicio.patologia_id ';

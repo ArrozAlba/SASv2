@@ -10,8 +10,9 @@
  * @copyright   Copyright (c) 2014 E.M.S. Arroz del Alba S.A. (http://autogestion.arrozdelalba.gob.ve)
  */
 
-Load::models('beneficiarios/titular','personas/persona', 'sistema/usuario');
+Load::models('beneficiarios/titular','personas/persona', 'sistema/usuario', 'beneficiarios/beneficiario');
 Load::models('params/pais', 'params/estado', 'params/municipio', 'params/parroquia');
+load::models('config/sucursal', 'config/departamento');
 
 class TitularController extends BackendController {
     
@@ -93,7 +94,6 @@ class TitularController extends BackendController {
      * Método para agregar
      */
     public function agregar() {
-
         $pais = new Pais(); 
         $estado = new Estado(); 
         $municipio = new Municipio();
@@ -113,6 +113,7 @@ class TitularController extends BackendController {
             $this->pais = $pais->getListadoPais();           
             $this->estado = $estado->getListadoEstado(); 
             $this->municipio = $municipio->getListadoMunicipio(); 
+            $this->sucursal = $sucursal->getListadoSucursal(); 
         }
         $this->page_title = 'Agregar Titular';
     }
@@ -129,8 +130,8 @@ class TitularController extends BackendController {
         if(!$titular->getInformacionTitular($id)) {
             DwMessage::get('id_no_found');    
             return DwRedirect::toAction('listar');
-        }                
-        
+        }
+       
         if(Input::hasPost('titular')) {
             if(DwSecurity::isValidKey(Input::post('titular_id_key'), 'form_key')) {
                 ActiveRecord::beginTrans();
@@ -150,7 +151,6 @@ class TitularController extends BackendController {
         $this->temas = DwUtils::getFolders(dirname(APP_PATH).'/public/css/backend/themes/');
         $this->titular = $titular;
         $this->page_title = 'Actualizar titular';
-        
     }
     
     /**
@@ -186,30 +186,56 @@ class TitularController extends BackendController {
     }
     
     /**
-     * Método para ver
+     * Método para formar el reporte en pdf 
      */
-    public function ver($key) {        
+    public function reportetitular($key) { 
+        View::template(NULL);       
         if(!$id = DwSecurity::isValidKey($key, 'shw_titular', 'int')) {
             return DwRedirect::toAction('listar');
         }
         
-        $titular = new Titular();
+        $titular=new Titular();
         if(!$titular->getInformacionTitular($id)) {
-            DwMessage::get('id_no_found');    
-            return DwRedirect::toAction('listar');
-        }                
+            DwMessage::get('id_no_found');
+        }
+        $this->nombres = strtoupper($titular->nombre1." ".$titular->nombre2);
+        $this->apellidos = strtoupper($titular->apellido1." ".$titular->apellido2);
+        if($titular->nacionalidad=="V"){ $this->nacionalidad = "VENEZOLANO"; } else { $this->nacionalidad ="EXTRANJERO"; }
+        $this->cedula = $titular->cedula;
+        $this->sexo = $titular->sexo;
+        $this->fecha_nac = $titular->fecha_nacimiento;
+        $this->estado = strtoupper($titular->estado);
+        $this->municipio = strtoupper($titular->municipio);
+        $this->estado_civil = strtoupper($titular->estado_civil);
+        $this->telefono = $titular->telefono;
+        $this->celular = $titular->celular;
+        $this->direccion = strtoupper($titular->direccion_habitacion);
+        $this->observacion = strtoupper($titular->observacion);
         
-        //$estado = new EstadoUsuario();
-        //$this->estados = $estado->getListadoEstadoUsuario($usuario->id);
+        $this->correo_electronico = strtoupper($titular->correo_electronico);
         
-        //$acceso = new Acceso();
-        //$this->accesos = $acceso->getListadoAcceso($usuario->id, 'todos', 'order.fecha.desc');
-        
-        $this->titular = $titular;
-        $this->page_title = 'Información del titular';
-        
+        //llamada a otra funcion, ya que no logre un solo query para ese reportee! :S
+
+        $datosdireccion = $titular->getInformacionDireccionTitular($id);
+        $this->hestado = strtoupper($titular->hestado);
+        $this->hparroquia = strtoupper($titular->hparroquia);
+        $this->hpais = strtoupper($titular->hpais);
+
+        //llamada a otra funcion, ya que no logre un solo query para ese reportee! :S
+        $datoslaborales = $titular->getInformacionLaboralTitular($id);
+
+        $this->upsa = $titular->sucursal;
+        $this->direccionlaboral = strtoupper($titular->direccion);
+        $this->municipio_laboral = strtoupper($titular->municipios);
+        $this->estado_laboral = strtoupper($titular->estados);
+        $this->pais_laboral = strtoupper($titular->paiss);
+        $this->cargo = strtoupper($titular->cargo);
+
+        //instanciando la clase beneficiario 
+        $beneficiario = new beneficiario();
+        $this->beneficiarios = $beneficiario->getListadoBeneTitular($id);
+
     }
-    
     /**
      * Método para subir imágenes
      */
@@ -231,7 +257,6 @@ class TitularController extends BackendController {
        $this->pais_id=Input::post('pais_id');
     }
 
-
     public function getMunicipioEstado(){
        View::response('view'); 
        $this->estado_id=Input::post('estado_id');
@@ -242,5 +267,32 @@ class TitularController extends BackendController {
        $this->municipio_id=Input::post('municipio_id');
     }
 
-}
+    public function getDepartamento(){
+       View::response('view'); 
+       $this->sucursal_id=Input::post('sucursal_id');
+    }
+    //Funciones para listar los paises estdos, municipios, etc de la direccion de habitacion 
 
+    public function getHEstadoPais(){
+       View::response('view'); 
+       $this->pais_id=Input::post('pais_id');
+    }
+
+    public function getHMunicipioEstado(){
+       View::response('view'); 
+       $this->estado_id=Input::post('estado_id');
+    }
+
+     public function getHParroquiaMunicipio(){
+       View::response('view'); 
+       $this->municipio_id=Input::post('municipio_id');
+    }
+
+
+
+
+
+
+
+
+}

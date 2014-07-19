@@ -3,7 +3,6 @@
  * S.A.S
  *
  * Descripcion: Controlador que se encarga de la gestión de los beneficiarioes del sistema
- *
  * @category    
  * @package     Controllers 
  * @author      Javier León (jel1284@gmail.com)
@@ -13,7 +12,6 @@
 Load::models('beneficiarios/beneficiario','personas/persona', 'sistema/usuario');
 
 class beneficiarioController extends BackendController {
-    
     /**
      * Método que se ejecuta antes de cualquier acción
      */
@@ -48,10 +46,7 @@ class beneficiarioController extends BackendController {
         $this->value = $value;
         $this->page_title = 'Búsqueda de beneficiarios del sistema';        
     }
-    public function getBeneficiarios(){
-       View::response('view'); 
-       $this->titular_id=Input::post('titular_id');
-    }    
+    
 /**
      * Método para obtener beneficiarios
      */
@@ -67,39 +62,49 @@ class beneficiarioController extends BackendController {
             //json_encode nos devolverá el array en formato json ["aragua","carabobo","..."]
         }
     }
-
     /**
      * Método para listar
      */
     public function listar($order='order.id.asc', $page='pag.1') { 
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
         $beneficiario = new beneficiario();
+
         $this->beneficiarios = $beneficiario->getListadobeneficiario('todos', $order, $page);
         $this->order = $order;        
         $this->page_title = 'Listado de beneficiarios del sistema';
     }
-    
     /**
      * Método para agregar
      */
-    public function agregar() {
+    public function agregar($key) {
+        if(!$id = DwSecurity::isValidKey($key, 'shw_titular', 'int')) {
+            return DwRedirect::toAction('listar');
+        }
+        //El id del titular que tendra a los beneficiarios asociados
+        $this->idtitular = $id;
+        $beneficiario=new beneficiario();
+        $this->bene = $beneficiario->getListadoBeneTitular($id);
+       
+
         if(Input::hasPost('persona') && Input::hasPost('beneficiario')) {
             ActiveRecord::beginTrans();
-            //Guardo la persona
+            //Guardo la persona y sus beneficiarios
+
             $persona = Persona::setPersona('create', Input::post('persona'));
             if($persona) {
                 if(beneficiario::setbeneficiario('create', Input::post('beneficiario'), array('persona_id'=>$persona->id))) {
                     ActiveRecord::commitTrans();
                     DwMessage::valid('El beneficiario se ha creado correctamente.');
-                    return DwRedirect::toAction('listar');
+                    return DwRedirect::toAction('agregar/'.$key);
                 }
             } else {
                 ActiveRecord::rollbackTrans();
-            }            
+            }
         }
+
+
         $this->page_title = 'Agregar beneficiario';
     }
-    
     /**
      * Método para editar
      */
@@ -133,9 +138,7 @@ class beneficiarioController extends BackendController {
         $this->temas = DwUtils::getFolders(dirname(APP_PATH).'/public/css/backend/themes/');
         $this->beneficiario = $beneficiario;
         $this->page_title = 'Actualizar beneficiario';
-        
     }
-    
     /**
      * Método para inactivar/reactivar
      */
@@ -190,7 +193,6 @@ class beneficiarioController extends BackendController {
         
         $this->beneficiario = $beneficiario;
         $this->page_title = 'Información del beneficiario';
-        
     }
     
     /**
@@ -209,4 +211,3 @@ class beneficiarioController extends BackendController {
     }
     
 }
-
