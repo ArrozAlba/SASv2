@@ -68,15 +68,14 @@ class Titular extends ActiveRecord {
      */
 
     public function getListadotitular($estado, $order='', $page=0) {
-        $columns = 'titular.*, persona.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';
+        $columns = 'titular.*, titular.id as idtitular, sucursal.*, persona.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';
         $join= 'INNER JOIN persona ON persona.id = titular.persona_id ';        
         $join.= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
-        $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';   
+        $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';
+        $join.= 'INNER JOIN sucursal ON departamento.sucursal_id = sucursal.id';
 
-        $conditions = "";//Por el super usuario
-                       
-           
-        
+       // $conditions = "";//Por el super usuario
+     
         if($page) {
             return $this->paginated("columns: $columns", "join: $join", "page: $page");
         } else {
@@ -92,7 +91,7 @@ class Titular extends ActiveRecord {
         if ($titular != '') {
             $titular = stripcslashes($titular);
             $res = $this->find_all_by_sql("
-select titular.id,titular.persona_id,persona.nombre1,persona.apellido1,cast(persona.cedula as integer) 
+                select titular.id,titular.persona_id,persona.nombre1,persona.apellido1,cast(persona.cedula as integer) 
 from titular,persona where persona.cedula like '%{$titular}%' 
 and titular.persona_id = persona.id");
             
@@ -118,7 +117,7 @@ and titular.persona_id = persona.id");
         return $this->$method("conditions: $conditions");
     }
 
-    
+     
     /**
      * Método para obtener la información de un usuario
      * @return type
@@ -128,18 +127,55 @@ and titular.persona_id = persona.id");
         if(!$titular) {
             return NULL;
         }
-        $columns = 'titular.*, persona.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';
+        $columns = 'municipio.nombre as municipio, municipio.id as idmunicipio, estado.nombre as estado, estado.id as idestado,  pais.nombre as pais, pais.id as idpais, titular.*, persona.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';
         $join= 'INNER JOIN persona ON persona.id = titular.persona_id ';        
         $join.= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
-        $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';   
-//        $columnas = 'titular.*, persona.cedula, persona.nombre1, persona.nombre2, persona.apellido1, persona.apellido2, persona.nacionalidad, persona.sexo, persona.fecha_nacimiento, persona.pais_id, persona.estado_id, persona.municipio_id, persona.parroquia_id, persona.direccion_habitacion, persona.estado_civil, persona.celular, persona.telefono, persona.correo_electronico, persona.grupo_sanguineo, persona.fotografia, estado_usuario.estado_usuario, estado_usuario.descripcion, sucursal.sucursal';
-  //      $join = self::getInnerEstado();
-//        $join.= 'INNER JOIN perfil ON perfil.id = usuario.perfil_id ';
-//        $join.= 'INNER JOIN persona ON persona.id = usuario.persona_id ';               
-//        $join.= 'LEFT JOIN sucursal ON sucursal.id = usuario.sucursal_id ';
+        $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';
+        $join.= 'INNER JOIN pais ON  persona.pais_id = pais.id ';
+        $join.= 'INNER JOIN estado ON  persona.estado_id = estado.id ';
+        $join.= 'INNER JOIN municipio ON  persona.municipio_id = municipio.id ';
+
         $condicion = "titular.id = $titular";        
         return $this->find_first("columns: $columns", "join: $join", "conditions: $condicion");
     }
+
+// Funcion para tomar los paises y estado para la direccion de habitacion :S
+    public function getInformacionDireccionTitular($titular) {
+        $titular = Filter::get($titular, 'int');
+        if(!$titular) {
+            return NULL;
+        }
+        $columns = 'parroquia.nombre as hparroquia, estado.nombre as hestado, estado.id as idhestado,  pais.nombre as hpais, pais.id as idhpais, titular.*, persona.id';
+        $join= 'INNER JOIN persona ON persona.id = titular.persona_id ';        
+        $join.= 'INNER JOIN pais ON  persona.hpais_id = pais.id ';
+        $join.= 'INNER JOIN estado ON  persona.hestado_id = estado.id ';
+        $join.= 'INNER JOIN parroquia ON  persona.hparroquia_id = parroquia.id ';
+
+        $condicion = "titular.id = $titular";        
+        return $this->find_first("columns: $columns", "join: $join", "conditions: $condicion");
+    }
+
+
+// --------Informacion para los datos de la upsa donde trabaja el titular----------
+    public function getInformacionLaboralTitular($titular) {
+        $titular = Filter::get($titular, 'int');
+        if(!$titular) {
+            return NULL;
+        }
+        $columns = 'municipio.nombre as municipios, municipio.id as idmunicipio, estado.nombre as estados, estado.id as idestado, pais.nombre as paiss, pais.id as idpais,  departamento.id, departamento.nombre as departamento, sucursal.sucursal, sucursal.direccion, cargo.nombre as cargo';
+        $join= 'INNER JOIN persona ON persona.id = titular.persona_id ';        
+        $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';
+        $join.= 'INNER JOIN sucursal ON sucursal.id = departamento.sucursal_id ';
+        $join.= 'INNER JOIN pais ON  persona.pais_id = pais.id ';
+        $join.= 'INNER JOIN estado ON  persona.estado_id = estado.id ';
+        $join.= 'INNER JOIN municipio ON  persona.municipio_id = municipio.id ';
+        $join.= 'INNER JOIN cargo ON cargo.id = titular.cargo_id ';
+        $condicion = "titular.id = $titular";        
+        return $this->find_first("columns: $columns", "join: $join", "conditions: $condicion");
+    }
+
+
+
     /**
      * Método para buscar Titular
      */

@@ -1,0 +1,17 @@
+<?php
+    echo Form::dbSelect("persona.hestado_id", 'nombre', array('estado','buscar',$pais_id), '                -  Seleccione  -           ');
+?>		
+ 
+<script type='text/javascript'>
+$("#persona_hestado_id").change(function(){
+    var estado_id     =   $('#persona_hestado_id').val();
+        $.ajax({
+          type: "POST",
+          url: "<?php echo PUBLIC_PATH . 'beneficiarios/titular/getHMunicipioEstado/'; ?>",
+          data: "estado_id=" + estado_id,
+          success: function(html){
+            $("#div_hmunicipio").html(html);
+          }
+        });
+});
+</script>

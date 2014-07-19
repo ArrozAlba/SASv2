@@ -400,9 +400,10 @@ CREATE TABLE beneficiario (
     fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
     titular_id integer NOT NULL,
     persona_id integer NOT NULL,
-    parentesco character varying(1) DEFAULT 'M'::character varying NOT NULL,
+    parentesco character varying(2) DEFAULT 'M'::character varying NOT NULL,
     beneficiario_tipo_id integer NOT NULL,
-    observacion character varying(250)
+    observacion character varying(250),
+    participacion integer
 );
 
 
@@ -2413,11 +2414,15 @@ CREATE TABLE persona (
     nacionalidad character varying(1) DEFAULT 'V'::character varying NOT NULL,
     sexo character varying(1) DEFAULT 'M'::character varying NOT NULL,
     fecha_nacimiento date DEFAULT '1900-01-01'::date,
-    pais_id integer NOT NULL,
-    estado_id integer NOT NULL,
-    municipio_id integer NOT NULL,
-    parroquia_id integer NOT NULL,
-    direccion_habitacion character varying(250) NOT NULL,
+    pais_id integer,
+    estado_id integer,
+    municipio_id integer,
+    parroquia_id integer,
+    direccion_habitacion character varying(250),
+    hpais_id integer,
+    hestado_id integer,
+    hmunicipio_id integer,
+    hparroquia_id integer,
     estado_civil character varying(1) DEFAULT 'S'::character varying NOT NULL,
     celular character varying(12),
     telefono character varying(12),
@@ -2546,6 +2551,34 @@ COMMENT ON COLUMN persona.parroquia_id IS 'Parroquia de Origen del persona';
 --
 
 COMMENT ON COLUMN persona.direccion_habitacion IS 'Direccion de Habitacion del persona';
+
+
+--
+-- Name: COLUMN persona.hpais_id; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN persona.hpais_id IS 'Pais de residencia';
+
+
+--
+-- Name: COLUMN persona.hestado_id; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN persona.hestado_id IS 'Estado de residencia';
+
+
+--
+-- Name: COLUMN persona.hmunicipio_id; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN persona.hmunicipio_id IS 'Municipio de residencia';
+
+
+--
+-- Name: COLUMN persona.hparroquia_id; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN persona.hparroquia_id IS 'Parroquia de residencia';
 
 
 --
@@ -4125,7 +4158,7 @@ CREATE TABLE solicitud_servicio (
     estado_solicitud character(1) DEFAULT 1 NOT NULL,
     tiposolicitud_id integer NOT NULL,
     fecha_solicitud date DEFAULT '1900-01-01'::date,
-    codigo_solicitud character varying(8) NOT NULL,
+    codigo_solicitud character varying(11) NOT NULL,
     titular_id integer NOT NULL,
     beneficiario_id integer NOT NULL,
     beneficiario_tipo character(1) DEFAULT 1 NOT NULL,
@@ -4296,7 +4329,7 @@ CREATE TABLE sucursal (
     estado_id integer NOT NULL,
     municipio_id integer NOT NULL,
     parroquia_id integer NOT NULL,
-    direccion character varying(45),
+    direccion character varying(200),
     telefono character varying(45),
     fax character varying(45),
     celular character varying(45)
@@ -4521,7 +4554,7 @@ CREATE TABLE tiposolicitud (
     fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
     nombre character varying(64) NOT NULL,
     observacion character varying(250),
-    correlativo character varying(20)
+    correlativo character varying(7)
 );
 
 
@@ -5321,6 +5354,35 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 159	1	2014-06-24 19:34:46.400686-04:30	2014-06-24 19:34:46.400686-04:30	1	\N	\N	\N	\N	127.0.0.1
 160	1	2014-06-24 22:08:04.652082-04:30	2014-06-24 22:08:04.652082-04:30	1	\N	\N	\N	\N	127.0.0.1
 161	1	2014-06-25 01:12:07.934534-04:30	2014-06-25 01:12:07.934534-04:30	1	\N	\N	\N	\N	127.0.0.1
+162	1	2014-07-02 20:54:42.991752-04:30	2014-07-02 20:54:42.991752-04:30	1	\N	\N	\N	\N	127.0.0.1
+163	1	2014-07-06 15:51:55.404458-04:30	2014-07-06 15:51:55.404458-04:30	1	\N	\N	\N	\N	127.0.0.1
+164	1	2014-07-07 15:51:01.052218-04:30	2014-07-07 15:51:01.052218-04:30	1	\N	\N	\N	\N	127.0.0.1
+165	1	2014-07-07 21:21:15.598794-04:30	2014-07-07 21:21:15.598794-04:30	1	\N	\N	\N	\N	127.0.0.1
+166	1	2014-07-09 21:04:35.994625-04:30	2014-07-09 21:04:35.994625-04:30	1	\N	\N	\N	\N	127.0.0.1
+167	1	2014-07-10 21:51:19.876278-04:30	2014-07-10 21:51:19.876278-04:30	1	\N	\N	\N	\N	127.0.0.1
+168	1	2014-07-14 10:56:06.096953-04:30	2014-07-14 10:56:06.096953-04:30	1	\N	\N	\N	\N	127.0.0.1
+169	1	2014-07-14 19:42:18.922228-04:30	2014-07-14 19:42:18.922228-04:30	1	\N	\N	\N	\N	127.0.0.1
+170	1	2014-07-15 08:27:23.370105-04:30	2014-07-15 08:27:23.370105-04:30	1	\N	\N	\N	\N	127.0.0.1
+171	1	2014-07-15 09:17:59.464866-04:30	2014-07-15 09:17:59.464866-04:30	1	\N	\N	\N	\N	127.0.0.1
+172	1	2014-07-15 10:15:49.17923-04:30	2014-07-15 10:15:49.17923-04:30	1	\N	\N	\N	\N	127.0.0.1
+173	1	2014-07-15 10:52:14.890634-04:30	2014-07-15 10:52:14.890634-04:30	2	\N	\N	\N	\N	127.0.0.1
+174	1	2014-07-15 10:52:17.866492-04:30	2014-07-15 10:52:17.866492-04:30	1	\N	\N	\N	\N	127.0.0.1
+175	1	2014-07-15 10:56:39.346388-04:30	2014-07-15 10:56:39.346388-04:30	2	\N	\N	\N	\N	127.0.0.1
+176	1	2014-07-15 10:56:44.779247-04:30	2014-07-15 10:56:44.779247-04:30	1	\N	\N	\N	\N	127.0.0.1
+177	1	2014-07-15 11:08:54.398424-04:30	2014-07-15 11:08:54.398424-04:30	1	\N	\N	\N	\N	127.0.0.1
+178	1	2014-07-15 13:27:14.743163-04:30	2014-07-15 13:27:14.743163-04:30	1	\N	\N	\N	\N	127.0.0.1
+179	1	2014-07-15 19:12:22.158068-04:30	2014-07-15 19:12:22.158068-04:30	1	\N	\N	\N	\N	127.0.0.1
+180	1	2014-07-15 20:58:46.777591-04:30	2014-07-15 20:58:46.777591-04:30	1	\N	\N	\N	\N	127.0.0.1
+181	1	2014-07-16 08:46:00.363761-04:30	2014-07-16 08:46:00.363761-04:30	1	\N	\N	\N	\N	127.0.0.1
+182	1	2014-07-16 10:41:48.549832-04:30	2014-07-16 10:41:48.549832-04:30	1	\N	\N	\N	\N	127.0.0.1
+183	1	2014-07-16 13:56:13.772717-04:30	2014-07-16 13:56:13.772717-04:30	1	\N	\N	\N	\N	127.0.0.1
+184	1	2014-07-16 14:43:49.011784-04:30	2014-07-16 14:43:49.011784-04:30	1	\N	\N	\N	\N	127.0.0.1
+185	1	2014-07-16 18:48:27.376544-04:30	2014-07-16 18:48:27.376544-04:30	1	\N	\N	\N	\N	127.0.0.1
+186	1	2014-07-16 20:55:22.608774-04:30	2014-07-16 20:55:22.608774-04:30	1	\N	\N	\N	\N	127.0.0.1
+187	1	2014-07-16 21:57:45.029957-04:30	2014-07-16 21:57:45.029957-04:30	1	\N	\N	\N	\N	127.0.0.1
+188	1	2014-07-17 08:07:29.174673-04:30	2014-07-17 08:07:29.174673-04:30	1	\N	\N	\N	\N	127.0.0.1
+189	1	2014-07-17 10:41:07.374132-04:30	2014-07-17 10:41:07.374132-04:30	1	\N	\N	\N	\N	127.0.0.1
+190	1	2014-07-17 14:15:17.259961-04:30	2014-07-17 14:15:17.259961-04:30	1	\N	\N	\N	\N	127.0.0.1
 \.
 
 
@@ -5328,7 +5390,7 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 -- Name: acceso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('acceso_id_seq', 161, true);
+SELECT pg_catalog.setval('acceso_id_seq', 190, true);
 
 
 --
@@ -5365,9 +5427,15 @@ SELECT pg_catalog.setval('backup_id_seq', 1, false);
 -- Data for Name: beneficiario; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
-COPY beneficiario (id, usuario_id, fecha_registro, fecha_modificado, titular_id, persona_id, parentesco, beneficiario_tipo_id, observacion) FROM stdin;
-1	\N	2014-06-02 18:45:57.537604-04:30	2014-06-02 18:45:57.537604-04:30	1	4	H	1	\N
-4	\N	2014-06-23 17:44:53.903527-04:30	2014-06-23 17:44:53.903527-04:30	1	6	H	1	\N
+COPY beneficiario (id, usuario_id, fecha_registro, fecha_modificado, titular_id, persona_id, parentesco, beneficiario_tipo_id, observacion,participacion) FROM stdin;
+5	\N	2014-07-16 12:14:44.952499-04:30	2014-07-16 12:14:44.952499-04:30	4	21	M	1	\N	50
+6	\N	2014-07-16 14:46:03.674933-04:30	2014-07-16 14:46:03.674933-04:30	4	22	HO	2	\N	32
+7	\N	2014-07-16 14:48:29.331338-04:30	2014-07-16 14:48:29.331338-04:30	4	23	C	2	\N	45
+8	\N	2014-07-16 14:50:06.458048-04:30	2014-07-16 14:50:06.458048-04:30	4	24	O	2	\N	34
+9	\N	2014-07-16 14:51:09.835792-04:30	2014-07-16 14:51:09.835792-04:30	4	25	EO	2	\N	40
+10	\N	2014-07-16 20:56:33.338986-04:30	2014-07-16 20:56:33.338986-04:30	7	26	M	1	\N	50
+1	\N	2014-06-02 18:45:57.537604-04:30	2014-06-02 18:45:57.537604-04:30	1	4	H	1	\N	40
+4	\N	2014-06-23 17:44:53.903527-04:30	2014-06-23 17:44:53.903527-04:30	1	6	H	1	\N	30
 \.
 
 
@@ -5375,7 +5443,7 @@ COPY beneficiario (id, usuario_id, fecha_registro, fecha_modificado, titular_id,
 -- Name: beneficiario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('beneficiario_id_seq', 4, true);
+SELECT pg_catalog.setval('beneficiario_id_seq', 10, true);
 
 
 --
@@ -5435,7 +5503,7 @@ SELECT pg_catalog.setval('cargo_id_seq', 21, true);
 --
 
 COPY cobertura (id, usuario_id, fecha_registro, fecha_modificado, descripcion, tipo_cobertura, monto_cobertura, fecha_inicio, fecha_fin, observacion) FROM stdin;
-1	\N	2014-04-11 19:36:18.984626-04:30	2014-04-11 19:36:18.984626-04:30	Odontologia	2	3500.00	2014-04-01	2014-04-23	\N
+1	\N	2014-04-11 19:36:18.984626-04:30	2014-04-11 19:36:18.984626-04:30	Odontologia	2	6000.00	2014-04-01	2014-04-23	\N
 \.
 
 
@@ -5492,6 +5560,7 @@ COPY departamento (id, usuario_id, fecha_registro, fecha_modificado, nombre, obs
 39	1	2014-04-03 10:43:29.70528-04:30	2014-04-03 10:43:29.70528-04:30	GERENCIA DE ASISTENCIA TECNICA Y DESARROLLO TECNOLOGICO		1
 40	1	2014-04-03 10:43:29.70528-04:30	2014-04-03 10:43:29.70528-04:30	COORDINACION DE ASEGURAMIENTO DE LA CALIDAD		1
 41	1	2014-04-03 10:43:29.70528-04:30	2014-04-03 10:43:29.70528-04:30	UNIDAD DE TRANSFERENCIA Y CONTROL TECNOLOGICO		1
+42	\N	2014-07-14 20:01:52.468679-04:30	2014-07-14 20:01:52.468679-04:30	ROMANA	\N	3
 \.
 
 
@@ -5499,7 +5568,7 @@ COPY departamento (id, usuario_id, fecha_registro, fecha_modificado, nombre, obs
 -- Name: departamento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('departamento_id_seq', 41, true);
+SELECT pg_catalog.setval('departamento_id_seq', 42, true);
 
 
 --
@@ -5507,6 +5576,7 @@ SELECT pg_catalog.setval('departamento_id_seq', 41, true);
 --
 
 COPY discapacidad (id, usuario_id, fecha_registro, fecha_modificado, nombre, observacion) FROM stdin;
+1	\N	2014-07-07 17:03:16.045851-04:30	2014-07-07 17:03:16.045851-04:30	Ninguna	\N
 \.
 
 
@@ -5514,7 +5584,7 @@ COPY discapacidad (id, usuario_id, fecha_registro, fecha_modificado, nombre, obs
 -- Name: discapacidad_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('discapacidad_id_seq', 1, false);
+SELECT pg_catalog.setval('discapacidad_id_seq', 1, true);
 
 
 --
@@ -22029,13 +22099,22 @@ SELECT pg_catalog.setval('perfil_id_seq', 3, true);
 -- Data for Name: persona; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
-COPY persona (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1, nombre2, apellido1, apellido2, nacionalidad, sexo, fecha_nacimiento, pais_id, estado_id, municipio_id, parroquia_id, direccion_habitacion, estado_civil, celular, telefono, correo_electronico, grupo_sanguineo, fotografia) FROM stdin;
-1	\N	2014-03-13 12:03:49.841971-04:30	2014-03-13 12:03:49.841971-04:30	20643647	Alexis	jose	Borges	\N	V	M	1990-12-11	240	69	223	28	Villa Araure 1 el bosque	S	\N	\N	\N	\N	default.png
-2	\N	2014-03-16 01:14:45.552613-04:30	2014-03-16 01:14:45.552613-04:30	16753367	Javier	Enrique	León	\N	V	M	1984-12-09	240	69	229	732	Av principal	c	04162546908	02556217013	\N	AB-	default.png
-3	\N	2014-03-17 19:22:19.405099-04:30	2014-03-17 19:22:19.405099-04:30	20543089	yelix	andreina	monsalve	la cruz	V	F	1990-03-01	240	69	229	52	las delicias	S	04165555555	\N	\N	AB-	default.png
-5	\N	2014-03-17 18:34:56.063814-04:30	2014-03-17 18:34:56.063814-04:30	20389587	Rahiber	jose	monsalve	Cardona	V	M	1980-04-01	20	8	250	11	Av principal	c	04165555555	02556217013	\N	AB-	default.png
-6	\N	2014-06-23 17:43:06.825569-04:30	2014-06-23 17:43:06.825569-04:30	206436472	Antonio	Ramon	Borges	\N	V	M	2010-01-01	240	69	223	28	Villa	S	\N	\N	\N	N/A	default.png
-4	\N	2014-04-04 15:18:00.894791-04:30	2014-04-04 15:18:00.894791-04:30	2064364721	pedro	jose	Lopéz	la cruz	E	M	2013-12-11	16	2	198	2	Av principal	c	04162546908	02556217013	\N	AB-	default.png
+COPY persona (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1, nombre2, apellido1, apellido2, nacionalidad, sexo, fecha_nacimiento, pais_id, estado_id, municipio_id, parroquia_id, direccion_habitacion, hpais_id, hestado_id, hmunicipio_id, hparroquia_id, estado_civil, celular, telefono, correo_electronico, grupo_sanguineo, fotografia) FROM stdin;
+1	\N	2014-03-13 12:03:49.841971-04:30	2014-03-13 12:03:49.841971-04:30	20643647	Alexis	jose	Borges	\N	V	M	1990-12-11	240	69	223	28	Villa Araure 1 el bosque	240	69	223	28	S	\N	\N	\N	\N	default.png
+2	\N	2014-03-16 01:14:45.552613-04:30	2014-03-16 01:14:45.552613-04:30	16753367	Javier	Enrique	León	\N	V	M	1984-12-09	240	69	229	732	Av principal	240	69	229	732	c	04162546908	02556217013	\N	AB-	default.png
+3	\N	2014-03-17 19:22:19.405099-04:30	2014-03-17 19:22:19.405099-04:30	20543089	yelix	andreina	monsalve	la cruz	V	F	1990-03-01	240	69	229	52	las delicias	240	69	229	52	S	04165555555	\N	\N	AB-	default.png
+5	\N	2014-03-17 18:34:56.063814-04:30	2014-03-17 18:34:56.063814-04:30	20389587	Rahiber	jose	monsalve	Cardona	V	M	1980-04-01	20	8	250	11	Av principal	20	8	250	11	c	04165555555	02556217013	\N	AB-	default.png
+6	\N	2014-06-23 17:43:06.825569-04:30	2014-06-23 17:43:06.825569-04:30	206436472	Antonio	Ramon	Borges	\N	V	M	2010-01-01	240	69	223	28	Villa	240	69	223	28	S	\N	\N	\N	N/A	default.png
+4	\N	2014-04-04 15:18:00.894791-04:30	2014-04-04 15:18:00.894791-04:30	2064364721	pedro	jose	Lopéz	la cruz	E	M	2013-12-11	16	2	198	2	Av principal	16	2	198	2	c	04162546908	02556217013	\N	AB-	default.png
+13	\N	2014-07-14 19:53:32.145741-04:30	2014-07-14 19:53:32.145741-04:30	19171238	Guillermo	Antonio	Barradas	Escorchaa	V	M	1993-02-10	240	69	234	749	Urb los Cortijos	240	69	234	749	c	041256452343	0255453721	\N	A-	default.png
+14	\N	2014-07-15 08:35:08.010317-04:30	2014-07-15 08:35:08.010317-04:30	12345678	Juana	del Carmen	Petronilaaa	\N	V	M	2011-03-08	240	69	223	716	12 de Octubre	240	69	223	716	S	041256452343	0255453721	\N	A	default.png
+15	\N	2014-07-15 21:01:56.580292-04:30	2014-07-15 21:01:56.580292-04:30	21123456	Juana	\N	Polinaria	\N	V	F	1990-03-22	240	69	225	719	Urb. Los piritus de los piriteños	240	69	224	717	C	04122457896	02554436587	sexyjuana@gmail.com	A	default.png
+21	\N	2014-07-16 12:14:44.952499-04:30	2014-07-16 12:14:44.952499-04:30	1234567	Juana	jhsfdg	Barradas	\N	V	M	2014-07-16	\N	\N	\N	\N	\N	\N	\N	\N	\N	S	0412564	0255453721	\N	A	default.png
+22	\N	2014-07-16 14:46:03.674933-04:30	2014-07-16 14:46:03.674933-04:30	211234562	asdf	asdf	asdf	asdf	V	M	2014-01-01	\N	\N	\N	\N	\N	\N	\N	\N	\N	c	2342134	123323	\N	dsa	default.png
+23	\N	2014-07-16 14:48:29.331338-04:30	2014-07-16 14:48:29.331338-04:30	43278	ttttttttttt	ttttttttttttt	ttttttttttttttt	tttttttttttttttttt	V	M	2013-11-04	\N	\N	\N	\N	\N	\N	\N	\N	\N	S	2342341	341234234	\N	F	default.png
+24	\N	2014-07-16 14:50:06.458048-04:30	2014-07-16 14:50:06.458048-04:30	49873948729	aaaaaaaaaaaaaaa	aaaaaaaaaaaa	aaaaaaaaaaaaaaaaaa	aaaaaaaaaaaaaaaa	V	M	2000-07-01	\N	\N	\N	\N	\N	\N	\N	\N	\N	V	32131231	3241233	\N	A	default.png
+25	\N	2014-07-16 14:51:09.835792-04:30	2014-07-16 14:51:09.835792-04:30	434534	kljkljkl	jkl	kjljkljklj	\N	V	M	2010-01-01	\N	\N	\N	\N	\N	\N	\N	\N	\N	c	343444	324423	\N	A	default.png
+26	\N	2014-07-16 20:56:33.338986-04:30	2014-07-16 20:56:33.338986-04:30	32413413	Maria	\N	Corina	Veia tv mientras estosxD	V	M	2010-12-01	\N	\N	\N	\N	\N	\N	\N	\N	\N	c	\N	\N	\N	N/A	default.png
 \.
 
 
@@ -22043,7 +22122,7 @@ COPY persona (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1,
 -- Name: persona_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('persona_id_seq', 12, true);
+SELECT pg_catalog.setval('persona_id_seq', 26, true);
 
 
 --
@@ -22279,6 +22358,8 @@ SELECT pg_catalog.setval('proveedor_medico_id_seq', 1, false);
 --
 
 COPY recaudo (id, usuario_id, fecha_registro, fecha_modificado, nombre, tipo, observacion) FROM stdin;
+1	\N	2014-07-07 16:59:35.632638-04:30	2014-07-07 16:59:35.632638-04:30	Cedula	Datos Basicos	\N
+2	\N	2014-07-07 16:59:55.435504-04:30	2014-07-07 16:59:55.435504-04:30	Carnet	Datos Basicos	\N
 \.
 
 
@@ -22301,7 +22382,7 @@ SELECT pg_catalog.setval('recaudo_beneficiario_id_seq', 1, false);
 -- Name: recaudo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('recaudo_id_seq', 1, false);
+SELECT pg_catalog.setval('recaudo_id_seq', 2, true);
 
 
 --
@@ -22600,20 +22681,23 @@ SELECT pg_catalog.setval('solicitud_medicina_id_seq', 1, false);
 --
 
 COPY solicitud_servicio (id, usuario_id, fecha_registro, fecha_modificado, estado_solicitud, tiposolicitud_id, fecha_solicitud, codigo_solicitud, titular_id, beneficiario_id, beneficiario_tipo, patologia_id, proveedor_id, medico_id, fecha_vencimiento, servicio_id, observacion) FROM stdin;
-11	\N	2014-06-02 18:50:47.769075-04:30	2014-06-02 18:50:47.769075-04:30	R	1	2014-06-02	1	1	1	1	14189	1	1	1900-01-01	1	asd
-12	\N	2014-06-02 18:51:21.767053-04:30	2014-06-02 18:51:21.767053-04:30	A	1	2014-06-02	2	1	1	1	14189	1	1	1900-01-01	1	asd
-13	\N	2014-06-09 19:41:36.084029-04:30	2014-06-09 19:41:36.084029-04:30	A	2	2014-06-09	3	1	1	1	14189	1	1	1900-01-01	1	asd
-16	\N	2014-06-23 17:24:37.71975-04:30	2014-06-23 17:24:37.71975-04:30	R	1	2014-06-23	4	1	1	1	16802	1	1	2014-06-23	1	prueba
-17	\N	2014-06-23 17:29:07.203539-04:30	2014-06-23 17:29:07.203539-04:30	R	1	2014-06-23	5	1	1	1	18129	1	1	2014-06-23	1	probando 2
-20	\N	2014-06-23 19:36:22.226111-04:30	2014-06-23 19:36:22.226111-04:30	R	1	2014-06-23	6	1	1	1	24763	1	1	2014-06-23	1	Pa
+11	\N	2014-06-02 18:50:47.769075-04:30	2014-06-02 18:50:47.769075-04:30	R	1	2014-06-02	SASCM-0001	1	1	1	14189	1	1	1900-01-01	1	asd
+12	\N	2014-06-02 18:51:21.767053-04:30	2014-06-02 18:51:21.767053-04:30	A	1	2014-06-02	SASCM-0002	1	1	1	14189	1	1	1900-01-01	1	asd
+13	\N	2014-06-09 19:41:36.084029-04:30	2014-06-09 19:41:36.084029-04:30	A	2	2014-06-09	SASCM-0003	1	1	1	14189	1	1	1900-01-01	1	asd
+16	\N	2014-06-09 19:41:36.084029-04:30	2014-06-09 19:41:36.084029-04:30	R	1	2014-06-23	SASCM-0004	1	1	1	16802	1	1	2014-06-23	1	prueba
+17	\N	2014-06-23 17:29:07.203539-04:30	2014-06-23 17:29:07.203539-04:30	R	1	2014-06-23	SASCM-0005	1	1	1	18129	1	1	2014-06-23	1	probando 2
+20	\N	2014-06-23 19:36:22.226111-04:30	2014-06-23 19:36:22.226111-04:30	R	1	2014-06-23	SASCM-0006	1	1	1	24763	1	1	2014-06-23	1	Pa
+21	\N	2014-07-07 18:24:51.971522-04:30	2014-07-07 18:24:51.971522-04:30	R	1	2014-07-07	SASCM-0007	1	4	1	16798	1	1	2014-07-07	1	asdasd
+22	\N	2014-07-07 19:36:32.273039-04:30	2014-07-07 19:36:32.273039-04:30	R	1	2014-07-07	SASCM-0008	1	4	1	14556	1	1	2014-07-07	1	pepepe
 \.
+
 
 
 --
 -- Name: solicitud_servicio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('solicitud_servicio_id_seq', 20, true);
+SELECT pg_catalog.setval('solicitud_servicio_id_seq', 22, true);
 
 
 --
@@ -22622,6 +22706,7 @@ SELECT pg_catalog.setval('solicitud_servicio_id_seq', 20, true);
 
 COPY sucursal (id, usuario_id, fecha_registro, fecha_modificado, empresa_id, sucursal, sucursal_slug, pais_id, estado_id, municipio_id, parroquia_id, direccion, telefono, fax, celular) FROM stdin;
 1	\N	2014-03-13 12:13:18.140817-04:30	2014-03-13 12:13:18.140817-04:30	1	ACCION CENTRAL	WTF	240	69	224	717	CARRETERA PRINCIPAL VIA TUREN	02563361333	\N	\N
+3	\N	2014-07-14 19:59:43.615064-04:30	2014-07-14 19:59:43.615064-04:30	1	UPSA PIRITU 1	P1	240	69	224	717	CARRETERA NACIONAL VIA TUREN DE AGROLEON	02555643215	\N	\N
 \.
 
 
@@ -22629,7 +22714,7 @@ COPY sucursal (id, usuario_id, fecha_registro, fecha_modificado, empresa_id, suc
 -- Name: sucursal_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('sucursal_id_seq', 1, true);
+SELECT pg_catalog.setval('sucursal_id_seq', 3, true);
 
 
 --
@@ -22681,6 +22766,9 @@ COPY titular (id, usuario_id, fecha_registro, fecha_modificado, tipoempleado_id,
 3	\N	2014-04-04 15:18:00.894791-04:30	2014-04-04 15:18:00.894791-04:30	1	3	1900-01-01	1	1	4	fgdfgdfg
 2	1	2014-04-03 11:12:19.553918-04:30	2014-04-03 11:12:19.553918-04:30	1	2	1900-01-01	1	1	4	probando
 4	\N	2014-04-04 18:03:48.428044-04:30	2014-04-04 18:03:48.428044-04:30	1	5	1900-01-01	1	1	4	 asd asd ads
+6	\N	2014-07-14 19:53:32.145741-04:30	2014-07-14 19:53:32.145741-04:30	1	13	1900-01-01	127	41	16	Todo al pelo
+7	\N	2014-07-15 08:35:08.010317-04:30	2014-07-15 08:35:08.010317-04:30	1	14	1900-01-01	46	42	16	lalaalal alala alaala
+8	\N	2014-07-15 21:01:56.580292-04:30	2014-07-15 21:01:56.580292-04:30	2	15	2014-01-07	1	42	20	NA
 \.
 
 
@@ -22688,7 +22776,7 @@ COPY titular (id, usuario_id, fecha_registro, fecha_modificado, tipoempleado_id,
 -- Name: titular_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('titular_id_seq', 5, true);
+SELECT pg_catalog.setval('titular_id_seq', 8, true);
 
 
 --
@@ -23651,6 +23739,38 @@ ALTER TABLE ONLY patologia
 
 ALTER TABLE ONLY persona
     ADD CONSTRAINT persona_estado_id_fkey FOREIGN KEY (estado_id) REFERENCES estado(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: persona_hestado_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY persona
+    ADD CONSTRAINT persona_hestado_id_fkey FOREIGN KEY (estado_id) REFERENCES estado(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: persona_hmunicipio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY persona
+    ADD CONSTRAINT persona_hmunicipio_id_fkey FOREIGN KEY (municipio_id) REFERENCES municipio(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: persona_hpais_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY persona
+    ADD CONSTRAINT persona_hpais_id_fkey FOREIGN KEY (pais_id) REFERENCES pais(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: persona_hparroquia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY persona
+    ADD CONSTRAINT persona_hparroquia_id_fkey FOREIGN KEY (parroquia_id) REFERENCES parroquia(id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --

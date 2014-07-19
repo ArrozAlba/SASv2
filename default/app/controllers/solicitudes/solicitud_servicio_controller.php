@@ -12,6 +12,7 @@
 
 Load::models('solicitudes/solicitud_servicio');
 Load::models('config/tiposolicitud');
+Load::models('beneficiarios/titular');
 Load::models('beneficiarios/beneficiario');
 
 class SolicitudServicioController extends BackendController {

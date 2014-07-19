@@ -42,10 +42,10 @@
             </thead>
             <tbody>
                 <?php foreach($titulares->items as $titular): ?>
-                    <?php $key_shw = DwSecurity::getKey($titular->id, 'shw_titular'); ?>
-                    <?php $key_upd = DwSecurity::getKey($titular->id, 'upd_titular'); ?>
-                    <?php $key_ina = DwSecurity::getKey($titular->id, 'bloquear_usuario'); ?>
-                    <?php $key_rea = DwSecurity::getKey($titular->id, 'reactivar_usuario'); ?>
+                    <?php $key_shw = DwSecurity::getKey($titular->idtitular, 'shw_titular'); ?>
+                    <?php $key_upd = DwSecurity::getKey($titular->idtitular, 'upd_titular'); ?>
+                    <?php $key_ina = DwSecurity::getKey($titular->idtitular, 'bloquear_usuario'); ?>
+                    <?php $key_rea = DwSecurity::getKey($titular->idtitular, 'reactivar_usuario'); ?>
                     <tr>
                         <td><?php echo $titulares->counter; ?></td>
                         <td><?php echo $titular->cedula; ?></td>
@@ -56,11 +56,11 @@
                         <?if(APP_OFFICE) { //Si está activa la opción de oficinas ?>
                         <td><?php echo empty($titular->sucursal) ? 'Todas' : $titular->sucursal; ?></td>
                         <? } ?>
-                        <td><?php // echo ($usuario->estado_usuario == EstadoUsuario::ACTIVO) ? '<span class="label label-success" title="'.$usuario->descripcion.'" rel="tooltip">Activo</span>' : '<span class="label label-important" title="'.$usuario->descripcion.'" rel="tooltip">Bloqueado</span>'; ; ?></td>
+                        <td><?php // echo ($usuario->estado_usuario == EstadoUsuario::ACTIVO) ? '<span class="label label-success" title="'.$usuario->descripcion.'" rel="tooltip">Activo</span>' : '<span class="label label-important" title="'.$usuario->descripcion.'" rel="tooltip">Bloqueado</span>'; ?></td>
                         <td>
-                            <?php echo DwHtml::buttonTable('Ver titular', "beneficiarios/titular/ver/$key_shw/", NULL, 'warning', 'search'); ?>
+                            <?php echo DwHtml::buttonTable('Agregar Beneficiarios', "beneficiarios/beneficiario/agregar/$key_shw/", NULL, 'success', 'user'); ?>
+                            <?php echo DwHtml::buttonTable('Ver titular', "beneficiarios/titular/reportetitular/$key_shw/", NULL, 'warning', 'search'); ?>
                             <?php echo DwHtml::buttonTable('Modificar titular', "beneficiarios/titular/editar/$key_upd/", NULL, 'info', 'edit'); ?>
-                            
                         </td>
                     </tr>
                     <?php $titulares->counter++; ?>
@@ -71,49 +71,3 @@
     </div>
 
     <?php View::partial('paginators/default', false, array('page'=>$titulares, 'url'=>"beneficiarios/titular/listar/$order/")); ?>
-
-<?php echo Form::text('autocomplete') ?>
- 
-<script type="text/javascript" > 
-    $(document).ready(function(){
-        $('input#autocomplete').autocomplete({
- 
-            minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
- 
-            source : function( request , response ){
- 
-                var url = "<?php echo PUBLIC_PATH ?>beneficiarios/titular/autocomplete";   //url donde buscará los estados
- 
-                $.post(url, { 'busqueda' : request.term }, response, 'json');
- 
-                //busqueda es la varible que mandaremos por post con el contenido del input
-            }
-        });
-    });
-</script>
-
-</div>
-
-
-
-<?php echo Form::text('autocomplete2') ?>
-<script type="text/javascript" > 
-    $(document).ready(function(){
-        $('input#autocomplete2').autocomplete({
- 
-            minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
- 
-            source : function( request , response ){
- 
-                var url = "<?php echo PUBLIC_PATH ?>solicitudes/solicitud_servicio/agregar/autocomplete2";   //url donde buscará los estados
- 
-                $.post(url, { 'busqueda' : request.term }, response, 'json');
- 
-                //busqueda es la varible que mandaremos por post con el contenido del input
-            }
-        });
-    });
-</script>
-
-
-

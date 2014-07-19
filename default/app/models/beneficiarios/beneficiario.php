@@ -29,23 +29,9 @@ class beneficiario extends ActiveRecord {
      * Método que devuelve el inner join con el estado_usuario
      * @return string
      */
-//    public static function getInnerEstado() {
-//        return "INNER JOIN (SELECT usuario_id, CASE estado_usuario WHEN ".EstadoUsuario::COD_ACTIVO." THEN '".EstadoUsuario::ACTIVO."' WHEN ".EstadoUsuario::COD_BLOQUEADO." THEN '".EstadoUsuario::BLOQUEADO."' ELSE 'INDEFINIDO' END AS estado_usuario, descripcion FROM (SELECT * FROM estado_usuario ORDER BY estado_usuario.id DESC ) AS estado_usuario GROUP BY estado_usuario.usuario_id,estado_usuario.estado_usuario, descripcion) AS estado_usuario ON estado_usuario.usuario_id = usuario.id ";        
+//public static function getInnerEstado() {
+//return "INNER JOIN (SELECT usuario_id, CASE estado_usuario WHEN ".EstadoUsuario::COD_ACTIVO." THEN '".EstadoUsuario::ACTIVO."' WHEN ".EstadoUsuario::COD_BLOQUEADO." THEN '".EstadoUsuario::BLOQUEADO."' ELSE 'INDEFINIDO' END AS estado_usuario, descripcion FROM (SELECT * FROM estado_usuario ORDER BY estado_usuario.id DESC ) AS estado_usuario GROUP BY estado_usuario.usuario_id,estado_usuario.estado_usuario, descripcion) AS estado_usuario ON estado_usuario.usuario_id = usuario.id ";        
 //    }
-    /**
-     * Método para listar los tipos de identificación
-     * @return array
-     */
-    public function getListBeneficiario() {
-        return $this->find_all_by_sql("select beneficiario.id,beneficiario.titular_id,beneficiario.persona_id,persona.nombre1,persona.apellido1,
-cast(persona.cedula as integer) 
-from beneficiario,persona where beneficiario.persona_id = persona.id");
-    }
-    public function buscar($titular_id){
-        return $this->find_all_by_sql("select beneficiario.id,beneficiario.titular_id,beneficiario.persona_id,(persona.nombre1 || ' ' || persona.apellido1) as nombrefull,
-cast(persona.cedula as integer) 
-from beneficiario,persona where  beneficiario.titular_id = '{$titular_id}' and beneficiario.persona_id = persona.id");
-    }    
     /**
      * Método para obtener titulares
      * @return obj
@@ -108,13 +94,8 @@ and beneficiario.persona_id = persona.id ");
     public function getListadobeneficiario($estado, $order='', $page=0) {
         $columns = 'beneficiario.*, persona.*';
         $join= 'INNER JOIN persona ON persona.id = beneficiario.persona_id ';        
-//        $join.= 'INNER JOIN tipoempleado  ON  beneficiario.tipoempleado_id = tipoempleado.id ';   
-//        $join.= 'INNER JOIN departamento  ON  beneficiario.departamento_id = departamento.id ';   
-
         $conditions = "";//Por el super usuario
-                       
-           
-        
+ 
         if($page) {
             return $this->paginated("columns: $columns", "join: $join", "page: $page");
         } else {
@@ -158,16 +139,27 @@ and beneficiario.persona_id = persona.id ");
             return NULL;
         }
         $columns = 'beneficiario.*, persona.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';
-        $join= 'INNER JOIN persona ON persona.id = beneficiario.persona_id ';        
+        $join = 'INNER JOIN persona ON persona.id = beneficiario.persona_id ';        
         $join.= 'INNER JOIN tipoempleado  ON  beneficiario.tipoempleado_id = tipoempleado.id ';   
-        $join.= 'INNER JOIN departamento  ON  beneficiario.departamento_id = departamento.id ';   
-//        $columnas = 'beneficiario.*, persona.cedula, persona.nombre1, persona.nombre2, persona.apellido1, persona.apellido2, persona.nacionalidad, persona.sexo, persona.fecha_nacimiento, persona.pais_id, persona.estado_id, persona.municipio_id, persona.parroquia_id, persona.direccion_habitacion, persona.estado_civil, persona.celular, persona.telefono, persona.correo_electronico, persona.grupo_sanguineo, persona.fotografia, estado_usuario.estado_usuario, estado_usuario.descripcion, sucursal.sucursal';
-  //      $join = self::getInnerEstado();
-//        $join.= 'INNER JOIN perfil ON perfil.id = usuario.perfil_id ';
-//        $join.= 'INNER JOIN persona ON persona.id = usuario.persona_id ';               
-//        $join.= 'LEFT JOIN sucursal ON sucursal.id = usuario.sucursal_id ';
+        $join.= 'INNER JOIN departamento  ON  beneficiario.departamento_id = departamento.id ';
         $condicion = "beneficiario.id = $beneficiario";        
         return $this->find_first("columns: $columns", "join: $join", "conditions: $condicion");
     } 
+
+
+//------ Listado de los beneficiarios de un titular en especificoooo ----- 16/07/2014
+    public function getListadoBeneTitular($titular){
+        $page=0;
+        $titular = Filter::get($titular, 'int');
+        if(!$titular) {
+            return NULL;
+        }
+        $columns = 'persona.cedula, persona.nombre1, persona.nombre2, persona.apellido1, persona.fecha_nacimiento, persona.nacionalidad, persona.apellido2, persona.sexo, beneficiario.parentesco,beneficiario.participacion, beneficiario.id, beneficiario_tipo.descripcion';        
+        $join = 'INNER JOIN persona ON persona.id = beneficiario.persona_id ';
+        $join.= 'INNER JOIN beneficiario_tipo ON beneficiario.beneficiario_tipo_id = beneficiario_tipo.id ';
+        $condicion = "beneficiario.titular_id = $titular";
+ 
+        return $this->find("columns: $columns", "join: $join","conditions: $condicion");
+    }
 }
 ?>
