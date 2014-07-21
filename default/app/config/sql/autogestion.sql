@@ -18,6 +18,22 @@ CREATE SCHEMA audit_log;
 ALTER SCHEMA audit_log OWNER TO arrozalba;
 
 --
+-- Name: smsd; Type: SCHEMA; Schema: -; Owner: arrozalba
+--
+
+CREATE SCHEMA smsd;
+
+
+ALTER SCHEMA smsd OWNER TO arrozalba;
+
+--
+-- Name: SCHEMA smsd; Type: COMMENT; Schema: -; Owner: arrozalba
+--
+
+COMMENT ON SCHEMA smsd IS 'standard public schema';
+
+
+--
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
@@ -119,6 +135,24 @@ $$;
 
 
 ALTER FUNCTION public.logger() OWNER TO arrozalba;
+
+SET search_path = smsd, pg_catalog;
+
+--
+-- Name: update_timestamp(); Type: FUNCTION; Schema: smsd; Owner: jelitox
+--
+
+CREATE FUNCTION update_timestamp() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+  BEGIN
+    NEW."UpdatedInDB" := LOCALTIMESTAMP(0);
+    RETURN NEW;
+  END;
+$$;
+
+
+ALTER FUNCTION smsd.update_timestamp() OWNER TO jelitox;
 
 SET search_path = audit_log, pg_catalog;
 
@@ -4842,6 +4876,307 @@ ALTER TABLE public.usuario_id_seq OWNER TO arrozalba;
 ALTER SEQUENCE usuario_id_seq OWNED BY usuario.id;
 
 
+SET search_path = smsd, pg_catalog;
+
+--
+-- Name: daemons; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
+--
+
+CREATE TABLE daemons (
+    "Start" text NOT NULL,
+    "Info" text NOT NULL
+);
+
+
+ALTER TABLE smsd.daemons OWNER TO jelitox;
+
+--
+-- Name: gammu; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
+--
+
+CREATE TABLE gammu (
+    "Version" smallint DEFAULT (0)::smallint NOT NULL
+);
+
+
+ALTER TABLE smsd.gammu OWNER TO jelitox;
+
+--
+-- Name: inbox; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
+--
+
+CREATE TABLE inbox (
+    "UpdatedInDB" timestamp(0) without time zone DEFAULT ('now'::text)::timestamp(0) without time zone NOT NULL,
+    "ReceivingDateTime" timestamp(0) without time zone DEFAULT ('now'::text)::timestamp(0) without time zone NOT NULL,
+    "Text" text NOT NULL,
+    "SenderNumber" character varying(20) DEFAULT ''::character varying NOT NULL,
+    "Coding" character varying(255) DEFAULT 'Default_No_Compression'::character varying NOT NULL,
+    "UDH" text NOT NULL,
+    "SMSCNumber" character varying(20) DEFAULT ''::character varying NOT NULL,
+    "Class" integer DEFAULT (-1) NOT NULL,
+    "TextDecoded" text DEFAULT ''::text NOT NULL,
+    "ID" integer NOT NULL,
+    "RecipientID" text NOT NULL,
+    "Processed" boolean DEFAULT false NOT NULL,
+    CONSTRAINT "inbox_Coding_check" CHECK ((("Coding")::text = ANY (ARRAY[('Default_No_Compression'::character varying)::text, ('Unicode_No_Compression'::character varying)::text, ('8bit'::character varying)::text, ('Default_Compression'::character varying)::text, ('Unicode_Compression'::character varying)::text])))
+);
+
+
+ALTER TABLE smsd.inbox OWNER TO jelitox;
+
+--
+-- Name: inbox_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: jelitox
+--
+
+CREATE SEQUENCE "inbox_ID_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE smsd."inbox_ID_seq" OWNER TO jelitox;
+
+--
+-- Name: inbox_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: jelitox
+--
+
+ALTER SEQUENCE "inbox_ID_seq" OWNED BY inbox."ID";
+
+
+--
+-- Name: outbox; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
+--
+
+CREATE TABLE outbox (
+    "UpdatedInDB" timestamp(0) without time zone DEFAULT ('now'::text)::timestamp(0) without time zone NOT NULL,
+    "InsertIntoDB" timestamp(0) without time zone DEFAULT ('now'::text)::timestamp(0) without time zone NOT NULL,
+    "SendingDateTime" timestamp without time zone DEFAULT ('now'::text)::timestamp(0) without time zone NOT NULL,
+    "SendBefore" time without time zone DEFAULT '23:59:59'::time without time zone NOT NULL,
+    "SendAfter" time without time zone DEFAULT '00:00:00'::time without time zone NOT NULL,
+    "Text" text,
+    "DestinationNumber" character varying(20) DEFAULT ''::character varying NOT NULL,
+    "Coding" character varying(255) DEFAULT 'Default_No_Compression'::character varying NOT NULL,
+    "UDH" text,
+    "Class" integer DEFAULT (-1),
+    "TextDecoded" text DEFAULT ''::text NOT NULL,
+    "ID" integer NOT NULL,
+    "MultiPart" boolean DEFAULT false NOT NULL,
+    "RelativeValidity" integer DEFAULT (-1),
+    "SenderID" character varying(255),
+    "SendingTimeOut" timestamp(0) without time zone DEFAULT ('now'::text)::timestamp(0) without time zone NOT NULL,
+    "DeliveryReport" character varying(10) DEFAULT 'default'::character varying,
+    "CreatorID" text NOT NULL,
+    CONSTRAINT "outbox_Coding_check" CHECK ((("Coding")::text = ANY (ARRAY[('Default_No_Compression'::character varying)::text, ('Unicode_No_Compression'::character varying)::text, ('8bit'::character varying)::text, ('Default_Compression'::character varying)::text, ('Unicode_Compression'::character varying)::text]))),
+    CONSTRAINT "outbox_DeliveryReport_check" CHECK ((("DeliveryReport")::text = ANY (ARRAY[('default'::character varying)::text, ('yes'::character varying)::text, ('no'::character varying)::text])))
+);
+
+
+ALTER TABLE smsd.outbox OWNER TO jelitox;
+
+--
+-- Name: outbox_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: jelitox
+--
+
+CREATE SEQUENCE "outbox_ID_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE smsd."outbox_ID_seq" OWNER TO jelitox;
+
+--
+-- Name: outbox_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: jelitox
+--
+
+ALTER SEQUENCE "outbox_ID_seq" OWNED BY outbox."ID";
+
+
+--
+-- Name: outbox_multipart; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
+--
+
+CREATE TABLE outbox_multipart (
+    "Text" text,
+    "Coding" character varying(255) DEFAULT 'Default_No_Compression'::character varying NOT NULL,
+    "UDH" text,
+    "Class" integer DEFAULT (-1),
+    "TextDecoded" text,
+    "ID" integer NOT NULL,
+    "SequencePosition" integer DEFAULT 1 NOT NULL,
+    CONSTRAINT "outbox_multipart_Coding_check" CHECK ((("Coding")::text = ANY (ARRAY[('Default_No_Compression'::character varying)::text, ('Unicode_No_Compression'::character varying)::text, ('8bit'::character varying)::text, ('Default_Compression'::character varying)::text, ('Unicode_Compression'::character varying)::text])))
+);
+
+
+ALTER TABLE smsd.outbox_multipart OWNER TO jelitox;
+
+--
+-- Name: outbox_multipart_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: jelitox
+--
+
+CREATE SEQUENCE "outbox_multipart_ID_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE smsd."outbox_multipart_ID_seq" OWNER TO jelitox;
+
+--
+-- Name: outbox_multipart_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: jelitox
+--
+
+ALTER SEQUENCE "outbox_multipart_ID_seq" OWNED BY outbox_multipart."ID";
+
+
+--
+-- Name: pbk; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
+--
+
+CREATE TABLE pbk (
+    "ID" integer NOT NULL,
+    "GroupID" integer DEFAULT (-1) NOT NULL,
+    "Name" text NOT NULL,
+    "Number" text NOT NULL
+);
+
+
+ALTER TABLE smsd.pbk OWNER TO jelitox;
+
+--
+-- Name: pbk_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: jelitox
+--
+
+CREATE SEQUENCE "pbk_ID_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE smsd."pbk_ID_seq" OWNER TO jelitox;
+
+--
+-- Name: pbk_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: jelitox
+--
+
+ALTER SEQUENCE "pbk_ID_seq" OWNED BY pbk."ID";
+
+
+--
+-- Name: pbk_groups; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
+--
+
+CREATE TABLE pbk_groups (
+    "Name" text NOT NULL,
+    "ID" integer NOT NULL
+);
+
+
+ALTER TABLE smsd.pbk_groups OWNER TO jelitox;
+
+--
+-- Name: pbk_groups_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: jelitox
+--
+
+CREATE SEQUENCE "pbk_groups_ID_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE smsd."pbk_groups_ID_seq" OWNER TO jelitox;
+
+--
+-- Name: pbk_groups_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: jelitox
+--
+
+ALTER SEQUENCE "pbk_groups_ID_seq" OWNED BY pbk_groups."ID";
+
+
+--
+-- Name: phones; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
+--
+
+CREATE TABLE phones (
+    "ID" text NOT NULL,
+    "UpdatedInDB" timestamp(0) without time zone DEFAULT ('now'::text)::timestamp(0) without time zone NOT NULL,
+    "InsertIntoDB" timestamp(0) without time zone DEFAULT ('now'::text)::timestamp(0) without time zone NOT NULL,
+    "TimeOut" timestamp(0) without time zone DEFAULT ('now'::text)::timestamp(0) without time zone NOT NULL,
+    "Send" boolean DEFAULT false NOT NULL,
+    "Receive" boolean DEFAULT false NOT NULL,
+    "IMEI" character varying(35) NOT NULL,
+    "Client" text NOT NULL,
+    "Battery" integer DEFAULT (-1) NOT NULL,
+    "Signal" integer DEFAULT (-1) NOT NULL,
+    "Sent" integer DEFAULT 0 NOT NULL,
+    "Received" integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE smsd.phones OWNER TO jelitox;
+
+--
+-- Name: sentitems; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
+--
+
+CREATE TABLE sentitems (
+    "UpdatedInDB" timestamp(0) without time zone DEFAULT ('now'::text)::timestamp(0) without time zone NOT NULL,
+    "InsertIntoDB" timestamp(0) without time zone DEFAULT ('now'::text)::timestamp(0) without time zone NOT NULL,
+    "SendingDateTime" timestamp(0) without time zone DEFAULT ('now'::text)::timestamp(0) without time zone NOT NULL,
+    "DeliveryDateTime" timestamp(0) without time zone,
+    "Text" text NOT NULL,
+    "DestinationNumber" character varying(20) DEFAULT ''::character varying NOT NULL,
+    "Coding" character varying(255) DEFAULT 'Default_No_Compression'::character varying NOT NULL,
+    "UDH" text NOT NULL,
+    "SMSCNumber" character varying(20) DEFAULT ''::character varying NOT NULL,
+    "Class" integer DEFAULT (-1) NOT NULL,
+    "TextDecoded" text DEFAULT ''::text NOT NULL,
+    "ID" integer NOT NULL,
+    "SenderID" character varying(255) NOT NULL,
+    "SequencePosition" integer DEFAULT 1 NOT NULL,
+    "Status" character varying(255) DEFAULT 'SendingOK'::character varying NOT NULL,
+    "StatusError" integer DEFAULT (-1) NOT NULL,
+    "TPMR" integer DEFAULT (-1) NOT NULL,
+    "RelativeValidity" integer DEFAULT (-1) NOT NULL,
+    "CreatorID" text NOT NULL,
+    CONSTRAINT "sentitems_Coding_check" CHECK ((("Coding")::text = ANY (ARRAY[('Default_No_Compression'::character varying)::text, ('Unicode_No_Compression'::character varying)::text, ('8bit'::character varying)::text, ('Default_Compression'::character varying)::text, ('Unicode_Compression'::character varying)::text]))),
+    CONSTRAINT "sentitems_Status_check" CHECK ((("Status")::text = ANY (ARRAY[('SendingOK'::character varying)::text, ('SendingOKNoReport'::character varying)::text, ('SendingError'::character varying)::text, ('DeliveryOK'::character varying)::text, ('DeliveryFailed'::character varying)::text, ('DeliveryPending'::character varying)::text, ('DeliveryUnknown'::character varying)::text, ('Error'::character varying)::text])))
+);
+
+
+ALTER TABLE smsd.sentitems OWNER TO jelitox;
+
+--
+-- Name: sentitems_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: jelitox
+--
+
+CREATE SEQUENCE "sentitems_ID_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE smsd."sentitems_ID_seq" OWNER TO jelitox;
+
+--
+-- Name: sentitems_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: jelitox
+--
+
+ALTER SEQUENCE "sentitems_ID_seq" OWNED BY sentitems."ID";
+
+
 SET search_path = audit_log, pg_catalog;
 
 --
@@ -5168,6 +5503,50 @@ ALTER TABLE ONLY titular ALTER COLUMN id SET DEFAULT nextval('titular_id_seq'::r
 ALTER TABLE ONLY usuario ALTER COLUMN id SET DEFAULT nextval('usuario_id_seq'::regclass);
 
 
+SET search_path = smsd, pg_catalog;
+
+--
+-- Name: ID; Type: DEFAULT; Schema: smsd; Owner: jelitox
+--
+
+ALTER TABLE ONLY inbox ALTER COLUMN "ID" SET DEFAULT nextval('"inbox_ID_seq"'::regclass);
+
+
+--
+-- Name: ID; Type: DEFAULT; Schema: smsd; Owner: jelitox
+--
+
+ALTER TABLE ONLY outbox ALTER COLUMN "ID" SET DEFAULT nextval('"outbox_ID_seq"'::regclass);
+
+
+--
+-- Name: ID; Type: DEFAULT; Schema: smsd; Owner: jelitox
+--
+
+ALTER TABLE ONLY outbox_multipart ALTER COLUMN "ID" SET DEFAULT nextval('"outbox_multipart_ID_seq"'::regclass);
+
+
+--
+-- Name: ID; Type: DEFAULT; Schema: smsd; Owner: jelitox
+--
+
+ALTER TABLE ONLY pbk ALTER COLUMN "ID" SET DEFAULT nextval('"pbk_ID_seq"'::regclass);
+
+
+--
+-- Name: ID; Type: DEFAULT; Schema: smsd; Owner: jelitox
+--
+
+ALTER TABLE ONLY pbk_groups ALTER COLUMN "ID" SET DEFAULT nextval('"pbk_groups_ID_seq"'::regclass);
+
+
+--
+-- Name: ID; Type: DEFAULT; Schema: smsd; Owner: jelitox
+--
+
+ALTER TABLE ONLY sentitems ALTER COLUMN "ID" SET DEFAULT nextval('"sentitems_ID_seq"'::regclass);
+
+
 SET search_path = audit_log, pg_catalog;
 
 --
@@ -5383,6 +5762,8 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 188	1	2014-07-17 08:07:29.174673-04:30	2014-07-17 08:07:29.174673-04:30	1	\N	\N	\N	\N	127.0.0.1
 189	1	2014-07-17 10:41:07.374132-04:30	2014-07-17 10:41:07.374132-04:30	1	\N	\N	\N	\N	127.0.0.1
 190	1	2014-07-17 14:15:17.259961-04:30	2014-07-17 14:15:17.259961-04:30	1	\N	\N	\N	\N	127.0.0.1
+191	1	2014-07-19 04:43:10.408857-04:30	2014-07-19 04:43:10.408857-04:30	1	\N	\N	\N	\N	127.0.0.1
+192	1	2014-07-21 11:57:48.143364-04:30	2014-07-21 11:57:48.143364-04:30	1	\N	\N	\N	\N	127.0.0.1
 \.
 
 
@@ -5390,7 +5771,7 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 -- Name: acceso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('acceso_id_seq', 190, true);
+SELECT pg_catalog.setval('acceso_id_seq', 192, true);
 
 
 --
@@ -5427,7 +5808,7 @@ SELECT pg_catalog.setval('backup_id_seq', 1, false);
 -- Data for Name: beneficiario; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
-COPY beneficiario (id, usuario_id, fecha_registro, fecha_modificado, titular_id, persona_id, parentesco, beneficiario_tipo_id, observacion,participacion) FROM stdin;
+COPY beneficiario (id, usuario_id, fecha_registro, fecha_modificado, titular_id, persona_id, parentesco, beneficiario_tipo_id, observacion, participacion) FROM stdin;
 5	\N	2014-07-16 12:14:44.952499-04:30	2014-07-16 12:14:44.952499-04:30	4	21	M	1	\N	50
 6	\N	2014-07-16 14:46:03.674933-04:30	2014-07-16 14:46:03.674933-04:30	4	22	HO	2	\N	32
 7	\N	2014-07-16 14:48:29.331338-04:30	2014-07-16 14:48:29.331338-04:30	4	23	C	2	\N	45
@@ -22692,7 +23073,6 @@ COPY solicitud_servicio (id, usuario_id, fecha_registro, fecha_modificado, estad
 \.
 
 
-
 --
 -- Name: solicitud_servicio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
@@ -22796,6 +23176,123 @@ COPY usuario (id, usuario_id, fecha_registro, fecha_modificado, sucursal_id, per
 --
 
 SELECT pg_catalog.setval('usuario_id_seq', 4, true);
+
+
+SET search_path = smsd, pg_catalog;
+
+--
+-- Data for Name: daemons; Type: TABLE DATA; Schema: smsd; Owner: jelitox
+--
+
+COPY daemons ("Start", "Info") FROM stdin;
+\.
+
+
+--
+-- Data for Name: gammu; Type: TABLE DATA; Schema: smsd; Owner: jelitox
+--
+
+COPY gammu ("Version") FROM stdin;
+13
+\.
+
+
+--
+-- Data for Name: inbox; Type: TABLE DATA; Schema: smsd; Owner: jelitox
+--
+
+COPY inbox ("UpdatedInDB", "ReceivingDateTime", "Text", "SenderNumber", "Coding", "UDH", "SMSCNumber", "Class", "TextDecoded", "ID", "RecipientID", "Processed") FROM stdin;
+\.
+
+
+--
+-- Name: inbox_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: jelitox
+--
+
+SELECT pg_catalog.setval('"inbox_ID_seq"', 1, false);
+
+
+--
+-- Data for Name: outbox; Type: TABLE DATA; Schema: smsd; Owner: jelitox
+--
+
+COPY outbox ("UpdatedInDB", "InsertIntoDB", "SendingDateTime", "SendBefore", "SendAfter", "Text", "DestinationNumber", "Coding", "UDH", "Class", "TextDecoded", "ID", "MultiPart", "RelativeValidity", "SenderID", "SendingTimeOut", "DeliveryReport", "CreatorID") FROM stdin;
+\.
+
+
+--
+-- Name: outbox_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: jelitox
+--
+
+SELECT pg_catalog.setval('"outbox_ID_seq"', 1, false);
+
+
+--
+-- Data for Name: outbox_multipart; Type: TABLE DATA; Schema: smsd; Owner: jelitox
+--
+
+COPY outbox_multipart ("Text", "Coding", "UDH", "Class", "TextDecoded", "ID", "SequencePosition") FROM stdin;
+\.
+
+
+--
+-- Name: outbox_multipart_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: jelitox
+--
+
+SELECT pg_catalog.setval('"outbox_multipart_ID_seq"', 1, false);
+
+
+--
+-- Data for Name: pbk; Type: TABLE DATA; Schema: smsd; Owner: jelitox
+--
+
+COPY pbk ("ID", "GroupID", "Name", "Number") FROM stdin;
+\.
+
+
+--
+-- Name: pbk_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: jelitox
+--
+
+SELECT pg_catalog.setval('"pbk_ID_seq"', 1, false);
+
+
+--
+-- Data for Name: pbk_groups; Type: TABLE DATA; Schema: smsd; Owner: jelitox
+--
+
+COPY pbk_groups ("Name", "ID") FROM stdin;
+\.
+
+
+--
+-- Name: pbk_groups_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: jelitox
+--
+
+SELECT pg_catalog.setval('"pbk_groups_ID_seq"', 1, false);
+
+
+--
+-- Data for Name: phones; Type: TABLE DATA; Schema: smsd; Owner: jelitox
+--
+
+COPY phones ("ID", "UpdatedInDB", "InsertIntoDB", "TimeOut", "Send", "Receive", "IMEI", "Client", "Battery", "Signal", "Sent", "Received") FROM stdin;
+\.
+
+
+--
+-- Data for Name: sentitems; Type: TABLE DATA; Schema: smsd; Owner: jelitox
+--
+
+COPY sentitems ("UpdatedInDB", "InsertIntoDB", "SendingDateTime", "DeliveryDateTime", "Text", "DestinationNumber", "Coding", "UDH", "SMSCNumber", "Class", "TextDecoded", "ID", "SenderID", "SequencePosition", "Status", "StatusError", "TPMR", "RelativeValidity", "CreatorID") FROM stdin;
+\.
+
+
+--
+-- Name: sentitems_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: jelitox
+--
+
+SELECT pg_catalog.setval('"sentitems_ID_seq"', 1, false);
 
 
 SET search_path = audit_log, pg_catalog;
@@ -23450,6 +23947,66 @@ ALTER TABLE ONLY usuario
     ADD CONSTRAINT usuario_pkey PRIMARY KEY (id);
 
 
+SET search_path = smsd, pg_catalog;
+
+--
+-- Name: inbox_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
+--
+
+ALTER TABLE ONLY inbox
+    ADD CONSTRAINT inbox_pkey PRIMARY KEY ("ID");
+
+
+--
+-- Name: outbox_multipart_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
+--
+
+ALTER TABLE ONLY outbox_multipart
+    ADD CONSTRAINT outbox_multipart_pkey PRIMARY KEY ("ID", "SequencePosition");
+
+
+--
+-- Name: outbox_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
+--
+
+ALTER TABLE ONLY outbox
+    ADD CONSTRAINT outbox_pkey PRIMARY KEY ("ID");
+
+
+--
+-- Name: pbk_groups_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
+--
+
+ALTER TABLE ONLY pbk_groups
+    ADD CONSTRAINT pbk_groups_pkey PRIMARY KEY ("ID");
+
+
+--
+-- Name: pbk_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
+--
+
+ALTER TABLE ONLY pbk
+    ADD CONSTRAINT pbk_pkey PRIMARY KEY ("ID");
+
+
+--
+-- Name: phones_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
+--
+
+ALTER TABLE ONLY phones
+    ADD CONSTRAINT phones_pkey PRIMARY KEY ("IMEI");
+
+
+--
+-- Name: sentitems_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
+--
+
+ALTER TABLE ONLY sentitems
+    ADD CONSTRAINT sentitems_pkey PRIMARY KEY ("ID", "SequencePosition");
+
+
+SET search_path = public, pg_catalog;
+
 --
 -- Name: patologia_categoria_padre_id_index; Type: INDEX; Schema: public; Owner: arrozalba; Tablespace: 
 --
@@ -23478,12 +24035,90 @@ CREATE INDEX usuario_persona_idx ON usuario USING btree (persona_id);
 CREATE INDEX usuario_sucursal_idx ON usuario USING btree (sucursal_id);
 
 
+SET search_path = smsd, pg_catalog;
+
+--
+-- Name: outbox_date; Type: INDEX; Schema: smsd; Owner: jelitox; Tablespace: 
+--
+
+CREATE INDEX outbox_date ON outbox USING btree ("SendingDateTime", "SendingTimeOut");
+
+
+--
+-- Name: outbox_sender; Type: INDEX; Schema: smsd; Owner: jelitox; Tablespace: 
+--
+
+CREATE INDEX outbox_sender ON outbox USING btree ("SenderID");
+
+
+--
+-- Name: sentitems_date; Type: INDEX; Schema: smsd; Owner: jelitox; Tablespace: 
+--
+
+CREATE INDEX sentitems_date ON sentitems USING btree ("DeliveryDateTime");
+
+
+--
+-- Name: sentitems_dest; Type: INDEX; Schema: smsd; Owner: jelitox; Tablespace: 
+--
+
+CREATE INDEX sentitems_dest ON sentitems USING btree ("DestinationNumber");
+
+
+--
+-- Name: sentitems_sender; Type: INDEX; Schema: smsd; Owner: jelitox; Tablespace: 
+--
+
+CREATE INDEX sentitems_sender ON sentitems USING btree ("SenderID");
+
+
+--
+-- Name: sentitems_tpmr; Type: INDEX; Schema: smsd; Owner: jelitox; Tablespace: 
+--
+
+CREATE INDEX sentitems_tpmr ON sentitems USING btree ("TPMR");
+
+
+SET search_path = public, pg_catalog;
+
 --
 -- Name: trg_usuario; Type: TRIGGER; Schema: public; Owner: arrozalba
 --
 
 CREATE TRIGGER trg_usuario AFTER INSERT OR DELETE OR UPDATE ON usuario FOR EACH ROW EXECUTE PROCEDURE logger();
 
+
+SET search_path = smsd, pg_catalog;
+
+--
+-- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: jelitox
+--
+
+CREATE TRIGGER update_timestamp BEFORE UPDATE ON inbox FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
+
+
+--
+-- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: jelitox
+--
+
+CREATE TRIGGER update_timestamp BEFORE UPDATE ON outbox FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
+
+
+--
+-- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: jelitox
+--
+
+CREATE TRIGGER update_timestamp BEFORE UPDATE ON phones FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
+
+
+--
+-- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: jelitox
+--
+
+CREATE TRIGGER update_timestamp BEFORE UPDATE ON sentitems FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
+
+
+SET search_path = public, pg_catalog;
 
 --
 -- Name: acceso_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
@@ -24285,6 +24920,16 @@ REVOKE ALL ON SCHEMA public FROM PUBLIC;
 REVOKE ALL ON SCHEMA public FROM postgres;
 GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- Name: smsd; Type: ACL; Schema: -; Owner: arrozalba
+--
+
+REVOKE ALL ON SCHEMA smsd FROM PUBLIC;
+REVOKE ALL ON SCHEMA smsd FROM arrozalba;
+GRANT ALL ON SCHEMA smsd TO arrozalba;
+GRANT ALL ON SCHEMA smsd TO PUBLIC;
 
 
 --
