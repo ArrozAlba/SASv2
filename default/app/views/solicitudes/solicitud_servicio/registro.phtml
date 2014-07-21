@@ -41,8 +41,8 @@
             </thead>
             <tbody>
                 <?php foreach($solicitud_servicios->items as $solicitud_servicio): ?>
-                    <?php $key_upd = DwSecurity::getKey($solicitud_servicio->id, 'upd_solicitud_servicio'); ?>
-                    <?php $key_del = DwSecurity::getKey($solicitud_servicio->id, 'del_solicitud_servicio'); ?>
+                    <?php $key_upd = DwSecurity::getKey($solicitud_servicio->idsolicitudservicio, 'upd_solicitud_servicio'); ?>
+                    <?php $key_del = DwSecurity::getKey($solicitud_servicio->idsolicitudservicio, 'del_solicitud_servicio'); ?>
                     
                     <tr>
                         <td><?php echo $solicitud_servicios->counter; ?></td>
