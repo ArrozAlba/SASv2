@@ -9,14 +9,12 @@
  * @author      Javier León (jel1284@gmail.com)
  * @copyright   Copyright (c) 2014 UPTP - (PNFI Team) (https://github.com/ArrozAlba/SASv2)
  */
-
 Load::models('solicitudes/solicitud_servicio');
 Load::models('config/tiposolicitud');
 Load::models('beneficiarios/titular');
 Load::models('beneficiarios/beneficiario');
 
 class SolicitudServicioController extends BackendController {
-    
     /**
      * Método que se ejecuta antes de cualquier acción
      */
@@ -58,11 +56,11 @@ class SolicitudServicioController extends BackendController {
      * Método para aprobacion
      */
     public function aprobacion($order='order.nombre.asc', $page='pag.1') { 
-        $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
-        $solicitud_servicio = new SolicitudServicio();        
-        $this->solicitud_servicios = $solicitud_servicio->getListadoAprobacionSolicitudServicio($order, $page);
-        $this->order = $order;        
-        $this->page_title = 'Aprobación de Solicitudes de Atención Primaria';
+    		$page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
+        	$solicitud_servicio = new SolicitudServicio();        
+        	$this->solicitud_servicios = $solicitud_servicio->getListadoAprobacionSolicitudServicio($order, $page);
+        	$this->order = $order;        
+        	$this->page_title = 'Aprobación de Solicitudes de Atención Primaria';
     }
     /**
      * Método para contabilizar
@@ -74,8 +72,6 @@ class SolicitudServicioController extends BackendController {
         $this->order = $order;        
         $this->page_title = 'Contabilizar Solicitudes de Atención Primaria';
     }
-
-
     /**
      * Método para agregar
      */
@@ -92,12 +88,6 @@ class SolicitudServicioController extends BackendController {
         $this->codigodd=$this->cargoas[0].'00'.$this->codigods;
         $beneficiario = new beneficiario(); 
         $this->beneficiario = $beneficiario->getListBeneficiario();              
-        //$a= array('codid'=>$siglas,'codvalue'=>$numero_registros);;
-         
-//        $solicitud_servicio = new SolicitudServicio();
-//        $ppp1 = $solicitud_servicio->getCodigoSolicitud1();
-//        $solicitud_servicio->getCodigoSolicitud2();
-//        var_dump($ppp1);
         if(Input::hasPost('solicitud_servicio')) {
             if(SolicitudServicio::setSolicitudServicio('create', Input::post('solicitud_servicio'))) {
                 DwMessage::valid('La solicitud se ha registrado correctamente!');
@@ -107,7 +97,24 @@ class SolicitudServicioController extends BackendController {
        // $this->personas = Load::model('beneficiarios/titular')->getTitularesToJson();
         $this->page_title = 'Agregar Solicitud de Servicio';
     }
-    
+    /**
+    *Metodo para aprobar las solicitudes (Cambiar de Estatus)
+    */
+
+    public function aprobar($key){
+    	if(!$id = DwSecurity::isValidKey($key, 'upd_solicitud_servicio', 'int')) {
+            return DwRedirect::toAction('aprobacion');
+        } 
+        //Mejorar esta parte  implementando algodon de seguridad
+        $solicitud_servicio = new SolicitudServicio();
+        $sol = $solicitud_servicio->find($id);
+        $sol->estado_solicitud="A";
+        $sol->save();
+
+        //$sol-> codigo_solicitud es para crear el reporte
+        $cod = $sol->codigo_solicitud;
+        return DwRedirect::toAction('reporte_aprobacion/'.$cod);
+    }
     /**
      * Método para editar
      */

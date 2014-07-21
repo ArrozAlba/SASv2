@@ -64,7 +64,7 @@ class SolicitudServicio extends ActiveRecord {
      * @return ActiveRecord
      */
     public function getListadoRegistroSolicitudServicio($order='order.descripcion.asc', $page='', $empresa=null) {
-        $columns = 'solicitud_servicio.*, persona.nombre1 as nombre,persona.apellido1 as apellido, titular.id, proveedor.id, proveedor.nombre_corto as proveedor, servicio.id, servicio.descripcion as servicio, patologia.id, patologia.descripcion as patologia, tiposolicitud.id, tiposolicitud.nombre as tiposolicitud ';
+        $columns = 'solicitud_servicio.*, solicitud_servicio.id as idsolicitudservicio, persona.nombre1 as nombre,persona.apellido1 as apellido, titular.id, proveedor.id, proveedor.nombre_corto as proveedor, servicio.id, servicio.descripcion as servicio, patologia.id, patologia.descripcion as patologia, tiposolicitud.id, tiposolicitud.nombre as tiposolicitud ';
         $join= 'INNER JOIN proveedor ON proveedor.id = solicitud_servicio.proveedor_id ';
         $join.= 'INNER JOIN servicio ON servicio.id = solicitud_servicio.servicio_id ';        
         $join.= 'INNER JOIN patologia ON patologia.id = solicitud_servicio.patologia_id ';
@@ -90,7 +90,7 @@ class SolicitudServicio extends ActiveRecord {
      * @return ActiveRecord
      */
     public function getListadoAprobacionSolicitudServicio($order='order.descripcion.asc', $page='', $empresa=null) {
-        $columns = 'solicitud_servicio.*, persona.nombre1 as nombre,persona.apellido1 as apellido, titular.id, proveedor.id, proveedor.nombre_corto as proveedor, servicio.id, servicio.descripcion as servicio, patologia.id, patologia.descripcion as patologia, tiposolicitud.id, tiposolicitud.nombre as tiposolicitud ';
+        $columns = 'solicitud_servicio.*, solicitud_servicio.id as idsolicitudservicio, persona.nombre1 as nombre,persona.apellido1 as apellido, titular.id, proveedor.id, proveedor.nombre_corto as proveedor, servicio.id, servicio.descripcion as servicio, patologia.id, patologia.descripcion as patologia, tiposolicitud.id, tiposolicitud.nombre as tiposolicitud ';
         $join= 'INNER JOIN proveedor ON proveedor.id = solicitud_servicio.proveedor_id ';
         $join.= 'INNER JOIN servicio ON servicio.id = solicitud_servicio.servicio_id ';        
         $join.= 'INNER JOIN patologia ON patologia.id = solicitud_servicio.patologia_id ';
@@ -117,7 +117,7 @@ class SolicitudServicio extends ActiveRecord {
      * @return ActiveRecord
      */
     public function getListadoContabilizarSolicitudServicio($order='order.descripcion.asc', $page='', $empresa=null) {
-        $columns = 'solicitud_servicio.*, persona.nombre1 as nombre,persona.apellido1 as apellido, titular.id, proveedor.id, proveedor.nombre_corto as proveedor, servicio.id, servicio.descripcion as servicio, patologia.id, patologia.descripcion as patologia, tiposolicitud.id, tiposolicitud.nombre as tiposolicitud ';
+        $columns = 'solicitud_servicio.*, solicitud_servicio.id as idsolicitudservicio, persona.nombre1 as nombre,persona.apellido1 as apellido, titular.id, proveedor.id, proveedor.nombre_corto as proveedor, servicio.id, servicio.descripcion as servicio, patologia.id, patologia.descripcion as patologia, tiposolicitud.id, tiposolicitud.nombre as tiposolicitud ';
         $join= 'INNER JOIN proveedor ON proveedor.id = solicitud_servicio.proveedor_id ';
         $join.= 'INNER JOIN servicio ON servicio.id = solicitud_servicio.servicio_id ';        
         $join.= 'INNER JOIN patologia ON patologia.id = solicitud_servicio.patologia_id ';
@@ -135,9 +135,6 @@ class SolicitudServicio extends ActiveRecord {
             return $this->find("columns: $columns", "join: $join", "conditions: $conditions", "order: $order", "page: $page");            
         }
     }
-    
-
-
     /**
      * Método que devuelve las sucursales
      * @param string $order
@@ -145,7 +142,7 @@ class SolicitudServicio extends ActiveRecord {
      * @return ActiveRecord
      */
     public function getListadoSolicitudServicio($order='order.descripcion.asc', $page='', $empresa=null) {
-        $columns = 'solicitud_servicio.*, persona.nombre1 as nombre,persona.apellido1 as apellido, titular.id, proveedor.id, proveedor.nombre_corto as proveedor, servicio.id, servicio.descripcion as servicio, patologia.id, patologia.descripcion as patologia, tiposolicitud.id, tiposolicitud.nombre as tiposolicitud ';
+        $columns = 'solicitud_servicio.*, solicitud_servicio.id as idsolicitudservicio, persona.nombre1 as nombre,persona.apellido1 as apellido, titular.id, proveedor.id, proveedor.nombre_corto as proveedor, servicio.id, servicio.descripcion as servicio, patologia.id, patologia.descripcion as patologia, tiposolicitud.id, tiposolicitud.nombre as tiposolicitud ';
         $join= 'INNER JOIN proveedor ON proveedor.id = solicitud_servicio.proveedor_id ';
         $join.= 'INNER JOIN servicio ON servicio.id = solicitud_servicio.servicio_id ';        
         $join.= 'INNER JOIN patologia ON patologia.id = solicitud_servicio.patologia_id ';
@@ -163,8 +160,6 @@ class SolicitudServicio extends ActiveRecord {
             return $this->find("columns: $columns", "join: $join", "order: $order", "page: $page");            
         }
     }
-    
-
     /**
      * Método para setear
      * @param string $method Método a ejecutar (create, update, save)
