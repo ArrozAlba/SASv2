@@ -17,6 +17,7 @@ bootstrap framework maquetacion css
 *** PLATAFORMA: ***
 apache2 
 php5
+git
 github
 
 
