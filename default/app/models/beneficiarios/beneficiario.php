@@ -103,6 +103,19 @@ and beneficiario.persona_id = persona.id ");
         }  
     }
 
+       public function getListBeneficiario() {
+        return $this->find_all_by_sql("select beneficiario.id,beneficiario.titular_id,beneficiario.persona_id,persona.nombre1,persona.apellido1,
+cast(persona.cedula as float) 
+from beneficiario,persona where beneficiario.persona_id = persona.id");
+    }
+    public function buscar($titular_id){
+        return $this->find_all_by_sql("select beneficiario.id,beneficiario.titular_id,beneficiario.persona_id,(persona.nombre1 || ' ' || persona.apellido1) as nombrefull,
+cast(persona.cedula as integer) 
+from beneficiario,persona where  beneficiario.titular_id = '{$titular_id}' and beneficiario.persona_id = persona.id");
+    }    
+
+
+
     /**
      * Método para verificar si una persona ya se encuentra registrada
      * @return obj

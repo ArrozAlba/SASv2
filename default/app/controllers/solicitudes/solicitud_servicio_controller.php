@@ -107,12 +107,20 @@ class SolicitudServicioController extends BackendController {
         } 
         //Mejorar esta parte  implementando algodon de seguridad
         $solicitud_servicio = new SolicitudServicio();
-        $sol = $solicitud_servicio->find($id);
+        $sol = $solicitud_servicio->getInformacionSolicitudServicio ($id);
         $sol->estado_solicitud="A";
         $sol->save();
 
         //$sol-> codigo_solicitud es para crear el reporte
         $cod = $sol->codigo_solicitud;
+        $nro = $sol->celular;
+        $nombre = $sol->nombre1;
+        $apellido = $sol->apellido;
+
+		$contenido= "Sr. ".$nombre." ".$apellido." Su solicitud ha sido aprobada Aprobada con el codigo: ".$cod;
+		$destinatario=$nro;
+		system( '/usr/bin/gammu -c /etc/gammu-smsdrc --sendsms EMS ' . escapeshellarg( $destinatario ) . ' -text ' . escapeshellarg( $contenido ) ); // try this one
+
         return DwRedirect::toAction('reporte_aprobacion/'.$cod);
     }
     /**
