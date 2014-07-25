@@ -173,9 +173,6 @@ and titular.persona_id = persona.id");
         $condicion = "titular.id = $titular";        
         return $this->find_first("columns: $columns", "join: $join", "conditions: $condicion");
     }
-
-
-
     /**
      * Método para buscar Titular
      */
@@ -191,10 +188,6 @@ and titular.persona_id = persona.id");
         //$conditions = "";//Por el super usuario
         
         $order = $this->get_order($order, 'nombre1', array(                        
-            'login' => array(
-                'ASC'=>'usuario.login ASC, persona.nombre1 ASC, persona.apellido1 DESC', 
-                'DESC'=>'usuario.login DESC, persona.nombre1 DESC, persona.apellido1 DESC'
-            ),
             'nombre1' => array(
                 'ASC'=>'persona.nombre1 ASC, persona.apellido1 DESC', 
                 'DESC'=>'persona.nombre1 DESC, persona.apellido1 DESC'
@@ -206,34 +199,23 @@ and titular.persona_id = persona.id");
             'cedula' => array(
                 'ASC'=>'persona.cedula ASC, persona.apellido1 ASC, persona.nombre1 ASC', 
                 'DESC'=>'persona.cedula DESC, persona.apellido1 DESC, persona.nombre1 DESC'
-            ),            
-            'email' => array(
-                'ASC'=>'usuario.email ASC, persona.apellido1 ASC, persona.nombre1 ASC', 
-                'DESC'=>'usuario.email DESC, persona.apellido1 DESC, persona.nombre1 DESC'
-            ),
-            'sucursal' => array(
-                'ASC'=>'sucursal.sucursal ASC, persona.apellido1 ASC, persona.nombre1 ASC', 
-                'DESC'=>'sucursal.sucursal DESC, persona.apellido1 DESC, persona.nombre1 DESC'
-            ),
-            'estado_usuario' => array(
-                'ASC'=>'estado_usuario.estado_usuario ASC, persona.apellido1 ASC, persona.nombre1 ASC', 
-                'DESC'=>'estado_usuario.estado_usuario DESC, persona.apellido1 DESC, persona.nombre1 DESC'
             )
         ));
         
         //Defino los campos habilitados para la búsqueda
-        $fields = array('login', 'nombre1', 'apellido1', 'cedula', 'email', 'perfil', 'sucursal', 'estado_usuario');
+        $fields = array('cedula', 'nombre1', 'apellido1', 'tipoe', 'departamento', );
         if(!in_array($field, $fields)) {
             $field = 'nombre1';
         }        
         if(! ($field=='sucursal' && $value=='todas') ) {
-           // $conditions.= " AND $field LIKE '%$value%'";
+          $conditions.= " AND $field LIKE '%$value%'";
         }        
         if($page) {
-            return $this->paginated("columns: $columns", "join: $join",/* "conditions: $conditions",*/ "order: $order", "page: $page");
+            return $this->paginated("columns: $columns", "join: $join","conditions: $conditions",  "order: $order", "page: $page");
         } else {
-            return $this->find("columns: $columns", "join: $join", /* "conditions: $conditions",*/ "order: $order");
+            return $this->find("columns: $columns", "join: $join","conditions: $conditions", "order: $order");
         }  
+        //"conditions: $conditions",
     }
     /**
      * Callback que se ejecuta antes de guardar/modificar
@@ -245,8 +227,7 @@ and titular.persona_id = persona.id");
         $this->departamento_id = Filter::get($this->departamento_id, 'numeric');
         $this->cargo_id = Filter::get($this->cargo_id, 'numeric'); 
         $this->observacion = Filter::get($this->observacion, 'string');
-    }    
-
+    }
 
 }
 ?>

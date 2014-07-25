@@ -54,7 +54,7 @@
                         <td><?php echo $titular->tipoe; ?></td>
                         <td><?php echo $titular->departamento; ?></td>
                         <?if(APP_OFFICE) { //Si está activa la opción de oficinas ?>
-                        <td><?php echo empty($titular->sucursal) ? 'Todas' : $titular->sucursal; ?></td>
+                        <td><?php echo $titular->sucursal; ?></td>
                         <? } ?>
                         <td><?php // echo ($usuario->estado_usuario == EstadoUsuario::ACTIVO) ? '<span class="label label-success" title="'.$usuario->descripcion.'" rel="tooltip">Activo</span>' : '<span class="label label-important" title="'.$usuario->descripcion.'" rel="tooltip">Bloqueado</span>'; ?></td>
                         <td>

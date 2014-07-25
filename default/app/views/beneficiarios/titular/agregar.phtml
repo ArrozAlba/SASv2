@@ -27,13 +27,15 @@
                         <?php echo DwForm::select('persona.nacionalidad', array(''=>'Seleccione:','V'=>'Venezolana', 'E'=>'Extranjera'), array('class'=>'input-xlarge input-required show-error'), NULL, 'Nacionalidad:'); ?>
                     </div>
                     <div class="span3">
-                        <?php echo DwForm::text('persona.cedula', array('class'=>'input-xlarge mask-pint input-numeric input-required show-error'), NULL, 'Cedula de Identidad'); ?>
+                        <?php 
+                        echo DwForm::text('persona.cedula', array('class'=>'input-xlarge mask-pint input-numeric input-required show-error'), NULL ,'Cédula de Identidad'); 
+                       ?>
                     </div>
                     <div class="span3">
                         <?php echo DwForm::select('persona.sexo', array(''=>'Seleccione:', 'M'=>'Masculino', 'F'=>'Femenino'), array('class'=>'input-xlarge input-required show-error'), NULL, 'Sexo:'); ?>
                     </div>
                     <div class="span3">
-                        <?php echo DwForm::date('persona.fecha_nacimiento', array('class'=>'input-large input-required mask-date input-date show-errors'), date("Y-m-d"), 'Fecha de Nacimiento'); ?>
+                        <?php echo DwForm::date('persona.fecha_nacimiento', array('class'=>'input-large input-required mask-date input-date show-errors'), date("d-m-Y"), 'Fecha de Nacimiento'); ?>
                     </div>
                 </div>
                 
@@ -115,13 +117,13 @@
             <div class="tab-pane" id="tab3">
                 <div class="row-fluid">
                     <div class="span4">
-                        <?php echo DwForm::dbSelect('titular.tipoempleado_id', 'nombre', array('config/tipoempleado', 'getListadoTipoempleado'), NULL, array('class'=>'input-xlarge input-required input-list show-errors'), NULL, 'Tipo Empleado'); ?>
+                        <?php echo DwForm::dbSelect('titular.tipoempleado_id', 'nombre', array('config/tipoempleado', 'getListadoTipoempleado'), NULL, array('class'=>'input-xlarge input-required input-list show-errors'), NULL, 'Tipo Trabajador'); ?>
                     </div>
                     <div class="span4">
-                        <?php echo DwForm::date('titular.fecha_ingreso', array('class'=>'input-xlarge input-required mask-date input-date show-errors'), date("Y-m-d"), 'Fecha de Ingreso'); ?>
+                        <?php echo DwForm::date('titular.fecha_ingreso', array('class'=>'input-xlarge input-required mask-date input-date show-errors'), date("d-m-Y"), 'Fecha de Ingreso'); ?>
                     </div>
                     <div class="span4">
-                        <?php echo DwForm::dbSelect('titular.profesion_id', 'nombre', array('config/profesion', 'getListadoProfesion'), NULL, array('class'=>'input-xlarge input-required input-list show-errors'), NULL, 'Profesión'); ?>
+                        <?php echo DwForm::dbSelect('titular.profesion_id', 'nombre', array('config/profesion', 'getListadoProfesion'), NULL, array('class'=>'input-xlarge input-required input-list show-errors'), NULL, 'Profesión u Oficio'); ?>
                     </div>
                 </div>
                 <div class="row-fluid">
@@ -277,8 +279,10 @@
 </div>
 
 <?php View::partial('jquery.file-upload'); ?>
+
 <!-- Script para obtener por Ajax el departamento en funcion de las Upsas  -->
 <script type='text/javascript'>
+
 $("#usuario_sucursal_id").change(function(){
     var sucursal_id     =   $('#usuario_sucursal_id').val();
         $.ajax({
