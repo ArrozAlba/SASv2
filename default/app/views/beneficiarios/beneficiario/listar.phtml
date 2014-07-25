@@ -4,7 +4,7 @@
     $(function() {
         $('table').dwGrid({
             form_search: true,
-            form_action: '<?php echo PUBLIC_PATH; ?>beneficiario/beneficiario/buscar/',
+            form_action: '<?php echo PUBLIC_PATH; ?>beneficiarios/beneficiario/buscar/',
             form_load_data : 'dw-shell-content',
             order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
             order_action: $.KumbiaPHP.publicPath+"beneficiario/beneficiario/listar/"

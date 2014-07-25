@@ -4,10 +4,10 @@
     $(function() {
         $('table').dwGrid({
             form_search: true,
-            form_action: '<?php echo PUBLIC_PATH; ?>sistema/usuario/buscar/',
+            form_action: '<?php echo PUBLIC_PATH; ?>beneficiarios/beneficiario/buscar/',
             form_load_data : 'dw-shell-content',
             order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
-            order_action: $.KumbiaPHP.publicPath+"sistema/usuario/buscar/<?php echo $field.'/'.$value.'/'; ?>"
+            order_action: $.KumbiaPHP.publicPath+"beneficiarios/beneficiario/buscar/<?php echo $field.'/'.$value.'/'; ?>"
         });
     });
 </script>
