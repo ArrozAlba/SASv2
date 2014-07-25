@@ -55,10 +55,10 @@
                         <td>
 							<?php echo ($solicitud_servicio->estado_solicitud == 'R') ? '<span class="label label-success" title="'.$solicitud_servicio->tiposolicitud.'" rel="tooltip">Por Aprobar</span>' : '<span class="label label-important" title="'.$solicitud_servicio->estado_solicitud.'" rel="tooltip">Aprobada</span>'; ; ?></td>
                         <td>
-                            <?php echo Js::linkAction("aprobar/$key_upd", "Aprobar Soliccitud","check"); ?>
-
+                            <?php echo Js::linkAction("aprobar/$key_upd", "Aprobarp Soliccitud","check"); ?>
 
                             <?php // echo DwHtml::buttonTable('Aprobar Solicitud', "Js::linkAction('aprobar/$key_upd')", null, 'success', 'check'); ?>
+
                             <?php echo DwHtml::buttonTable('Modificar Solicitud', "solicitudes/solicitud_servicio/editar/$key_upd/", null, 'info', 'edit'); ?>
                             <?php echo DwHtml::buttonTable('Eliminar Solicitud', "solicitudes/solicitud_servicio/eliminar/$key_del/", array('class'=>'js-confirm', 'confirm-title'=>'Eliminar solicitud_medicina', 'confirm-body'=>'Está seguro de eliminar este solicitud_medicina? <br />Recuerda que esta operación no se puede reversar.'), 'danger', 'ban-circle'); ?>
                         </td>
