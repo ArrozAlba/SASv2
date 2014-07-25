@@ -56,6 +56,7 @@
 							<?php echo ($solicitud_servicio->estado_solicitud == 'R') ? '<span class="label label-success" title="'.$solicitud_servicio->tiposolicitud.'" rel="tooltip">Por Aprobar</span>' : '<span class="label label-important" title="'.$solicitud_servicio->estado_solicitud.'" rel="tooltip">Aprobada</span>'; ; ?></td>
                         <td>
                             <?php echo Js::linkAction("aprobar/$key_upd", "Aprobar Soliccitud","check"); ?>
+                            <?php echo Js::linkAction("reporte_aprobacion/$key_upd", "Ver Solicitud","check"); ?>
 
 
                             <?php // echo DwHtml::buttonTable('Aprobar Solicitud', "Js::linkAction('aprobar/$key_upd')", null, 'success', 'check'); ?>

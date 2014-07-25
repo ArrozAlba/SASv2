@@ -14,7 +14,7 @@
                 <?php ?>
             </div>
             <div class="span4">
-                <?php echo DwForm::date('solicitud_servicio.fecha_solicitud', array('class'=>'input-required mask-date input-date show-errors'), date("Y/m/d"), 'Fecha Solicitud'); ?>
+                <?php echo DwForm::date('solicitud_servicio.fecha_solicitud', array('class'=>'input-required mask-date disabled input-date show-errors'), date("d/m/Y"), 'Fecha Solicitud'); ?>
             </div>
             <div class="span4">
                 <?php echo DwForm::date('solicitud_servicio.fecha_vencimiento', array('class'=>'input-required mask-date input-date show-errors'), date("Y/m/d"), 'Fecha Vencimiento'); ?>
@@ -38,7 +38,7 @@
                 <?php echo DwForm::hidden('solicitud_servicio.titular_id', NULL, ''); ?>
             </div>
             <div class="span6">
-                <?php echo DwForm::text('solicitud_servicio.titular_idnombre', array('class'=>'input-xxlarge disabled input-required '), NULL, 'Nombre Titular:'); ?>
+                <?php echo DwForm::text('solicitud_servicio.titular_idnombre', array('class'=>'input-xxlarge disabled '), NULL, 'Nombre Titular:'); ?>
             </div>
             <div class="span2">
 				<label>Beneficiarios:</label>
