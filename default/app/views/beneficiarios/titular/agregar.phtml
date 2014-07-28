@@ -41,7 +41,7 @@
                 
                 <div class="row-fluid">
                     <div class="span3">
-                        <?php echo DwForm::text('persona.nombre1', array('class'=>'input-xlarge input-required  show-error'), NULL, 'Primer Nombre'); ?>
+                        <?php echo DwForm::text('persona.nombre1', array('class'=>'input-xlarge input-required input-alphanum show-error'), NULL, 'Primer Nombre'); ?>
                     </div>
                     <div class="span3">
                         <?php echo DwForm::text('persona.nombre2', array('class'=>'input-xlarge show-error'), NULL, 'Segundo Nombre'); ?>
@@ -141,7 +141,7 @@
                 </div>
                 <div class="row-fluid">
                     <div class="span12">
-						<?php echo DwForm::textarea('titular.observacion', array('class'=>'input-xxlarge input-required mask-alphanum show-error'), NULL, 'Observación'); ?>
+						<?php echo DwForm::textarea('titular.observacion', array('class'=>'input-xxlarge mask-alphanum show-error'), NULL, 'Observación'); ?>
                     </div>
                 </div>
             </div><!--Cierre del tab3-->
@@ -279,6 +279,14 @@
 </div>
 
 <?php View::partial('jquery.file-upload'); ?>
+
+<!-- Funcion para darle el tamano maximo a cada input -->
+<script type="text/javascript">
+$(function(){
+    var cedula = document.getElementById("persona_cedula");
+    cedula.maxLength = 8;
+})
+</script>
 
 <!-- Script para obtener por Ajax el departamento en funcion de las Upsas  -->
 <script type='text/javascript'>
