@@ -1,5 +1,4 @@
 <?php View::notify(); ?>
-
 <script type="text/javascript">
     $(function() {
         $('table').dwGrid({
@@ -8,16 +7,11 @@
         });
     });
 </script>
-
 <div class="container-fluid dw-shell-view">
-
     <?php View::process($page_module, $page_title, $set_title); ?>
-
     <div class="btn-toolbar btn-toolbar-top">
     </div>
-
     <div class="dw-overflow">
-
         <table class="table table-bordered table-hover table-striped table-condensed table-responsive">
             <thead>
                 <tr>
@@ -39,7 +33,6 @@
                 <?php foreach($solicitud_servicios->items as $solicitud_servicio): ?>
                     <?php $key_upd = DwSecurity::getKey($solicitud_servicio->id, 'upd_solicitud_servicio'); ?>
                     <?php $key_del = DwSecurity::getKey($solicitud_servicio->id, 'del_solicitud_servicio'); ?>
-                    
                     <tr>
                         <td><?php echo $solicitud_servicios->counter; ?></td>
                         <td><?php echo $solicitud_servicio->fecha_solicitud; ?></td>
@@ -51,21 +44,16 @@
                         <td><?php echo $solicitud_servicio->patologia; ?></td>
                         <td><?php echo $solicitud_servicio->observacion; ?></td>
                         <td><?php echo $solicitud_servicio->tiposolicitud; ?></td>
-                        <td><?php echo ($solicitud_servicio->estado_solicitud == 'C') ? '<span class="label label-success" title="'.$solicitud_servicio->tiposolicitud.'" rel="tooltip">Por Contabilizar</span>' : '<span class="label label-important" title="'.$solicitud_servicio->estado_solicitud.'" rel="tooltip">Contabilizada</span>'; ; ?></td>
-</td>
+                        <td><?php echo ($solicitud_servicio->estado_solicitud == 'C') ? '<span class="label label-success" title="'.$solicitud_servicio->tiposolicitud.'" rel="tooltip">Contabilizada</span>' : '<span class="label label-important" title="'.$solicitud_servicio->estado_solicitud.'" rel="tooltip">Por Contabilizar</span>' ; ?>
+                        </td>
                         <td>
-                            <?php echo DwHtml::buttonTable('*Contabilizar Solicitud', "solicitudes/solicitud_servicio/contabilizar/$key_upd/", null, 'default', 'check'); ?>
-                            <?php echo DwHtml::buttonTable('Reversar Solicitud', "solicitudes/solicitud_servicio/modificar/$key_upd/", null, 'warning', 'repeat'); ?>
-                            <?php echo DwHtml::buttonTable('Eliminar Solicitud', "solicitudes/solicitud_servicio/anular/$key_del/", array('class'=>'js-confirm', 'confirm-title'=>'Eliminar solicitud_medicina', 'confirm-body'=>'Está seguro de eliminar esta Solicitud de '.$solicitud_servicio->tiposolicitud.' ? <br />Recuerda que esta operación no se puede reversar.'), 'danger', 'ban-circle'); ?>
+                        <?php echo ($solicitud_servicio->estado_solicitud == 'C') ? DwHtml::buttonTable('Reversar Solicitud', "solicitudes/solicitud_servicio/modificar/$key_upd/", null, 'warning', 'repeat') : DwHtml::buttonTable('*Contabilizar Solicitud', "solicitudes/solicitud_servicio/contabilizar/$key_upd/", null, 'default', 'list'); ?>
                         </td>
                     </tr>
                     <?php $solicitud_servicios->counter++; ?>
                 <?php endforeach; ?>
             </tbody>
         </table>
-
     </div>
-
-    <?php View::partial('paginators/default', false, array('page'=>$solicitud_servicios, 'url'=>"solicitudes/solicitud_servicio/listar/$order/")); ?>
-
+    <?php View::partial('paginators/default', false, array('page'=>$solicitud_servicios, 'url'=>"solicitudes/solicitud_servicio/contabilizar/$order/")); ?>
 </div>

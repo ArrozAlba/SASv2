@@ -111,37 +111,50 @@ class SolicitudServicioController extends BackendController {
         } 
         //Mejorar esta parte  implementando algodon de seguridad
         $solicitud_servicio = new SolicitudServicio();
-        $sol = $solicitud_servicio->getInformacionSolicitudServicio ($id);
-        //$sol->estado_solicitud="A";
-        //$sol->save();
+        $sol = $solicitud_servicio->getInformacionSolicitudServicio($id);
+        $sol->estado_solicitud="A";
+        $sol->save();
 
         //$sol-> codigo_solicitud es para crear el reporte
         $cod = $sol->codigo_solicitud;
         $nro = $sol->celular;
-        $nombre = $sol->nombre1;
+        $nombre = $sol->nombre;
         $apellido = $sol->apellido;
-
-		$contenido= "Sr. ".$nombre." ".$apellido." Su solicitud ha sido aprobada Aprobada con el codigo: ".$cod;
-		$destinatario=$nro;
-		system( '/usr/bin/gammu -c /etc/gammu-smsdrc --sendsms EMS ' . escapeshellarg( $destinatario ) . ' -text ' . escapeshellarg( $contenido ) ); // try this one
-
-        return DwRedirect::toAction('reporte_aprobacion/'.$cod);
+		//$contenido= "Sr. ".$nombre." ".$apellido." Su solicitud ha sido aprobada Aprobada con el codigo: ".$cod;
+		//$destinatario=$nro;
+		//system( '/usr/bin/gammu -c /etc/gammu-smsdrc --sendsms EMS ' . escapeshellarg( $destinatario ) . ' -text ' . escapeshellarg( $contenido ) ); 
+        return DwRedirect::toAction('reporte_aprobacion/'.$id);
     }
+    /**
+    *Metodo para aprobar las solicitudes (Cambiar de Estatus)
+    */
+
+    public function reversar_aprobacion($key){
+    	if(!$id = DwSecurity::isValidKey($key, 'upd_solicitud_servicio', 'int')) {
+            return DwRedirect::toAction('aprobacion');
+        } 
+        //Mejorar esta parte  implementando algodon de seguridad
+        $solicitud_servicio = new SolicitudServicio();
+        $sol = $solicitud_servicio->getInformacionSolicitudServicio($id);
+        $sol->estado_solicitud="R";
+        $sol->save();
+        return DwRedirect::toAction('aprobacion');
+    }
+
     /**
      * Método para formar el reporte en pdf 
      */
-    public function reporte_aprobacion($key) { 
+    public function reporte_aprobacion($id) { 
         View::template(NULL);       
-        if(!$id = DwSecurity::isValidKey($key, 'upd_solicitud_servicio', 'int')) {
-            return DwRedirect::toAction('aprobacion');
-        }
+       // if(!$id = DwSecurity::isValidKey($key, 'upd_solicitud_servicio', 'int')) {
+       //     return DwRedirect::toAction('aprobacion');
+       // }
 
         //Mejorar esta parte  implementando algodon de seguridad
         $solicitud_servicio = new SolicitudServicio();
                 if(!$sol = $solicitud_servicio->getReporteSolicitudServicio($id)) {
             DwMessage::get('id_no_found');
         };
-
         $this->nombres = strtoupper($solicitud_servicio->nombre1." ".$solicitud_servicio->nombre2);
         $this->apellidos = strtoupper($solicitud_servicio->apellido1." ".$solicitud_servicio->apellido2);
         $this->cedula = $solicitud_servicio->cedula;
@@ -149,22 +162,18 @@ class SolicitudServicioController extends BackendController {
         $this->celular = $solicitud_servicio->celular;
         $this->nacionalidad = $solicitud_servicio->nacionalidad;        
         $this->sexo = $solicitud_servicio->sexo;        
-
         //llamada a otra funcion, ya que no logre un solo query para ese reportee! :S
         $titular = new titular();
         $datoslaborales = $titular->getInformacionLaboralTitular($id);
-
         $this->upsa = $titular->sucursal;
         $this->direccionlaboral = strtoupper($titular->direccion);
         $this->municipio_laboral = strtoupper($titular->municipios);
         $this->estado_laboral = strtoupper($titular->estados);
         $this->pais_laboral = strtoupper($titular->paiss);
         $this->cargo = strtoupper($titular->cargo);
-
         //instanciando la clase beneficiario 
         $beneficiario = new beneficiario();
         $this->beneficiarios = $beneficiario->getListadoBeneTitular($id);
-
     }
     /**
      * Método para editar
