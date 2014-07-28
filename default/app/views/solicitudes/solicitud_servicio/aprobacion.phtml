@@ -1,24 +1,17 @@
 <?php View::notify(); ?>
-
 <script type="text/javascript">
     $(function() {
         $('table').dwGrid({
             order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
-            order_action: $.KumbiaPHP.publicPath+"solicitudes/solicitud_servicio/registro/"
+            order_action: $.KumbiaPHP.publicPath+"solicitudes/solicitud_servicio/aprobacion/"
         });
     });
 </script>
-
 <div class="container-fluid dw-shell-view">
-
     <?php View::process($page_module, $page_title, $set_title); ?>
-
     <div class="btn-toolbar btn-toolbar-top">
-        
     </div>
-
     <div class="dw-overflow">
-
         <table class="table table-bordered table-hover table-striped table-condensed table-responsive">
             <thead>
                 <tr>
@@ -40,7 +33,6 @@
                 <?php foreach($solicitud_servicios->items as $solicitud_servicio): ?>
                     <?php $key_upd = DwSecurity::getKey($solicitud_servicio->idsolicitudservicio, 'upd_solicitud_servicio'); ?>
                     <?php $key_del = DwSecurity::getKey($solicitud_servicio->idsolicitudservicio, 'del_solicitud_servicio'); ?>
-                    
                     <tr>
                         <td><?php echo $solicitud_servicios->counter; ?></td>
                         <td><?php echo $solicitud_servicio->fecha_solicitud; ?></td>
@@ -52,25 +44,16 @@
                         <td><?php echo $solicitud_servicio->patologia; ?></td>
                         <td><?php echo $solicitud_servicio->observacion; ?></td>
                         <td><?php echo $solicitud_servicio->tiposolicitud; ?></td>
+                        <td><?php echo ($solicitud_servicio->estado_solicitud == 'R') ? '<span class="label label-success" title="'.$solicitud_servicio->tiposolicitud.'" rel="tooltip">Por Aprobar</span>' : '<span class="label label-important" title="'.$solicitud_servicio->estado_solicitud.'" rel="tooltip">Aprobada</span>' ; ?>
+                        </td>
                         <td>
-							<?php echo ($solicitud_servicio->estado_solicitud == 'R') ? '<span class="label label-success" title="'.$solicitud_servicio->tiposolicitud.'" rel="tooltip">Por Aprobar</span>' : '<span class="label label-important" title="'.$solicitud_servicio->estado_solicitud.'" rel="tooltip">Aprobada</span>'; ; ?></td>
-                        <td>
-                            <?php echo Js::linkAction("aprobar/$key_upd", "Aprobar Soliccitud","check"); ?>
-                            <?php echo Js::linkAction("reporte_aprobacion/$key_upd", "Ver Solicitud","check"); ?>
-
-
-                            <?php // echo DwHtml::buttonTable('Aprobar Solicitud', "Js::linkAction('aprobar/$key_upd')", null, 'success', 'check'); ?>
-                            <?php echo DwHtml::buttonTable('Modificar Solicitud', "solicitudes/solicitud_servicio/editar/$key_upd/", null, 'info', 'edit'); ?>
-                            <?php echo DwHtml::buttonTable('Eliminar Solicitud', "solicitudes/solicitud_servicio/eliminar/$key_del/", array('class'=>'js-confirm', 'confirm-title'=>'Eliminar solicitud_medicina', 'confirm-body'=>'Está seguro de eliminar este solicitud_medicina? <br />Recuerda que esta operación no se puede reversar.'), 'danger', 'ban-circle'); ?>
+                        <?php echo ($solicitud_servicio->estado_solicitud == 'R') ? DwHtml::buttonTable('Aprobar', "solicitudes/solicitud_servicio/aprobar/$key_upd/", array('class'=>'no-ajax no-spinner',),'default','check') : DwHtml::buttonTable('Reversar Aprobacion', "solicitudes/solicitud_servicio/reversar_aprobacion/$key_upd/", array('class'=>'js-confirm', 'confirm-title'=>'Reversar Aprobación', 'confirm-body'=>'Está seguro de Reversar esta solicitud? <br />Recuerda que esta operación no se puede reversar.'), 'warning', 'repeat'); ?>
                         </td>
                     </tr>
                     <?php $solicitud_servicios->counter++; ?>
                 <?php endforeach; ?>
             </tbody>
         </table>
-
     </div>
-
-    <?php View::partial('paginators/default', false, array('page'=>$solicitud_servicios, 'url'=>"solicitudes/solicitud_servicio/listar/$order/")); ?>
-
+    <?php View::partial('paginators/default', false, array('page'=>$solicitud_servicios, 'url'=>"solicitudes/solicitud_servicio/aprobacion/$order/")); ?>
 </div>
