@@ -40,14 +40,14 @@
                         <td><?php echo $solicitud_servicios->counter; ?></td>
                         <td><?php echo $solicitud_servicio->fecha_solicitud; ?></td>
                         <td><?php echo $solicitud_servicio->codigo_solicitud; ?></td>
-                        <td><?php echo $solicitud_servicio->nombre; echo ' '; echo $solicitud_servicio->apellido;?></td>
-                        <td><?php echo $solicitud_servicio->nombre; echo ' '; echo $solicitud_servicio->apellido;?></td>
-                        <td><?php echo $solicitud_servicio->proveedor; ?></td>
-                        <td><?php echo $solicitud_servicio->servicio; ?></td>
-                        <td><?php echo $solicitud_servicio->patologia; ?></td>
-                        <td><?php echo $solicitud_servicio->observacion; ?></td>
-                        <td><?php echo $solicitud_servicio->tiposolicitud; ?></td>
-                        <td><?php echo ($solicitud_servicio->estado_solicitud == 'R') ? '<span class="label label-success" title="'.$solicitud_servicio->tiposolicitud.' Pendiente por Aprobar" rel="tooltip">Registrada</span>' : '<span class="label label-important" title="'.$solicitud_servicio->estado_solicitud.'" rel="tooltip">Emitida</span>'; ; ?></td>
+                        <td><?php echo strtoupper($solicitud_servicio->nombre); echo ' '; echo strtoupper($solicitud_servicio->apellido);?></td>
+                        <td><?php echo strtoupper($solicitud_servicio->nombre); echo ' '; echo strtoupper($solicitud_servicio->apellido);?></td>
+                        <td><?php echo strtoupper($solicitud_servicio->proveedor); ?></td>
+                        <td><?php echo strtoupper($solicitud_servicio->servicio); ?></td>
+                        <td><?php echo strtoupper($solicitud_servicio->patologia); ?></td>
+                        <td><?php echo strtoupper($solicitud_servicio->observacion); ?></td>
+                        <td><?php echo strtoupper($solicitud_servicio->tiposolicitud); ?></td>
+                        <td><?php echo ($solicitud_servicio->estado_solicitud == 'R') ? '<span class="label label-success" title="'.$solicitud_servicio->tiposolicitud.' PENDIENTE POR APROBAR" rel="tooltip">REGISTRADA</span>' : '<span class="label label-important" title="'.$solicitud_servicio->estado_solicitud.'" rel="tooltip">EMITIDA</span>'; ; ?></td>
                         </td>
                         <td>
                             <?php echo DwHtml::buttonTable('Modificar Solicitud', "solicitudes/solicitud_servicio/editar/$key_upd/", null, 'info', 'edit'); ?>
