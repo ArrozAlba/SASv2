@@ -142,7 +142,6 @@ class SolicitudServicioController extends BackendController {
         $sol->save();
         return DwRedirect::toAction('aprobacion');
     }
-
     /**
      * Método para formar el reporte en pdf 
      */
@@ -157,6 +156,7 @@ class SolicitudServicioController extends BackendController {
                 if(!$sol = $solicitud_servicio->getReporteSolicitudServicio($id)) {
             DwMessage::get('id_no_found');
         };
+        $this->fecha_sol = $solicitud_servicio->fecha_solicitud;
         $this->nombres = strtoupper($solicitud_servicio->nombre1." ".$solicitud_servicio->nombre2);
         $this->apellidos = strtoupper($solicitud_servicio->apellido1." ".$solicitud_servicio->apellido2);
         $this->cedula = $solicitud_servicio->cedula;
@@ -164,10 +164,11 @@ class SolicitudServicioController extends BackendController {
         $this->celular = $solicitud_servicio->celular;
         $this->nacionalidad = $solicitud_servicio->nacionalidad;        
         $this->sexo = $solicitud_servicio->sexo;        
+        $this->upsa = $solicitud_servicio->upsa; 
         //llamada a otra funcion, ya que no logre un solo query para ese reportee! :S
         $titular = new titular();
         $datoslaborales = $titular->getInformacionLaboralTitular($id);
-        $this->upsa = $titular->sucursal;
+        //$this->upsa = $titular->sucursal;
         $this->direccionlaboral = strtoupper($titular->direccion);
         $this->municipio_laboral = strtoupper($titular->municipios);
         $this->estado_laboral = strtoupper($titular->estados);
