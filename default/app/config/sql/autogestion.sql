@@ -139,7 +139,7 @@ ALTER FUNCTION public.logger() OWNER TO arrozalba;
 SET search_path = smsd, pg_catalog;
 
 --
--- Name: update_timestamp(); Type: FUNCTION; Schema: smsd; Owner: jelitox
+-- Name: update_timestamp(); Type: FUNCTION; Schema: smsd; Owner: arrozalba
 --
 
 CREATE FUNCTION update_timestamp() RETURNS trigger
@@ -152,7 +152,7 @@ CREATE FUNCTION update_timestamp() RETURNS trigger
 $$;
 
 
-ALTER FUNCTION smsd.update_timestamp() OWNER TO jelitox;
+ALTER FUNCTION smsd.update_timestamp() OWNER TO arrozalba;
 
 SET search_path = audit_log, pg_catalog;
 
@@ -4879,7 +4879,7 @@ ALTER SEQUENCE usuario_id_seq OWNED BY usuario.id;
 SET search_path = smsd, pg_catalog;
 
 --
--- Name: daemons; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
+-- Name: daemons; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE daemons (
@@ -4888,10 +4888,10 @@ CREATE TABLE daemons (
 );
 
 
-ALTER TABLE smsd.daemons OWNER TO jelitox;
+ALTER TABLE smsd.daemons OWNER TO arrozalba;
 
 --
--- Name: gammu; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
+-- Name: gammu; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE gammu (
@@ -4899,10 +4899,10 @@ CREATE TABLE gammu (
 );
 
 
-ALTER TABLE smsd.gammu OWNER TO jelitox;
+ALTER TABLE smsd.gammu OWNER TO arrozalba;
 
 --
--- Name: inbox; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
+-- Name: inbox; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE inbox (
@@ -4922,10 +4922,10 @@ CREATE TABLE inbox (
 );
 
 
-ALTER TABLE smsd.inbox OWNER TO jelitox;
+ALTER TABLE smsd.inbox OWNER TO arrozalba;
 
 --
--- Name: inbox_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: jelitox
+-- Name: inbox_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: arrozalba
 --
 
 CREATE SEQUENCE "inbox_ID_seq"
@@ -4936,17 +4936,17 @@ CREATE SEQUENCE "inbox_ID_seq"
     CACHE 1;
 
 
-ALTER TABLE smsd."inbox_ID_seq" OWNER TO jelitox;
+ALTER TABLE smsd."inbox_ID_seq" OWNER TO arrozalba;
 
 --
--- Name: inbox_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: jelitox
+-- Name: inbox_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: arrozalba
 --
 
 ALTER SEQUENCE "inbox_ID_seq" OWNED BY inbox."ID";
 
 
 --
--- Name: outbox; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
+-- Name: outbox; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE outbox (
@@ -4973,10 +4973,10 @@ CREATE TABLE outbox (
 );
 
 
-ALTER TABLE smsd.outbox OWNER TO jelitox;
+ALTER TABLE smsd.outbox OWNER TO arrozalba;
 
 --
--- Name: outbox_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: jelitox
+-- Name: outbox_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: arrozalba
 --
 
 CREATE SEQUENCE "outbox_ID_seq"
@@ -4987,17 +4987,17 @@ CREATE SEQUENCE "outbox_ID_seq"
     CACHE 1;
 
 
-ALTER TABLE smsd."outbox_ID_seq" OWNER TO jelitox;
+ALTER TABLE smsd."outbox_ID_seq" OWNER TO arrozalba;
 
 --
--- Name: outbox_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: jelitox
+-- Name: outbox_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: arrozalba
 --
 
 ALTER SEQUENCE "outbox_ID_seq" OWNED BY outbox."ID";
 
 
 --
--- Name: outbox_multipart; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
+-- Name: outbox_multipart; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE outbox_multipart (
@@ -5012,10 +5012,10 @@ CREATE TABLE outbox_multipart (
 );
 
 
-ALTER TABLE smsd.outbox_multipart OWNER TO jelitox;
+ALTER TABLE smsd.outbox_multipart OWNER TO arrozalba;
 
 --
--- Name: outbox_multipart_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: jelitox
+-- Name: outbox_multipart_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: arrozalba
 --
 
 CREATE SEQUENCE "outbox_multipart_ID_seq"
@@ -5026,17 +5026,17 @@ CREATE SEQUENCE "outbox_multipart_ID_seq"
     CACHE 1;
 
 
-ALTER TABLE smsd."outbox_multipart_ID_seq" OWNER TO jelitox;
+ALTER TABLE smsd."outbox_multipart_ID_seq" OWNER TO arrozalba;
 
 --
--- Name: outbox_multipart_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: jelitox
+-- Name: outbox_multipart_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: arrozalba
 --
 
 ALTER SEQUENCE "outbox_multipart_ID_seq" OWNED BY outbox_multipart."ID";
 
 
 --
--- Name: pbk; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
+-- Name: pbk; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE pbk (
@@ -5047,10 +5047,10 @@ CREATE TABLE pbk (
 );
 
 
-ALTER TABLE smsd.pbk OWNER TO jelitox;
+ALTER TABLE smsd.pbk OWNER TO arrozalba;
 
 --
--- Name: pbk_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: jelitox
+-- Name: pbk_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: arrozalba
 --
 
 CREATE SEQUENCE "pbk_ID_seq"
@@ -5061,17 +5061,17 @@ CREATE SEQUENCE "pbk_ID_seq"
     CACHE 1;
 
 
-ALTER TABLE smsd."pbk_ID_seq" OWNER TO jelitox;
+ALTER TABLE smsd."pbk_ID_seq" OWNER TO arrozalba;
 
 --
--- Name: pbk_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: jelitox
+-- Name: pbk_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: arrozalba
 --
 
 ALTER SEQUENCE "pbk_ID_seq" OWNED BY pbk."ID";
 
 
 --
--- Name: pbk_groups; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
+-- Name: pbk_groups; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE pbk_groups (
@@ -5080,10 +5080,10 @@ CREATE TABLE pbk_groups (
 );
 
 
-ALTER TABLE smsd.pbk_groups OWNER TO jelitox;
+ALTER TABLE smsd.pbk_groups OWNER TO arrozalba;
 
 --
--- Name: pbk_groups_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: jelitox
+-- Name: pbk_groups_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: arrozalba
 --
 
 CREATE SEQUENCE "pbk_groups_ID_seq"
@@ -5094,17 +5094,17 @@ CREATE SEQUENCE "pbk_groups_ID_seq"
     CACHE 1;
 
 
-ALTER TABLE smsd."pbk_groups_ID_seq" OWNER TO jelitox;
+ALTER TABLE smsd."pbk_groups_ID_seq" OWNER TO arrozalba;
 
 --
--- Name: pbk_groups_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: jelitox
+-- Name: pbk_groups_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: arrozalba
 --
 
 ALTER SEQUENCE "pbk_groups_ID_seq" OWNED BY pbk_groups."ID";
 
 
 --
--- Name: phones; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
+-- Name: phones; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE phones (
@@ -5123,10 +5123,10 @@ CREATE TABLE phones (
 );
 
 
-ALTER TABLE smsd.phones OWNER TO jelitox;
+ALTER TABLE smsd.phones OWNER TO arrozalba;
 
 --
--- Name: sentitems; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
+-- Name: sentitems; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
 --
 
 CREATE TABLE sentitems (
@@ -5154,10 +5154,10 @@ CREATE TABLE sentitems (
 );
 
 
-ALTER TABLE smsd.sentitems OWNER TO jelitox;
+ALTER TABLE smsd.sentitems OWNER TO arrozalba;
 
 --
--- Name: sentitems_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: jelitox
+-- Name: sentitems_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: arrozalba
 --
 
 CREATE SEQUENCE "sentitems_ID_seq"
@@ -5168,10 +5168,10 @@ CREATE SEQUENCE "sentitems_ID_seq"
     CACHE 1;
 
 
-ALTER TABLE smsd."sentitems_ID_seq" OWNER TO jelitox;
+ALTER TABLE smsd."sentitems_ID_seq" OWNER TO arrozalba;
 
 --
--- Name: sentitems_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: jelitox
+-- Name: sentitems_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: arrozalba
 --
 
 ALTER SEQUENCE "sentitems_ID_seq" OWNED BY sentitems."ID";
@@ -5506,42 +5506,42 @@ ALTER TABLE ONLY usuario ALTER COLUMN id SET DEFAULT nextval('usuario_id_seq'::r
 SET search_path = smsd, pg_catalog;
 
 --
--- Name: ID; Type: DEFAULT; Schema: smsd; Owner: jelitox
+-- Name: ID; Type: DEFAULT; Schema: smsd; Owner: arrozalba
 --
 
 ALTER TABLE ONLY inbox ALTER COLUMN "ID" SET DEFAULT nextval('"inbox_ID_seq"'::regclass);
 
 
 --
--- Name: ID; Type: DEFAULT; Schema: smsd; Owner: jelitox
+-- Name: ID; Type: DEFAULT; Schema: smsd; Owner: arrozalba
 --
 
 ALTER TABLE ONLY outbox ALTER COLUMN "ID" SET DEFAULT nextval('"outbox_ID_seq"'::regclass);
 
 
 --
--- Name: ID; Type: DEFAULT; Schema: smsd; Owner: jelitox
+-- Name: ID; Type: DEFAULT; Schema: smsd; Owner: arrozalba
 --
 
 ALTER TABLE ONLY outbox_multipart ALTER COLUMN "ID" SET DEFAULT nextval('"outbox_multipart_ID_seq"'::regclass);
 
 
 --
--- Name: ID; Type: DEFAULT; Schema: smsd; Owner: jelitox
+-- Name: ID; Type: DEFAULT; Schema: smsd; Owner: arrozalba
 --
 
 ALTER TABLE ONLY pbk ALTER COLUMN "ID" SET DEFAULT nextval('"pbk_ID_seq"'::regclass);
 
 
 --
--- Name: ID; Type: DEFAULT; Schema: smsd; Owner: jelitox
+-- Name: ID; Type: DEFAULT; Schema: smsd; Owner: arrozalba
 --
 
 ALTER TABLE ONLY pbk_groups ALTER COLUMN "ID" SET DEFAULT nextval('"pbk_groups_ID_seq"'::regclass);
 
 
 --
--- Name: ID; Type: DEFAULT; Schema: smsd; Owner: jelitox
+-- Name: ID; Type: DEFAULT; Schema: smsd; Owner: arrozalba
 --
 
 ALTER TABLE ONLY sentitems ALTER COLUMN "ID" SET DEFAULT nextval('"sentitems_ID_seq"'::regclass);
@@ -23246,7 +23246,7 @@ SELECT pg_catalog.setval('usuario_id_seq', 4, true);
 SET search_path = smsd, pg_catalog;
 
 --
--- Data for Name: daemons; Type: TABLE DATA; Schema: smsd; Owner: jelitox
+-- Data for Name: daemons; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
 --
 
 COPY daemons ("Start", "Info") FROM stdin;
@@ -23254,7 +23254,7 @@ COPY daemons ("Start", "Info") FROM stdin;
 
 
 --
--- Data for Name: gammu; Type: TABLE DATA; Schema: smsd; Owner: jelitox
+-- Data for Name: gammu; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
 --
 
 COPY gammu ("Version") FROM stdin;
@@ -23263,7 +23263,7 @@ COPY gammu ("Version") FROM stdin;
 
 
 --
--- Data for Name: inbox; Type: TABLE DATA; Schema: smsd; Owner: jelitox
+-- Data for Name: inbox; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
 --
 
 COPY inbox ("UpdatedInDB", "ReceivingDateTime", "Text", "SenderNumber", "Coding", "UDH", "SMSCNumber", "Class", "TextDecoded", "ID", "RecipientID", "Processed") FROM stdin;
@@ -23271,14 +23271,14 @@ COPY inbox ("UpdatedInDB", "ReceivingDateTime", "Text", "SenderNumber", "Coding"
 
 
 --
--- Name: inbox_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: jelitox
+-- Name: inbox_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('"inbox_ID_seq"', 1, false);
 
 
 --
--- Data for Name: outbox; Type: TABLE DATA; Schema: smsd; Owner: jelitox
+-- Data for Name: outbox; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
 --
 
 COPY outbox ("UpdatedInDB", "InsertIntoDB", "SendingDateTime", "SendBefore", "SendAfter", "Text", "DestinationNumber", "Coding", "UDH", "Class", "TextDecoded", "ID", "MultiPart", "RelativeValidity", "SenderID", "SendingTimeOut", "DeliveryReport", "CreatorID") FROM stdin;
@@ -23286,14 +23286,14 @@ COPY outbox ("UpdatedInDB", "InsertIntoDB", "SendingDateTime", "SendBefore", "Se
 
 
 --
--- Name: outbox_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: jelitox
+-- Name: outbox_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('"outbox_ID_seq"', 1, false);
 
 
 --
--- Data for Name: outbox_multipart; Type: TABLE DATA; Schema: smsd; Owner: jelitox
+-- Data for Name: outbox_multipart; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
 --
 
 COPY outbox_multipart ("Text", "Coding", "UDH", "Class", "TextDecoded", "ID", "SequencePosition") FROM stdin;
@@ -23301,14 +23301,14 @@ COPY outbox_multipart ("Text", "Coding", "UDH", "Class", "TextDecoded", "ID", "S
 
 
 --
--- Name: outbox_multipart_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: jelitox
+-- Name: outbox_multipart_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('"outbox_multipart_ID_seq"', 1, false);
 
 
 --
--- Data for Name: pbk; Type: TABLE DATA; Schema: smsd; Owner: jelitox
+-- Data for Name: pbk; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
 --
 
 COPY pbk ("ID", "GroupID", "Name", "Number") FROM stdin;
@@ -23316,14 +23316,14 @@ COPY pbk ("ID", "GroupID", "Name", "Number") FROM stdin;
 
 
 --
--- Name: pbk_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: jelitox
+-- Name: pbk_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('"pbk_ID_seq"', 1, false);
 
 
 --
--- Data for Name: pbk_groups; Type: TABLE DATA; Schema: smsd; Owner: jelitox
+-- Data for Name: pbk_groups; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
 --
 
 COPY pbk_groups ("Name", "ID") FROM stdin;
@@ -23331,14 +23331,14 @@ COPY pbk_groups ("Name", "ID") FROM stdin;
 
 
 --
--- Name: pbk_groups_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: jelitox
+-- Name: pbk_groups_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('"pbk_groups_ID_seq"', 1, false);
 
 
 --
--- Data for Name: phones; Type: TABLE DATA; Schema: smsd; Owner: jelitox
+-- Data for Name: phones; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
 --
 
 COPY phones ("ID", "UpdatedInDB", "InsertIntoDB", "TimeOut", "Send", "Receive", "IMEI", "Client", "Battery", "Signal", "Sent", "Received") FROM stdin;
@@ -23346,7 +23346,7 @@ COPY phones ("ID", "UpdatedInDB", "InsertIntoDB", "TimeOut", "Send", "Receive", 
 
 
 --
--- Data for Name: sentitems; Type: TABLE DATA; Schema: smsd; Owner: jelitox
+-- Data for Name: sentitems; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
 --
 
 COPY sentitems ("UpdatedInDB", "InsertIntoDB", "SendingDateTime", "DeliveryDateTime", "Text", "DestinationNumber", "Coding", "UDH", "SMSCNumber", "Class", "TextDecoded", "ID", "SenderID", "SequencePosition", "Status", "StatusError", "TPMR", "RelativeValidity", "CreatorID") FROM stdin;
@@ -23354,7 +23354,7 @@ COPY sentitems ("UpdatedInDB", "InsertIntoDB", "SendingDateTime", "DeliveryDateT
 
 
 --
--- Name: sentitems_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: jelitox
+-- Name: sentitems_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('"sentitems_ID_seq"', 1, false);
@@ -24015,7 +24015,7 @@ ALTER TABLE ONLY usuario
 SET search_path = smsd, pg_catalog;
 
 --
--- Name: inbox_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
+-- Name: inbox_pkey; Type: CONSTRAINT; Schema: smsd; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY inbox
@@ -24023,7 +24023,7 @@ ALTER TABLE ONLY inbox
 
 
 --
--- Name: outbox_multipart_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
+-- Name: outbox_multipart_pkey; Type: CONSTRAINT; Schema: smsd; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY outbox_multipart
@@ -24031,7 +24031,7 @@ ALTER TABLE ONLY outbox_multipart
 
 
 --
--- Name: outbox_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
+-- Name: outbox_pkey; Type: CONSTRAINT; Schema: smsd; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY outbox
@@ -24039,7 +24039,7 @@ ALTER TABLE ONLY outbox
 
 
 --
--- Name: pbk_groups_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
+-- Name: pbk_groups_pkey; Type: CONSTRAINT; Schema: smsd; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY pbk_groups
@@ -24047,7 +24047,7 @@ ALTER TABLE ONLY pbk_groups
 
 
 --
--- Name: pbk_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
+-- Name: pbk_pkey; Type: CONSTRAINT; Schema: smsd; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY pbk
@@ -24055,7 +24055,7 @@ ALTER TABLE ONLY pbk
 
 
 --
--- Name: phones_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
+-- Name: phones_pkey; Type: CONSTRAINT; Schema: smsd; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY phones
@@ -24063,7 +24063,7 @@ ALTER TABLE ONLY phones
 
 
 --
--- Name: sentitems_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
+-- Name: sentitems_pkey; Type: CONSTRAINT; Schema: smsd; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY sentitems
@@ -24103,42 +24103,42 @@ CREATE INDEX usuario_sucursal_idx ON usuario USING btree (sucursal_id);
 SET search_path = smsd, pg_catalog;
 
 --
--- Name: outbox_date; Type: INDEX; Schema: smsd; Owner: jelitox; Tablespace: 
+-- Name: outbox_date; Type: INDEX; Schema: smsd; Owner: arrozalba; Tablespace: 
 --
 
 CREATE INDEX outbox_date ON outbox USING btree ("SendingDateTime", "SendingTimeOut");
 
 
 --
--- Name: outbox_sender; Type: INDEX; Schema: smsd; Owner: jelitox; Tablespace: 
+-- Name: outbox_sender; Type: INDEX; Schema: smsd; Owner: arrozalba; Tablespace: 
 --
 
 CREATE INDEX outbox_sender ON outbox USING btree ("SenderID");
 
 
 --
--- Name: sentitems_date; Type: INDEX; Schema: smsd; Owner: jelitox; Tablespace: 
+-- Name: sentitems_date; Type: INDEX; Schema: smsd; Owner: arrozalba; Tablespace: 
 --
 
 CREATE INDEX sentitems_date ON sentitems USING btree ("DeliveryDateTime");
 
 
 --
--- Name: sentitems_dest; Type: INDEX; Schema: smsd; Owner: jelitox; Tablespace: 
+-- Name: sentitems_dest; Type: INDEX; Schema: smsd; Owner: arrozalba; Tablespace: 
 --
 
 CREATE INDEX sentitems_dest ON sentitems USING btree ("DestinationNumber");
 
 
 --
--- Name: sentitems_sender; Type: INDEX; Schema: smsd; Owner: jelitox; Tablespace: 
+-- Name: sentitems_sender; Type: INDEX; Schema: smsd; Owner: arrozalba; Tablespace: 
 --
 
 CREATE INDEX sentitems_sender ON sentitems USING btree ("SenderID");
 
 
 --
--- Name: sentitems_tpmr; Type: INDEX; Schema: smsd; Owner: jelitox; Tablespace: 
+-- Name: sentitems_tpmr; Type: INDEX; Schema: smsd; Owner: arrozalba; Tablespace: 
 --
 
 CREATE INDEX sentitems_tpmr ON sentitems USING btree ("TPMR");
@@ -24156,28 +24156,28 @@ CREATE TRIGGER trg_usuario AFTER INSERT OR DELETE OR UPDATE ON usuario FOR EACH 
 SET search_path = smsd, pg_catalog;
 
 --
--- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: jelitox
+-- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: arrozalba
 --
 
 CREATE TRIGGER update_timestamp BEFORE UPDATE ON inbox FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
 
 
 --
--- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: jelitox
+-- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: arrozalba
 --
 
 CREATE TRIGGER update_timestamp BEFORE UPDATE ON outbox FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
 
 
 --
--- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: jelitox
+-- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: arrozalba
 --
 
 CREATE TRIGGER update_timestamp BEFORE UPDATE ON phones FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
 
 
 --
--- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: jelitox
+-- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: arrozalba
 --
 
 CREATE TRIGGER update_timestamp BEFORE UPDATE ON sentitems FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
