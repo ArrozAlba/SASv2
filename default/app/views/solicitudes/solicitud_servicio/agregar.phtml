@@ -11,7 +11,7 @@
                 <?php ?>
             </div>
             <div class="span4">
-                <?php echo DwForm::date('solicitud_servicio.fecha_solicitud', array('class'=>'input-required mask-date disabled input-date show-errors'), date("d/m/Y"), 'Fecha Solicitud'); ?>
+                <?php echo DwForm::date('solicitud_servicio.fecha_solicitud', array('class'=>'input-required mask-date disabled input-date show-errors'), date("Y/m/d"), 'Fecha Solicitud'); ?>
             </div>
             <div class="span4">
                 <?php echo DwForm::date('solicitud_servicio.fecha_vencimiento', array('class'=>'input-required mask-date input-date show-errors'), date("Y/m/d"), 'Fecha Vencimiento'); ?>
@@ -27,7 +27,7 @@
         <div class="row-fluid">
             <div class="span4">
                 <?php //echo DwForm::dbSelect('solicitud_servicio.titular_id', 'cedula', array('beneficiarios/titular', 'getListadoTitular'), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Titular'); ?>
-                <?php echo DwForm::text('solicitud_servicio.titular', array('class'=>'input-xlarge input-required '), NULL, 'Cedula Titular'); ?>
+                <?php echo DwForm::text('solicitud_servicio.titular', array('class'=>'input-xlarge mask-pint show-error input-required '), NULL, 'Cedula Titular'); ?>
                 <?php echo DwForm::hidden('solicitud_servicio.titular_id', NULL, ''); ?>
             </div>
             <div class="span6">
@@ -61,7 +61,7 @@
         </div>
         <div class="row-fluid">
             <div class="span12">
-                <?php echo DwForm::textarea('solicitud_servicio.observacion', array('class'=>'input-required mask-text show-error input-xxlarge'), NULL, 'Observacion'); ?>
+                <?php echo DwForm::textarea('solicitud_servicio.observacion', array('class'=>'mask-text show-error input-xxlarge'), NULL, 'Observacion'); ?>
                 <?php //echo DwForm::dbSelect('solicitud_servicio.patologia_id', 'descripcion', array('config/patologia', 'getListadoPatologia'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Patologia'); ?>
             </div>
         </div>

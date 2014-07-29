@@ -35,13 +35,13 @@
                         <?php echo DwForm::select('persona.sexo', array(''=>'Seleccione:', 'M'=>'Masculino', 'F'=>'Femenino'), array('class'=>'input-xlarge input-required show-error'), NULL, 'Sexo:'); ?>
                     </div>
                     <div class="span3">
-                        <?php echo DwForm::date('persona.fecha_nacimiento', array('class'=>'input-large input-required mask-date input-date show-errors'), date("d-m-Y"), 'Fecha de Nacimiento'); ?>
+                        <?php echo DwForm::date('persona.fecha_nacimiento', array('class'=>'input-large input-required mask-date input-date show-errors'), date("Y-m-d"), 'Fecha de Nacimiento'); ?>
                     </div>
                 </div>
                 
                 <div class="row-fluid">
                     <div class="span3">
-                        <?php echo DwForm::text('persona.nombre1', array('class'=>'input-xlarge input-required  show-error'), NULL, 'Primer Nombre'); ?>
+                        <?php echo DwForm::text('persona.nombre1', array('class'=>'input-xlarge input-required input-alphanum show-error'), NULL, 'Primer Nombre'); ?>
                     </div>
                     <div class="span3">
                         <?php echo DwForm::text('persona.nombre2', array('class'=>'input-xlarge show-error'), NULL, 'Segundo Nombre'); ?>
@@ -58,7 +58,7 @@
                         <?php echo DwForm::select('persona.estado_civil', array(''=>'Seleccione:', 'S'=>'Soltero', 'c'=>'Concubinato','C'=>'Casado', 'D'=>'Divorciado', 'V'=>'Viudo'), array('class'=>'input-xlarge input-required show-error'), NULL, 'Estado Civil'); ?>
                     </div>
                     <div class="span3">
-                        <?php echo DwForm::text('persona.grupo_sanguineo', array('class'=>'input-xlarge  mask-alphanum show-error'), NULL, 'Grupo Sanguineo'); ?>
+                         <?php echo DwForm::select('persona.grupo_sanguineo', array(''=>'Seleccione:', 'O-'=>'O-', 'O+'=>'O+','A-'=>'A-', 'A+'=>'A+', 'AB+'=>'AB+', 'AB-'=>'AB-'), array('class'=>'input-xlarge input-required show-error'), NULL, 'Grupo Sanguineo'); ?>
                     </div>
                     <div class="span3">
                         <?php echo DwForm::tel('persona.telefono', array('class'=>'input-numeric input-xlarge mask-pint show-error'), NULL, 'Teléfono'); ?>
@@ -279,6 +279,22 @@
 </div>
 
 <?php View::partial('jquery.file-upload'); ?>
+
+<!-- Funcion para darle el tamano maximo a cada input -->
+<script type="text/javascript">
+$(function(){
+    var cedula = document.getElementById("persona_cedula");
+    var telefono = document.getElementById("persona_telefono");
+    var celular = document.getElementById("persona_celular");
+    cedula.maxLength = 8;
+    telefono.maxLength = 11;
+    celular.maxLength = 11;
+
+
+})
+</script>
+
+</script>
 
 <!-- Script para obtener por Ajax el departamento en funcion de las Upsas  -->
 <script type='text/javascript'>

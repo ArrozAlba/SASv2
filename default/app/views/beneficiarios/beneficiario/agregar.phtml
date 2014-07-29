@@ -299,6 +299,16 @@
 </div>
 
 <?php View::partial('jquery.file-upload'); ?>
+<script type="text/javascript">
+    $(function(){
+        var cedula = document.getElementById("persona_cedula");
+        var telefono = document.getElementById("persona_telefono");
+        var celular = document.getElementById("pesona_celular");
+        cedula.maxLength = 8;
+        telefono.maxLength = 11;
+        celular.maxLength = 11;
+    })
+</script>
 
 <script type="text/javascript">
     $('#fotografia').fileupload({

@@ -120,9 +120,11 @@ class SolicitudServicioController extends BackendController {
         $nro = $sol->celular;
         $nombre = $sol->nombre;
         $apellido = $sol->apellido;
-		//$contenido= "Sr. ".$nombre." ".$apellido." Su solicitud ha sido aprobada Aprobada con el codigo: ".$cod;
-		//$destinatario=$nro;
-		//system( '/usr/bin/gammu -c /etc/gammu-smsdrc --sendsms EMS ' . escapeshellarg( $destinatario ) . ' -text ' . escapeshellarg( $contenido ) ); 
+        
+        $contenido= "Sr. ".$nombre." ".$apellido." Su solicitud ha sido aprobada Aprobada con el codigo: ".$cod;
+        $destinatario=$nro;
+        system( '/usr/bin/gammu -c /etc/gammu-smsdrc --sendsms EMS ' . escapeshellarg( $destinatario ) . ' -text ' . escapeshellarg( $contenido ) ); 
+
         return DwRedirect::toAction('reporte_aprobacion/'.$id);
     }
     /**

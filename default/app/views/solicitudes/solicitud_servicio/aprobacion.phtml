@@ -37,17 +37,17 @@
                         <td><?php echo $solicitud_servicios->counter; ?></td>
                         <td><?php echo $solicitud_servicio->fecha_solicitud; ?></td>
                         <td><?php echo $solicitud_servicio->codigo_solicitud; ?></td>
-                        <td><?php echo $solicitud_servicio->nombre; echo ' '; echo $solicitud_servicio->apellido;?></td>
-                        <td><?php echo $solicitud_servicio->nombre; echo ' '; echo $solicitud_servicio->apellido;?></td>
-                        <td><?php echo $solicitud_servicio->proveedor; ?></td>
-                        <td><?php echo $solicitud_servicio->servicio; ?></td>
-                        <td><?php echo $solicitud_servicio->patologia; ?></td>
-                        <td><?php echo $solicitud_servicio->observacion; ?></td>
-                        <td><?php echo $solicitud_servicio->tiposolicitud; ?></td>
-                        <td><?php echo ($solicitud_servicio->estado_solicitud == 'R') ? '<span class="label label-success" title="'.$solicitud_servicio->tiposolicitud.'" rel="tooltip">Por Aprobar</span>' : '<span class="label label-important" title="'.$solicitud_servicio->estado_solicitud.'" rel="tooltip">Aprobada</span>' ; ?>
+                        <td><?php echo strtoupper($solicitud_servicio->nombre); echo ' '; echo strtoupper($solicitud_servicio->apellido);?></td>
+                        <td><?php echo strtoupper($solicitud_servicio->nombre); echo ' '; echo strtoupper($solicitud_servicio->apellido);?></td>
+                        <td><?php echo strtoupper($solicitud_servicio->proveedor); ?></td>
+                        <td><?php echo strtoupper($solicitud_servicio->servicio); ?></td>
+                        <td><?php echo strtoupper($solicitud_servicio->patologia); ?></td>
+                        <td><?php echo strtoupper($solicitud_servicio->observacion); ?></td>
+                        <td><?php echo strtoupper($solicitud_servicio->tiposolicitud); ?></td>
+                        <td><?php echo ($solicitud_servicio->estado_solicitud == 'R') ? '<span class="label label-success" title="'.$solicitud_servicio->tiposolicitud.'" rel="tooltip">POR APROBAR</span>' : '<span class="label label-important" title="'.$solicitud_servicio->estado_solicitud.'" rel="tooltip">APROBADA</span>' ; ?>
                         </td>
                         <td>
-                        <?php echo ($solicitud_servicio->estado_solicitud == 'R') ? DwHtml::buttonTable('Aprobar', "solicitudes/solicitud_servicio/aprobar/$key_upd/", array('class'=>'no-ajax no-spinner',),'default','check') : DwHtml::buttonTable('Reversar Aprobacion', "solicitudes/solicitud_servicio/reversar_aprobacion/$key_upd/", array('class'=>'js-confirm', 'confirm-title'=>'Reversar Aprobación', 'confirm-body'=>'Está seguro de Reversar esta solicitud? <br />Recuerda que esta operación no se puede reversar.'), 'warning', 'repeat'); ?>
+                        <?php echo ($solicitud_servicio->estado_solicitud == 'R') ? DwHtml::buttonTable('APROBAR', "solicitudes/solicitud_servicio/aprobar/$key_upd/", array('class'=>'no-ajax no-spinner',),'default','check') : DwHtml::buttonTable('REVERSAR APROBACION', "solicitudes/solicitud_servicio/reversar_aprobacion/$key_upd/", array('class'=>'js-confirm', 'confirm-title'=>'Reversar Aprobación', 'confirm-body'=>'Está seguro de Reversar esta solicitud? <br />Recuerda que esta operación no se puede reversar.'), 'warning', 'repeat'); ?>
                         </td>
                     </tr>
                     <?php $solicitud_servicios->counter++; ?>

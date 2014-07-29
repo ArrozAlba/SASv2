@@ -105,6 +105,14 @@ class TitularController extends BackendController {
                 if(Titular::setTitular('create', Input::post('titular'), array('persona_id'=>$persona->id))) {
                     ActiveRecord::commitTrans();
                     DwMessage::valid('El titular se ha creado correctamente.');
+                    //$sol-> codigo_solicitud es para crear el reporte
+                    //$cod = $sol->codigo_solicitud;
+                    //$nro = $sol->celular;
+                    //$nombre = $sol->nombre;
+                    //$apellido = $sol->apellido;
+                    //$contenido= "Sr. ".$nombre." ".$apellido." Su solicitud ha sido aprobada Aprobada con el codigo: ".$cod;
+                    //$destinatario=$nro;
+                    //system( '/usr/bin/gammu -c /etc/gammu-smsdrc --sendsms EMS ' . escapeshellarg( $destinatario ) . ' -text ' . escapeshellarg( $contenido ) ); 
                     return DwRedirect::toAction('listar');
                 }
             } else {

@@ -139,7 +139,7 @@ ALTER FUNCTION public.logger() OWNER TO arrozalba;
 SET search_path = smsd, pg_catalog;
 
 --
--- Name: update_timestamp(); Type: FUNCTION; Schema: smsd; Owner: arrozalba
+-- Name: update_timestamp(); Type: FUNCTION; Schema: smsd; Owner: jelitox
 --
 
 CREATE FUNCTION update_timestamp() RETURNS trigger
@@ -152,7 +152,7 @@ CREATE FUNCTION update_timestamp() RETURNS trigger
 $$;
 
 
-ALTER FUNCTION smsd.update_timestamp() OWNER TO arrozalba;
+ALTER FUNCTION smsd.update_timestamp() OWNER TO jelitox;
 
 SET search_path = audit_log, pg_catalog;
 
@@ -4879,7 +4879,7 @@ ALTER SEQUENCE usuario_id_seq OWNED BY usuario.id;
 SET search_path = smsd, pg_catalog;
 
 --
--- Name: daemons; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: daemons; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE TABLE daemons (
@@ -4888,10 +4888,10 @@ CREATE TABLE daemons (
 );
 
 
-ALTER TABLE smsd.daemons OWNER TO arrozalba;
+ALTER TABLE smsd.daemons OWNER TO jelitox;
 
 --
--- Name: gammu; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: gammu; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE TABLE gammu (
@@ -4899,10 +4899,10 @@ CREATE TABLE gammu (
 );
 
 
-ALTER TABLE smsd.gammu OWNER TO arrozalba;
+ALTER TABLE smsd.gammu OWNER TO jelitox;
 
 --
--- Name: inbox; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: inbox; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE TABLE inbox (
@@ -4922,10 +4922,10 @@ CREATE TABLE inbox (
 );
 
 
-ALTER TABLE smsd.inbox OWNER TO arrozalba;
+ALTER TABLE smsd.inbox OWNER TO jelitox;
 
 --
--- Name: inbox_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: arrozalba
+-- Name: inbox_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: jelitox
 --
 
 CREATE SEQUENCE "inbox_ID_seq"
@@ -4936,17 +4936,17 @@ CREATE SEQUENCE "inbox_ID_seq"
     CACHE 1;
 
 
-ALTER TABLE smsd."inbox_ID_seq" OWNER TO arrozalba;
+ALTER TABLE smsd."inbox_ID_seq" OWNER TO jelitox;
 
 --
--- Name: inbox_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: arrozalba
+-- Name: inbox_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: jelitox
 --
 
 ALTER SEQUENCE "inbox_ID_seq" OWNED BY inbox."ID";
 
 
 --
--- Name: outbox; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: outbox; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE TABLE outbox (
@@ -4973,10 +4973,10 @@ CREATE TABLE outbox (
 );
 
 
-ALTER TABLE smsd.outbox OWNER TO arrozalba;
+ALTER TABLE smsd.outbox OWNER TO jelitox;
 
 --
--- Name: outbox_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: arrozalba
+-- Name: outbox_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: jelitox
 --
 
 CREATE SEQUENCE "outbox_ID_seq"
@@ -4987,17 +4987,17 @@ CREATE SEQUENCE "outbox_ID_seq"
     CACHE 1;
 
 
-ALTER TABLE smsd."outbox_ID_seq" OWNER TO arrozalba;
+ALTER TABLE smsd."outbox_ID_seq" OWNER TO jelitox;
 
 --
--- Name: outbox_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: arrozalba
+-- Name: outbox_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: jelitox
 --
 
 ALTER SEQUENCE "outbox_ID_seq" OWNED BY outbox."ID";
 
 
 --
--- Name: outbox_multipart; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: outbox_multipart; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE TABLE outbox_multipart (
@@ -5012,10 +5012,10 @@ CREATE TABLE outbox_multipart (
 );
 
 
-ALTER TABLE smsd.outbox_multipart OWNER TO arrozalba;
+ALTER TABLE smsd.outbox_multipart OWNER TO jelitox;
 
 --
--- Name: outbox_multipart_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: arrozalba
+-- Name: outbox_multipart_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: jelitox
 --
 
 CREATE SEQUENCE "outbox_multipart_ID_seq"
@@ -5026,17 +5026,17 @@ CREATE SEQUENCE "outbox_multipart_ID_seq"
     CACHE 1;
 
 
-ALTER TABLE smsd."outbox_multipart_ID_seq" OWNER TO arrozalba;
+ALTER TABLE smsd."outbox_multipart_ID_seq" OWNER TO jelitox;
 
 --
--- Name: outbox_multipart_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: arrozalba
+-- Name: outbox_multipart_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: jelitox
 --
 
 ALTER SEQUENCE "outbox_multipart_ID_seq" OWNED BY outbox_multipart."ID";
 
 
 --
--- Name: pbk; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: pbk; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE TABLE pbk (
@@ -5047,10 +5047,10 @@ CREATE TABLE pbk (
 );
 
 
-ALTER TABLE smsd.pbk OWNER TO arrozalba;
+ALTER TABLE smsd.pbk OWNER TO jelitox;
 
 --
--- Name: pbk_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: arrozalba
+-- Name: pbk_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: jelitox
 --
 
 CREATE SEQUENCE "pbk_ID_seq"
@@ -5061,17 +5061,17 @@ CREATE SEQUENCE "pbk_ID_seq"
     CACHE 1;
 
 
-ALTER TABLE smsd."pbk_ID_seq" OWNER TO arrozalba;
+ALTER TABLE smsd."pbk_ID_seq" OWNER TO jelitox;
 
 --
--- Name: pbk_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: arrozalba
+-- Name: pbk_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: jelitox
 --
 
 ALTER SEQUENCE "pbk_ID_seq" OWNED BY pbk."ID";
 
 
 --
--- Name: pbk_groups; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: pbk_groups; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE TABLE pbk_groups (
@@ -5080,10 +5080,10 @@ CREATE TABLE pbk_groups (
 );
 
 
-ALTER TABLE smsd.pbk_groups OWNER TO arrozalba;
+ALTER TABLE smsd.pbk_groups OWNER TO jelitox;
 
 --
--- Name: pbk_groups_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: arrozalba
+-- Name: pbk_groups_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: jelitox
 --
 
 CREATE SEQUENCE "pbk_groups_ID_seq"
@@ -5094,17 +5094,17 @@ CREATE SEQUENCE "pbk_groups_ID_seq"
     CACHE 1;
 
 
-ALTER TABLE smsd."pbk_groups_ID_seq" OWNER TO arrozalba;
+ALTER TABLE smsd."pbk_groups_ID_seq" OWNER TO jelitox;
 
 --
--- Name: pbk_groups_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: arrozalba
+-- Name: pbk_groups_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: jelitox
 --
 
 ALTER SEQUENCE "pbk_groups_ID_seq" OWNED BY pbk_groups."ID";
 
 
 --
--- Name: phones; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: phones; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE TABLE phones (
@@ -5123,10 +5123,10 @@ CREATE TABLE phones (
 );
 
 
-ALTER TABLE smsd.phones OWNER TO arrozalba;
+ALTER TABLE smsd.phones OWNER TO jelitox;
 
 --
--- Name: sentitems; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: sentitems; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE TABLE sentitems (
@@ -5154,10 +5154,10 @@ CREATE TABLE sentitems (
 );
 
 
-ALTER TABLE smsd.sentitems OWNER TO arrozalba;
+ALTER TABLE smsd.sentitems OWNER TO jelitox;
 
 --
--- Name: sentitems_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: arrozalba
+-- Name: sentitems_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: jelitox
 --
 
 CREATE SEQUENCE "sentitems_ID_seq"
@@ -5168,10 +5168,10 @@ CREATE SEQUENCE "sentitems_ID_seq"
     CACHE 1;
 
 
-ALTER TABLE smsd."sentitems_ID_seq" OWNER TO arrozalba;
+ALTER TABLE smsd."sentitems_ID_seq" OWNER TO jelitox;
 
 --
--- Name: sentitems_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: arrozalba
+-- Name: sentitems_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: jelitox
 --
 
 ALTER SEQUENCE "sentitems_ID_seq" OWNED BY sentitems."ID";
@@ -5506,42 +5506,42 @@ ALTER TABLE ONLY usuario ALTER COLUMN id SET DEFAULT nextval('usuario_id_seq'::r
 SET search_path = smsd, pg_catalog;
 
 --
--- Name: ID; Type: DEFAULT; Schema: smsd; Owner: arrozalba
+-- Name: ID; Type: DEFAULT; Schema: smsd; Owner: jelitox
 --
 
 ALTER TABLE ONLY inbox ALTER COLUMN "ID" SET DEFAULT nextval('"inbox_ID_seq"'::regclass);
 
 
 --
--- Name: ID; Type: DEFAULT; Schema: smsd; Owner: arrozalba
+-- Name: ID; Type: DEFAULT; Schema: smsd; Owner: jelitox
 --
 
 ALTER TABLE ONLY outbox ALTER COLUMN "ID" SET DEFAULT nextval('"outbox_ID_seq"'::regclass);
 
 
 --
--- Name: ID; Type: DEFAULT; Schema: smsd; Owner: arrozalba
+-- Name: ID; Type: DEFAULT; Schema: smsd; Owner: jelitox
 --
 
 ALTER TABLE ONLY outbox_multipart ALTER COLUMN "ID" SET DEFAULT nextval('"outbox_multipart_ID_seq"'::regclass);
 
 
 --
--- Name: ID; Type: DEFAULT; Schema: smsd; Owner: arrozalba
+-- Name: ID; Type: DEFAULT; Schema: smsd; Owner: jelitox
 --
 
 ALTER TABLE ONLY pbk ALTER COLUMN "ID" SET DEFAULT nextval('"pbk_ID_seq"'::regclass);
 
 
 --
--- Name: ID; Type: DEFAULT; Schema: smsd; Owner: arrozalba
+-- Name: ID; Type: DEFAULT; Schema: smsd; Owner: jelitox
 --
 
 ALTER TABLE ONLY pbk_groups ALTER COLUMN "ID" SET DEFAULT nextval('"pbk_groups_ID_seq"'::regclass);
 
 
 --
--- Name: ID; Type: DEFAULT; Schema: smsd; Owner: arrozalba
+-- Name: ID; Type: DEFAULT; Schema: smsd; Owner: jelitox
 --
 
 ALTER TABLE ONLY sentitems ALTER COLUMN "ID" SET DEFAULT nextval('"sentitems_ID_seq"'::regclass);
@@ -5764,6 +5764,40 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 190	1	2014-07-17 14:15:17.259961-04:30	2014-07-17 14:15:17.259961-04:30	1	\N	\N	\N	\N	127.0.0.1
 191	1	2014-07-19 04:43:10.408857-04:30	2014-07-19 04:43:10.408857-04:30	1	\N	\N	\N	\N	127.0.0.1
 192	1	2014-07-21 11:57:48.143364-04:30	2014-07-21 11:57:48.143364-04:30	1	\N	\N	\N	\N	127.0.0.1
+193	1	2014-07-21 13:29:11.144359-04:30	2014-07-21 13:29:11.144359-04:30	1	\N	\N	\N	\N	127.0.0.1
+194	1	2014-07-21 14:16:32.045062-04:30	2014-07-21 14:16:32.045062-04:30	2	\N	\N	\N	\N	127.0.0.1
+195	1	2014-07-21 14:16:49.435174-04:30	2014-07-21 14:16:49.435174-04:30	1	\N	\N	\N	\N	127.0.0.1
+196	1	2014-07-21 14:17:52.786058-04:30	2014-07-21 14:17:52.786058-04:30	2	\N	\N	\N	\N	127.0.0.1
+197	1	2014-07-21 14:25:04.066044-04:30	2014-07-21 14:25:04.066044-04:30	1	\N	\N	\N	\N	127.0.0.1
+198	1	2014-07-21 16:24:32.509668-04:30	2014-07-21 16:24:32.509668-04:30	2	\N	\N	\N	\N	127.0.0.1
+199	1	2014-07-21 16:24:41.986128-04:30	2014-07-21 16:24:41.986128-04:30	1	\N	\N	\N	\N	127.0.0.1
+200	1	2014-07-21 16:31:55.939764-04:30	2014-07-21 16:31:55.939764-04:30	2	\N	\N	\N	\N	127.0.0.1
+201	1	2014-07-21 16:31:59.469777-04:30	2014-07-21 16:31:59.469777-04:30	1	\N	\N	\N	\N	127.0.0.1
+202	1	2014-07-21 16:33:19.451637-04:30	2014-07-21 16:33:19.451637-04:30	1	\N	\N	\N	\N	127.0.0.1
+203	1	2014-07-21 20:26:17.209052-04:30	2014-07-21 20:26:17.209052-04:30	1	\N	\N	\N	\N	127.0.0.1
+204	1	2014-07-22 10:38:41.233472-04:30	2014-07-22 10:38:41.233472-04:30	1	\N	\N	\N	\N	127.0.0.1
+205	1	2014-07-22 14:13:47.943663-04:30	2014-07-22 14:13:47.943663-04:30	1	\N	\N	\N	\N	127.0.0.1
+206	1	2014-07-22 15:42:05.90874-04:30	2014-07-22 15:42:05.90874-04:30	1	\N	\N	\N	\N	127.0.0.1
+207	1	2014-07-25 13:22:36.143585-04:30	2014-07-25 13:22:36.143585-04:30	1	\N	\N	\N	\N	127.0.0.1
+208	1	2014-07-25 14:40:25.005219-04:30	2014-07-25 14:40:25.005219-04:30	1	\N	\N	\N	\N	127.0.0.1
+209	1	2014-07-25 16:16:56.283462-04:30	2014-07-25 16:16:56.283462-04:30	1	\N	\N	\N	\N	127.0.0.1
+210	1	2014-07-25 18:17:38.103525-04:30	2014-07-25 18:17:38.103525-04:30	1	\N	\N	\N	\N	127.0.0.1
+211	1	2014-07-25 18:21:14.912417-04:30	2014-07-25 18:21:14.912417-04:30	1	\N	\N	\N	\N	127.0.0.1
+212	1	2014-07-25 19:20:56.643068-04:30	2014-07-25 19:20:56.643068-04:30	1	\N	\N	\N	\N	127.0.0.1
+213	1	2014-07-25 19:30:20.435413-04:30	2014-07-25 19:30:20.435413-04:30	1	\N	\N	\N	\N	127.0.0.1
+214	1	2014-07-26 12:52:24.795594-04:30	2014-07-26 12:52:24.795594-04:30	1	\N	\N	\N	\N	127.0.0.1
+215	1	2014-07-26 14:13:12.255888-04:30	2014-07-26 14:13:12.255888-04:30	1	\N	\N	\N	\N	127.0.0.1
+216	1	2014-07-26 16:36:37.5208-04:30	2014-07-26 16:36:37.5208-04:30	1	\N	\N	\N	\N	127.0.0.1
+217	1	2014-07-26 21:05:13.439739-04:30	2014-07-26 21:05:13.439739-04:30	1	\N	\N	\N	\N	127.0.0.1
+218	1	2014-07-26 22:32:49.524354-04:30	2014-07-26 22:32:49.524354-04:30	1	\N	\N	\N	\N	127.0.0.1
+219	1	2014-07-27 01:39:29.671238-04:30	2014-07-27 01:39:29.671238-04:30	1	\N	\N	\N	\N	127.0.0.1
+220	1	2014-07-27 13:44:06.62934-04:30	2014-07-27 13:44:06.62934-04:30	1	\N	\N	\N	\N	127.0.0.1
+221	1	2014-07-27 20:21:56.279664-04:30	2014-07-27 20:21:56.279664-04:30	1	\N	\N	\N	\N	127.0.0.1
+222	1	2014-07-28 12:23:32.839746-04:30	2014-07-28 12:23:32.839746-04:30	1	\N	\N	\N	\N	127.0.0.1
+223	1	2014-07-28 15:15:07.43481-04:30	2014-07-28 15:15:07.43481-04:30	1	\N	\N	\N	\N	127.0.0.1
+224	1	2014-07-28 18:31:45.097209-04:30	2014-07-28 18:31:45.097209-04:30	1	\N	\N	\N	\N	127.0.0.1
+225	1	2014-07-28 18:36:01.909448-04:30	2014-07-28 18:36:01.909448-04:30	1	\N	\N	\N	\N	127.0.0.1
+226	1	2014-07-29 00:24:49.01999-04:30	2014-07-29 00:24:49.01999-04:30	1	\N	\N	\N	\N	127.0.0.1
 \.
 
 
@@ -5771,7 +5805,7 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 -- Name: acceso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('acceso_id_seq', 192, true);
+SELECT pg_catalog.setval('acceso_id_seq', 226, true);
 
 
 --
@@ -5817,6 +5851,10 @@ COPY beneficiario (id, usuario_id, fecha_registro, fecha_modificado, titular_id,
 10	\N	2014-07-16 20:56:33.338986-04:30	2014-07-16 20:56:33.338986-04:30	7	26	M	1	\N	50
 1	\N	2014-06-02 18:45:57.537604-04:30	2014-06-02 18:45:57.537604-04:30	1	4	H	1	\N	40
 4	\N	2014-06-23 17:44:53.903527-04:30	2014-06-23 17:44:53.903527-04:30	1	6	H	1	\N	30
+11	\N	2014-07-21 19:02:19.376527-04:30	2014-07-21 19:02:19.376527-04:30	1	28	HO	2	\N	20
+12	\N	2014-07-21 20:08:13.770409-04:30	2014-07-21 20:08:13.770409-04:30	2	29	H	1	\N	0
+13	\N	2014-07-25 16:13:19.166188-04:30	2014-07-25 16:13:19.166188-04:30	9	31	M	1	\N	100
+14	\N	2014-07-25 19:44:12.733546-04:30	2014-07-25 19:44:12.733546-04:30	10	33	M	1	\N	100
 \.
 
 
@@ -5824,7 +5862,7 @@ COPY beneficiario (id, usuario_id, fecha_registro, fecha_modificado, titular_id,
 -- Name: beneficiario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('beneficiario_id_seq', 10, true);
+SELECT pg_catalog.setval('beneficiario_id_seq', 14, true);
 
 
 --
@@ -6158,7 +6196,8 @@ SELECT pg_catalog.setval('medicina_id_seq', 1, false);
 --
 
 COPY medico (id, usuario_id, fecha_registro, fecha_modificado, nacionalidad, cedula, rmpps, rif, nombre1, nombre2, apellido1, apellido2, sexo, celular, telefono, correo_electronico, observacion) FROM stdin;
-1	\N	2014-06-02 18:48:19.763325-04:30	2014-06-02 18:48:19.763325-04:30	v	1	1	1	Pedro	Jose	Perez	\N	M	\N	\N	\N	\N
+1	\N	2014-06-02 18:48:19.763325-04:30	2014-06-02 18:48:19.763325-04:30	v	1	1	1	PEDRO	JOSE	PEREZ	\N	M	\N	\N	\N	\N
+2	\N	2014-07-28 18:20:48.169269-04:30	2014-07-28 18:20:48.169269-04:30	V	12	12	12	CARLOS	\N	ESCALONA	\N	M	\N	\N	\N	\N
 \.
 
 
@@ -6166,7 +6205,7 @@ COPY medico (id, usuario_id, fecha_registro, fecha_modificado, nacionalidad, ced
 -- Name: medico_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('medico_id_seq', 1, true);
+SELECT pg_catalog.setval('medico_id_seq', 2, true);
 
 
 --
@@ -6190,7 +6229,6 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 14	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	14	Sistema	sistema/configuracion/	911	icon-wrench	1	1
 15	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	\N	\N	Configuraciones	#	800	icon-wrench	1	1
 16	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	15	Empresa	config/empresa/	876	icon-briefcase	1	1
-17	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	16	Sucursales	config/sucursal/listar/	802	icon-sitemap	1	1
 19	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	18	Profesion	config/profesion/listar	803	\N	1	1
 20	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	19	Cargo	config/cargo/listar	804	\N	1	1
 21	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	20	Cobertura	config/cobertura/listar	805	\N	1	1
@@ -6207,7 +6245,6 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 33	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	30	Exámenes Médicos 	solicitudes/examenes_medicos/listar	204	icon-th	1	1
 34	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	31	Solicitudes de Reembolso	solicitudes/reembolso/listar	205	icon-th	1	1
 35	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	32	Funeraria	solicitudes/funeraria/listar	206	icon-th	1	1
-31	\N	2014-03-16 13:26:21.282386-04:30	2014-03-16 13:26:21.282386-04:30	29	28	Atención Primaria	solicitudes/solicitud_servicio/listar	202	icon-th	1	1
 41	\N	2014-06-09 10:57:40.852716-04:30	2014-06-09 10:57:40.852716-04:30	31	38	Registro	solicitudes/solicitud_servicio/registro	302	icon-plus-sign	1	1
 42	\N	2014-06-09 11:28:23.150623-04:30	2014-06-09 11:28:23.150623-04:30	31	39	Aprobación	solicitudes/solicitud_servicio/aprobacion	303	icon-ok-sign	1	1
 43	\N	2014-06-09 11:28:56.829577-04:30	2014-06-09 11:28:56.829577-04:30	31	40	Contabilizar	solicitudes/solicitud_servicio/contabilizar	304	icon-check	1	1
@@ -6219,6 +6256,8 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 40	\N	2014-04-22 14:52:02.983257-04:30	2014-04-22 14:52:02.983257-04:30	36	37	Medicinas	proveedorsalud/medicina/	604	icon-th	1	1
 45	\N	2014-06-24 15:51:37.984221-04:30	2014-06-24 15:51:37.984221-04:30	36	42	Servicio	proveedorsalud/servicio/	605	icon-th	1	1
 46	\N	2014-06-24 23:52:34.310536-04:30	2014-06-24 23:52:34.310536-04:30	15	43	Tipo de Solicitudes	config/tiposolicitud/listar	810	icon-th	1	1
+31	\N	2014-03-16 13:26:21.282386-04:30	2014-03-16 13:26:21.282386-04:30	29	28	Atención Primaria	#	202	icon-th	1	1
+17	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	16	Sucursales	config/sucursal/listar/	802	icon-sitemap	1	1
 \.
 
 
@@ -22481,7 +22520,6 @@ SELECT pg_catalog.setval('perfil_id_seq', 3, true);
 --
 
 COPY persona (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1, nombre2, apellido1, apellido2, nacionalidad, sexo, fecha_nacimiento, pais_id, estado_id, municipio_id, parroquia_id, direccion_habitacion, hpais_id, hestado_id, hmunicipio_id, hparroquia_id, estado_civil, celular, telefono, correo_electronico, grupo_sanguineo, fotografia) FROM stdin;
-1	\N	2014-03-13 12:03:49.841971-04:30	2014-03-13 12:03:49.841971-04:30	20643647	Alexis	jose	Borges	\N	V	M	1990-12-11	240	69	223	28	Villa Araure 1 el bosque	240	69	223	28	S	\N	\N	\N	\N	default.png
 2	\N	2014-03-16 01:14:45.552613-04:30	2014-03-16 01:14:45.552613-04:30	16753367	Javier	Enrique	León	\N	V	M	1984-12-09	240	69	229	732	Av principal	240	69	229	732	c	04162546908	02556217013	\N	AB-	default.png
 3	\N	2014-03-17 19:22:19.405099-04:30	2014-03-17 19:22:19.405099-04:30	20543089	yelix	andreina	monsalve	la cruz	V	F	1990-03-01	240	69	229	52	las delicias	240	69	229	52	S	04165555555	\N	\N	AB-	default.png
 5	\N	2014-03-17 18:34:56.063814-04:30	2014-03-17 18:34:56.063814-04:30	20389587	Rahiber	jose	monsalve	Cardona	V	M	1980-04-01	20	8	250	11	Av principal	20	8	250	11	c	04165555555	02556217013	\N	AB-	default.png
@@ -22496,6 +22534,13 @@ COPY persona (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1,
 24	\N	2014-07-16 14:50:06.458048-04:30	2014-07-16 14:50:06.458048-04:30	49873948729	aaaaaaaaaaaaaaa	aaaaaaaaaaaa	aaaaaaaaaaaaaaaaaa	aaaaaaaaaaaaaaaa	V	M	2000-07-01	\N	\N	\N	\N	\N	\N	\N	\N	\N	V	32131231	3241233	\N	A	default.png
 25	\N	2014-07-16 14:51:09.835792-04:30	2014-07-16 14:51:09.835792-04:30	434534	kljkljkl	jkl	kjljkljklj	\N	V	M	2010-01-01	\N	\N	\N	\N	\N	\N	\N	\N	\N	c	343444	324423	\N	A	default.png
 26	\N	2014-07-16 20:56:33.338986-04:30	2014-07-16 20:56:33.338986-04:30	32413413	Maria	\N	Corina	Veia tv mientras estosxD	V	M	2010-12-01	\N	\N	\N	\N	\N	\N	\N	\N	\N	c	\N	\N	\N	N/A	default.png
+28	\N	2014-07-21 19:02:19.376527-04:30	2014-07-21 19:02:19.376527-04:30	34345345	Luis	\N	Lopez	\N	V	M	2000-06-01	\N	\N	\N	\N	\N	\N	\N	\N	\N	S	\N	\N	\N	N/A	default.png
+1	\N	2014-03-13 12:03:49.841971-04:30	2014-03-13 12:03:49.841971-04:30	20643647	Alexis	jose	Borges	\N	V	M	1990-12-11	240	69	223	28	Villa Araure 1 el bosque	240	69	223	28	S	04140718040	\N	\N	\N	default.png
+31	\N	2014-07-25 16:13:19.166188-04:30	2014-07-25 16:13:19.166188-04:30	5363919	GLADIS	COROMOTO	RIVERO	SOTELDO	V	F	1957-07-13	\N	\N	\N	\N	\N	\N	\N	\N	\N	S	04263094592	02563213878	\N	AB	default.png
+32	\N	2014-07-25 19:40:48.320933-04:30	2014-07-25 19:40:48.320933-04:30	20387902	santos	3322refddcf	toro	ochoa	V	M	1990-06-05	240	69	223	715	tecnologico calle cruz rojas bodeguita de fello	240	69	223	715	V	04140738920	02556641346	rafaeltoro@gmail.com	AB	5f239501b94bae568dca9370015cb339.jpg
+33	\N	2014-07-25 19:44:12.733546-04:30	2014-07-25 19:44:12.733546-04:30	9560082	nancy	beatriz	ochoa	\N	V	F	1963-07-02	\N	\N	\N	\N	\N	\N	\N	\N	\N	S	04140738920	02556641346	\N	AB	default.png
+29	\N	2014-07-21 20:08:13.770409-04:30	2014-07-21 20:08:13.770409-04:30	9876543	Sebastian	\N	Leon	\N	V	M	2014-02-04	\N	\N	\N	\N	\N	\N	\N	\N	\N	S	04143572664	\N	\N	AB	default.png
+30	\N	2014-07-25 16:10:45.301376-04:30	2014-07-25 16:10:45.301376-04:30	14888607	JORGE	LUIS	AZUAJE	RIVERO	V	M	1982-04-07	240	69	235	751	CALLE 13 ENTRE AV 2 Y 3	240	69	235	751	S	04162546908	02563213878	JORGEAZUAJE110@GMAIL.COM	A	default.png
 \.
 
 
@@ -22503,7 +22548,7 @@ COPY persona (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1,
 -- Name: persona_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('persona_id_seq', 26, true);
+SELECT pg_catalog.setval('persona_id_seq', 33, true);
 
 
 --
@@ -22708,7 +22753,9 @@ SELECT pg_catalog.setval('profesion_id_seq', 182, true);
 --
 
 COPY proveedor (id, usuario_id, fecha_registro, fecha_modificado, rif, razon_social, nombre_corto, pais_id, estado_id, municipio_id, parroquia_id, direccion, celular, telefono1, telefono2, fax, correo_electronico, observacion) FROM stdin;
-1	\N	2014-05-10 12:03:55.159164-04:30	2014-05-10 12:03:55.159164-04:30	g20082054	Centro medico de los llanos	Cemell	240	69	223	715	av las lagrimas	\N	02222	02222	02222	cemell@gmail.com	asdas
+1	\N	2014-05-10 12:03:55.159164-04:30	2014-05-10 12:03:55.159164-04:30	g20082054	CENTRO MEDICO DE LOS LLANOS	CEMELL	240	69	223	715	av las lagrimas	\N	02222	02222	02222	cemell@gmail.com	asdas
+5	\N	2014-07-28 18:02:07.563286-04:30	2014-07-28 18:02:07.563286-04:30	j20000	 POLICLINICA SAN JAVIER 	SAN JAVIER	240	69	223	715	Av. Andres Bello entre carr. 33 y 34 .	\N	0251-2736943	\N	\N	\N	\N
+3	\N	2014-07-28 17:59:34.253814-04:30	2014-07-28 17:59:34.253814-04:30	g20082055	HPO HOSPITAL DE OCCIDENTE C.A.	HPO	240	69	223	715	Av. Vencedores de Araure Araure Portuguesa 	\N	0255-6004760	\N	\N	\N	\N
 \.
 
 
@@ -22716,7 +22763,7 @@ COPY proveedor (id, usuario_id, fecha_registro, fecha_modificado, rif, razon_soc
 -- Name: proveedor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('proveedor_id_seq', 1, true);
+SELECT pg_catalog.setval('proveedor_id_seq', 5, true);
 
 
 --
@@ -22956,7 +23003,29 @@ SELECT pg_catalog.setval('reembolso_id_seq', 1, false);
 --
 
 COPY servicio (id, usuario_id, fecha_registro, fecha_modificado, descripcion, observacion) FROM stdin;
-1	\N	2014-06-02 18:50:38.059846-04:30	2014-06-02 18:50:38.059846-04:30	Consulta	\N
+1	1	2014-06-02 18:50:38.059846-04:30	2014-06-02 18:50:38.059846-04:30	CONSULTA CARDIOLOGIA ADULTOS	\N
+2	1	2014-07-27 00:54:00.9342-04:30	2014-07-27 00:54:00.9342-04:30	CONSULTA CARDIOLOGIA NIÑOS	\N
+3	1	2014-07-27 00:55:26.120865-04:30	2014-07-27 00:55:26.120865-04:30	CONSULTA DERMATOLOGIA 	\N
+4	1	2014-07-27 00:55:45.603736-04:30	2014-07-27 00:55:45.603736-04:30	CONSULTA ENDOCRINOLOGIA 	\N
+5	1	2014-07-27 00:55:58.550819-04:30	2014-07-27 00:55:58.550819-04:30	CONSULTA GASTROENTEROLOGIA	\N
+6	1	2014-07-27 00:56:06.170791-04:30	2014-07-27 00:56:06.170791-04:30	CONSULTA GINECOLOGIA 	\N
+7	1	2014-07-27 00:56:17.11789-04:30	2014-07-27 00:56:17.11789-04:30	CONSULTA HEMATOLOGIA	\N
+9	1	2014-07-27 00:56:39.504461-04:30	2014-07-27 00:56:39.504461-04:30	CONSULTA INMUNOLOGIA	\N
+8	1	2014-07-27 00:56:28.363577-04:30	2014-07-27 00:56:28.363577-04:30	CONSULTA INFECTOLOGIA	\N
+10	1	2014-07-27 00:57:21.38009-04:30	2014-07-27 00:57:21.38009-04:30	CONSULTA MEDICINA INTERNA	\N
+11	1	2014-07-27 00:57:30.597743-04:30	2014-07-27 00:57:30.597743-04:30	CONSULTA NEFROLOGIA 	\N
+12	1	2014-07-27 00:57:39.403222-04:30	2014-07-27 00:57:39.403222-04:30	CONSULTA NEUMONOLOGIA 	\N
+13	1	2014-07-27 00:57:50.400941-04:30	2014-07-27 00:57:50.400941-04:30	CONSULTA NEUROLOGIA	\N
+14	1	2014-07-27 00:57:59.527971-04:30	2014-07-27 00:57:59.527971-04:30	CONSULTA OFTALMOLOGIA 	\N
+15	1	2014-07-27 00:58:24.756813-04:30	2014-07-27 00:58:24.756813-04:30	CONSULTA ONCOLOGIA CLINICA	\N
+16	1	2014-07-27 00:58:41.110587-04:30	2014-07-27 00:58:41.110587-04:30	CONSULTA OTORRINOLARINGOLOGIA	\N
+17	1	2014-07-27 00:58:51.403902-04:30	2014-07-27 00:58:51.403902-04:30	CONSULTA PEDIATRIA	\N
+18	1	2014-07-27 00:59:21.0572-04:30	2014-07-27 00:59:21.0572-04:30	CONSULTA PSIQUIATRIA 	\N
+19	1	2014-07-27 00:59:30.202777-04:30	2014-07-27 00:59:30.202777-04:30	CONSULTA REMAUTOLOGIA	\N
+20	1	2014-07-27 00:59:45.70884-04:30	2014-07-27 00:59:45.70884-04:30	CONSULTA TRAUMATOLOGIA 	\N
+21	1	2014-07-27 01:00:53.029261-04:30	2014-07-27 01:00:53.029261-04:30	CONSULTA UROLOGIA 	\N
+22	1	2014-07-27 01:01:08.825664-04:30	2014-07-27 01:01:08.825664-04:30	CONSULTA NUTRICION Y DIETETICA	\N
+23	1	2014-07-27 01:01:33.357318-04:30	2014-07-27 01:01:33.357318-04:30	CONSULTA FISIOTERAPIA Y REHABILITACION	\N
 \.
 
 
@@ -22964,7 +23033,7 @@ COPY servicio (id, usuario_id, fecha_registro, fecha_modificado, descripcion, ob
 -- Name: servicio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('servicio_id_seq', 1, true);
+SELECT pg_catalog.setval('servicio_id_seq', 23, true);
 
 
 --
@@ -23062,14 +23131,7 @@ SELECT pg_catalog.setval('solicitud_medicina_id_seq', 1, false);
 --
 
 COPY solicitud_servicio (id, usuario_id, fecha_registro, fecha_modificado, estado_solicitud, tiposolicitud_id, fecha_solicitud, codigo_solicitud, titular_id, beneficiario_id, beneficiario_tipo, patologia_id, proveedor_id, medico_id, fecha_vencimiento, servicio_id, observacion) FROM stdin;
-11	\N	2014-06-02 18:50:47.769075-04:30	2014-06-02 18:50:47.769075-04:30	R	1	2014-06-02	SASCM-0001	1	1	1	14189	1	1	1900-01-01	1	asd
-12	\N	2014-06-02 18:51:21.767053-04:30	2014-06-02 18:51:21.767053-04:30	A	1	2014-06-02	SASCM-0002	1	1	1	14189	1	1	1900-01-01	1	asd
-13	\N	2014-06-09 19:41:36.084029-04:30	2014-06-09 19:41:36.084029-04:30	A	2	2014-06-09	SASCM-0003	1	1	1	14189	1	1	1900-01-01	1	asd
-16	\N	2014-06-09 19:41:36.084029-04:30	2014-06-09 19:41:36.084029-04:30	R	1	2014-06-23	SASCM-0004	1	1	1	16802	1	1	2014-06-23	1	prueba
-17	\N	2014-06-23 17:29:07.203539-04:30	2014-06-23 17:29:07.203539-04:30	R	1	2014-06-23	SASCM-0005	1	1	1	18129	1	1	2014-06-23	1	probando 2
-20	\N	2014-06-23 19:36:22.226111-04:30	2014-06-23 19:36:22.226111-04:30	R	1	2014-06-23	SASCM-0006	1	1	1	24763	1	1	2014-06-23	1	Pa
-21	\N	2014-07-07 18:24:51.971522-04:30	2014-07-07 18:24:51.971522-04:30	R	1	2014-07-07	SASCM-0007	1	4	1	16798	1	1	2014-07-07	1	asdasd
-22	\N	2014-07-07 19:36:32.273039-04:30	2014-07-07 19:36:32.273039-04:30	R	1	2014-07-07	SASCM-0008	1	4	1	14556	1	1	2014-07-07	1	pepepe
+2	1	2014-07-27 01:41:08.508088-04:30	2014-07-27 01:41:08.508088-04:30	R	1	1900-01-01	SASCM-0001	9	13	1	16802	1	1	2014-07-27	10	s
 \.
 
 
@@ -23077,7 +23139,7 @@ COPY solicitud_servicio (id, usuario_id, fecha_registro, fecha_modificado, estad
 -- Name: solicitud_servicio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('solicitud_servicio_id_seq', 22, true);
+SELECT pg_catalog.setval('solicitud_servicio_id_seq', 2, true);
 
 
 --
@@ -23122,11 +23184,12 @@ SELECT pg_catalog.setval('tipoempleado_id_seq', 8, true);
 --
 
 COPY tiposolicitud (id, usuario_id, fecha_registro, fecha_modificado, nombre, observacion, correlativo) FROM stdin;
-1	\N	2014-06-02 16:39:48.736278-04:30	2014-06-02 16:39:48.736278-04:30	Consulta Medica	\N	SASCM-0
-2	\N	2014-06-02 16:42:11.530463-04:30	2014-06-02 16:42:11.530463-04:30	Consulta Odontologica	\N	SASCO-0
-3	\N	2014-06-02 16:42:25.511351-04:30	2014-06-02 16:42:25.511351-04:30	Examenes de Laboratorio	\N	SASEL-0
-4	\N	2014-06-02 16:42:33.182268-04:30	2014-06-02 16:42:33.182268-04:30	Examenes Especiales	\N	SASEE-0
-5	\N	2014-06-02 16:44:56.932481-04:30	2014-06-02 16:44:56.932481-04:30	Servicios Funerarios	\N	SASSF-0
+1	\N	2014-06-02 16:39:48.736278-04:30	2014-06-02 16:39:48.736278-04:30	CONSULTA MEDICA	\N	SASCM-0
+2	\N	2014-06-02 16:42:11.530463-04:30	2014-06-02 16:42:11.530463-04:30	CONSULTA ODONTOLOGICA	\N	SASCO-0
+3	\N	2014-06-02 16:42:25.511351-04:30	2014-06-02 16:42:25.511351-04:30	EXAMENES DE LABORATORIO	\N	SASEL-0
+4	\N	2014-06-02 16:42:33.182268-04:30	2014-06-02 16:42:33.182268-04:30	EXAMENES ESPECIALES	\N	SASEE-0
+5	\N	2014-06-02 16:44:56.932481-04:30	2014-06-02 16:44:56.932481-04:30	SERVICIOS FUNERARIOS	\N	SASSF-0
+6	\N	2014-07-29 01:01:02.633039-04:30	2014-07-29 01:01:02.633039-04:30	CARTA AVAL	\N	SASCA-0
 \.
 
 
@@ -23134,7 +23197,7 @@ COPY tiposolicitud (id, usuario_id, fecha_registro, fecha_modificado, nombre, ob
 -- Name: tiposolicitud_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('tiposolicitud_id_seq', 5, true);
+SELECT pg_catalog.setval('tiposolicitud_id_seq', 6, true);
 
 
 --
@@ -23149,6 +23212,8 @@ COPY titular (id, usuario_id, fecha_registro, fecha_modificado, tipoempleado_id,
 6	\N	2014-07-14 19:53:32.145741-04:30	2014-07-14 19:53:32.145741-04:30	1	13	1900-01-01	127	41	16	Todo al pelo
 7	\N	2014-07-15 08:35:08.010317-04:30	2014-07-15 08:35:08.010317-04:30	1	14	1900-01-01	46	42	16	lalaalal alala alaala
 8	\N	2014-07-15 21:01:56.580292-04:30	2014-07-15 21:01:56.580292-04:30	2	15	2014-01-07	1	42	20	NA
+9	\N	2014-07-25 16:10:45.301376-04:30	2014-07-25 16:10:45.301376-04:30	1	30	2012-10-20	22	15	16	P
+10	\N	2014-07-25 19:40:48.320933-04:30	2014-07-25 19:40:48.320933-04:30	1	32	2009-03-12	116	13	16	eaereear
 \.
 
 
@@ -23156,7 +23221,7 @@ COPY titular (id, usuario_id, fecha_registro, fecha_modificado, tipoempleado_id,
 -- Name: titular_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('titular_id_seq', 8, true);
+SELECT pg_catalog.setval('titular_id_seq', 10, true);
 
 
 --
@@ -23181,7 +23246,7 @@ SELECT pg_catalog.setval('usuario_id_seq', 4, true);
 SET search_path = smsd, pg_catalog;
 
 --
--- Data for Name: daemons; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
+-- Data for Name: daemons; Type: TABLE DATA; Schema: smsd; Owner: jelitox
 --
 
 COPY daemons ("Start", "Info") FROM stdin;
@@ -23189,7 +23254,7 @@ COPY daemons ("Start", "Info") FROM stdin;
 
 
 --
--- Data for Name: gammu; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
+-- Data for Name: gammu; Type: TABLE DATA; Schema: smsd; Owner: jelitox
 --
 
 COPY gammu ("Version") FROM stdin;
@@ -23198,7 +23263,7 @@ COPY gammu ("Version") FROM stdin;
 
 
 --
--- Data for Name: inbox; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
+-- Data for Name: inbox; Type: TABLE DATA; Schema: smsd; Owner: jelitox
 --
 
 COPY inbox ("UpdatedInDB", "ReceivingDateTime", "Text", "SenderNumber", "Coding", "UDH", "SMSCNumber", "Class", "TextDecoded", "ID", "RecipientID", "Processed") FROM stdin;
@@ -23206,14 +23271,14 @@ COPY inbox ("UpdatedInDB", "ReceivingDateTime", "Text", "SenderNumber", "Coding"
 
 
 --
--- Name: inbox_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: arrozalba
+-- Name: inbox_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: jelitox
 --
 
 SELECT pg_catalog.setval('"inbox_ID_seq"', 1, false);
 
 
 --
--- Data for Name: outbox; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
+-- Data for Name: outbox; Type: TABLE DATA; Schema: smsd; Owner: jelitox
 --
 
 COPY outbox ("UpdatedInDB", "InsertIntoDB", "SendingDateTime", "SendBefore", "SendAfter", "Text", "DestinationNumber", "Coding", "UDH", "Class", "TextDecoded", "ID", "MultiPart", "RelativeValidity", "SenderID", "SendingTimeOut", "DeliveryReport", "CreatorID") FROM stdin;
@@ -23221,14 +23286,14 @@ COPY outbox ("UpdatedInDB", "InsertIntoDB", "SendingDateTime", "SendBefore", "Se
 
 
 --
--- Name: outbox_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: arrozalba
+-- Name: outbox_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: jelitox
 --
 
 SELECT pg_catalog.setval('"outbox_ID_seq"', 1, false);
 
 
 --
--- Data for Name: outbox_multipart; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
+-- Data for Name: outbox_multipart; Type: TABLE DATA; Schema: smsd; Owner: jelitox
 --
 
 COPY outbox_multipart ("Text", "Coding", "UDH", "Class", "TextDecoded", "ID", "SequencePosition") FROM stdin;
@@ -23236,14 +23301,14 @@ COPY outbox_multipart ("Text", "Coding", "UDH", "Class", "TextDecoded", "ID", "S
 
 
 --
--- Name: outbox_multipart_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: arrozalba
+-- Name: outbox_multipart_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: jelitox
 --
 
 SELECT pg_catalog.setval('"outbox_multipart_ID_seq"', 1, false);
 
 
 --
--- Data for Name: pbk; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
+-- Data for Name: pbk; Type: TABLE DATA; Schema: smsd; Owner: jelitox
 --
 
 COPY pbk ("ID", "GroupID", "Name", "Number") FROM stdin;
@@ -23251,14 +23316,14 @@ COPY pbk ("ID", "GroupID", "Name", "Number") FROM stdin;
 
 
 --
--- Name: pbk_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: arrozalba
+-- Name: pbk_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: jelitox
 --
 
 SELECT pg_catalog.setval('"pbk_ID_seq"', 1, false);
 
 
 --
--- Data for Name: pbk_groups; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
+-- Data for Name: pbk_groups; Type: TABLE DATA; Schema: smsd; Owner: jelitox
 --
 
 COPY pbk_groups ("Name", "ID") FROM stdin;
@@ -23266,14 +23331,14 @@ COPY pbk_groups ("Name", "ID") FROM stdin;
 
 
 --
--- Name: pbk_groups_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: arrozalba
+-- Name: pbk_groups_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: jelitox
 --
 
 SELECT pg_catalog.setval('"pbk_groups_ID_seq"', 1, false);
 
 
 --
--- Data for Name: phones; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
+-- Data for Name: phones; Type: TABLE DATA; Schema: smsd; Owner: jelitox
 --
 
 COPY phones ("ID", "UpdatedInDB", "InsertIntoDB", "TimeOut", "Send", "Receive", "IMEI", "Client", "Battery", "Signal", "Sent", "Received") FROM stdin;
@@ -23281,7 +23346,7 @@ COPY phones ("ID", "UpdatedInDB", "InsertIntoDB", "TimeOut", "Send", "Receive", 
 
 
 --
--- Data for Name: sentitems; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
+-- Data for Name: sentitems; Type: TABLE DATA; Schema: smsd; Owner: jelitox
 --
 
 COPY sentitems ("UpdatedInDB", "InsertIntoDB", "SendingDateTime", "DeliveryDateTime", "Text", "DestinationNumber", "Coding", "UDH", "SMSCNumber", "Class", "TextDecoded", "ID", "SenderID", "SequencePosition", "Status", "StatusError", "TPMR", "RelativeValidity", "CreatorID") FROM stdin;
@@ -23289,7 +23354,7 @@ COPY sentitems ("UpdatedInDB", "InsertIntoDB", "SendingDateTime", "DeliveryDateT
 
 
 --
--- Name: sentitems_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: arrozalba
+-- Name: sentitems_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: jelitox
 --
 
 SELECT pg_catalog.setval('"sentitems_ID_seq"', 1, false);
@@ -23950,7 +24015,7 @@ ALTER TABLE ONLY usuario
 SET search_path = smsd, pg_catalog;
 
 --
--- Name: inbox_pkey; Type: CONSTRAINT; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: inbox_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 ALTER TABLE ONLY inbox
@@ -23958,7 +24023,7 @@ ALTER TABLE ONLY inbox
 
 
 --
--- Name: outbox_multipart_pkey; Type: CONSTRAINT; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: outbox_multipart_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 ALTER TABLE ONLY outbox_multipart
@@ -23966,7 +24031,7 @@ ALTER TABLE ONLY outbox_multipart
 
 
 --
--- Name: outbox_pkey; Type: CONSTRAINT; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: outbox_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 ALTER TABLE ONLY outbox
@@ -23974,7 +24039,7 @@ ALTER TABLE ONLY outbox
 
 
 --
--- Name: pbk_groups_pkey; Type: CONSTRAINT; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: pbk_groups_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 ALTER TABLE ONLY pbk_groups
@@ -23982,7 +24047,7 @@ ALTER TABLE ONLY pbk_groups
 
 
 --
--- Name: pbk_pkey; Type: CONSTRAINT; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: pbk_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 ALTER TABLE ONLY pbk
@@ -23990,7 +24055,7 @@ ALTER TABLE ONLY pbk
 
 
 --
--- Name: phones_pkey; Type: CONSTRAINT; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: phones_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 ALTER TABLE ONLY phones
@@ -23998,7 +24063,7 @@ ALTER TABLE ONLY phones
 
 
 --
--- Name: sentitems_pkey; Type: CONSTRAINT; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: sentitems_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 ALTER TABLE ONLY sentitems
@@ -24038,42 +24103,42 @@ CREATE INDEX usuario_sucursal_idx ON usuario USING btree (sucursal_id);
 SET search_path = smsd, pg_catalog;
 
 --
--- Name: outbox_date; Type: INDEX; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: outbox_date; Type: INDEX; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE INDEX outbox_date ON outbox USING btree ("SendingDateTime", "SendingTimeOut");
 
 
 --
--- Name: outbox_sender; Type: INDEX; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: outbox_sender; Type: INDEX; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE INDEX outbox_sender ON outbox USING btree ("SenderID");
 
 
 --
--- Name: sentitems_date; Type: INDEX; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: sentitems_date; Type: INDEX; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE INDEX sentitems_date ON sentitems USING btree ("DeliveryDateTime");
 
 
 --
--- Name: sentitems_dest; Type: INDEX; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: sentitems_dest; Type: INDEX; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE INDEX sentitems_dest ON sentitems USING btree ("DestinationNumber");
 
 
 --
--- Name: sentitems_sender; Type: INDEX; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: sentitems_sender; Type: INDEX; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE INDEX sentitems_sender ON sentitems USING btree ("SenderID");
 
 
 --
--- Name: sentitems_tpmr; Type: INDEX; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: sentitems_tpmr; Type: INDEX; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE INDEX sentitems_tpmr ON sentitems USING btree ("TPMR");
@@ -24091,28 +24156,28 @@ CREATE TRIGGER trg_usuario AFTER INSERT OR DELETE OR UPDATE ON usuario FOR EACH 
 SET search_path = smsd, pg_catalog;
 
 --
--- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: arrozalba
+-- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: jelitox
 --
 
 CREATE TRIGGER update_timestamp BEFORE UPDATE ON inbox FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
 
 
 --
--- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: arrozalba
+-- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: jelitox
 --
 
 CREATE TRIGGER update_timestamp BEFORE UPDATE ON outbox FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
 
 
 --
--- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: arrozalba
+-- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: jelitox
 --
 
 CREATE TRIGGER update_timestamp BEFORE UPDATE ON phones FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
 
 
 --
--- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: arrozalba
+-- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: jelitox
 --
 
 CREATE TRIGGER update_timestamp BEFORE UPDATE ON sentitems FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
