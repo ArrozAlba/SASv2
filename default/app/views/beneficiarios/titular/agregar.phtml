@@ -141,7 +141,7 @@
                 </div>
                 <div class="row-fluid">
                     <div class="span12">
-						<?php echo DwForm::textarea('titular.observacion', array('class'=>'input-xxlarge input-required mask-alphanum show-error'), NULL, 'Observación'); ?>
+						<?php echo DwForm::textarea('titular.observacion', array('class'=>'input-xxlarge mask-alphanum show-error'), NULL, 'Observación'); ?>
                     </div>
                 </div>
             </div><!--Cierre del tab3-->
@@ -289,13 +289,8 @@ $(function(){
     cedula.maxLength = 8;
     telefono.maxLength = 11;
     celular.maxLength = 11;
-
-
 })
 </script>
-
-</script>
-
 <!-- Script para obtener por Ajax el departamento en funcion de las Upsas  -->
 <script type='text/javascript'>
 
