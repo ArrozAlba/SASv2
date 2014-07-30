@@ -143,7 +143,7 @@ from beneficiario,persona where  beneficiario.titular_id = '{$titular_id}' and b
 
     
     /**
-     * Método para obtener la información de un usuario
+     * Método para obtener la información de un beneficiario solo la informacion basica a traves de su id
      * @return type
      */
     public function getInformacionbeneficiario($beneficiario) {
@@ -151,27 +151,24 @@ from beneficiario,persona where  beneficiario.titular_id = '{$titular_id}' and b
         if(!$beneficiario) {
             return NULL;
         }
-        $columns = 'beneficiario.*, persona.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';
+        $columns = 'beneficiario.*, persona.*';
         $join = 'INNER JOIN persona ON persona.id = beneficiario.persona_id ';        
-        $join.= 'INNER JOIN tipoempleado  ON  beneficiario.tipoempleado_id = tipoempleado.id ';   
-        $join.= 'INNER JOIN departamento  ON  beneficiario.departamento_id = departamento.id ';
         $condicion = "beneficiario.id = $beneficiario";        
         return $this->find_first("columns: $columns", "join: $join", "conditions: $condicion");
     } 
 
 
-//------ Listado de los beneficiarios de un titular en especificoooo ----- 16/07/2014
+//------ Listado de todos los beneficiarios de un titular en especificoooo ----- 16/07/2014 
     public function getListadoBeneTitular($titular){
         $page=0;
         $titular = Filter::get($titular, 'int');
         if(!$titular) {
             return NULL;
         }
-        $columns = 'persona.cedula, persona.nombre1, persona.nombre2, persona.apellido1, persona.fecha_nacimiento, persona.nacionalidad, persona.apellido2, persona.sexo, beneficiario.parentesco,beneficiario.participacion, beneficiario.id, beneficiario_tipo.descripcion';        
+        $columns = 'DATE_PART(\'year\', now()) - DATE_PART(\'year\', persona.fecha_nacimiento) as edad,persona.cedula, persona.nombre1, persona.nombre2, persona.apellido1, persona.fecha_nacimiento, persona.nacionalidad, persona.apellido2, persona.sexo, beneficiario.parentesco,beneficiario.participacion, beneficiario.id, beneficiario_tipo.descripcion';
         $join = 'INNER JOIN persona ON persona.id = beneficiario.persona_id ';
         $join.= 'INNER JOIN beneficiario_tipo ON beneficiario.beneficiario_tipo_id = beneficiario_tipo.id ';
         $condicion = "beneficiario.titular_id = $titular";
- 
         return $this->find("columns: $columns", "join: $join","conditions: $condicion");
     }
 }

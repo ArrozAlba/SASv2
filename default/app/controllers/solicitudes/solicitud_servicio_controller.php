@@ -165,6 +165,11 @@ class SolicitudServicioController extends BackendController {
         $this->nacionalidad = $solicitud_servicio->nacionalidad;        
         $this->sexo = $solicitud_servicio->sexo;  
         $this->idtitular = $solicitud_servicio->idtitular;
+        $this->bene = $solicitud_servicio->beneficiario_id;
+        $this->medico = strtoupper($solicitud_servicio->nombrem1." ".$solicitud_servicio->nombrem2." ".$solicitud_servicio->apellidom1." ".$solicitud_servicio->apellidom2);
+        $this->clinica = strtoupper($solicitud_servicio->proveedor);
+        $this->servicio = strtoupper($solicitud_servicio->servicio);
+        $this->direccion = $solicitud_servicio->direccionp;
 
         //llamada a otra funcion, ya que no logre un solo query para ese reportee! :S
         $titular = new titular();
@@ -176,8 +181,16 @@ class SolicitudServicioController extends BackendController {
         $this->pais_laboral = strtoupper($titular->paiss);
         $this->cargo = strtoupper($titular->cargo);
         //instanciando la clase beneficiario 
-        $beneficiario = new beneficiario();
-        $this->beneficiarios = $beneficiario->getListadoBeneTitular($id);
+        
+        $beneficiarios = new beneficiario();
+        $beneficiarios->getInformacionbeneficiario($this->bene);
+        $this->nombresb = strtoupper($beneficiarios->nombre1." ".$beneficiarios->nombre2);
+        $this->apellidosb = strtoupper($beneficiarios->apellido1." ".$beneficiarios->apellido2);
+        $this->cedulab = $beneficiarios->cedula;
+        $this->parentesco = $beneficiarios->parentesco;
+ 
+
+
     }
     /**
      * Método para editar
@@ -227,3 +240,4 @@ class SolicitudServicioController extends BackendController {
         return DwRedirect::toAction('listar');
     }
 }
+

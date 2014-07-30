@@ -4,10 +4,6 @@ ob_end_clean();
 Load::lib('pdf_cabecera');
 $pdf=new PDF('P','mm','letter');
 //Definiendo las fechas
-$d= "DÍA";
-$dia = utf8_decode($d);
-$a= "AÑO";  
-$año = utf8_decode($a);
 $pdf->Open();
 $pdf->AliasNbPages();
 $pdf->AddPage();
@@ -23,9 +19,9 @@ $Fecha=date("d/m/Y");
 $pdf->Cell(152);
 $pdf->Cell(45,6,'FECHA',1,1,'C',true);
 $pdf->Cell(154);
-$pdf->Cell(15,6,$dia,1,0,'C',true);
+$pdf->Cell(15,6,utf8_decode("DÍA"),1,0,'C',true);
 $pdf->Cell(15,6,'MES',1,0,'C',true);
-$pdf->Cell(15,6,$año,1,1,'C',true);
+$pdf->Cell(15,6,utf8_decode("AÑO"),1,1,'C',true);
 
 //datos del titular 
 $pdf->Cell(45,6,'DATOS DEL TITULAR',1,0,'C',true);
@@ -59,7 +55,7 @@ $pdf->SetFont('Times','',9);
         $elYear=substr($fecha_nac,0,4);
         $FechaNac=$elDia."-".$elMes."-".$elYear;        
     }
-$edad= "";
+//$edad= "";
 $pdf->Cell(30,6,$FechaNac,1,0,'C',true);
 $pdf->Cell(14,6,$edad,1,0,'C',true);
 $pdf->Cell(46,6,$municipio,1,0,'C',true);
@@ -117,7 +113,6 @@ $pdf->SetFont('Times','',8);
 
 
 foreach($beneficiarios as $bene){
-$edad = 0;
 $pdf->Cell(80,6,utf8_decode($bene->nombre1.' '.$bene->nombre2.' '.$bene->apellido1.' '.$bene->apellido2),1,0,'C',true);
         $elDia=substr($bene->fecha_nacimiento,8,2);
         $elMes=substr($bene->fecha_nacimiento,5,2);

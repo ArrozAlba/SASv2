@@ -17,8 +17,6 @@ $Fecha=$fecha_sol;
     $elMes=substr($Fecha,5,2);
     $elYear=substr($Fecha,0,4);
 $pdf->Cell(152);
-$pdf->Cell(45,6,'FECHA',1,1,'C',true);
-$pdf->Cell(154);
 $pdf->Cell(15,6,utf8_decode("DÍA"),1,0,'C',true);
 $pdf->Cell(15,6,'MES',1,0,'C',true);
 $pdf->Cell(15,6,utf8_decode("AÑO"),1,1,'C',true);
@@ -48,51 +46,61 @@ $pdf->Cell(28,6,utf8_decode('UPSA/SEDE'),1,0,'C',true);
 $pdf->SetFont('Times','',9);
 $pdf->Cell(45,6,$upsa,1,1,'C',true);//sexo
 
-
+// ENCABEZZDO DATOS BENEFICIARIOS
 $pdf->Ln(3);
 $pdf->SetFont('Times','B',10);  
 $pdf->Cell(199,6,utf8_decode("DATOS DEL BENEFICIARIO"),1,1,'C',true);
-$pdf->SetFont('Times','',9);
-$pdf->Cell(199,6,utf8_decode('Dirección: '),1,1,'L',true);
-
-$pdf->Cell(28,6,utf8_decode('Pais: '),1,0,'L',true);   
-$pdf->Cell(34,6,utf8_decode('Estado: '),1,0,'L',true);
-$pdf->Cell(63,6,utf8_decode('Parroquia: '),1,0,'L',true);
-$pdf->Cell(74,6,'E-mail: '.' ',1,1,'L',true);
+$pdf->Cell(80,6,'APELLIDO(S) Y NOMBRE(S)',1,0,'C',true);
+$pdf->Cell(46,6,utf8_decode('CÉDULA DE IDENTIDAD'),1,0,'C',true);
+$pdf->Cell(28,6,'SEXO',1,0,'C',true);
+$pdf->Cell(45,6,utf8_decode('PARENTESCO'),1,1,'C',true);
 $pdf->SetFont('Times','B',9);
+//VARIABLES datos de beneficiarios
+$pdf->SetFont('Times','',9);
+$pdf->Cell(80,6,utf8_decode($nombresb.' '.$apellidosb),1,0,'C',true);
+$pdf->Cell(46,6,$nacionalidad."-".$cedulab,1,0,'C',true);
+$pdf->Cell(28,6,$sexo,1,0,'C',true);//sexo
+$pdf->Cell(45,6,$parentesco,1,1,'C',true);
+$pdf->Ln(3);
+$pdf->SetFont('Times','B',10);
+//datos de clinica
+$pdf->Cell(100,6,'CLINICA O CENTRO HOSPITALARIO',1,0,'C',true);
+$pdf->Cell(99,6,utf8_decode('DIRECCION'),1,1,'C',true);
+$pdf->SetFont('Times','',9);
+$pdf->Cell(100,6,utf8_decode($clinica),1,0,'C',true);
+$ciudad = "";
+$pdf->Cell(99,6,$direccion,1,1,'C',true);
+//datos de medico
+$pdf->SetFont('Times','B',10);
+$pdf->Cell(100,6,'MEDICO ESPECIALISTA',1,0,'C',true);
+$pdf->Cell(99,6,utf8_decode('SERVICIO'),1,1,'C',true);
+$pdf->SetFont('Times','',9);
+$pdf->Cell(100,6,utf8_decode($medico),1,0,'C',true);
+$pdf->Cell(99,6,$servicio,1,1,'C',true);
+$pdf->SetFont('Times','B',10);
+$pdf->Ln(3);
+$pdf->Cell(199,6,'MOTIVO DE LA CONSULTA: ','C',1,'C',true);
+$pdf->Cell(199,6,'','T',1,'L',true);
+$pdf->Cell(199,6,'','T',1,'L',true);
+$pdf->Cell(199,6,'','T',1,'L',true);
+$pdf->Cell(199,6,'','T',1,'L',true);
 
-//datos de beneficiarios
+$pdf->Cell(199,6,utf8_decode('DIAGNOSTICO:'),'C',1,'C',true);
+$pdf->Cell(199,6,'','T',1,'L',true);
+$pdf->Cell(199,6,'','T',1,'L',true);
+$pdf->Cell(199,6,'','T',1,'L',true);
+$pdf->Cell(199,6,'','T',1,'L',true);
+
 
 $pdf->Ln(3);
-$pdf->SetFont('Times','B',10);  
+$pdf->Cell(199,6,utf8_decode('ESTUDIO O PROCEDIMIENTO PRACTICADOS EN CONSULTA MEDICA (ANEXAR SOPORTES EN ORIGINAL)'),1,1,'C',true);
+$pdf->Cell(65,6,'Medico Tratante Firma y Sello',1,0,'C',true);
+$pdf->Cell(65,6,'Firma del Paciente',1,0,'C',true);
+$pdf->Cell(69,6,'Autorizado por Autogestion de Salud',1,1,'C',true);
 
-
-$pdf->Cell(199,6,'MOTIVO DE LA CONSULTA: ','C',1,'L',true);
-$pdf->Cell(199,6,'','T',1,'L',true);
-$pdf->Cell(199,6,'','T',1,'L',true);
-$pdf->Cell(199,6,'','T',1,'L',true);
-
-
-    $pdf->SetFont('Times','B',10);
-    $pdf->Ln(2);
-    $pdf->Cell(99,6,'TITULAR',0,0,'L',true);
-    $pdf->Cell(35,6,'REGISTRADO POR:  ',0,0,'L',true);
-    $pdf->SetFont('Times','',10);
-    $pdf->Cell(65,6,'COORDINADOR',0,1,'L',true);
-    $pdf->SetFont('Times','B',10);
-    $pdf->Cell(99,6,'FIRMA Y HUELLA',0,0,'L',true);
-    $pdf->Cell(100,6,'FIRMA Y SELLO',0,1,'L',true); 
-    $pdf->Cell(99,6,' ','0',0,'L',true);
-    $pdf->Cell(100,6,' ','0',1,'L',true);
-    $pdf->Cell(100,6,' ','0',1,'L',true);
-    $pdf->Cell(100,6,' ','0',1,'L',true);
-
-
-
-
-
-
-
+$pdf->Cell(65,15,'',1,0,'C',true);
+$pdf->Cell(65,15,'',1,0,'C',true);
+$pdf->Cell(69,15,'',1,1,'C',true);
 
 $pdf->Output();
 
