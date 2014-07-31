@@ -79,6 +79,9 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
     line-height: 17px;
     margin-bottom: 2px;
 }
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .mayus-input {
+    text-transform: uppercase;
+}
 .nav-tabs li a, .nav-pills li a, .accordion-heading a { font-size: 14px !important}
 .bar { height: 17px }
 .dw-picture-profile { max-width: 200px}
