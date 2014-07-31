@@ -47,7 +47,7 @@
                         <td><?php echo ($solicitud_servicio->estado_solicitud == 'R') ? '<span class="label label-success" title="'.$solicitud_servicio->tiposolicitud.'" rel="tooltip">POR APROBAR</span>' : '<span class="label label-important" title="'.$solicitud_servicio->estado_solicitud.'" rel="tooltip">APROBADA</span>' ; ?>
                         </td>
                         <td>
-                        <?php echo ($solicitud_servicio->estado_solicitud == 'R') ? DwHtml::buttonTable('APROBAR', "solicitudes/solicitud_servicio/aprobar/$key_upd/", array('class'=>'no-ajax no-spinner',),'default','check') : DwHtml::buttonTable('REVERSAR APROBACION', "solicitudes/solicitud_servicio/reversar_aprobacion/$key_upd/", array('class'=>'js-confirm', 'confirm-title'=>'Reversar Aprobación', 'confirm-body'=>'Está seguro de Reversar esta solicitud? <br />Recuerda que esta operación no se puede reversar.'), 'warning', 'repeat'); ?>
+                        <?php echo ($solicitud_servicio->estado_solicitud == 'R') ? DwHtml::buttonTable('APROBAR', "solicitudes/solicitud_servicio/aprobar/$key_upd/", array('class'=>'no-ajax no-spinner', ),'default','check') : DwHtml::buttonTable('REVERSAR APROBACION', "solicitudes/solicitud_servicio/reversar_aprobacion/$key_upd/", array('class'=>'js-confirm', 'confirm-title'=>'Reversar Aprobación', 'confirm-body'=>'Está seguro de Reversar esta solicitud? <br />Recuerda que esta operación no se puede reversar.'), 'warning', 'repeat');  ?>
                         </td>
                     </tr>
                     <?php $solicitud_servicios->counter++; ?>

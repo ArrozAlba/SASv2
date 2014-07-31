@@ -35,7 +35,7 @@
                         <?php echo DwForm::select('persona.sexo', array(''=>'Seleccione:', 'M'=>'Masculino', 'F'=>'Femenino'), array('class'=>'input-xlarge input-required show-error'), NULL, 'Sexo:'); ?>
                     </div>
                     <div class="span3">
-                        <?php echo DwForm::date('persona.fecha_nacimiento', array('class'=>'input-large input-required mask-date input-date show-errors'), date("Y-m-d"), 'Fecha de Nacimiento'); ?>
+                        <?php echo DwForm::date('persona.fecha_nacimiento', array('class'=>'input-large input-required mask-date input-date show-errors'),date("Y-m-d"), 'Fecha de Nacimiento'); ?>
                     </div>
                 </div>
                 
