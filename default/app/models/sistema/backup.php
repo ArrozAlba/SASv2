@@ -28,31 +28,31 @@ class Backup extends ActiveRecord {
         if( strlen($value) <= 2 OR ($value=='none') ) {
             return NULL;
         }
-        $columns = 'backup.*, persona.nombre, persona.apellido';        
+        $columns = 'backup.*, persona.nombre1, persona.apellido1';        
         $join = 'INNER JOIN usuario ON usuario.id = backup.usuario_id ';
         $join.= 'INNER JOIN persona ON persona.id = usuario.persona_id ';
         $conditions = "backup.id > 0";
         
         $order = $this->get_order($order, 'backup.registrado_at', array(
                 'nombre'=>array(
-                    'ASC'=>'persona.nombre ASC, persona.apellido ASC', 
-                    'DESC'=>'persona.nombre DESC, persona.apellido DESC'
+                    'ASC'=>'persona.nombre1 ASC, persona.apellido1 ASC', 
+                    'DESC'=>'persona.nombre1 DESC, persona.apellido1 DESC'
                 ),
                 'apellido'=>array(
-                    'ASC'=>'persona.apellido ASC, persona.nombre ASC', 
-                    'DESC'=>'persona.apellido DESC, persona.nombre DESC'
+                    'ASC'=>'persona.apellido1 ASC, persona.nombre1 ASC', 
+                    'DESC'=>'persona.apellido1 DESC, persona.nombre1 DESC'
                 ),
                 'fecha'=>array(
-                    'ASC'=>'backup.registrado_at ASC' ,
-                    'DESC'=>'backup.registrado_at DESC'
+                    'ASC'=>'backup.fecha_registro ASC' ,
+                    'DESC'=>'backup.fecha_registro DESC'
                 ),                                                                                            
                 'denominacion'=>array(
-                    'ASC'=>'backup.denominacion ASC, backup.registrado_at DESC' ,
-                    'DESC'=>'backup.denominacion DESC, backup.registrado_at DESC'
+                    'ASC'=>'backup.denominacion ASC, backup.fecha_registro DESC' ,
+                    'DESC'=>'backup.denominacion DESC, backup.fecha_registro DESC'
                 ),
                 'tamano'=>array(
-                    'ASC'=>'backup.tamano ASC, backup.registrado_at DESC' ,
-                    'DESC'=>'backup.tamano DESC, backup.registrado_at DESC'
+                    'ASC'=>'backup.tamano ASC, backup.fecha_registro DESC' ,
+                    'DESC'=>'backup.tamano DESC, backup.fecha_registro DESC'
                 )
             )
         );
@@ -64,7 +64,7 @@ class Backup extends ActiveRecord {
         }        
         
         if($field=='fecha') {
-            $conditions.= " AND DATE(backup.registrado_at) LIKE '%$value%'";
+            $conditions.= " AND DATE(backup.fecha_registro) LIKE '%$value%'";
         } else {  
             $conditions.= " AND $field LIKE '%$value%'";
         }        
@@ -83,30 +83,30 @@ class Backup extends ActiveRecord {
      * @return type
      */
     public function getListadoBackup($order='', $page=0) {
-        $columns = 'backup.*, persona.nombre, persona.apellido';        
+        $columns = 'backup.*, persona.nombre1, persona.apellido1';        
         $join = 'INNER JOIN usuario ON usuario.id = backup.usuario_id ';
         $join.= 'INNER JOIN persona ON persona.id = usuario.persona_id ';                        
         
-        $order = $this->get_order($order, 'backup.registrado_at', array(
+        $order = $this->get_order($order, 'backup.fecha_registro', array(
                 'nombre'=>array(
-                    'ASC'=>'persona.nombre ASC, persona.apellido ASC', 
-                    'DESC'=>'persona.nombre DESC, persona.apellido DESC'
+                    'ASC'=>'persona.nombre1 ASC, persona.apellido1 ASC', 
+                    'DESC'=>'persona.nombre1 DESC, persona.apellido1 DESC'
                 ),
                 'apellido'=>array(
-                    'ASC'=>'persona.apellido ASC, persona.nombre ASC', 
-                    'DESC'=>'persona.apellido DESC, persona.nombre DESC'
+                    'ASC'=>'persona.apellido1 ASC, persona.nombre1 ASC', 
+                    'DESC'=>'persona.apellido1 DESC, persona.nombre1 DESC'
                 ),
                 'fecha'=>array(
-                    'ASC'=>'backup.registrado_at ASC' ,
-                    'DESC'=>'backup.registrado_at DESC'
+                    'ASC'=>'backup.fecha_registro ASC' ,
+                    'DESC'=>'backup.fecha_registro DESC'
                 ),                                                                                            
                 'denominacion'=>array(
-                    'ASC'=>'backup.denominacion ASC, backup.registrado_at DESC' ,
-                    'DESC'=>'backup.denominacion DESC, backup.registrado_at DESC'
+                    'ASC'=>'backup.denominacion ASC, backup.fecha_registro DESC' ,
+                    'DESC'=>'backup.denominacion DESC, backup.fecha_registro DESC'
                 ),
                 'tamano'=>array(
-                    'ASC'=>'backup.tamano ASC, backup.registrado_at DESC' ,
-                    'DESC'=>'backup.tamano DESC, backup.registrado_at DESC'
+                    'ASC'=>'backup.tamano ASC, backup.fecha_registro DESC' ,
+                    'DESC'=>'backup.tamano DESC, backup.fecha_registro DESC'
                 )
             )
         );

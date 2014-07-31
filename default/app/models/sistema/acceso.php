@@ -90,7 +90,7 @@ class Acceso extends ActiveRecord {
         if( strlen($value) <= 2 OR ($value=='none') ) {
             return NULL;
         }
-        $columns = 'acceso.*, IF(acceso.tipo_acceso='.self::ENTRADA.', "Entrada", "Salida") AS new_tipo, usuario.login, persona.nombre, persona.apellido';
+        $columns = 'acceso.*, IF(acceso.tipo_acceso='.self::ENTRADA.', "Entrada", "Salida") AS new_tipo, usuario.login, persona.nombre1, persona.apellido1';
         $join = 'INNER JOIN usuario ON usuario.id = acceso.usuario_id ';        
         $join.= 'INNER JOIN persona ON persona.id = usuario.persona_id ';
         $conditions = "usuario.id > '1'";//Por el super usuario "error"

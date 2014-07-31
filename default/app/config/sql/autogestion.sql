@@ -18,6 +18,13 @@ CREATE SCHEMA audit_log;
 ALTER SCHEMA audit_log OWNER TO arrozalba;
 
 --
+-- Name: SCHEMA audit_log; Type: COMMENT; Schema: -; Owner: arrozalba
+--
+
+COMMENT ON SCHEMA audit_log IS 'Esquema de Auditoria';
+
+
+--
 -- Name: smsd; Type: SCHEMA; Schema: -; Owner: arrozalba
 --
 
@@ -30,7 +37,7 @@ ALTER SCHEMA smsd OWNER TO arrozalba;
 -- Name: SCHEMA smsd; Type: COMMENT; Schema: -; Owner: arrozalba
 --
 
-COMMENT ON SCHEMA smsd IS 'standard public schema';
+COMMENT ON SCHEMA smsd IS 'Esquema SMS';
 
 
 --
@@ -139,7 +146,7 @@ ALTER FUNCTION public.logger() OWNER TO arrozalba;
 SET search_path = smsd, pg_catalog;
 
 --
--- Name: update_timestamp(); Type: FUNCTION; Schema: smsd; Owner: arrozalba
+-- Name: update_timestamp(); Type: FUNCTION; Schema: smsd; Owner: jelitox
 --
 
 CREATE FUNCTION update_timestamp() RETURNS trigger
@@ -152,7 +159,7 @@ CREATE FUNCTION update_timestamp() RETURNS trigger
 $$;
 
 
-ALTER FUNCTION smsd.update_timestamp() OWNER TO arrozalba;
+ALTER FUNCTION smsd.update_timestamp() OWNER TO jelitox;
 
 SET search_path = audit_log, pg_catalog;
 
@@ -306,48 +313,6 @@ ALTER TABLE public.acceso_id_seq OWNER TO arrozalba;
 --
 
 ALTER SEQUENCE acceso_id_seq OWNED BY acceso.id;
-
-
---
--- Name: audit_log; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
---
-
-CREATE TABLE audit_log (
-    log_id integer NOT NULL,
-    log_relid oid NOT NULL,
-    log_session_user text DEFAULT "session_user"() NOT NULL,
-    log_when timestamp with time zone DEFAULT now() NOT NULL,
-    log_client_addr inet,
-    log_operation text,
-    log_query text,
-    log_table text,
-    log_columns text[],
-    log_old_values text[],
-    log_new_values text[]
-);
-
-
-ALTER TABLE public.audit_log OWNER TO arrozalba;
-
---
--- Name: audit_log_log_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
---
-
-CREATE SEQUENCE audit_log_log_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.audit_log_log_id_seq OWNER TO arrozalba;
-
---
--- Name: audit_log_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
---
-
-ALTER SEQUENCE audit_log_log_id_seq OWNED BY audit_log.log_id;
 
 
 --
@@ -1866,7 +1831,7 @@ CREATE TABLE menu (
     menu_id integer,
     recurso_id integer,
     menu character varying(45) NOT NULL,
-    url character varying(45) NOT NULL,
+    url character varying(55) NOT NULL,
     posicion integer DEFAULT 0,
     icono character varying(45),
     activo integer DEFAULT 1 NOT NULL,
@@ -4879,7 +4844,7 @@ ALTER SEQUENCE usuario_id_seq OWNED BY usuario.id;
 SET search_path = smsd, pg_catalog;
 
 --
--- Name: daemons; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: daemons; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE TABLE daemons (
@@ -4888,10 +4853,10 @@ CREATE TABLE daemons (
 );
 
 
-ALTER TABLE smsd.daemons OWNER TO arrozalba;
+ALTER TABLE smsd.daemons OWNER TO jelitox;
 
 --
--- Name: gammu; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: gammu; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE TABLE gammu (
@@ -4899,10 +4864,10 @@ CREATE TABLE gammu (
 );
 
 
-ALTER TABLE smsd.gammu OWNER TO arrozalba;
+ALTER TABLE smsd.gammu OWNER TO jelitox;
 
 --
--- Name: inbox; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: inbox; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE TABLE inbox (
@@ -4922,10 +4887,10 @@ CREATE TABLE inbox (
 );
 
 
-ALTER TABLE smsd.inbox OWNER TO arrozalba;
+ALTER TABLE smsd.inbox OWNER TO jelitox;
 
 --
--- Name: inbox_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: arrozalba
+-- Name: inbox_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: jelitox
 --
 
 CREATE SEQUENCE "inbox_ID_seq"
@@ -4936,17 +4901,17 @@ CREATE SEQUENCE "inbox_ID_seq"
     CACHE 1;
 
 
-ALTER TABLE smsd."inbox_ID_seq" OWNER TO arrozalba;
+ALTER TABLE smsd."inbox_ID_seq" OWNER TO jelitox;
 
 --
--- Name: inbox_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: arrozalba
+-- Name: inbox_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: jelitox
 --
 
 ALTER SEQUENCE "inbox_ID_seq" OWNED BY inbox."ID";
 
 
 --
--- Name: outbox; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: outbox; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE TABLE outbox (
@@ -4973,10 +4938,10 @@ CREATE TABLE outbox (
 );
 
 
-ALTER TABLE smsd.outbox OWNER TO arrozalba;
+ALTER TABLE smsd.outbox OWNER TO jelitox;
 
 --
--- Name: outbox_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: arrozalba
+-- Name: outbox_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: jelitox
 --
 
 CREATE SEQUENCE "outbox_ID_seq"
@@ -4987,17 +4952,17 @@ CREATE SEQUENCE "outbox_ID_seq"
     CACHE 1;
 
 
-ALTER TABLE smsd."outbox_ID_seq" OWNER TO arrozalba;
+ALTER TABLE smsd."outbox_ID_seq" OWNER TO jelitox;
 
 --
--- Name: outbox_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: arrozalba
+-- Name: outbox_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: jelitox
 --
 
 ALTER SEQUENCE "outbox_ID_seq" OWNED BY outbox."ID";
 
 
 --
--- Name: outbox_multipart; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: outbox_multipart; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE TABLE outbox_multipart (
@@ -5012,10 +4977,10 @@ CREATE TABLE outbox_multipart (
 );
 
 
-ALTER TABLE smsd.outbox_multipart OWNER TO arrozalba;
+ALTER TABLE smsd.outbox_multipart OWNER TO jelitox;
 
 --
--- Name: outbox_multipart_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: arrozalba
+-- Name: outbox_multipart_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: jelitox
 --
 
 CREATE SEQUENCE "outbox_multipart_ID_seq"
@@ -5026,17 +4991,17 @@ CREATE SEQUENCE "outbox_multipart_ID_seq"
     CACHE 1;
 
 
-ALTER TABLE smsd."outbox_multipart_ID_seq" OWNER TO arrozalba;
+ALTER TABLE smsd."outbox_multipart_ID_seq" OWNER TO jelitox;
 
 --
--- Name: outbox_multipart_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: arrozalba
+-- Name: outbox_multipart_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: jelitox
 --
 
 ALTER SEQUENCE "outbox_multipart_ID_seq" OWNED BY outbox_multipart."ID";
 
 
 --
--- Name: pbk; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: pbk; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE TABLE pbk (
@@ -5047,10 +5012,10 @@ CREATE TABLE pbk (
 );
 
 
-ALTER TABLE smsd.pbk OWNER TO arrozalba;
+ALTER TABLE smsd.pbk OWNER TO jelitox;
 
 --
--- Name: pbk_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: arrozalba
+-- Name: pbk_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: jelitox
 --
 
 CREATE SEQUENCE "pbk_ID_seq"
@@ -5061,17 +5026,17 @@ CREATE SEQUENCE "pbk_ID_seq"
     CACHE 1;
 
 
-ALTER TABLE smsd."pbk_ID_seq" OWNER TO arrozalba;
+ALTER TABLE smsd."pbk_ID_seq" OWNER TO jelitox;
 
 --
--- Name: pbk_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: arrozalba
+-- Name: pbk_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: jelitox
 --
 
 ALTER SEQUENCE "pbk_ID_seq" OWNED BY pbk."ID";
 
 
 --
--- Name: pbk_groups; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: pbk_groups; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE TABLE pbk_groups (
@@ -5080,10 +5045,10 @@ CREATE TABLE pbk_groups (
 );
 
 
-ALTER TABLE smsd.pbk_groups OWNER TO arrozalba;
+ALTER TABLE smsd.pbk_groups OWNER TO jelitox;
 
 --
--- Name: pbk_groups_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: arrozalba
+-- Name: pbk_groups_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: jelitox
 --
 
 CREATE SEQUENCE "pbk_groups_ID_seq"
@@ -5094,17 +5059,17 @@ CREATE SEQUENCE "pbk_groups_ID_seq"
     CACHE 1;
 
 
-ALTER TABLE smsd."pbk_groups_ID_seq" OWNER TO arrozalba;
+ALTER TABLE smsd."pbk_groups_ID_seq" OWNER TO jelitox;
 
 --
--- Name: pbk_groups_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: arrozalba
+-- Name: pbk_groups_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: jelitox
 --
 
 ALTER SEQUENCE "pbk_groups_ID_seq" OWNED BY pbk_groups."ID";
 
 
 --
--- Name: phones; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: phones; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE TABLE phones (
@@ -5123,10 +5088,10 @@ CREATE TABLE phones (
 );
 
 
-ALTER TABLE smsd.phones OWNER TO arrozalba;
+ALTER TABLE smsd.phones OWNER TO jelitox;
 
 --
--- Name: sentitems; Type: TABLE; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: sentitems; Type: TABLE; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE TABLE sentitems (
@@ -5154,10 +5119,10 @@ CREATE TABLE sentitems (
 );
 
 
-ALTER TABLE smsd.sentitems OWNER TO arrozalba;
+ALTER TABLE smsd.sentitems OWNER TO jelitox;
 
 --
--- Name: sentitems_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: arrozalba
+-- Name: sentitems_ID_seq; Type: SEQUENCE; Schema: smsd; Owner: jelitox
 --
 
 CREATE SEQUENCE "sentitems_ID_seq"
@@ -5168,10 +5133,10 @@ CREATE SEQUENCE "sentitems_ID_seq"
     CACHE 1;
 
 
-ALTER TABLE smsd."sentitems_ID_seq" OWNER TO arrozalba;
+ALTER TABLE smsd."sentitems_ID_seq" OWNER TO jelitox;
 
 --
--- Name: sentitems_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: arrozalba
+-- Name: sentitems_ID_seq; Type: SEQUENCE OWNED BY; Schema: smsd; Owner: jelitox
 --
 
 ALTER SEQUENCE "sentitems_ID_seq" OWNED BY sentitems."ID";
@@ -5193,13 +5158,6 @@ SET search_path = public, pg_catalog;
 --
 
 ALTER TABLE ONLY acceso ALTER COLUMN id SET DEFAULT nextval('acceso_id_seq'::regclass);
-
-
---
--- Name: log_id; Type: DEFAULT; Schema: public; Owner: arrozalba
---
-
-ALTER TABLE ONLY audit_log ALTER COLUMN log_id SET DEFAULT nextval('audit_log_log_id_seq'::regclass);
 
 
 --
@@ -5506,42 +5464,42 @@ ALTER TABLE ONLY usuario ALTER COLUMN id SET DEFAULT nextval('usuario_id_seq'::r
 SET search_path = smsd, pg_catalog;
 
 --
--- Name: ID; Type: DEFAULT; Schema: smsd; Owner: arrozalba
+-- Name: ID; Type: DEFAULT; Schema: smsd; Owner: jelitox
 --
 
 ALTER TABLE ONLY inbox ALTER COLUMN "ID" SET DEFAULT nextval('"inbox_ID_seq"'::regclass);
 
 
 --
--- Name: ID; Type: DEFAULT; Schema: smsd; Owner: arrozalba
+-- Name: ID; Type: DEFAULT; Schema: smsd; Owner: jelitox
 --
 
 ALTER TABLE ONLY outbox ALTER COLUMN "ID" SET DEFAULT nextval('"outbox_ID_seq"'::regclass);
 
 
 --
--- Name: ID; Type: DEFAULT; Schema: smsd; Owner: arrozalba
+-- Name: ID; Type: DEFAULT; Schema: smsd; Owner: jelitox
 --
 
 ALTER TABLE ONLY outbox_multipart ALTER COLUMN "ID" SET DEFAULT nextval('"outbox_multipart_ID_seq"'::regclass);
 
 
 --
--- Name: ID; Type: DEFAULT; Schema: smsd; Owner: arrozalba
+-- Name: ID; Type: DEFAULT; Schema: smsd; Owner: jelitox
 --
 
 ALTER TABLE ONLY pbk ALTER COLUMN "ID" SET DEFAULT nextval('"pbk_ID_seq"'::regclass);
 
 
 --
--- Name: ID; Type: DEFAULT; Schema: smsd; Owner: arrozalba
+-- Name: ID; Type: DEFAULT; Schema: smsd; Owner: jelitox
 --
 
 ALTER TABLE ONLY pbk_groups ALTER COLUMN "ID" SET DEFAULT nextval('"pbk_groups_ID_seq"'::regclass);
 
 
 --
--- Name: ID; Type: DEFAULT; Schema: smsd; Owner: arrozalba
+-- Name: ID; Type: DEFAULT; Schema: smsd; Owner: jelitox
 --
 
 ALTER TABLE ONLY sentitems ALTER COLUMN "ID" SET DEFAULT nextval('"sentitems_ID_seq"'::regclass);
@@ -5556,6 +5514,251 @@ SET search_path = audit_log, pg_catalog;
 COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, log_operation, log_query, log_table, log_columns, log_old_values, log_new_values) FROM stdin;
 1	254379	arrozalba	2014-03-17 19:37:38.359201-04:30	127.0.0.1	UPDATE	UPDATE public.usuario SET email='yelix_ricarda@gmail.com'::text WHERE id = '6'::integer	usuario	{id,tema,email,login,app_ajax,datagrid,password,perfil_id,persona_id,usuario_id,sucursal_id,fecha_registro,fecha_modificado}	{6,default,yelix@gmail.com,yelix,1,30,d93a5def7511da3d0f2d171d9c344e91,3,6,NULL,NULL,"2014-03-17 19:22:19.405099-04:30","2014-03-17 19:22:19.405099-04:30"}	{6,default,yelix_ricarda@gmail.com,yelix,1,30,d93a5def7511da3d0f2d171d9c344e91,3,6,NULL,NULL,"2014-03-17 19:22:19.405099-04:30","2014-03-17 19:22:19.405099-04:30"}
 2	254379	arrozalba	2014-03-17 19:38:57.531371-04:30	127.0.0.1	UPDATE	UPDATE public.usuario SET email='yelixmaria@gmail.com'::text WHERE id = '6'::integer	usuario	{id,tema,email,login,app_ajax,datagrid,password,perfil_id,persona_id,usuario_id,sucursal_id,fecha_registro,fecha_modificado}	{6,default,yelix_ricarda@gmail.com,yelix,1,30,d93a5def7511da3d0f2d171d9c344e91,3,6,NULL,NULL,"2014-03-17 19:22:19.405099-04:30","2014-03-17 19:22:19.405099-04:30"}	{6,default,yelixmaria@gmail.com,yelix,1,30,d93a5def7511da3d0f2d171d9c344e91,3,6,NULL,NULL,"2014-03-17 19:22:19.405099-04:30","2014-03-17 19:22:19.405099-04:30"}
+3	443916	arrozalba	2014-07-31 02:35:12.943758-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{231,127.0.0.1,NULL,1,1,NULL,"2014-07-31 02:35:12.943758-04:30","2014-07-31 02:35:12.943758-04:30",NULL,NULL}
+4	443916	arrozalba	2014-07-31 11:55:04.66407-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{232,127.0.0.1,NULL,1,1,NULL,"2014-07-31 11:55:04.66407-04:30","2014-07-31 11:55:04.66407-04:30",NULL,NULL}
+5	443916	arrozalba	2014-07-31 13:05:03.891895-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{233,127.0.0.1,NULL,1,1,NULL,"2014-07-31 13:05:03.891895-04:30","2014-07-31 13:05:03.891895-04:30",NULL,NULL}
+6	444234	arrozalba	2014-07-31 13:27:14.401245-04:30	127.0.0.1	INSERT	INSERT INTO solicitud_servicio (usuario_id,fecha_registro,fecha_modificado,estado_solicitud,tiposolicitud_id,fecha_solicitud,codigo_solicitud,titular_id,beneficiario_id,beneficiario_tipo,patologia_id,proveedor_id,medico_id,fecha_vencimiento,servicio_id,observacion) VALUES (NULL,DEFAULT,DEFAULT,'R','1',DEFAULT,'SASCM-0002','1','4',DEFAULT,'16802','3','1','2014/07/31','17','gg')	solicitud_servicio	\N	\N	{3,1,1,NULL,gg,17,16802,3,"2014-07-31 13:27:14.401245-04:30",4,1900-01-01,SASCM-0002,R,"2014-07-31 13:27:14.401245-04:30",1,1,2014-07-31}
+7	444088	arrozalba	2014-07-31 14:53:16.920671-04:30	127.0.0.1	INSERT	INSERT INTO perfil (usuario_id,fecha_registro,fecha_modificado,perfil,estado,plantilla) VALUES (NULL,DEFAULT,DEFAULT,'coordinador','1','default')	perfil	\N	\N	{4,1,coordinador,default,NULL,"2014-07-31 14:53:16.920671-04:30","2014-07-31 14:53:16.920671-04:30"}
+8	444167	arrozalba	2014-07-31 14:53:17.03958-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,DEFAULT,DEFAULT,'2','4')	recurso_perfil	\N	\N	{277,4,2,NULL,"2014-07-31 14:53:17.03958-04:30","2014-07-31 14:53:17.03958-04:30"}
+9	444088	arrozalba	2014-07-31 14:53:36.84059-04:30	127.0.0.1	INSERT	INSERT INTO perfil (usuario_id,fecha_registro,fecha_modificado,perfil,estado,plantilla) VALUES (NULL,DEFAULT,DEFAULT,'titular','1','default')	perfil	\N	\N	{5,1,titular,default,NULL,"2014-07-31 14:53:36.84059-04:30","2014-07-31 14:53:36.84059-04:30"}
+10	444167	arrozalba	2014-07-31 14:53:36.88844-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,DEFAULT,DEFAULT,'2','5')	recurso_perfil	\N	\N	{278,5,2,NULL,"2014-07-31 14:53:36.88844-04:30","2014-07-31 14:53:36.88844-04:30"}
+11	444088	arrozalba	2014-07-31 14:54:17.855932-04:30	127.0.0.1	INSERT	INSERT INTO perfil (usuario_id,fecha_registro,fecha_modificado,perfil,estado,plantilla) VALUES (NULL,DEFAULT,DEFAULT,'operador','1','default')	perfil	\N	\N	{6,1,operador,default,NULL,"2014-07-31 14:54:17.855932-04:30","2014-07-31 14:54:17.855932-04:30"}
+12	444167	arrozalba	2014-07-31 14:54:17.946247-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,DEFAULT,DEFAULT,'2','6')	recurso_perfil	\N	\N	{279,6,2,NULL,"2014-07-31 14:54:17.946247-04:30","2014-07-31 14:54:17.946247-04:30"}
+13	444088	arrozalba	2014-07-31 14:54:34.249491-04:30	127.0.0.1	INSERT	INSERT INTO perfil (usuario_id,fecha_registro,fecha_modificado,perfil,estado,plantilla) VALUES (NULL,DEFAULT,DEFAULT,'presidente','1','default')	perfil	\N	\N	{7,1,presidente,default,NULL,"2014-07-31 14:54:34.249491-04:30","2014-07-31 14:54:34.249491-04:30"}
+14	444167	arrozalba	2014-07-31 14:54:34.283005-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,DEFAULT,DEFAULT,'2','7')	recurso_perfil	\N	\N	{280,7,2,NULL,"2014-07-31 14:54:34.283005-04:30","2014-07-31 14:54:34.283005-04:30"}
+15	444088	jelitox	2014-07-31 14:55:53.084998-04:30	127.0.0.1	UPDATE	UPDATE public.perfil SET perfil='Usuario Restringido'::text WHERE id = '3'::integer	perfil	{id,estado,perfil,plantilla,usuario_id,fecha_registro,fecha_modificado}	{3,1,Usuario,default,NULL,"2014-03-13 12:20:07.544255-04:30","2014-03-13 12:20:07.544255-04:30"}	{3,1,"Usuario Restringido",default,NULL,"2014-03-13 12:20:07.544255-04:30","2014-03-13 12:20:07.544255-04:30"}
+16	444088	jelitox	2014-07-31 14:56:03.140625-04:30	127.0.0.1	UPDATE	UPDATE public.perfil SET perfil='Coordinador'::text WHERE id = '4'::integer	perfil	{id,estado,perfil,plantilla,usuario_id,fecha_registro,fecha_modificado}	{4,1,coordinador,default,NULL,"2014-07-31 14:53:16.920671-04:30","2014-07-31 14:53:16.920671-04:30"}	{4,1,Coordinador,default,NULL,"2014-07-31 14:53:16.920671-04:30","2014-07-31 14:53:16.920671-04:30"}
+35	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','31','5')	recurso_perfil	\N	\N	{285,5,31,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+17	444088	jelitox	2014-07-31 14:56:08.337285-04:30	127.0.0.1	UPDATE	UPDATE public.perfil SET perfil='Titular'::text WHERE id = '5'::integer	perfil	{id,estado,perfil,plantilla,usuario_id,fecha_registro,fecha_modificado}	{5,1,titular,default,NULL,"2014-07-31 14:53:36.84059-04:30","2014-07-31 14:53:36.84059-04:30"}	{5,1,Titular,default,NULL,"2014-07-31 14:53:36.84059-04:30","2014-07-31 14:53:36.84059-04:30"}
+18	444088	jelitox	2014-07-31 14:56:14.238111-04:30	127.0.0.1	UPDATE	UPDATE public.perfil SET perfil='Presidente'::text WHERE id = '4'::integer	perfil	{id,estado,perfil,plantilla,usuario_id,fecha_registro,fecha_modificado}	{4,1,Coordinador,default,NULL,"2014-07-31 14:53:16.920671-04:30","2014-07-31 14:53:16.920671-04:30"}	{4,1,Presidente,default,NULL,"2014-07-31 14:53:16.920671-04:30","2014-07-31 14:53:16.920671-04:30"}
+19	444088	jelitox	2014-07-31 14:56:19.510352-04:30	127.0.0.1	UPDATE	UPDATE public.perfil SET perfil='Coordinador'::text WHERE id = '5'::integer	perfil	{id,estado,perfil,plantilla,usuario_id,fecha_registro,fecha_modificado}	{5,1,Titular,default,NULL,"2014-07-31 14:53:36.84059-04:30","2014-07-31 14:53:36.84059-04:30"}	{5,1,Coordinador,default,NULL,"2014-07-31 14:53:36.84059-04:30","2014-07-31 14:53:36.84059-04:30"}
+20	444088	jelitox	2014-07-31 14:56:26.261973-04:30	127.0.0.1	UPDATE	UPDATE public.perfil SET perfil='Operador'::text WHERE id = '6'::integer	perfil	{id,estado,perfil,plantilla,usuario_id,fecha_registro,fecha_modificado}	{6,1,operador,default,NULL,"2014-07-31 14:54:17.855932-04:30","2014-07-31 14:54:17.855932-04:30"}	{6,1,Operador,default,NULL,"2014-07-31 14:54:17.855932-04:30","2014-07-31 14:54:17.855932-04:30"}
+21	444088	jelitox	2014-07-31 14:56:31.90974-04:30	127.0.0.1	UPDATE	UPDATE public.perfil SET perfil='Titular'::text WHERE id = '7'::integer	perfil	{id,estado,perfil,plantilla,usuario_id,fecha_registro,fecha_modificado}	{7,1,presidente,default,NULL,"2014-07-31 14:54:34.249491-04:30","2014-07-31 14:54:34.249491-04:30"}	{7,1,Titular,default,NULL,"2014-07-31 14:54:34.249491-04:30","2014-07-31 14:54:34.249491-04:30"}
+22	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 8 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{262,2,8,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+23	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 31 AND perfil_id = 3	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{276,3,31,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+24	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 28 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{272,2,28,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+25	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 28 AND perfil_id = 3	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{271,3,28,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+26	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 27 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{270,2,27,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+27	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 27 AND perfil_id = 3	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{269,3,27,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+28	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 29 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{274,2,29,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+29	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 29 AND perfil_id = 3	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{273,3,29,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+30	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 30 AND perfil_id = 3	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{275,3,30,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+31	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,DEFAULT,DEFAULT,'8','2')	recurso_perfil	\N	\N	{281,2,8,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+32	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','65','5')	recurso_perfil	\N	\N	{282,5,65,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+33	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','66','5')	recurso_perfil	\N	\N	{283,5,66,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+34	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','67','5')	recurso_perfil	\N	\N	{284,5,67,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+36	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','31','3')	recurso_perfil	\N	\N	{286,3,31,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+37	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','68','5')	recurso_perfil	\N	\N	{287,5,68,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+38	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','28','5')	recurso_perfil	\N	\N	{288,5,28,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+39	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','28','2')	recurso_perfil	\N	\N	{289,2,28,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+40	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','28','3')	recurso_perfil	\N	\N	{290,3,28,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+41	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','38','5')	recurso_perfil	\N	\N	{291,5,38,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+42	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','39','5')	recurso_perfil	\N	\N	{292,5,39,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+43	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','40','5')	recurso_perfil	\N	\N	{293,5,40,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+44	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','41','5')	recurso_perfil	\N	\N	{294,5,41,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+45	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','44','5')	recurso_perfil	\N	\N	{295,5,44,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+46	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','45','5')	recurso_perfil	\N	\N	{296,5,45,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+47	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','46','5')	recurso_perfil	\N	\N	{297,5,46,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+48	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','47','5')	recurso_perfil	\N	\N	{298,5,47,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+49	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','48','5')	recurso_perfil	\N	\N	{299,5,48,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+50	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','49','5')	recurso_perfil	\N	\N	{300,5,49,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+51	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','27','5')	recurso_perfil	\N	\N	{301,5,27,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+52	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','27','2')	recurso_perfil	\N	\N	{302,2,27,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+53	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','27','3')	recurso_perfil	\N	\N	{303,3,27,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+54	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','29','5')	recurso_perfil	\N	\N	{304,5,29,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+55	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','29','2')	recurso_perfil	\N	\N	{305,2,29,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+56	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','29','3')	recurso_perfil	\N	\N	{306,3,29,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+57	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','50','5')	recurso_perfil	\N	\N	{307,5,50,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+58	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','51','5')	recurso_perfil	\N	\N	{308,5,51,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+59	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','52','5')	recurso_perfil	\N	\N	{309,5,52,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+60	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','53','5')	recurso_perfil	\N	\N	{310,5,53,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+61	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','32','5')	recurso_perfil	\N	\N	{311,5,32,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+62	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','30','5')	recurso_perfil	\N	\N	{312,5,30,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+63	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','30','3')	recurso_perfil	\N	\N	{313,3,30,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+64	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','54','5')	recurso_perfil	\N	\N	{314,5,54,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+65	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','55','5')	recurso_perfil	\N	\N	{315,5,55,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+66	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','56','5')	recurso_perfil	\N	\N	{316,5,56,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+67	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','57','5')	recurso_perfil	\N	\N	{317,5,57,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+68	444167	arrozalba	2014-07-31 15:02:23.502607-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:23.502607-04:30','2014-07-31 15:02:23.502607-04:30','58','5')	recurso_perfil	\N	\N	{318,5,58,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}
+69	444167	arrozalba	2014-07-31 15:02:40.270536-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,DEFAULT,DEFAULT,'59','5')	recurso_perfil	\N	\N	{319,5,59,NULL,"2014-07-31 15:02:40.270536-04:30","2014-07-31 15:02:40.270536-04:30"}
+70	444167	arrozalba	2014-07-31 15:02:40.270536-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:40.270536-04:30','2014-07-31 15:02:40.270536-04:30','60','5')	recurso_perfil	\N	\N	{320,5,60,NULL,"2014-07-31 15:02:40.270536-04:30","2014-07-31 15:02:40.270536-04:30"}
+71	444167	arrozalba	2014-07-31 15:02:40.270536-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:40.270536-04:30','2014-07-31 15:02:40.270536-04:30','61','5')	recurso_perfil	\N	\N	{321,5,61,NULL,"2014-07-31 15:02:40.270536-04:30","2014-07-31 15:02:40.270536-04:30"}
+72	444167	arrozalba	2014-07-31 15:02:40.270536-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:40.270536-04:30','2014-07-31 15:02:40.270536-04:30','62','5')	recurso_perfil	\N	\N	{322,5,62,NULL,"2014-07-31 15:02:40.270536-04:30","2014-07-31 15:02:40.270536-04:30"}
+73	444167	arrozalba	2014-07-31 15:02:40.270536-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:40.270536-04:30','2014-07-31 15:02:40.270536-04:30','63','5')	recurso_perfil	\N	\N	{323,5,63,NULL,"2014-07-31 15:02:40.270536-04:30","2014-07-31 15:02:40.270536-04:30"}
+74	444167	arrozalba	2014-07-31 15:02:40.270536-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:02:40.270536-04:30','2014-07-31 15:02:40.270536-04:30','64','5')	recurso_perfil	\N	\N	{324,5,64,NULL,"2014-07-31 15:02:40.270536-04:30","2014-07-31 15:02:40.270536-04:30"}
+75	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 1 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{241,2,1,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+76	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 26 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{243,2,26,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+77	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 26 AND perfil_id = 3	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{242,3,26,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+78	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 25 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{245,2,25,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+79	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 25 AND perfil_id = 3	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{244,3,25,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+80	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 24 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{256,2,24,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+81	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 22 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{254,2,22,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+82	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 23 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{255,2,23,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+83	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 19 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{251,2,19,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+84	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 15 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{248,2,15,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+85	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 15 AND perfil_id = 3	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{247,3,15,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+86	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 20 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{252,2,20,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+87	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 16 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{246,2,16,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+88	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 21 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{253,2,21,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+89	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 18 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{250,2,18,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+90	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 18 AND perfil_id = 3	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{249,3,18,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+91	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 7 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{261,2,7,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+92	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 14 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{257,2,14,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+93	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 6 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{268,2,6,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+94	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 13 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{260,2,13,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+95	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 12 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{266,2,12,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+96	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 3 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{258,2,3,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+97	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 11 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{265,2,11,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+98	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 10 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{264,2,10,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+99	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 5 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{267,2,5,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+100	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 9 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{263,2,9,NULL,"2014-03-17 18:46:48.784501-04:30","2014-03-17 18:46:48.784501-04:30"}	\N
+101	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 8 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{281,2,8,NULL,"2014-07-31 15:02:23.502607-04:30","2014-07-31 15:02:23.502607-04:30"}	\N
+102	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,DEFAULT,DEFAULT,'1','2')	recurso_perfil	\N	\N	{325,2,1,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+103	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','26','5')	recurso_perfil	\N	\N	{326,5,26,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+104	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','26','2')	recurso_perfil	\N	\N	{327,2,26,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+105	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','26','3')	recurso_perfil	\N	\N	{328,3,26,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+106	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','25','5')	recurso_perfil	\N	\N	{329,5,25,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+107	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','25','2')	recurso_perfil	\N	\N	{330,2,25,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+108	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','25','3')	recurso_perfil	\N	\N	{331,3,25,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+109	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','24','5')	recurso_perfil	\N	\N	{332,5,24,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+110	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','24','2')	recurso_perfil	\N	\N	{333,2,24,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+111	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','22','5')	recurso_perfil	\N	\N	{334,5,22,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+112	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','22','2')	recurso_perfil	\N	\N	{335,2,22,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+113	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','23','5')	recurso_perfil	\N	\N	{336,5,23,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+114	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','23','2')	recurso_perfil	\N	\N	{337,2,23,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+115	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','19','5')	recurso_perfil	\N	\N	{338,5,19,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+116	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','19','2')	recurso_perfil	\N	\N	{339,2,19,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+117	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','43','5')	recurso_perfil	\N	\N	{340,5,43,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+118	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','15','5')	recurso_perfil	\N	\N	{341,5,15,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+119	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','15','2')	recurso_perfil	\N	\N	{342,2,15,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+120	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','15','3')	recurso_perfil	\N	\N	{343,3,15,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+121	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','20','5')	recurso_perfil	\N	\N	{344,5,20,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+122	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','20','2')	recurso_perfil	\N	\N	{345,2,20,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+123	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','16','5')	recurso_perfil	\N	\N	{346,5,16,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+124	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','16','2')	recurso_perfil	\N	\N	{347,2,16,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+125	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','21','5')	recurso_perfil	\N	\N	{348,5,21,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+126	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','21','2')	recurso_perfil	\N	\N	{349,2,21,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+127	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','18','5')	recurso_perfil	\N	\N	{350,5,18,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+128	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','18','2')	recurso_perfil	\N	\N	{351,2,18,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+129	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','18','3')	recurso_perfil	\N	\N	{352,3,18,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+130	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','37','5')	recurso_perfil	\N	\N	{353,5,37,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+131	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','36','5')	recurso_perfil	\N	\N	{354,5,36,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+132	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','35','5')	recurso_perfil	\N	\N	{355,5,35,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+133	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','42','5')	recurso_perfil	\N	\N	{356,5,42,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+134	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','34','5')	recurso_perfil	\N	\N	{357,5,34,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+135	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','7','2')	recurso_perfil	\N	\N	{358,2,7,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+136	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','14','2')	recurso_perfil	\N	\N	{359,2,14,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+137	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','6','2')	recurso_perfil	\N	\N	{360,2,6,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+138	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','13','2')	recurso_perfil	\N	\N	{361,2,13,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+139	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','12','2')	recurso_perfil	\N	\N	{362,2,12,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+140	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','3','2')	recurso_perfil	\N	\N	{363,2,3,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+141	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','11','2')	recurso_perfil	\N	\N	{364,2,11,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+142	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','10','2')	recurso_perfil	\N	\N	{365,2,10,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+143	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','5','2')	recurso_perfil	\N	\N	{366,2,5,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+144	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','9','2')	recurso_perfil	\N	\N	{367,2,9,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+145	444167	arrozalba	2014-07-31 15:03:28.630738-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:03:28.630738-04:30','2014-07-31 15:03:28.630738-04:30','8','2')	recurso_perfil	\N	\N	{368,2,8,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}
+146	444088	jelitox	2014-07-31 15:04:12.420045-04:30	127.0.0.1	UPDATE	UPDATE public.perfil SET perfil='Especialista'::text WHERE id = '6'::integer	perfil	{id,estado,perfil,plantilla,usuario_id,fecha_registro,fecha_modificado}	{6,1,Operador,default,NULL,"2014-07-31 14:54:17.855932-04:30","2014-07-31 14:54:17.855932-04:30"}	{6,1,Especialista,default,NULL,"2014-07-31 14:54:17.855932-04:30","2014-07-31 14:54:17.855932-04:30"}
+147	444088	jelitox	2014-07-31 15:04:59.627997-04:30	127.0.0.1	UPDATE	UPDATE public.perfil SET perfil='administrador'::text WHERE id = '2'::integer	perfil	{id,estado,perfil,plantilla,usuario_id,fecha_registro,fecha_modificado}	{2,1,"Usuario Full",default,NULL,"2014-03-13 12:20:07.544255-04:30","2014-03-13 12:20:07.544255-04:30"}	{2,1,administrador,default,NULL,"2014-03-13 12:20:07.544255-04:30","2014-03-13 12:20:07.544255-04:30"}
+148	444088	jelitox	2014-07-31 15:05:13.292075-04:30	127.0.0.1	UPDATE	UPDATE public.perfil SET perfil='Especialista'::text WHERE id = '3'::integer	perfil	{id,estado,perfil,plantilla,usuario_id,fecha_registro,fecha_modificado}	{3,1,"Usuario Restringido",default,NULL,"2014-03-13 12:20:07.544255-04:30","2014-03-13 12:20:07.544255-04:30"}	{3,1,Especialista,default,NULL,"2014-03-13 12:20:07.544255-04:30","2014-03-13 12:20:07.544255-04:30"}
+149	444088	jelitox	2014-07-31 15:05:28.02677-04:30	127.0.0.1	UPDATE	UPDATE public.perfil SET perfil='Operador'::text WHERE id = '6'::integer	perfil	{id,estado,perfil,plantilla,usuario_id,fecha_registro,fecha_modificado}	{6,1,Especialista,default,NULL,"2014-07-31 14:54:17.855932-04:30","2014-07-31 14:54:17.855932-04:30"}	{6,1,Operador,default,NULL,"2014-07-31 14:54:17.855932-04:30","2014-07-31 14:54:17.855932-04:30"}
+150	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 1 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{325,2,1,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+151	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 26 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{327,2,26,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+152	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 26 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{326,5,26,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+153	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 26 AND perfil_id = 3	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{328,3,26,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+154	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 25 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{330,2,25,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+155	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 25 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{329,5,25,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+156	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 25 AND perfil_id = 3	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{331,3,25,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+157	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 24 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{333,2,24,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+158	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 24 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{332,5,24,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+159	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 22 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{335,2,22,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+160	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 22 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{334,5,22,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+161	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 23 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{337,2,23,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+162	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 23 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{336,5,23,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+163	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 19 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{339,2,19,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+164	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 19 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{338,5,19,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+165	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 43 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{340,5,43,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+166	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 15 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{342,2,15,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+167	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 15 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{341,5,15,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+168	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 15 AND perfil_id = 3	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{343,3,15,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+169	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 20 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{345,2,20,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+170	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 20 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{344,5,20,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+171	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 16 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{347,2,16,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+172	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 16 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{346,5,16,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+173	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 21 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{349,2,21,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+174	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 21 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{348,5,21,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+175	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 18 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{351,2,18,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+176	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 18 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{350,5,18,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+177	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 18 AND perfil_id = 3	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{352,3,18,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+178	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 37 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{353,5,37,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+179	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 36 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{354,5,36,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+180	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 35 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{355,5,35,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+181	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 42 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{356,5,42,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+182	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 34 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{357,5,34,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+183	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 7 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{358,2,7,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+184	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 14 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{359,2,14,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+185	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 6 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{360,2,6,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+186	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 13 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{361,2,13,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+187	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 12 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{362,2,12,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+188	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 3 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{363,2,3,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+189	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 11 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{364,2,11,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+190	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 10 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{365,2,10,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+191	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 5 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{366,2,5,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+192	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 9 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{367,2,9,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+193	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 8 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{368,2,8,NULL,"2014-07-31 15:03:28.630738-04:30","2014-07-31 15:03:28.630738-04:30"}	\N
+194	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,DEFAULT,DEFAULT,'1','2')	recurso_perfil	\N	\N	{369,2,1,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+195	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','26','2')	recurso_perfil	\N	\N	{370,2,26,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+196	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','26','5')	recurso_perfil	\N	\N	{371,5,26,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+197	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','26','3')	recurso_perfil	\N	\N	{372,3,26,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+198	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','25','2')	recurso_perfil	\N	\N	{373,2,25,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+199	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','25','5')	recurso_perfil	\N	\N	{374,5,25,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+200	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','25','3')	recurso_perfil	\N	\N	{375,3,25,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+201	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','24','2')	recurso_perfil	\N	\N	{376,2,24,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+202	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','24','5')	recurso_perfil	\N	\N	{377,5,24,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+203	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','22','2')	recurso_perfil	\N	\N	{378,2,22,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+204	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','22','5')	recurso_perfil	\N	\N	{379,5,22,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+205	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','23','2')	recurso_perfil	\N	\N	{380,2,23,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+206	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','23','5')	recurso_perfil	\N	\N	{381,5,23,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+207	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','19','2')	recurso_perfil	\N	\N	{382,2,19,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+208	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','19','5')	recurso_perfil	\N	\N	{383,5,19,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+209	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','43','2')	recurso_perfil	\N	\N	{384,2,43,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+210	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','43','5')	recurso_perfil	\N	\N	{385,5,43,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+211	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','15','2')	recurso_perfil	\N	\N	{386,2,15,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+212	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','15','5')	recurso_perfil	\N	\N	{387,5,15,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+213	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','15','3')	recurso_perfil	\N	\N	{388,3,15,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+214	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','20','2')	recurso_perfil	\N	\N	{389,2,20,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+215	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','20','5')	recurso_perfil	\N	\N	{390,5,20,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+216	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','16','2')	recurso_perfil	\N	\N	{391,2,16,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+217	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','16','5')	recurso_perfil	\N	\N	{392,5,16,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+218	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','21','2')	recurso_perfil	\N	\N	{393,2,21,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+219	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','21','5')	recurso_perfil	\N	\N	{394,5,21,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+220	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','18','2')	recurso_perfil	\N	\N	{395,2,18,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+221	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','18','5')	recurso_perfil	\N	\N	{396,5,18,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+222	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','18','3')	recurso_perfil	\N	\N	{397,3,18,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+223	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','37','2')	recurso_perfil	\N	\N	{398,2,37,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+224	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','37','5')	recurso_perfil	\N	\N	{399,5,37,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+225	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','36','2')	recurso_perfil	\N	\N	{400,2,36,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+226	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','36','5')	recurso_perfil	\N	\N	{401,5,36,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+227	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','35','2')	recurso_perfil	\N	\N	{402,2,35,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+228	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','35','5')	recurso_perfil	\N	\N	{403,5,35,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+229	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','42','2')	recurso_perfil	\N	\N	{404,2,42,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+230	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','42','5')	recurso_perfil	\N	\N	{405,5,42,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+231	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','34','2')	recurso_perfil	\N	\N	{406,2,34,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+232	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','34','5')	recurso_perfil	\N	\N	{407,5,34,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+233	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','7','2')	recurso_perfil	\N	\N	{408,2,7,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+234	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','14','2')	recurso_perfil	\N	\N	{409,2,14,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+235	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','6','2')	recurso_perfil	\N	\N	{410,2,6,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+236	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','13','2')	recurso_perfil	\N	\N	{411,2,13,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+237	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','12','2')	recurso_perfil	\N	\N	{412,2,12,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+238	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','3','2')	recurso_perfil	\N	\N	{413,2,3,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+239	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','11','2')	recurso_perfil	\N	\N	{414,2,11,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+240	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','10','2')	recurso_perfil	\N	\N	{415,2,10,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+241	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','5','2')	recurso_perfil	\N	\N	{416,2,5,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+242	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','9','2')	recurso_perfil	\N	\N	{417,2,9,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+243	444167	arrozalba	2014-07-31 15:07:14.026936-04:30	127.0.0.1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-07-31 15:07:14.026936-04:30','2014-07-31 15:07:14.026936-04:30','8','2')	recurso_perfil	\N	\N	{418,2,8,NULL,"2014-07-31 15:07:14.026936-04:30","2014-07-31 15:07:14.026936-04:30"}
+244	443916	arrozalba	2014-07-31 15:53:22.147146-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{234,127.0.0.1,NULL,1,1,NULL,"2014-07-31 15:53:22.147146-04:30","2014-07-31 15:53:22.147146-04:30",NULL,NULL}
+245	444097	arrozalba	2014-07-31 16:12:58.143096-04:30	127.0.0.1	INSERT	INSERT INTO persona (usuario_id,fecha_registro,fecha_modificado,cedula,nombre1,nombre2,apellido1,apellido2,nacionalidad,sexo,fecha_nacimiento,pais_id,estado_id,municipio_id,parroquia_id,direccion_habitacion,hpais_id,hestado_id,hmunicipio_id,hparroquia_id,estado_civil,celular,telefono,correo_electronico,grupo_sanguineo,fotografia) VALUES (NULL,DEFAULT,DEFAULT,'8943274','asdfas','adfa','adsfasdf',NULL,'V','M','2014-07-08','9','56','314','16','mnaehskfhkjh',NULL,NULL,NULL,NULL,'D',NULL,NULL,NULL,DEFAULT,'default.png')	persona	\N	\N	{34,M,8943274,NULL,asdfas,adfa,9,NULL,NULL,adsfasdf,NULL,56,default.png,NULL,NULL,D,314,V,16,NULL,NULL,"2014-07-31 16:12:58.143096-04:30",N/A,"2014-07-31 16:12:58.143096-04:30",2014-07-08,NULL,mnaehskfhkjh}
+246	444274	arrozalba	2014-07-31 16:12:58.143096-04:30	127.0.0.1	INSERT	INSERT INTO usuario (usuario_id,fecha_registro,fecha_modificado,sucursal_id,persona_id,login,password,perfil_id,email,tema,app_ajax,datagrid) VALUES (NULL,DEFAULT,DEFAULT,NULL,'34','alex54','b8d794abb3c7e10f835a199c1df2dac8','3','akashj@ajfkl.com','default',DEFAULT,'30')	usuario	\N	\N	{5,default,akashj@ajfkl.com,alex54,1,30,b8d794abb3c7e10f835a199c1df2dac8,3,34,NULL,NULL,"2014-07-31 16:12:58.143096-04:30","2014-07-31 16:12:58.143096-04:30"}
+247	444026	arrozalba	2014-07-31 16:12:58.143096-04:30	127.0.0.1	INSERT	INSERT INTO estado_usuario (usuario_id,fecha_registro,fecha_modificado,estado_usuario,descripcion) VALUES ('5',DEFAULT,DEFAULT,'1','Activado por registro inicial')	estado_usuario	\N	\N	{5,5,"Activado por registro inicial",1,"2014-07-31 16:12:58.143096-04:30","2014-07-31 16:12:58.143096-04:30"}
 \.
 
 
@@ -5563,7 +5766,7 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 -- Name: audit_log_log_id_seq; Type: SEQUENCE SET; Schema: audit_log; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('audit_log_log_id_seq', 2, true);
+SELECT pg_catalog.setval('audit_log_log_id_seq', 247, true);
 
 
 SET search_path = public, pg_catalog;
@@ -5798,6 +6001,14 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 224	1	2014-07-28 18:31:45.097209-04:30	2014-07-28 18:31:45.097209-04:30	1	\N	\N	\N	\N	127.0.0.1
 225	1	2014-07-28 18:36:01.909448-04:30	2014-07-28 18:36:01.909448-04:30	1	\N	\N	\N	\N	127.0.0.1
 226	1	2014-07-29 00:24:49.01999-04:30	2014-07-29 00:24:49.01999-04:30	1	\N	\N	\N	\N	127.0.0.1
+227	1	2014-07-30 08:55:19.147198-04:30	2014-07-30 08:55:19.147198-04:30	1	\N	\N	\N	\N	127.0.0.1
+228	1	2014-07-30 14:23:09.032679-04:30	2014-07-30 14:23:09.032679-04:30	1	\N	\N	\N	\N	127.0.0.1
+229	1	2014-07-30 19:25:43.67215-04:30	2014-07-30 19:25:43.67215-04:30	1	\N	\N	\N	\N	127.0.0.1
+230	1	2014-07-30 21:10:59.711014-04:30	2014-07-30 21:10:59.711014-04:30	1	\N	\N	\N	\N	127.0.0.1
+231	1	2014-07-31 02:35:12.943758-04:30	2014-07-31 02:35:12.943758-04:30	1	\N	\N	\N	\N	127.0.0.1
+232	1	2014-07-31 11:55:04.66407-04:30	2014-07-31 11:55:04.66407-04:30	1	\N	\N	\N	\N	127.0.0.1
+233	1	2014-07-31 13:05:03.891895-04:30	2014-07-31 13:05:03.891895-04:30	1	\N	\N	\N	\N	127.0.0.1
+234	1	2014-07-31 15:53:22.147146-04:30	2014-07-31 15:53:22.147146-04:30	1	\N	\N	\N	\N	127.0.0.1
 \.
 
 
@@ -5805,22 +6016,7 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 -- Name: acceso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('acceso_id_seq', 226, true);
-
-
---
--- Data for Name: audit_log; Type: TABLE DATA; Schema: public; Owner: arrozalba
---
-
-COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, log_operation, log_query, log_table, log_columns, log_old_values, log_new_values) FROM stdin;
-\.
-
-
---
--- Name: audit_log_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
---
-
-SELECT pg_catalog.setval('audit_log_log_id_seq', 1, false);
+SELECT pg_catalog.setval('acceso_id_seq', 234, true);
 
 
 --
@@ -6166,6 +6362,7 @@ COPY estado_usuario (id, usuario_id, fecha_registro, fecha_modificado, estado_us
 2	2	2014-03-16 01:14:45.552613-04:30	2014-03-16 01:14:45.552613-04:30	1	Activado por registro inicial
 3	3	2014-03-17 18:34:56.063814-04:30	2014-03-17 18:34:56.063814-04:30	1	Activado por registro inicial
 4	4	2014-03-17 19:22:19.405099-04:30	2014-03-17 19:22:19.405099-04:30	1	Activado por registro inicial
+5	5	2014-07-31 16:12:58.143096-04:30	2014-07-31 16:12:58.143096-04:30	1	Activado por registro inicial
 \.
 
 
@@ -6173,7 +6370,7 @@ COPY estado_usuario (id, usuario_id, fecha_registro, fecha_modificado, estado_us
 -- Name: estado_usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('estado_usuario_id_seq', 4, true);
+SELECT pg_catalog.setval('estado_usuario_id_seq', 5, true);
 
 
 --
@@ -6240,15 +6437,6 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 27	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	28	26	Beneficiarios	beneficiarios/beneficiario/listar	102	icon-user	1	1
 28	\N	2014-03-16 12:46:04.752491-04:30	2014-03-16 12:46:04.752491-04:30	\N	\N	Beneficiarios	#	100	icon-user	1	1
 29	\N	2014-03-16 13:23:40.74219-04:30	2014-03-16 13:23:40.74219-04:30	\N	\N	Solicitudes	#	200	icon-th	1	1
-30	\N	2014-03-16 13:24:43.632516-04:30	2014-03-16 13:24:43.632516-04:30	29	27	Solicitud de Medicinas	solicitudes/solicitud_medicina/listar	201	icon-th	1	1
-32	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	29	Solicitudes Odontologicas	solicitudes/solicitud_odontologica/listar	203	icon-th	1	1
-33	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	30	Exámenes Médicos 	solicitudes/examenes_medicos/listar	204	icon-th	1	1
-34	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	31	Solicitudes de Reembolso	solicitudes/reembolso/listar	205	icon-th	1	1
-35	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	32	Funeraria	solicitudes/funeraria/listar	206	icon-th	1	1
-41	\N	2014-06-09 10:57:40.852716-04:30	2014-06-09 10:57:40.852716-04:30	31	38	Registro	solicitudes/solicitud_servicio/registro	302	icon-plus-sign	1	1
-42	\N	2014-06-09 11:28:23.150623-04:30	2014-06-09 11:28:23.150623-04:30	31	39	Aprobación	solicitudes/solicitud_servicio/aprobacion	303	icon-ok-sign	1	1
-43	\N	2014-06-09 11:28:56.829577-04:30	2014-06-09 11:28:56.829577-04:30	31	40	Contabilizar	solicitudes/solicitud_servicio/contabilizar	304	icon-check	1	1
-44	\N	2014-06-09 11:31:13.991409-04:30	2014-06-09 11:31:13.991409-04:30	31	41	Anular	solicitudes/solicitud_servicio/anular	305	icon-remove-sign	1	1
 36	\N	2014-04-22 09:51:53.400012-04:30	2014-04-22 09:51:53.400012-04:30	\N	\N	Provedores de Salud	#	600	icon-group	1	1
 37	\N	2014-04-22 09:57:03.54549-04:30	2014-04-22 09:57:03.54549-04:30	36	34	Proveedor	proveedorsalud/proveedor/	602	icon-briefcase	1	1
 38	\N	2014-04-22 10:09:02.242857-04:30	2014-04-22 10:09:02.242857-04:30	36	36	Especialidad	proveedorsalud/especialidad/	601	icon-magic	1	1
@@ -6256,8 +6444,42 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 40	\N	2014-04-22 14:52:02.983257-04:30	2014-04-22 14:52:02.983257-04:30	36	37	Medicinas	proveedorsalud/medicina/	604	icon-th	1	1
 45	\N	2014-06-24 15:51:37.984221-04:30	2014-06-24 15:51:37.984221-04:30	36	42	Servicio	proveedorsalud/servicio/	605	icon-th	1	1
 46	\N	2014-06-24 23:52:34.310536-04:30	2014-06-24 23:52:34.310536-04:30	15	43	Tipo de Solicitudes	config/tiposolicitud/listar	810	icon-th	1	1
-31	\N	2014-03-16 13:26:21.282386-04:30	2014-03-16 13:26:21.282386-04:30	29	28	Atención Primaria	#	202	icon-th	1	1
 17	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	16	Sucursales	config/sucursal/listar/	802	icon-sitemap	1	1
+30	\N	2014-03-16 13:24:43.632516-04:30	2014-03-16 13:24:43.632516-04:30	29	27	Solicitud de Medicinas	#	201	icon-th	1	1
+47	\N	2014-07-30 14:25:46.578584-04:30	2014-07-30 14:25:46.578584-04:30	30	44	Registro	solicitudes/solicitud_medicina/registro	202	icon-plus-sign	1	1
+48	\N	2014-07-30 14:26:23.724504-04:30	2014-07-30 14:26:23.724504-04:30	30	45	Aprobacion	solicitudes/solicitud_medicina/aprobacion	203	icon-ok-sign	1	1
+49	\N	2014-07-30 14:26:53.261228-04:30	2014-07-30 14:26:53.261228-04:30	30	46	Contabilizar	solicitudes/solicitud_medicina/contabilizar	204	icon-check	1	1
+31	\N	2014-03-16 13:26:21.282386-04:30	2014-03-16 13:26:21.282386-04:30	29	28	Atención Primaria	#	211	icon-th	1	1
+32	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	29	Solicitudes Odontologicas	#	221	icon-th	1	1
+33	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	30	Exámenes Médicos	#	231	icon-th	1	1
+34	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	31	Solicitudes de Reembolso	#	241	icon-th	1	1
+35	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	32	Funeraria	#	251	icon-th	1	1
+41	\N	2014-06-09 10:57:40.852716-04:30	2014-06-09 10:57:40.852716-04:30	31	38	Registro	solicitudes/solicitud_servicio/registro	212	icon-plus-sign	1	1
+42	\N	2014-06-09 11:28:23.150623-04:30	2014-06-09 11:28:23.150623-04:30	31	39	Aprobación	solicitudes/solicitud_servicio/aprobacion	213	icon-ok-sign	1	1
+43	\N	2014-06-09 11:28:56.829577-04:30	2014-06-09 11:28:56.829577-04:30	31	40	Contabilizar	solicitudes/solicitud_servicio/contabilizar	214	icon-check	1	1
+44	\N	2014-06-09 11:31:13.991409-04:30	2014-06-09 11:31:13.991409-04:30	31	41	Anular	solicitudes/solicitud_servicio/anular	215	icon-remove-sign	1	1
+50	\N	2014-07-30 14:27:26.593054-04:30	2014-07-30 14:27:26.593054-04:30	30	47	Anular	solicitudes/solicitud_medicina/anular	205	icon-remove-sign	1	1
+51	\N	2014-07-30 15:14:45.308621-04:30	2014-07-30 15:14:45.308621-04:30	32	48	Registro	solicitudes/solicitud_odontologica/registro	222	icon-plus-sign	1	1
+52	\N	2014-07-30 15:19:32.343134-04:30	2014-07-30 15:19:32.343134-04:30	32	49	Aprobacion	solicitudes/solicitud_odontologica/aprobacion	223	icon-ok-sign	1	1
+53	\N	2014-07-30 15:31:18.854185-04:30	2014-07-30 15:31:18.854185-04:30	32	50	Contabilizar	solicitudes/solicitud_odontologica/contabilizar	224	icon-check	1	1
+54	\N	2014-07-30 15:34:10.258296-04:30	2014-07-30 15:34:10.258296-04:30	32	51	Anular	solicitudes/solicitud_odontologica/anular	225	icon-remove-sign	1	1
+55	\N	2014-07-30 15:55:09.056613-04:30	2014-07-30 15:55:09.056613-04:30	33	52	Registro	solicitudes/solicitud_examen/registro	232	icon-plus-sign	1	1
+56	\N	2014-07-30 15:55:38.334131-04:30	2014-07-30 15:55:38.334131-04:30	33	53	Aprobacion	solicitudes/solicitud_examen/aprobacion	233	icon-ok-sign	1	1
+57	\N	2014-07-30 15:56:20.014958-04:30	2014-07-30 15:56:20.014958-04:30	33	54	Contabilizar	solicitudes/solicitud_examen/contabilizar	234	icon-check	1	1
+58	\N	2014-07-30 15:56:51.212513-04:30	2014-07-30 15:56:51.212513-04:30	33	55	Anular	solicitudes/solicitud_examen/anular	235	icon-remove-sign	1	1
+59	\N	2014-07-30 16:02:17.372533-04:30	2014-07-30 16:02:17.372533-04:30	34	56	Registro	solicitudes/solicitud_reembolso/registro	242	icon-plus-sign	1	1
+60	\N	2014-07-30 16:03:33.102309-04:30	2014-07-30 16:03:33.102309-04:30	34	57	Aprobacion	solicitudes/solicitud_reembolso/aprobacion	243	icon-ok-sign	1	1
+61	\N	2014-07-30 16:04:13.959142-04:30	2014-07-30 16:04:13.959142-04:30	34	58	Contabilizar	solicitudes/solicitud_reembolso/contabilizar	244	icon-check	1	1
+62	\N	2014-07-30 16:05:13.790258-04:30	2014-07-30 16:05:13.790258-04:30	34	59	Anular	solicitudes/solicitud_reembolso/anular	245	icon-remove-sign	1	1
+63	\N	2014-07-30 16:06:13.758372-04:30	2014-07-30 16:06:13.758372-04:30	35	64	Registro	solicitudes/solicitud_funeraria/registro	252	icon-plus-sign	1	1
+64	\N	2014-07-30 16:07:03.414714-04:30	2014-07-30 16:07:03.414714-04:30	35	65	Aprobacion	solicitudes/solicitud_funeraria/aprobacion	253	icon-ok-sign	1	1
+65	\N	2014-07-30 16:10:05.371277-04:30	2014-07-30 16:10:05.371277-04:30	35	66	Contabilizar	solicitudes/solicitud_funeraria/contabilizar	254	icon-check	1	1
+66	\N	2014-07-30 16:13:09.462772-04:30	2014-07-30 16:13:09.462772-04:30	35	67	Anular	solicitudes/solicitud_funeraria/anular	255	icon-remove-sign	1	1
+68	\N	2014-07-30 20:07:05.413317-04:30	2014-07-30 20:07:05.413317-04:30	67	60	Registro	solicitudes/solicitud_carta/registro	262	icon-plus-sign	1	1
+67	\N	2014-07-30 19:32:00.487102-04:30	2014-07-30 19:32:00.487102-04:30	29	68	Carta Aval	#	261	icon-th	1	1
+69	\N	2014-07-30 20:26:05.938004-04:30	2014-07-30 20:26:05.938004-04:30	67	61	Aprobacion	solicitudes/solicitud_carta/aprobacion	263	icon-ok-sign	1	1
+70	\N	2014-07-30 20:27:20.039277-04:30	2014-07-30 20:27:20.039277-04:30	67	62	Contabilizar	solicitudes/solicitud_carta/contabilizar	264	icon-check	1	1
+71	\N	2014-07-30 20:29:29.133166-04:30	2014-07-30 20:29:29.133166-04:30	67	63	Anular	solicitudes/solicitud_carta/anular	265	icon-remove-sign	1	1
 \.
 
 
@@ -6265,7 +6487,7 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 -- Name: menu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('menu_id_seq', 46, true);
+SELECT pg_catalog.setval('menu_id_seq', 71, true);
 
 
 --
@@ -22503,8 +22725,12 @@ SELECT pg_catalog.setval('patologia_id_seq', 28385, true);
 
 COPY perfil (id, usuario_id, fecha_registro, fecha_modificado, perfil, estado, plantilla) FROM stdin;
 1	\N	2014-03-13 12:19:42.852111-04:30	2014-03-13 12:19:42.852111-04:30	Super User	1	default
-2	\N	2014-03-13 12:20:07.544255-04:30	2014-03-13 12:20:07.544255-04:30	Usuario Full	1	default
-3	\N	2014-03-13 12:20:07.544255-04:30	2014-03-13 12:20:07.544255-04:30	Usuario	1	default
+4	\N	2014-07-31 14:53:16.920671-04:30	2014-07-31 14:53:16.920671-04:30	Presidente	1	default
+5	\N	2014-07-31 14:53:36.84059-04:30	2014-07-31 14:53:36.84059-04:30	Coordinador	1	default
+7	\N	2014-07-31 14:54:34.249491-04:30	2014-07-31 14:54:34.249491-04:30	Titular	1	default
+2	\N	2014-03-13 12:20:07.544255-04:30	2014-03-13 12:20:07.544255-04:30	administrador	1	default
+3	\N	2014-03-13 12:20:07.544255-04:30	2014-03-13 12:20:07.544255-04:30	Especialista	1	default
+6	\N	2014-07-31 14:54:17.855932-04:30	2014-07-31 14:54:17.855932-04:30	Operador	1	default
 \.
 
 
@@ -22512,7 +22738,7 @@ COPY perfil (id, usuario_id, fecha_registro, fecha_modificado, perfil, estado, p
 -- Name: perfil_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('perfil_id_seq', 3, true);
+SELECT pg_catalog.setval('perfil_id_seq', 7, true);
 
 
 --
@@ -22541,6 +22767,7 @@ COPY persona (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1,
 33	\N	2014-07-25 19:44:12.733546-04:30	2014-07-25 19:44:12.733546-04:30	9560082	nancy	beatriz	ochoa	\N	V	F	1963-07-02	\N	\N	\N	\N	\N	\N	\N	\N	\N	S	04140738920	02556641346	\N	AB	default.png
 29	\N	2014-07-21 20:08:13.770409-04:30	2014-07-21 20:08:13.770409-04:30	9876543	Sebastian	\N	Leon	\N	V	M	2014-02-04	\N	\N	\N	\N	\N	\N	\N	\N	\N	S	04143572664	\N	\N	AB	default.png
 30	\N	2014-07-25 16:10:45.301376-04:30	2014-07-25 16:10:45.301376-04:30	14888607	JORGE	LUIS	AZUAJE	RIVERO	V	M	1982-04-07	240	69	235	751	CALLE 13 ENTRE AV 2 Y 3	240	69	235	751	S	04162546908	02563213878	JORGEAZUAJE110@GMAIL.COM	A	default.png
+34	\N	2014-07-31 16:12:58.143096-04:30	2014-07-31 16:12:58.143096-04:30	8943274	asdfas	adfa	adsfasdf	\N	V	M	2014-07-08	9	56	314	16	mnaehskfhkjh	\N	\N	\N	\N	D	\N	\N	\N	N/A	default.png
 \.
 
 
@@ -22548,7 +22775,7 @@ COPY persona (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1,
 -- Name: persona_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('persona_id_seq', 33, true);
+SELECT pg_catalog.setval('persona_id_seq', 34, true);
 
 
 --
@@ -22903,11 +23130,6 @@ COPY recurso (id, usuario_id, fecha_registro, fecha_modificado, modulo, controla
 24	\N	2014-03-13 13:24:45.006859-04:30	2014-03-13 13:24:45.006859-04:30	config	recaudo	*	config/recaudo/*	Gestión de los Recaudos	1
 25	\N	2014-03-13 13:24:45.006859-04:30	2014-03-13 13:24:45.006859-04:30	beneficiarios	titular	*	beneficiarios/titular/*	Gestión del personal de la empresa	1
 26	\N	2014-03-13 13:24:45.006859-04:30	2014-03-13 13:24:45.006859-04:30	beneficiarios	beneficiario	*	beneficiarios/beneficiario/*	Gestión del personal de la empresa	1
-27	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	orden_medica	*	solicitudes/orden_medica/*	Página para la gestión de Ordenes Medicas	1
-29	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	examen_laboratorio	*	solicitudes/examen_laboratorio/*	Página para la gestión de Ordenes Medicas	1
-30	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	examen_imagen	*	solicitudes/examen_imagen/*	Página para la gestión de Ordenes Medicas	1
-31	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	reembolso	*	solicitudes/reembolso/*	Página para la gestión de Ordenes Medicas	1
-32	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	funeraria	*	solicitudes/funeraria/*	Página para la gestión de Ordenes Medicas	1
 37	\N	2014-04-22 14:51:42.619186-04:30	2014-04-22 14:51:42.619186-04:30	proveedorsalud	medicina	*	proveedorsalud/medicina/*	Gestión de Medicinas	1
 34	\N	2014-04-22 09:46:35.877227-04:30	2014-04-22 09:46:35.877227-04:30	proveedorsalud	proveedor	*	proveedorsalud/proveedor/*	Gestión de las Características de los proveedores	1
 35	\N	2014-04-22 10:08:00.726011-04:30	2014-04-22 10:08:00.726011-04:30	proveedorsalud	medico	*	proveedorsalud/medico/*	Gestión de Médicos	1
@@ -22919,6 +23141,36 @@ COPY recurso (id, usuario_id, fecha_registro, fecha_modificado, modulo, controla
 41	\N	2014-06-09 11:30:37.965083-04:30	2014-06-09 11:30:37.965083-04:30	solicitudes	solicitud_servicio	anular	solicitudes/solicitud_servicio/anular	Anular Solicitudes de Servicio Atención Primaria	1
 42	\N	2014-06-24 15:50:26.79701-04:30	2014-06-24 15:50:26.79701-04:30	proveedorsalud	servicio	*	proveedorsalud/servicio/*	Modulo para el registro de servicios profesionales	1
 43	\N	2014-06-24 23:50:31.046028-04:30	2014-06-24 23:50:31.046028-04:30	config	tiposolicitud	*	config/tiposolicitud/*	Gestionar los tipos de solicitudes dentro del sistema	1
+44	\N	2014-07-30 09:29:21.417534-04:30	2014-07-30 09:29:21.417534-04:30	solicitudes	solicitud_medicina	registro	solicitudes/solicitud_medicina/registro	Crear registro de solicitudes de medicina	1
+45	\N	2014-07-30 09:29:37.643509-04:30	2014-07-30 09:29:37.643509-04:30	solicitudes	solicitud_medicina	aprobacion	solicitudes/solicitud_medicina/aprobacion	Aprobacion de las Solicitudes de medicina	1
+46	\N	2014-07-30 09:30:27.955985-04:30	2014-07-30 09:30:27.955985-04:30	solicitudes	solicitud_medicina	contabilizar	solicitudes/solicitud_medicina/contabilizar	Contabilizar las Solicitudes de medicina	1
+47	\N	2014-07-30 09:30:55.82575-04:30	2014-07-30 09:30:55.82575-04:30	solicitudes	solicitud_medicina	anular	solicitudes/solicitud_medicina/anular	Anular Solicitudes de medicina	1
+48	\N	2014-07-30 14:37:24.664168-04:30	2014-07-30 14:37:24.664168-04:30	solicitudes	solicitud_odontologica	registro	solicitudes/solicitud_odontologica/registro	Crear registro de solicitudes odontologicas	1
+49	\N	2014-07-30 14:38:27.461241-04:30	2014-07-30 14:38:27.461241-04:30	solicitudes	solicitud_odontologica	aprobacion	solicitudes/solicitud_odontologica/aprobacion	Aprobacion de las Solicitudes odontologicas	1
+27	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	solicitud_medicina	*	solicitudes/solicitud_medicina/*	Página para la gestión de solicitudes de medicina	1
+29	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	solicitud_odontologica	*	solicitudes/solicitud_odontologica/*	Página para la gestión de Solicitudes Odontologicas	1
+50	\N	2014-07-30 14:40:58.865859-04:30	2014-07-30 14:40:58.865859-04:30	solicitudes	solicitud_odontologica	contabilizar	solicitudes/solicitud_odontologica/contabilizar	Contabilizar las Solicitudes odontologicas	1
+51	\N	2014-07-30 14:41:30.926049-04:30	2014-07-30 14:41:30.926049-04:30	solicitudes	solicitud_odontologica	anular	solicitudes/solicitud_odontologica/anular	Anular Solicitudes odontologicas	1
+52	\N	2014-07-30 14:44:57.241013-04:30	2014-07-30 14:44:57.241013-04:30	solicitudes	solicitud_examen	registro	solicitudes/solicitud_examen/registro	Crear registro de solicitudes de Examenes Medicos y de Laboratorio	1
+53	\N	2014-07-30 14:45:13.204799-04:30	2014-07-30 14:45:13.204799-04:30	solicitudes	solicitud_examen	aprobacion	solicitudes/solicitud_examen/aprobacion	Aprobar registro de solicitudes de Examenes Medicos y de Laboratorio	1
+32	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	solicitud_funeraria	*	solicitudes/solicitud_funeraria/*	Página para la gestión de Funeraria	1
+30	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	solicitud_examen	*	solicitudes/solicitud_examen/*	Página para la gestión de Examenes Medicos	1
+54	\N	2014-07-30 14:45:33.497835-04:30	2014-07-30 14:45:33.497835-04:30	solicitudes	solicitud_examen	contabilizar	solicitudes/solicitud_examen/contabilizar	Contabilizar registro de solicitudes de Examenes Medicos y de Laboratorio	1
+55	\N	2014-07-30 14:47:03.996344-04:30	2014-07-30 14:47:03.996344-04:30	solicitudes	solicitud_examen	anular	solicitudes/solicitud_examen/anular	Anular registro de solicitudes de Examenes Medicos y de Laboratorio	1
+56	\N	2014-07-30 14:51:48.968255-04:30	2014-07-30 14:51:48.968255-04:30	solicitudes	solicitud_reembolso	registro	solicitudes/solicitud_reembolso/registro	Crear registro de solicitudes de reembolso	1
+57	\N	2014-07-30 14:52:53.720865-04:30	2014-07-30 14:52:53.720865-04:30	solicitudes	solicitud_reembolso	aprobacion	solicitudes/solicitud_reembolso/aprobacion	Aprobar registro de solicitudes de reembolso	1
+58	\N	2014-07-30 14:53:12.72641-04:30	2014-07-30 14:53:12.72641-04:30	solicitudes	solicitud_reembolso	contabilizar	solicitudes/solicitud_reembolso/contabilizar	contabilizar registro de solicitudes de reembolso	1
+59	\N	2014-07-30 14:53:44.635347-04:30	2014-07-30 14:53:44.635347-04:30	solicitudes	solicitud_reembolso	anular	solicitudes/solicitud_reembolso/anular	Anular registro de solicitudes de reembolso	1
+60	\N	2014-07-30 14:56:54.45487-04:30	2014-07-30 14:56:54.45487-04:30	solicitudes	solicitud_carta	registro	solicitudes/solicitud_carta/registro	Crear registro de solicitudes de Carta Aval	1
+61	\N	2014-07-30 14:57:18.873272-04:30	2014-07-30 14:57:18.873272-04:30	solicitudes	solicitud_carta	aprobacion	solicitudes/solicitud_carta/aprobacion	Aprobacion de registro de solicitudes de Carta Aval	1
+62	\N	2014-07-30 14:57:37.619569-04:30	2014-07-30 14:57:37.619569-04:30	solicitudes	solicitud_carta	contabilizar	solicitudes/solicitud_carta/contabilizar	contabilizar registro de solicitudes de Carta Aval	1
+63	\N	2014-07-30 14:57:57.378824-04:30	2014-07-30 14:57:57.378824-04:30	solicitudes	solicitud_carta	anular	solicitudes/solicitud_carta/anular	Anular registro de solicitudes de Carta Aval	1
+64	\N	2014-07-30 14:59:44.870946-04:30	2014-07-30 14:59:44.870946-04:30	solicitudes	solicitud_funeraria	registro	solicitudes/solicitud_funeraria/registro	Crear registro de solicitudes de Funeraria	1
+65	\N	2014-07-30 15:00:00.870462-04:30	2014-07-30 15:00:00.870462-04:30	solicitudes	solicitud_funeraria	aprobacion	solicitudes/solicitud_funeraria/aprobacion	Aprobar registro de solicitudes de Funeraria	1
+66	\N	2014-07-30 15:00:20.714269-04:30	2014-07-30 15:00:20.714269-04:30	solicitudes	solicitud_funeraria	contabilizar	solicitudes/solicitud_funeraria/contabilizar	Contabilizar registro de solicitudes de Funeraria	1
+67	\N	2014-07-30 15:00:38.990127-04:30	2014-07-30 15:00:38.990127-04:30	solicitudes	solicitud_funeraria	anular	solicitudes/solicitud_funeraria/anular	Anular registro de solicitudes de Funeraria	1
+31	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	solicitud_reembolso	*	solicitudes/solicitud_reembolso/*	Página para la gestión de Ordenes Medicas	1
+68	\N	2014-07-30 19:28:17.953379-04:30	2014-07-30 19:28:17.953379-04:30	solicitudes	solicitud_carta	*	solicitudes/solicitud_carta/*	Pagina para gestionar cartas avales	1
 \.
 
 
@@ -22926,7 +23178,7 @@ COPY recurso (id, usuario_id, fecha_registro, fecha_modificado, modulo, controla
 -- Name: recurso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('recurso_id_seq', 43, true);
+SELECT pg_catalog.setval('recurso_id_seq', 68, true);
 
 
 --
@@ -22936,43 +23188,105 @@ SELECT pg_catalog.setval('recurso_id_seq', 43, true);
 COPY recurso_perfil (id, usuario_id, fecha_registro, fecha_modificado, recurso_id, perfil_id) FROM stdin;
 1	1	2014-03-13 14:07:07.669586-04:30	2014-03-13 14:07:07.669586-04:30	1	1
 12	\N	2014-03-16 01:22:15.711586-04:30	2014-03-16 01:22:15.711586-04:30	2	2
-241	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	1	2
-242	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	26	3
-243	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	26	2
-244	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	25	3
-245	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	25	2
-246	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	16	2
-247	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	15	3
-248	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	15	2
-249	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	18	3
-250	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	18	2
-251	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	19	2
-252	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	20	2
-253	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	21	2
-254	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	22	2
-255	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	23	2
-256	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	24	2
 185	\N	2014-03-16 15:55:00.358245-04:30	2014-03-16 15:55:00.358245-04:30	2	3
-257	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	14	2
-258	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	3	2
 259	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	4	2
-260	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	13	2
-261	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	7	2
-262	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	8	2
-263	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	9	2
-264	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	10	2
-265	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	11	2
-266	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	12	2
-267	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	5	2
-268	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	6	2
-269	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	27	3
-270	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	27	2
-271	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	28	3
-272	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	28	2
-273	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	29	3
-274	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	29	2
-275	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	30	3
-276	\N	2014-03-17 18:46:48.784501-04:30	2014-03-17 18:46:48.784501-04:30	31	3
+277	\N	2014-07-31 14:53:17.03958-04:30	2014-07-31 14:53:17.03958-04:30	2	4
+278	\N	2014-07-31 14:53:36.88844-04:30	2014-07-31 14:53:36.88844-04:30	2	5
+279	\N	2014-07-31 14:54:17.946247-04:30	2014-07-31 14:54:17.946247-04:30	2	6
+280	\N	2014-07-31 14:54:34.283005-04:30	2014-07-31 14:54:34.283005-04:30	2	7
+282	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	65	5
+283	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	66	5
+284	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	67	5
+285	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	31	5
+286	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	31	3
+287	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	68	5
+288	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	28	5
+289	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	28	2
+290	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	28	3
+291	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	38	5
+292	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	39	5
+293	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	40	5
+294	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	41	5
+295	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	44	5
+296	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	45	5
+297	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	46	5
+298	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	47	5
+299	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	48	5
+300	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	49	5
+301	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	27	5
+302	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	27	2
+303	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	27	3
+304	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	29	5
+305	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	29	2
+306	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	29	3
+307	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	50	5
+308	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	51	5
+309	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	52	5
+310	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	53	5
+311	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	32	5
+312	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	30	5
+313	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	30	3
+314	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	54	5
+315	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	55	5
+316	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	56	5
+317	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	57	5
+318	\N	2014-07-31 15:02:23.502607-04:30	2014-07-31 15:02:23.502607-04:30	58	5
+319	\N	2014-07-31 15:02:40.270536-04:30	2014-07-31 15:02:40.270536-04:30	59	5
+320	\N	2014-07-31 15:02:40.270536-04:30	2014-07-31 15:02:40.270536-04:30	60	5
+321	\N	2014-07-31 15:02:40.270536-04:30	2014-07-31 15:02:40.270536-04:30	61	5
+322	\N	2014-07-31 15:02:40.270536-04:30	2014-07-31 15:02:40.270536-04:30	62	5
+323	\N	2014-07-31 15:02:40.270536-04:30	2014-07-31 15:02:40.270536-04:30	63	5
+324	\N	2014-07-31 15:02:40.270536-04:30	2014-07-31 15:02:40.270536-04:30	64	5
+369	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	1	2
+370	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	26	2
+371	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	26	5
+372	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	26	3
+373	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	25	2
+374	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	25	5
+375	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	25	3
+376	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	24	2
+377	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	24	5
+378	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	22	2
+379	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	22	5
+380	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	23	2
+381	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	23	5
+382	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	19	2
+383	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	19	5
+384	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	43	2
+385	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	43	5
+386	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	15	2
+387	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	15	5
+388	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	15	3
+389	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	20	2
+390	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	20	5
+391	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	16	2
+392	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	16	5
+393	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	21	2
+394	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	21	5
+395	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	18	2
+396	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	18	5
+397	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	18	3
+398	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	37	2
+399	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	37	5
+400	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	36	2
+401	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	36	5
+402	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	35	2
+403	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	35	5
+404	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	42	2
+405	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	42	5
+406	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	34	2
+407	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	34	5
+408	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	7	2
+409	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	14	2
+410	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	6	2
+411	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	13	2
+412	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	12	2
+413	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	3	2
+414	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	11	2
+415	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	10	2
+416	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	5	2
+417	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	9	2
+418	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	8	2
 \.
 
 
@@ -22980,7 +23294,7 @@ COPY recurso_perfil (id, usuario_id, fecha_registro, fecha_modificado, recurso_i
 -- Name: recurso_perfil_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('recurso_perfil_id_seq', 276, true);
+SELECT pg_catalog.setval('recurso_perfil_id_seq', 418, true);
 
 
 --
@@ -23131,7 +23445,8 @@ SELECT pg_catalog.setval('solicitud_medicina_id_seq', 1, false);
 --
 
 COPY solicitud_servicio (id, usuario_id, fecha_registro, fecha_modificado, estado_solicitud, tiposolicitud_id, fecha_solicitud, codigo_solicitud, titular_id, beneficiario_id, beneficiario_tipo, patologia_id, proveedor_id, medico_id, fecha_vencimiento, servicio_id, observacion) FROM stdin;
-2	1	2014-07-27 01:41:08.508088-04:30	2014-07-27 01:41:08.508088-04:30	R	1	1900-01-01	SASCM-0001	9	13	1	16802	1	1	2014-07-27	10	s
+2	1	2014-07-27 01:41:08.508088-04:30	2014-07-27 01:41:08.508088-04:30	A	1	1900-01-01	SASCM-0001	9	13	1	16802	1	1	2014-07-27	10	s
+3	\N	2014-07-31 13:27:14.401245-04:30	2014-07-31 13:27:14.401245-04:30	R	1	1900-01-01	SASCM-0002	1	4	1	16802	3	1	2014-07-31	17	gg
 \.
 
 
@@ -23139,7 +23454,7 @@ COPY solicitud_servicio (id, usuario_id, fecha_registro, fecha_modificado, estad
 -- Name: solicitud_servicio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('solicitud_servicio_id_seq', 2, true);
+SELECT pg_catalog.setval('solicitud_servicio_id_seq', 3, true);
 
 
 --
@@ -23233,6 +23548,7 @@ COPY usuario (id, usuario_id, fecha_registro, fecha_modificado, sucursal_id, per
 2	\N	2014-03-16 01:14:45.552613-04:30	2014-03-16 01:14:45.552613-04:30	\N	2	arrozalba	d93a5def7511da3d0f2d171d9c344e91	3	jel1284@gmail.com	default	1	30
 3	\N	2014-03-17 18:34:56.063814-04:30	2014-03-17 18:34:56.063814-04:30	\N	3	rahiber	d93a5def7511da3d0f2d171d9c344e91	3	rahiber_15@gmail.com	default	1	30
 4	\N	2014-03-17 19:22:19.405099-04:30	2014-03-17 19:22:19.405099-04:30	\N	4	yelix	d93a5def7511da3d0f2d171d9c344e91	3	yelixmaria@gmail.com	default	1	30
+5	\N	2014-07-31 16:12:58.143096-04:30	2014-07-31 16:12:58.143096-04:30	\N	34	alex54	b8d794abb3c7e10f835a199c1df2dac8	3	akashj@ajfkl.com	default	1	30
 \.
 
 
@@ -23240,13 +23556,13 @@ COPY usuario (id, usuario_id, fecha_registro, fecha_modificado, sucursal_id, per
 -- Name: usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('usuario_id_seq', 4, true);
+SELECT pg_catalog.setval('usuario_id_seq', 5, true);
 
 
 SET search_path = smsd, pg_catalog;
 
 --
--- Data for Name: daemons; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
+-- Data for Name: daemons; Type: TABLE DATA; Schema: smsd; Owner: jelitox
 --
 
 COPY daemons ("Start", "Info") FROM stdin;
@@ -23254,7 +23570,7 @@ COPY daemons ("Start", "Info") FROM stdin;
 
 
 --
--- Data for Name: gammu; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
+-- Data for Name: gammu; Type: TABLE DATA; Schema: smsd; Owner: jelitox
 --
 
 COPY gammu ("Version") FROM stdin;
@@ -23263,7 +23579,7 @@ COPY gammu ("Version") FROM stdin;
 
 
 --
--- Data for Name: inbox; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
+-- Data for Name: inbox; Type: TABLE DATA; Schema: smsd; Owner: jelitox
 --
 
 COPY inbox ("UpdatedInDB", "ReceivingDateTime", "Text", "SenderNumber", "Coding", "UDH", "SMSCNumber", "Class", "TextDecoded", "ID", "RecipientID", "Processed") FROM stdin;
@@ -23271,14 +23587,14 @@ COPY inbox ("UpdatedInDB", "ReceivingDateTime", "Text", "SenderNumber", "Coding"
 
 
 --
--- Name: inbox_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: arrozalba
+-- Name: inbox_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: jelitox
 --
 
 SELECT pg_catalog.setval('"inbox_ID_seq"', 1, false);
 
 
 --
--- Data for Name: outbox; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
+-- Data for Name: outbox; Type: TABLE DATA; Schema: smsd; Owner: jelitox
 --
 
 COPY outbox ("UpdatedInDB", "InsertIntoDB", "SendingDateTime", "SendBefore", "SendAfter", "Text", "DestinationNumber", "Coding", "UDH", "Class", "TextDecoded", "ID", "MultiPart", "RelativeValidity", "SenderID", "SendingTimeOut", "DeliveryReport", "CreatorID") FROM stdin;
@@ -23286,14 +23602,14 @@ COPY outbox ("UpdatedInDB", "InsertIntoDB", "SendingDateTime", "SendBefore", "Se
 
 
 --
--- Name: outbox_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: arrozalba
+-- Name: outbox_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: jelitox
 --
 
 SELECT pg_catalog.setval('"outbox_ID_seq"', 1, false);
 
 
 --
--- Data for Name: outbox_multipart; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
+-- Data for Name: outbox_multipart; Type: TABLE DATA; Schema: smsd; Owner: jelitox
 --
 
 COPY outbox_multipart ("Text", "Coding", "UDH", "Class", "TextDecoded", "ID", "SequencePosition") FROM stdin;
@@ -23301,14 +23617,14 @@ COPY outbox_multipart ("Text", "Coding", "UDH", "Class", "TextDecoded", "ID", "S
 
 
 --
--- Name: outbox_multipart_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: arrozalba
+-- Name: outbox_multipart_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: jelitox
 --
 
 SELECT pg_catalog.setval('"outbox_multipart_ID_seq"', 1, false);
 
 
 --
--- Data for Name: pbk; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
+-- Data for Name: pbk; Type: TABLE DATA; Schema: smsd; Owner: jelitox
 --
 
 COPY pbk ("ID", "GroupID", "Name", "Number") FROM stdin;
@@ -23316,14 +23632,14 @@ COPY pbk ("ID", "GroupID", "Name", "Number") FROM stdin;
 
 
 --
--- Name: pbk_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: arrozalba
+-- Name: pbk_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: jelitox
 --
 
 SELECT pg_catalog.setval('"pbk_ID_seq"', 1, false);
 
 
 --
--- Data for Name: pbk_groups; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
+-- Data for Name: pbk_groups; Type: TABLE DATA; Schema: smsd; Owner: jelitox
 --
 
 COPY pbk_groups ("Name", "ID") FROM stdin;
@@ -23331,14 +23647,14 @@ COPY pbk_groups ("Name", "ID") FROM stdin;
 
 
 --
--- Name: pbk_groups_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: arrozalba
+-- Name: pbk_groups_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: jelitox
 --
 
 SELECT pg_catalog.setval('"pbk_groups_ID_seq"', 1, false);
 
 
 --
--- Data for Name: phones; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
+-- Data for Name: phones; Type: TABLE DATA; Schema: smsd; Owner: jelitox
 --
 
 COPY phones ("ID", "UpdatedInDB", "InsertIntoDB", "TimeOut", "Send", "Receive", "IMEI", "Client", "Battery", "Signal", "Sent", "Received") FROM stdin;
@@ -23346,7 +23662,7 @@ COPY phones ("ID", "UpdatedInDB", "InsertIntoDB", "TimeOut", "Send", "Receive", 
 
 
 --
--- Data for Name: sentitems; Type: TABLE DATA; Schema: smsd; Owner: arrozalba
+-- Data for Name: sentitems; Type: TABLE DATA; Schema: smsd; Owner: jelitox
 --
 
 COPY sentitems ("UpdatedInDB", "InsertIntoDB", "SendingDateTime", "DeliveryDateTime", "Text", "DestinationNumber", "Coding", "UDH", "SMSCNumber", "Class", "TextDecoded", "ID", "SenderID", "SequencePosition", "Status", "StatusError", "TPMR", "RelativeValidity", "CreatorID") FROM stdin;
@@ -23354,7 +23670,7 @@ COPY sentitems ("UpdatedInDB", "InsertIntoDB", "SendingDateTime", "DeliveryDateT
 
 
 --
--- Name: sentitems_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: arrozalba
+-- Name: sentitems_ID_seq; Type: SEQUENCE SET; Schema: smsd; Owner: jelitox
 --
 
 SELECT pg_catalog.setval('"sentitems_ID_seq"', 1, false);
@@ -23378,14 +23694,6 @@ SET search_path = public, pg_catalog;
 
 ALTER TABLE ONLY acceso
     ADD CONSTRAINT acceso_pkey PRIMARY KEY (id);
-
-
---
--- Name: audit_log_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
---
-
-ALTER TABLE ONLY audit_log
-    ADD CONSTRAINT audit_log_pkey PRIMARY KEY (log_id);
 
 
 --
@@ -24015,7 +24323,7 @@ ALTER TABLE ONLY usuario
 SET search_path = smsd, pg_catalog;
 
 --
--- Name: inbox_pkey; Type: CONSTRAINT; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: inbox_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 ALTER TABLE ONLY inbox
@@ -24023,7 +24331,7 @@ ALTER TABLE ONLY inbox
 
 
 --
--- Name: outbox_multipart_pkey; Type: CONSTRAINT; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: outbox_multipart_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 ALTER TABLE ONLY outbox_multipart
@@ -24031,7 +24339,7 @@ ALTER TABLE ONLY outbox_multipart
 
 
 --
--- Name: outbox_pkey; Type: CONSTRAINT; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: outbox_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 ALTER TABLE ONLY outbox
@@ -24039,7 +24347,7 @@ ALTER TABLE ONLY outbox
 
 
 --
--- Name: pbk_groups_pkey; Type: CONSTRAINT; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: pbk_groups_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 ALTER TABLE ONLY pbk_groups
@@ -24047,7 +24355,7 @@ ALTER TABLE ONLY pbk_groups
 
 
 --
--- Name: pbk_pkey; Type: CONSTRAINT; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: pbk_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 ALTER TABLE ONLY pbk
@@ -24055,7 +24363,7 @@ ALTER TABLE ONLY pbk
 
 
 --
--- Name: phones_pkey; Type: CONSTRAINT; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: phones_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 ALTER TABLE ONLY phones
@@ -24063,7 +24371,7 @@ ALTER TABLE ONLY phones
 
 
 --
--- Name: sentitems_pkey; Type: CONSTRAINT; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: sentitems_pkey; Type: CONSTRAINT; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 ALTER TABLE ONLY sentitems
@@ -24103,42 +24411,42 @@ CREATE INDEX usuario_sucursal_idx ON usuario USING btree (sucursal_id);
 SET search_path = smsd, pg_catalog;
 
 --
--- Name: outbox_date; Type: INDEX; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: outbox_date; Type: INDEX; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE INDEX outbox_date ON outbox USING btree ("SendingDateTime", "SendingTimeOut");
 
 
 --
--- Name: outbox_sender; Type: INDEX; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: outbox_sender; Type: INDEX; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE INDEX outbox_sender ON outbox USING btree ("SenderID");
 
 
 --
--- Name: sentitems_date; Type: INDEX; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: sentitems_date; Type: INDEX; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE INDEX sentitems_date ON sentitems USING btree ("DeliveryDateTime");
 
 
 --
--- Name: sentitems_dest; Type: INDEX; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: sentitems_dest; Type: INDEX; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE INDEX sentitems_dest ON sentitems USING btree ("DestinationNumber");
 
 
 --
--- Name: sentitems_sender; Type: INDEX; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: sentitems_sender; Type: INDEX; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE INDEX sentitems_sender ON sentitems USING btree ("SenderID");
 
 
 --
--- Name: sentitems_tpmr; Type: INDEX; Schema: smsd; Owner: arrozalba; Tablespace: 
+-- Name: sentitems_tpmr; Type: INDEX; Schema: smsd; Owner: jelitox; Tablespace: 
 --
 
 CREATE INDEX sentitems_tpmr ON sentitems USING btree ("TPMR");
@@ -24147,37 +24455,716 @@ CREATE INDEX sentitems_tpmr ON sentitems USING btree ("TPMR");
 SET search_path = public, pg_catalog;
 
 --
--- Name: trg_usuario; Type: TRIGGER; Schema: public; Owner: arrozalba
+-- Name: tgl_acceso; Type: TRIGGER; Schema: public; Owner: arrozalba
 --
 
-CREATE TRIGGER trg_usuario AFTER INSERT OR DELETE OR UPDATE ON usuario FOR EACH ROW EXECUTE PROCEDURE logger();
+CREATE TRIGGER tgl_acceso AFTER INSERT OR DELETE OR UPDATE ON acceso FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_backup; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_backup AFTER INSERT OR DELETE OR UPDATE ON backup FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_beneficiario; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_beneficiario AFTER INSERT OR DELETE OR UPDATE ON beneficiario FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_beneficiario_tipo; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_beneficiario_tipo AFTER INSERT OR DELETE OR UPDATE ON beneficiario_tipo FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_cargo; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_cargo AFTER INSERT OR DELETE OR UPDATE ON cargo FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_cobertura; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_cobertura AFTER INSERT OR DELETE OR UPDATE ON cobertura FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_departamento; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_departamento AFTER INSERT OR DELETE OR UPDATE ON departamento FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_discapacidad; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_discapacidad AFTER INSERT OR DELETE OR UPDATE ON discapacidad FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_discapacidad_persona; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_discapacidad_persona AFTER INSERT OR DELETE OR UPDATE ON discapacidad_persona FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_empresa; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_empresa AFTER INSERT OR DELETE OR UPDATE ON empresa FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_especialidad; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_especialidad AFTER INSERT OR DELETE OR UPDATE ON especialidad FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_especialidad_medico; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_especialidad_medico AFTER INSERT OR DELETE OR UPDATE ON especialidad_medico FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_estado; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_estado AFTER INSERT OR DELETE OR UPDATE ON estado FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_estado_usuario; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_estado_usuario AFTER INSERT OR DELETE OR UPDATE ON estado_usuario FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_medicina; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_medicina AFTER INSERT OR DELETE OR UPDATE ON medicina FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_medico; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_medico AFTER INSERT OR DELETE OR UPDATE ON medico FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_menu; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_menu AFTER INSERT OR DELETE OR UPDATE ON menu FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_municipio; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_municipio AFTER INSERT OR DELETE OR UPDATE ON municipio FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_pais; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_pais AFTER INSERT OR DELETE OR UPDATE ON pais FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_parroquia; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_parroquia AFTER INSERT OR DELETE OR UPDATE ON parroquia FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_patologia; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_patologia AFTER INSERT OR DELETE OR UPDATE ON patologia FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_patologia_categoria; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_patologia_categoria AFTER INSERT OR DELETE OR UPDATE ON patologia_categoria FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_perfil; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_perfil AFTER INSERT OR DELETE OR UPDATE ON perfil FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_persona; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_persona AFTER INSERT OR DELETE OR UPDATE ON persona FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_profesion; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_profesion AFTER INSERT OR DELETE OR UPDATE ON profesion FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_proveedor; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_proveedor AFTER INSERT OR DELETE OR UPDATE ON proveedor FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_proveedor_medico; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_proveedor_medico AFTER INSERT OR DELETE OR UPDATE ON proveedor_medico FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_recaudo; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_recaudo AFTER INSERT OR DELETE OR UPDATE ON recaudo FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_recaudo_beneficiario; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_recaudo_beneficiario AFTER INSERT OR DELETE OR UPDATE ON recaudo_beneficiario FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_recaudo_reembolso; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_recaudo_reembolso AFTER INSERT OR DELETE OR UPDATE ON recaudo_reembolso FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_recaudo_solicitud_medicina; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_recaudo_solicitud_medicina AFTER INSERT OR DELETE OR UPDATE ON recaudo_solicitud_medicina FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_recaudo_solicitud_servicio; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_recaudo_solicitud_servicio AFTER INSERT OR DELETE OR UPDATE ON recaudo_solicitud_servicio FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_recaudo_titular; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_recaudo_titular AFTER INSERT OR DELETE OR UPDATE ON recaudo_titular FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_reccurso_perfil; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_reccurso_perfil AFTER INSERT OR DELETE OR UPDATE ON recurso_perfil FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_recurso; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_recurso AFTER INSERT OR DELETE OR UPDATE ON recurso FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_reembolso; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_reembolso AFTER INSERT OR DELETE OR UPDATE ON reembolso FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_servicio; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_servicio AFTER INSERT OR DELETE OR UPDATE ON servicio FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_servicio_proveedor; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_servicio_proveedor AFTER INSERT OR DELETE OR UPDATE ON servicio_proveedor FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_servicio_tiposolicitud; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_servicio_tiposolicitud AFTER INSERT OR DELETE OR UPDATE ON servicio_tiposolicitud FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_solicitud_dt_factura; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_solicitud_dt_factura AFTER INSERT OR DELETE OR UPDATE ON solicitud_dt_factura FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_solicitud_dt_medicina; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_solicitud_dt_medicina AFTER INSERT OR DELETE OR UPDATE ON solicitud_dt_medicina FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_solicitud_factura; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_solicitud_factura AFTER INSERT OR DELETE OR UPDATE ON solicitud_factura FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_solicitud_medicina; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_solicitud_medicina AFTER INSERT OR DELETE OR UPDATE ON solicitud_medicina FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_solicitud_servicio; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_solicitud_servicio AFTER INSERT OR DELETE OR UPDATE ON solicitud_servicio FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_sucursal; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_sucursal AFTER INSERT OR DELETE OR UPDATE ON sucursal FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_tipoempleado; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_tipoempleado AFTER INSERT OR DELETE OR UPDATE ON tipoempleado FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_tiposolicitud; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_tiposolicitud AFTER INSERT OR DELETE OR UPDATE ON tiposolicitud FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_titular; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_titular AFTER INSERT OR DELETE OR UPDATE ON titular FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_usuario; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_usuario AFTER INSERT OR DELETE OR UPDATE ON usuario FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_acceso; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_acceso AFTER TRUNCATE ON acceso FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_backup; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_backup AFTER TRUNCATE ON backup FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_beneficiario; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_beneficiario AFTER TRUNCATE ON beneficiario FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_beneficiario_tipo; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_beneficiario_tipo AFTER TRUNCATE ON beneficiario_tipo FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_cargo; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_cargo AFTER TRUNCATE ON cargo FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_cobertura; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_cobertura AFTER TRUNCATE ON cobertura FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_departamento; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_departamento AFTER TRUNCATE ON departamento FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_discapacidad; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_discapacidad AFTER TRUNCATE ON discapacidad FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_discapacidad_persona; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_discapacidad_persona AFTER TRUNCATE ON discapacidad_persona FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_empresa; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_empresa AFTER TRUNCATE ON empresa FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_especialidad; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_especialidad AFTER TRUNCATE ON especialidad FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_especialidad_medico; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_especialidad_medico AFTER TRUNCATE ON especialidad_medico FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_estado; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_estado AFTER TRUNCATE ON estado FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_estado_usuario; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_estado_usuario AFTER TRUNCATE ON estado_usuario FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_medicina; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_medicina AFTER TRUNCATE ON medicina FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_medico; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_medico AFTER TRUNCATE ON medico FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_menu; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_menu AFTER TRUNCATE ON menu FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_municipio; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_municipio AFTER TRUNCATE ON municipio FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_pais; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_pais AFTER TRUNCATE ON pais FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_parroquia; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_parroquia AFTER TRUNCATE ON parroquia FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_patologia; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_patologia AFTER TRUNCATE ON patologia FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_patologia_categoria; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_patologia_categoria AFTER TRUNCATE ON patologia_categoria FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_perfil; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_perfil AFTER TRUNCATE ON perfil FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_persona; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_persona AFTER TRUNCATE ON persona FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_profesion; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_profesion AFTER TRUNCATE ON profesion FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_proveedor; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_proveedor AFTER TRUNCATE ON proveedor FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_proveedor_medico; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_proveedor_medico AFTER TRUNCATE ON proveedor_medico FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_recaudo; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_recaudo AFTER TRUNCATE ON recaudo FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_recaudo_beneficiario; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_recaudo_beneficiario AFTER TRUNCATE ON recaudo_beneficiario FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_recaudo_reembolso; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_recaudo_reembolso AFTER TRUNCATE ON recaudo_reembolso FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_recaudo_solicitud_medicina; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_recaudo_solicitud_medicina AFTER TRUNCATE ON recaudo_solicitud_medicina FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_recaudo_solicitud_servicio; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_recaudo_solicitud_servicio AFTER TRUNCATE ON recaudo_solicitud_servicio FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_recaudo_titular; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_recaudo_titular AFTER TRUNCATE ON recaudo_titular FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_recurso; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_recurso AFTER TRUNCATE ON recurso FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_recurso_perfil; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_recurso_perfil AFTER TRUNCATE ON recurso_perfil FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_reembolso; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_reembolso AFTER TRUNCATE ON reembolso FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_servicio; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_servicio AFTER TRUNCATE ON servicio FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_servicio_proveedor; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_servicio_proveedor AFTER TRUNCATE ON servicio_proveedor FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_servicio_tiposolicitud; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_servicio_tiposolicitud AFTER TRUNCATE ON servicio_tiposolicitud FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_solicitud_dt_factura; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_solicitud_dt_factura AFTER TRUNCATE ON solicitud_dt_factura FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_solicitud_dt_medicina; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_solicitud_dt_medicina AFTER TRUNCATE ON solicitud_dt_medicina FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_solicitud_factura; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_solicitud_factura AFTER TRUNCATE ON solicitud_factura FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_solicitud_medicina; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_solicitud_medicina AFTER TRUNCATE ON solicitud_medicina FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_solicitud_servicio; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_solicitud_servicio AFTER TRUNCATE ON solicitud_servicio FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_sucursal; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_sucursal AFTER TRUNCATE ON sucursal FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_tipoempleado; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_tipoempleado AFTER TRUNCATE ON tipoempleado FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_tiposolicitud; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_tiposolicitud AFTER TRUNCATE ON tiposolicitud FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_titular; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_titular AFTER TRUNCATE ON titular FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_usuario; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_usuario AFTER TRUNCATE ON usuario FOR EACH STATEMENT EXECUTE PROCEDURE logger();
 
 
 SET search_path = smsd, pg_catalog;
 
 --
--- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: arrozalba
+-- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: jelitox
 --
 
 CREATE TRIGGER update_timestamp BEFORE UPDATE ON inbox FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
 
 
 --
--- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: arrozalba
+-- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: jelitox
 --
 
 CREATE TRIGGER update_timestamp BEFORE UPDATE ON outbox FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
 
 
 --
--- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: arrozalba
+-- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: jelitox
 --
 
 CREATE TRIGGER update_timestamp BEFORE UPDATE ON phones FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
 
 
 --
--- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: arrozalba
+-- Name: update_timestamp; Type: TRIGGER; Schema: smsd; Owner: jelitox
 --
 
 CREATE TRIGGER update_timestamp BEFORE UPDATE ON sentitems FOR EACH ROW EXECUTE PROCEDURE update_timestamp();
