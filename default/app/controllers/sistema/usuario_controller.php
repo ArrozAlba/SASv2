@@ -74,7 +74,8 @@ class UsuarioController extends BackendController {
                     DwMessage::valid('El usuario se ha creado correctamente.');
                     return DwRedirect::toAction('listar');
                 }
-            } else {
+            }
+            else {
                 ActiveRecord::rollbackTrans();
             }            
         }

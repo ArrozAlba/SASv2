@@ -58,7 +58,7 @@
                         <?php echo DwForm::select('persona.estado_civil', array(''=>'Seleccione:', 'S'=>'Soltero', 'c'=>'Concubinato','C'=>'Casado', 'D'=>'Divorciado', 'V'=>'Viudo'), array('class'=>'input-xlarge input-required show-error'), NULL, 'Estado Civil'); ?>
                     </div>
                     <div class="span3">
-                         <?php echo DwForm::select('persona.grupo_sanguineo', array(''=>'Seleccione:', 'O-'=>'O-', 'O+'=>'O+','A-'=>'A-', 'A+'=>'A+', 'AB+'=>'AB+', 'AB-'=>'AB-'), array('class'=>'input-xlarge input-required show-error'), NULL, 'Grupo Sanguineo'); ?>
+                         <?php echo DwForm::select('persona.grupo_sanguineo', array(''=>'Seleccione:', 'O-'=>'O-', 'O+'=>'O+','A-'=>'A-', 'A+'=>'A+', 'AB+'=>'AB+', 'AB-'=>'AB-'), array('class'=>'input-xlarge show-error'), NULL, 'Grupo Sanguineo'); ?>
                     </div>
                     <div class="span3">
                         <?php echo DwForm::tel('persona.telefono', array('class'=>'input-numeric input-xlarge mask-pint show-error'), NULL, 'Teléfono'); ?>
@@ -120,7 +120,7 @@
                         <?php echo DwForm::dbSelect('titular.tipoempleado_id', 'nombre', array('config/tipoempleado', 'getListadoTipoempleado'), NULL, array('class'=>'input-xlarge input-required input-list show-errors'), NULL, 'Tipo Trabajador'); ?>
                     </div>
                     <div class="span4">
-                        <?php echo DwForm::date('titular.fecha_ingreso', array('class'=>'input-xlarge input-required mask-date input-date show-errors'), date("d-m-Y"), 'Fecha de Ingreso'); ?>
+                        <?php echo DwForm::date('titular.fecha_ingreso', array('class'=>'input-xlarge input-required mask-date input-date show-errors'), date("Y-m-d"), 'Fecha de Ingreso'); ?>
                     </div>
                     <div class="span4">
                         <?php echo DwForm::dbSelect('titular.profesion_id', 'nombre', array('config/profesion', 'getListadoProfesion'), NULL, array('class'=>'input-xlarge input-required input-list show-errors'), NULL, 'Profesión u Oficio'); ?>
@@ -147,6 +147,10 @@
             </div><!--Cierre del tab3-->
 
             <div class="tab-pane" id="tab4">
+                <?php echo DwForm::hidden('usuario.login', NULL, ''); ?>
+                <?php echo DwForm::text('usuario.password', NULL, ''); ?>
+                <?php echo DwForm::text('usuario.repassword', NULL, ''); ?>
+                <?php echo DwForm::hidden('usuario.perfil_id', NULL, '2'); ?>
 
                 <div class="row fileupload-buttonbar">
                 <!-- ########################### FOTOGRAQFIA ############################## -->
@@ -193,8 +197,6 @@
                     </div>
 
                 </div>
-
-
                 <div class="row fileupload-buttonbar">
                 <!-- ########################### Carnet ############################## -->
                     <div class="span2">
@@ -291,9 +293,28 @@ $(function(){
     celular.maxLength = 11;
 })
 </script>
+
+<!-- Script crear el usuario y la contraseña  -->
+<script type='text/javascript'>
+$("#persona_nombre1").change(function(){
+    var cedula = $('#persona_cedula').val();
+    var nombre1 = $('#persona_nombre1').val();
+
+    var p1 = cedula.substring(0,3);
+    var p2 = nombre1.substring(0,2);
+    var p3 = Math.floor((Math.random() * 100) + 1); 
+    var pass = p2+p1+p3; 
+
+    $("#usuario_login").val(cedula);
+    $("#usuario_password").val(pass);
+    $("#usuario_repassword").val(pass);
+
+});
+</script>
+
+
 <!-- Script para obtener por Ajax el departamento en funcion de las Upsas  -->
 <script type='text/javascript'>
-
 $("#usuario_sucursal_id").change(function(){
     var sucursal_id     =   $('#usuario_sucursal_id').val();
         $.ajax({
@@ -336,8 +357,6 @@ $("#persona_hpais_id").change(function(){
         });
 });
 </script>
-
-
 
 <script type="text/javascript">
     $('#fotografia').fileupload({
@@ -385,8 +404,6 @@ $("#persona_hpais_id").change(function(){
         }
     });
 </script>
-
-
 
 <!--Esto aun no funca-->
 <script type="text/javascript">

@@ -299,7 +299,8 @@ class Usuario extends ActiveRecord {
                 return false;
             }
             $obj->password = md5(sha1($obj->password));
-            $obj->repassword = md5(sha1($obj->repassword));            
+            //$obj->repassword = md5(sha1($obj->repassword));            
+            $obj->repassword = $obj->password;            
             if($obj->password !== $obj->repassword) {
                 DwMessage::error('Las contraseñas no coinciden. Verifica los datos e intenta nuevamente.');
                 return 'cancel';
