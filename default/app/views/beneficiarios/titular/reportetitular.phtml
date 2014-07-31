@@ -93,7 +93,6 @@ $pdf->Cell(76,6,'Email: '.$email_corpo,1,0,'L',true);
 $pdf->Cell(50,6,'Cargo: '.utf8_decode($cargo),1,1,'L',true);
 
 //datos de beneficiarios
-
 $pdf->Ln(3);
 $pdf->SetFont('Times','B',10);  
 $pdf->Cell(30,6,'OBSERVACION:',1,0,'C',true);    
@@ -113,14 +112,14 @@ $pdf->SetFont('Times','',8);
 
 
 foreach($beneficiarios as $bene){
-$pdf->Cell(80,6,utf8_decode($bene->nombre1.' '.$bene->nombre2.' '.$bene->apellido1.' '.$bene->apellido2),1,0,'C',true);
+$pdf->Cell(80,6,strtoupper(utf8_decode($bene->nombre1.' '.$bene->nombre2.' '.$bene->apellido1.' '.$bene->apellido2)),1,0,'C',true);
         $elDia=substr($bene->fecha_nacimiento,8,2);
         $elMes=substr($bene->fecha_nacimiento,5,2);
         $elYear=substr($bene->fecha_nacimiento,0,4);
         $fb=$elDia.'-'.$elMes.'-'.$elYear;
         $pdf->Cell(26,6,$bene->nacionalidad.'-'.$bene->cedula,1,0,'C',true);
         $pdf->Cell(23,6,$fb,1,0,'C',true);
-        $pdf->Cell(11,6,$edad,1,0,'C',true);
+        $pdf->Cell(11,6,$bene->edad,1,0,'C',true);
         $pdf->Cell(18,6,$bene->sexo,1,0,'C',true);
         $pdf->Cell(25,6,$bene->parentesco,1,0,'C',true);
         $pdf->Cell(16,6,$bene->participacion.'%',1,1,'C',true);
@@ -140,12 +139,6 @@ $pdf->Cell(199,5,'*Acepta los terminos y condiciones establecidas por el Autoges
     $pdf->Cell(100,6,' ','0',1,'L',true);
     $pdf->Cell(100,6,' ','0',1,'L',true);
     $pdf->Cell(100,6,' ','0',1,'L',true);
-
-
-
-
-
-
 
 
 $pdf->Output();

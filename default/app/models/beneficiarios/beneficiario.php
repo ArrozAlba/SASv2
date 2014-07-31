@@ -107,6 +107,8 @@ and beneficiario.persona_id = persona.id ");
         return $this->find_all_by_sql("select beneficiario.id,beneficiario.titular_id,beneficiario.persona_id,persona.nombre1,persona.apellido1,
 cast(persona.cedula as float) 
 from beneficiario,persona where beneficiario.persona_id = persona.id");
+
+
     }
     public function buscar($titular_id){
         return $this->find_all_by_sql("select beneficiario.id,beneficiario.titular_id,beneficiario.persona_id,(persona.nombre1 || ' ' || persona.apellido1) as nombrefull,
@@ -160,16 +162,7 @@ from beneficiario,persona where  beneficiario.titular_id = '{$titular_id}' and b
 
 //------ Listado de todos los beneficiarios de un titular en especificoooo ----- 16/07/2014 
     public function getListadoBeneTitular($titular){
-        $page=0;
-        $titular = Filter::get($titular, 'int');
-        if(!$titular) {
-            return NULL;
-        }
-        $columns = 'DATE_PART(\'year\', now()) - DATE_PART(\'year\', persona.fecha_nacimiento) as edad,persona.cedula, persona.nombre1, persona.nombre2, persona.apellido1, persona.fecha_nacimiento, persona.nacionalidad, persona.apellido2, persona.sexo, beneficiario.parentesco,beneficiario.participacion, beneficiario.id, beneficiario_tipo.descripcion';
-        $join = 'INNER JOIN persona ON persona.id = beneficiario.persona_id ';
-        $join.= 'INNER JOIN beneficiario_tipo ON beneficiario.beneficiario_tipo_id = beneficiario_tipo.id ';
-        $condicion = "beneficiario.titular_id = $titular";
-        return $this->find("columns: $columns", "join: $join","conditions: $condicion");
+       return $this->find_all_by_sql("SELECT DATE_PART('year', now()) - DATE_PART('year', persona.fecha_nacimiento) as edad, persona.cedula, persona.nombre1, persona.nombre2, persona.apellido1, persona.fecha_nacimiento, persona.nacionalidad, persona.apellido2, persona.sexo, beneficiario.parentesco,beneficiario.participacion, beneficiario.id, beneficiario_tipo.descripcion FROM beneficiario INNER JOIN persona ON persona.id = beneficiario.persona_id INNER JOIN beneficiario_tipo ON beneficiario.beneficiario_tipo_id = beneficiario_tipo.id WHERE beneficiario.titular_id = $titular");
     }
 }
 ?>

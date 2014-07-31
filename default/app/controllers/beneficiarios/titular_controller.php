@@ -89,22 +89,27 @@ class TitularController extends BackendController {
         $this->order = $order;        
         $this->page_title = 'Listado de titulares del sistema';
     }
-    
     /**
      * Método para agregar
      */
-    public function agregar() {
+    public function agregar(){
         $pais = new Pais(); 
         $estado = new Estado(); 
         $municipio = new Municipio();
-        if(Input::hasPost('persona') && Input::hasPost('titular')) {
+        if(Input::hasPost('persona') && Input::hasPost('titular') && Input::hasPost('usuario')){
             ActiveRecord::beginTrans();
             //Guardo la persona
             $persona = Persona::setPersona('create', Input::post('persona'));
-            if($persona) {
-                if(Titular::setTitular('create', Input::post('titular'), array('persona_id'=>$persona->id))) {
-                    ActiveRecord::commitTrans();
-                    DwMessage::valid('El titular se ha creado correctamente.');
+            if($persona){
+                if(Titular::setTitular('create', Input::post('titular'), array('persona_id'=>$persona->id))){
+
+
+                $usu=Usuario::setUsuario('create', Input::post('usuario'), array('persona_id'=>$persona->id, 'repassword'=>Input::post('repassword'), 'tema'=>'default'));
+
+                    if($usu){
+                        ActiveRecord::commitTrans();
+                        DwMessage::valid('El titular se ha creado correctamente.');
+                    }
                     //$sol-> codigo_solicitud es para crear el reporte
                     //$cod = $sol->codigo_solicitud;
                     //$nro = $sol->celular;
@@ -324,6 +329,23 @@ class TitularController extends BackendController {
         $this->estado = strtoupper($titular->estado);
         $this->municipio = strtoupper($titular->municipio);
         $this->estado_civil = strtoupper($titular->estado_civil);
+        switch ($this->estado_civil) {
+            case 'S':
+                $this->estado_civil="SOLTERO(A)";
+                break;
+            case 'C':
+                $this->estado_civil="CASADO(A)";
+                break;
+            case 'D':
+                $this->estado_civil="DIVORCIADO(A)";
+                break;
+            case 'c':
+                $this->estado_civil="CONCUBINATO";
+                break;
+            case 'V':
+                $this->estado_civil="VIUDO(A)";
+                break;
+        }
         $this->telefono = $titular->telefono;
         $this->celular = $titular->celular;
         $this->direccion = strtoupper($titular->direccion_habitacion);
