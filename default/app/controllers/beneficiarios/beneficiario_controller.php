@@ -17,7 +17,7 @@ class beneficiarioController extends BackendController {
      */
     protected function before_filter() {
         //Se cambia el nombre del módulo actual
-        $this->page_module = 'Gestión de beneficiarios';
+        $this->page_module = 'Beneficiarios';
     }
     
     /**
