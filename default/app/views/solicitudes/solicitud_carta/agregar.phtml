@@ -6,7 +6,7 @@
             <div class="span4">
                 <?php echo DwForm::text('solicitud_servicio.codigo_solicitud_id', array('class'=>'input-xlarge disabled'),$codigodd, 'Código:'); ?>
                 <?php echo DwForm::hidden('solicitud_servicio.codigo_solicitud', NULL, $codigodd); ?>
-                <?php echo DwForm::hidden('solicitud_servicio.tiposolicitud_id', NULL, '1'); ?>
+                <?php echo DwForm::hidden('solicitud_servicio.tiposolicitud_id', NULL, '6'); ?>
                 <?php echo DwForm::hidden('solicitud_servicio.estado_solicitud', NULL, 'R'); ?>
                 <?php ?>
             </div>
@@ -61,7 +61,7 @@
         </div>
         <div class="row-fluid">
             <div class="span12">
-                <?php echo DwForm::textarea('solicitud_servicio.observacion', array('class'=>'mask-text show-error input-xxlarge mask-alpha '), NULL, 'Observacion'); ?>
+                <?php echo DwForm::textarea('solicitud_servicio.observacion', array('class'=>'mask-text show-error mask-alpha input-xxlarge'), NULL, 'Observacion'); ?>
                 <?php //echo DwForm::dbSelect('solicitud_servicio.patologia_id', 'descripcion', array('config/patologia', 'getListadoPatologia'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Patologia'); ?>
             </div>
         </div>
