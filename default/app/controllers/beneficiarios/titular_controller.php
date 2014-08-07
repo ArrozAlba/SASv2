@@ -21,7 +21,7 @@ class TitularController extends BackendController {
      */
     protected function before_filter() {
         //Se cambia el nombre del módulo actual
-        $this->page_module = 'Gestión de titulares';
+        $this->page_module = 'Titular';
     }
     
     /**
@@ -128,7 +128,7 @@ class TitularController extends BackendController {
             $this->municipio = $municipio->getListadoMunicipio(); 
             $this->sucursal = $sucursal->getListadoSucursal(); 
         }
-        $this->page_title = 'Agregar Titular';
+        $this->page_title = 'Agregar';
     }
     
     /**

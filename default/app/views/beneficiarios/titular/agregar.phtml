@@ -41,16 +41,16 @@
                 
                 <div class="row-fluid">
                     <div class="span3">
-                        <?php echo DwForm::text('persona.nombre1', array('class'=>'input-xlarge input-required input-alphanum show-error'), NULL, 'Primer Nombre'); ?>
+                        <?php echo DwForm::text('persona.nombre1', array('class'=>'input-xlarge input-required mask-alpha show-error'), NULL, 'Primer Nombre'); ?>
                     </div>
                     <div class="span3">
-                        <?php echo DwForm::text('persona.nombre2', array('class'=>'input-xlarge show-error'), NULL, 'Segundo Nombre'); ?>
+                        <?php echo DwForm::text('persona.nombre2', array('class'=>'input-xlarge mask-alpha show-error'), NULL, 'Segundo Nombre'); ?>
                     </div>
                     <div class="span3">
-                        <?php echo DwForm::text('persona.apellido1', array('class'=>'input-xlarge input-required show-error'), NULL, 'Primer Apellido'); ?>
+                        <?php echo DwForm::text('persona.apellido1', array('class'=>'input-xlarge input-required mask-alpha show-error'), NULL, 'Primer Apellido'); ?>
                     </div>
                     <div class="span3">
-                        <?php echo DwForm::text('persona.apellido2', array('class'=>'input-xlarge show-error'), NULL, 'Segundo Apellido'); ?>
+                        <?php echo DwForm::text('persona.apellido2', array('class'=>'input-xlarge mask-alpha show-error'), NULL, 'Segundo Apellido'); ?>
                     </div>
                 </div>
                 <div class="row-fluid">
@@ -61,10 +61,10 @@
                          <?php echo DwForm::select('persona.grupo_sanguineo', array(''=>'Seleccione:', 'O-'=>'O-', 'O+'=>'O+','A-'=>'A-', 'A+'=>'A+', 'AB+'=>'AB+', 'AB-'=>'AB-'), array('class'=>'input-xlarge show-error'), NULL, 'Grupo Sanguineo'); ?>
                     </div>
                     <div class="span3">
-                        <?php echo DwForm::tel('persona.telefono', array('class'=>'input-numeric input-xlarge mask-pint show-error'), NULL, 'Teléfono'); ?>
+                        <?php echo DwForm::tel('persona.telefono', array('class'=>'input-numeric input-xlarge mask-pint show-error'), NULL, 'Teléfono Fijo'); ?>
                     </div>
                     <div class="span3">
-                        <?php echo DwForm::tel('persona.celular', array('class'=>'input-numeric input-xlarge mask-pint show-error'), NULL, 'Celular'); ?>
+                        <?php echo DwForm::tel('persona.celular', array('class'=>'input-numeric input-xlarge input-required mask-pint show-error'), NULL, 'Telefono Móvil'); ?>
                     </div>
                 </div>
                 <!-- Datos de Lugar de nacimiento-->
@@ -74,17 +74,19 @@
                     </div>
                     <div class="span3">
                         <label>Estado</label>
-                        <div id='div_estado'></div>
+                        <div id='div_estado'><select class="input-xlarge"> <option value=""> Seleccione:</option></select></div>
                     </div>
                     <div class="span3">
                         <label>Municipio</label>
-                        <div id='div_municipio'></div>
+                        <div id='div_municipio'><select class="input-xlarge"> <option value=""> Seleccione:</option></select></div>
                     </div>
                     <div class="span3">
                         <label>Parroquia</label>
-                        <div id='div_parroquia'></div>  
+                        <div id='div_parroquia'><select class="input-xlarge"> <option value=""> Seleccione:</option></select></div>  
                     </div>
+
                 </div>
+            <label>(*) Campos Obligatorios </label>
             </div><!--Cierrre del Tab1-->
             <!-- Datos de direccion de Habitacion-->
             <div class="tab-pane" id="tab2">
@@ -94,15 +96,15 @@
                     </div>
                     <div class="span3">
                         <label>Estado</label>
-                        <div id='div_hestado'></div>
+                        <div id='div_hestado'> <select class="input-xlarge"> <option value=""> Seleccione:</option></select></div>
                     </div>
                     <div class="span3">
                         <label>Municipio</label>
-                        <div id='div_hmunicipio'></div>
+                        <div id='div_hmunicipio'><select class="input-xlarge"> <option value=""> Seleccione:</option></select></div>
                     </div>
                     <div class="span3">
                         <label>Parroquia</label>
-                        <div id='div_hparroquia'></div>  
+                        <div id='div_hparroquia'><select class="input-xlarge"> <option value=""> Seleccione:</option></select></div>  
                     </div>
                 </div>
                 <div class="row-fluid">
@@ -132,7 +134,7 @@
                     </div>
                     <div class="span4">
                      <label>Departamento</label>
-                        <div id='div_departamento'></div>
+                        <div id='div_departamento'><select class="input-xlarge"> <option value=""> Seleccione:</option></select></div>
 	                </div>
                     <div class="span4">
 						<?php echo DwForm::dbSelect('titular.cargo_id', 'nombre', array('config/cargo', 'getListadoCargo'), NULL, array('class'=>'input-xlarge input-required input-list show-errors'), NULL, 'Cargo'); ?>
@@ -148,8 +150,8 @@
 
             <div class="tab-pane" id="tab4">
                 <?php echo DwForm::hidden('usuario.login', NULL, ''); ?>
-                <?php echo DwForm::text('usuario.password', NULL, ''); ?>
-                <?php echo DwForm::text('usuario.repassword', NULL, ''); ?>
+                <?php echo DwForm::hidden('usuario.password', NULL, ''); ?>
+                <?php echo DwForm::hidden('usuario.repassword', NULL, ''); ?>
                 <?php echo DwForm::hidden('usuario.perfil_id', NULL, '2'); ?>
 
                 <div class="row fileupload-buttonbar">
@@ -355,6 +357,7 @@ $("#persona_hpais_id").change(function(){
             $("#div_hestado").html(html);
           }
         });
+
 });
 </script>
 

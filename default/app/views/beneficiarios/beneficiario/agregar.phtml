@@ -105,7 +105,7 @@
              <?php echo DwForm::hidden('beneficiario.titular_id', NULL, $idtitular); ?>
                 <div class="row-fluid">
                     <div class="span4">
-                        <?php echo DwForm::dbSelect('beneficiario.beneficiario_tipo_id', 'descripcion', array('config/beneficiario_tipo', 'getListadoTipobeneficiario'), NULL, array('class'=>'input-xlarge input-required show-errors'), NULL, 'Tipo Beneficiario'); ?>
+                        <?php echo DwForm::dbSelect('beneficiario.beneficiario_tipo_id', 'descripcion', array('config/beneficiario_tipo', 'getListadoTipobeneficiario'), NULL, array('class'=>'input-xlarge input-required  show-errors'), NULL, 'Tipo Beneficiario'); ?>
                     </div>
                      <div class="span4">
                         <?php echo DwForm::select('beneficiario.parentesco', array(''=>'Seleccione:', 'P'=>'Padre', 'M'=>'Madre', 'H'=>'Hijo','EO'=>'Esposo', 'EA'=>'Esposa', 'HA'=>'Hermana', 'HO'=>'Hermano', 'TA'=>'Tia', 'TO'=>'Tio', 'C'=>'Concubino', 'O'=>'Otro'), array('class'=>'input-xlarge input-required show-error'), NULL, 'Parentesco'); ?>
@@ -131,16 +131,16 @@
                 </div>
                 <div class="row-fluid">
                     <div class="span3">
-                        <?php echo DwForm::text('persona.nombre1', array('class'=>'input-xlarge input-required show-error'), NULL, 'Primer Nombre'); ?>
+                        <?php echo DwForm::text('persona.nombre1', array('class'=>'input-xlarge mask-alpha input-required show-error'), NULL, 'Primer Nombre'); ?>
                     </div>
                     <div class="span3">
-                        <?php echo DwForm::text('persona.nombre2', array('class'=>'input-xlarge  mask-alphanum show-error'), NULL, 'Segundo Nombre'); ?>
+                        <?php echo DwForm::text('persona.nombre2', array('class'=>'input-xlarge mask-alpha show-error'), NULL, 'Segundo Nombre'); ?>
                     </div>
                     <div class="span3">
-                        <?php echo DwForm::text('persona.apellido1', array('class'=>'input-xlarge input-required show-error'), NULL, 'Primer Apellido'); ?>
+                        <?php echo DwForm::text('persona.apellido1', array('class'=>'input-xlarge input-required mask-alpha show-error'), NULL, 'Primer Apellido'); ?>
                     </div>
                     <div class="span3">
-                        <?php echo DwForm::text('persona.apellido2', array('class'=>'input-xlarge mask-alphanum show-error'), NULL, 'Segundo Apellido'); ?>
+                        <?php echo DwForm::text('persona.apellido2', array('class'=>'input-xlarge mask-alpha show-error'), NULL, 'Segundo Apellido'); ?>
                     </div>
                 </div>
                 <div class="row-fluid">
