@@ -5574,6 +5574,13 @@ ALTER TABLE ONLY titular ALTER COLUMN id SET DEFAULT nextval('titular_id_seq'::r
 ALTER TABLE ONLY usuario ALTER COLUMN id SET DEFAULT nextval('usuario_id_seq'::regclass);
 
 
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY usuario_clave ALTER COLUMN id SET DEFAULT nextval('usuario_clave_id_seq'::regclass);
+
+
 SET search_path = smsd, pg_catalog;
 
 --
@@ -5625,6 +5632,10 @@ SET search_path = audit_log, pg_catalog;
 --
 
 COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, log_operation, log_query, log_table, log_columns, log_old_values, log_new_values) FROM stdin;
+285	68524	postgres	2014-08-09 11:49:07.877445-04:30	127.0.0.1	INSERT	INSERT INTO public.titular(cedula, nombre1, nombre2, apellido1, apellido2, nacionalidad, sexo, fecha_nacimiento, sucursal_id, pais_id, estado_id, municipio_id, parroquia_id, direccion_habitacion, hpais_id, hestado_id, hmunicipio_id, hparroquia_id, estado_civil, celular, tipoempleado_id, fecha_ingreso, profesion_id, departamento_id, cargo_id, observacion) VALUES ('20643647'::text, 'Alexis'::text, 'Jose'::text, 'Borges'::text, 'Tu'::text, 'V'::text, 'M'::text, '1990-12-11'::date, '1'::integer, '240'::integer, '39'::integer, '25'::integer, '32'::integer, 'sadfasd'::text, '240'::integer, '39'::integer, '23'::integer, '43'::integer, 'S'::text, '04167012111'::text, '1'::integer, '2014-11-08'::date, '1'::integer, '1'::integer, '1'::integer, '1'::text)	titular	\N	\N	{14,M,20643647,04167012111,Alexis,Jose,240,1,240,NULL,Borges,Tu,39,39,NULL,1,1,S,25,V,32,1,2014-11-08,23,43,"2014-08-09 11:49:07.877445-04:30",1,N/A,1,"2014-08-09 11:49:07.877445-04:30",1990-12-11,NULL,sadfasd}
+286	68524	postgres	2014-08-09 11:50:20.543282-04:30	127.0.0.1	UPDATE	UPDATE public.titular SET id='1'::integer WHERE id = '14'::integer	titular	{id,sexo,cedula,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,correo_electronico,direccion_habitacion}	{14,M,20643647,04167012111,Alexis,Jose,240,1,240,NULL,Borges,Tu,39,39,NULL,1,1,S,25,V,32,1,2014-11-08,23,43,"2014-08-09 11:49:07.877445-04:30",1,N/A,1,"2014-08-09 11:49:07.877445-04:30",1990-12-11,NULL,sadfasd}	{1,M,20643647,04167012111,Alexis,Jose,240,1,240,NULL,Borges,Tu,39,39,NULL,1,1,S,25,V,32,1,2014-11-08,23,43,"2014-08-09 11:49:07.877445-04:30",1,N/A,1,"2014-08-09 11:49:07.877445-04:30",1990-12-11,NULL,sadfasd}
+287	68540	postgres	2014-08-09 11:50:25.26152-04:30	127.0.0.1	INSERT	INSERT INTO public.usuario(sucursal_id, titular_id, login, perfil_id) VALUES ('1'::integer, '1'::integer, 'admin'::text, '1'::integer)	usuario	\N	\N	{10,NULL,NULL,admin,NULL,1,30,1,1,NULL,1,"2014-08-09 11:50:25.26152-04:30","2014-08-09 11:50:25.26152-04:30",NULL}
+288	68540	postgres	2014-08-09 11:51:19.037554-04:30	127.0.0.1	UPDATE	UPDATE public.usuario SET id='1'::integer WHERE id = '10'::integer	usuario	{id,tema,email,login,estatus,app_ajax,datagrid,perfil_id,titular_id,usuario_id,sucursal_id,fecha_registro,fecha_modificado,fecha_desactivacion}	{10,NULL,NULL,admin,NULL,1,30,1,1,NULL,1,"2014-08-09 11:50:25.26152-04:30","2014-08-09 11:50:25.26152-04:30",NULL}	{1,NULL,NULL,admin,NULL,1,30,1,1,NULL,1,"2014-08-09 11:50:25.26152-04:30","2014-08-09 11:50:25.26152-04:30",NULL}
 \.
 
 
@@ -5632,7 +5643,7 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 -- Name: audit_log_log_id_seq; Type: SEQUENCE SET; Schema: audit_log; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('audit_log_log_id_seq', 284, true);
+SELECT pg_catalog.setval('audit_log_log_id_seq', 288, true);
 
 
 SET search_path = public, pg_catalog;
@@ -23134,6 +23145,7 @@ SELECT pg_catalog.setval('tiposolicitud_id_seq', 6, true);
 --
 
 COPY titular (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1, nombre2, apellido1, apellido2, nacionalidad, sexo, fecha_nacimiento, sucursal_id, pais_id, estado_id, municipio_id, parroquia_id, direccion_habitacion, hpais_id, hestado_id, hmunicipio_id, hparroquia_id, estado_civil, celular, telefono, correo_electronico, grupo_sanguineo, tipoempleado_id, fecha_ingreso, profesion_id, departamento_id, cargo_id, observacion) FROM stdin;
+1	\N	2014-08-09 11:49:07.877445-04:30	2014-08-09 11:49:07.877445-04:30	20643647	Alexis	Jose	Borges	Tu	V	M	1990-12-11	1	240	39	25	32	sadfasd	240	39	23	43	S	04167012111	\N	\N	N/A	1	2014-11-08	1	1	1	1
 \.
 
 
@@ -23141,7 +23153,7 @@ COPY titular (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1,
 -- Name: titular_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('titular_id_seq', 13, true);
+SELECT pg_catalog.setval('titular_id_seq', 14, true);
 
 
 --
@@ -23149,6 +23161,7 @@ SELECT pg_catalog.setval('titular_id_seq', 13, true);
 --
 
 COPY usuario (id, usuario_id, fecha_registro, fecha_modificado, fecha_desactivacion, sucursal_id, titular_id, login, perfil_id, email, tema, app_ajax, datagrid, estatus) FROM stdin;
+1	\N	2014-08-09 11:50:25.26152-04:30	2014-08-09 11:50:25.26152-04:30	\N	1	1	admin	1	\N	\N	1	30	\N
 \.
 
 
@@ -23157,6 +23170,7 @@ COPY usuario (id, usuario_id, fecha_registro, fecha_modificado, fecha_desactivac
 --
 
 COPY usuario_clave (id, usuario_id, fecha_registro, fecha_modificado, password, fecha_inicio, fecha_fin) FROM stdin;
+1	1	2014-08-09 11:51:21.701566-04:30	2014-08-09 11:51:21.701566-04:30	d93a5def7511da3d0f2d171d9c344e91	2014-08-08	2014-09-09
 \.
 
 
@@ -23164,14 +23178,14 @@ COPY usuario_clave (id, usuario_id, fecha_registro, fecha_modificado, password, 
 -- Name: usuario_clave_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('usuario_clave_id_seq', 1, false);
+SELECT pg_catalog.setval('usuario_clave_id_seq', 3, true);
 
 
 --
 -- Name: usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('usuario_id_seq', 8, true);
+SELECT pg_catalog.setval('usuario_id_seq', 10, true);
 
 
 --
