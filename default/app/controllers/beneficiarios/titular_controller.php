@@ -10,7 +10,7 @@
  * @copyright   Copyright (c) 2014 E.M.S. Arroz del Alba S.A. (http://autogestion.arrozdelalba.gob.ve)
  */
 
-Load::models('beneficiarios/titular','personas/persona', 'sistema/usuario', 'beneficiarios/beneficiario');
+Load::models('beneficiarios/titular','sistema/usuario', 'beneficiarios/beneficiario');
 Load::models('params/pais', 'params/estado', 'params/municipio', 'params/parroquia');
 load::models('config/sucursal', 'config/departamento');
 

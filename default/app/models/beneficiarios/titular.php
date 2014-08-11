@@ -68,9 +68,8 @@ class Titular extends ActiveRecord {
      */
 
     public function getListadotitular($estado, $order='', $page=0) {
-        $columns = 'titular.*, titular.id as idtitular, sucursal.*, persona.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';
-        $join= 'INNER JOIN persona ON persona.id = titular.persona_id ';        
-        $join.= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
+        $columns = 'titular.*, titular.id as idtitular, sucursal.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';       
+        $join= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
         $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';
         $join.= 'INNER JOIN sucursal ON departamento.sucursal_id = sucursal.id';
 

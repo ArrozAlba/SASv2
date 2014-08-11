@@ -24,53 +24,53 @@
             <div class="tab-pane active" id="tab1">
                 <div class="row-fluid">
                      <div class="span3">
-                        <?php echo DwForm::select('persona.nacionalidad', array(''=>'Seleccione:','V'=>'Venezolana', 'E'=>'Extranjera'), array('class'=>'input-xlarge input-required show-error'), NULL, 'Nacionalidad:'); ?>
+                        <?php echo DwForm::select('titular.nacionalidad', array(''=>'Seleccione:','V'=>'Venezolana', 'E'=>'Extranjera'), array('class'=>'input-xlarge input-required show-error'), NULL, 'Nacionalidad:'); ?>
                     </div>
                     <div class="span3">
                         <?php 
-                        echo DwForm::text('persona.cedula', array('class'=>'input-xlarge mask-pint input-numeric input-required show-error'), NULL ,'Cédula de Identidad'); 
+                        echo DwForm::text('titular.cedula', array('class'=>'input-xlarge mask-pint input-numeric input-required show-error'), NULL ,'Cédula de Identidad'); 
                        ?>
                     </div>
                     <div class="span3">
-                        <?php echo DwForm::select('persona.sexo', array(''=>'Seleccione:', 'M'=>'Masculino', 'F'=>'Femenino'), array('class'=>'input-xlarge input-required show-error'), NULL, 'Sexo:'); ?>
+                        <?php echo DwForm::select('titular.sexo', array(''=>'Seleccione:', 'M'=>'Masculino', 'F'=>'Femenino'), array('class'=>'input-xlarge input-required show-error'), NULL, 'Sexo:'); ?>
                     </div>
                     <div class="span3">
-                        <?php echo DwForm::date('persona.fecha_nacimiento', array('class'=>'input-large input-required mask-date input-date show-errors'),date("Y-m-d"), 'Fecha de Nacimiento'); ?>
+                        <?php echo DwForm::date('titular.fecha_nacimiento', array('class'=>'input-large input-required mask-date input-date show-errors'),date("Y-m-d"), 'Fecha de Nacimiento'); ?>
                     </div>
                 </div>
                 
                 <div class="row-fluid">
                     <div class="span3">
-                        <?php echo DwForm::text('persona.nombre1', array('class'=>'input-xlarge input-required mask-alpha show-error'), NULL, 'Primer Nombre'); ?>
+                        <?php echo DwForm::text('titular.nombre1', array('class'=>'input-xlarge input-required mask-alpha show-error'), NULL, 'Primer Nombre'); ?>
                     </div>
                     <div class="span3">
-                        <?php echo DwForm::text('persona.nombre2', array('class'=>'input-xlarge mask-alpha show-error'), NULL, 'Segundo Nombre'); ?>
+                        <?php echo DwForm::text('titular.nombre2', array('class'=>'input-xlarge mask-alpha show-error'), NULL, 'Segundo Nombre'); ?>
                     </div>
                     <div class="span3">
-                        <?php echo DwForm::text('persona.apellido1', array('class'=>'input-xlarge input-required mask-alpha show-error'), NULL, 'Primer Apellido'); ?>
+                        <?php echo DwForm::text('titular.apellido1', array('class'=>'input-xlarge input-required mask-alpha show-error'), NULL, 'Primer Apellido'); ?>
                     </div>
                     <div class="span3">
-                        <?php echo DwForm::text('persona.apellido2', array('class'=>'input-xlarge mask-alpha show-error'), NULL, 'Segundo Apellido'); ?>
+                        <?php echo DwForm::text('titular.apellido2', array('class'=>'input-xlarge mask-alpha show-error'), NULL, 'Segundo Apellido'); ?>
                     </div>
                 </div>
                 <div class="row-fluid">
                     <div class="span3">
-                        <?php echo DwForm::select('persona.estado_civil', array(''=>'Seleccione:', 'S'=>'Soltero', 'c'=>'Concubinato','C'=>'Casado', 'D'=>'Divorciado', 'V'=>'Viudo'), array('class'=>'input-xlarge input-required show-error'), NULL, 'Estado Civil'); ?>
+                        <?php echo DwForm::select('titular.estado_civil', array(''=>'Seleccione:', 'S'=>'Soltero', 'c'=>'Concubinato','C'=>'Casado', 'D'=>'Divorciado', 'V'=>'Viudo'), array('class'=>'input-xlarge input-required show-error'), NULL, 'Estado Civil'); ?>
                     </div>
                     <div class="span3">
-                         <?php echo DwForm::select('persona.grupo_sanguineo', array(''=>'Seleccione:', 'O-'=>'O-', 'O+'=>'O+','A-'=>'A-', 'A+'=>'A+', 'AB+'=>'AB+', 'AB-'=>'AB-'), array('class'=>'input-xlarge show-error'), NULL, 'Grupo Sanguineo'); ?>
+                         <?php echo DwForm::select('titular.grupo_sanguineo', array(''=>'Seleccione:', 'O-'=>'O-', 'O+'=>'O+','A-'=>'A-', 'A+'=>'A+', 'AB+'=>'AB+', 'AB-'=>'AB-'), array('class'=>'input-xlarge show-error'), NULL, 'Grupo Sanguineo'); ?>
                     </div>
                     <div class="span3">
-                        <?php echo DwForm::tel('persona.telefono', array('class'=>'input-numeric input-xlarge mask-pint show-error'), NULL, 'Teléfono Fijo'); ?>
+                        <?php echo DwForm::tel('titular.telefono', array('class'=>'input-numeric input-xlarge mask-pint show-error'), NULL, 'Teléfono Fijo'); ?>
                     </div>
                     <div class="span3">
-                        <?php echo DwForm::tel('persona.celular', array('class'=>'input-numeric input-xlarge input-required mask-pint show-error'), NULL, 'Telefono Móvil'); ?>
+                        <?php echo DwForm::tel('titular.celular', array('class'=>'input-numeric input-xlarge input-required mask-pint show-error'), NULL, 'Telefono Móvil'); ?>
                     </div>
                 </div>
                 <!-- Datos de Lugar de nacimiento-->
                 <div class="row-fluid">
                     <div class="span3">
-                        <?php echo DwForm::dbSelect('persona.pais_id', 'nombre', array('params/pais', 'getListadoPais'), NULL, array('class'=>'input-xlarge input-required mask-pint show-errors'), NULL, 'Pais Nacimiento'); ?>
+                        <?php echo DwForm::dbSelect('titular.pais_id', 'nombre', array('params/pais', 'getListadoPais'), NULL, array('class'=>'input-xlarge input-required mask-pint show-errors'), NULL, 'Pais Nacimiento'); ?>
                     </div>
                     <div class="span3">
                         <label>Estado</label>
@@ -92,7 +92,7 @@
             <div class="tab-pane" id="tab2">
                 <div class="row-fluid">
                     <div class="span3">
-                        <?php echo DwForm::dbSelect('persona.hpais_id', 'nombre', array('params/pais', 'getListadoPais'), NULL, array('class'=>'input-large input-required mask-pint show-errors'), NULL, 'Pais Residencia'); ?>
+                        <?php echo DwForm::dbSelect('titular.hpais_id', 'nombre', array('params/pais', 'getListadoPais'), NULL, array('class'=>'input-large input-required mask-pint show-errors'), NULL, 'Pais Residencia'); ?>
                     </div>
                     <div class="span3">
                         <label>Estado</label>
@@ -109,10 +109,10 @@
                 </div>
                 <div class="row-fluid">
                     <div class="span6">
-                        <?php echo DwForm::text('persona.direccion_habitacion', array('class'=>'input-xxlarge input-required show-error'), NULL, 'Dirección de Habitación'); ?>
+                        <?php echo DwForm::text('titular.direccion_habitacion', array('class'=>'input-xxlarge input-required show-error'), NULL, 'Dirección de Habitación'); ?>
                     </div>
                     <div class="span6">
-                        <?php echo DwForm::email('persona.correo_electronico', array('class'=>'input-xxlarge show-error'), NULL, 'Correo Electronico'); ?>
+                        <?php echo DwForm::email('titular.correo_electronico', array('class'=>'input-xxlarge show-error'), NULL, 'Correo Electronico'); ?>
                     </div>
                 </div>
             </div><!--cierre del tab2-->
@@ -267,7 +267,7 @@
                 </div>
 
                 <div class="row-fluid">
-                <?php echo DwForm::hidden('persona.fotografia', NULL, 'default.png'); ?>
+                <?php echo DwForm::hidden('titular.fotografia', NULL, 'default.png'); ?>
                     <div class="form-actions">
                         <?php echo DwButton::save('Guardar Titular'); ?>
                         <?php echo DwButton::reset('form'); ?>

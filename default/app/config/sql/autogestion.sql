@@ -4590,6 +4590,7 @@ CREATE TABLE titular (
     profesion_id integer NOT NULL,
     departamento_id integer NOT NULL,
     cargo_id integer NOT NULL,
+    fotografia character varying(64),
     observacion character varying(250)
 );
 

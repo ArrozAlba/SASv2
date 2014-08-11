@@ -1,3 +1,4 @@
+
 <?php
 /**
  * S.A.S
@@ -92,14 +93,12 @@ and beneficiario.persona_id = persona.id ");
      */
 
     public function getListadobeneficiario($estado, $order='', $page=0) {
-        $columns = 'beneficiario.*, persona.*';
-        $join= 'INNER JOIN persona ON persona.id = beneficiario.persona_id ';        
+        $columns = 'beneficiario.*';        
         $conditions = "";//Por el super usuario
- 
         if($page) {
-            return $this->paginated("columns: $columns", "join: $join", "page: $page");
+            return $this->paginated("columns: $columns", "page: $page");
         } else {
-            return $this->find("columns: $columns", "join: $join");
+            return $this->find("columns: $columns");
         }  
     }
 
@@ -115,8 +114,6 @@ from beneficiario,persona where beneficiario.persona_id = persona.id");
 cast(persona.cedula as integer) 
 from beneficiario,persona where  beneficiario.titular_id = '{$titular_id}' and beneficiario.persona_id = persona.id");
     }    
-
-
 
     /**
      * Método para verificar si una persona ya se encuentra registrada
@@ -162,7 +159,7 @@ from beneficiario,persona where  beneficiario.titular_id = '{$titular_id}' and b
 
 //------ Listado de todos los beneficiarios de un titular en especificoooo ----- 16/07/2014 
     public function getListadoBeneTitular($titular){
-       return $this->find_all_by_sql("SELECT DATE_PART('year', now()) - DATE_PART('year', persona.fecha_nacimiento) as edad, persona.cedula, persona.nombre1, persona.nombre2, persona.apellido1, persona.fecha_nacimiento, persona.nacionalidad, persona.apellido2, persona.sexo, beneficiario.parentesco,beneficiario.participacion, beneficiario.id, beneficiario_tipo.descripcion FROM beneficiario INNER JOIN persona ON persona.id = beneficiario.persona_id INNER JOIN beneficiario_tipo ON beneficiario.beneficiario_tipo_id = beneficiario_tipo.id WHERE beneficiario.titular_id = $titular");
+       return $this->find_all_by_sql("SELECT DATE_PART('year', now()) - DATE_PART('year', beneficiario.fecha_nacimiento) as edad, beneficiario.cedula, beneficiario.nombre1, beneficiario.nombre2, beneficiario.apellido1, beneficiario.fecha_nacimiento, beneficiario.nacionalidad, beneficiario.apellido2, beneficiario.sexo, beneficiario.parentesco,beneficiario.participacion, beneficiario.id, beneficiario_tipo.descripcion FROM beneficiario INNER JOIN beneficiario_tipo ON beneficiario.beneficiario_tipo_id = beneficiario_tipo.id WHERE beneficiario.titular_id = $titular");
     }
 }
 ?>
