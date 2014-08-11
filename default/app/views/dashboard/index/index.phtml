@@ -5,7 +5,19 @@
     <?php View::process($page_module, $page_title, $set_title); ?>
 
     <div class="dw-overflow">
-        
+     <p>Sesion ID: <?php  echo Session::get('id'); ?> </p>
+     <p>Sesion TITULAR_ID: <?php  echo Session::get('titular_id'); ?> </p>
+     <p>Sesion LOGIN: <?php  echo Session::get('login'); ?> </p>
+     <p>Sesion TEMA: <?php  echo Session::get('tema'); ?> </p>
+     <p>Sesion AJAX: <?php  echo Session::get('ajax'); ?> </p>
+     <p>Sesion DATAGRID: <?php  echo Session::get('datagrid'); ?> </p>
+     <p>Sesion PERFIL_ID: <?php  echo Session::get('perfil_id'); ?> </p>
+     <p>Sesion IP: <?php  echo Session::get('ip'); ?> </p>
+
+     <p>Sesion : <?php  echo var_dump($_SESSION); ?> </p>
+
+
+
     </div>
     
 </div>

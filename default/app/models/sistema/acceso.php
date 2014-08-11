@@ -51,24 +51,24 @@ class Acceso extends ActiveRecord {
      * @return ActiveRecord
      */
     public function getListadoAcceso($usuario=NULL, $estado='todos', $order='', $page=0) {
-        $columns = 'acceso.*, usuario.login, persona.nombre1, persona.apellido1';
+        $columns = 'acceso.*, usuario.login, titular.nombre1, titular.apellido1';
         $join = 'INNER JOIN usuario ON usuario.id = acceso.usuario_id ';        
-        $join.= 'INNER JOIN persona ON persona.id = usuario.persona_id ';
+        $join.= 'INNER JOIN titular ON titular.id = usuario.titular_id ';
         $conditions = (empty($usuario)) ? "usuario.id > '1'" : "usuario.id=$usuario";
         
         $order = $this->get_order($order, 'acceso.fecha_registro', array(  'fecha'       =>array( 
-                                                                                                'ASC'=>'acceso.fecha_registro ASC, persona.nombre1 ASC, persona.apellido1 ASC',
-                                                                                                'DESC'=>'acceso.fecha_registro DESC, persona.nombre1 ASC, persona.apellido1 ASC'), 
+                                                                                                'ASC'=>'acceso.fecha_registro ASC, titular.nombre1 ASC, titular.apellido1 ASC',
+                                                                                                'DESC'=>'acceso.fecha_registro DESC, titular.nombre1 ASC, titular.apellido1 ASC'), 
                                                                           'nombre'      =>array(
-                                                                                                'ASC'=>'persona.nombre1 ASC, persona.apellido1 ASC, acceso.fecha_registro DESC', 
-                                                                                                'DESC'=>'persona.nombre1 DESC, persona.apellido1 DESC, acceso.fecha_registro DESC'),
+                                                                                                'ASC'=>'titular.nombre1 ASC, titular.apellido1 ASC, acceso.fecha_registro DESC', 
+                                                                                                'DESC'=>'titular.nombre1 DESC, titular.apellido1 DESC, acceso.fecha_registro DESC'),
                                                                           'apellido'    =>array(
-                                                                                                'ASC'=>'persona.nombre1 ASC, persona.apellido1 ASC, acceso.fecha_registro DESC', 
-                                                                                                'DESC'=>'persona.nombre1 DESC, persona.apellido1 DESC, acceso.fecha_registro DESC'),
+                                                                                                'ASC'=>'titular.nombre1 ASC, titular.apellido1 ASC, acceso.fecha_registro DESC', 
+                                                                                                'DESC'=>'titular.nombre1 DESC, titular.apellido1 DESC, acceso.fecha_registro DESC'),
                                                                            'ip',
                                                                            'tipo_acceso'=>array(
-                                                                                                'ASC'=>'acceso.tipo_acceso ASC, acceso.fecha_registro DESC, persona.nombre1 ASC, persona.apellido1 ASC', 
-                                                                                                'DESC'=>'acceso.tipo_acceso DESC, acceso.fecha_registro DESC, persona.nombre1 DESC, persona.apellido1 DESC')) );
+                                                                                                'ASC'=>'acceso.tipo_acceso ASC, acceso.fecha_registro DESC, titular.nombre1 ASC, titular.apellido1 ASC', 
+                                                                                                'DESC'=>'acceso.tipo_acceso DESC, acceso.fecha_registro DESC, titular.nombre1 DESC, titular.apellido1 DESC')) );
         
         if($estado != 'todos') {
             $conditions.= ($estado!=self::ENTRADA) ? " AND acceso.tipo_acceso = ".self::ENTRADA : " AND acceso.tipo_acceso = ".self::SALIDA;
@@ -90,24 +90,24 @@ class Acceso extends ActiveRecord {
         if( strlen($value) <= 2 OR ($value=='none') ) {
             return NULL;
         }
-        $columns = 'acceso.*, IF(acceso.tipo_acceso='.self::ENTRADA.', "Entrada", "Salida") AS new_tipo, usuario.login, persona.nombre1, persona.apellido1';
+        $columns = 'acceso.*, IF(acceso.tipo_acceso='.self::ENTRADA.', "Entrada", "Salida") AS new_tipo, usuario.login, titular.nombre1, titular.apellido1';
         $join = 'INNER JOIN usuario ON usuario.id = acceso.usuario_id ';        
-        $join.= 'INNER JOIN persona ON persona.id = usuario.persona_id ';
+        $join.= 'INNER JOIN titular ON titular.id = usuario.titular_id ';
         $conditions = "usuario.id > '1'";//Por el super usuario "error"
         
         $order = $this->get_order($order, 'acceso.registrado_at', array(  'fecha'       =>array( 
-                                                                                                'ASC'=>'acceso.fecha_registro ASC, persona.nombre1 ASC, persona.apellido1 ASC',
-                                                                                                'DESC'=>'acceso.fecha_registro DESC, persona.nombre1 ASC, persona.apellido1 ASC'), 
+                                                                                                'ASC'=>'acceso.fecha_registro ASC, titular.nombre1 ASC, titular.apellido1 ASC',
+                                                                                                'DESC'=>'acceso.fecha_registro DESC, titular.nombre1 ASC, titular.apellido1 ASC'), 
                                                                           'nombre'      =>array(
-                                                                                                'ASC'=>'persona.nombre1 ASC, persona.apellido1 ASC, acceso.fecha_registro DESC', 
-                                                                                                'DESC'=>'persona.nombre1 DESC, persona.apellido1 DESC, acceso.fecha_registro DESC'),
+                                                                                                'ASC'=>'titular.nombre1 ASC, titular.apellido1 ASC, acceso.fecha_registro DESC', 
+                                                                                                'DESC'=>'titular.nombre1 DESC, titular.apellido1 DESC, acceso.fecha_registro DESC'),
                                                                           'apellido'    =>array(
-                                                                                                'ASC'=>'persona.nombre1 ASC, persona.apellido1 ASC, acceso.fecha_registro DESC', 
-                                                                                                'DESC'=>'persona.nombre1 DESC, persona.apellido1 DESC, acceso.fecha_registro DESC'),
+                                                                                                'ASC'=>'titular.nombre1 ASC, titular.apellido1 ASC, acceso.fecha_registro DESC', 
+                                                                                                'DESC'=>'titular.nombre1 DESC, titular.apellido1 DESC, acceso.fecha_registro DESC'),
                                                                            'ip',
                                                                            'tipo_acceso'=>array(
-                                                                                                'ASC'=>'acceso.tipo_acceso ASC, acceso.fecha_registro DESC, persona.nombre1 ASC, persona.apellido1 ASC', 
-                                                                                                'DESC'=>'acceso.tipo_acceso DESC, acceso.fecha_registro DESC, persona.nombre1 DESC, persona.apellido1 DESC')) );
+                                                                                                'ASC'=>'acceso.tipo_acceso ASC, acceso.fecha_registro DESC, titular.nombre1 ASC, titular.apellido1 ASC', 
+                                                                                                'DESC'=>'acceso.tipo_acceso DESC, acceso.fecha_registro DESC, titular.nombre1 DESC, titular.apellido1 DESC')) );
         
         //Defino los campos habilitados para la búsqueda por seguridad
         $fields = array('fecha', 'nombre', 'apellido', 'tipo_acceso',  'ip');
