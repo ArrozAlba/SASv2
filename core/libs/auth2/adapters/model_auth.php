@@ -55,9 +55,10 @@ class ModelAuth extends Auth2
      *  
      * @param string $model nombre de modelo
      */
-    public function setModel($model)
+    public function setModel($model,$model2)
     {
         $this->_model = $model;
+        $this->_model2 = $model2;    
     }
 
     /**
@@ -100,10 +101,11 @@ class ModelAuth extends Auth2
         $password = hash($this->_algos, $password);
         //$username = addslashes($username);
         $username = filter_var($username, FILTER_SANITIZE_MAGIC_QUOTES);
-
-        $Model = Load::model($this->_model);
-        if ($user = $Model->find_first("$this->_login = '$username' AND $this->_pass = '$password'")) {
+        $Model = Load::model($this->_model);        
+        $Model2 = Load::model($this->_model2);        
+        if ($user = $Model->find_first("$this->_login = '$username'") && $pass = $Model2->find_first("$this->_pass = '$password'")) {
             // Carga los atributos indicados en sesion
+            $user = $Model->find_first("$this->_login = '$username'");
             foreach ($this->_fields as $field) {
                 Session::set($field, $user->$field, $this->_sessionNamespace);
             }
@@ -115,6 +117,7 @@ class ModelAuth extends Auth2
         $this->setError('Error Login!');
         Session::set($this->_key, FALSE);
         return FALSE;
+
     }
 
 }
