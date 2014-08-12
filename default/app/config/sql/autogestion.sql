@@ -412,10 +412,10 @@ CREATE TABLE beneficiario (
     celular character varying(12),
     telefono character varying(12),
     titular_id integer NOT NULL,
-    parentesco character varying(2) DEFAULT 'M'::character varying NOT NULL,
     beneficiario_tipo_id integer NOT NULL,
     observacion character varying(250),
-    participacion integer
+    participacion integer,
+    parentesco_id integer NOT NULL
 );
 
 
@@ -454,13 +454,6 @@ COMMENT ON COLUMN beneficiario.fecha_modificado IS 'Fecha Modificacion del Regis
 --
 
 COMMENT ON COLUMN beneficiario.titular_id IS 'Empleado Titular';
-
-
---
--- Name: COLUMN beneficiario.parentesco; Type: COMMENT; Schema: public; Owner: arrozalba
---
-
-COMMENT ON COLUMN beneficiario.parentesco IS 'Parentesco del beneficiario';
 
 
 --
@@ -2226,6 +2219,40 @@ ALTER TABLE public.pais_id_seq OWNER TO arrozalba;
 --
 
 ALTER SEQUENCE pais_id_seq OWNED BY pais.id;
+
+
+--
+-- Name: parentesco; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+CREATE TABLE parentesco (
+    id integer NOT NULL,
+    descripcion character varying(50),
+    observacion character varying(100)
+);
+
+
+ALTER TABLE public.parentesco OWNER TO arrozalba;
+
+--
+-- Name: parentesco_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
+--
+
+CREATE SEQUENCE parentesco_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.parentesco_id_seq OWNER TO arrozalba;
+
+--
+-- Name: parentesco_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
+--
+
+ALTER SEQUENCE parentesco_id_seq OWNED BY parentesco.id;
 
 
 --
@@ -5430,6 +5457,13 @@ ALTER TABLE ONLY pais ALTER COLUMN id SET DEFAULT nextval('pais_id_seq'::regclas
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
+ALTER TABLE ONLY parentesco ALTER COLUMN id SET DEFAULT nextval('parentesco_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
+--
+
 ALTER TABLE ONLY parroquia ALTER COLUMN id SET DEFAULT nextval('parroquia_id_seq'::regclass);
 
 
@@ -5751,6 +5785,10 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 369	70019	postgres	2014-08-11 20:51:45.35637-04:30	127.0.0.1	DELETE	DELETE FROM public.titular WHERE id = '22'::integer	titular	{id,sexo,cedula,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,correo_electronico,direccion_habitacion}	{22,M,20643647,23423423423,were,werqw,240,11,240,3242343,qwerqwer,NULL,69,62,NULL,rwsdfasd,NULL,C,233,V,744,5,2014-08-01,122,406,"2014-08-11 20:51:11.675092-04:30",30,A-,2,"2014-08-11 20:51:11.675092-04:30",2014-08-29,NULL,"dssdafasdf "}	\N
 370	70019	arrozalba	2014-08-11 21:03:25.179479-04:30	127.0.0.1	UPDATE	UPDATE titular SET cedula = '20643647',nombre1 = 'fdsgjh',nombre2 = 'hkjhkjh',apellido1 = 'dsafd',apellido2 = 'sdf',nacionalidad = 'V',sexo = 'F',fecha_nacimiento = '2014-04-03',pais_id = '240',estado_id = '67',municipio_id = '207',parroquia_id = '693',direccion_habitacion = 'sdafsdf',hpais_id = '240',hestado_id = '57',hmunicipio_id = '57',hparroquia_id = '154',estado_civil = 'C',celular = '342134123',telefono = NULL,correo_electronico = NULL,grupo_sanguineo = 'A-',tipoempleado_id = '3',fecha_ingreso = '2014-08-05',profesion_id = '3',departamento_id = '8',cargo_id = '14',observacion = NULL WHERE  id = '1'	titular	{id,sexo,cedula,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,correo_electronico,direccion_habitacion}	{1,M,20643647,04167012111,Alexis,Jose,240,1,240,NULL,Borges,Tua,39,39,1,1,1,S,25,V,32,1,2014-11-08,23,43,"2014-08-09 11:49:07.877445-04:30",1,N/A,1,"2014-08-09 11:49:07.877445-04:30",1990-12-11,NULL,sadfasd}	{1,F,20643647,342134123,fdsgjh,hkjhkjh,240,14,240,NULL,dsafd,sdf,67,57,1,NULL,1,C,207,V,693,3,2014-08-05,57,154,"2014-08-09 11:49:07.877445-04:30",8,A-,3,"2014-08-09 11:49:07.877445-04:30",2014-04-03,NULL,sdafsdf}
 371	70019	postgres	2014-08-11 21:23:44.724081-04:30	127.0.0.1	UPDATE	UPDATE public.titular SET nombre1='Alexis'::text, nombre2='Jose'::text, apellido1='Borges'::text, apellido2='Tua'::text WHERE id = '1'::integer	titular	{id,sexo,cedula,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,correo_electronico,direccion_habitacion}	{1,F,20643647,342134123,fdsgjh,hkjhkjh,240,14,240,NULL,dsafd,sdf,67,57,1,NULL,1,C,207,V,693,3,2014-08-05,57,154,"2014-08-09 11:49:07.877445-04:30",8,A-,3,"2014-08-09 11:49:07.877445-04:30",2014-04-03,NULL,sdafsdf}	{1,F,20643647,342134123,Alexis,Jose,240,14,240,NULL,Borges,Tua,67,57,1,NULL,1,C,207,V,693,3,2014-08-05,57,154,"2014-08-09 11:49:07.877445-04:30",8,A-,3,"2014-08-09 11:49:07.877445-04:30",2014-04-03,NULL,sdafsdf}
+372	70019	postgres	2014-08-11 22:13:16.932566-04:30	127.0.0.1	UPDATE	UPDATE public.titular SET grupo_sanguineo='A-'::text WHERE id = '2'::integer	titular	{id,sexo,cedula,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,correo_electronico,direccion_habitacion}	{2,M,16753367,04162546908,Javier,Enrique,240,1,240,NULL,Leon,NULL,39,39,NULL,1,1,S,25,V,32,1,2008-10-01,23,43,"2014-08-09 17:38:17.859252-04:30",1,N/A,1,"2014-08-09 17:38:17.859252-04:30",1984-12-09,jel1284@gmail.com,ss}	{2,M,16753367,04162546908,Javier,Enrique,240,1,240,NULL,Leon,NULL,39,39,NULL,1,1,S,25,V,32,1,2008-10-01,23,43,"2014-08-09 17:38:17.859252-04:30",1,A-,1,"2014-08-09 17:38:17.859252-04:30",1984-12-09,jel1284@gmail.com,ss}
+373	69677	arrozalba	2014-08-12 11:49:54.38797-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{308,127.0.0.1,NULL,1,1,NULL,"2014-08-12 11:49:54.38797-04:30","2014-08-12 11:49:54.38797-04:30",NULL,NULL}
+374	69677	arrozalba	2014-08-12 13:44:35.04588-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{309,127.0.0.1,NULL,1,1,NULL,"2014-08-12 13:44:35.04588-04:30","2014-08-12 13:44:35.04588-04:30",NULL,NULL}
+375	69677	arrozalba	2014-08-12 15:52:51.157109-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{310,127.0.0.1,NULL,1,1,NULL,"2014-08-12 15:52:51.157109-04:30","2014-08-12 15:52:51.157109-04:30",NULL,NULL}
 \.
 
 
@@ -5758,7 +5796,7 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 -- Name: audit_log_log_id_seq; Type: SEQUENCE SET; Schema: audit_log; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('audit_log_log_id_seq', 371, true);
+SELECT pg_catalog.setval('audit_log_log_id_seq', 375, true);
 
 
 SET search_path = public, pg_catalog;
@@ -5831,6 +5869,9 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 305	1	2014-08-11 04:52:58.786591-04:30	2014-08-11 04:52:58.786591-04:30	1	\N	\N	\N	\N	127.0.0.1
 306	1	2014-08-11 15:03:38.707142-04:30	2014-08-11 15:03:38.707142-04:30	1	\N	\N	\N	\N	127.0.0.1
 307	1	2014-08-11 19:58:55.583999-04:30	2014-08-11 19:58:55.583999-04:30	1	\N	\N	\N	\N	127.0.0.1
+308	1	2014-08-12 11:49:54.38797-04:30	2014-08-12 11:49:54.38797-04:30	1	\N	\N	\N	\N	127.0.0.1
+309	1	2014-08-12 13:44:35.04588-04:30	2014-08-12 13:44:35.04588-04:30	1	\N	\N	\N	\N	127.0.0.1
+310	1	2014-08-12 15:52:51.157109-04:30	2014-08-12 15:52:51.157109-04:30	1	\N	\N	\N	\N	127.0.0.1
 \.
 
 
@@ -5838,7 +5879,7 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 -- Name: acceso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('acceso_id_seq', 307, true);
+SELECT pg_catalog.setval('acceso_id_seq', 310, true);
 
 
 --
@@ -5860,7 +5901,7 @@ SELECT pg_catalog.setval('backup_id_seq', 1, false);
 -- Data for Name: beneficiario; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
-COPY beneficiario (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1, nombre2, apellido1, apellido2, nacionalidad, sexo, fecha_nacimiento, correo_electronico, grupo_sanguineo, fecha_inclusion, fecha_exclusion, celular, telefono, titular_id, parentesco, beneficiario_tipo_id, observacion, participacion) FROM stdin;
+COPY beneficiario (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1, nombre2, apellido1, apellido2, nacionalidad, sexo, fecha_nacimiento, correo_electronico, grupo_sanguineo, fecha_inclusion, fecha_exclusion, celular, telefono, titular_id, beneficiario_tipo_id, observacion, participacion, parentesco_id) FROM stdin;
 \.
 
 
@@ -6947,6 +6988,26 @@ COPY pais (id, codigo, nombre) FROM stdin;
 --
 
 SELECT pg_catalog.setval('pais_id_seq', 253, true);
+
+
+--
+-- Data for Name: parentesco; Type: TABLE DATA; Schema: public; Owner: arrozalba
+--
+
+COPY parentesco (id, descripcion, observacion) FROM stdin;
+1	HIJO(A)	\N
+2	ESPOSO(A)	\N
+3	CONCUBINO(A)	\N
+4	MADRE	\N
+5	PADRE	\N
+\.
+
+
+--
+-- Name: parentesco_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
+--
+
+SELECT pg_catalog.setval('parentesco_id_seq', 5, true);
 
 
 --
@@ -23338,9 +23399,9 @@ SELECT pg_catalog.setval('tiposolicitud_id_seq', 6, true);
 --
 
 COPY titular (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1, nombre2, apellido1, apellido2, nacionalidad, sexo, fecha_nacimiento, sucursal_id, pais_id, estado_id, municipio_id, parroquia_id, direccion_habitacion, hpais_id, hestado_id, hmunicipio_id, hparroquia_id, estado_civil, celular, telefono, correo_electronico, grupo_sanguineo, tipoempleado_id, fecha_ingreso, profesion_id, departamento_id, cargo_id, observacion) FROM stdin;
-2	\N	2014-08-09 17:38:17.859252-04:30	2014-08-09 17:38:17.859252-04:30	16753367	Javier	Enrique	Leon	\N	V	M	1984-12-09	1	240	39	25	32	ss	240	39	23	43	S	04162546908	\N	jel1284@gmail.com	N/A	1	2008-10-01	1	1	1	1
 21	\N	2014-08-11 20:48:14.681461-04:30	2014-08-11 20:48:14.681461-04:30	34123412	sdfasdf	asdfasdf	asdfa	sdfasd	V	M	2014-08-01	\N	240	69	231	738	dsfsadf asdef asd a	240	57	58	156	c	42134234123	341234123	\N	O+	3	2014-08-07	4	39	14	\N
 1	1	2014-08-09 11:49:07.877445-04:30	2014-08-09 11:49:07.877445-04:30	20643647	Alexis	Jose	Borges	Tua	V	F	2014-04-03	1	240	67	207	693	sdafsdf	240	57	57	154	C	342134123	\N	\N	A-	3	2014-08-05	3	8	14	\N
+2	\N	2014-08-09 17:38:17.859252-04:30	2014-08-09 17:38:17.859252-04:30	16753367	Javier	Enrique	Leon	\N	V	M	1984-12-09	1	240	39	25	32	ss	240	39	23	43	S	04162546908	\N	jel1284@gmail.com	A-	1	2008-10-01	1	1	1	1
 \.
 
 
@@ -23798,6 +23859,14 @@ ALTER TABLE ONLY pais
 
 ALTER TABLE ONLY pais
     ADD CONSTRAINT pais_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: parentesco_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+ALTER TABLE ONLY parentesco
+    ADD CONSTRAINT parentesco_pkey PRIMARY KEY (id);
 
 
 --
@@ -25059,6 +25128,14 @@ ALTER TABLE ONLY backup
 
 ALTER TABLE ONLY beneficiario
     ADD CONSTRAINT beneficiario_beneficiario_tipo_id_fkey FOREIGN KEY (beneficiario_tipo_id) REFERENCES beneficiario_tipo(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: beneficiario_parentesco_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY beneficiario
+    ADD CONSTRAINT beneficiario_parentesco_id_fkey FOREIGN KEY (parentesco_id) REFERENCES parentesco(id);
 
 
 --

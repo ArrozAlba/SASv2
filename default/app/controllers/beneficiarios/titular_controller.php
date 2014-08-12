@@ -124,18 +124,15 @@ class TitularController extends BackendController {
             DwMessage::get('id_no_found');    
             return DwRedirect::toAction('listar');
         }
-       
+        $titularh = getInformacionDireccionTitular($id);
         if(Input::hasPost('titular')) {
             if(DwSecurity::isValidKey(Input::post('titular_id_key'), 'form_key')) {
                 ActiveRecord::beginTrans();
-                //Guardo la persona
-                $persona = Persona::setPersona('update', Input::post('persona'), array('id'=>$titular->persona_id));
-                if($persona) {
-                    if(Titular::setTitular('update', Input::post('titular'), array('id'=>$titular->persona_id))) {
+                $titular = Titular::setETitular('update', Input::post('titular'));
+                if($titular){
                         ActiveRecord::commitTrans();
                         DwMessage::valid('El titular se ha actualizado correctamente.');
                         return DwRedirect::toAction('listar');
-                    }
                 } else {
                     ActiveRecord::rollbackTrans();
                 } 
