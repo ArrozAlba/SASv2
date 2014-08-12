@@ -659,11 +659,11 @@ CREATE TABLE cobertura (
     fecha_registro timestamp with time zone DEFAULT now() NOT NULL,
     fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
     descripcion character varying(30) NOT NULL,
-    tipo_cobertura character varying(1) NOT NULL,
     monto_cobertura numeric(11,2) DEFAULT 0.0 NOT NULL,
     fecha_inicio date DEFAULT '1900-01-01'::date,
     fecha_fin date DEFAULT '1900-01-01'::date,
-    observacion character varying(250)
+    observacion character varying(250),
+    tipo_cobertura integer NOT NULL
 );
 
 
@@ -702,13 +702,6 @@ COMMENT ON COLUMN cobertura.fecha_modificado IS 'Fecha Modificacion del Registro
 --
 
 COMMENT ON COLUMN cobertura.descripcion IS 'Descripcion de la cobertura';
-
-
---
--- Name: COLUMN cobertura.tipo_cobertura; Type: COMMENT; Schema: public; Owner: arrozalba
---
-
-COMMENT ON COLUMN cobertura.tipo_cobertura IS 'Tipo de Cobertura (G-Grupal,I-Individual)';
 
 
 --
@@ -4395,6 +4388,40 @@ ALTER SEQUENCE sucursal_id_seq OWNED BY sucursal.id;
 
 
 --
+-- Name: tipo_cobertura; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+CREATE TABLE tipo_cobertura (
+    id integer NOT NULL,
+    desripcion character varying(200) NOT NULL,
+    estatus integer DEFAULT 1 NOT NULL
+);
+
+
+ALTER TABLE public.tipo_cobertura OWNER TO arrozalba;
+
+--
+-- Name: tipo_cpbertura_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
+--
+
+CREATE SEQUENCE tipo_cpbertura_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tipo_cpbertura_id_seq OWNER TO arrozalba;
+
+--
+-- Name: tipo_cpbertura_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
+--
+
+ALTER SEQUENCE tipo_cpbertura_id_seq OWNED BY tipo_cobertura.id;
+
+
+--
 -- Name: tipoempleado; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -4590,7 +4617,6 @@ CREATE TABLE titular (
     profesion_id integer NOT NULL,
     departamento_id integer NOT NULL,
     cargo_id integer NOT NULL,
-    fotografia character varying(64),
     observacion character varying(250)
 );
 
@@ -5551,6 +5577,13 @@ ALTER TABLE ONLY sucursal ALTER COLUMN id SET DEFAULT nextval('sucursal_id_seq':
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
+ALTER TABLE ONLY tipo_cobertura ALTER COLUMN id SET DEFAULT nextval('tipo_cpbertura_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
+--
+
 ALTER TABLE ONLY tipoempleado ALTER COLUMN id SET DEFAULT nextval('tipoempleado_id_seq'::regclass);
 
 
@@ -5708,6 +5741,16 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 357	451205	arrozalba	2014-08-09 23:23:38.171869-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{300,127.0.0.1,NULL,1,1,NULL,"2014-08-09 23:23:38.171869-04:30","2014-08-09 23:23:38.171869-04:30",NULL,NULL}
 358	451205	arrozalba	2014-08-09 23:45:57.491401-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{301,127.0.0.1,NULL,1,2,NULL,"2014-08-09 23:45:57.491401-04:30","2014-08-09 23:45:57.491401-04:30",NULL,NULL}
 359	451205	arrozalba	2014-08-09 23:46:04.099204-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{302,127.0.0.1,NULL,1,1,NULL,"2014-08-09 23:46:04.099204-04:30","2014-08-09 23:46:04.099204-04:30",NULL,NULL}
+360	69677	arrozalba	2014-08-11 04:51:41.084807-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{303,127.0.0.1,NULL,1,1,NULL,"2014-08-11 04:51:41.084807-04:30","2014-08-11 04:51:41.084807-04:30",NULL,NULL}
+361	69677	arrozalba	2014-08-11 04:52:52.662524-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{304,127.0.0.1,NULL,1,2,NULL,"2014-08-11 04:52:52.662524-04:30","2014-08-11 04:52:52.662524-04:30",NULL,NULL}
+362	69677	arrozalba	2014-08-11 04:52:58.786591-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{305,127.0.0.1,NULL,1,1,NULL,"2014-08-11 04:52:58.786591-04:30","2014-08-11 04:52:58.786591-04:30",NULL,NULL}
+363	69677	arrozalba	2014-08-11 15:03:38.707142-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{306,127.0.0.1,NULL,1,1,NULL,"2014-08-11 15:03:38.707142-04:30","2014-08-11 15:03:38.707142-04:30",NULL,NULL}
+365	69677	arrozalba	2014-08-11 19:58:55.583999-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{307,127.0.0.1,NULL,1,1,NULL,"2014-08-11 19:58:55.583999-04:30","2014-08-11 19:58:55.583999-04:30",NULL,NULL}
+367	70019	arrozalba	2014-08-11 20:48:14.681461-04:30	127.0.0.1	INSERT	INSERT INTO titular (usuario_id,fecha_registro,fecha_modificado,cedula,nombre1,nombre2,apellido1,apellido2,nacionalidad,sexo,fecha_nacimiento,sucursal_id,pais_id,estado_id,municipio_id,parroquia_id,direccion_habitacion,hpais_id,hestado_id,hmunicipio_id,hparroquia_id,estado_civil,celular,telefono,correo_electronico,grupo_sanguineo,tipoempleado_id,fecha_ingreso,profesion_id,departamento_id,cargo_id,observacion) VALUES (NULL,DEFAULT,DEFAULT,'34123412','sdfasdf','asdfasdf','asdfa','sdfasd','V','M','2014-08-01',NULL,'240','69','231','738','dsfsadf asdef asd a','240','57','58','156','c','42134234123','341234123',NULL,'O+','3','2014-08-07','4','39','14',NULL)	titular	\N	\N	{21,M,34123412,42134234123,sdfasdf,asdfasdf,240,14,240,341234123,asdfa,sdfasd,69,57,NULL,NULL,NULL,c,231,V,738,4,2014-08-07,58,156,"2014-08-11 20:48:14.681461-04:30",39,O+,3,"2014-08-11 20:48:14.681461-04:30",2014-08-01,NULL,"dsfsadf asdef asd a"}
+368	70019	arrozalba	2014-08-11 20:51:11.675092-04:30	127.0.0.1	INSERT	INSERT INTO titular (usuario_id,fecha_registro,fecha_modificado,cedula,nombre1,nombre2,apellido1,apellido2,nacionalidad,sexo,fecha_nacimiento,sucursal_id,pais_id,estado_id,municipio_id,parroquia_id,direccion_habitacion,hpais_id,hestado_id,hmunicipio_id,hparroquia_id,estado_civil,celular,telefono,correo_electronico,grupo_sanguineo,tipoempleado_id,fecha_ingreso,profesion_id,departamento_id,cargo_id,observacion) VALUES (NULL,DEFAULT,DEFAULT,'20643647','were','werqw','qwerqwer',NULL,'V','M','2014-08-29',NULL,'240','69','233','744','dssdafasdf ','240','62','122','406','C','23423423423','3242343',NULL,'A-','2','2014-08-01','5','30','11','rwsdfasd')	titular	\N	\N	{22,M,20643647,23423423423,were,werqw,240,11,240,3242343,qwerqwer,NULL,69,62,NULL,rwsdfasd,NULL,C,233,V,744,5,2014-08-01,122,406,"2014-08-11 20:51:11.675092-04:30",30,A-,2,"2014-08-11 20:51:11.675092-04:30",2014-08-29,NULL,"dssdafasdf "}
+369	70019	postgres	2014-08-11 20:51:45.35637-04:30	127.0.0.1	DELETE	DELETE FROM public.titular WHERE id = '22'::integer	titular	{id,sexo,cedula,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,correo_electronico,direccion_habitacion}	{22,M,20643647,23423423423,were,werqw,240,11,240,3242343,qwerqwer,NULL,69,62,NULL,rwsdfasd,NULL,C,233,V,744,5,2014-08-01,122,406,"2014-08-11 20:51:11.675092-04:30",30,A-,2,"2014-08-11 20:51:11.675092-04:30",2014-08-29,NULL,"dssdafasdf "}	\N
+370	70019	arrozalba	2014-08-11 21:03:25.179479-04:30	127.0.0.1	UPDATE	UPDATE titular SET cedula = '20643647',nombre1 = 'fdsgjh',nombre2 = 'hkjhkjh',apellido1 = 'dsafd',apellido2 = 'sdf',nacionalidad = 'V',sexo = 'F',fecha_nacimiento = '2014-04-03',pais_id = '240',estado_id = '67',municipio_id = '207',parroquia_id = '693',direccion_habitacion = 'sdafsdf',hpais_id = '240',hestado_id = '57',hmunicipio_id = '57',hparroquia_id = '154',estado_civil = 'C',celular = '342134123',telefono = NULL,correo_electronico = NULL,grupo_sanguineo = 'A-',tipoempleado_id = '3',fecha_ingreso = '2014-08-05',profesion_id = '3',departamento_id = '8',cargo_id = '14',observacion = NULL WHERE  id = '1'	titular	{id,sexo,cedula,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,correo_electronico,direccion_habitacion}	{1,M,20643647,04167012111,Alexis,Jose,240,1,240,NULL,Borges,Tua,39,39,1,1,1,S,25,V,32,1,2014-11-08,23,43,"2014-08-09 11:49:07.877445-04:30",1,N/A,1,"2014-08-09 11:49:07.877445-04:30",1990-12-11,NULL,sadfasd}	{1,F,20643647,342134123,fdsgjh,hkjhkjh,240,14,240,NULL,dsafd,sdf,67,57,1,NULL,1,C,207,V,693,3,2014-08-05,57,154,"2014-08-09 11:49:07.877445-04:30",8,A-,3,"2014-08-09 11:49:07.877445-04:30",2014-04-03,NULL,sdafsdf}
+371	70019	postgres	2014-08-11 21:23:44.724081-04:30	127.0.0.1	UPDATE	UPDATE public.titular SET nombre1='Alexis'::text, nombre2='Jose'::text, apellido1='Borges'::text, apellido2='Tua'::text WHERE id = '1'::integer	titular	{id,sexo,cedula,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,correo_electronico,direccion_habitacion}	{1,F,20643647,342134123,fdsgjh,hkjhkjh,240,14,240,NULL,dsafd,sdf,67,57,1,NULL,1,C,207,V,693,3,2014-08-05,57,154,"2014-08-09 11:49:07.877445-04:30",8,A-,3,"2014-08-09 11:49:07.877445-04:30",2014-04-03,NULL,sdafsdf}	{1,F,20643647,342134123,Alexis,Jose,240,14,240,NULL,Borges,Tua,67,57,1,NULL,1,C,207,V,693,3,2014-08-05,57,154,"2014-08-09 11:49:07.877445-04:30",8,A-,3,"2014-08-09 11:49:07.877445-04:30",2014-04-03,NULL,sdafsdf}
 \.
 
 
@@ -5715,7 +5758,7 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 -- Name: audit_log_log_id_seq; Type: SEQUENCE SET; Schema: audit_log; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('audit_log_log_id_seq', 359, true);
+SELECT pg_catalog.setval('audit_log_log_id_seq', 371, true);
 
 
 SET search_path = public, pg_catalog;
@@ -5783,6 +5826,11 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 300	1	2014-08-09 23:23:38.171869-04:30	2014-08-09 23:23:38.171869-04:30	1	\N	\N	\N	\N	127.0.0.1
 301	1	2014-08-09 23:45:57.491401-04:30	2014-08-09 23:45:57.491401-04:30	2	\N	\N	\N	\N	127.0.0.1
 302	1	2014-08-09 23:46:04.099204-04:30	2014-08-09 23:46:04.099204-04:30	1	\N	\N	\N	\N	127.0.0.1
+303	1	2014-08-11 04:51:41.084807-04:30	2014-08-11 04:51:41.084807-04:30	1	\N	\N	\N	\N	127.0.0.1
+304	1	2014-08-11 04:52:52.662524-04:30	2014-08-11 04:52:52.662524-04:30	2	\N	\N	\N	\N	127.0.0.1
+305	1	2014-08-11 04:52:58.786591-04:30	2014-08-11 04:52:58.786591-04:30	1	\N	\N	\N	\N	127.0.0.1
+306	1	2014-08-11 15:03:38.707142-04:30	2014-08-11 15:03:38.707142-04:30	1	\N	\N	\N	\N	127.0.0.1
+307	1	2014-08-11 19:58:55.583999-04:30	2014-08-11 19:58:55.583999-04:30	1	\N	\N	\N	\N	127.0.0.1
 \.
 
 
@@ -5790,7 +5838,7 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 -- Name: acceso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('acceso_id_seq', 302, true);
+SELECT pg_catalog.setval('acceso_id_seq', 307, true);
 
 
 --
@@ -5879,7 +5927,7 @@ SELECT pg_catalog.setval('cargo_id_seq', 21, true);
 -- Data for Name: cobertura; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
-COPY cobertura (id, usuario_id, fecha_registro, fecha_modificado, descripcion, tipo_cobertura, monto_cobertura, fecha_inicio, fecha_fin, observacion) FROM stdin;
+COPY cobertura (id, usuario_id, fecha_registro, fecha_modificado, descripcion, monto_cobertura, fecha_inicio, fecha_fin, observacion, tipo_cobertura) FROM stdin;
 \.
 
 
@@ -23230,6 +23278,21 @@ SELECT pg_catalog.setval('sucursal_id_seq', 3, true);
 
 
 --
+-- Data for Name: tipo_cobertura; Type: TABLE DATA; Schema: public; Owner: arrozalba
+--
+
+COPY tipo_cobertura (id, desripcion, estatus) FROM stdin;
+\.
+
+
+--
+-- Name: tipo_cpbertura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
+--
+
+SELECT pg_catalog.setval('tipo_cpbertura_id_seq', 1, false);
+
+
+--
 -- Data for Name: tipoempleado; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -23275,8 +23338,9 @@ SELECT pg_catalog.setval('tiposolicitud_id_seq', 6, true);
 --
 
 COPY titular (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1, nombre2, apellido1, apellido2, nacionalidad, sexo, fecha_nacimiento, sucursal_id, pais_id, estado_id, municipio_id, parroquia_id, direccion_habitacion, hpais_id, hestado_id, hmunicipio_id, hparroquia_id, estado_civil, celular, telefono, correo_electronico, grupo_sanguineo, tipoempleado_id, fecha_ingreso, profesion_id, departamento_id, cargo_id, observacion) FROM stdin;
-1	1	2014-08-09 11:49:07.877445-04:30	2014-08-09 11:49:07.877445-04:30	20643647	Alexis	Jose	Borges	Tua	V	M	1990-12-11	1	240	39	25	32	sadfasd	240	39	23	43	S	04167012111	\N	\N	N/A	1	2014-11-08	1	1	1	1
 2	\N	2014-08-09 17:38:17.859252-04:30	2014-08-09 17:38:17.859252-04:30	16753367	Javier	Enrique	Leon	\N	V	M	1984-12-09	1	240	39	25	32	ss	240	39	23	43	S	04162546908	\N	jel1284@gmail.com	N/A	1	2008-10-01	1	1	1	1
+21	\N	2014-08-11 20:48:14.681461-04:30	2014-08-11 20:48:14.681461-04:30	34123412	sdfasdf	asdfasdf	asdfa	sdfasd	V	M	2014-08-01	\N	240	69	231	738	dsfsadf asdef asd a	240	57	58	156	c	42134234123	341234123	\N	O+	3	2014-08-07	4	39	14	\N
+1	1	2014-08-09 11:49:07.877445-04:30	2014-08-09 11:49:07.877445-04:30	20643647	Alexis	Jose	Borges	Tua	V	F	2014-04-03	1	240	67	207	693	sdafsdf	240	57	57	154	C	342134123	\N	\N	A-	3	2014-08-05	3	8	14	\N
 \.
 
 
@@ -23284,7 +23348,7 @@ COPY titular (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1,
 -- Name: titular_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('titular_id_seq', 18, true);
+SELECT pg_catalog.setval('titular_id_seq', 24, true);
 
 
 --
@@ -24049,6 +24113,14 @@ ALTER TABLE ONLY sucursal
 
 
 --
+-- Name: tipo_beneficiario_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+ALTER TABLE ONLY tipo_cobertura
+    ADD CONSTRAINT tipo_beneficiario_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: tipoempleado_nombre_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24078,6 +24150,14 @@ ALTER TABLE ONLY tiposolicitud
 
 ALTER TABLE ONLY tiposolicitud
     ADD CONSTRAINT tiposolicitud_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: titular_cedula; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+ALTER TABLE ONLY titular
+    ADD CONSTRAINT titular_cedula UNIQUE (cedula);
 
 
 --
@@ -25019,6 +25099,14 @@ ALTER TABLE ONLY cargo
 
 ALTER TABLE ONLY cobertura
     ADD CONSTRAINT cobertura_usuario_id_fkey FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: coberura_tipo_cobertura_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY cobertura
+    ADD CONSTRAINT coberura_tipo_cobertura_id_fkey FOREIGN KEY (tipo_cobertura) REFERENCES tipo_cobertura(id);
 
 
 --
