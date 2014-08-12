@@ -159,7 +159,7 @@ from beneficiario,persona where  beneficiario.titular_id = '{$titular_id}' and b
 
 //------ Listado de todos los beneficiarios de un titular en especificoooo ----- 16/07/2014 
     public function getListadoBeneTitular($titular){
-       return $this->find_all_by_sql("SELECT DATE_PART('year', now()) - DATE_PART('year', beneficiario.fecha_nacimiento) as edad, beneficiario.cedula, beneficiario.nombre1, beneficiario.nombre2, beneficiario.apellido1, beneficiario.fecha_nacimiento, beneficiario.nacionalidad, beneficiario.apellido2, beneficiario.sexo, beneficiario.parentesco,beneficiario.participacion, beneficiario.id, beneficiario_tipo.descripcion FROM beneficiario INNER JOIN beneficiario_tipo ON beneficiario.beneficiario_tipo_id = beneficiario_tipo.id WHERE beneficiario.titular_id = $titular");
+       return $this->find_all_by_sql("SELECT DATE_PART('year', now()) - DATE_PART('year', beneficiario.fecha_nacimiento) as edad, beneficiario.cedula, beneficiario.nombre1, beneficiario.nombre2, beneficiario.apellido1, beneficiario.fecha_nacimiento, beneficiario.nacionalidad, beneficiario.apellido2, beneficiario.sexo, beneficiario.participacion, beneficiario.id, beneficiario_tipo.descripcion, parentesco.id as idparentesco, parentesco.descripcion as parentesco FROM beneficiario INNER JOIN beneficiario_tipo ON beneficiario.beneficiario_tipo_id = beneficiario_tipo.id INNER JOIN parentesco ON beneficiario.parentesco_id = parentesco.id WHERE beneficiario.titular_id = $titular");
     }
 }
 ?>
