@@ -64,7 +64,7 @@ class UsuarioController extends BackendController {
      * Método para agregar
      */
     public function agregar() {
-        if(Input::hasPost('persona') && Input::hasPost('usuario')) {
+        if(Input::hasPost('titular') && Input::hasPost('usuario')) {
             ActiveRecord::beginTrans();
             //Guardo la persona
             $persona = Persona::setPersona('create', Input::post('persona'));

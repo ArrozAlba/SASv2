@@ -17,7 +17,7 @@ class Titular extends ActiveRecord {
      * Método para definir las relaciones y validaciones
      */
     protected function initialize() {
-		$this->belongs_to('persona');
+		//$this->belongs_to('persona');
       //  $this->has_one('usuario');
       //  $this->has_one('persona');
 
@@ -43,14 +43,14 @@ class Titular extends ActiveRecord {
         }
         //Creo otro objeto para comparar si existe
         $old = new Titular($data);
-        //$check = $old->_getTitularRegistrado('find_first');
-        $check = false;
+        $check = $old->_getTitularRegistrado('find_first');
+        //$check = false;
         if($check) { //Si existe
-            if(empty($obj->id)) {
-                $obj->id = $old->id; //Asigno el id del encontrado al nuevo
+            if(empty($obj->cedula)) {
+                $obj->cedula = $old->cedula; //Asigno el id del encontrado al nuevo
             } else { //Si se actualiza y existe otro con la misma información
                 if($obj->id != $old->id) {
-                    DwMessage::info('Lo sentimos, pero ya existe una persona registrada con el mismo número de identificación');
+                    DwMessage::info('Lo sentimos, pero ya existe una persona registrada con el mismo número de cédula');
                     return FALSE;
                 }
             }
@@ -115,8 +115,6 @@ and titular.persona_id = persona.id");
         }
         return $this->$method("conditions: $conditions");
     }
-
-     
     /**
      * Método para obtener la información de un usuario
      * @return type
@@ -126,14 +124,12 @@ and titular.persona_id = persona.id");
         if(!$titular) {
             return NULL;
         }
-        $columns = 'municipio.nombre as municipio, municipio.id as idmunicipio, estado.nombre as estado, estado.id as idestado,  pais.nombre as pais, pais.id as idpais, titular.*, persona.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';
-        $join= 'INNER JOIN persona ON persona.id = titular.persona_id ';        
-        $join.= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
+        $columns = 'municipio.nombre as municipio, municipio.id as idmunicipio, estado.nombre as estado, estado.id as idestado,  pais.nombre as pais, pais.id as idpais, titular.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';
+        $join= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
         $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';
-        $join.= 'INNER JOIN pais ON  persona.pais_id = pais.id ';
-        $join.= 'INNER JOIN estado ON  persona.estado_id = estado.id ';
-        $join.= 'INNER JOIN municipio ON  persona.municipio_id = municipio.id ';
-
+        $join.= 'INNER JOIN pais ON  titular.pais_id = pais.id ';
+        $join.= 'INNER JOIN estado ON  titular.estado_id = estado.id ';
+        $join.= 'INNER JOIN municipio ON  titular.municipio_id = municipio.id ';
         $condicion = "titular.id = $titular";        
         return $this->find_first("columns: $columns", "join: $join", "conditions: $condicion");
     }

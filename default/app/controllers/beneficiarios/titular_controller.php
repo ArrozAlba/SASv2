@@ -6,7 +6,7 @@
  *
  * @category    
  * @package     Controllers 
- * @author      Javier León (jel1284@gmail.com)
+ * @author      Javier León (jel1284@gmail.com) Alexis Borges (tuaalexis@gmail.com)
  * @copyright   Copyright (c) 2014 E.M.S. Arroz del Alba S.A. (http://autogestion.arrozdelalba.gob.ve)
  */
 
@@ -96,39 +96,19 @@ class TitularController extends BackendController {
         $pais = new Pais(); 
         $estado = new Estado(); 
         $municipio = new Municipio();
-        if(Input::hasPost('persona') && Input::hasPost('titular') && Input::hasPost('usuario')){
-            ActiveRecord::beginTrans();
-            //Guardo la persona
-            $persona = Persona::setPersona('create', Input::post('persona'));
-            if($persona){
-                if(Titular::setTitular('create', Input::post('titular'), array('persona_id'=>$persona->id))){
+        $sucursal = new Sucursal();
+        if(Input::hasPost('titular')){
+           if(Titular::setTitular('create', Input::post('titular'))){
+                DwMessage::valid('El titular se ha creado correctamente.');
+                return DwRedirect::toAction('listar');
+           }
+        $this->pais = $pais->getListadoPais();           
+        $this->estado = $estado->getListadoEstado(); 
+        $this->municipio = $municipio->getListadoMunicipio(); 
+        $this->sucursal = $sucursal->getListadoSucursal(); 
 
-
-                $usu=Usuario::setUsuario('create', Input::post('usuario'), array('persona_id'=>$persona->id, 'repassword'=>Input::post('repassword'), 'tema'=>'default'));
-
-                    if($usu){
-                        ActiveRecord::commitTrans();
-                        DwMessage::valid('El titular se ha creado correctamente.');
-                    }
-                    //$sol-> codigo_solicitud es para crear el reporte
-                    //$cod = $sol->codigo_solicitud;
-                    //$nro = $sol->celular;
-                    //$nombre = $sol->nombre;
-                    //$apellido = $sol->apellido;
-                    //$contenido= "Sr. ".$nombre." ".$apellido." Su solicitud ha sido aprobada Aprobada con el codigo: ".$cod;
-                    //$destinatario=$nro;
-                    //system( '/usr/bin/gammu -c /etc/gammu-smsdrc --sendsms EMS ' . escapeshellarg( $destinatario ) . ' -text ' . escapeshellarg( $contenido ) ); 
-                    return DwRedirect::toAction('listar');
-                }
-            } else {
-                ActiveRecord::rollbackTrans();
-            }
-            $this->pais = $pais->getListadoPais();           
-            $this->estado = $estado->getListadoEstado(); 
-            $this->municipio = $municipio->getListadoMunicipio(); 
-            $this->sucursal = $sucursal->getListadoSucursal(); 
-        }
-        $this->page_title = 'Agregar';
+    }
+    $this->page_title = 'Agregar';
     }
     
     /**
@@ -165,7 +145,7 @@ class TitularController extends BackendController {
         $this->titular = $titular;
         $this->page_title = 'Actualizar titular';
     }
-    
+ 
     /**
      * Método para inactivar/reactivar
      */
