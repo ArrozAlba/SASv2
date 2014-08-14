@@ -41,8 +41,8 @@
                             <tr>
                                 <td><?php echo $counter; ?></td>
                                 <td><?php echo $bn->cedula; ?></td>
-                                <td><?php echo $bn->nombre1." ".$bn->nombre2; ?></td>
-                                <td><?php echo $bn->apellido1." ".$bn->apellido2;?></td>
+                                <td><?php echo strtoupper($bn->nombre1." ".$bn->nombre2); ?></td>
+                                <td><?php echo strtoupper($bn->apellido1." ".$bn->apellido2);?></td>
                                 <td><?php echo strtoupper($bn->descripcion); ?></td>
                                 <td><?php switch ($bn->sexo){
                                             case 'F':
@@ -52,42 +52,7 @@
                                                 echo "MASCULINO";
                                                 break;
                                     }?></td>
-                                <td><?php /* switch ($bn->parentesco){ //ES MEJORABLE ESTA PARTE DEL CODIGO PERO TENGO SUEÑO Y ES LO QUE SE ME OCURRIO PA RESOLVER
-                                    case 'P':
-                                        echo "PADRE";
-                                        break;
-                                    case 'M':
-                                        echo "MADRE";
-                                        break;
-                                    case 'H':
-                                        echo "HIJO";
-                                        break;
-                                    case 'HA':
-                                        echo "HERMANA";
-                                        break;
-                                    case 'HO':
-                                        echo "HERMANO";
-                                        break;
-                                    case 'TA':
-                                        echo "TIA";
-                                        break;
-                                    case 'TO':
-                                        echo "TIO";
-                                        break;
-                                    case 'O':
-                                        echo "OTRO";
-                                        break;
-                                    case 'EA':
-                                        echo "ESPOSA";
-                                        break;
-                                    case 'EO':
-                                        echo "ESPOSO";
-                                        break;
-                                    case 'C':
-                                        echo "CONCUBINO";
-                                        break;
-                               }
-                                */?></td>
+                                <td><?php echo $bn->parentesco;?></td>
                                 <td><?php echo $bn->participacion."%"; ?></td>
                             </tr>
                              <?php $counter++; ?>
@@ -104,13 +69,10 @@
 
              <?php echo DwForm::hidden('beneficiario.titular_id', NULL, $idtitular); ?>
                 <div class="row-fluid">
-                    <div class="span4">
-                        <?php echo DwForm::dbSelect('beneficiario.beneficiario_tipo_id', 'descripcion', array('config/beneficiario_tipo', 'getListadoTipobeneficiario'), NULL, array('class'=>'input-xlarge input-required  show-errors'), NULL, 'Tipo Beneficiario'); ?>
+                     <div class="span3">
+                        <?php echo DwForm::dbSelect('beneficiario.parentesco_id', 'descripcion', array('config/parentesco', 'getListadoParentesco'), NULL, array('class'=>'input-xlarge input-required  show-errors'), NULL, 'Parentesco' ); ?>
                     </div>
-                     <div class="span4">
-                        <?php echo DwForm::select('beneficiario.parentesco', array(''=>'Seleccione:', 'P'=>'Padre', 'M'=>'Madre', 'H'=>'Hijo','EO'=>'Esposo', 'EA'=>'Esposa', 'HA'=>'Hermana', 'HO'=>'Hermano', 'TA'=>'Tia', 'TO'=>'Tio', 'C'=>'Concubino', 'O'=>'Otro'), array('class'=>'input-xlarge input-required show-error'), NULL, 'Parentesco'); ?>
-                    </div>
-                    <div class="span4">
+                    <div class="span3">
                         <?php echo DwForm::select('beneficiario.sexo', array(''=>'Seleccione:','M'=>'Masculino', 'F'=>'Femenino'), array('class'=>'input-xlarge input-required show-error'), NULL, 'Sexo:'); ?>
                     </div>
 
@@ -148,7 +110,7 @@
                         <?php echo DwForm::tel('beneficiario.participacion', array('class'=>'input-xlarge input-numeric input-required mask-pint show-error'), NULL, 'Participación'); ?>
                     </div>
                     <div class="span3">
-                        <?php echo DwForm::text('beneficiario.grupo_sanguineo', array('class'=>'input-xlarge mask-alphanum show-error'), NULL, 'Grupo Sanguineo'); ?>
+                        <?php echo DwForm::select('titular.grupo_sanguineo', array(''=>'Seleccione:', 'O-'=>'O-', 'O+'=>'O+','A-'=>'A-', 'A+'=>'A+', 'AB+'=>'AB+', 'AB-'=>'AB-'), array('class'=>'input-xlarge show-error'), NULL, 'Grupo Sanguineo'); ?>
                     </div>
                     <div class="span3">
                         <?php echo DwForm::tel('beneficiario.celular', array('class'=>'input-xlarge input-numeric mask-pint show-error'), NULL, 'Celular'); ?>
@@ -160,10 +122,9 @@
                 <div class="row-fluid">
 
                 </div>
-
-
              <div class="row-fluid">
                 <?php echo DwForm::hidden('beneficiario.fotografia', NULL, 'default.png'); ?>
+                <?php echo DwForm::hidden('beneficiario.beneficiario_tipo_id', NULL, ''); ?>
                     <div class="form-actions">
                         <?php echo DwButton::save('Guardar beneficiario'); ?>
                         <?php echo DwButton::reset('form'); ?>
@@ -201,99 +162,6 @@
                     </div>
 
 
-                   <!-- ########################### Cedula ############################## -->
-                    <div class="span2">
-                        <span class="btn btn-success fileinput-button">
-                            <i class="icon-plus icon-white"></i>
-                            <span>Seleccione Cédula...</span>
-                            <input id="cedula" type="file" name="cedula" class="input-large">
-                        </span>
-                    </div>
-
-                    <div id="upload-progress" class="span1 fileupload-progress fade">
-                        <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                            <div class="bar" style="width:0%;"></div>
-                        </div>
-                    </div>
-
-                    <div class="span3 dw-text-right">
-                        <div class="span2 dw-picture-profile dw-text-center dw-text-middle dw-shadow-dark" style="margin-top: 5px">
-                            <?php echo DwHtml::img('upload/personas/default.png', 'Imágen de muestra', array('id'=>'img-persona')); ?>
-                        </div>
-                    </div>
-
-                </div>
-
-
-                <div class="row fileupload-buttonbar">
-                <!-- ########################### Carnet ############################## -->
-                    <div class="span2">
-                        <span class="btn btn-success fileinput-button">
-                            <i class="icon-plus icon-white"></i>
-                            <span>Seleccione Carnet...</span>
-                            <input id="carnet" type="file" name="carnet" class="input-large">
-                        </span>
-                    </div>
-
-                    <div id="upload-progress" class="span1 fileupload-progress fade">
-                        <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                            <div class="bar" style="width:0%;"></div>
-                        </div>
-                    </div>
-
-                    <div class="span3 dw-text-right">
-                        <div class="span2 dw-picture-profile dw-text-center dw-text-middle dw-shadow-dark" style="margin-top: 5px">
-                            <?php echo DwHtml::img('upload/personas/default.png', 'Imágen de muestra', array('id'=>'img-persona')); ?>
-                        </div>
-                    </div>
-                <!-- ########################### Acta de matrimonio ############################## -->
-                    <div class="span2">
-                        <span class="btn btn-success fileinput-button">
-                            <i class="icon-plus icon-white"></i>
-                            <span>Acta de Matrimonio...</span>
-                            <input id="actamatrimonio" type="file" name="actamatrimonio" class="input-large">
-                        </span>
-                    </div>
-
-                    <div id="upload-progress" class="span1 fileupload-progress fade">
-                        <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                            <div class="bar" style="width:0%;"></div>
-                        </div>
-                    </div>
-
-                    <div class="span3 dw-text-right">
-                        <div class="span2 dw-picture-profile dw-text-center dw-text-middle dw-shadow-dark" style="margin-top: 5px">
-                            <?php echo DwHtml::img('upload/personas/default.png', 'Imágen de muestra', array('id'=>'img-persona')); ?>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ########################### Partida de Nacimiento ############################## -->
-                <div class="row fileupload-buttonbar">
-
-                    <div class="span2">
-                        <span class="btn btn-success fileinput-button">
-                            <i class="icon-plus icon-white"></i>
-                            <span>Partida de Nacimiento...</span>
-                            <input id="partidanacimiento" type="file" name="partidanacimiento" class="input-large">
-                        </span>
-                    </div>
-
-                    <div id="upload-progress" class="span1 fileupload-progress fade">
-                        <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                            <div class="bar" style="width:0%;"></div>
-                        </div>
-                    </div>
-
-                    <div class="span3 dw-text-right">
-                        <div class="span2 dw-picture-profile dw-text-center dw-text-middle dw-shadow-dark" style="margin-top: 5px">
-                            <?php echo DwHtml::img('upload/personas/default.png', 'Imágen de muestra', array('id'=>'img-persona')); ?>
-                        </div>
-                    </div>
-                </div>
-
-              
-
             </div>
         </div>
 </div>
@@ -301,13 +169,45 @@
 <?php View::partial('jquery.file-upload'); ?>
 <script type="text/javascript">
     $(function(){
-        var cedula = document.getElementById("persona_cedula");
-        var telefono = document.getElementById("persona_telefono");
-        var celular = document.getElementById("pesona_celular");
+        var cedula = document.getElementById("beneficiario_cedula");
+        var telefono = document.getElementById("beneficiario_telefono");
+        var celular = document.getElementById("beneficiario_celular");
+        var participacion = document.getElementById("beneficiario_participacion");
         cedula.maxLength = 8;
         telefono.maxLength = 11;
         celular.maxLength = 11;
+        participacion.maxLength = 3;
     })
+</script>
+
+
+<!-- Script ṕara darle el valor al tipo de beneficiario  -->
+<script type='text/javascript'>
+$("#beneficiario_parentesco_id").change(function(){
+    var parentesco = $('#beneficiario_parentesco_id').val();
+    if(parentesco<=5){
+        $("#beneficiario_beneficiario_tipo_id").val("1");
+    }
+    else{
+        $("#beneficiario_beneficiario_tipo_id").val("2");
+    }
+});
+</script>
+
+
+
+<!-- Script para chequear disponibilidad de participacion  -->
+<script type='text/javascript'>
+/*$("#beneficiario_participacion").change(function(){
+    $.ajax({
+          type: "POST",
+          url: "<?php echo PUBLIC_PATH . 'beneficiarios/beneficiario/getParticipacion/'; ?>",
+          data: "sucursal_id=" + sucursal_id,
+          success: function(html){
+            $("#div_departamento").html(html);
+          }
+        });
+});*/
 </script>
 
 <script type="text/javascript">
