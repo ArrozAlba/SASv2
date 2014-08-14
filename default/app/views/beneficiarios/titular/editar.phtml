@@ -91,7 +91,7 @@
             <div class="tab-pane" id="tab2">
                 <div class="row-fluid">
                     <div class="span3">
-                        <?php echo DwForm::dbSelect('titular.hpais_id', 'nombre', array('params/pais', 'getListadoPais'), NULL, array('class'=>'input-large input-required mask-pint show-errors'), NULL, 'Pais Residencia'); ?>
+                        <?php echo DwForm::dbSelect('titular.hpais_id', 'nombre', array('params/pais', 'getListadoPais'), NULL, array('class'=>'input-large input-required mask-pint show-errors'), NULL,  'Pais Residencia'); ?>
                     </div>
                     <div class="span3">
                         <label>Estado</label>
@@ -129,11 +129,11 @@
                 </div>
                 <div class="row-fluid">
                     <div class="span4">
-                        <?php echo DwForm::dbSelect('titular.sucursal_id', array('sucursal', 'parroquia'), array('config/sucursal', 'getListadoSucursal'), array('todas'=>'Todas'), array('class'=>'input-xlarge input-required mask-pint show-errors'), NULL, 'Sucursal / UPSA'); ?>
+                        <?php echo DwForm::dbSelect('titular.sucursal_id', array('sucursal', 'parroquia'), array('config/sucursal', 'getListadoSucursal'), array('todas'=>'Todas'), array('class'=>'input-xlarge input-required mask-pint show-errors'), $titular->idsucursal, 'Sucursal / UPSA'); ?>
                     </div>
                     <div class="span4">
                      <label>Departamento</label>
-                        <div id='div_departamento'><select class="input-xlarge"> <option value=""> Seleccione:</option></select></div>
+                        <div id='div_departamento'><select class="input-xlarge"><option value="<?php echo $titular->iddepartamento ?> "> <?php echo $titular->departamento ?> </option></select></div>
                     </div>
                     <div class="span4">
                         <?php echo DwForm::dbSelect('titular.cargo_id', 'nombre', array('config/cargo', 'getListadoCargo'), NULL, array('class'=>'input-xlarge input-required input-list show-errors'), $titular->cargo_id, 'Cargo'); ?>

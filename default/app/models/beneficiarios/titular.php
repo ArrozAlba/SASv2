@@ -69,23 +69,8 @@ class Titular extends ActiveRecord {
             $obj->dump_result_self($optData);
         }
         $method = 'update';
-        //Creo otro objeto para comparar si existe
-       /* $old = new Titular($data);
-        $check = $old->_getTitularRegistrado('find_first');
-        //$check = false;
-        if($check) { //Si existe
-            if(empty($obj->cedula)) {
-                $obj->cedula = $old->cedula; //Asigno el id del encontrado al nuevo
-            } else { //Si se actualiza y existe otro con la misma información
-                if($obj->id != $old->id) {
-                    DwMessage::info('Lo sentimos, pero ya existe una persona registrada con el mismo número de cédula');
-                    return FALSE;
-                }
-            }
-            if($method=='create') { //Si se crea la persona, pero ya está registrada la actualizo
-                $method = 'update';
-            }
-        }*/
+        
+
         $rs = $obj->$method();
         return ($rs) ? $obj : FALSE;
     }
@@ -152,10 +137,11 @@ and titular.persona_id = persona.id");
         if(!$titular) {
             return NULL;
         }
-        $columns = 'municipio.nombre as municipio, municipio.id as idmunicipio, parroquia.nombre as parroquia, parroquia.id as idparroquia,  estado.nombre as estado, estado.id as idestado, pais.nombre as pais, pais.id as idpais, titular.*, titular.id as idtitular,  profesion.id, profesion.nombre as profesion, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';
-        $join= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';
+        $columns = 'municipio.nombre as municipio, municipio.id as idmunicipio, parroquia.nombre as parroquia, parroquia.id as idparroquia,  estado.nombre as estado, estado.id as idestado, pais.nombre as pais, pais.id as idpais, titular.*, titular.id as idtitular,  profesion.id, profesion.nombre as profesion, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id as iddepartamento, departamento.nombre as departamento, sucursal.id as idsucursal, sucursal.sucursal ';
+        $join = 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';
         $join.= 'INNER JOIN profesion ON  titular.profesion_id = profesion.id ';
         $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';
+        $join.= 'INNER JOIN sucursal ON  departamento.sucursal_id = sucursal.id ';
         $join.= 'INNER JOIN pais ON  titular.pais_id = pais.id ';
         $join.= 'INNER JOIN estado ON  titular.estado_id = estado.id ';
         $join.= 'INNER JOIN municipio ON  titular.municipio_id = municipio.id ';
@@ -170,12 +156,10 @@ and titular.persona_id = persona.id");
         if(!$titular) {
             return NULL;
         }
-        $columns = 'parroquia.nombre as hparroquia, estado.nombre as hestado, estado.id as idhestado,  pais.nombre as hpais, pais.id as idhpais, titular.*, persona.id';
-        $join= 'INNER JOIN persona ON persona.id = titular.persona_id ';        
-        $join.= 'INNER JOIN pais ON  persona.hpais_id = pais.id ';
-        $join.= 'INNER JOIN estado ON  persona.hestado_id = estado.id ';
-        $join.= 'INNER JOIN parroquia ON  persona.hparroquia_id = parroquia.id ';
-
+        $columns = 'parroquia.nombre as hparroquia, estado.nombre as hestado, estado.id as idhestado,  pais.nombre as hpais, pais.id as idhpais, titular.id ';
+        $join= 'INNER JOIN pais ON  titular.hpais_id = pais.id ';
+        $join.= 'INNER JOIN estado ON  titular.hestado_id = estado.id ';
+        $join.= 'INNER JOIN parroquia ON  titular.hparroquia_id = parroquia.id ';
         $condicion = "titular.id = $titular";        
         return $this->find_first("columns: $columns", "join: $join", "conditions: $condicion");
     }
@@ -188,12 +172,11 @@ and titular.persona_id = persona.id");
             return NULL;
         }
         $columns = 'municipio.nombre as municipios, municipio.id as idmunicipio, estado.nombre as estados, estado.id as idestado, pais.nombre as paiss, pais.id as idpais,  departamento.id, departamento.nombre as departamento, sucursal.sucursal, sucursal.direccion, cargo.nombre as cargo';
-        $join= 'INNER JOIN persona ON persona.id = titular.persona_id ';        
-        $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';
+        $join= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';
         $join.= 'INNER JOIN sucursal ON sucursal.id = departamento.sucursal_id ';
-        $join.= 'INNER JOIN pais ON  persona.pais_id = pais.id ';
-        $join.= 'INNER JOIN estado ON  persona.estado_id = estado.id ';
-        $join.= 'INNER JOIN municipio ON  persona.municipio_id = municipio.id ';
+        $join.= 'INNER JOIN pais ON  titular.pais_id = pais.id ';
+        $join.= 'INNER JOIN estado ON  titular.estado_id = estado.id ';
+        $join.= 'INNER JOIN municipio ON  titular.municipio_id = municipio.id ';
         $join.= 'INNER JOIN cargo ON cargo.id = titular.cargo_id ';
         $condicion = "titular.id = $titular";        
         return $this->find_first("columns: $columns", "join: $join", "conditions: $condicion");

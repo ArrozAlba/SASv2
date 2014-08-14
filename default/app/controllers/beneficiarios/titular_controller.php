@@ -124,7 +124,8 @@ class TitularController extends BackendController {
             DwMessage::get('id_no_found');    
             return DwRedirect::toAction('listar');
         }
-        $titularh = getInformacionDireccionTitular($id);
+        $titularh = new Titular();
+        $titularh->getInformacionDireccionTitular($id);
         if(Input::hasPost('titular')) {
             if(DwSecurity::isValidKey(Input::post('titular_id_key'), 'form_key')) {
                 ActiveRecord::beginTrans();

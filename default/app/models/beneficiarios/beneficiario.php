@@ -11,9 +11,6 @@
  * @author      Javier León (jel1284@gmail.com)
  * @copyright   Copyright (c) 2014 UPTP / E.M.S. Arroz del Alba S.A. (http://autogestion.arrozdelalba.gob.ve) 
  */
-
-//Load::models('sistema/usuario', 'personas/persona');
-
 class beneficiario extends ActiveRecord {
     
     /**
@@ -21,9 +18,8 @@ class beneficiario extends ActiveRecord {
      */
     protected function initialize() {
 	$this->has_one('titular');	
-	$this->belongs_to('persona');
-      //  $this->has_one('usuario');
-      //  $this->has_one('persona');
+	//  $this->has_one('usuario');
+    //  $this->has_one('persona');
 
     }
    /**
@@ -132,12 +128,62 @@ from beneficiario,persona where  beneficiario.titular_id = '{$titular_id}' and b
      * Callback que se ejecuta antes de guardar/modificar
      */
     public function before_save() {
-//        $this->tipoempleado_id = Filter::get($this->tipoempleado_id, 'numeric');
-//        $this->fecha_ingreso = Filter::get($this->fecha_ingreso, 'string'); 
-//        $this->profesion_id = Filter::get($this->profesion_id, 'numeric');
-//        $this->departamento_id = Filter::get($this->departamento_id, 'numeric');
-//        $this->cargo_id = Filter::get($this->cargo_id, 'numeric'); 
-//        $this->observacion = Filter::get($this->observacion, 'string');
+    // validar aqui lo del tipo de beneficiario ;) 
+      $paren = Filter::get($this->parentesco_id, 'numeric');
+      $titu = Filter::get($this->titular_id, 'numeric');
+      $parti = Filter::get($this->participacion, 'numeric');
+
+      $columns = 'beneficiario.participacion, beneficiario.parentesco_id ';
+      $conditions = "titular_id = $titu ";
+      $bene = $this->find("columns: $columns", "conditions: $conditions");
+
+      $acum = 0;
+      foreach($bene as $bn):
+        if (($bn->parentesco_id==$paren)&&($bn->parentesco_id==2)){
+            DwMessage::error('Ya existe el benficiario Esposo(a) agregado.');
+            return 'cancel';
+        }
+        elseif (($bn->parentesco_id==$paren)&&($bn->parentesco_id==3)) {
+            DwMessage::error('Ya existe el benficiario Concubino(a) agregado.');
+            return 'cancel';
+        }
+        elseif (($bn->parentesco_id==$paren)&&($bn->parentesco_id==4)) {
+            DwMessage::error('Ya existe el benficiario Madre agregado.');
+            return 'cancel';
+        }
+        elseif (($bn->parentesco_id==$paren)&&($bn->parentesco_id==5)) {
+            DwMessage::error('Ya existe el benficiario Padre agregado.');
+            return 'cancel';
+        }
+        elseif ( (($bn->parentesco_id==2)&&($paren==3))||( ($paren==3)&&($bn->parentesco_id==2) ) ) {
+            DwMessage::error('Ya existe un Esposo(a), no puede agregar un Concubino(a) o Visceversa.');
+            return 'cancel';
+        }
+        $acum = $acum + $bn->participacion;
+      endforeach;
+
+      if($acum+$parti>100){
+        $this->participacion = 100-$acum;
+      }
+      if($paren==4){
+        $this->sexo='F';
+      }elseif ($paren==5) {
+        $this->sexo='M';
+      }
+
+      //espos@ 2
+      //madre 4 padre 5 concubino 3 
+      if(($acum>=100)&&($parti>0)) {
+            DwMessage::error('Lo sentimos, pero ya has agotado la cobertura de la poliza de vida asignada a tus beneficiarios.');
+            return 'cancel';
+      }
+   /*$conditions = "sucursal = '$this->sucursal' AND ciudad_id = $this->ciudad_id AND empresa_id = $this->empresa_id";
+        $conditions.= (isset($this->id)) ? " AND id != $this->id" : '';
+        if($this->count("conditions: $conditions")) {
+            DwMessage::error('Lo sentimos, pero ya existe una sucursal registrada con el mismo nombre y ciudad.');
+            return 'cancel';
+        } algo asi para consultar lo de si ya existe un padre o una madre, esposo o esposa , q se puede de a una xD*/
+
     }    
 
     
@@ -150,10 +196,9 @@ from beneficiario,persona where  beneficiario.titular_id = '{$titular_id}' and b
         if(!$beneficiario) {
             return NULL;
         }
-        $columns = 'beneficiario.*, persona.*';
-        $join = 'INNER JOIN persona ON persona.id = beneficiario.persona_id ';        
+        $columns = 'beneficiario.*';
         $condicion = "beneficiario.id = $beneficiario";        
-        return $this->find_first("columns: $columns", "join: $join", "conditions: $condicion");
+        return $this->find_first("columns: $columns", "conditions: $condicion");
     } 
 
 

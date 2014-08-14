@@ -93,25 +93,19 @@ class beneficiarioController extends BackendController {
         $this->idtitular = $id;
         $beneficiario=new beneficiario();
         $this->bene = $beneficiario->getListadoBeneTitular($id);
-       
-
-        if(Input::hasPost('persona') && Input::hasPost('beneficiario')) {
+        if(Input::hasPost('beneficiario')) {
             ActiveRecord::beginTrans();
-            //Guardo la persona y sus beneficiarios
-
-            $persona = Persona::setPersona('create', Input::post('persona'));
-            if($persona) {
-                if(beneficiario::setbeneficiario('create', Input::post('beneficiario'), array('persona_id'=>$persona->id))) {
+            //Guardo beneficiario
+            $benefici = beneficiario::setbeneficiario('create', Input::post('beneficiario'));
+                if($benefici){
                     ActiveRecord::commitTrans();
                     DwMessage::valid('El beneficiario se ha creado correctamente.');
                     return DwRedirect::toAction('agregar/'.$key);
                 }
-            } else {
+            else {
                 ActiveRecord::rollbackTrans();
             }
         }
-
-
         $this->page_title = 'Agregar beneficiario';
     }
     /**
