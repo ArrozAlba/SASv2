@@ -102,10 +102,7 @@ class Titular extends ActiveRecord {
    public function obtener_titulares($titular) {
         if ($titular != '') {
             $titular = stripcslashes($titular);
-            $res = $this->find_all_by_sql("
-                select titular.id,titular.persona_id,persona.nombre1,persona.apellido1,cast(persona.cedula as integer) 
-from titular,persona where persona.cedula like '%{$titular}%' 
-and titular.persona_id = persona.id");
+            $res = $this->find_all_by_sql(" select titular.id,titular.nombre1,titular.apellido1,cast(titular.cedula as integer) from titular where titular.cedula like '%{$titular}%'");
             
             if ($res) {
                 foreach ($res as $titular) {
@@ -189,24 +186,23 @@ and titular.persona_id = persona.id");
         if( strlen($value) <= 2 OR ($value=='none') ) {
             return NULL;
         }
-        $columns = 'titular.*, persona.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';
-        $join= 'INNER JOIN persona ON persona.id = titular.persona_id ';        
+        $columns = 'titular.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';
         $join.= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
         $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';   
         //$conditions = "";//Por el super usuario
         
         $order = $this->get_order($order, 'nombre1', array(                        
             'nombre1' => array(
-                'ASC'=>'persona.nombre1 ASC, persona.apellido1 DESC', 
-                'DESC'=>'persona.nombre1 DESC, persona.apellido1 DESC'
+                'ASC'=>'beneficiario.nombre1 ASC, beneficiario.apellido1 DESC', 
+                'DESC'=>'beneficiario.nombre1 DESC, beneficiario.apellido1 DESC'
             ),
             'apellido1' => array(
-                'ASC'=>'persona.apellido1 ASC, persona.nombre1 ASC', 
-                'DESC'=>'persona.apellido1 DESC, persona.nombre1 DESC'
+                'ASC'=>'beneficiario.apellido1 ASC, beneficiario.nombre1 ASC', 
+                'DESC'=>'beneficiario.apellido1 DESC, beneficiario.nombre1 DESC'
             ),
             'cedula' => array(
-                'ASC'=>'persona.cedula ASC, persona.apellido1 ASC, persona.nombre1 ASC', 
-                'DESC'=>'persona.cedula DESC, persona.apellido1 DESC, persona.nombre1 DESC'
+                'ASC'=>'beneficiario.cedula ASC, beneficiario.apellido1 ASC, beneficiario.nombre1 ASC', 
+                'DESC'=>'beneficiario.cedula DESC, beneficiario.apellido1 DESC, beneficiario.nombre1 DESC'
             )
         ));
         

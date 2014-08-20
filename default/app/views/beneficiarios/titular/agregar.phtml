@@ -150,8 +150,8 @@
 
             <div class="tab-pane" id="tab4">
                 <?php echo DwForm::hidden('usuario.login', NULL, ''); ?>
-                <?php echo DwForm::text('usuario.password', NULL, ''); ?>
-                <?php echo DwForm::text('usuario.repassword', NULL, ''); ?>
+                <?php echo DwForm::hidden('usuario.password', NULL, ''); ?>
+                <?php echo DwForm::hidden('usuario.repassword', NULL, ''); ?>
                 <?php echo DwForm::hidden('usuario.perfil_id', NULL, '2'); ?>
 
                 <div class="row fileupload-buttonbar">
@@ -200,6 +200,7 @@ $(function(){
     cedula.maxLength = 8;
     telefono.maxLength = 11;
     celular.maxLength = 11;
+    //VALIDAR NRO MINIMO ( NO PERMITIR MENOS DE 11 Xd)
 })
 </script>
 
