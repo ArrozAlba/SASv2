@@ -20,4 +20,5 @@ class UsuarioPregunta extends ActiveRecord {
         $this->belongs_to('usuario');
     }
       
+
 }
