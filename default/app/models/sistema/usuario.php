@@ -54,12 +54,21 @@ class Usuario extends ActiveRecord {
             } else {                                
                 if(DwForm::isValidToken()) {
                     if(DwAuth::login(array('login'=>$user), array('password'=>sha1($pass)), $mode)) {
-                        $usuario = self::getUsuarioLogueado();                         
+                        $usuario = self::getUsuarioLogueado();  
+                        $usuval = UsuarioClave::clave_valida($usuario->id);
+                                              
                         if( ($usuario->id!=2) &&  ($usuario->estado_usuario != EstadoUsuario::ACTIVO) ) { 
                             DwAuth::logout();
                             DwMessage::error('Lo sentimos pero tu cuenta se encuentra inactiva. <br />Si esta información es incorrecta contacta al administrador del sistema.');
                             return false;
-                        } 
+                        }
+                        if($usuval!=1 ) { 
+                           // DwAuth::logout();
+                           Session::set('perfil_id', '8');
+                           Session::set('tema', 'default');
+
+                            return DwRedirect::to('sistema/usuario_clave/cambiar_clave');
+                        }                         
                         Session::set('nombre1', $usuario->nombre1);
                         Session::set('apellido1', $usuario->apellido1);                        
                         Session::set('ip', DwUtils::getIp());
