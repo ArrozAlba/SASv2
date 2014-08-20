@@ -17,19 +17,12 @@ class Titular extends ActiveRecord {
      * Método para definir las relaciones y validaciones
      */
     protected function initialize() {
-		//$this->belongs_to('persona');
-      //  $this->has_one('usuario');
-      //  $this->has_one('persona');
-
+        $this->has_many('discapacidad_titular');
     }
    /**
      * Método que devuelve el inner join con el estado_usuario
      * @return string
      */
-//    public static function getInnerEstado() {
-//        return "INNER JOIN (SELECT usuario_id, CASE estado_usuario WHEN ".EstadoUsuario::COD_ACTIVO." THEN '".EstadoUsuario::ACTIVO."' WHEN ".EstadoUsuario::COD_BLOQUEADO." THEN '".EstadoUsuario::BLOQUEADO."' ELSE 'INDEFINIDO' END AS estado_usuario, descripcion FROM (SELECT * FROM estado_usuario ORDER BY estado_usuario.id DESC ) AS estado_usuario GROUP BY estado_usuario.usuario_id,estado_usuario.estado_usuario, descripcion) AS estado_usuario ON estado_usuario.usuario_id = usuario.id ";        
-//    }
-        
     /**
      * Método para setear un Objeto
      * @param string    $method     Método a ejecutar (create, update)
@@ -231,6 +224,14 @@ class Titular extends ActiveRecord {
         $this->departamento_id = Filter::get($this->departamento_id, 'numeric');
         $this->cargo_id = Filter::get($this->cargo_id, 'numeric'); 
         $this->observacion = Filter::get($this->observacion, 'string');
+        $this->nombre1 = strtoupper($this->nombre1);
+        $this->nombre2 = strtoupper($this->nombre2);
+        $this->apellido1 = strtoupper($this->apellido1);
+        $this->apellido2 = strtoupper($this->apellido2);
+        $this->observacion = strtoupper($this->observacion);
+        $this->direccion = strtoupper($this->direccion);
+        $this->correo_electronico = strtoupper($this->correo_electronico);
+
     }
 
 }

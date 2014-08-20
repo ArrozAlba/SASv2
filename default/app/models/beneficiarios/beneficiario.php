@@ -170,6 +170,14 @@ class beneficiario extends ActiveRecord {
             DwMessage::error('Lo sentimos, pero ya has agotado la cobertura de la poliza de vida asignada a tus beneficiarios.');
             return 'cancel';
       }
+      //guardar en mayusculas todo
+      $this->nombre1 = strtoupper($this->nombre1);
+      $this->nombre2 = strtoupper($this->nombre2);
+      $this->apellido1 = strtoupper($this->apellido1);
+      $this->apellido2 = strtoupper($this->apellido2);
+      $this->observacion = strtoupper($this->observacion);
+      $this->direccion = strtoupper($this->direccion);
+      $this->correo_electronico = strtoupper($this->correo_electronico);
     }    
     /**
      * Método para obtener la información de un beneficiario solo la informacion basica a traves de su id
