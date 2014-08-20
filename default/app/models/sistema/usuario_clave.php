@@ -21,9 +21,113 @@ class UsuarioClave extends ActiveRecord {
     protected function initialize() {
         $this->has_many('usuario');
     }
-    
- 
-       
-    
+
+    /**
+     * Método para validar la fecha de la clave
+     */
+    public static function clave_valida($idusuario) {    
+        $usuario_clave = new UsuarioClave();
+        $fecha = $usuario_clave->find("columns: id,usuario_id,fecha_fin","conditions: usuario_id='".$idusuario."'","order: fecha_fin DESC","limit: 1 ");
+        $fecha1 = strtotime($fecha[0]->fecha_fin);
+        $fechaHoy = date('Y-m-d');
+        $fechaHoy2 = strtotime($fechaHoy);
+        if($fecha1 >= $fechaHoy2){
+                    return 1;
+        }
+                    return 0;
+    }
+    public function cambiar_clave($usuario_id, $clave, $clave2) {
+    if ($clave == $clave2) {
+        if (strlen($clave) < 4) {
+            Flash::error(' La clave debe tener al menos tres (3) caracteres');
+        return false;
+    }
+    $usuario_clave = $this->find("columns: id,usuario_id,fecha_fin","conditions: usuario_id='".$usuario_id."'","order: fecha_fin DESC","limit: 1 ");
+    if ($usuario_clave) {
+        $usuario_clave->password = sha1($clave);
+        //TODO: Cambio de clave de reseteo
+        /* $correo = new Correo();
+        $reset_clave = $correo->generarClave(50);
+        $usuario->reset = $reset_clave; */
+        if ($usuario_clave->update()) {
+        return true;
+        } else {
+        return false;
+        }
+    } else {
+    throw new KumbiaException('El usuario no existe');
+    }
+    } else {
+    throw new KumbiaException('Las claves no coinciden');
+    }
+    }
+    /**
+     * Método para crear/modificar un objeto de base de datos
+     * 
+     * @param string $medthod: create, update
+     * @param array $data: Data para autocargar el modelo
+     * @param array $otherData: Data adicional para autocargar
+     * 
+     * @return object ActiveRecord
+     */
+    public static function setClave($method, $data, $optData=null) {
+        $obj = new ClaveUsuario($data);
+        if($optData) {
+            $obj->dump_result_self($optData);
+        }
+        if(!empty($obj->id)) { //Si va a actualizar
+            $old = new Usuario();
+            $old->find_first($obj->id);
+            if(!empty($obj->oldpassword)) { //Si cambia de claves
+                if(empty($obj->password) OR empty($obj->repassword)) {
+                    DwMessage::error("Indica la nueva contraseña");
+                    return false;
+                }
+                $obj->oldpassword = md5(sha1($obj->oldpassword));
+                if($obj->oldpassword !== $old->password) {
+                    DwMessage::error("La contraseña anterior no coincide con la registrada. Verifica los datos e intente nuevamente");
+                    return false;
+                }
+            }                       
+        }
+        //Verifico si las contraseñas coinciden (password y repassword)
+        if( (!empty($obj->password) && !empty($obj->repassword) ) OR ($method=='create')  ) { 
+            if($method=='create' && (empty($obj->password))) {
+                DwMessage::error("Indica la contraseña para el inicio de sesión");
+                return false;
+            }
+            $obj->password = md5(sha1($obj->password));
+            //$obj->repassword = md5(sha1($obj->repassword)); mientras luego borrar lo de abajo 
+            $obj->repassword = $obj->password;            
+            if($obj->password !== $obj->repassword) {
+                DwMessage::error('Las contraseñas no coinciden. Verifica los datos e intenta nuevamente.');
+                return 'cancel';
+            }
+        } else {
+            if(isset($obj->id)) { //Mantengo la contraseña anterior                    
+                $obj->password = $old->password;                                
+            }
+        } 
+        $rs = $obj->$method();
+        if($rs) {
+            ($method == 'create') ? DwAudit::debug("Se ha registrado el usuario $obj->usuario_id en el sistema") : DwAudit::debug("Se ha modificado la información del usuario $obj->usuario_id");
+        }
+        return ($rs) ? $obj : FALSE;
+    }
+              
+        /**
+     * Método para obtener la información de un usuario
+     * @return type
+     */
+    public function getInformacionUsuarioClave($usuario) {
+        $usuario = Filter::get($usuario, 'int');
+        if(!$usuario) {
+            return NULL;
+        }
+        $columnas = 'usuario_clave.* ';
+        $join = ' ';
+        $condicion = "usuario_clave.id = $usuario";        
+        return $this->find_first("columns: $columnas", "join: $join", "conditions: $condicion");
+    } 
 }
 ?>
