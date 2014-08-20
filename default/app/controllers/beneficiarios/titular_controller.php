@@ -12,7 +12,7 @@
 
 Load::models('beneficiarios/titular','sistema/usuario', 'beneficiarios/beneficiario');
 Load::models('params/pais', 'params/estado', 'params/municipio', 'params/parroquia');
-load::models('config/sucursal', 'config/departamento');
+load::models('config/sucursal', 'config/departamento', 'config/discapacidad', 'beneficiarios/discapacidad_titular');
 
 class TitularController extends BackendController {
     
@@ -97,17 +97,29 @@ class TitularController extends BackendController {
         $estado = new Estado(); 
         $municipio = new Municipio();
         $sucursal = new Sucursal();
+        $discapacidad = new Discapacidad();
         if(Input::hasPost('titular')){
-           if(Titular::setTitular('create', Input::post('titular'))){
-                DwMessage::valid('El titular se ha creado correctamente.');
-                return DwRedirect::toAction('listar');
-           }
-        $this->pais = $pais->getListadoPais();           
-        $this->estado = $estado->getListadoEstado(); 
-        $this->municipio = $municipio->getListadoMunicipio(); 
-        $this->sucursal = $sucursal->getListadoSucursal(); 
+            ActiveRecord::beginTrans();
+            $titu = Titular::setTitular('create', Input::post('titular'));
+            if($titu){
+                if (DiscapacidadTitular::setDiscapacidadTitular(Input::post('discapacidad'),$titu->id)){
+                    ActiveRecord::commitTrans();
+                    DwMessage::valid('El titular se ha creado correctamente.');
+                    return DwRedirect::toAction('listar');
+                }
+                else{
+                    ActiveRecord::rollbackTrans();
+                }
+            }
+            unset($titu);
+            $this->pais = $pais->getListadoPais();           
+            $this->estado = $estado->getListadoEstado(); 
+            $this->municipio = $municipio->getListadoMunicipio(); 
+            $this->sucursal = $sucursal->getListadoSucursal(); 
+        }
 
-    }
+
+    $this->discapacidad = $discapacidad->getListadoDiscapacidad();
     $this->page_title = 'Agregar';
     }
     
@@ -412,12 +424,4 @@ class TitularController extends BackendController {
        View::response('view'); 
        $this->municipio_id=Input::post('municipio_id');
     }
-
-
-
-
-
-
-
-
 }

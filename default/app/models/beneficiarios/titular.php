@@ -17,19 +17,12 @@ class Titular extends ActiveRecord {
      * Método para definir las relaciones y validaciones
      */
     protected function initialize() {
-		//$this->belongs_to('persona');
-      //  $this->has_one('usuario');
-      //  $this->has_one('persona');
-
+        $this->has_many('discapacidad_titular');
     }
    /**
      * Método que devuelve el inner join con el estado_usuario
      * @return string
      */
-//    public static function getInnerEstado() {
-//        return "INNER JOIN (SELECT usuario_id, CASE estado_usuario WHEN ".EstadoUsuario::COD_ACTIVO." THEN '".EstadoUsuario::ACTIVO."' WHEN ".EstadoUsuario::COD_BLOQUEADO." THEN '".EstadoUsuario::BLOQUEADO."' ELSE 'INDEFINIDO' END AS estado_usuario, descripcion FROM (SELECT * FROM estado_usuario ORDER BY estado_usuario.id DESC ) AS estado_usuario GROUP BY estado_usuario.usuario_id,estado_usuario.estado_usuario, descripcion) AS estado_usuario ON estado_usuario.usuario_id = usuario.id ";        
-//    }
-        
     /**
      * Método para setear un Objeto
      * @param string    $method     Método a ejecutar (create, update)
@@ -102,10 +95,7 @@ class Titular extends ActiveRecord {
    public function obtener_titulares($titular) {
         if ($titular != '') {
             $titular = stripcslashes($titular);
-            $res = $this->find_all_by_sql("
-                select titular.id,titular.persona_id,persona.nombre1,persona.apellido1,cast(persona.cedula as integer) 
-from titular,persona where persona.cedula like '%{$titular}%' 
-and titular.persona_id = persona.id");
+            $res = $this->find_all_by_sql(" select titular.id,titular.nombre1,titular.apellido1,cast(titular.cedula as integer) from titular where titular.cedula like '%{$titular}%'");
             
             if ($res) {
                 foreach ($res as $titular) {
@@ -189,24 +179,23 @@ and titular.persona_id = persona.id");
         if( strlen($value) <= 2 OR ($value=='none') ) {
             return NULL;
         }
-        $columns = 'titular.*, persona.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';
-        $join= 'INNER JOIN persona ON persona.id = titular.persona_id ';        
+        $columns = 'titular.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';
         $join.= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
         $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';   
         //$conditions = "";//Por el super usuario
         
         $order = $this->get_order($order, 'nombre1', array(                        
             'nombre1' => array(
-                'ASC'=>'persona.nombre1 ASC, persona.apellido1 DESC', 
-                'DESC'=>'persona.nombre1 DESC, persona.apellido1 DESC'
+                'ASC'=>'beneficiario.nombre1 ASC, beneficiario.apellido1 DESC', 
+                'DESC'=>'beneficiario.nombre1 DESC, beneficiario.apellido1 DESC'
             ),
             'apellido1' => array(
-                'ASC'=>'persona.apellido1 ASC, persona.nombre1 ASC', 
-                'DESC'=>'persona.apellido1 DESC, persona.nombre1 DESC'
+                'ASC'=>'beneficiario.apellido1 ASC, beneficiario.nombre1 ASC', 
+                'DESC'=>'beneficiario.apellido1 DESC, beneficiario.nombre1 DESC'
             ),
             'cedula' => array(
-                'ASC'=>'persona.cedula ASC, persona.apellido1 ASC, persona.nombre1 ASC', 
-                'DESC'=>'persona.cedula DESC, persona.apellido1 DESC, persona.nombre1 DESC'
+                'ASC'=>'beneficiario.cedula ASC, beneficiario.apellido1 ASC, beneficiario.nombre1 ASC', 
+                'DESC'=>'beneficiario.cedula DESC, beneficiario.apellido1 DESC, beneficiario.nombre1 DESC'
             )
         ));
         
@@ -235,6 +224,14 @@ and titular.persona_id = persona.id");
         $this->departamento_id = Filter::get($this->departamento_id, 'numeric');
         $this->cargo_id = Filter::get($this->cargo_id, 'numeric'); 
         $this->observacion = Filter::get($this->observacion, 'string');
+        $this->nombre1 = strtoupper($this->nombre1);
+        $this->nombre2 = strtoupper($this->nombre2);
+        $this->apellido1 = strtoupper($this->apellido1);
+        $this->apellido2 = strtoupper($this->apellido2);
+        $this->observacion = strtoupper($this->observacion);
+        $this->direccion = strtoupper($this->direccion);
+        $this->correo_electronico = strtoupper($this->correo_electronico);
+
     }
 
 }

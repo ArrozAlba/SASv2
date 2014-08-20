@@ -2,7 +2,7 @@
 /**
  * S.A.S
  *
- * Descripcion: Controlador que se encarga de la gestión de los beneficiarioes del sistema
+ * Descripcion: Controlador que se encarga de la gestión de los beneficiarioes del sistema 
  * @category    
  * @package     Controllers 
  * @author      Javier León (jel1284@gmail.com)
@@ -66,7 +66,7 @@ class beneficiarioController extends BackendController {
         View::select(NULL);
         if (Input::isAjax()) { //solo devolvemos los estados si se accede desde ajax 
             $busqueda = Input::post('busqueda');
-            $beneficiarios = Load::model('beneficiarios/beneficiario')->obtener_beneficiarios($busqueda);
+            $beneficiarios = Load::model('beneficiarios/beneficiario')->obtener_beneficiariosautocomplete($busqueda);
             die(json_encode($beneficiarios)); // solo devolvemos los datos, sin template ni vista
             //json_encode nos devolverá el array en formato json ["aragua","carabobo","..."]
         }

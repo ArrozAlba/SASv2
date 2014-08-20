@@ -36,10 +36,7 @@ class beneficiario extends ActiveRecord {
    public function obtener_beneficiarios($beneficiario) {
         if ($beneficiario != '') {
             $beneficiario = stripcslashes($beneficiario);
-            $res = $this->find_all_by_sql("
-select beneficiario.id,beneficiario.titular_id,beneficiario.persona_id,persona.nombre1,persona.apellido1,cast(persona.cedula as integer) 
-from titular,beneficiario,persona where beneficiario.titular_id in (select id from titular) and persona.cedula like '%{$beneficiario}%' 
-and beneficiario.persona_id = persona.id ");
+            $res = $this->find_all_by_sql(" select beneficiario.id,beneficiario.titular_id,beneficiario.persona_id,beneficiario.nombre1,beneficiario.apellido1,cast(beneficiario.cedula as integer) from titular,beneficiario where beneficiario.titular_id in (select id from titular) and beneficiario.cedula like '%{$beneficiario}%'");
             
             if ($res) {
                 foreach ($res as $beneficiario) {
@@ -99,20 +96,16 @@ and beneficiario.persona_id = persona.id ");
     }
 
        public function getListBeneficiario() {
-        return $this->find_all_by_sql("select beneficiario.id,beneficiario.titular_id,beneficiario.persona_id,persona.nombre1,persona.apellido1,
-cast(persona.cedula as float) 
-from beneficiario,persona where beneficiario.persona_id = persona.id");
+        return $this->find_all_by_sql("select beneficiario.id,beneficiario.titular_id, beneficiario.nombre1,beneficiario.apellido1, cast(beneficiario.cedula as float) from beneficiario");
 
 
     }
     public function buscar($titular_id){
-        return $this->find_all_by_sql("select beneficiario.id,beneficiario.titular_id,beneficiario.persona_id,(persona.nombre1 || ' ' || persona.apellido1) as nombrefull,
-cast(persona.cedula as integer) 
-from beneficiario,persona where  beneficiario.titular_id = '{$titular_id}' and beneficiario.persona_id = persona.id");
+        return $this->find_all_by_sql("select beneficiario.id,beneficiario.titular_id,(beneficiario.nombre1 || ' ' || beneficiario.apellido1) as nombrefull, cast(beneficiario.cedula as integer) from beneficiario where  beneficiario.titular_id = '{$titular_id}'");
     }    
 
     /**
-     * Método para verificar si una persona ya se encuentra registrada
+     * Método para verificar si un beneficiaro ya se encuentra registrada
      * @return obj
      */
     protected function _getbeneficiarioRegistrado($method='count') {
@@ -177,16 +170,15 @@ from beneficiario,persona where  beneficiario.titular_id = '{$titular_id}' and b
             DwMessage::error('Lo sentimos, pero ya has agotado la cobertura de la poliza de vida asignada a tus beneficiarios.');
             return 'cancel';
       }
-   /*$conditions = "sucursal = '$this->sucursal' AND ciudad_id = $this->ciudad_id AND empresa_id = $this->empresa_id";
-        $conditions.= (isset($this->id)) ? " AND id != $this->id" : '';
-        if($this->count("conditions: $conditions")) {
-            DwMessage::error('Lo sentimos, pero ya existe una sucursal registrada con el mismo nombre y ciudad.');
-            return 'cancel';
-        } algo asi para consultar lo de si ya existe un padre o una madre, esposo o esposa , q se puede de a una xD*/
-
+      //guardar en mayusculas todo
+      $this->nombre1 = strtoupper($this->nombre1);
+      $this->nombre2 = strtoupper($this->nombre2);
+      $this->apellido1 = strtoupper($this->apellido1);
+      $this->apellido2 = strtoupper($this->apellido2);
+      $this->observacion = strtoupper($this->observacion);
+      $this->direccion = strtoupper($this->direccion);
+      $this->correo_electronico = strtoupper($this->correo_electronico);
     }    
-
-    
     /**
      * Método para obtener la información de un beneficiario solo la informacion basica a traves de su id
      * @return type
