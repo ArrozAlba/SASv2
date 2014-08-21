@@ -17,10 +17,8 @@ class beneficiario extends ActiveRecord {
      * Método para definir las relaciones y validaciones
      */
     protected function initialize() {
-	$this->has_one('titular');	
-	//  $this->has_one('usuario');
-    //  $this->has_one('persona');
-
+      $this->has_one('titular');
+      $this->has_many('discapacidad_beneficiario');
     }
    /**
      * Método que devuelve el inner join con el estado_usuario

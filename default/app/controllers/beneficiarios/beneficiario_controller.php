@@ -9,7 +9,7 @@
  * @copyright   Copyright (c) 2014 E.M.S. Arroz del Alba S.A. (http://autogestion.arrozdelalba.gob.ve)
  */
 
-Load::models('beneficiarios/beneficiario','personas/persona', 'sistema/usuario');
+Load::models('beneficiarios/beneficiario','personas/persona', 'sistema/usuario','config/discapacidad', 'beneficiarios/discapacidad_beneficiario');
 
 class beneficiarioController extends BackendController {
     /**
@@ -92,19 +92,22 @@ class beneficiarioController extends BackendController {
         //El id del titular que tendra a los beneficiarios asociados
         $this->idtitular = $id;
         $beneficiario=new beneficiario();
+        $discapacidad = new Discapacidad();
         $this->bene = $beneficiario->getListadoBeneTitular($id);
         if(Input::hasPost('beneficiario')) {
             ActiveRecord::beginTrans();
             //Guardo beneficiario
             $benefici = beneficiario::setbeneficiario('create', Input::post('beneficiario'));
                 if($benefici){
-                    ActiveRecord::commitTrans();
-                    DwMessage::valid('El beneficiario se ha creado correctamente.');
-                    return DwRedirect::toAction('agregar/'.$key);
+                    if (DiscapacidadBeneficiario::setDiscapacidadBeneficiario(Input::post('discapacidad'),$benefici->id)){
+                        ActiveRecord::commitTrans();
+                        DwMessage::valid('El beneficiario se ha creado correctamente.');
+                        return DwRedirect::toAction('agregar/'.$key);
+                    }
+                  else{
+                     ActiveRecord::rollbackTrans();
+                  }
                 }
-            else {
-                ActiveRecord::rollbackTrans();
-            }
         }
         $this->page_title = 'Agregar beneficiario';
     }
