@@ -110,6 +110,7 @@ class beneficiarioController extends BackendController {
                 }
         }
         $this->page_title = 'Agregar beneficiario';
+        $this->discapacidad = $discapacidad->getListadoDiscapacidad();
     }
     /**
      * Método para editar
