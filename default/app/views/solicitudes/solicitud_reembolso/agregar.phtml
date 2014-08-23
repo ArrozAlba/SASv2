@@ -4,17 +4,17 @@
     <?php echo DwForm::open('', 'post', array('id'=>'form', 'class'=>'dw-validate')); ?>
         <div class="row-fluid">
             <div class="span4">
-                <?php echo DwForm::text('solicitud_servicio.codigo_solicitud_id', array('class'=>'input-xlarge disabled'),$codigodd, 'Código:'); ?>
-                <?php echo DwForm::hidden('solicitud_servicio.codigo_solicitud', NULL, $codigodd); ?>
-                <?php echo DwForm::hidden('solicitud_servicio.tiposolicitud_id', NULL, '1'); ?>
-                <?php echo DwForm::hidden('solicitud_servicio.estado_solicitud', NULL, 'R'); ?>
+                <?php echo DwForm::text('reembolso.codigo_solicitud_id', array('class'=>'input-xlarge disabled'),$codigodd, 'Código:'); ?>
+                <?php echo DwForm::hidden('reembolso.codigo_solicitud', NULL, $codigodd); ?>
+                <?php echo DwForm::hidden('reembolso.tiposolicitud_id', NULL, '1'); ?>
+                <?php echo DwForm::hidden('reembolso.estado_solicitud', NULL, 'R'); ?>
                 <?php ?>
             </div>
             <div class="span4">
-                <?php echo DwForm::date('solicitud_servicio.fecha_solicitud', array('class'=>'input-required mask-date disabled input-date show-errors'), date("Y/m/d"), 'Fecha Solicitud'); ?>
+                <?php echo DwForm::date('reembolso.fecha_solicitud', array('class'=>'input-required mask-date disabled input-date show-errors'), date("Y/m/d"), 'Fecha Solicitud'); ?>
             </div>
             <div class="span4">
-                <?php echo DwForm::date('solicitud_servicio.fecha_vencimiento', array('class'=>'input-required mask-date input-date show-errors'), date("Y/m/d"), 'Fecha Vencimiento'); ?>
+                <?php echo DwForm::date('reembolso.fecha_vencimiento', array('class'=>'input-required mask-date input-date show-errors'), date("Y/m/d"), 'Fecha Vencimiento'); ?>
             </div>
         </div>
         <div>
@@ -26,12 +26,12 @@
         </div>
         <div class="row-fluid">
             <div class="span4">
-                <?php //echo DwForm::dbSelect('solicitud_servicio.titular_id', 'cedula', array('beneficiarios/titular', 'getListadoTitular'), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Titular'); ?>
-                <?php echo DwForm::text('solicitud_servicio.titular', array('class'=>'input-xlarge mask-pint show-error input-required '), NULL, 'Cedula Titular'); ?>
-                <?php echo DwForm::hidden('solicitud_servicio.titular_id', NULL, ''); ?>
+                <?php //echo DwForm::dbSelect('reembolso.titular_id', 'cedula', array('beneficiarios/titular', 'getListadoTitular'), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Titular'); ?>
+                <?php echo DwForm::text('reembolso.titular', array('class'=>'input-xlarge mask-pint show-error input-required '), NULL, 'Cedula Titular'); ?>
+                <?php echo DwForm::hidden('reembolso.titular_id', NULL, ''); ?>
             </div>
             <div class="span6">
-                <?php echo DwForm::text('solicitud_servicio.titular_idnombre', array('class'=>'input-xxlarge disabled '), NULL, 'Nombre Titular:'); ?>
+                <?php echo DwForm::text('reembolso.titular_idnombre', array('class'=>'input-xxlarge disabled '), NULL, 'Nombre Titular:'); ?>
             </div>
             <div class="span2">
 				<label>Beneficiarios:</label>
@@ -40,29 +40,29 @@
 		</div>
         <div class="row-fluid">
             <div class="span6">
-                <?php echo DwForm::text('solicitud_servicio.proveedor', array('class'=>'input-xxlarge input-required mask-alpha '), NULL, 'Proveedor'); ?>
-                <?php echo DwForm::hidden('solicitud_servicio.proveedor_id', NULL, ''); ?>
+                <?php echo DwForm::text('reembolso.proveedor', array('class'=>'input-xxlarge input-required mask-alpha '), NULL, 'Proveedor'); ?>
+                <?php echo DwForm::hidden('reembolso.proveedor_id', NULL, ''); ?>
             </div>
             <div class="span6">
-               <?php echo DwForm::text('solicitud_servicio.medico', array('class'=>'input-xxlarge input-required mask-alpha '), NULL, 'Medico'); ?>
-               <?php echo DwForm::hidden('solicitud_servicio.medico_id', NULL, ''); ?>
+               <?php echo DwForm::text('reembolso.medico', array('class'=>'input-xxlarge input-required mask-alpha '), NULL, 'Medico'); ?>
+               <?php echo DwForm::hidden('reembolso.medico_id', NULL, ''); ?>
             </div>
         </div>
          </div>
         <div class="row-fluid">
             <div class="span6">
-                <?php echo DwForm::text('solicitud_servicio.servicio', array('class'=>'input-xxlarge input-required mask-alpha '), NULL, 'Servicio'); ?>
-                <?php echo DwForm::hidden('solicitud_servicio.servicio_id', NULL, ''); ?>
+                <?php echo DwForm::text('reembolso.servicio', array('class'=>'input-xxlarge input-required mask-alpha '), NULL, 'Servicio'); ?>
+                <?php echo DwForm::hidden('reembolso.servicio_id', NULL, ''); ?>
             </div>
             <div class="span6">
-               <?php echo DwForm::text('solicitud_servicio.patologia', array('class'=>'input-xxlarge input-required mask-alpha '), NULL, 'Patologia'); ?>
-                <?php echo DwForm::hidden('solicitud_servicio.patologia_id', NULL, ''); ?>
+               <?php echo DwForm::text('reembolso.patologia', array('class'=>'input-xxlarge input-required mask-alpha '), NULL, 'Patologia'); ?>
+                <?php echo DwForm::hidden('reembolso.patologia_id', NULL, ''); ?>
             </div>
         </div>
         <div class="row-fluid">
             <div class="span12">
-                <?php echo DwForm::textarea('solicitud_servicio.observacion', array('class'=>'mask-text show-error input-xxlarge mask-alpha '), NULL, 'Observacion'); ?>
-                <?php //echo DwForm::dbSelect('solicitud_servicio.patologia_id', 'descripcion', array('config/patologia', 'getListadoPatologia'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Patologia'); ?>
+                <?php echo DwForm::textarea('reembolso.observacion', array('class'=>'mask-text show-error input-xxlarge mask-alpha '), NULL, 'Observacion'); ?>
+                <?php //echo DwForm::dbSelect('reembolso.patologia_id', 'descripcion', array('config/patologia', 'getListadoPatologia'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Patologia'); ?>
             </div>
         </div>
         <div class="row-fluid">
@@ -79,10 +79,10 @@
 <script type="text/javascript" >
 $(document).ready(function(){
   select: function ll(event, ui) {
-                  $('input#solicitud_servicio_codigo_solicitud').val(ui.item.codid);// Asignacion de Id en Campo
-                 // $('textarea#solicitud_servicio_observacion').val(ui.item.id);// Asignacion de Id en Campo
+                  $('input#reembolso_codigo_solicitud').val(ui.item.codid);// Asignacion de Id en Campo
+                 // $('textarea#reembolso_observacion').val(ui.item.id);// Asignacion de Id en Campo
               }
-    $('input#solicitud_servicio_titular').autocomplete({
+    $('input#reembolso_titular').autocomplete({
             minLength : 3 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
             source: function(request, response) {
                 $.ajax({
@@ -96,12 +96,12 @@ $(document).ready(function(){
                 });
               },
               select: function(event, ui) {
-                  $('input#solicitud_servicio_titular_id').val(ui.item.id);// Asignacion de Id en Campo
-                  $('input#solicitud_servicio_titular_idnombre').val(ui.item.idnombre);// Asignacion de Id en Campo
-                 // $('textarea#solicitud_servicio_observacion').val(ui.item.id);// Asignacion de Id en Campo
+                  $('input#reembolso_titular_id').val(ui.item.id);// Asignacion de Id en Campo
+                  $('input#reembolso_titular_idnombre').val(ui.item.idnombre);// Asignacion de Id en Campo
+                 // $('textarea#reembolso_observacion').val(ui.item.id);// Asignacion de Id en Campo
               }
     });
-    $('input#solicitud_servicio_beneficiario').autocomplete({
+    $('input#reembolso_beneficiario').autocomplete({
             minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
             source: function(request, response) {
                 $.ajax({
@@ -115,11 +115,11 @@ $(document).ready(function(){
                 });
               },
               select: function(event, ui) {
-                  $('input#solicitud_servicio_beneficiario_id').val(ui.item.id);// Asignacion de Id en Campo
-                  $('input#solicitud_servicio_beneficiario_idnombre').val(ui.item.idnombre);// Asignacion de Id en Campo
+                  $('input#reembolso_beneficiario_id').val(ui.item.id);// Asignacion de Id en Campo
+                  $('input#reembolso_beneficiario_idnombre').val(ui.item.idnombre);// Asignacion de Id en Campo
               }
     });
-    $( "input#solicitud_servicio_proveedor" ).autocomplete({
+    $( "input#reembolso_proveedor" ).autocomplete({
             minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
             source: function(request, response) {
                 $.ajax({
@@ -133,10 +133,10 @@ $(document).ready(function(){
                 });
               },
               select: function(event, ui) {
-                  $('input#solicitud_servicio_proveedor_id').val(ui.item.id);// Asignacion de Id en Campo
+                  $('input#reembolso_proveedor_id').val(ui.item.id);// Asignacion de Id en Campo
               }
     });
-    $('input#solicitud_servicio_medico').autocomplete({
+    $('input#reembolso_medico').autocomplete({
             minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
             source: function(request, response) {
                 $.ajax({
@@ -150,10 +150,10 @@ $(document).ready(function(){
                 });
               },
               select: function(event, ui) {
-                  $('input#solicitud_servicio_medico_id').val(ui.item.id);// Asignacion de Id en Campo
+                  $('input#reembolso_medico_id').val(ui.item.id);// Asignacion de Id en Campo
               }
     });
-    $('input#solicitud_servicio_servicio').autocomplete({
+    $('input#reembolso_servicio').autocomplete({
             minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
             source: function(request, response) {
                 $.ajax({
@@ -167,11 +167,11 @@ $(document).ready(function(){
                 });
               },
               select: function(event, ui) {
-                  $('input#solicitud_servicio_servicio_id').val(ui.item.id);// Asignacion de Id en Campo
-                   //$('textarea#solicitud_servicio_observacion').val(ui.item.id);// Asignacion de Id en Campo
+                  $('input#reembolso_servicio_id').val(ui.item.id);// Asignacion de Id en Campo
+                   //$('textarea#reembolso_observacion').val(ui.item.id);// Asignacion de Id en Campo
               }
     }); 
-    $('input#solicitud_servicio_patologia').autocomplete({
+    $('input#reembolso_patologia').autocomplete({
             minLength : 3 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
             source: function(request, response) {
                 $.ajax({
@@ -185,12 +185,12 @@ $(document).ready(function(){
                 });
               },
               select: function(event, ui) {
-                  $('input#solicitud_servicio_patologia_id').val(ui.item.id);// Asignacion de Id en Campo
-                   //$('textarea#solicitud_servicio_observacion').val(ui.item.id);// Asignacion de Id en Campo
+                  $('input#reembolso_patologia_id').val(ui.item.id);// Asignacion de Id en Campo
+                   //$('textarea#reembolso_observacion').val(ui.item.id);// Asignacion de Id en Campo
               }
     }); 
-$("#solicitud_servicio_titular").change(function(){
-    var titular_id     =   $('#solicitud_servicio_titular_id').val();
+$("#reembolso_titular").change(function(){
+    var titular_id     =   $('#reembolso_titular_id').val();
         $.ajax({
           type: "POST",
           url: "<?php echo PUBLIC_PATH . 'beneficiarios/beneficiario/getBeneficiarios/'; ?>",
