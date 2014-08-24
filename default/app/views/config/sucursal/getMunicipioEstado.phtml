@@ -1,0 +1,17 @@
+<?php
+    echo Form::dbSelect("sucursal.municipio_id", 'nombre', array('municipio','buscar',$estado_id), '           -  Seleccione  -           ');
+?>		
+ 
+<script type='text/javascript'>
+$("#sucursal_municipio_id").change(function(){
+    var municipio_id     =   $('#sucursal_municipio_id').val();
+        $.ajax({
+          type: "POST",
+          url: "<?php echo PUBLIC_PATH . 'config/sucursal/getParroquiaMunicipio/'; ?>",
+          data: "municipio_id=" + municipio_id,
+          success: function(html){
+            $("#div_parroquia").html(html);
+          }
+        });
+});
+</script>

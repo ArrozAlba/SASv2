@@ -66,7 +66,8 @@ class Usuario extends ActiveRecord {
                            // DwAuth::logout();
                            Session::set('perfil_id', '8');
                            Session::set('tema', 'default');
-
+                        Session::set('nombre1', $usuario->nombre1);
+                        Session::set('apellido1', $usuario->apellido1);                           
                             return DwRedirect::to('sistema/usuario_clave/cambiar_clave');
                         }                         
                         Session::set('nombre1', $usuario->nombre1);

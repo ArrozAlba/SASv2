@@ -19,6 +19,7 @@ class Discapacidad extends ActiveRecord {
      */
     protected function initialize() {
         $this->has_many('discapacidad_titular');  
+        $this->has_many('discapacidad_beneficiario'); 
     }  
     /**
      * Método para ver la información de una sucursal
