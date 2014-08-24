@@ -388,7 +388,6 @@ class TitularController extends BackendController {
         View::json($data);
     }
 
-
     public function getEstadoPais(){
        View::response('view'); 
        $this->pais_id=Input::post('pais_id');

@@ -224,8 +224,8 @@ $("#titular_nombre1").change(function(){
 
 <!-- Script para obtener por Ajax el departamento en funcion de las Upsas  -->
 <script type='text/javascript'>
-$("#usuario_sucursal_id").change(function(){
-    var sucursal_id     =   $('#usuario_sucursal_id').val();
+$("#titular_sucursal_id").change(function(){
+    var sucursal_id     =   $('#titular_sucursal_id').val();
         $.ajax({
           type: "POST",
           url: "<?php echo PUBLIC_PATH . 'beneficiarios/titular/getDepartamento/'; ?>",
@@ -239,7 +239,7 @@ $("#usuario_sucursal_id").change(function(){
 
 <!-- Script para obtener por Ajax Los Estados en funcion de los paises  -->
 <script type='text/javascript'>
-$("#titular_pais_id").change(function(){
+$("#titular_pais_id").click(function(){
     var pais_id     =   $('#titular_pais_id').val();
         $.ajax({
           type: "POST",

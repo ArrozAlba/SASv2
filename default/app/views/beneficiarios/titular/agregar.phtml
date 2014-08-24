@@ -97,7 +97,6 @@
                         </div>
                         <?php } 
                     ?>
-   
                 </div>
             <label>(*) Campos Obligatorios </label>
             </div><!--Cierrre del Tab1-->
@@ -143,7 +142,7 @@
                 </div>
                 <div class="row-fluid">
                     <div class="span4">
-                        <?php echo DwForm::dbSelect('usuario.sucursal_id', array('sucursal', 'parroquia'), array('config/sucursal', 'getListadoSucursal'), array('todas'=>'Todas'), array('class'=>'input-xlarge input-required mask-pint show-errors'), NULL, 'Sucursal / UPSA'); ?>
+                        <?php echo DwForm::dbSelect('titular.sucursal_id', array('sucursal', 'parroquia'), array('config/sucursal', 'getListadoSucursal'), array('todas'=>'Todas'), array('class'=>'input-xlarge input-required mask-pint show-errors'), NULL, 'Sucursal / UPSA'); ?>
                     </div>
                     <div class="span4">
                      <label>Departamento</label>
@@ -238,8 +237,8 @@ $("#titular_nombre1").change(function(){
 
 <!-- Script para obtener por Ajax el departamento en funcion de las Upsas  -->
 <script type='text/javascript'>
-$("#usuario_sucursal_id").change(function(){
-    var sucursal_id     =   $('#usuario_sucursal_id').val();
+$("#titular_sucursal_id").change(function(){
+    var sucursal_id     =   $('#titular_sucursal_id').val();
         $.ajax({
           type: "POST",
           url: "<?php echo PUBLIC_PATH . 'beneficiarios/titular/getDepartamento/'; ?>",
