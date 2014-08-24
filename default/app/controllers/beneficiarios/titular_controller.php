@@ -38,6 +38,7 @@ class TitularController extends BackendController {
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
         $field = (Input::hasPost('field')) ? Input::post('field') : $field;
         $value = (Input::hasPost('field')) ? Input::post('value') : $value;
+        $value = strtoupper($value);
         $titular = new Titular();
         $titulares = $titular->getAjaxTitular($field, $value, $order, $page);        
         if(empty($titulares->items)) {

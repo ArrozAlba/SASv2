@@ -58,7 +58,7 @@
                         <?php echo DwForm::select('titular.estado_civil', array(''=>'Seleccione:', 'S'=>'Soltero', 'c'=>'Concubinato','C'=>'Casado', 'D'=>'Divorciado', 'V'=>'Viudo'), array('class'=>'input-xlarge input-required show-error'), NULL, 'Estado Civil'); ?>
                     </div>
                     <div class="span3">
-                         <?php echo DwForm::select('titular.grupo_sanguineo', array(''=>'Seleccione:', 'O-'=>'O-', 'O+'=>'O+','A-'=>'A-', 'A+'=>'A+', 'AB+'=>'AB+', 'AB-'=>'AB-'), array('class'=>'input-xlarge show-error'), NULL, 'Grupo Sanguineo'); ?>
+                         <?php echo DwForm::select('titular.grupo_sanguineo', array(''=>'Seleccione:', 'O-'=>'O-', 'O+'=>'O+','A-'=>'A-', 'A+'=>'A+', 'B-'=>'B-', 'B+'=>'B+', 'AB+'=>'AB+', 'AB-'=>'AB-'), array('class'=>'input-xlarge show-error'), NULL, 'Grupo Sanguineo'); ?>
                     </div>
                     <div class="span3">
                         <?php echo DwForm::tel('titular.telefono', array('class'=>'input-numeric input-xlarge mask-pint show-error'), NULL, 'Teléfono Fijo'); ?>
@@ -70,19 +70,16 @@
                 <!-- Datos de Lugar de nacimiento-->
                 <div class="row-fluid">
                     <div class="span3">
-                        <?php echo DwForm::dbSelect('titular.pais_id', 'nombre', array('params/pais', 'getListadoPais'), NULL, array('class'=>'input-xlarge input-required mask-pint show-errors'), NULL, 'Pais Nacimiento'); ?>
+                        <?php echo DwForm::dbSelect('titular.pais_id', 'nombre', array('params/pais', 'getListadoPais'), NULL, array('class'=>'input-xlarge input-required mask-pint show-errors'), NULL, 'País Nacimiento'); ?>
                     </div>
                     <div class="span3">
-                        <label>Estado</label>
-                        <div id='div_estado'><select class="input-xlarge"> <option value=""> Seleccione:</option></select></div>
+                        <div id='div_estado'><?php echo DwForm::dbSelect('titular.estado_id', 'nombre', array('params/estado', 'getListadoEstado'), NULL, array('class'=>'input-xlarge input-required mask-pint show-errors'), NULL, 'Estado'); ?></div>
                     </div>
                     <div class="span3">
-                        <label>Municipio</label>
-                        <div id='div_municipio'><select class="input-xlarge"> <option value=""> Seleccione:</option></select></div>
+                        <div id='div_municipio'><?php echo DwForm::dbSelect('titular.municipio_id', 'nombre', array('params/municipio', 'getListadoMunicipio'), NULL, array('class'=>'input-xlarge input-required mask-pint show-errors'), NULL, 'Municipio'); ?></div>
                     </div>
                     <div class="span3">
-                        <label>Parroquia</label>
-                        <div id='div_parroquia'><select class="input-xlarge"> <option value=""> Seleccione:</option></select></div>  
+                       <div id='div_parroquia'><?php echo DwForm::dbSelect('titular.parroquia_id', 'nombre', array('params/parroquia', 'getListadoParroquia'), NULL, array('class'=>'input-xlarge input-required mask-pint show-errors'), NULL, 'Parroquia'); ?></div>
                     </div>
 
                 </div>
@@ -107,16 +104,13 @@
                         <?php echo DwForm::dbSelect('titular.hpais_id', 'nombre', array('params/pais', 'getListadoPais'), NULL, array('class'=>'input-large input-required mask-pint show-errors'), NULL, 'Pais Residencia'); ?>
                     </div>
                     <div class="span3">
-                        <label>Estado</label>
-                        <div id='div_hestado'> <select class="input-xlarge"> <option value=""> Seleccione:</option></select></div>
+                        <div id='div_hestado'><?php echo DwForm::dbSelect('titular.hestado_id', 'nombre', array('params/estado', 'getListadoEstado'), NULL, array('class'=>'input-xlarge input-required mask-pint show-errors'), NULL, 'Estado'); ?></div>
                     </div>
                     <div class="span3">
-                        <label>Municipio</label>
-                        <div id='div_hmunicipio'><select class="input-xlarge"> <option value=""> Seleccione:</option></select></div>
+                        <div id='div_hmunicipio'><?php echo DwForm::dbSelect('titular.hmunicipio_id', 'nombre', array('params/municipio', 'getListadoMunicipio'), NULL, array('class'=>'input-xlarge input-required mask-pint show-errors'), NULL, 'Municipio'); ?></div>
                     </div>
                     <div class="span3">
-                        <label>Parroquia</label>
-                        <div id='div_hparroquia'><select class="input-xlarge"> <option value=""> Seleccione:</option></select></div>  
+                       <div id='div_hparroquia'><?php echo DwForm::dbSelect('titular.hparroquia_id', 'nombre', array('params/parroquia', 'getListadoParroquia'), NULL, array('class'=>'input-xlarge input-required mask-pint show-errors'), NULL, 'Parroquia'); ?></div>
                     </div>
                 </div>
                 <div class="row-fluid">
@@ -124,7 +118,7 @@
                         <?php echo DwForm::text('titular.direccion_habitacion', array('class'=>'input-xxlarge input-required show-error'), NULL, 'Dirección de Habitación'); ?>
                     </div>
                     <div class="span6">
-                        <?php echo DwForm::email('titular.correo_electronico', array('class'=>'input-xxlarge show-error'), NULL, 'Correo Electronico'); ?>
+                        <?php echo DwForm::text('titular.correo_electronico', array('class'=>'input-xxlarge show-error'), NULL, 'Correo Electronico'); ?>
                     </div>
                 </div>
             </div><!--cierre del tab2-->
@@ -145,8 +139,9 @@
                         <?php echo DwForm::dbSelect('titular.sucursal_id', array('sucursal', 'parroquia'), array('config/sucursal', 'getListadoSucursal'), array('todas'=>'Todas'), array('class'=>'input-xlarge input-required mask-pint show-errors'), NULL, 'Sucursal / UPSA'); ?>
                     </div>
                     <div class="span4">
-                     <label>Departamento</label>
-                        <div id='div_departamento'><select class="input-xlarge"> <option value=""> Seleccione:</option></select></div>
+                    <div id="departamento">
+                    <?php echo DwForm::dbSelect('titular.departamento_id', 'nombre', array('config/departamento', 'getListadoDepartamento'), NULL, array('class'=>'input-xlarge input-required input-list show-errors'), NULL, 'Departamento'); ?></div>
+
 	                </div>
                     <div class="span4">
 						<?php echo DwForm::dbSelect('titular.cargo_id', 'nombre', array('config/cargo', 'getListadoCargo'), NULL, array('class'=>'input-xlarge input-required input-list show-errors'), NULL, 'Cargo'); ?>

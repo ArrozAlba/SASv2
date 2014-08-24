@@ -79,12 +79,28 @@ class Titular extends ActiveRecord {
         $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';
         $join.= 'INNER JOIN sucursal ON departamento.sucursal_id = sucursal.id';
 
-       // $conditions = "";//Por el super usuario
-     
+        $order = $this->get_order($order, 'nombre1', array(                        
+            'nombre1' => array(
+                'ASC'=>'titular.nombre1 ASC, titular.apellido1 ASC', 
+                'DESC'=>'titular.nombre1 DESC, titular.apellido1 DESC'
+            ),
+            'apellido1' => array(
+                'ASC'=>'titular.apellido1 ASC, titular.nombre1 ASC', 
+                'DESC'=>'titular.apellido1 DESC, titular.nombre1 DESC'
+            ),
+            'cedula' => array(
+                'ASC'=>'titular.cedula ASC, titular.apellido1 ASC, titular.nombre1 ASC', 
+                'DESC'=>'titular.cedula DESC, titular.apellido1 DESC, titular.nombre1 DESC'
+            ),
+            'nomina' => array(
+                'ASC'=>'tipoempleado.nombre ASC, titular.apellido1 ASC, titular.nombre1 ASC', 
+                'DESC'=>'tipoempleado.nombre DESC, titular.apellido1 DESC, titular.nombre1 DESC'
+            ),
+        ));
         if($page) {
-            return $this->paginated("columns: $columns", "join: $join", "page: $page");
+            return $this->paginated("columns: $columns", "join: $join", "order: $order", "page: $page");
         } else {
-            return $this->find("columns: $columns", "join: $join");
+            return $this->find("columns: $columns", "join: $join", "order: $order");
         }  
     }
 
@@ -176,37 +192,48 @@ class Titular extends ActiveRecord {
      */
     public function getAjaxTitular($field, $value, $order='', $page=0) {
         $value = Filter::get($value, 'string');
-        if( strlen($value) <= 2 OR ($value=='none') ) {
+        if( strlen($value) < 1 OR ($value=='none') ) {
             return NULL;
         }
-        $columns = 'titular.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';
-        $join.= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
+        if($field=='apellido'){ $field ='apellido1';}
+        if($field=='nomina'){ $field ='tipoempleado.nombre';}
+        if($field=='departamento'){ $field ='departamento.nombre';}
+        if($field=='sucursal'){ $field ='sucursal.sucursal';}
+
+        $columns = 'titular.*, tipoempleado.id as idtipoempleado, tipoempleado.nombre as nomina, departamento.id, departamento.nombre as departamento, sucursal.* ';
+        $join = 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
         $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';   
+        $join.= 'INNER JOIN sucursal  ON  departamento.sucursal_id = sucursal.id ';
         //$conditions = "";//Por el super usuario
         
         $order = $this->get_order($order, 'nombre1', array(                        
             'nombre1' => array(
-                'ASC'=>'beneficiario.nombre1 ASC, beneficiario.apellido1 DESC', 
-                'DESC'=>'beneficiario.nombre1 DESC, beneficiario.apellido1 DESC'
+                'ASC'=>'titular.nombre1 ASC, titular.apellido1 ASC', 
+                'DESC'=>'titular.nombre1 DESC, titular.apellido1 DESC'
             ),
             'apellido1' => array(
-                'ASC'=>'beneficiario.apellido1 ASC, beneficiario.nombre1 ASC', 
-                'DESC'=>'beneficiario.apellido1 DESC, beneficiario.nombre1 DESC'
+                'ASC'=>'titular.apellido1 ASC, titular.nombre1 ASC', 
+                'DESC'=>'titular.apellido1 DESC, titular.nombre1 DESC'
             ),
             'cedula' => array(
-                'ASC'=>'beneficiario.cedula ASC, beneficiario.apellido1 ASC, beneficiario.nombre1 ASC', 
-                'DESC'=>'beneficiario.cedula DESC, beneficiario.apellido1 DESC, beneficiario.nombre1 DESC'
-            )
+                'ASC'=>'titular.cedula ASC, titular.apellido1 ASC, titular.nombre1 ASC', 
+                'DESC'=>'titular.cedula DESC, titular.apellido1 DESC, titular.nombre1 DESC'
+            ),
+            'nomina' => array(
+                'ASC'=>'tipoempleado.nombre ASC, titular.apellido1 ASC, titular.nombre1 ASC', 
+                'DESC'=>'tipoempleado.nombre DESC, titular.apellido1 DESC, titular.nombre1 DESC'
+            ),
         ));
         
         //Defino los campos habilitados para la búsqueda
-        $fields = array('cedula', 'nombre1', 'apellido1', 'tipoe', 'departamento', );
+        $fields = array('cedula', 'nombre1', 'apellido1','tipoempleado.nombre', 'departamento.nombre','sucursal.sucursal');
         if(!in_array($field, $fields)) {
             $field = 'nombre1';
         }        
         if(! ($field=='sucursal' && $value=='todas') ) {
-          $conditions.= " AND $field LIKE '%$value%'";
-        }        
+          $conditions= " $field LIKE '%$value%'";
+        } 
+
         if($page) {
             return $this->paginated("columns: $columns", "join: $join","conditions: $conditions",  "order: $order", "page: $page");
         } else {
@@ -231,7 +258,34 @@ class Titular extends ActiveRecord {
         $this->observacion = strtoupper($this->observacion);
         $this->direccion = strtoupper($this->direccion);
         $this->correo_electronico = strtoupper($this->correo_electronico);
+        $a = $this->estado_id = Filter::get($this->estado_id, 'numeric');
+        $this->municipio_id = Filter::get($this->municipio_id, 'numeric');
 
+        //validando correo electronico
+        if($this->correo_electronico!=''){ 
+            $valEmail = Validate::mail($this->correo_electronico);
+            if(!$valEmail){
+                DwMessage::error('El campo Email no es correcto');
+                return 'cancel';
+            }
+        }
+        //validando fecha nacimiento
+        $fecha = $this->fecha_nacimiento;
+        $ano  = substr($fecha, 0,4);
+        $anoac = date("Y");
+        if(($ano == $anoac)|| ($anoac-$ano <18)){
+             DwMessage::error('La fecha de nacimiento ingresada no es correcta, verifica e intenta de nuevo');
+            return 'cancel';
+        }
+        //validand cantidad de nros del telefono y celular 
+        if (strlen($this->celular)>1 || strlen($this->celular)<11){
+            DwMessage::error('Faltan numeros al telefono Movil (celular) ');
+                return 'cancel';
+        }
+        if (strlen($this->telefono)>1 || strlen($this->telefono)<11){
+            DwMessage::error('Faltan numeros al telefono Fijo');
+                return 'cancel';
+        }
     }
 
 }
