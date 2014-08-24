@@ -10,7 +10,7 @@
  * @copyright   Copyright (c) 2013 Dailyscript Team (http://www.dailyscript.com.co)
  */
 
-Load::models('beneficiarios/titular', 'config/sucursal');
+Load::models('beneficiarios/titular', 'config/sucursal', 'sistema/usuario_clave');
 
 class UsuarioClaveController extends BackendController {
     
@@ -22,15 +22,18 @@ class UsuarioClaveController extends BackendController {
         $this->page_module = 'Gestión de Clave de Usuarios';
     }
     public function cambiar_clave() {
+    $usuval = UsuarioClave::clave_valida(Session::get('id'));
     $this->title = 'Cambiar clave del usuario';
     $usuario_clave = new UsuarioClave();
     //$usuario = $usuario->getUsuarioByEmail($email);
-    $this->id = $usuario_clave->id;
-    if ($usuario_clave->reset == $reset_clave) {
-    if (Input::hasPost('usuario')) {
+    $this->id = $usuario_clave->usuario_id;
+    
+    if ($usuval!=1 ) {
+    if (Input::hasPost('usuario_clave')) {
         try {
             $data = Input::post('usuario_clave');
-            if (Load::model('usuario_clave')->cambiar_clave($data['id'], $data['clave'], $data['clave2'])) {
+            $id=Session::get('id');
+            if (Load::model('usuario_clave')->cambiar_clave($id, $data['password'], $data['repassword'])) {
             Flash::success('Cambio de clave realizado exitosamente.');
             return Router::redirect('/');
             } else {
