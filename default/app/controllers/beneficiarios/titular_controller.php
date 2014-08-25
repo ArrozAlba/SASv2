@@ -317,7 +317,7 @@ class TitularController extends BackendController {
         $this->cedula = $titular->cedula;
         $this->sexo = $titular->sexo;
         $this->fecha_nac = $titular->fecha_nacimiento;
-        $this->estado = strtoupper($titular->estado);
+        $this->estado = strtoupper($titular->esta2);
         $this->municipio = strtoupper($titular->municipio);
         $this->estado_civil = strtoupper($titular->estado_civil);
         switch ($this->estado_civil) {

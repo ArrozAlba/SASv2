@@ -38,14 +38,14 @@
                     <th class="col-collapse" data-search="sucursal">SUCURSAL</th>
                     <? } ?>
                     <th class="col-collapse" data-search="estado">ESTADO</th>
-                    <th class="btn-actions no-responsive" style="width: 100px;">ACCIONES</th>
+                    <th class="btn-actions no-responsive" style="width: 150px;">ACCIONES</th>
                 </tr>
             </thead>
             <tbody>
                 <?php if($titulares) { ?>
                 <?php foreach($titulares->items as $titular): ?>
-                    <?php $key_upd = DwSecurity::getKey($titular->idtitular, 'upd_usuario'); ?>
-                    <?php $key_ina = DwSecurity::getKey($titular->idtitular, 'bloquear_usuario'); ?>
+                    <?php $key_shw = DwSecurity::getKey($titular->idtitular, 'shw_titular'); ?>
+                    <?php $key_upd = DwSecurity::getKey($titular->idtitular, 'upd_titular'); ?>
                     <?php $key_rea = DwSecurity::getKey($titular->idtitular, 'reactivar_usuario'); ?>
                     <tr>
                         <td><?php echo $titulares->counter; ?></td>
@@ -59,12 +59,9 @@
                         <? } ?>
                         <td><?php if ($titular->estado == 1){ echo '<span class="label label-success">Activo</span>'; } else{ echo '<span class="label label-important">Inactivo</span>';}?></td>
                         <td>
-                            <?php echo DwHtml::buttonTable('Modificar usuario', "sistema/usuario/editar/$key_upd/", null, 'info', 'edit'); ?>
-                            <?php if($titular->estado_usuario == EstadoUsuario::ACTIVO) { ?>
-                                <?php echo DwHtml::buttonTable('Bloquear usuario', "sistema/usuario/estado/bloquear/$key_ina/", null, 'success', 'flag'); ?>
-                            <?php } else { ?>
-                                <?php echo DwHtml::buttonTable('Reactivar usuario', "sistema/usuario/estado/reactivar/$key_rea/", null, 'danger', 'flag'); ?>
-                            <?php } ?>
+                            <?php echo DwHtml::buttonTable('Agregar Beneficiarios', "beneficiarios/beneficiario/agregar/$key_shw/", NULL, 'success', 'user'); ?>
+                            <?php echo DwHtml::buttonTable('Ver titular', "beneficiarios/titular/reportetitular/$key_shw/", NULL, 'warning', 'search'); ?>
+                            <?php echo DwHtml::buttonTable('Modificar titular', "beneficiarios/titular/editar/$key_upd/", NULL, 'info', 'edit'); ?>                            
                         </td>
                     </tr>
                     <?php $titulares->counter++; ?>

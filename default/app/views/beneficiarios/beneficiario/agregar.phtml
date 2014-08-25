@@ -14,7 +14,7 @@
         <?php } else { ?>
         <ul class="nav nav-pills nav-stacked">
         <?php } ?>
-            <li class="active"><a href="#tab1" data-toggle="tab">Beneficiarios de {Nombre del titular} </a></li>
+            <li class="active"><a href="#tab1" data-toggle="tab">Beneficiarios de <?php echo $titulares->apellido1." ".$titulares->nombre1; ?>  </a></li>
             <li><a href="#tab2" data-toggle="tab">Agregar beneficiario </a></li>
             <li><a href="#tab3" data-toggle="tab">Cargar Archivos</a></li>
         </ul>

@@ -143,7 +143,7 @@ class Titular extends ActiveRecord {
         if(!$titular) {
             return NULL;
         }
-        $columns = 'municipio.nombre as municipio, municipio.id as idmunicipio, parroquia.nombre as parroquia, parroquia.id as idparroquia,  estado.nombre as estado, estado.id as idestado, pais.nombre as pais, pais.id as idpais, titular.*, titular.id as idtitular,  profesion.id, profesion.nombre as profesion, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id as iddepartamento, departamento.nombre as departamento, sucursal.id as idsucursal, sucursal.sucursal ';
+        $columns = 'municipio.nombre as municipio, municipio.id as idmunicipio, parroquia.nombre as parroquia, parroquia.id as idparroquia,  estado.nombre as esta2, estado.id as idestado, pais.nombre as pais, pais.id as idpais, titular.*, titular.id as idtitular, titular.estado as estado_titular,  profesion.id, profesion.nombre as profesion, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id as iddepartamento, departamento.nombre as departamento, sucursal.id as idsucursal, sucursal.sucursal ';
         $join = 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';
         $join.= 'INNER JOIN profesion ON  titular.profesion_id = profesion.id ';
         $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';
@@ -200,7 +200,7 @@ class Titular extends ActiveRecord {
         if($field=='departamento'){ $field ='departamento.nombre';}
         if($field=='sucursal'){ $field ='sucursal.sucursal';}
 
-        $columns = 'titular.*, tipoempleado.id as idtipoempleado, tipoempleado.nombre as nomina, departamento.id, departamento.nombre as departamento, sucursal.* ';
+        $columns = 'titular.*, titular.id as idtitular, tipoempleado.id as idtipoempleado, tipoempleado.nombre as nomina, departamento.id, departamento.nombre as departamento, sucursal.* ';
         $join = 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
         $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';   
         $join.= 'INNER JOIN sucursal  ON  departamento.sucursal_id = sucursal.id ';
