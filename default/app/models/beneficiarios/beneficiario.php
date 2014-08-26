@@ -8,7 +8,7 @@
  * @category
  * @package     Models
  * @subpackage
- * @author      Javier León (jel1284@gmail.com)
+ * @author      Grupo SAS IuTEP (jel1284@gmail.com)
  * @copyright   Copyright (c) 2014 UPTP / E.M.S. Arroz del Alba S.A. (http://autogestion.arrozdelalba.gob.ve) 
  */
 class beneficiario extends ActiveRecord {

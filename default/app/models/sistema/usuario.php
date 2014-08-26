@@ -1,14 +1,14 @@
 <?php
 /**
- * Dailyscript - Web | App | Media
+ * S.A.S
  *
- * Descripcion: Modelo para el manejo de usuarios
+ * Descripcion: Modelo para el manejo de beneficiarioes
  *
  * @category
  * @package     Models
  * @subpackage
- * @author      Iván D. Meléndez (ivan.melendez@dailyscript.com.co)
- * @copyright   Copyright (c) 2013 Dailyscript Team (http://www.dailyscript.com.co) 
+ * @author      Javier León (jel1284@gmail.com)
+ * @copyright   Copyright (c) 2014 UPTP / E.M.S. Arroz del Alba S.A. (http://autogestion.arrozdelalba.gob.ve) 
  */
 
 Load::models('sistema/estado_usuario', 'sistema/perfil','sistema/usuario_clave','sistema/usuario_pregunta', 'sistema/recurso', 'sistema/recurso_perfil', 'sistema/acceso');
@@ -40,10 +40,10 @@ class Usuario extends ActiveRecord {
         $usuario = new Usuario();
         $intento = $usuario->find("columns: id,intentos","conditions: id='".$idusuario."'","order: id DESC","limit: 1 ");
         $intento1 = $intento[0]->intentos;
-        if($intento1 = 3){
+        if($intento1 == 3){
                     return 100;
         }
-                    return 0;
+                    return 2;
     }    
     /**
      * Método para abrir y cerrar sesión
@@ -73,14 +73,14 @@ class Usuario extends ActiveRecord {
                             DwMessage::error('Lo sentimos pero tu cuenta se encuentra inactiva. <br />Si esta información es incorrecta contacta al administrador del sistema.');
                             return false;
                         }
-                        if($usuintentos=3 ) { 
+                        if($usuintentos== 2 ) { 
                            // DwAuth::logout();
                            //Session::set('perfil_id', '8');
                            //Session::set('tema', 'default');
                         //Session::set('nombre1', $usuario->nombre1);
                         //Session::set('apellido1', $usuario->apellido1);                           
                             //return DwRedirect::to('sistema/usuario_clave/cambiar_clave');
-                        DwMessage::error('usuintentos. <br />Si esta información es incorrecta contacta al administrador del sistema.');
+                        DwMessage::error('usuintentos. '.$usuintentos.'<br />Si esta información es incorrecta contacta al administrador del sistema.');
                         }
                         if($usuval!=1 ) { 
                            // DwAuth::logout();
