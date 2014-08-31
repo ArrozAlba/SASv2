@@ -24,11 +24,11 @@
             <div class="tab-pane active" id="tab1">
                 <div class="row-fluid">
                      <div class="span3">
-                        <?php echo DwForm::select('titular.nacionalidad', array(''=>'Seleccione:','V'=>'Venezolana', 'E'=>'Extranjera'), array('class'=>'input-xlarge input-required show-error'), NULL, 'Nacionalidad:'); ?>
+                        <?php echo DwForm::select('titular.nacionalidad', array(''=>'Seleccione:','V'=>'Venezolana', 'E'=>'Extranjera'), array('class'=>'input-xlarge input-required show-error data-toggle="tooltip" title="Nacionalidad del Titular" '), NULL, 'Nacionalidad:','Seleccione una Opcion'); ?>
                     </div>
                     <div class="span3">
                         <?php 
-                        echo DwForm::text('titular.cedula', array('class'=>'input-xlarge mask-pint input-numeric input-required show-error'), NULL ,'Cédula de Identidad'); 
+                        echo DwForm::text('titular.cedula', array('class'=>'input-xlarge mask-pint input-numeric input-required show-error data-toggle="tooltip" title="Introduzca el numero de cedula del titular"'), NULL ,'Cédula de Identidad','Introduzca solo Numeros ejemplo: 12345678'); 
                        ?>
                     </div>
                     <div class="span3">
@@ -204,6 +204,7 @@
 <?php View::partial('jquery.file-upload'); ?>
 
 <!-- Funcion para darle el tamano maximo a cada input -->
+
 <script type="text/javascript">
 $(function(){
     var cedula = document.getElementById("titular_cedula");
