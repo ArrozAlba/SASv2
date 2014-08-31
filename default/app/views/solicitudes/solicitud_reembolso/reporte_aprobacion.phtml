@@ -1,0 +1,107 @@
+ <?php
+ // LImpia el bufer (evita los errores de: Some data has already been output ) 
+ob_end_clean(); 
+Load::lib('pdf_cabecera_solicitud');
+$pdf=new PDF('P','mm','letter');
+//Definiendo las fechas
+$pdf->Open();
+$pdf->AliasNbPages();
+$pdf->AddPage();
+$pdf->SetFont('Times','B',10);
+$pdf->SetFillColor(255);
+$pdf->SetTextColor(000);
+$pdf->SetMargins(8,8,8,8);
+//Imprimiendo las fechas
+$Fecha=$fecha_sol;
+    $elDia=substr($Fecha,8,2);
+    $elMes=substr($Fecha,5,2);
+    $elYear=substr($Fecha,0,4);
+$pdf->Cell(152);
+$pdf->Cell(15,6,utf8_decode("DÍA"),1,0,'C',true);
+$pdf->Cell(15,6,'MES',1,0,'C',true);
+$pdf->Cell(15,6,utf8_decode("AÑO"),1,1,'C',true);
+$pdf->Cell(154);
+$pdf->Cell(15,6,$elDia,1,0,'C',true);
+$pdf->Cell(15,6,$elMes,1,0,'C',true);
+$pdf->Cell(15,6,$elYear,1,1,'C',true);
+//datos del titular.
+$pdf->Cell(199,6,'DATOS DEL TITULAR ',1,1,'C',true);
+$pdf->Cell(80,6,'APELLIDO(S) Y NOMBRE(S)',1,0,'C',true);
+$pdf->Cell(46,6,utf8_decode('CÉDULA DE IDENTIDAD'),1,0,'C',true);
+$pdf->Cell(28,6,'SEXO',1,0,'C',true);
+$pdf->Cell(45,6,utf8_decode('TELÉFONOS'),1,1,'C',true); 
+//Variables
+$pdf->SetFont('Times','',9);
+$pdf->Cell(80,6,utf8_decode($nombres.' '.$apellidos),1,0,'C',true);
+$pdf->Cell(46,6,$nacionalidad."-".$cedula,1,0,'C',true);
+$pdf->Cell(28,6,$sexo,1,0,'C',true);//sexo
+if($telefono!=''){
+    $pdf->Cell(45,6,$telefono.' / '.$celular,1,1,'C',true);
+}else{
+    $pdf->Cell(45,6,$celular,1,1,'C',true);
+}
+$pdf->SetFont('Times','B',10);
+$pdf->Cell(126);
+$pdf->Cell(28,6,utf8_decode('UPSA/SEDE'),1,0,'C',true);
+$pdf->SetFont('Times','',9);
+$pdf->Cell(45,6,$upsa,1,1,'C',true);//sexo
+
+// ENCABEZZDO DATOS BENEFICIARIOS
+$pdf->Ln(3);
+$pdf->SetFont('Times','B',10);  
+$pdf->Cell(199,6,utf8_decode("DATOS DEL BENEFICIARIO"),1,1,'C',true);
+$pdf->Cell(80,6,'APELLIDO(S) Y NOMBRE(S)',1,0,'C',true);
+$pdf->Cell(46,6,utf8_decode('CÉDULA DE IDENTIDAD'),1,0,'C',true);
+$pdf->Cell(28,6,'SEXO',1,0,'C',true);
+$pdf->Cell(45,6,utf8_decode('PARENTESCO'),1,1,'C',true);
+$pdf->SetFont('Times','B',9);
+//VARIABLES datos de beneficiarios
+$pdf->SetFont('Times','',9);
+$pdf->Cell(80,6,utf8_decode($nombresb.' '.$apellidosb),1,0,'C',true);
+$pdf->Cell(46,6,$nacionalidad."-".$cedulab,1,0,'C',true);
+$pdf->Cell(28,6,$sexo,1,0,'C',true);//sexo
+$pdf->Cell(45,6,$parentesco,1,1,'C',true);
+$pdf->Ln(3);
+$pdf->SetFont('Times','B',10);
+//datos de clinica
+$pdf->Cell(100,6,'CLINICA O CENTRO HOSPITALARIO',1,0,'C',true);
+$pdf->Cell(99,6,utf8_decode('DIRECCION'),1,1,'C',true);
+$pdf->SetFont('Times','',9);
+$pdf->Cell(100,6,utf8_decode($clinica),1,0,'C',true);
+$ciudad = "";
+$pdf->Cell(99,6,$direccion,1,1,'C',true);
+//datos de medico
+$pdf->SetFont('Times','B',10);
+$pdf->Cell(100,6,'MEDICO ESPECIALISTA',1,0,'C',true);
+$pdf->Cell(99,6,utf8_decode('SERVICIO'),1,1,'C',true);
+$pdf->SetFont('Times','',9);
+$pdf->Cell(100,6,utf8_decode($medico),1,0,'C',true);
+$pdf->Cell(99,6,$servicio,1,1,'C',true);
+$pdf->SetFont('Times','B',10);
+$pdf->Ln(3);
+$pdf->Cell(199,6,'MOTIVO DE LA CONSULTA: ','C',1,'C',true);
+$pdf->Cell(199,6,'','T',1,'L',true);
+$pdf->Cell(199,6,'','T',1,'L',true);
+$pdf->Cell(199,6,'','T',1,'L',true);
+$pdf->Cell(199,6,'','T',1,'L',true);
+
+$pdf->Cell(199,6,utf8_decode('DIAGNOSTICO:'),'C',1,'C',true);
+$pdf->Cell(199,6,'','T',1,'L',true);
+$pdf->Cell(199,6,'','T',1,'L',true);
+$pdf->Cell(199,6,'','T',1,'L',true);
+$pdf->Cell(199,6,'','T',1,'L',true);
+
+
+$pdf->Ln(3);
+$pdf->Cell(199,6,utf8_decode('ESTUDIO O PROCEDIMIENTO PRACTICADOS EN CONSULTA MEDICA (ANEXAR SOPORTES EN ORIGINAL)'),1,1,'C',true);
+$pdf->Cell(65,6,'Medico Tratante Firma y Sello',1,0,'C',true);
+$pdf->Cell(65,6,'Firma del Paciente',1,0,'C',true);
+$pdf->Cell(69,6,'Autorizado por Autogestion de Salud',1,1,'C',true);
+
+$pdf->Cell(65,15,'',1,0,'C',true);
+$pdf->Cell(65,15,'',1,0,'C',true);
+$pdf->Cell(69,15,'',1,1,'C',true);
+
+$pdf->Output();
+
+?>

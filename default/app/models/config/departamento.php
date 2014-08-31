@@ -1,5 +1,4 @@
 <?php
-
 /**
  *
  * @category
@@ -71,5 +70,10 @@ class Departamento extends ActiveRecord {
         } else {
             return $this->find("columns: $columns", "join: $join");
         }    
+    }
+    
+    //Funcion que realiza la busqueda del los departamentos en funcion de las sucursales
+    public function buscar($sucursal_id){
+        return $this->find("sucursal_id = $sucursal_id", 'order: nombre');
     }
 }

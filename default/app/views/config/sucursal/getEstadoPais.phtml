@@ -1,0 +1,17 @@
+<?php
+    echo Form::dbSelect("sucursal.estado_id", 'nombre', array('estado', 'buscar',$pais_id), '                   ----  Seleccione  ----              ');
+?>		
+ 
+<script type='text/javascript'>
+$("#sucursal_estado_id").change(function(){
+    var estado_id     =   $('#sucursal_estado_id').val();
+        $.ajax({
+          type: "POST",
+          url: "<?php echo PUBLIC_PATH . 'config/sucursal/getMunicipioEstado/'; ?>",
+          data: "estado_id=" + estado_id,
+          success: function(html){
+            $("#div_municipio").html(html);
+          }
+        });
+});
+</script>

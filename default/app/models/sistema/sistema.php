@@ -68,9 +68,9 @@ class Sistema {
      */
     public function getEstadoTablas() {        
         $all_status = array();        
-        $tables = $this->_db->fetch_all("SHOW TABLE STATUS"); 
+        $tables = $this->_db->fetch_all("SELECT * FROM pg_catalog.pg_tables"); 
         foreach($tables as $table) {
-            $status = $this->_db->fetch_all('CHECK TABLE '.$table['Name']);
+            $status = $this->_db->fetch_all('SELECT * FROM  '.$table['Name']);
             $status = $status[0];
             $table['Op'] = $status['Op'];
             $table['Msg_type'] = $status['Msg_type'];

@@ -17,19 +17,12 @@ class Titular extends ActiveRecord {
      * Método para definir las relaciones y validaciones
      */
     protected function initialize() {
-		$this->belongs_to('persona');
-      //  $this->has_one('usuario');
-      //  $this->has_one('persona');
-
+        $this->has_many('discapacidad_titular');
     }
    /**
      * Método que devuelve el inner join con el estado_usuario
      * @return string
      */
-//    public static function getInnerEstado() {
-//        return "INNER JOIN (SELECT usuario_id, CASE estado_usuario WHEN ".EstadoUsuario::COD_ACTIVO." THEN '".EstadoUsuario::ACTIVO."' WHEN ".EstadoUsuario::COD_BLOQUEADO." THEN '".EstadoUsuario::BLOQUEADO."' ELSE 'INDEFINIDO' END AS estado_usuario, descripcion FROM (SELECT * FROM estado_usuario ORDER BY estado_usuario.id DESC ) AS estado_usuario GROUP BY estado_usuario.usuario_id,estado_usuario.estado_usuario, descripcion) AS estado_usuario ON estado_usuario.usuario_id = usuario.id ";        
-//    }
-        
     /**
      * Método para setear un Objeto
      * @param string    $method     Método a ejecutar (create, update)
@@ -43,14 +36,14 @@ class Titular extends ActiveRecord {
         }
         //Creo otro objeto para comparar si existe
         $old = new Titular($data);
-        //$check = $old->_getTitularRegistrado('find_first');
-        $check = false;
+        $check = $old->_getTitularRegistrado('find_first');
+        //$check = false;
         if($check) { //Si existe
-            if(empty($obj->id)) {
-                $obj->id = $old->id; //Asigno el id del encontrado al nuevo
+            if(empty($obj->cedula)) {
+                $obj->cedula = $old->cedula; //Asigno el id del encontrado al nuevo
             } else { //Si se actualiza y existe otro con la misma información
                 if($obj->id != $old->id) {
-                    DwMessage::info('Lo sentimos, pero ya existe una persona registrada con el mismo número de identificación');
+                    DwMessage::info('Lo sentimos, pero ya existe una persona registrada con el mismo número de cédula');
                     return FALSE;
                 }
             }
@@ -62,21 +55,32 @@ class Titular extends ActiveRecord {
         return ($rs) ? $obj : FALSE;
     }
 
+
+    public static function setETitular($method, $data=array(), $optData=array()) {
+        $obj = new Titular($data);
+        if(!empty($optData)) {
+            $obj->dump_result_self($optData);
+        }
+        $method = 'update';
+        
+
+        $rs = $obj->$method();
+        return ($rs) ? $obj : FALSE;
+    }
+
     /**
      * Método para listar Titulares
      * @return obj
      */
 
     public function getListadotitular($estado, $order='', $page=0) {
-        $columns = 'titular.*, persona.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';
-        $join= 'INNER JOIN persona ON persona.id = titular.persona_id ';        
-        $join.= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
-        $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';   
+        $columns = 'titular.*, titular.id as idtitular, sucursal.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';       
+        $join= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
+        $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';
+        $join.= 'INNER JOIN sucursal ON departamento.sucursal_id = sucursal.id';
 
-        $conditions = "";//Por el super usuario
-                       
-           
-        
+       // $conditions = "";//Por el super usuario
+     
         if($page) {
             return $this->paginated("columns: $columns", "join: $join", "page: $page");
         } else {
@@ -91,15 +95,16 @@ class Titular extends ActiveRecord {
    public function obtener_titulares($titular) {
         if ($titular != '') {
             $titular = stripcslashes($titular);
-            $res = $this->find_by_sql("select titular.id,titular.persona_id,persona.nombre1,persona.apellido1,cast(persona.cedula as integer) from titular,persona where persona.cedula like '%{$titular}%' or persona.nombre1 like '%{$titular}%' or persona.nombre2 like '%{$titular}%' or persona.apellido1 like '%{$titular}%' or persona.apellido2 like '%{$titular}%' and titular.persona_id = persona.id");
+            $res = $this->find_all_by_sql(" select titular.id,titular.nombre1,titular.apellido1,cast(titular.cedula as integer) from titular where titular.cedula like '%{$titular}%'");
+            
             if ($res) {
                 foreach ($res as $titular) {
-                    $titulares[] = array('id'=>$titular->id,'value'=>$titular->nombre1.' '.$titular->nombre2.' '.$titular->apellido1.' '.$titular->apellido2);
+                    $titulares[] = array('id'=>$titular->id,'value'=>$titular->cedula,'idnombre'=>$titular->nombre1.' '.$titular->nombre2.' '.$titular->apellido1.' '.$titular->apellido2);
                 }
                 return $titulares;
             }
         }
-        return array('no hubo coincidencias');
+        return array('No hubo coincidencias');
     }
     /**
      * Método para verificar si una persona ya se encuentra registrada
@@ -113,8 +118,6 @@ class Titular extends ActiveRecord {
         }
         return $this->$method("conditions: $conditions");
     }
-
-    
     /**
      * Método para obtener la información de un usuario
      * @return type
@@ -124,15 +127,47 @@ class Titular extends ActiveRecord {
         if(!$titular) {
             return NULL;
         }
-        $columns = 'titular.*, persona.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';
-        $join= 'INNER JOIN persona ON persona.id = titular.persona_id ';        
-        $join.= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
-        $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';   
-//        $columnas = 'titular.*, persona.cedula, persona.nombre1, persona.nombre2, persona.apellido1, persona.apellido2, persona.nacionalidad, persona.sexo, persona.fecha_nacimiento, persona.pais_id, persona.estado_id, persona.municipio_id, persona.parroquia_id, persona.direccion_habitacion, persona.estado_civil, persona.celular, persona.telefono, persona.correo_electronico, persona.grupo_sanguineo, persona.fotografia, estado_usuario.estado_usuario, estado_usuario.descripcion, sucursal.sucursal';
-  //      $join = self::getInnerEstado();
-//        $join.= 'INNER JOIN perfil ON perfil.id = usuario.perfil_id ';
-//        $join.= 'INNER JOIN persona ON persona.id = usuario.persona_id ';               
-//        $join.= 'LEFT JOIN sucursal ON sucursal.id = usuario.sucursal_id ';
+        $columns = 'municipio.nombre as municipio, municipio.id as idmunicipio, parroquia.nombre as parroquia, parroquia.id as idparroquia,  estado.nombre as estado, estado.id as idestado, pais.nombre as pais, pais.id as idpais, titular.*, titular.id as idtitular,  profesion.id, profesion.nombre as profesion, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id as iddepartamento, departamento.nombre as departamento, sucursal.id as idsucursal, sucursal.sucursal ';
+        $join = 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';
+        $join.= 'INNER JOIN profesion ON  titular.profesion_id = profesion.id ';
+        $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';
+        $join.= 'INNER JOIN sucursal ON  departamento.sucursal_id = sucursal.id ';
+        $join.= 'INNER JOIN pais ON  titular.pais_id = pais.id ';
+        $join.= 'INNER JOIN estado ON  titular.estado_id = estado.id ';
+        $join.= 'INNER JOIN municipio ON  titular.municipio_id = municipio.id ';
+        $join.= 'INNER JOIN parroquia ON  titular.parroquia_id = parroquia.id ';
+        $condicion = "titular.id = $titular";        
+        return $this->find_first("columns: $columns", "join: $join", "conditions: $condicion");
+    }
+
+// Funcion para tomar los paises y estado para la direccion de habitacion :S
+    public function getInformacionDireccionTitular($titular) {
+        $titular = Filter::get($titular, 'int');
+        if(!$titular) {
+            return NULL;
+        }
+        $columns = 'parroquia.nombre as hparroquia, estado.nombre as hestado, estado.id as idhestado,  pais.nombre as hpais, pais.id as idhpais, titular.id ';
+        $join= 'INNER JOIN pais ON  titular.hpais_id = pais.id ';
+        $join.= 'INNER JOIN estado ON  titular.hestado_id = estado.id ';
+        $join.= 'INNER JOIN parroquia ON  titular.hparroquia_id = parroquia.id ';
+        $condicion = "titular.id = $titular";        
+        return $this->find_first("columns: $columns", "join: $join", "conditions: $condicion");
+    }
+
+
+// --------Informacion para los datos de la upsa donde trabaja el titular----------
+    public function getInformacionLaboralTitular($titular) {
+        $titular = Filter::get($titular, 'int');
+        if(!$titular) {
+            return NULL;
+        }
+        $columns = 'municipio.nombre as municipios, municipio.id as idmunicipio, estado.nombre as estados, estado.id as idestado, pais.nombre as paiss, pais.id as idpais,  departamento.id, departamento.nombre as departamento, sucursal.sucursal, sucursal.direccion, cargo.nombre as cargo';
+        $join= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';
+        $join.= 'INNER JOIN sucursal ON sucursal.id = departamento.sucursal_id ';
+        $join.= 'INNER JOIN pais ON  titular.pais_id = pais.id ';
+        $join.= 'INNER JOIN estado ON  titular.estado_id = estado.id ';
+        $join.= 'INNER JOIN municipio ON  titular.municipio_id = municipio.id ';
+        $join.= 'INNER JOIN cargo ON cargo.id = titular.cargo_id ';
         $condicion = "titular.id = $titular";        
         return $this->find_first("columns: $columns", "join: $join", "conditions: $condicion");
     }
@@ -144,56 +179,40 @@ class Titular extends ActiveRecord {
         if( strlen($value) <= 2 OR ($value=='none') ) {
             return NULL;
         }
-        $columns = 'titular.*, persona.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';
-        $join= 'INNER JOIN persona ON persona.id = titular.persona_id ';        
+        $columns = 'titular.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';
         $join.= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
         $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';   
         //$conditions = "";//Por el super usuario
         
         $order = $this->get_order($order, 'nombre1', array(                        
-            'login' => array(
-                'ASC'=>'usuario.login ASC, persona.nombre1 ASC, persona.apellido1 DESC', 
-                'DESC'=>'usuario.login DESC, persona.nombre1 DESC, persona.apellido1 DESC'
-            ),
             'nombre1' => array(
-                'ASC'=>'persona.nombre1 ASC, persona.apellido1 DESC', 
-                'DESC'=>'persona.nombre1 DESC, persona.apellido1 DESC'
+                'ASC'=>'beneficiario.nombre1 ASC, beneficiario.apellido1 DESC', 
+                'DESC'=>'beneficiario.nombre1 DESC, beneficiario.apellido1 DESC'
             ),
             'apellido1' => array(
-                'ASC'=>'persona.apellido1 ASC, persona.nombre1 ASC', 
-                'DESC'=>'persona.apellido1 DESC, persona.nombre1 DESC'
+                'ASC'=>'beneficiario.apellido1 ASC, beneficiario.nombre1 ASC', 
+                'DESC'=>'beneficiario.apellido1 DESC, beneficiario.nombre1 DESC'
             ),
             'cedula' => array(
-                'ASC'=>'persona.cedula ASC, persona.apellido1 ASC, persona.nombre1 ASC', 
-                'DESC'=>'persona.cedula DESC, persona.apellido1 DESC, persona.nombre1 DESC'
-            ),            
-            'email' => array(
-                'ASC'=>'usuario.email ASC, persona.apellido1 ASC, persona.nombre1 ASC', 
-                'DESC'=>'usuario.email DESC, persona.apellido1 DESC, persona.nombre1 DESC'
-            ),
-            'sucursal' => array(
-                'ASC'=>'sucursal.sucursal ASC, persona.apellido1 ASC, persona.nombre1 ASC', 
-                'DESC'=>'sucursal.sucursal DESC, persona.apellido1 DESC, persona.nombre1 DESC'
-            ),
-            'estado_usuario' => array(
-                'ASC'=>'estado_usuario.estado_usuario ASC, persona.apellido1 ASC, persona.nombre1 ASC', 
-                'DESC'=>'estado_usuario.estado_usuario DESC, persona.apellido1 DESC, persona.nombre1 DESC'
+                'ASC'=>'beneficiario.cedula ASC, beneficiario.apellido1 ASC, beneficiario.nombre1 ASC', 
+                'DESC'=>'beneficiario.cedula DESC, beneficiario.apellido1 DESC, beneficiario.nombre1 DESC'
             )
         ));
         
         //Defino los campos habilitados para la búsqueda
-        $fields = array('login', 'nombre1', 'apellido1', 'cedula', 'email', 'perfil', 'sucursal', 'estado_usuario');
+        $fields = array('cedula', 'nombre1', 'apellido1', 'tipoe', 'departamento', );
         if(!in_array($field, $fields)) {
             $field = 'nombre1';
         }        
         if(! ($field=='sucursal' && $value=='todas') ) {
-           // $conditions.= " AND $field LIKE '%$value%'";
+          $conditions.= " AND $field LIKE '%$value%'";
         }        
         if($page) {
-            return $this->paginated("columns: $columns", "join: $join",/* "conditions: $conditions",*/ "order: $order", "page: $page");
+            return $this->paginated("columns: $columns", "join: $join","conditions: $conditions",  "order: $order", "page: $page");
         } else {
-            return $this->find("columns: $columns", "join: $join", /* "conditions: $conditions",*/ "order: $order");
+            return $this->find("columns: $columns", "join: $join","conditions: $conditions", "order: $order");
         }  
+        //"conditions: $conditions",
     }
     /**
      * Callback que se ejecuta antes de guardar/modificar
@@ -205,8 +224,15 @@ class Titular extends ActiveRecord {
         $this->departamento_id = Filter::get($this->departamento_id, 'numeric');
         $this->cargo_id = Filter::get($this->cargo_id, 'numeric'); 
         $this->observacion = Filter::get($this->observacion, 'string');
-    }    
+        $this->nombre1 = strtoupper($this->nombre1);
+        $this->nombre2 = strtoupper($this->nombre2);
+        $this->apellido1 = strtoupper($this->apellido1);
+        $this->apellido2 = strtoupper($this->apellido2);
+        $this->observacion = strtoupper($this->observacion);
+        $this->direccion = strtoupper($this->direccion);
+        $this->correo_electronico = strtoupper($this->correo_electronico);
 
+    }
 
 }
 ?>

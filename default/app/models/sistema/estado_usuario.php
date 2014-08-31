@@ -1,14 +1,14 @@
 <?php
 /**
- * Dailyscript - Web | App | Media
+ * S.A.S
  *
- * Clase que gestiona todos los estados de los usuarios
+ * Descripcion: Modelo para el manejo de beneficiarioes
  *
  * @category
  * @package     Models
  * @subpackage
- * @author      Iván D. Meléndez (ivan.melendez@dailyscript.com.co)
- * @copyright   Copyright (c) 2013 Dailyscript Team (http://www.dailyscript.com.co)  
+ * @author      Grupo SAS IuTEP (jel1284@gmail.com)
+ * @copyright   Copyright (c) 2014 UPTP / E.M.S. Arroz del Alba S.A. (http://autogestion.arrozdelalba.gob.ve) 
  */
 
 class EstadoUsuario extends ActiveRecord {
