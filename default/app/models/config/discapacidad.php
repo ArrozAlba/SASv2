@@ -18,14 +18,8 @@ class Discapacidad extends ActiveRecord {
      * Método para definir las relaciones y validaciones
      */
     protected function initialize() {
-  /*      $this->belongs_to('empresa');
-        $this->belongs_to('ciudad');
-        $this->has_many('usuario');
-
-        $this->validates_presence_of('sucursal', 'message: Ingresa el nombre de la sucursal');        
-        $this->validates_presence_of('direccion', 'message: Ingresa la dirección de la sucursal.');
-        $this->validates_presence_of('ciudad_id', 'message: Indica la ciudad de ubicación de la sucursal.');
-    */            
+        $this->has_many('discapacidad_titular');  
+        $this->has_many('discapacidad_beneficiario'); 
     }  
     /**
      * Método para ver la información de una sucursal
@@ -47,11 +41,10 @@ class Discapacidad extends ActiveRecord {
      * @return ActiveRecord
      */
     public function getListadoDiscapacidad($order='order.nombre.asc', $page='', $empresa=null) {
-        $columns = 'discapacidad.*';
-        $join = '';        
-        //$conditions 
-        $order = $this->get_order($order, 'discapacidad', array('discapacidad'=>array('ASC'=>'discapacidad.nombre ASC, discapacidad.observacion ASC',
-                                                                              'DESC'=>'discapacidad.nombre DESC, discapacidad.observacion ASC'),
+        $columns = 'discapacidad.id as iddiscapacidad, discapacidad.nombre as discapacidad';
+        $join = '';
+        $order = $this->get_order($order, 'discapacidad', array('discapacidad'=>array('ASC'=>'discapacidad.id ASC',
+                                                                              'DESC'=>'discapacidad.id DESC'),
                                                             'observacion'));
         if($page) {                
             return $this->paginated("columns: $columns", "join: $join", "order: $order", "page: $page");

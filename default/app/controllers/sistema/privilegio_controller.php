@@ -39,8 +39,6 @@ class PrivilegioController extends BackendController {
                 Input::delete('old_privilegios');
             }
         }
-        
-        
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;                 
         $recurso = new Recurso();
         $this->recursos = $recurso->getListadoRecurso(Recurso::ACTIVO, $order, $page);

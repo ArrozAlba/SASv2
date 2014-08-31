@@ -14,169 +14,213 @@
         <?php } else { ?>
         <ul class="nav nav-pills nav-stacked">
         <?php } ?>
-            <li class="active"><a href="#tab1" data-toggle="tab">Información personal</a></li>
-            <li><a href="#tab2" data-toggle="tab">Información laboral</a></li>
-            <li><a href="#tab3" data-toggle="tab">Cargar imagen</a></li>
+            <li class="active"><a href="#tab1" data-toggle="tab">Beneficiarios de {Nombre del titular} </a></li>
+            <li><a href="#tab2" data-toggle="tab">Agregar beneficiario </a></li>
+            <li><a href="#tab3" data-toggle="tab">Cargar Archivos</a></li>
         </ul>
         <div class="tab-content">
-
-            <div class="tab-pane active" id="tab1">
-                <div class="row-fluid">
-                    <div class="span6">
-                        <?php echo DwForm::text('persona.cedula', array('class'=>'input-xxlarge mask-pint input-numeric input-required show-error'), NULL, 'Cedula de Identidad'); ?>
-                    </div>
-                
-                    <div class="span6">
-						<?php echo DwForm::select('persona.nacionalidad', array(''=>'Seleccione:','V'=>'Venezolana', 'E'=>'Extranjera'), array('class'=>'input-xxlarge input-required show-error'), NULL, 'Nacionalidad:'); ?>
-                    </div>
-                </div>
-                
-                <div class="row-fluid">
-                    <div class="span6">
-                        <?php echo DwForm::text('persona.nombre1', array('class'=>'input-xxlarge input-required mask-alphanum show-error'), NULL, 'Primer Nombre'); ?>
-                    </div>
-                    <div class="span6">
-						
-                        <?php echo DwForm::text('persona.nombre2', array('class'=>'input-xxlarge  mask-alphanum show-error'), NULL, 'Segundo Nombre'); ?>
-                    </div>
-                </div>
-                <div class="row-fluid">
-                    <div class="span6">
-                        <?php echo DwForm::text('persona.apellido1', array('class'=>'input-xxlarge input-required mask-alphanum show-error'), NULL, 'Primer Apellido'); ?>
-                    </div>
-                    <div class="span6">
-                        <?php echo DwForm::text('persona.apellido2', array('class'=>'input-xxlarge mask-alphanum show-error'), NULL, 'Segundo Apellido'); ?>
-                    </div>
-                </div>
-
-                <div class="row-fluid">
-                    <div class="span6">
-						<?php echo DwForm::date('persona.fecha_nacimiento', array('class'=>'input-xlarge input-required mask-date input-date show-errors'), date("Y-m-d"), 'Fecha de Nacimiento'); ?>
-                    </div>
-                    <div class="span6">
-						<?php echo DwForm::select('persona.sexo', array(''=>'Seleccione:', 'M'=>'Masculino', 'F'=>'Femenino'), array('class'=>'input-xxlarge input-required show-error'), NULL, 'Sexo:'); ?>
-                    </div>
-                </div>
-             <div class="row-fluid">
-                    <div class="span6">
-                        <?php echo DwForm::dbSelect('persona.pais_id', 'nombre', array('params/pais', 'getListadoPais'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Pais'); ?>
-                    </div>
-                    <div class="span6">
-                        <?php echo DwForm::dbSelect('persona.estado_id', 'nombre', array('params/estado', 'getListadoEstado'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Estado'); ?>
-                    </div>
-                </div>
-             <div class="row-fluid">
-                    <div class="span6">
-                        <?php echo DwForm::dbSelect('persona.municipio_id', 'nombre', array('params/municipio', 'getListadoMunicipio'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Municipio'); ?>
-                    </div>
-                    <div class="span6">
-                        <?php echo DwForm::dbSelect('persona.parroquia_id', 'nombre', array('params/parroquia', 'getListadoParroquia'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Parroquia'); ?>
-                    </div>
-                </div>
-             <div class="row-fluid">
-                    <div class="span6">
-                        <?php echo DwForm::text('persona.direccion_habitacion', array('class'=>'input-xxlarge input-required mask-alphanum show-error'), NULL, 'Dirección de Habitación'); ?>
-                    </div>
-                    <div class="span6">
-						<?php echo DwForm::select('persona.estado_civil', array(''=>'Seleccione:', 'S'=>'Soltero', 'c'=>'Concubinato','C'=>'Casado', 'D'=>'Divorciado', 'V'=>'Viudo'), array('class'=>'input-xxlarge input-required show-error'), NULL, 'Estado Civil'); ?>
-                    </div>
-                </div>
-       <div class="row-fluid">
-                 <div class="span4">
-                      <?php echo DwForm::text('persona.grupo_sanguineo', array('class'=>'input-xlarge  mask-alphanum show-error'), NULL, 'Grupo Sanguineo'); ?>
-                 </div>
-            <div class="span4">
-                <?php echo DwForm::tel('persona.celular', array('class'=>'input-numeric mask-pint show-error'), NULL, 'Celular'); ?>
-            </div>
-            <div class="span4">
-                <?php echo DwForm::tel('persona.telefono', array('class'=>'input-numeric mask-pint show-error'), NULL, 'Teléfono'); ?>
-            </div>
-        </div>
+           <div class="tab-pane active" id="tab1">
+            <div class="dw-overflow" id="data-result">
+                <table class="table table-bordered table-hover table-striped table-condensed table-responsive">
+                    <thead>
+                        <tr>
+                            <th>NUM</th>
+                            <th class="col-collapse" data-search="cedula">CEDULA</th>
+                            <th class="col-collapse" data-search="nombre1">NOMBRES</th>
+                            <th class="col-collapse" data-search="apellido1">APELLIDOS</th>
+                            <th class="col-collapse" data-search="titular">TIPO BENFICIARIO</th>
+                            <th class="col-collapse" data-search="titular">SEXO</th>
+                            <th class="col-collapse" data-search="parentesco">PARENTESCO</th>
+                            <th class="btn-actions no-responsive" style="width: 150px;">PARTICIPACION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $counter=1;
+                         foreach($bene as $bn): ?>
+                            <tr>
+                                <td><?php echo $counter; ?></td>
+                                <td><?php echo $bn->cedula; ?></td>
+                                <td><?php echo strtoupper($bn->nombre1." ".$bn->nombre2); ?></td>
+                                <td><?php echo strtoupper($bn->apellido1." ".$bn->apellido2);?></td>
+                                <td><?php echo strtoupper($bn->descripcion); ?></td>
+                                <td><?php switch ($bn->sexo){
+                                            case 'F':
+                                                echo "FEMENINO";
+                                                break;
+                                            case 'M':
+                                                echo "MASCULINO";
+                                                break;
+                                    }?></td>
+                                <td><?php echo $bn->parentesco;?></td>
+                                <td><?php echo $bn->participacion."%"; ?></td>
+                            </tr>
+                             <?php $counter++; ?>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
             </div>
 
+            <div class="form-actions">
+                        <?php echo DwButton::cancel('beneficiarios/titular/listar/'); ?>
+                    </div>
+            </div><!--Cierre tab1-->
             <div class="tab-pane" id="tab2">
 
+             <?php echo DwForm::hidden('beneficiario.titular_id', NULL, $idtitular); ?>
                 <div class="row-fluid">
-                    <div class="span6">
-                        <?php echo DwForm::dbSelect('beneficiario.tipoempleado_id', 'nombre', array('config/tipoempleado', 'getListadoTipoempleado'), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Tipo Empleado'); ?>
+                     <div class="span3">
+                        <?php echo DwForm::dbSelect('beneficiario.parentesco_id', 'descripcion', array('config/parentesco', 'getListadoParentesco'), NULL, array('class'=>'input-xlarge input-required  show-errors'), NULL, 'Parentesco' ); ?>
                     </div>
-                    <div class="span6">
-                        <?php //echo DwForm::dbSelect('usuario.sucursal_id', array('sucursal', 'parroquia'), array('config/sucursal', 'getListadoSucursal'), array('todas'=>'Todas'), array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Sucursal / UPSA'); ?>
+                    <div class="span3">
+                        <?php echo DwForm::select('beneficiario.sexo', array(''=>'Seleccione:','M'=>'Masculino', 'F'=>'Femenino'), array('class'=>'input-xlarge input-required show-error'), NULL, 'Sexo:'); ?>
                     </div>
 
                 </div>
-
                 <div class="row-fluid">
-                    <?php if(APP_OFFICE) { ?>
-                    <div class="span6">
-						<?php echo DwForm::dbSelect('beneficiario.departamento_id', 'nombre', array('config/departamento', 'getListadoDepartamento'), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Departamento'); ?>
+                    <div class="span3">
+                        <?php echo DwForm::select('beneficiario.nacionalidad', array(''=>'Seleccione:','V'=>'Venezolana', 'E'=>'Extranjera'), array('class'=>'input-xlarge input-required show-error'), NULL, 'Nacionalidad:'); ?>
                     </div>
-                    <?php } ?>
-                    <div class="span6">
-						<?php echo DwForm::dbSelect('beneficiario.cargo_id', 'nombre', array('config/cargo', 'getListadoCargo'), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Cargo'); ?>
+                    <div class="span3">
+                        <?php echo DwForm::text('beneficiario.cedula', array('class'=>'input-xlarge mask-pint input-numeric input-required show-error'), NULL, 'Cedula de Identidad'); ?>
+                    </div>
+                    <div class="span3">
+                        <?php echo DwForm::select('beneficiario.estado_civil', array(''=>'Seleccione:', 'S'=>'Soltero', 'c'=>'Concubinato','C'=>'Casado', 'D'=>'Divorciado', 'V'=>'Viudo'), array('class'=>'input-xlarge input-required show-error'), NULL, 'Estado Civil'); ?>
+                    </div>
+                    <div class="span3">
+                        <?php echo DwForm::date('beneficiario.fecha_nacimiento', array('class'=>'input-large input-required mask-date input-date show-errors'), date("Y-m-d"), 'Fecha de Nacimiento'); ?>
                     </div>
                 </div>
                 <div class="row-fluid">
-                    <div class="span6">
-						<?php echo DwForm::dbSelect('beneficiario.profesion_id', 'nombre', array('config/profesion', 'getListadoProfesion'), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Profesión'); ?>
+                    <div class="span3">
+                        <?php echo DwForm::text('beneficiario.nombre1', array('class'=>'input-xlarge mask-alpha input-required show-error'), NULL, 'Primer Nombre'); ?>
+                    </div>
+                    <div class="span3">
+                        <?php echo DwForm::text('beneficiario.nombre2', array('class'=>'input-xlarge mask-alpha show-error'), NULL, 'Segundo Nombre'); ?>
+                    </div>
+                    <div class="span3">
+                        <?php echo DwForm::text('beneficiario.apellido1', array('class'=>'input-xlarge input-required mask-alpha show-error'), NULL, 'Primer Apellido'); ?>
+                    </div>
+                    <div class="span3">
+                        <?php echo DwForm::text('beneficiario.apellido2', array('class'=>'input-xlarge mask-alpha show-error'), NULL, 'Segundo Apellido'); ?>
                     </div>
                 </div>
-
                 <div class="row-fluid">
-                    <div class="span12">
-						<?php echo DwForm::textarea('beneficiario.observacion', array('class'=>'input-xxlarge input-required mask-alphanum show-error'), NULL, 'Observación'); ?>
+                    <div class="span3">
+                        <?php echo DwForm::tel('beneficiario.participacion', array('class'=>'input-xlarge input-numeric input-required mask-pint show-error'), NULL, 'Participación'); ?>
                     </div>
-                    
+                    <div class="span3">
+                        <?php echo DwForm::select('titular.grupo_sanguineo', array(''=>'Seleccione:', 'O-'=>'O-', 'O+'=>'O+','A-'=>'A-', 'A+'=>'A+', 'AB+'=>'AB+', 'AB-'=>'AB-'), array('class'=>'input-xlarge show-error'), NULL, 'Grupo Sanguineo'); ?>
+                    </div>
+                    <div class="span3">
+                        <?php echo DwForm::tel('beneficiario.celular', array('class'=>'input-xlarge input-numeric mask-pint show-error'), NULL, 'Celular'); ?>
+                    </div>
+                    <div class="span3">
+                        <?php echo DwForm::tel('beneficiario.telefono', array('class'=>'input-xlarge input-numeric mask-pint show-error'), NULL, 'Teléfono'); ?>
+                    </div>
                 </div>
-
-            </div>
-
-            <div class="tab-pane" id="tab3">
-
-                <div class="row fileupload-buttonbar">
-
-                    <div class="span2">
-                        <span class="btn btn-success fileinput-button">
-                            <i class="icon-plus icon-white"></i>
-                            <span>Seleccionar fotografía...</span>
-                            <input id="fotografia" type="file" name="fotografia" class="input-large">
-                        </span>
-                    </div>
-
-                    <div id="upload-progress" class="span4 fileupload-progress fade">
-                        <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                            <div class="bar" style="width:0%;"></div>
+                <div class="row-fluid">
+                    <label>Discapacidad</label>
+                    <?php foreach($discapacidad as $dis) { ?>
+                        <div class="span1">
+                            <th class="no-responsive dw-text-center"><?php 
+                            echo DwForm::check('discapacidad[]', $dis->iddiscapacidad); 
+                            echo $dis->discapacidad; ?>
+                            </th>
                         </div>
-                    </div>
-
-                    <div class="span5 dw-text-right">
-                        <div class="span5 dw-picture-profile dw-text-center dw-text-middle dw-shadow-dark" style="margin-top: 5px">
-                            <?php echo DwHtml::img('upload/personas/default.png', 'Imágen de muestra', array('id'=>'img-persona')); ?>
-                        </div>
-                    </div>
-
+                        <?php } 
+                    ?>
                 </div>
-
                 <div class="row-fluid">
 
-                    <?php echo DwForm::hidden('persona.fotografia', NULL, 'default.png'); ?>
-
+                </div>
+             <div class="row-fluid">
+                <?php echo DwForm::hidden('beneficiario.fotografia', NULL, 'default.png'); ?>
+                <?php echo DwForm::hidden('beneficiario.beneficiario_tipo_id', NULL, ''); ?>
                     <div class="form-actions">
                         <?php echo DwButton::save('Guardar beneficiario'); ?>
                         <?php echo DwButton::reset('form'); ?>
                         <?php echo DwButton::cancel('beneficiarios/beneficiario/listar/'); ?>
                     </div>
-
-                </div>
-
             </div>
-        </div>
+            
 
     <?php echo DwForm::close(); ?>
 
+            </div><!--Cierre del tab2-->
+
+            <div class="tab-pane" id="tab3">
+
+            <div class="row fileupload-buttonbar">
+                <!-- ########################### FOTOGRAQFIA ############################## -->
+                    <div class="span2">
+                        <span class="btn btn-success fileinput-button">
+                            <i class="icon-plus icon-white"></i>
+                            <span>Seleccione Fotografía...</span>
+                            <input id="fotografia" type="file" name="fotografia" class="input-large">
+                        </span>
+                    </div>
+
+                    <div id="upload-progress" class="span1 fileupload-progress fade">
+                        <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                            <div class="bar" style="width:0%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="span3 dw-text-right">
+                        <div class="span2 dw-picture-profile dw-text-center dw-text-middle dw-shadow-dark" style="margin-top: 5px">
+                            <?php echo DwHtml::img('upload/personas/default.png', 'Imágen de muestra', array('id'=>'img-persona')); ?>
+                        </div>
+                    </div>
+
+
+            </div>
+        </div>
 </div>
 
 <?php View::partial('jquery.file-upload'); ?>
+<script type="text/javascript">
+    $(function(){
+        var cedula = document.getElementById("beneficiario_cedula");
+        var telefono = document.getElementById("beneficiario_telefono");
+        var celular = document.getElementById("beneficiario_celular");
+        var participacion = document.getElementById("beneficiario_participacion");
+        cedula.maxLength = 8;
+        telefono.maxLength = 11;
+        celular.maxLength = 11;
+        participacion.maxLength = 3;
+    })
+</script>
+
+
+<!-- Script ṕara darle el valor al tipo de beneficiario  -->
+<script type='text/javascript'>
+$("#beneficiario_parentesco_id").change(function(){
+    var parentesco = $('#beneficiario_parentesco_id').val();
+    if(parentesco<=5){
+        $("#beneficiario_beneficiario_tipo_id").val("1");
+    }
+    else{
+        $("#beneficiario_beneficiario_tipo_id").val("2");
+    }
+});
+</script>
+
+
+
+<!-- Script para chequear disponibilidad de participacion  -->
+<script type='text/javascript'>
+/*$("#beneficiario_participacion").change(function(){
+    $.ajax({
+          type: "POST",
+          url: "<?php echo PUBLIC_PATH . 'beneficiarios/beneficiario/getParticipacion/'; ?>",
+          data: "sucursal_id=" + sucursal_id,
+          success: function(html){
+            $("#div_departamento").html(html);
+          }
+        });
+});*/
+</script>
 
 <script type="text/javascript">
     $('#fotografia').fileupload({
