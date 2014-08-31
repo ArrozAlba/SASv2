@@ -1,14 +1,14 @@
 <?php
 /**
- * Dailyscript - Web | App | Media
+ * S.A.S
  *
- * Descripcion: Modelo para el manejo de usuarios
+ * Descripcion: Modelo para el manejo de beneficiarioes
  *
  * @category
  * @package     Models
  * @subpackage
- * @author      Iván D. Meléndez (ivan.melendez@dailyscript.com.co)
- * @copyright   Copyright (c) 2013 Dailyscript Team (http://www.dailyscript.com.co) 
+ * @author      Javier León (jel1284@gmail.com)
+ * @copyright   Copyright (c) 2014 UPTP / E.M.S. Arroz del Alba S.A. (http://autogestion.arrozdelalba.gob.ve) 
  */
 
 Load::models('sistema/usuario', 'sistema/acceso');

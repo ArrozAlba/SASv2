@@ -1,14 +1,14 @@
 <?php
 /**
- * Dailyscript - Web | App | Media
+ * S.A.S
  *
- * Descripcion: Modelo para el manejo de usuarios
+ * Descripcion: Modelo para el manejo de beneficiarioes
  *
  * @category
  * @package     Models
  * @subpackage
- * @author      Iván D. Meléndez (ivan.melendez@dailyscript.com.co)
- * @copyright   Copyright (c) 2013 Dailyscript Team (http://www.dailyscript.com.co) 
+ * @author      Javier León (jel1284@gmail.com)
+ * @copyright   Copyright (c) 2014 UPTP / E.M.S. Arroz del Alba S.A. (http://autogestion.arrozdelalba.gob.ve) 
  */
 
 Load::models('sistema/estado_usuario', 'sistema/perfil','sistema/usuario_clave','sistema/usuario_pregunta', 'sistema/recurso', 'sistema/recurso_perfil', 'sistema/acceso');
@@ -33,7 +33,18 @@ class Usuario extends ActiveRecord {
     public static function getInnerEstado() {
         return "INNER JOIN (SELECT usuario_id, CASE estado_usuario WHEN ".EstadoUsuario::COD_ACTIVO." THEN '".EstadoUsuario::ACTIVO."' WHEN ".EstadoUsuario::COD_BLOQUEADO." THEN '".EstadoUsuario::BLOQUEADO."' ELSE 'INDEFINIDO' END AS estado_usuario, descripcion FROM (SELECT * FROM estado_usuario ORDER BY estado_usuario.id DESC ) AS estado_usuario GROUP BY estado_usuario.usuario_id,estado_usuario.estado_usuario, descripcion) AS estado_usuario ON estado_usuario.usuario_id = usuario.id ";        
     }
-    
+    /**
+     * Método para validar los intentos de la clave
+     */
+    public static function usuario_intentos($idusuario) {    
+        $usuario = new Usuario();
+        $intento = $usuario->find("columns: id,intentos","conditions: id='".$idusuario."'","order: id DESC","limit: 1 ");
+        $intento1 = $intento[0]->intentos;
+        if($intento1 == 3){
+                    return 100;
+        }
+                    return 2;
+    }    
     /**
      * Método para abrir y cerrar sesión
      * @param type $opt
@@ -56,11 +67,20 @@ class Usuario extends ActiveRecord {
                     if(DwAuth::login(array('login'=>$user), array('password'=>sha1($pass)), $mode)) {
                         $usuario = self::getUsuarioLogueado();  
                         $usuval = UsuarioClave::clave_valida($usuario->id);
-                                              
+                        $usuintentos = self::usuario_intentos($usuario->id);                      
                         if( ($usuario->id!=2) &&  ($usuario->estado_usuario != EstadoUsuario::ACTIVO) ) { 
                             DwAuth::logout();
                             DwMessage::error('Lo sentimos pero tu cuenta se encuentra inactiva. <br />Si esta información es incorrecta contacta al administrador del sistema.');
                             return false;
+                        }
+                        if($usuintentos== 2 ) { 
+                           // DwAuth::logout();
+                           //Session::set('perfil_id', '8');
+                           //Session::set('tema', 'default');
+                        //Session::set('nombre1', $usuario->nombre1);
+                        //Session::set('apellido1', $usuario->apellido1);                           
+                            //return DwRedirect::to('sistema/usuario_clave/cambiar_clave');
+                        DwMessage::error('usuintentos. '.$usuintentos.'<br />Si esta información es incorrecta contacta al administrador del sistema.');
                         }
                         if($usuval!=1 ) { 
                            // DwAuth::logout();
