@@ -8,16 +8,19 @@
 
         <div class="row-fluid">
             <div class="span6">
-                <?php echo DwForm::text('cargo.nombre', array('class'=>'input-xxlarge input-required input-alphanum mask-alphanum show-error'), NULL, 'Nombre'); ?>
+                <?php echo DwForm::text('cargo.nombre', array('class'=>'input-xxlarge input-required input-alphanum mask-alphanum show-error'), NULL, 'Nombre','Ejemplo Analista'); ?>
+               
                 data-toggle="tooltip" title="Nombre del Cargo"
                 <? php array('class'=>'input-xxlarge input-required input-alphanum mask-alphanum show-error')?>
-                <? php array('class'=>'input-xxlarge input-required input-alphanum mask-alphanum show-error data-toggle="tooltip" title="Nombre del Cargo"')
+                <? php array('class'=>'input-xxlarge input-required input-alphanum mask-alphanum show-error data-toggle="tooltip" title="Nombre del Cargo"')?>
+                
             </div>
             <div class="span6">
-                <?php echo DwForm::text('cargo.observacion', array('class'=>'input-xxlarge input-alphanum mask-alphanum show-error', 'autocomplete'=>'off'), NULL, 'Observacion'); ?>
-                data-toggle="tooltip" title="Observacion del Cargo"
+                <?php echo DwForm::text('cargo.observacion', array('class'=>'input-xxlarge input-alphanum mask-alphanum show-error', 'autocomplete'=>'off'), NULL, 'Observacion','Ejemplo Analiza las muesta'); ?>
+               
+               data-toggle="tooltip" title="Observacion del Cargo"
                 <? php array('class'=>'input-xxlarge input-alphanum mask-alphanum show-error')?>
-                <? php array('class'=>'input-xxlarge input-alphanum mask-alphanum show-error data-toggle="tooltip" title="Observacion del Cargo"')
+                <? php array('class'=>'input-xxlarge input-alphanum mask-alphanum show-error data-toggle="tooltip" title="Observacion del Cargo"') ?>
             </div>
         </div>
 
