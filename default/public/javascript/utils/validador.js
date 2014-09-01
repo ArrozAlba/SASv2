@@ -112,7 +112,6 @@ function inputList(input) {
     return true;
 }
 
-
 function inputAlphanum(input) {
     field = $('#'+input);
     if (!(field.val() == null || field.val().length == 0 || /^\s+$/.test(field.val()))) {

@@ -17,6 +17,7 @@ bootstrap framework maquetacion css
 *** PLATAFORMA: ***
 apache2 
 php5
+git
 github
 
 
@@ -35,6 +36,7 @@ github
 1) agregar baremos y gacetas de precios maximos para comparativos (gaceta 40196 precios de clinicas).
 2) Realizar la incorporación de firma digital (como elemento de seguridad para la aprobacion de las ordenes y solicitudes)
 3) Agregar la posibilidad de enviar un SMS al generarse algun proceso en el sistema.
+4) La posibilidad de enviar un alerta al coordinador luego de cierta cantidad de patologias repetidas. (PARA ESTUDIO DE LAS CAUSAS Y PREVENCION SEA EL CASO) 
 
 *** PENDIENTES POR MODULOS ***
 (ALEXIS)

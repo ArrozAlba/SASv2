@@ -8,10 +8,10 @@
 
         <div class="row-fluid">
             <div class="span6">
-                <?php echo DwForm::text('cargo.nombre', array('class'=>'input-xxlarge input-required input-alphanum mask-alphanum show-error'), NULL, 'Nombre'); ?>
+                <?php echo DwForm::text('cargo.nombre', array('class'=>'input-xxlarge input-required input-alphanum mask-alphanum show-error data-toggle="tooltip" title="Nombre del Cargo"'), NULL, 'Nombre','Ejemplo Analista'); ?>
             </div>
             <div class="span6">
-                <?php echo DwForm::text('cargo.observacion', array('class'=>'input-xxlarge input-alphanum mask-alphanum show-error', 'autocomplete'=>'off'), NULL, 'Observacion'); ?>
+                <?php echo DwForm::text('cargo.observacion', array('class'=>'input-xxlarge input-alphanum mask-alphanum show-error data-toggle="tooltip" title="Observacion del Cargo"', 'autocomplete'=>'off'), NULL, 'Observacion','Ejemplo Analiza las muesta'); ?>
             </div>
         </div>
 

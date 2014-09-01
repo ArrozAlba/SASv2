@@ -65,7 +65,7 @@ class Medico extends ActiveRecord {
      */
    public function obtener_medicos($medico) {
         if ($medico != '') {
-            $medico = stripcslashes($medico);
+            $medico = stripcslashes(strtoupper($medico));
             $res = $this->find('columns: id,nombre1,apellido1', "nombre1 like '%{$medico}%' or apellido1 like '%{$medico}%'");
             if ($res) {
                 foreach ($res as $medico) {

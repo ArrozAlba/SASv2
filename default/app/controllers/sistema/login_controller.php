@@ -44,6 +44,7 @@ class LoginController extends BackendController {
     public function entrar() {        
         if(Input::hasPost('login') && Input::hasPost('password') && Input::hasPost('mode')) {
             if(Usuario::setSession('open', Input::post('login'), Input::post('password'))) {
+                
                 return DwRedirect::to('dashboard/');
             }                       
         } else if(DwAuth::isLogged()) {
@@ -64,5 +65,17 @@ class LoginController extends BackendController {
         return DwRedirect::toAction('entrar/');
     }
     
+     /**
+     * Método para cambiar clave
+     */
+    public function cambioClave($js='') {        
+        if(Usuario::setSession('close')) {
+            DwMessage::valid("La sesión ha sido cerrada correctamente.");
+        }
+        if($js == 'no-script') {
+            DwMessage::info('Activa el uso de JavaScript en su navegador para poder continuar.');
+        }        
+        return DwRedirect::toAction('entrar/');
+    }
 }
 

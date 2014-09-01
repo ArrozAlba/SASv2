@@ -26,8 +26,8 @@ class MantenimientoController extends BackendController {
      * Método principal
      */
     public function index() {
-        $sistema = new Sistema();
-        $this->tablas = $sistema->getEstadoTablas();        
+        //$sistema = new Sistema();
+        //$this->tablas = $sistema->getEstadoTablas();        
         
         //Se cambia el nombre del módulo actual
         $this->page_module = 'Estado de las tablas';
