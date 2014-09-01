@@ -9,14 +9,14 @@
         <div class="row-fluid">
         	<?php if(APP_OFFICE) { ?>
             <div class="span4">
-            	<?php echo DwForm::dbSelect('departamento.sucursal_id', array('sucursal'), array('config/sucursal', 'getListadoSucursal'), array('todas'=>'Todas'), array('class'=>'input-xlarge input-required mask-pint show-errors'), NULL, 'Sucursal'); ?>
+            	<?php echo DwForm::dbSelect('departamento.sucursal_id', array('sucursal'), array('config/sucursal', 'getListadoSucursal'), array('todas'=>'Todas'), array('class'=>'input-xlarge input-required mask-pint show-errors data-toggle="tooltip" title="Selecciona la Sucursal"'), NULL, 'Sucursal'); ?>
             </div>
             <?php } ?>
             <div class="span4">
-                <?php echo DwForm::text('departamento.nombre', array('class'=>'input-xlarge input-required input-alphanum mask-alphanum show-error'), NULL, 'Nombre'); ?>
+                <?php echo DwForm::text('departamento.nombre', array('class'=>'input-xlarge input-required input-alphanum mask-alphanum show-error data-toggle="tooltip" title="Nombre del Departamento"'), NULL, 'Nombre'); ?>
             </div>
             <div class="span4">
-                <?php echo DwForm::text('departamento.observacion', array('class'=>'input-xlarge input-alphanum mask-alphanum show-error', 'autocomplete'=>'off'), NULL, 'Observacion'); ?>
+                <?php echo DwForm::text('departamento.observacion', array('class'=>'input-xlarge input-alphanum mask-alphanum show-error data-toggle="tooltip" title="Observacion del Departamento"', 'autocomplete'=>'off'), NULL, 'Observacion'); ?>
             </div>
         </div>
 
