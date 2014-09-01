@@ -656,7 +656,7 @@ CREATE TABLE cobertura (
     fecha_inicio date DEFAULT '1900-01-01'::date,
     fecha_fin date DEFAULT '1900-01-01'::date,
     observacion character varying(250),
-    tipo_cobertura_id integer NOT NULL
+    tipo_cobertura integer NOT NULL
 );
 
 
@@ -2608,40 +2608,6 @@ ALTER SEQUENCE patologia_categoria_id_seq OWNED BY patologia_categoria.id;
 
 
 --
--- Name: patologia_cobertura; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
---
-
-CREATE TABLE patologia_cobertura (
-    id integer NOT NULL,
-    patologia_id integer,
-    cobertura_id integer
-);
-
-
-ALTER TABLE public.patologia_cobertura OWNER TO arrozalba;
-
---
--- Name: patologia_cobertura_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
---
-
-CREATE SEQUENCE patologia_cobertura_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.patologia_cobertura_id_seq OWNER TO arrozalba;
-
---
--- Name: patologia_cobertura_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
---
-
-ALTER SEQUENCE patologia_cobertura_id_seq OWNED BY patologia_cobertura.id;
-
-
---
 -- Name: patologia_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -3198,6 +3164,125 @@ ALTER SEQUENCE recurso_perfil_id_seq OWNED BY recurso_perfil.id;
 
 
 --
+-- Name: reembolso; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+CREATE TABLE reembolso (
+    id integer NOT NULL,
+    usuario_id integer,
+    fecha_registro timestamp with time zone DEFAULT now() NOT NULL,
+    fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
+    estado_solicitud character(1) NOT NULL,
+    fecha_solicitud date DEFAULT '1900-01-01'::date,
+    codigo_solicitud character varying(8) NOT NULL,
+    titular_id integer NOT NULL,
+    beneficiario_id integer NOT NULL,
+    beneficiario_tipo character(1) NOT NULL,
+    observacion character varying(250)
+);
+
+
+ALTER TABLE public.reembolso OWNER TO arrozalba;
+
+--
+-- Name: TABLE reembolso; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON TABLE reembolso IS 'Modelo para manipular las Solicitudes de Reembolso';
+
+
+--
+-- Name: COLUMN reembolso.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN reembolso.usuario_id IS 'Usuario Editor del Registro';
+
+
+--
+-- Name: COLUMN reembolso.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN reembolso.fecha_registro IS 'Fecha del Registro';
+
+
+--
+-- Name: COLUMN reembolso.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN reembolso.fecha_modificado IS 'Fecha Modificacion del Registro';
+
+
+--
+-- Name: COLUMN reembolso.estado_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN reembolso.estado_solicitud IS 'Estado de la Solicitud';
+
+
+--
+-- Name: COLUMN reembolso.fecha_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN reembolso.fecha_solicitud IS 'Fecha de la Solicitud';
+
+
+--
+-- Name: COLUMN reembolso.codigo_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN reembolso.codigo_solicitud IS 'Codigo de la Solicitud';
+
+
+--
+-- Name: COLUMN reembolso.titular_id; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN reembolso.titular_id IS 'Codigo del Titular';
+
+
+--
+-- Name: COLUMN reembolso.beneficiario_id; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN reembolso.beneficiario_id IS 'Codigo del Beneficiario';
+
+
+--
+-- Name: COLUMN reembolso.beneficiario_tipo; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN reembolso.beneficiario_tipo IS 'beneficiario de la Solicitud';
+
+
+--
+-- Name: COLUMN reembolso.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN reembolso.observacion IS 'Observacion';
+
+
+--
+-- Name: reembolso_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
+--
+
+CREATE SEQUENCE reembolso_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.reembolso_id_seq OWNER TO arrozalba;
+
+--
+-- Name: reembolso_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
+--
+
+ALTER SEQUENCE reembolso_id_seq OWNED BY reembolso.id;
+
+
+--
 -- Name: servicio; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -3408,6 +3493,100 @@ ALTER SEQUENCE solicitud_dt_factura_id_seq OWNED BY factura_dt.id;
 
 
 --
+-- Name: solicitud_dt_medicina; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+CREATE TABLE solicitud_dt_medicina (
+    id integer NOT NULL,
+    solicitud_id integer NOT NULL,
+    medicina_id integer NOT NULL,
+    fecha_inicio date DEFAULT '1900-01-01'::date,
+    fecha_fin date DEFAULT '1900-01-01'::date,
+    dosis integer,
+    horas time without time zone
+);
+
+
+ALTER TABLE public.solicitud_dt_medicina OWNER TO arrozalba;
+
+--
+-- Name: TABLE solicitud_dt_medicina; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON TABLE solicitud_dt_medicina IS 'Modelo para manipular los Detalles de las Solicitudes de Medicinas';
+
+
+--
+-- Name: COLUMN solicitud_dt_medicina.id; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN solicitud_dt_medicina.id IS 'Id del Registro';
+
+
+--
+-- Name: COLUMN solicitud_dt_medicina.solicitud_id; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN solicitud_dt_medicina.solicitud_id IS 'Id la Solicitud';
+
+
+--
+-- Name: COLUMN solicitud_dt_medicina.medicina_id; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN solicitud_dt_medicina.medicina_id IS 'Codigo de la Medicina';
+
+
+--
+-- Name: COLUMN solicitud_dt_medicina.fecha_inicio; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN solicitud_dt_medicina.fecha_inicio IS 'Fecha Inicio del Tratamiento';
+
+
+--
+-- Name: COLUMN solicitud_dt_medicina.fecha_fin; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN solicitud_dt_medicina.fecha_fin IS 'Fecha Fin del Tratamiento';
+
+
+--
+-- Name: COLUMN solicitud_dt_medicina.dosis; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN solicitud_dt_medicina.dosis IS 'Dosis de la Medicina';
+
+
+--
+-- Name: COLUMN solicitud_dt_medicina.horas; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN solicitud_dt_medicina.horas IS 'Dosis de la Medicina';
+
+
+--
+-- Name: solicitud_dt_medicina_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
+--
+
+CREATE SEQUENCE solicitud_dt_medicina_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.solicitud_dt_medicina_id_seq OWNER TO arrozalba;
+
+--
+-- Name: solicitud_dt_medicina_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
+--
+
+ALTER SEQUENCE solicitud_dt_medicina_id_seq OWNED BY solicitud_dt_medicina.id;
+
+
+--
 -- Name: solicitud_factura_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -3426,6 +3605,197 @@ ALTER TABLE public.solicitud_factura_id_seq OWNER TO arrozalba;
 --
 
 ALTER SEQUENCE solicitud_factura_id_seq OWNED BY factura.id;
+
+
+--
+-- Name: solicitud_medicina; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+CREATE TABLE solicitud_medicina (
+    id integer NOT NULL,
+    usuario_id integer,
+    fecha_registro timestamp with time zone DEFAULT now() NOT NULL,
+    fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
+    estado_solicitud character(1) NOT NULL,
+    fecha_solicitud date DEFAULT '1900-01-01'::date,
+    fecha_vencimiento date DEFAULT '1900-01-01'::date,
+    codigo_solicitud character varying(8) NOT NULL,
+    titular_id integer NOT NULL,
+    beneficiario_id integer NOT NULL,
+    beneficiario_tipo character(1) NOT NULL,
+    patologia_id integer NOT NULL,
+    proveedor_id integer NOT NULL,
+    medico_id integer NOT NULL,
+    persona_autorizada character varying(30) NOT NULL,
+    persona_cedula character varying(8) NOT NULL,
+    tipo_tratamiento character varying(1) DEFAULT 'T'::character varying NOT NULL,
+    diagnostico character varying(250) NOT NULL,
+    servicio_id integer NOT NULL,
+    observacion character varying(250)
+);
+
+
+ALTER TABLE public.solicitud_medicina OWNER TO arrozalba;
+
+--
+-- Name: TABLE solicitud_medicina; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON TABLE solicitud_medicina IS 'Modelo para manipular las Solicitudes de Medicinas';
+
+
+--
+-- Name: COLUMN solicitud_medicina.usuario_id; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN solicitud_medicina.usuario_id IS 'Usuario Editor del Registro';
+
+
+--
+-- Name: COLUMN solicitud_medicina.fecha_registro; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN solicitud_medicina.fecha_registro IS 'Fecha del Registro';
+
+
+--
+-- Name: COLUMN solicitud_medicina.fecha_modificado; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN solicitud_medicina.fecha_modificado IS 'Fecha Modificacion del Registro';
+
+
+--
+-- Name: COLUMN solicitud_medicina.estado_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN solicitud_medicina.estado_solicitud IS 'Estado de la Solicitud';
+
+
+--
+-- Name: COLUMN solicitud_medicina.fecha_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN solicitud_medicina.fecha_solicitud IS 'Fecha de la Solicitud';
+
+
+--
+-- Name: COLUMN solicitud_medicina.fecha_vencimiento; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN solicitud_medicina.fecha_vencimiento IS 'Fecha de Vencimiento de la Solicitud';
+
+
+--
+-- Name: COLUMN solicitud_medicina.codigo_solicitud; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN solicitud_medicina.codigo_solicitud IS 'Codigo de la Solicitud';
+
+
+--
+-- Name: COLUMN solicitud_medicina.titular_id; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN solicitud_medicina.titular_id IS 'Codigo del Titular';
+
+
+--
+-- Name: COLUMN solicitud_medicina.beneficiario_id; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN solicitud_medicina.beneficiario_id IS 'Codigo del Beneficiario';
+
+
+--
+-- Name: COLUMN solicitud_medicina.beneficiario_tipo; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN solicitud_medicina.beneficiario_tipo IS 'beneficiario de la Solicitud';
+
+
+--
+-- Name: COLUMN solicitud_medicina.patologia_id; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN solicitud_medicina.patologia_id IS 'Codigo de la Patologia';
+
+
+--
+-- Name: COLUMN solicitud_medicina.proveedor_id; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN solicitud_medicina.proveedor_id IS 'Codigo del Proveedor';
+
+
+--
+-- Name: COLUMN solicitud_medicina.medico_id; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN solicitud_medicina.medico_id IS 'Codigo del Medico';
+
+
+--
+-- Name: COLUMN solicitud_medicina.persona_autorizada; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN solicitud_medicina.persona_autorizada IS 'Persona Autorizada';
+
+
+--
+-- Name: COLUMN solicitud_medicina.persona_cedula; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN solicitud_medicina.persona_cedula IS 'Cedula Persona Autorizada';
+
+
+--
+-- Name: COLUMN solicitud_medicina.tipo_tratamiento; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN solicitud_medicina.tipo_tratamiento IS 'Tipo de Tratamiento';
+
+
+--
+-- Name: COLUMN solicitud_medicina.diagnostico; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN solicitud_medicina.diagnostico IS 'Diagnostico';
+
+
+--
+-- Name: COLUMN solicitud_medicina.servicio_id; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN solicitud_medicina.servicio_id IS 'Codigo del Servicio';
+
+
+--
+-- Name: COLUMN solicitud_medicina.observacion; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON COLUMN solicitud_medicina.observacion IS 'Observacion';
+
+
+--
+-- Name: solicitud_medicina_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
+--
+
+CREATE SEQUENCE solicitud_medicina_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.solicitud_medicina_id_seq OWNER TO arrozalba;
+
+--
+-- Name: solicitud_medicina_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
+--
+
+ALTER SEQUENCE solicitud_medicina_id_seq OWNED BY solicitud_medicina.id;
 
 
 --
@@ -3593,40 +3963,6 @@ ALTER TABLE public.solicitud_servicio_id_seq OWNER TO arrozalba;
 --
 
 ALTER SEQUENCE solicitud_servicio_id_seq OWNED BY solicitud_servicio.id;
-
-
---
--- Name: solicitud_servicio_patologia; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE solicitud_servicio_patologia (
-    id integer NOT NULL,
-    patologia_id integer,
-    solicitud_servicio_id integer
-);
-
-
-ALTER TABLE public.solicitud_servicio_patologia OWNER TO postgres;
-
---
--- Name: solicitud_servicio_patologia_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE solicitud_servicio_patologia_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.solicitud_servicio_patologia_id_seq OWNER TO postgres;
-
---
--- Name: solicitud_servicio_patologia_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE solicitud_servicio_patologia_id_seq OWNED BY solicitud_servicio_patologia.id;
 
 
 --
@@ -4869,13 +5205,6 @@ ALTER TABLE ONLY patologia_categoria ALTER COLUMN id SET DEFAULT nextval('patolo
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
-ALTER TABLE ONLY patologia_cobertura ALTER COLUMN id SET DEFAULT nextval('patologia_cobertura_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
---
-
 ALTER TABLE ONLY perfil ALTER COLUMN id SET DEFAULT nextval('perfil_id_seq'::regclass);
 
 
@@ -4925,6 +5254,13 @@ ALTER TABLE ONLY recurso_perfil ALTER COLUMN id SET DEFAULT nextval('recurso_per
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
+ALTER TABLE ONLY reembolso ALTER COLUMN id SET DEFAULT nextval('reembolso_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
+--
+
 ALTER TABLE ONLY servicio ALTER COLUMN id SET DEFAULT nextval('servicio_id_seq'::regclass);
 
 
@@ -4932,14 +5268,21 @@ ALTER TABLE ONLY servicio ALTER COLUMN id SET DEFAULT nextval('servicio_id_seq':
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
+ALTER TABLE ONLY solicitud_dt_medicina ALTER COLUMN id SET DEFAULT nextval('solicitud_dt_medicina_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY solicitud_medicina ALTER COLUMN id SET DEFAULT nextval('solicitud_medicina_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
+--
+
 ALTER TABLE ONLY solicitud_servicio ALTER COLUMN id SET DEFAULT nextval('solicitud_servicio_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY solicitud_servicio_patologia ALTER COLUMN id SET DEFAULT nextval('solicitud_servicio_patologia_id_seq'::regclass);
 
 
 --
@@ -5280,7 +5623,7 @@ SELECT pg_catalog.setval('cargo_id_seq', 21, true);
 -- Data for Name: cobertura; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
-COPY cobertura (id, usuario_id, fecha_registro, fecha_modificado, descripcion, monto_cobertura, fecha_inicio, fecha_fin, observacion, tipo_cobertura_id) FROM stdin;
+COPY cobertura (id, usuario_id, fecha_registro, fecha_modificado, descripcion, monto_cobertura, fecha_inicio, fecha_fin, observacion, tipo_cobertura) FROM stdin;
 \.
 
 
@@ -21953,21 +22296,6 @@ SELECT pg_catalog.setval('patologia_categoria_id_seq', 575, true);
 
 
 --
--- Data for Name: patologia_cobertura; Type: TABLE DATA; Schema: public; Owner: arrozalba
---
-
-COPY patologia_cobertura (id, patologia_id, cobertura_id) FROM stdin;
-\.
-
-
---
--- Name: patologia_cobertura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
---
-
-SELECT pg_catalog.setval('patologia_cobertura_id_seq', 1, false);
-
-
---
 -- Name: patologia_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -22457,6 +22785,21 @@ SELECT pg_catalog.setval('recurso_perfil_id_seq', 419, true);
 
 
 --
+-- Data for Name: reembolso; Type: TABLE DATA; Schema: public; Owner: arrozalba
+--
+
+COPY reembolso (id, usuario_id, fecha_registro, fecha_modificado, estado_solicitud, fecha_solicitud, codigo_solicitud, titular_id, beneficiario_id, beneficiario_tipo, observacion) FROM stdin;
+\.
+
+
+--
+-- Name: reembolso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
+--
+
+SELECT pg_catalog.setval('reembolso_id_seq', 1, false);
+
+
+--
 -- Data for Name: servicio; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
@@ -22532,10 +22875,40 @@ SELECT pg_catalog.setval('solicitud_dt_factura_id_seq', 1, false);
 
 
 --
+-- Data for Name: solicitud_dt_medicina; Type: TABLE DATA; Schema: public; Owner: arrozalba
+--
+
+COPY solicitud_dt_medicina (id, solicitud_id, medicina_id, fecha_inicio, fecha_fin, dosis, horas) FROM stdin;
+\.
+
+
+--
+-- Name: solicitud_dt_medicina_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
+--
+
+SELECT pg_catalog.setval('solicitud_dt_medicina_id_seq', 1, false);
+
+
+--
 -- Name: solicitud_factura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
 SELECT pg_catalog.setval('solicitud_factura_id_seq', 1, false);
+
+
+--
+-- Data for Name: solicitud_medicina; Type: TABLE DATA; Schema: public; Owner: arrozalba
+--
+
+COPY solicitud_medicina (id, usuario_id, fecha_registro, fecha_modificado, estado_solicitud, fecha_solicitud, fecha_vencimiento, codigo_solicitud, titular_id, beneficiario_id, beneficiario_tipo, patologia_id, proveedor_id, medico_id, persona_autorizada, persona_cedula, tipo_tratamiento, diagnostico, servicio_id, observacion) FROM stdin;
+\.
+
+
+--
+-- Name: solicitud_medicina_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
+--
+
+SELECT pg_catalog.setval('solicitud_medicina_id_seq', 1, false);
 
 
 --
@@ -22552,21 +22925,6 @@ COPY solicitud_servicio (id, usuario_id, fecha_registro, fecha_modificado, estad
 --
 
 SELECT pg_catalog.setval('solicitud_servicio_id_seq', 6, true);
-
-
---
--- Data for Name: solicitud_servicio_patologia; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY solicitud_servicio_patologia (id, patologia_id, solicitud_servicio_id) FROM stdin;
-\.
-
-
---
--- Name: solicitud_servicio_patologia_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('solicitud_servicio_patologia_id_seq', 1, false);
 
 
 --
@@ -23408,14 +23766,6 @@ ALTER TABLE ONLY parroquia
 
 
 --
--- Name: patologia_categoria_id_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
---
-
-ALTER TABLE ONLY patologia_cobertura
-    ADD CONSTRAINT patologia_categoria_id_pkey PRIMARY KEY (id);
-
-
---
 -- Name: patologia_categoria_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -23544,6 +23894,22 @@ ALTER TABLE ONLY recurso
 
 
 --
+-- Name: reembolso_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+ALTER TABLE ONLY reembolso
+    ADD CONSTRAINT reembolso_codigo_solicitud_key UNIQUE (codigo_solicitud);
+
+
+--
+-- Name: reembolso_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+ALTER TABLE ONLY reembolso
+    ADD CONSTRAINT reembolso_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: servicio_descripcion_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -23584,6 +23950,14 @@ ALTER TABLE ONLY factura_dt
 
 
 --
+-- Name: solicitud_dt_medicina_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+ALTER TABLE ONLY solicitud_dt_medicina
+    ADD CONSTRAINT solicitud_dt_medicina_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: solicitud_factura_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -23592,19 +23966,27 @@ ALTER TABLE ONLY factura
 
 
 --
+-- Name: solicitud_medicina_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+ALTER TABLE ONLY solicitud_medicina
+    ADD CONSTRAINT solicitud_medicina_codigo_solicitud_key UNIQUE (codigo_solicitud);
+
+
+--
+-- Name: solicitud_medicina_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+ALTER TABLE ONLY solicitud_medicina
+    ADD CONSTRAINT solicitud_medicina_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: solicitud_servicio_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY solicitud_servicio
     ADD CONSTRAINT solicitud_servicio_codigo_solicitud_key UNIQUE (codigo_solicitud);
-
-
---
--- Name: solicitud_servicio_patologia_id_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY solicitud_servicio_patologia
-    ADD CONSTRAINT solicitud_servicio_patologia_id_pkey PRIMARY KEY (id);
 
 
 --
@@ -24041,6 +24423,13 @@ CREATE TRIGGER tgl_recurso AFTER INSERT OR DELETE OR UPDATE ON recurso FOR EACH 
 
 
 --
+-- Name: tgl_reembolso; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_reembolso AFTER INSERT OR DELETE OR UPDATE ON reembolso FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
 -- Name: tgl_servicio; Type: TRIGGER; Schema: public; Owner: arrozalba
 --
 
@@ -24069,10 +24458,24 @@ CREATE TRIGGER tgl_solicitud_dt_factura AFTER INSERT OR DELETE OR UPDATE ON fact
 
 
 --
+-- Name: tgl_solicitud_dt_medicina; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_solicitud_dt_medicina AFTER INSERT OR DELETE OR UPDATE ON solicitud_dt_medicina FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
 -- Name: tgl_solicitud_factura; Type: TRIGGER; Schema: public; Owner: arrozalba
 --
 
 CREATE TRIGGER tgl_solicitud_factura AFTER INSERT OR DELETE OR UPDATE ON factura FOR EACH ROW EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgl_solicitud_medicina; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgl_solicitud_medicina AFTER INSERT OR DELETE OR UPDATE ON solicitud_medicina FOR EACH ROW EXECUTE PROCEDURE logger();
 
 
 --
@@ -24328,6 +24731,13 @@ CREATE TRIGGER tgt_recurso_perfil AFTER TRUNCATE ON recurso_perfil FOR EACH STAT
 
 
 --
+-- Name: tgt_reembolso; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_reembolso AFTER TRUNCATE ON reembolso FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
 -- Name: tgt_servicio; Type: TRIGGER; Schema: public; Owner: arrozalba
 --
 
@@ -24356,10 +24766,24 @@ CREATE TRIGGER tgt_solicitud_dt_factura AFTER TRUNCATE ON factura_dt FOR EACH ST
 
 
 --
+-- Name: tgt_solicitud_dt_medicina; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_solicitud_dt_medicina AFTER TRUNCATE ON solicitud_dt_medicina FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
 -- Name: tgt_solicitud_factura; Type: TRIGGER; Schema: public; Owner: arrozalba
 --
 
 CREATE TRIGGER tgt_solicitud_factura AFTER TRUNCATE ON factura FOR EACH STATEMENT EXECUTE PROCEDURE logger();
+
+
+--
+-- Name: tgt_solicitud_medicina; Type: TRIGGER; Schema: public; Owner: arrozalba
+--
+
+CREATE TRIGGER tgt_solicitud_medicina AFTER TRUNCATE ON solicitud_medicina FOR EACH STATEMENT EXECUTE PROCEDURE logger();
 
 
 --
@@ -24513,7 +24937,7 @@ ALTER TABLE ONLY cobertura
 --
 
 ALTER TABLE ONLY cobertura
-    ADD CONSTRAINT coberura_tipo_cobertura_id_fkey FOREIGN KEY (tipo_cobertura_id) REFERENCES tipo_cobertura(id);
+    ADD CONSTRAINT coberura_tipo_cobertura_id_fkey FOREIGN KEY (tipo_cobertura) REFERENCES tipo_cobertura(id);
 
 
 --
@@ -24717,22 +25141,6 @@ ALTER TABLE ONLY patologia_categoria
 
 
 --
--- Name: patologia_cobertura_cobertura_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
---
-
-ALTER TABLE ONLY patologia_cobertura
-    ADD CONSTRAINT patologia_cobertura_cobertura_id_fkey FOREIGN KEY (cobertura_id) REFERENCES cobertura(id);
-
-
---
--- Name: patologia_cobertura_patologia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
---
-
-ALTER TABLE ONLY patologia_cobertura
-    ADD CONSTRAINT patologia_cobertura_patologia_id_fkey FOREIGN KEY (patologia_id) REFERENCES patologia(id);
-
-
---
 -- Name: patologia_patologia_categoria_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -24845,6 +25253,30 @@ ALTER TABLE ONLY recurso_perfil
 
 
 --
+-- Name: reembolso_beneficiario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY reembolso
+    ADD CONSTRAINT reembolso_beneficiario_id_fkey FOREIGN KEY (beneficiario_id) REFERENCES beneficiario(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: reembolso_titular_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY reembolso
+    ADD CONSTRAINT reembolso_titular_id_fkey FOREIGN KEY (titular_id) REFERENCES titular(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: reembolso_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY reembolso
+    ADD CONSTRAINT reembolso_usuario_id_fkey FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
 -- Name: servicio_proveedor_proveedor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
@@ -24885,19 +25317,67 @@ ALTER TABLE ONLY servicio
 
 
 --
--- Name: sol_ser_pat_patologia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: solicitud_dt_medicina_medicina_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
-ALTER TABLE ONLY solicitud_servicio_patologia
-    ADD CONSTRAINT sol_ser_pat_patologia_id_fkey FOREIGN KEY (patologia_id) REFERENCES patologia(id);
+ALTER TABLE ONLY solicitud_dt_medicina
+    ADD CONSTRAINT solicitud_dt_medicina_medicina_id_fkey FOREIGN KEY (medicina_id) REFERENCES medicina(id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
--- Name: sol_ser_pat_solicitud_servicio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: solicitud_dt_medicina_solicitud_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
-ALTER TABLE ONLY solicitud_servicio_patologia
-    ADD CONSTRAINT sol_ser_pat_solicitud_servicio_id_fkey FOREIGN KEY (solicitud_servicio_id) REFERENCES solicitud_servicio(id);
+ALTER TABLE ONLY solicitud_dt_medicina
+    ADD CONSTRAINT solicitud_dt_medicina_solicitud_id_fkey FOREIGN KEY (solicitud_id) REFERENCES solicitud_medicina(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: solicitud_medicina_beneficiario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY solicitud_medicina
+    ADD CONSTRAINT solicitud_medicina_beneficiario_id_fkey FOREIGN KEY (beneficiario_id) REFERENCES beneficiario(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: solicitud_medicina_medico_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY solicitud_medicina
+    ADD CONSTRAINT solicitud_medicina_medico_id_fkey FOREIGN KEY (medico_id) REFERENCES medico(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: solicitud_medicina_patologia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY solicitud_medicina
+    ADD CONSTRAINT solicitud_medicina_patologia_id_fkey FOREIGN KEY (patologia_id) REFERENCES patologia(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: solicitud_medicina_proveedor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY solicitud_medicina
+    ADD CONSTRAINT solicitud_medicina_proveedor_id_fkey FOREIGN KEY (proveedor_id) REFERENCES proveedor(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: solicitud_medicina_servicio_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY solicitud_medicina
+    ADD CONSTRAINT solicitud_medicina_servicio_id_fkey FOREIGN KEY (servicio_id) REFERENCES servicio(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: solicitud_medicina_titular_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY solicitud_medicina
+    ADD CONSTRAINT solicitud_medicina_titular_id_fkey FOREIGN KEY (titular_id) REFERENCES titular(id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
