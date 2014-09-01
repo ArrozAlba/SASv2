@@ -37,29 +37,29 @@ class UsuarioClave extends ActiveRecord {
                     return 0;
     }
     public function cambiar_clave($usuario_id, $clave, $clave2) {
-    if ($clave == $clave2) {
-        if (strlen($clave) < 4) {
-            Flash::error(' La clave debe tener al menos tres (3) caracteres');
-        return false;
-    }
-    $usuario_clave = $this->find("columns: id,usuario_id,fecha_fin","conditions: usuario_id='".$usuario_id."'","order: fecha_fin DESC","limit: 1 ");
-    if ($usuario_clave) {
-        $usuario_clave->password = sha1($clave);
-        //TODO: Cambio de clave de reseteo
-        /* $correo = new Correo();
-        $reset_clave = $correo->generarClave(50);
-        $usuario->reset = $reset_clave; */
-        if ($usuario_clave->update()) {
-        return true;
+        if ($clave == $clave2) {
+            if (strlen($clave) >= 6) {
+                $usuario_clave = $this->find("columns: id,usuario_id,password,fecha_fin","conditions: usuario_id='".$usuario_id."'","order: fecha_fin DESC","limit: 1 ");
+                if ($usuario_clave) {
+                    $usuario_clave[0]->usuario_id = $usuario_id;
+                    $usuario_clave[0]->fecha_inicio = date('Y-m-d');
+                    $usuario_clave[0]->fecha_fin = date('Y-m-d');
+                    $usuario_clave[0]->password = sha1($clave);
+                    if ($usuario_clave[0]->create()) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    throw new KumbiaException('El usuario no existe');
+                }
+            
+            }
+                Flash::error(' La clave debe tener al menos tres (6) caracteres');
+            return false;
         } else {
-        return false;
+            throw new KumbiaException('Las claves no coinciden');
         }
-    } else {
-    throw new KumbiaException('El usuario no existe');
-    }
-    } else {
-    throw new KumbiaException('Las claves no coinciden');
-    }
     }
     /**
      * Método para crear/modificar un objeto de base de datos
