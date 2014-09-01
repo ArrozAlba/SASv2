@@ -8,10 +8,10 @@
 
         <div class="row-fluid">
             <div class="span6">
-                <?php echo DwForm::text('profesion.nombre', array('class'=>'input-xxlarge input-required show-error'), NULL, 'Nombre'); ?>
+                <?php echo DwForm::text('profesion.nombre', array('class'=>'input-xxlarge input-required show-error data-toggle="tooltip" title="Nombre de la Profesión"'), NULL, 'Nombre','Ejemplo TSU en Informática'); ?>
             </div>
             <div class="span6">
-                <?php echo DwForm::text('profesion.observacion', array('class'=>'input-xxlarge input-alphanum mask-alphanum show-error', 'autocomplete'=>'off'), NULL, 'Observacion'); ?>
+                <?php echo DwForm::text('profesion.observacion', array('class'=>'input-xxlarge input-alphanum mask-alphanum show-error data-toggle="tooltip" title="Observacion de la Profesión"', 'autocomplete'=>'off'), NULL, 'Observación','Sorporte Tecnico'); ?>
             </div>
         </div>
 
