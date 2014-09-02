@@ -32,8 +32,8 @@
                     <th class="col-collapse" data-search="cedula">CEDULA</th>
                     <th class="col-collapse" data-search="nombre1">NOMBRE</th>
                     <th class="col-collapse" data-search="apellido1">APELLIDO</th>
-                    <th class="col-collapse" data-search="email">EMAIL</th>
-                    <th class="col-collapse" data-search="perfil">PERFIL</th>
+                    <th class="col-collapse" data-search="nomina">NOMINA</th>
+                    <th class="col-collapse" data-search="departamento">DEPARTAMENTO</th>
                     <?if(APP_OFFICE) { //Si está activa la opción de oficinas ?>
                     <th class="col-collapse" data-search="sucursal">SUCURSAL</th>
                     <? } ?>
@@ -44,18 +44,18 @@
             <tbody>
                 <?php if($titulares) { ?>
                 <?php foreach($titulares->items as $titular): ?>
-                    <?php $key_upd = DwSecurity::getKey($titular->id, 'upd_usuario'); ?>
-                    <?php $key_ina = DwSecurity::getKey($titular->id, 'bloquear_usuario'); ?>
-                    <?php $key_rea = DwSecurity::getKey($titular->id, 'reactivar_usuario'); ?>
+                    <?php $key_upd = DwSecurity::getKey($titular->idtitular, 'upd_usuario'); ?>
+                    <?php $key_ina = DwSecurity::getKey($titular->idtitular, 'bloquear_usuario'); ?>
+                    <?php $key_rea = DwSecurity::getKey($titular->idtitular, 'reactivar_usuario'); ?>
                     <tr>
                         <td><?php echo $titulares->counter; ?></td>
-                        <td><?php echo ($field=='cedula') ? DwUtils::resaltar($value, $titular->login) : $titular->login; ?></td>
+                        <td><?php echo ($field=='cedula') ? DwUtils::resaltar($value, $titular->cedula) : $titular->cedula; ?></td>
                         <td><?php echo ($field=='nombre1') ? DwUtils::resaltar($value, $titular->nombre1) : $titular->nombre1; ?></td>
                         <td><?php echo ($field=='apellido1') ? DwUtils::resaltar($value, $titular->apellido1) : $titular->apellido1; ?></td>
-                        <td><?php echo ($field=='email') ? DwUtils::resaltar($value, $titular->email) : $titular->email; ?></td>
-                        <td><?php echo ($field=='perfil') ? DwUtils::resaltar($value, $titular->perfil) : $titular->perfil; ?></td>
+                        <td><?php echo ($field=='nomina') ? DwUtils::resaltar($value, $titular->tipoe) : $titular->tipoe; ?></td>
+                        <td><?php echo ($field=='departamento') ? DwUtils::resaltar($value, $titular->departamento) : $titular->departamento; ?></td>
                         <?if(APP_OFFICE) { //Si está activa la opción de oficinas ?>
-                        <td><?php echo empty($titular->sucursal) ? ( ($value=='todas' ) ? DwUtils::resaltar($value, 'Todas') : 'Todas') : DwUtils::resaltar($value, $titular->sucursal); ?></td>
+                        <td><?php echo ($field=='sucursal') ? DwUtils::resaltar($value, $titular->sucursal) : $titular->sucursal; ?></td>
                         <? } ?>
                         <td><?php echo ($titular->estado_usuario == EstadoUsuario::ACTIVO) ? '<span class="label label-success">Activo</span>' : '<span class="label label-important">Bloqueado</span>'; ; ?></td>
                         <td>

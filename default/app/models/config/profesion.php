@@ -63,17 +63,15 @@ class Profesion extends ActiveRecord {
      * @param int $page 
      * @return ActiveRecord
      */
-    public function getListadoProfesion($order='order.nombre.asc', $page='', $empresa=null) {
-        $columns = 'profesion.*';
-        $join = '';        
-        //$conditions 
+    public function getListadoProfesion($order='order.nombre.asc', $page='') {
+       $columns = 'profesion.*';
         $order = $this->get_order($order, 'profesion', array('profesion'=>array('ASC'=>'profesion.nombre ASC, profesion.observacion ASC',
                                                                               'DESC'=>'profesion.nombre DESC, profesion.observacion ASC'),
                                                             'observacion'));
         if($page) {                
-            return $this->paginated("columns: $columns", "join: $join", "order: $order", "page: $page");
+            return $this->paginated("columns: $columns", "order: $order", "page: $page");
         } else {
-            return $this->find("columns: $columns", "join: $join", "order: $order", "page: $page");            
+            return $this->find("columns: $columns", "order: $order", "page: $page");            
         }
     }
     

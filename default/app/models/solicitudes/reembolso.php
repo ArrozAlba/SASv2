@@ -5,7 +5,7 @@
  * @category
  * @package     Models Reembolso
  * @subpackage
- * @author      alexis borges
+ * @author      ALEXIS BORGES TUAALEXIS@GMAIL.COM
  * @copyright    
  */
 class Reembolso extends ActiveRecord {
@@ -77,34 +77,39 @@ class Reembolso extends ActiveRecord {
         return ($rs) ? $obj : FALSE;
     }
 
+
+     public function getListadoRegistroReembolso($order='order.descripcion.asc', $page='', $empresa=null) {
+        $columnas = 'a.id as idsolicitudservicio, a.estado_solicitud, a.tiposolicitud_id, a.fecha_solicitud, a.codigo_solicitud, a.titular_id, a.beneficiario_id, a.patologia_id, a.proveedor_id, a.medico_id, a.servicio_id, a.fecha_vencimiento, a.observacion, c.celular, c.nombre1 as nombre, c.apellido1 as apellido, c.id as idtitular, d.id as idproveedor, d.nombre_corto as proveedor, e.id as idservicio, e.descripcion as servicio, f.id idpatologia, f.descripcion as patologia, g.id as idtiposolicitud, g.nombre as tiposolicitud ';
+        $join= 'as a INNER JOIN titular as c ON (a.titular_id = c.id) ';
+        $join.= 'INNER JOIN proveedor as d ON (a.proveedor_id = d.id) ';
+        $join.= 'INNER JOIN servicio as e ON (a.servicio_id = e.id) ';
+        $join.= 'INNER JOIN patologia as f ON (a.patologia_id = f.id) ';
+        $join.= 'INNER JOIN tiposolicitud as g ON (a.tiposolicitud_id = g.id) ';
+        $conditions = "a.estado_solicitud = 'R' ";
+        $order = $this->get_order($order, 'a', array('solicitud_servicio'=>array('ASC'=>'solicitud_servicio.descripcion ASC, solicitud_servicio.tipo_solicitud_servicio ASC',
+                                                                              'DESC'=>'solicitud_servicio.descripcion DESC, solicitud_servicio.tipo_solicitud_servicio ASC',
+                                                                              )));
+        if($page) {                
+            return $this->paginated("columns: $columnas", "join: $join", "conditions: $conditions", "order: $order", "page: $page");
+        } else {
+            return $this->find("columns: $columnas", "join: $join", "conditions: $conditions", "order: $order", "page: $page");            
+        }
+    }
+
+
+
+
     /**
      * Método que se ejecuta antes de guardar y/o modificar     
      */
     public function before_save() {        
-        /* 
-        $this->slug = DwUtils::getSlug($this->sucursal); 
-        $this->direccion = Filter::get($this->direccion, 'string');
-        $this->telefono = Filter::get($this->telefono, 'numeric');
-        $this->celular = Filter::get($this->celular, 'numeric');
-        $this->fax = Filter::get($this->fax, 'numeric');        
-        
-        $conditions = "sucursal = '$this->sucursal' AND ciudad_id = $this->ciudad_id AND empresa_id = $this->empresa_id";
-        $conditions.= (isset($this->id)) ? " AND id != $this->id" : '';
-        if($this->count("conditions: $conditions")) {
-            DwMessage::error('Lo sentimos, pero ya existe una sucursal registrada con el mismo nombre y ciudad.');
-            return 'cancel';
-        }
-   */     
     }
     
     /**
      * Callback que se ejecuta antes de eliminar
      */
     public function before_delete() {
-        /*if($this->id == 1) { //Para no eliminar la información de sucursal
-            DwMessage::warning('Lo sentimos, pero esta sucursal no se puede eliminar.');
-            return 'cancel';
-        }*/
+
     }
     
 }

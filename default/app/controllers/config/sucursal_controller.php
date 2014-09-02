@@ -11,6 +11,7 @@
  */
 
 Load::models('config/sucursal');
+Load::models('params/pais', 'params/estado', 'params/municipio', 'params/parroquia');
 
 class SucursalController extends BackendController {
     
@@ -44,14 +45,20 @@ class SucursalController extends BackendController {
      * Método para agregar
      */
     public function agregar() {
-        $empresa = Session::get('empresa', 'config');
-        if(Input::hasPost('sucursal')) {
-            if(Sucursal::setSucursal('create', Input::post('sucursal'), array('empresa_id'=>$empresa->id, 'parroquia_id'=>Input::post('parroquia_id')))) {
+        $pais = new Pais(); 
+        $estado = new Estado(); 
+        $municipio = new Municipio();
+        //$empresa = Session::get('empresa', 'config');
+        $empresa = 1;
+        if(Input::hasPost('sucursal')){
+            if(Sucursal::setSucursal('create', Input::post('sucursal'), array('empresa_id'=>$empresa))){
                 DwMessage::valid('La sucursal se ha registrado correctamente!');
                 return DwRedirect::toAction('listar');
-            }            
+            }  
         } 
-        //$this->parroquias = Load::model('params/parroquia')->getParroquiasToJson();
+        $this->pais = $pais->getListadoPais();           
+        $this->estado = $estado->getListadoEstado(); 
+        $this->municipio = $municipio->getListadoMunicipio(); 
         $this->page_title = 'Agregar sucursal';
     }
     
@@ -103,6 +110,25 @@ class SucursalController extends BackendController {
         
         return DwRedirect::toAction('listar');
     }
+    //obtener los paises, estados, parroquias, etc
+
+    public function getEstadoPais(){
+       View::response('view'); 
+       $this->pais_id=Input::post('pais_id');
+    }
+
+    public function getMunicipioEstado(){
+       View::response('view'); 
+       $this->estado_id=Input::post('estado_id');
+    }
+
+     public function getParroquiaMunicipio(){
+       View::response('view'); 
+       $this->municipio_id=Input::post('municipio_id');
+    }
+
+
+
     
 }
 

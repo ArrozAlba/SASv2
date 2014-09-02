@@ -1,3 +1,4 @@
+
 <?php
 /**
  * S.A.S
@@ -7,45 +8,25 @@
  * @category
  * @package     Models
  * @subpackage
- * @author      Javier León (jel1284@gmail.com)
+ * @author      Grupo SAS IuTEP (jel1284@gmail.com)
  * @copyright   Copyright (c) 2014 UPTP / E.M.S. Arroz del Alba S.A. (http://autogestion.arrozdelalba.gob.ve) 
  */
-
-//Load::models('sistema/usuario', 'personas/persona');
-
 class beneficiario extends ActiveRecord {
     
     /**
      * Método para definir las relaciones y validaciones
      */
     protected function initialize() {
-	$this->has_one('titular');	
-	$this->belongs_to('persona');
-      //  $this->has_one('usuario');
-      //  $this->has_one('persona');
-
+      $this->has_one('titular');
+      $this->has_many('discapacidad_beneficiario');
     }
    /**
      * Método que devuelve el inner join con el estado_usuario
      * @return string
      */
-//    public static function getInnerEstado() {
-//        return "INNER JOIN (SELECT usuario_id, CASE estado_usuario WHEN ".EstadoUsuario::COD_ACTIVO." THEN '".EstadoUsuario::ACTIVO."' WHEN ".EstadoUsuario::COD_BLOQUEADO." THEN '".EstadoUsuario::BLOQUEADO."' ELSE 'INDEFINIDO' END AS estado_usuario, descripcion FROM (SELECT * FROM estado_usuario ORDER BY estado_usuario.id DESC ) AS estado_usuario GROUP BY estado_usuario.usuario_id,estado_usuario.estado_usuario, descripcion) AS estado_usuario ON estado_usuario.usuario_id = usuario.id ";        
+//public static function getInnerEstado() {
+//return "INNER JOIN (SELECT usuario_id, CASE estado_usuario WHEN ".EstadoUsuario::COD_ACTIVO." THEN '".EstadoUsuario::ACTIVO."' WHEN ".EstadoUsuario::COD_BLOQUEADO." THEN '".EstadoUsuario::BLOQUEADO."' ELSE 'INDEFINIDO' END AS estado_usuario, descripcion FROM (SELECT * FROM estado_usuario ORDER BY estado_usuario.id DESC ) AS estado_usuario GROUP BY estado_usuario.usuario_id,estado_usuario.estado_usuario, descripcion) AS estado_usuario ON estado_usuario.usuario_id = usuario.id ";        
 //    }
-    /**
-     * Método para listar los tipos de identificación
-     * @return array
-     */
-    public function getListBeneficiario() {
-        return $this->find_all_by_sql("select beneficiario.id,beneficiario.titular_id,beneficiario.persona_id,persona.nombre1,persona.apellido1,
-cast(persona.cedula as integer) 
-from beneficiario,persona where beneficiario.persona_id = persona.id");
-    }
-    public function buscar($titular_id){
-        return $this->find_all_by_sql("select beneficiario.id,beneficiario.titular_id,beneficiario.persona_id,(persona.nombre1 || ' ' || persona.apellido1) as nombrefull,
-cast(persona.cedula as integer) 
-from beneficiario,persona where  beneficiario.titular_id = '{$titular_id}' and beneficiario.persona_id = persona.id");
-    }    
     /**
      * Método para obtener titulares
      * @return obj
@@ -53,10 +34,7 @@ from beneficiario,persona where  beneficiario.titular_id = '{$titular_id}' and b
    public function obtener_beneficiarios($beneficiario) {
         if ($beneficiario != '') {
             $beneficiario = stripcslashes($beneficiario);
-            $res = $this->find_all_by_sql("
-select beneficiario.id,beneficiario.titular_id,beneficiario.persona_id,persona.nombre1,persona.apellido1,cast(persona.cedula as integer) 
-from titular,beneficiario,persona where beneficiario.titular_id in (select id from titular) and persona.cedula like '%{$beneficiario}%' 
-and beneficiario.persona_id = persona.id ");
+            $res = $this->find_all_by_sql(" select beneficiario.id,beneficiario.titular_id,beneficiario.persona_id,beneficiario.nombre1,beneficiario.apellido1,cast(beneficiario.cedula as integer) from titular,beneficiario where beneficiario.titular_id in (select id from titular) and beneficiario.cedula like '%{$beneficiario}%'");
             
             if ($res) {
                 foreach ($res as $beneficiario) {
@@ -106,24 +84,26 @@ and beneficiario.persona_id = persona.id ");
      */
 
     public function getListadobeneficiario($estado, $order='', $page=0) {
-        $columns = 'beneficiario.*, persona.*';
-        $join= 'INNER JOIN persona ON persona.id = beneficiario.persona_id ';        
-//        $join.= 'INNER JOIN tipoempleado  ON  beneficiario.tipoempleado_id = tipoempleado.id ';   
-//        $join.= 'INNER JOIN departamento  ON  beneficiario.departamento_id = departamento.id ';   
-
+        $columns = 'beneficiario.*';        
         $conditions = "";//Por el super usuario
-                       
-           
-        
         if($page) {
-            return $this->paginated("columns: $columns", "join: $join", "page: $page");
+            return $this->paginated("columns: $columns", "page: $page");
         } else {
-            return $this->find("columns: $columns", "join: $join");
+            return $this->find("columns: $columns");
         }  
     }
 
+       public function getListBeneficiario() {
+        return $this->find_all_by_sql("select beneficiario.id,beneficiario.titular_id, beneficiario.nombre1,beneficiario.apellido1, cast(beneficiario.cedula as float) from beneficiario");
+
+
+    }
+    public function buscar($titular_id){
+        return $this->find_all_by_sql("select beneficiario.id,beneficiario.titular_id,(beneficiario.nombre1 || ' ' || beneficiario.apellido1) as nombrefull, cast(beneficiario.cedula as integer) from beneficiario where  beneficiario.titular_id = '{$titular_id}'");
+    }    
+
     /**
-     * Método para verificar si una persona ya se encuentra registrada
+     * Método para verificar si un beneficiaro ya se encuentra registrada
      * @return obj
      */
     protected function _getbeneficiarioRegistrado($method='count') {
@@ -139,17 +119,66 @@ and beneficiario.persona_id = persona.id ");
      * Callback que se ejecuta antes de guardar/modificar
      */
     public function before_save() {
-//        $this->tipoempleado_id = Filter::get($this->tipoempleado_id, 'numeric');
-//        $this->fecha_ingreso = Filter::get($this->fecha_ingreso, 'string'); 
-//        $this->profesion_id = Filter::get($this->profesion_id, 'numeric');
-//        $this->departamento_id = Filter::get($this->departamento_id, 'numeric');
-//        $this->cargo_id = Filter::get($this->cargo_id, 'numeric'); 
-//        $this->observacion = Filter::get($this->observacion, 'string');
-    }    
+    // validar aqui lo del tipo de beneficiario ;) 
+      $paren = Filter::get($this->parentesco_id, 'numeric');
+      $titu = Filter::get($this->titular_id, 'numeric');
+      $parti = Filter::get($this->participacion, 'numeric');
 
-    
+      $columns = 'beneficiario.participacion, beneficiario.parentesco_id ';
+      $conditions = "titular_id = $titu ";
+      $bene = $this->find("columns: $columns", "conditions: $conditions");
+
+      $acum = 0;
+      foreach($bene as $bn):
+        if (($bn->parentesco_id==$paren)&&($bn->parentesco_id==2)){
+            DwMessage::error('Ya existe el benficiario Esposo(a) agregado.');
+            return 'cancel';
+        }
+        elseif (($bn->parentesco_id==$paren)&&($bn->parentesco_id==3)) {
+            DwMessage::error('Ya existe el benficiario Concubino(a) agregado.');
+            return 'cancel';
+        }
+        elseif (($bn->parentesco_id==$paren)&&($bn->parentesco_id==4)) {
+            DwMessage::error('Ya existe el benficiario Madre agregado.');
+            return 'cancel';
+        }
+        elseif (($bn->parentesco_id==$paren)&&($bn->parentesco_id==5)) {
+            DwMessage::error('Ya existe el benficiario Padre agregado.');
+            return 'cancel';
+        }
+        elseif ( (($bn->parentesco_id==2)&&($paren==3))||( ($paren==3)&&($bn->parentesco_id==2) ) ) {
+            DwMessage::error('Ya existe un Esposo(a), no puede agregar un Concubino(a) o Visceversa.');
+            return 'cancel';
+        }
+        $acum = $acum + $bn->participacion;
+      endforeach;
+
+      if($acum+$parti>100){
+        $this->participacion = 100-$acum;
+      }
+      if($paren==4){
+        $this->sexo='F';
+      }elseif ($paren==5) {
+        $this->sexo='M';
+      }
+
+      //espos@ 2
+      //madre 4 padre 5 concubino 3 
+      if(($acum>=100)&&($parti>0)) {
+            DwMessage::error('Lo sentimos, pero ya has agotado la cobertura de la poliza de vida asignada a tus beneficiarios.');
+            return 'cancel';
+      }
+      //guardar en mayusculas todo
+      $this->nombre1 = strtoupper($this->nombre1);
+      $this->nombre2 = strtoupper($this->nombre2);
+      $this->apellido1 = strtoupper($this->apellido1);
+      $this->apellido2 = strtoupper($this->apellido2);
+      $this->observacion = strtoupper($this->observacion);
+      $this->direccion = strtoupper($this->direccion);
+      $this->correo_electronico = strtoupper($this->correo_electronico);
+    }    
     /**
-     * Método para obtener la información de un usuario
+     * Método para obtener la información de un beneficiario solo la informacion basica a traves de su id
      * @return type
      */
     public function getInformacionbeneficiario($beneficiario) {
@@ -157,17 +186,15 @@ and beneficiario.persona_id = persona.id ");
         if(!$beneficiario) {
             return NULL;
         }
-        $columns = 'beneficiario.*, persona.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';
-        $join= 'INNER JOIN persona ON persona.id = beneficiario.persona_id ';        
-        $join.= 'INNER JOIN tipoempleado  ON  beneficiario.tipoempleado_id = tipoempleado.id ';   
-        $join.= 'INNER JOIN departamento  ON  beneficiario.departamento_id = departamento.id ';   
-//        $columnas = 'beneficiario.*, persona.cedula, persona.nombre1, persona.nombre2, persona.apellido1, persona.apellido2, persona.nacionalidad, persona.sexo, persona.fecha_nacimiento, persona.pais_id, persona.estado_id, persona.municipio_id, persona.parroquia_id, persona.direccion_habitacion, persona.estado_civil, persona.celular, persona.telefono, persona.correo_electronico, persona.grupo_sanguineo, persona.fotografia, estado_usuario.estado_usuario, estado_usuario.descripcion, sucursal.sucursal';
-  //      $join = self::getInnerEstado();
-//        $join.= 'INNER JOIN perfil ON perfil.id = usuario.perfil_id ';
-//        $join.= 'INNER JOIN persona ON persona.id = usuario.persona_id ';               
-//        $join.= 'LEFT JOIN sucursal ON sucursal.id = usuario.sucursal_id ';
+        $columns = 'beneficiario.*';
         $condicion = "beneficiario.id = $beneficiario";        
-        return $this->find_first("columns: $columns", "join: $join", "conditions: $condicion");
+        return $this->find_first("columns: $columns", "conditions: $condicion");
     } 
+
+
+//------ Listado de todos los beneficiarios de un titular en especificoooo ----- 16/07/2014 
+    public function getListadoBeneTitular($titular){
+       return $this->find_all_by_sql("SELECT DATE_PART('year', now()) - DATE_PART('year', beneficiario.fecha_nacimiento) as edad, beneficiario.cedula, beneficiario.nombre1, beneficiario.nombre2, beneficiario.apellido1, beneficiario.fecha_nacimiento, beneficiario.nacionalidad, beneficiario.apellido2, beneficiario.sexo, beneficiario.participacion, beneficiario.id, beneficiario_tipo.descripcion, parentesco.id as idparentesco, parentesco.descripcion as parentesco FROM beneficiario INNER JOIN beneficiario_tipo ON beneficiario.beneficiario_tipo_id = beneficiario_tipo.id INNER JOIN parentesco ON beneficiario.parentesco_id = parentesco.id WHERE beneficiario.titular_id = $titular");
+    }
 }
 ?>
