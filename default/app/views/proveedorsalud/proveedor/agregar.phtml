@@ -7,57 +7,57 @@
     <?php echo DwForm::open('', 'post', array('id'=>'form', 'class'=>'dw-validate')); ?>
          <div class="row-fluid">
             <div class="span6">
-                <?php echo DwForm::text('proveedor.rif', array('class'=>'input-xxlarge input-required show-error'), NULL, 'Rif'); ?>
+                <?php echo DwForm::text('proveedor.rif', array('class'=>'input-xxlarge input-required show-error data-toggle="tooltip" title="Ingrese RIF del Proveedor"'), NULL, 'Rif'); ?>
             </div>
             <div class="span6">
-                <?php echo DwForm::text('proveedor.razon_social', array('class'=>'input-xxlarge input-required show-error'), NULL, 'Razon Social'); ?>
+                <?php echo DwForm::text('proveedor.razon_social', array('class'=>'input-xxlarge input-required show-error data-toggle="tooltip" title="Ingrese Razón Social del Proveedor"'), NULL, 'Razón Social'); ?>
             </div>
         </div>
 
         <div class="row-fluid">
             <div class="span6">
-                <?php echo DwForm::text('proveedor.nombre_corto', array('class'=>'input-xxlarge input-required show-error'), NULL, 'Alias'); ?>
+                <?php echo DwForm::text('proveedor.nombre_corto', array('class'=>'input-xxlarge input-required show-error data-toggle="tooltip" title="Ingrese el Alias del Proveedor"'), NULL, 'Alias'); ?>
             </div>
             <div class="span6">
-                <?php echo DwForm::text('proveedor.telefono1', array('class'=>'input-xxlarge input-required mask-alphanum show-error'), NULL, 'Telefono1'); ?>
+                <?php echo DwForm::text('proveedor.telefono1', array('class'=>'input-xxlarge input-required mask-alphanum show-error data-toggle="tooltip" title="Ingrese Teléfono Fijo del Proveedor"'), NULL, 'Teléfono Fijo'); ?>
             </div>
         </div>
         <div class="row-fluid">
             <div class="span6">
-                <?php echo DwForm::text('proveedor.telefono2', array('class'=>'input-xxlarge input-required mask-alphanum  show-error'), NULL, 'Telefono 2'); ?>
+                <?php echo DwForm::text('proveedor.telefono2', array('class'=>'input-xxlarge input-required mask-alphanum  show-error data-toggle="tooltip" title="Ingrese Teléfono Móvil del Proveedor"'), NULL, 'Teléfono Móvil'); ?>
             </div>
             <div class="span6">
-                <?php echo DwForm::text('proveedor.fax', array('class'=>'input-xxlarge mask-alphanum show-error'), NULL, 'Fax'); ?>
+                <?php echo DwForm::text('proveedor.fax', array('class'=>'input-xxlarge mask-alphanum show-error' data-toggle="tooltip" title="Ingrese Número de Fax"), NULL, 'Fax'); ?>
             </div>
         </div>
 
          <div class="row-fluid">
             <div class="span6">
-                <?php echo DwForm::dbSelect('proveedor.pais_id', 'nombre', array('params/pais', 'getListadoPais'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Pais'); ?>
+                <?php echo DwForm::dbSelect('proveedor.pais_id', 'nombre', array('params/pais', 'getListadoPais'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors data-toggle="tooltip" title="Seleccione País del Proveedor"'), NULL, 'País'); ?>
             </div>
             <div class="span6">
-                <?php echo DwForm::dbSelect('proveedor.estado_id', 'nombre', array('params/estado', 'getListadoEstado'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Estado'); ?>
-            </div>
-        </div>
-        <div class="row-fluid">
-            <div class="span6">
-                <?php echo DwForm::dbSelect('proveedor.municipio_id', 'nombre', array('params/municipio', 'getListadoMunicipio'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Municipio'); ?>
-            </div>
-            <div class="span6">
-                <?php echo DwForm::dbSelect('proveedor.parroquia_id', 'nombre', array('params/parroquia', 'getListadoParroquia'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Parroquia'); ?>
+                <?php echo DwForm::dbSelect('proveedor.estado_id', 'nombre', array('params/estado', 'getListadoEstado'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors data-toggle="tooltip" title="Seleccione Estado del Proveedor"'), NULL, 'Estado'); ?>
             </div>
         </div>
         <div class="row-fluid">
             <div class="span6">
-                <?php echo DwForm::text('proveedor.direccion', array('class'=>'input-xxlarge input-required show-error'), NULL, 'Dirección'); ?>
+                <?php echo DwForm::dbSelect('proveedor.municipio_id', 'nombre', array('params/municipio', 'getListadoMunicipio'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors data-toggle="tooltip" title="Seleccione Municipio del Proveedor"'), NULL, 'Municipio'); ?>
             </div>
             <div class="span6">
-                <?php echo DwForm::email('proveedor.correo_electronico', array('class'=>'input-xxlarge show-error'), NULL, 'Correo Electronico'); ?>
+                <?php echo DwForm::dbSelect('proveedor.parroquia_id', 'nombre', array('params/parroquia', 'getListadoParroquia'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors data-toggle="tooltip" title="Seleccione Parroquia del Proveedor"'), NULL, 'Parroquia'); ?>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span6">
+                <?php echo DwForm::text('proveedor.direccion', array('class'=>'input-xxlarge input-required show-error data-toggle="tooltip" title="Ingrese la Dirección del Proveedor"'), NULL, 'Dirección'); ?>
+            </div>
+            <div class="span6">
+                <?php echo DwForm::email('proveedor.correo_electronico', array('class'=>'input-xxlarge show-error data-toggle="tooltip" title="Ingrese Correo Electrónico del Proveedor"'), NULL, 'Correo Electrónico'); ?>
         </div>
        
         <div class="row-fluid">
             <div class="span12">
-                <?php echo DwForm::textarea('proveedor.observacion', array('class'=>'input-xxlarge show-error'), NULL, 'Observación'); ?>
+                <?php echo DwForm::textarea('proveedor.observacion', array('class'=>'input-xxlarge show-error data-toggle="tooltip" title="Ingrese Observación acerca del proveedor"'), NULL, 'Observación'); ?>
             </div>
             
         </div>
