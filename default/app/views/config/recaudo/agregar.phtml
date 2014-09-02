@@ -8,13 +8,13 @@
 
         <div class="row-fluid">
             <div class="span4">
-                <?php echo DwForm::text('recaudo.nombre', array('class'=>'input-xlarge input-required show-error'), NULL, 'Nombre'); ?>
+                <?php echo DwForm::text('recaudo.nombre', array('class'=>'input-xlarge input-required show-error data-toggle="tooltip" title="Ingrese nombre del recaudo"'), NULL, 'Nombre'); ?>
             </div>
             <div class="span4">
-                <?php echo DwForm::text('recaudo.tipo', array('class'=>'input-xlarge input-required show-error', 'autocomplete'=>'off'), NULL, 'Tipo'); ?>
+                <?php echo DwForm::text('recaudo.tipo', array('class'=>'input-xlarge input-required show-error data-toggle="tooltip" title="Ingrese tipo de recaudo', 'autocomplete'=>'off'), NULL, 'Tipo'); ?>
             </div>
             <div class="span4">
-                <?php echo DwForm::text('recaudo.observacion', array('class'=>'input-xlarge show-error', 'autocomplete'=>'off'), NULL, 'Observacion'); ?>
+                <?php echo DwForm::text('recaudo.observacion', array('class'=>'input-xlarge show-error data-toggle="tooltip" title="Ingrese observación de recaudo"', 'autocomplete'=>'off'), NULL, 'Observacion'); ?>
             </div>
         </div>
 
