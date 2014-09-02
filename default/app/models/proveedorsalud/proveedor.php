@@ -45,7 +45,7 @@ class Proveedor extends ActiveRecord {
      */
    public function obtener_proveedores($proveedor) {
         if ($proveedor != '') {
-            $proveedor = stripcslashes($proveedor);
+            $proveedor = stripcslashes(strtoupper($proveedor));
             $res = $this->find('columns: id,nombre_corto, razon_social', "nombre_corto like '%{$proveedor}%' or razon_social like '%{$proveedor}%'");
             if ($res) {
                 foreach ($res as $proveedor) {

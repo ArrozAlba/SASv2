@@ -4,7 +4,7 @@
     $(function() {
         $('table').dwGrid({
             form_search: true,
-            form_action: '<?php echo PUBLIC_PATH; ?>beneficiario/beneficiario/buscar/',
+            form_action: '<?php echo PUBLIC_PATH; ?>beneficiarios/beneficiario/buscar/',
             form_load_data : 'dw-shell-content',
             order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
             order_action: $.KumbiaPHP.publicPath+"beneficiario/beneficiario/listar/"
@@ -54,7 +54,7 @@
                         <td><?php echo $beneficiario->titular_id; ?></td>
                         <td><?php echo $beneficiario->parentesco; ?></td>
                         <?if(APP_OFFICE) { //Si está activa la opción de oficinas ?>
-                        <td><?php echo empty($beneficiario->sucursal) ? 'Todas' : $beneficiario->sucursal; ?></td>
+                        <td><?php echo $beneficiario->sucursal; ?></td>
                         <? } ?>
                         <td><?php // echo ($usuario->estado_usuario == EstadoUsuario::ACTIVO) ? '<span class="label label-success" title="'.$usuario->descripcion.'" rel="tooltip">Activo</span>' : '<span class="label label-important" title="'.$usuario->descripcion.'" rel="tooltip">Bloqueado</span>'; ; ?></td>
                         <td>

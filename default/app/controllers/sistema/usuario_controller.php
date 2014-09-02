@@ -1,16 +1,17 @@
 <?php
 /**
- * Dailyscript - Web | App | Media
+ * S.A.S
  *
- * Descripcion: Controlador que se encarga de la gestión de los usuarios del sistema
+ * Descripcion: Modelo para el manejo de beneficiarioes
  *
- * @category    
- * @package     Controllers 
- * @author      Iván D. Meléndez (ivan.melendez@dailycript.com.co)
- * @copyright   Copyright (c) 2013 Dailyscript Team (http://www.dailyscript.com.co)
+ * @category
+ * @package     Models
+ * @subpackage
+ * @author      Grupo SAS IuTEP (jel1284@gmail.com)
+ * @copyright   Copyright (c) 2014 UPTP / E.M.S. Arroz del Alba S.A. (http://autogestion.arrozdelalba.gob.ve) 
  */
 
-Load::models('personas/persona', 'config/sucursal');
+Load::models('beneficiarios/titular', 'config/sucursal');
 
 class UsuarioController extends BackendController {
     
@@ -64,17 +65,18 @@ class UsuarioController extends BackendController {
      * Método para agregar
      */
     public function agregar() {
-        if(Input::hasPost('persona') && Input::hasPost('usuario')) {
+        if(Input::hasPost('titular') && Input::hasPost('usuario')) {
             ActiveRecord::beginTrans();
-            //Guardo la persona
-            $persona = Persona::setPersona('create', Input::post('persona'));
-            if($persona) {
-                if(Usuario::setUsuario('create', Input::post('usuario'), array('persona_id'=>$persona->id, 'repassword'=>Input::post('repassword'), 'tema'=>'default'))) {
+            //Guardo la titular
+            $titular = titular::settitular('create', Input::post('titular'));
+            if($titular) {
+                if(Usuario::setUsuario('create', Input::post('usuario'), array('titular_id'=>$titular->id, 'repassword'=>Input::post('repassword'), 'tema'=>'default'))) {
                     ActiveRecord::commitTrans();
                     DwMessage::valid('El usuario se ha creado correctamente.');
                     return DwRedirect::toAction('listar');
                 }
-            } else {
+            }
+            else {
                 ActiveRecord::rollbackTrans();
             }            
         }
@@ -98,10 +100,10 @@ class UsuarioController extends BackendController {
         if(Input::hasPost('usuario')) {
             if(DwSecurity::isValidKey(Input::post('usuario_id_key'), 'form_key')) {
                 ActiveRecord::beginTrans();
-                //Guardo la persona
-                $persona = Persona::setPersona('update', Input::post('persona'), array('id'=>$usuario->persona_id));
-                if($persona) {
-                    if(Usuario::setUsuario('update', Input::post('usuario'), array('persona_id'=>$persona->id, 'repassword'=>Input::post('repassword'), 'id'=>$usuario->id, 'login'=>$usuario->login))) {
+                //Guardo la titular
+                $titular = titular::settitular('update', Input::post('titular'), array('id'=>$usuario->titular_id));
+                if($titular) {
+                    if(Usuario::setUsuario('update', Input::post('usuario'), array('titular_id'=>$titular->id, 'repassword'=>Input::post('repassword'), 'id'=>$usuario->id, 'login'=>$usuario->login))) {
                         ActiveRecord::commitTrans();
                         DwMessage::valid('El usuario se ha actualizado correctamente.');
                         return DwRedirect::toAction('listar');
@@ -178,7 +180,7 @@ class UsuarioController extends BackendController {
      * Método para subir imágenes
      */
     public function upload() {     
-        $upload = new DwUpload('fotografia', 'img/upload/personas/');
+        $upload = new DwUpload('fotografia', 'img/upload/titulares/');
         $upload->setAllowedTypes('png|jpg|gif|jpeg');
         $upload->setEncryptName(TRUE);
         $upload->setSize(170, 200, TRUE);

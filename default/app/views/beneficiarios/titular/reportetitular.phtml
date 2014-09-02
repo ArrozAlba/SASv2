@@ -1,0 +1,146 @@
+ <?php
+ // LImpia el bufer (evita los errores de: Some data has already been output ) 
+ob_end_clean(); 
+Load::lib('pdf_cabecera');
+$pdf=new PDF('P','mm','letter');
+//Definiendo las fechas
+$pdf->Open();
+$pdf->AliasNbPages();
+$pdf->AddPage();
+$pdf->SetFont('Times','B',10);
+$pdf->SetFillColor(255);
+$pdf->SetTextColor(000);
+$pdf->SetMargins(8,8,8,8);
+//Imprimiendo las fechas
+$Fecha=date("d/m/Y");
+    $elDia=substr($Fecha,0,2);
+    $elMes=substr($Fecha,3,2);
+    $elYear=substr($Fecha,6,4);
+$pdf->Cell(152);
+$pdf->Cell(45,6,'FECHA',1,1,'C',true);
+$pdf->Cell(154);
+$pdf->Cell(15,6,utf8_decode("DÍA"),1,0,'C',true);
+$pdf->Cell(15,6,'MES',1,0,'C',true);
+$pdf->Cell(15,6,utf8_decode("AÑO"),1,1,'C',true);
+
+//datos del titular 
+$pdf->Cell(45,6,'DATOS DEL TITULAR',1,0,'C',true);
+$pdf->Cell(109,6,'','L',0,'C',true);
+$pdf->Cell(15,6,$elDia,1,0,'C',true);
+$pdf->Cell(15,6,$elMes,1,0,'C',true);
+$pdf->Cell(15,6,$elYear,1,1,'C',true);
+$pdf->SetFont('Times','B',10);
+$pdf->Cell(90,6,'APELLIDO(S) Y NOMBRE(S)',1,0,'C',true);
+$pdf->Cell(32,6,'NACIONALIDAD',1,0,'C',true);
+$pdf->Cell(47,6,utf8_decode('CÉDULA DE IDENTIDAD'),1,0,'C',true);
+$pdf->Cell(30,6,'SEXO',1,1,'C',true);   
+$pdf->SetFont('Times','',9);
+$pdf->Cell(90,6,utf8_decode($nombres.' '.$apellidos),1,0,'C',true);
+$pdf->Cell(32,6,$nacionalidad,1,0,'C',true);
+$pdf->Cell(47,6,$cedula,1,0,'C',true);
+$pdf->Cell(30,6,$sexo,1,1,'C',true);//sexo
+$pdf->SetFont('Times','B',10);
+$pdf->Cell(30,6,'FECHA DE NAC.',1,0,'C',true);
+$pdf->Cell(14,6,'EDAD',1,0,'C',true);
+$pdf->Cell(46,6,'MUNICIPIO',1,0,'C',true);
+$pdf->Cell(30,6,'ESTADO',1,0,'C',true);
+$pdf->Cell(30,6,'EDO. CIVIL',1,0,'C',true); 
+$pdf->Cell(49,6,utf8_decode('TELÉFONOS'),1,1,'C',true); 
+//FEHCA NACIMIENTO
+$pdf->SetFont('Times','',9);
+   if (strlen($fecha_nac)==10)
+    {
+        $elDia=substr($fecha_nac,8,2);
+        $elMes=substr($fecha_nac,5,2);
+        $elYear=substr($fecha_nac,0,4);
+        $FechaNac=$elDia."-".$elMes."-".$elYear;        
+    }
+//$edad= "";
+$pdf->Cell(30,6,$FechaNac,1,0,'C',true);
+$pdf->Cell(14,6,$edad,1,0,'C',true);
+$pdf->Cell(46,6,$municipio,1,0,'C',true);
+$pdf->Cell(30,6,$estado,1,0,'C',true);
+$pdf->Cell(30,6,$estado_civil,1,0,'C',true);
+
+if($telefono!=''){
+    $pdf->Cell(49,6,$telefono.' / '.$celular,1,1,'C',true);
+}else{
+    $pdf->Cell(49,6,$celular,1,1,'C',true);
+}
+$pdf->Ln(3);
+$pdf->SetFont('Times','B',10);  
+$pdf->Cell(199,6,utf8_decode("DIRECCIÓN DE HABITACIÓN"),1,1,'C',true);  
+$pdf->SetFont('Times','',9);
+$pdf->Cell(199,6,utf8_decode('Dirección: '.$direccion),1,1,'L',true);
+
+$pdf->Cell(28,6,utf8_decode('Pais: '.$hpais),1,0,'L',true);   
+$pdf->Cell(34,6,utf8_decode('Estado: '.$hestado),1,0,'L',true);
+$pdf->Cell(63,6,utf8_decode('Parroquia: '.$hparroquia),1,0,'L',true);
+$pdf->Cell(74,6,'E-mail: '.$correo_electronico,1,1,'L',true);
+$pdf->SetFont('Times','B',9);
+
+//--------------DIRECCION DE TRABAJO-------------------------------
+//por ahora emali_corpo vacio 17/06/2014
+$email_corpo = "";
+$pdf->Cell(199,6,utf8_decode('DIRECCIÓN DE TRABAJO'),1,1,'C',true); 
+$pdf->SetFont('Times','',8);
+$pdf->Cell(34,6,'Upsa: '.$upsa,1,0,'L',true);
+$pdf->Cell(121,6,utf8_decode('Dirección: ').$direccionlaboral,1,0,'L',true);
+$pdf->Cell(44,6,'Municipio: '.$municipio_laboral,1,1,'L',true);
+$pdf->Cell(40,6,'Estado: '.$estado_laboral,1,0,'L',true);
+$pdf->Cell(33,6,'Pais: '.$pais_laboral,1,0,'L',true);  
+$pdf->Cell(76,6,'Email: '.$email_corpo,1,0,'L',true); 
+$pdf->Cell(50,6,'Cargo: '.utf8_decode($cargo),1,1,'L',true);
+
+//datos de beneficiarios
+$pdf->Ln(3);
+$pdf->SetFont('Times','B',10);  
+$pdf->Cell(30,6,'OBSERVACION:',1,0,'C',true);    
+$pdf->SetFont('Times','',10);   
+$pdf->MultiCell(169,6,$observacion,1,1,'C',true);   
+$pdf->Ln(3);
+$pdf->SetFont('Times','B',10);  
+$pdf->Cell(199,6,'BENEFICIARIOS INTERNOS',1,1,'C',true);    
+$pdf->Cell(80,6,'APELLIDOS Y NOMBRES',1,0,'C',true);
+$pdf->Cell(26,6,'C.I.',1,0,'C',true);
+$pdf->Cell(23,6,'FECHA NAC.',1,0,'C',true);
+$pdf->Cell(11,6,'EDAD',1,0,'C',true);
+$pdf->Cell(18,6,'SEXO',1,0,'C',true);
+$pdf->Cell(25,6,'PARENTESCO',1,0,'C',true);
+$pdf->Cell(16,6,'PARTIC.',1,1,'C',true);
+$pdf->SetFont('Times','',8);
+
+
+foreach($beneficiarios as $bene){
+$pdf->Cell(80,6,strtoupper(utf8_decode($bene->nombre1.' '.$bene->nombre2.' '.$bene->apellido1.' '.$bene->apellido2)),1,0,'C',true);
+        $elDia=substr($bene->fecha_nacimiento,8,2);
+        $elMes=substr($bene->fecha_nacimiento,5,2);
+        $elYear=substr($bene->fecha_nacimiento,0,4);
+        $fb=$elDia.'-'.$elMes.'-'.$elYear;
+        $pdf->Cell(26,6,$bene->nacionalidad.'-'.$bene->cedula,1,0,'C',true);
+        $pdf->Cell(23,6,$fb,1,0,'C',true);
+        $pdf->Cell(11,6,$bene->edad,1,0,'C',true);
+        $pdf->Cell(18,6,$bene->sexo,1,0,'C',true);
+        $pdf->Cell(25,6,$bene->parentesco,1,0,'C',true);
+        $pdf->Cell(16,6,$bene->participacion.'%',1,1,'C',true);
+}
+
+$pdf->Cell(199,5,'*Acepta los terminos y condiciones establecidas por el Autogestionado de salud. ','T',1,'L',true);
+    $pdf->SetFont('Times','B',10);
+    $pdf->Ln(2);
+    $pdf->Cell(99,6,'TITULAR',0,0,'L',true);
+    $pdf->Cell(35,6,'REGISTRADO POR:  ',0,0,'L',true);
+    $pdf->SetFont('Times','',10);
+    $pdf->Cell(65,6,'COORDINADOR',0,1,'L',true);
+    $pdf->SetFont('Times','B',10);
+    $pdf->Cell(99,6,'FIRMA Y HUELLA',0,0,'L',true);
+    $pdf->Cell(100,6,'FIRMA Y SELLO',0,1,'L',true); 
+    $pdf->Cell(99,6,' ','0',0,'L',true);
+    $pdf->Cell(100,6,' ','0',1,'L',true);
+    $pdf->Cell(100,6,' ','0',1,'L',true);
+    $pdf->Cell(100,6,' ','0',1,'L',true);
+
+
+$pdf->Output();
+
+?>

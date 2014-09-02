@@ -153,7 +153,16 @@
                 $("[rel=tooltip]").tooltip();
             });
         </script>
-
+<script type="text/javascript">
+$(document).ready(function(){
+    $(".row-fluid input ").tooltip({
+        placement : 'top'
+    });
+$(".row-fluid select").tooltip({
+        placement : 'top'
+    });
+});
+</script>
         <?php echo DwDialog::alert('Se ha producido un error en la validación del formulario.', 'subtext: Verifica los datos e intenta nuevamente.', 'title: Formulario incorrecto', 'name: errorForm'); ?>
         <?php if(PRODUCTION) { ?>
         <?php echo DwDialog::alert('Se ha generado la siguiente excepción: <br /><span id="dw-error-ajax"></span>.', 'title: Oops! hemos realizado algo mal.', 'name: errorAjax'); ?>

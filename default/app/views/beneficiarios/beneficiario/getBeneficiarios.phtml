@@ -1,0 +1,17 @@
+<?php
+    echo Form::dbSelect("solicitud_servicio.beneficiario_id", 'nombrefull', array('beneficiario','buscar',$titular_id), '                -  Seleccione  -           ');
+?>		
+ 
+<script type='text/javascript'>
+$("#solicitud_servicio_titular").change(function(){
+    var beneficiario_id     =   $('#beneficiario_id').val();
+        $.ajax({
+          type: "POST",
+          url: "<?php echo PUBLIC_PATH . 'beneficiarios/beneficiario/getBeneficiarios/'; ?>",
+          data: "beneficiario_id=" + beneficiario_id,
+          success: function(html){
+            $("#div_beneficiario").html(html);
+          }
+        });
+    });
+</script>
