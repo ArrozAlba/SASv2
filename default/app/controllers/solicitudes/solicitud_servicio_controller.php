@@ -209,7 +209,7 @@ class SolicitudServicioController extends BackendController {
         if(Input::hasPost('solicitud_servicio') && DwSecurity::isValidKey(Input::post('solicitud_servicio_id_key'), 'form_key')) {
             if(SolicitudServicio::setSolicitudServicio('update', Input::post('solicitud_servicio'), array('id'=>$id))){
                 DwMessage::valid('La solicitud se ha actualizado correctamente!');
-                return DwRedirect::toAction('contabilizar');
+                return DwRedirect::toAction('registro');
             }
         } 
         $this->solicitud_servicio = $solicitud_servicio;

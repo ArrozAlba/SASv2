@@ -54,7 +54,7 @@ class TitularController extends BackendController {
      * Método para obtener titulares
      */
     
-        //accion que busca en los titulares y devuelve el json con los datos
+    //accion que busca en los titulares y devuelve el json con los datos
     public function autocomplete() {
         View::template(NULL);
         View::select(NULL);

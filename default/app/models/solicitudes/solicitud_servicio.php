@@ -44,12 +44,12 @@ class SolicitudServicio extends ActiveRecord {
      */
     public function getInformacionSolicitudServicio($id, $isSlug=false) {
         $id = ($isSlug) ? Filter::get($id, 'string') : Filter::get($id, 'numeric');
-        $columnas = 'a.id, a.estado_solicitud, a.tiposolicitud_id, a.fecha_solicitud, a.codigo_solicitud, a.titular_id, a.beneficiario_id, a.patologia_id, a.proveedor_id, a.medico_id, a.servicio_id, a.fecha_vencimiento, a.observacion, b.celular, b.nombre1 as nombre,b.apellido1 as apellido, c.id as idtitular, d.id idproveedor, d.nombre_corto as proveedor, e.id as idservicio, e.descripcion as servicio, f.id idpatologia, f.descripcion as patologia, g.id idtiposolicitud, g.nombre as tiposolicitud ';
+        $columnas = 'a.id idsolicitudservicio, a.estado_solicitud, a.tiposolicitud_id, a.fecha_solicitud, a.codigo_solicitud, a.titular_id, a.beneficiario_id, a.proveedor_id, a.medico_id, a.servicio_id, a.fecha_vencimiento, a.observacion,b.id idmedico, b.nombre1 as nombrem, b.apellido1 as apellidom, c.cedula, c.celular, c.nombre1 as nombre, c.apellido1 as apellido, c.id as idtitular, d.id idproveedor, d.nombre_corto as proveedor, e.id as idservicio, e.descripcion as servicio, f.nombre1 as nombreb, f.apellido1 as apellidob, f.id as idbeneficiario, g.id idtiposolicitud, g.nombre as tiposolicitud ';
         $join= 'as a INNER JOIN titular as c ON (a.titular_id = c.id) ';
-        $join.= 'INNER JOIN persona as b ON (c.persona_id = b.id) ';        
+        $join.= 'INNER JOIN medico as b ON (a.medico_id = b.id) ';
         $join.= 'INNER JOIN proveedor as d ON (a.proveedor_id = d.id) ';
         $join.= 'INNER JOIN servicio as e ON (a.servicio_id = e.id) ';
-        $join.= 'INNER JOIN patologia as f ON (a.patologia_id = f.id) ';
+        $join.= 'INNER JOIN beneficiario as f ON (a.beneficiario_id = f.id) ';
         $join.= 'INNER JOIN tiposolicitud as g ON (a.tiposolicitud_id = g.id) ';
         $condicion = "a.id = '$id'";
         return $this->find_first("columns: $columnas", "join: $join", "conditions: $condicion");
@@ -81,13 +81,12 @@ class SolicitudServicio extends ActiveRecord {
      * @return ActiveRecord
      */
     public function getListadoRegistroSolicitudServicio($order='order.descripcion.asc', $page='', $empresa=null) {
-        $columnas = 'a.id as idsolicitudservicio, a.estado_solicitud, a.tiposolicitud_id, a.fecha_solicitud, a.codigo_solicitud, a.titular_id, a.beneficiario_id, a.patologia_id, a.proveedor_id, a.medico_id, a.servicio_id, a.fecha_vencimiento, a.observacion, c.celular, c.nombre1 as nombre, c.apellido1 as apellido, c.id as idtitular, d.id as idproveedor, d.nombre_corto as proveedor, e.id as idservicio, e.descripcion as servicio, f.id idpatologia, f.descripcion as patologia, g.id as idtiposolicitud, g.nombre as tiposolicitud ';
+        $columnas = 'a.id as idsolicitudservicio, a.estado_solicitud, a.tiposolicitud_id, a.fecha_solicitud, a.codigo_solicitud, a.titular_id, a.beneficiario_id, a.proveedor_id, a.medico_id, a.servicio_id, a.fecha_vencimiento, a.observacion, c.celular, c.nombre1 as nombre, c.apellido1 as apellido, c.id as idtitular, d.id as idproveedor, d.nombre_corto as proveedor, e.id as idservicio, e.descripcion as servicio, g.id as idtiposolicitud, g.nombre as tiposolicitud ';
         $join= 'as a INNER JOIN titular as c ON (a.titular_id = c.id) ';
         $join.= 'INNER JOIN proveedor as d ON (a.proveedor_id = d.id) ';
         $join.= 'INNER JOIN servicio as e ON (a.servicio_id = e.id) ';
-        $join.= 'INNER JOIN patologia as f ON (a.patologia_id = f.id) ';
         $join.= 'INNER JOIN tiposolicitud as g ON (a.tiposolicitud_id = g.id) ';
-        $conditions = "a.estado_solicitud = 'R' ";
+        $conditions = "a.estado_solicitud = 'R' or a.estado_solicitud= 'E' ";
         $order = $this->get_order($order, 'a', array('solicitud_servicio'=>array('ASC'=>'solicitud_servicio.descripcion ASC, solicitud_servicio.tipo_solicitud_servicio ASC',
                                                                               'DESC'=>'solicitud_servicio.descripcion DESC, solicitud_servicio.tipo_solicitud_servicio ASC',
                                                                               )));
@@ -105,11 +104,10 @@ class SolicitudServicio extends ActiveRecord {
      * @return ActiveRecord
      */
     public function getListadoAprobacionSolicitudServicio($order='order.descripcion.asc', $page='', $empresa=null) {
-        $columnas = 'a.id as idsolicitudservicio, a.estado_solicitud, a.tiposolicitud_id, a.fecha_solicitud, a.codigo_solicitud, a.titular_id, a.beneficiario_id, a.patologia_id, a.proveedor_id, a.medico_id, a.servicio_id, a.fecha_vencimiento, a.observacion, c.celular, c.nombre1 as nombre, c.apellido1 as apellido, c.id as idtitular, d.id as idproveedor, d.nombre_corto as proveedor, e.id as idservicio, e.descripcion as servicio, f.id idpatologia, f.descripcion as patologia, g.id as idtiposolicitud, g.nombre as tiposolicitud ';
+        $columnas = 'a.id as idsolicitudservicio, a.estado_solicitud, a.tiposolicitud_id, a.fecha_solicitud, a.codigo_solicitud, a.titular_id, a.beneficiario_id, a.proveedor_id, a.medico_id, a.servicio_id, a.fecha_vencimiento, a.observacion, c.celular, c.nombre1 as nombre, c.apellido1 as apellido, c.id as idtitular, d.id as idproveedor, d.nombre_corto as proveedor, e.id as idservicio, e.descripcion as servicio, g.id as idtiposolicitud, g.nombre as tiposolicitud ';
         $join= 'as a INNER JOIN titular as c ON (a.titular_id = c.id) ';
         $join.= 'INNER JOIN proveedor as d ON (a.proveedor_id = d.id) ';
         $join.= 'INNER JOIN servicio as e ON (a.servicio_id = e.id) ';
-        $join.= 'INNER JOIN patologia as f ON (a.patologia_id = f.id) ';
         $join.= 'INNER JOIN tiposolicitud as g ON (a.tiposolicitud_id = g.id) ';
         $conditions = "a.estado_solicitud = 'R' or a.estado_solicitud = 'A' ";
         $order = $this->get_order($order, 'a', array('solicitud_servicio'=>array('ASC'=>'solicitud_servicio.descripcion ASC, solicitud_servicio.tipo_solicitud_servicio ASC',
@@ -183,12 +181,7 @@ class SolicitudServicio extends ActiveRecord {
         if ($optData) {
             $obj->dump_result_self($optData);
         }   
-        
-        /*if($method!='delete') {
-            $obj->ciudad_id = Ciudad::setCiudad($obj->ciudad)->id;        
-        }*/
         $rs = $obj->$method();
-        
         return ($rs) ? $obj : FALSE;
     }
 

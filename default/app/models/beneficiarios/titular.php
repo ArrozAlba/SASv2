@@ -112,15 +112,14 @@ class Titular extends ActiveRecord {
         if ($titular != '') {
             $titular = stripcslashes($titular);
             $res = $this->find_all_by_sql(" select titular.id,titular.nombre1,titular.apellido1,cast(titular.cedula as integer) from titular where titular.cedula like '%{$titular}%'");
-            
-            if ($res) {
+            if ($res){
                 foreach ($res as $titular) {
                     $titulares[] = array('id'=>$titular->id,'value'=>$titular->cedula,'idnombre'=>$titular->nombre1.' '.$titular->nombre2.' '.$titular->apellido1.' '.$titular->apellido2);
                 }
                 return $titulares;
             }
         }
-        return array('No hubo coincidencias');
+       return array('No hubo coincidencias');
     }
     /**
      * Método para verificar si una persona ya se encuentra registrada
