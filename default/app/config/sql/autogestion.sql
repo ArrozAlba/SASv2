@@ -3275,7 +3275,6 @@ CREATE TABLE solicitud_servicio (
     titular_id integer NOT NULL,
     beneficiario_id integer NOT NULL,
     beneficiario_tipo character(1) DEFAULT 1 NOT NULL,
-    patologia_id integer NOT NULL,
     proveedor_id integer NOT NULL,
     medico_id integer NOT NULL,
     fecha_vencimiento date DEFAULT '1900-01-01'::date,
@@ -3363,13 +3362,6 @@ COMMENT ON COLUMN solicitud_servicio.beneficiario_id IS 'Codigo del Beneficiario
 --
 
 COMMENT ON COLUMN solicitud_servicio.beneficiario_tipo IS 'beneficiario de la Solicitud';
-
-
---
--- Name: COLUMN solicitud_servicio.patologia_id; Type: COMMENT; Schema: public; Owner: arrozalba
---
-
-COMMENT ON COLUMN solicitud_servicio.patologia_id IS 'Codigo de la Patologia';
 
 
 --
@@ -5169,6 +5161,43 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 1645	81990	arrozalba	2014-08-25 21:03:59.511741-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Titular'::text WHERE id = '28'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{28,#,Beneficiarios,icon-user,1,NULL,100,NULL,NULL,1,"2014-03-16 12:46:04.752491-04:30","2014-03-16 12:46:04.752491-04:30"}	{28,#,Titular,icon-user,1,NULL,100,NULL,NULL,1,"2014-03-16 12:46:04.752491-04:30","2014-03-16 12:46:04.752491-04:30"}
 1646	82155	arrozalba	2014-08-25 21:45:31.087574-04:30	127.0.0.1	INSERT	INSERT INTO solicitud_servicio (usuario_id,fecha_registro,fecha_modificado,estado_solicitud,tiposolicitud_id,fecha_solicitud,codigo_solicitud,titular_id,beneficiario_id,beneficiario_tipo,patologia_id,proveedor_id,medico_id,fecha_vencimiento,servicio_id,observacion) VALUES (NULL,DEFAULT,DEFAULT,'R','1',DEFAULT,'SASCM-0001','1','29',DEFAULT,'17230','1','1','2014/08/25','22','no se si camianra')	solicitud_servicio	\N	\N	{6,1,1,NULL,"no se si camianra",22,17230,1,"2014-08-25 21:45:31.087574-04:30",29,1900-01-01,SASCM-0001,R,"2014-08-25 21:45:31.087574-04:30",1,1,2014-08-25}
 1647	81841	arrozalba	2014-08-26 14:23:10.421677-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{359,127.0.0.1,NULL,1,1,NULL,"2014-08-26 14:23:10.421677-04:30","2014-08-26 14:23:10.421677-04:30",NULL,NULL}
+1648	467447	arrozalba	2014-08-30 15:47:12.490197-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{360,127.0.0.1,NULL,1,1,NULL,"2014-08-30 15:47:12.490197-04:30","2014-08-30 15:47:12.490197-04:30",NULL,NULL}
+1649	467447	arrozalba	2014-08-30 19:51:55.941498-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{361,127.0.0.1,NULL,1,1,NULL,"2014-08-30 19:51:55.941498-04:30","2014-08-30 19:51:55.941498-04:30",NULL,NULL}
+1650	467447	arrozalba	2014-08-31 12:33:08.511756-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{362,127.0.0.1,NULL,1,1,NULL,"2014-08-31 12:33:08.511756-04:30","2014-08-31 12:33:08.511756-04:30",NULL,NULL}
+1651	467447	arrozalba	2014-08-31 13:37:36.414024-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{363,127.0.0.1,NULL,1,1,NULL,"2014-08-31 13:37:36.414024-04:30","2014-08-31 13:37:36.414024-04:30",NULL,NULL}
+1652	467447	arrozalba	2014-08-31 18:51:39.63464-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{364,127.0.0.1,NULL,1,1,NULL,"2014-08-31 18:51:39.63464-04:30","2014-08-31 18:51:39.63464-04:30",NULL,NULL}
+1653	467447	arrozalba	2014-08-31 19:32:24.012951-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('2',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{365,127.0.0.1,NULL,2,2,NULL,"2014-08-31 19:32:24.012951-04:30","2014-08-31 19:32:24.012951-04:30",NULL,NULL}
+1654	467447	arrozalba	2014-08-31 20:46:34.982337-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{366,127.0.0.1,NULL,1,1,NULL,"2014-08-31 20:46:34.982337-04:30","2014-08-31 20:46:34.982337-04:30",NULL,NULL}
+1655	467447	arrozalba	2014-08-31 22:56:28.403071-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('2',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{367,127.0.0.1,NULL,2,1,NULL,"2014-08-31 22:56:28.403071-04:30","2014-08-31 22:56:28.403071-04:30",NULL,NULL}
+1656	467447	arrozalba	2014-08-31 22:56:40.95936-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('2',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{368,127.0.0.1,NULL,2,2,NULL,"2014-08-31 22:56:40.95936-04:30","2014-08-31 22:56:40.95936-04:30",NULL,NULL}
+1657	467447	arrozalba	2014-08-31 22:57:51.902666-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('2',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{369,127.0.0.1,NULL,2,1,NULL,"2014-08-31 22:57:51.902666-04:30","2014-08-31 22:57:51.902666-04:30",NULL,NULL}
+1658	467447	arrozalba	2014-08-31 22:58:00.659702-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('2',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{370,127.0.0.1,NULL,2,2,NULL,"2014-08-31 22:58:00.659702-04:30","2014-08-31 22:58:00.659702-04:30",NULL,NULL}
+1659	467447	arrozalba	2014-08-31 22:59:12.483994-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('2',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{371,127.0.0.1,NULL,2,1,NULL,"2014-08-31 22:59:12.483994-04:30","2014-08-31 22:59:12.483994-04:30",NULL,NULL}
+1660	467447	arrozalba	2014-08-31 22:59:19.929033-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('2',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{372,127.0.0.1,NULL,2,2,NULL,"2014-08-31 22:59:19.929033-04:30","2014-08-31 22:59:19.929033-04:30",NULL,NULL}
+1661	467447	arrozalba	2014-08-31 22:59:49.296022-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('2',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{373,127.0.0.1,NULL,2,1,NULL,"2014-08-31 22:59:49.296022-04:30","2014-08-31 22:59:49.296022-04:30",NULL,NULL}
+1662	467447	arrozalba	2014-08-31 22:59:56.909263-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('2',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{374,127.0.0.1,NULL,2,2,NULL,"2014-08-31 22:59:56.909263-04:30","2014-08-31 22:59:56.909263-04:30",NULL,NULL}
+1663	467447	arrozalba	2014-09-01 00:31:56.45856-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('2',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{375,127.0.0.1,NULL,2,1,NULL,"2014-09-01 00:31:56.45856-04:30","2014-09-01 00:31:56.45856-04:30",NULL,NULL}
+1664	467447	arrozalba	2014-09-01 00:33:00.333603-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('2',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{376,127.0.0.1,NULL,2,2,NULL,"2014-09-01 00:33:00.333603-04:30","2014-09-01 00:33:00.333603-04:30",NULL,NULL}
+1665	467447	arrozalba	2014-09-01 00:34:27.765478-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('2',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{377,127.0.0.1,NULL,2,1,NULL,"2014-09-01 00:34:27.765478-04:30","2014-09-01 00:34:27.765478-04:30",NULL,NULL}
+1666	467447	arrozalba	2014-09-01 00:34:34.370627-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('2',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{378,127.0.0.1,NULL,2,2,NULL,"2014-09-01 00:34:34.370627-04:30","2014-09-01 00:34:34.370627-04:30",NULL,NULL}
+1667	467447	arrozalba	2014-09-01 00:35:33.872037-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('2',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{379,127.0.0.1,NULL,2,2,NULL,"2014-09-01 00:35:33.872037-04:30","2014-09-01 00:35:33.872037-04:30",NULL,NULL}
+1668	467447	arrozalba	2014-09-01 00:35:59.153267-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('2',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{380,127.0.0.1,NULL,2,1,NULL,"2014-09-01 00:35:59.153267-04:30","2014-09-01 00:35:59.153267-04:30",NULL,NULL}
+1669	467447	arrozalba	2014-09-01 00:53:31.72089-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('2',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{381,127.0.0.1,NULL,2,2,NULL,"2014-09-01 00:53:31.72089-04:30","2014-09-01 00:53:31.72089-04:30",NULL,NULL}
+1670	467447	arrozalba	2014-09-01 00:54:27.043513-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('2',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{382,127.0.0.1,NULL,2,1,NULL,"2014-09-01 00:54:27.043513-04:30","2014-09-01 00:54:27.043513-04:30",NULL,NULL}
+1671	467447	arrozalba	2014-09-01 00:54:34.17348-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('2',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{383,127.0.0.1,NULL,2,2,NULL,"2014-09-01 00:54:34.17348-04:30","2014-09-01 00:54:34.17348-04:30",NULL,NULL}
+1672	467447	arrozalba	2014-09-01 00:55:12.06466-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('2',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{384,127.0.0.1,NULL,2,1,NULL,"2014-09-01 00:55:12.06466-04:30","2014-09-01 00:55:12.06466-04:30",NULL,NULL}
+1673	467447	arrozalba	2014-09-01 00:55:41.103843-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('2',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{385,127.0.0.1,NULL,2,2,NULL,"2014-09-01 00:55:41.103843-04:30","2014-09-01 00:55:41.103843-04:30",NULL,NULL}
+1674	467447	arrozalba	2014-09-01 00:55:53.764166-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('2',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{386,127.0.0.1,NULL,2,1,NULL,"2014-09-01 00:55:53.764166-04:30","2014-09-01 00:55:53.764166-04:30",NULL,NULL}
+1675	86817	arrozalba	2014-09-02 14:34:07.320482-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{387,127.0.0.1,NULL,1,1,NULL,"2014-09-02 14:34:07.320482-04:30","2014-09-02 14:34:07.320482-04:30",NULL,NULL}
+1676	86817	arrozalba	2014-09-02 17:32:45.817662-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{388,127.0.0.1,NULL,1,1,NULL,"2014-09-02 17:32:45.817662-04:30","2014-09-02 17:32:45.817662-04:30",NULL,NULL}
+1677	86817	arrozalba	2014-09-02 18:18:49.187594-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{389,127.0.0.1,NULL,1,1,NULL,"2014-09-02 18:18:49.187594-04:30","2014-09-02 18:18:49.187594-04:30",NULL,NULL}
+1678	87075	postgres	2014-09-02 19:26:13.613579-04:30	127.0.0.1	DELETE	DELETE FROM public.solicitud_servicio WHERE id = '6'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,observacion,servicio_id,patologia_id,proveedor_id,fecha_registro,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{6,NULL,1,1,NULL,"no se si camianra",22,17230,1,"2014-08-25 21:45:31.087574-04:30",29,1900-01-01,SASCM-0001,R,"2014-08-25 21:45:31.087574-04:30",NULL,1,1,2014-08-25}	\N
+1679	87075	arrozalba	2014-09-02 21:13:00.714053-04:30	127.0.0.1	INSERT	INSERT INTO solicitud_servicio (usuario_id,fecha_registro,fecha_modificado,estado_solicitud,tiposolicitud_id,fecha_solicitud,codigo_solicitud,titular_id,beneficiario_id,beneficiario_tipo,proveedor_id,medico_id,fecha_vencimiento,servicio_id,motivo,motivo_anulacion,observacion) VALUES (NULL,DEFAULT,DEFAULT,'R','1',DEFAULT,'SASCM-0001','1','29',DEFAULT,'1','1','2014-09-24','14',NULL,NULL,'todo al pelo ES JUSTO Y NECESARIO')	solicitud_servicio	\N	\N	{7,NULL,1,1,NULL,"todo al pelo ES JUSTO Y NECESARIO",14,1,"2014-09-02 21:13:00.714053-04:30",29,1900-01-01,SASCM-0001,R,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
+1680	87075	arrozalba	2014-09-02 21:27:31.841705-04:30	127.0.0.1	INSERT	INSERT INTO solicitud_servicio (usuario_id,fecha_registro,fecha_modificado,estado_solicitud,tiposolicitud_id,fecha_solicitud,codigo_solicitud,titular_id,beneficiario_id,beneficiario_tipo,proveedor_id,medico_id,fecha_vencimiento,servicio_id,motivo,motivo_anulacion,observacion) VALUES (NULL,DEFAULT,DEFAULT,'R','1','2014-09-02','SASCM-0002','1','29',DEFAULT,'1','1','2014/09/02','3',NULL,NULL,'pedrito')	solicitud_servicio	\N	\N	{8,NULL,1,1,NULL,pedrito,3,1,"2014-09-02 21:27:31.841705-04:30",29,2014-09-02,SASCM-0002,R,"2014-09-02 21:27:31.841705-04:30",NULL,1,1,2014-09-02}
+1681	87075	arrozalba	2014-09-02 22:00:50.698428-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET estado_solicitud = 'R',tiposolicitud_id = '1',fecha_solicitud = '1900-01-25',codigo_solicitud = 'SASCM-0001',titular_id = '1',beneficiario_id = '29',proveedor_id = '1',medico_id = '1',fecha_vencimiento = '2014-09-24',servicio_id = '14',observacion = 'modifica' WHERE  id = '7'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,observacion,servicio_id,proveedor_id,fecha_registro,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,"todo al pelo ES JUSTO Y NECESARIO",14,1,"2014-09-02 21:13:00.714053-04:30",29,1900-01-01,SASCM-0001,R,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,NULL,1,1,NULL,modifica,14,1,"2014-09-02 21:13:00.714053-04:30",29,1900-01-25,SASCM-0001,R,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
+1682	87075	arrozalba	2014-09-02 22:02:05.762096-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET estado_solicitud = 'R',tiposolicitud_id = '1',fecha_solicitud = '1900-01-25',codigo_solicitud = 'SASCM-0001',titular_id = '1',beneficiario_id = '29',proveedor_id = '5',medico_id = '1',fecha_vencimiento = '2014-09-24',servicio_id = '14',observacion = 'modificala ' WHERE  id = '7'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,observacion,servicio_id,proveedor_id,fecha_registro,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,modifica,14,1,"2014-09-02 21:13:00.714053-04:30",29,1900-01-25,SASCM-0001,R,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,NULL,1,1,NULL,"modificala ",14,5,"2014-09-02 21:13:00.714053-04:30",29,1900-01-25,SASCM-0001,R,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
+1683	86817	arrozalba	2014-09-02 22:22:43.188381-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{390,127.0.0.1,NULL,1,2,NULL,"2014-09-02 22:22:43.188381-04:30","2014-09-02 22:22:43.188381-04:30",NULL,NULL}
+1684	86817	arrozalba	2014-09-02 22:22:46.325725-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{391,127.0.0.1,NULL,1,1,NULL,"2014-09-02 22:22:46.325725-04:30","2014-09-02 22:22:46.325725-04:30",NULL,NULL}
 \.
 
 
@@ -5176,7 +5205,7 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 -- Name: audit_log_log_id_seq; Type: SEQUENCE SET; Schema: audit_log; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('audit_log_log_id_seq', 1647, true);
+SELECT pg_catalog.setval('audit_log_log_id_seq', 1684, true);
 
 
 SET search_path = public, pg_catalog;
@@ -5301,6 +5330,38 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 357	1	2014-08-25 18:28:12.280695-04:30	2014-08-25 18:28:12.280695-04:30	1	\N	\N	\N	\N	127.0.0.1
 358	1	2014-08-25 20:48:20.112789-04:30	2014-08-25 20:48:20.112789-04:30	1	\N	\N	\N	\N	127.0.0.1
 359	1	2014-08-26 14:23:10.421677-04:30	2014-08-26 14:23:10.421677-04:30	1	\N	\N	\N	\N	127.0.0.1
+360	1	2014-08-30 15:47:12.490197-04:30	2014-08-30 15:47:12.490197-04:30	1	\N	\N	\N	\N	127.0.0.1
+361	1	2014-08-30 19:51:55.941498-04:30	2014-08-30 19:51:55.941498-04:30	1	\N	\N	\N	\N	127.0.0.1
+362	1	2014-08-31 12:33:08.511756-04:30	2014-08-31 12:33:08.511756-04:30	1	\N	\N	\N	\N	127.0.0.1
+363	1	2014-08-31 13:37:36.414024-04:30	2014-08-31 13:37:36.414024-04:30	1	\N	\N	\N	\N	127.0.0.1
+364	1	2014-08-31 18:51:39.63464-04:30	2014-08-31 18:51:39.63464-04:30	1	\N	\N	\N	\N	127.0.0.1
+365	2	2014-08-31 19:32:24.012951-04:30	2014-08-31 19:32:24.012951-04:30	2	\N	\N	\N	\N	127.0.0.1
+366	1	2014-08-31 20:46:34.982337-04:30	2014-08-31 20:46:34.982337-04:30	1	\N	\N	\N	\N	127.0.0.1
+367	2	2014-08-31 22:56:28.403071-04:30	2014-08-31 22:56:28.403071-04:30	1	\N	\N	\N	\N	127.0.0.1
+368	2	2014-08-31 22:56:40.95936-04:30	2014-08-31 22:56:40.95936-04:30	2	\N	\N	\N	\N	127.0.0.1
+369	2	2014-08-31 22:57:51.902666-04:30	2014-08-31 22:57:51.902666-04:30	1	\N	\N	\N	\N	127.0.0.1
+370	2	2014-08-31 22:58:00.659702-04:30	2014-08-31 22:58:00.659702-04:30	2	\N	\N	\N	\N	127.0.0.1
+371	2	2014-08-31 22:59:12.483994-04:30	2014-08-31 22:59:12.483994-04:30	1	\N	\N	\N	\N	127.0.0.1
+372	2	2014-08-31 22:59:19.929033-04:30	2014-08-31 22:59:19.929033-04:30	2	\N	\N	\N	\N	127.0.0.1
+373	2	2014-08-31 22:59:49.296022-04:30	2014-08-31 22:59:49.296022-04:30	1	\N	\N	\N	\N	127.0.0.1
+374	2	2014-08-31 22:59:56.909263-04:30	2014-08-31 22:59:56.909263-04:30	2	\N	\N	\N	\N	127.0.0.1
+375	2	2014-09-01 00:31:56.45856-04:30	2014-09-01 00:31:56.45856-04:30	1	\N	\N	\N	\N	127.0.0.1
+376	2	2014-09-01 00:33:00.333603-04:30	2014-09-01 00:33:00.333603-04:30	2	\N	\N	\N	\N	127.0.0.1
+377	2	2014-09-01 00:34:27.765478-04:30	2014-09-01 00:34:27.765478-04:30	1	\N	\N	\N	\N	127.0.0.1
+378	2	2014-09-01 00:34:34.370627-04:30	2014-09-01 00:34:34.370627-04:30	2	\N	\N	\N	\N	127.0.0.1
+379	2	2014-09-01 00:35:33.872037-04:30	2014-09-01 00:35:33.872037-04:30	2	\N	\N	\N	\N	127.0.0.1
+380	2	2014-09-01 00:35:59.153267-04:30	2014-09-01 00:35:59.153267-04:30	1	\N	\N	\N	\N	127.0.0.1
+381	2	2014-09-01 00:53:31.72089-04:30	2014-09-01 00:53:31.72089-04:30	2	\N	\N	\N	\N	127.0.0.1
+382	2	2014-09-01 00:54:27.043513-04:30	2014-09-01 00:54:27.043513-04:30	1	\N	\N	\N	\N	127.0.0.1
+383	2	2014-09-01 00:54:34.17348-04:30	2014-09-01 00:54:34.17348-04:30	2	\N	\N	\N	\N	127.0.0.1
+384	2	2014-09-01 00:55:12.06466-04:30	2014-09-01 00:55:12.06466-04:30	1	\N	\N	\N	\N	127.0.0.1
+385	2	2014-09-01 00:55:41.103843-04:30	2014-09-01 00:55:41.103843-04:30	2	\N	\N	\N	\N	127.0.0.1
+386	2	2014-09-01 00:55:53.764166-04:30	2014-09-01 00:55:53.764166-04:30	1	\N	\N	\N	\N	127.0.0.1
+387	1	2014-09-02 14:34:07.320482-04:30	2014-09-02 14:34:07.320482-04:30	1	\N	\N	\N	\N	127.0.0.1
+388	1	2014-09-02 17:32:45.817662-04:30	2014-09-02 17:32:45.817662-04:30	1	\N	\N	\N	\N	127.0.0.1
+389	1	2014-09-02 18:18:49.187594-04:30	2014-09-02 18:18:49.187594-04:30	1	\N	\N	\N	\N	127.0.0.1
+390	1	2014-09-02 22:22:43.188381-04:30	2014-09-02 22:22:43.188381-04:30	2	\N	\N	\N	\N	127.0.0.1
+391	1	2014-09-02 22:22:46.325725-04:30	2014-09-02 22:22:46.325725-04:30	1	\N	\N	\N	\N	127.0.0.1
 \.
 
 
@@ -5308,7 +5369,7 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 -- Name: acceso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('acceso_id_seq', 359, true);
+SELECT pg_catalog.setval('acceso_id_seq', 391, true);
 
 
 --
@@ -22630,8 +22691,9 @@ SELECT pg_catalog.setval('servicio_tiposolicitud_id_seq', 1, false);
 -- Data for Name: solicitud_servicio; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
-COPY solicitud_servicio (id, usuario_id, fecha_registro, fecha_modificado, estado_solicitud, tiposolicitud_id, fecha_solicitud, codigo_solicitud, titular_id, beneficiario_id, beneficiario_tipo, patologia_id, proveedor_id, medico_id, fecha_vencimiento, servicio_id, motivo, motivo_anulacion, observacion) FROM stdin;
-6	\N	2014-08-25 21:45:31.087574-04:30	2014-08-25 21:45:31.087574-04:30	R	1	1900-01-01	SASCM-0001	1	29	1	17230	1	1	2014-08-25	22	\N	\N	no se si camianra
+COPY solicitud_servicio (id, usuario_id, fecha_registro, fecha_modificado, estado_solicitud, tiposolicitud_id, fecha_solicitud, codigo_solicitud, titular_id, beneficiario_id, beneficiario_tipo, proveedor_id, medico_id, fecha_vencimiento, servicio_id, motivo, motivo_anulacion, observacion) FROM stdin;
+8	\N	2014-09-02 21:27:31.841705-04:30	2014-09-02 21:27:31.841705-04:30	R	1	2014-09-02	SASCM-0002	1	29	1	1	1	2014-09-02	3	\N	\N	pedrito
+7	\N	2014-09-02 21:13:00.714053-04:30	2014-09-02 21:13:00.714053-04:30	R	1	1900-01-25	SASCM-0001	1	29	1	5	1	2014-09-24	14	\N	\N	modificala 
 \.
 
 
@@ -22639,7 +22701,7 @@ COPY solicitud_servicio (id, usuario_id, fecha_registro, fecha_modificado, estad
 -- Name: solicitud_servicio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('solicitud_servicio_id_seq', 6, true);
+SELECT pg_catalog.setval('solicitud_servicio_id_seq', 8, true);
 
 
 --
@@ -23105,7 +23167,7 @@ COPY usuario_clave (id, usuario_id, fecha_registro, fecha_modificado, password, 
 -- Name: usuario_clave_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('usuario_clave_id_seq', 11, true);
+SELECT pg_catalog.setval('usuario_clave_id_seq', 26, true);
 
 
 --
@@ -25118,14 +25180,6 @@ ALTER TABLE ONLY solicitud_servicio_patologia_factura_pagos_dt
 
 ALTER TABLE ONLY solicitud_servicio_patologia_factura_pagos_dt
     ADD CONSTRAINT solicitud_servicio_patologia_factura_pagos_id_fkey FOREIGN KEY (pagos_id) REFERENCES solicitud_servicio_patologia_factura_pagos(id);
-
-
---
--- Name: solicitud_servicio_patologia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
---
-
-ALTER TABLE ONLY solicitud_servicio
-    ADD CONSTRAINT solicitud_servicio_patologia_id_fkey FOREIGN KEY (patologia_id) REFERENCES patologia(id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
