@@ -22,7 +22,6 @@
                     <th class="col-collapse" data-search="beneficiario">BENEFICIARIO</th>
                     <th class="col-collapse" data-search="proveedor">PROVEEDOR</th>
                     <th class="col-collapse" data-search="servicio">SERVICIO</th>
-                    <th class="col-collapse" data-search="patologia">PATOLOGIA</th>
                     <th class="col-collapse" data-search="observacion">OBSERVACION</th>
                     <th class="col-collapse" data-search="tiposolicitud">TIPO SOLICITUD</th>
                     <th class="col-collapse" data-search="estado">ESTADO</th>
@@ -41,7 +40,6 @@
                         <td><?php echo strtoupper($solicitud_servicio->nombre); echo ' '; echo strtoupper($solicitud_servicio->apellido);?></td>
                         <td><?php echo strtoupper($solicitud_servicio->proveedor); ?></td>
                         <td><?php echo strtoupper($solicitud_servicio->servicio); ?></td>
-                        <td><?php echo strtoupper($solicitud_servicio->patologia); ?></td>
                         <td><?php echo strtoupper($solicitud_servicio->observacion); ?></td>
                         <td><?php echo strtoupper($solicitud_servicio->tiposolicitud); ?></td>
                         <td><?php echo ($solicitud_servicio->estado_solicitud == 'R') ? '<span class="label label-success" title="'.$solicitud_servicio->tiposolicitud.'" rel="tooltip">POR APROBAR</span>' : '<span class="label label-important" title="'.$solicitud_servicio->estado_solicitud.'" rel="tooltip">APROBADA</span>' ; ?>

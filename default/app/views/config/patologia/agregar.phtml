@@ -8,16 +8,16 @@
 
         <div class="row-fluid">
             <div class="span3">
-                <?php echo DwForm::text('patologia.codigo', array('class'=>'input-large input-required mask-alphanum show-error'), NULL, 'Código'); ?>
+                <?php echo DwForm::text('patologia.codigo', array('class'=>'input-large input-required mask-alphanum show-error data-toggle="tooltip" title="Ingrese el código de la patología"'), NULL, 'Código'); ?>
             </div>
             <div class="span3">
-                <?php echo DwForm::text('patologia.descripcion', array('class'=>'input-large input-required mask-alpha show-error'), NULL, 'Nombre'); ?>
+                <?php echo DwForm::text('patologia.descripción', array('class'=>'input-large input-required mask-alpha show-error data-toggle="tooltip" title="Ingrese la descripción de la patología'), NULL, 'Nombre'); ?>
             </div>
             <div class="span3">
-                <?php echo DwForm::text('patologia.observacion', array('class'=>'input-large mask-alpha show-error', 'autocomplete'=>'off'), NULL, 'Observacion'); ?>
+                <?php echo DwForm::text('patologia.observación', array('class'=>'input-large mask-alpha show-error data-toggle="tooltip" title="Ingrese observación de la patología"', 'autocomplete'=>'off'), NULL, 'Observacion'); ?>
             </div>
             <div class="span3">
-                 <?php echo DwForm::dbSelect('patologia.categoria', 'nombre', array('params/pais', 'getListadoPais'), NULL, array('class'=>'input-xlarge input-required mask-pint show-errors'), NULL, 'Categoria'); ?>
+                 <?php echo DwForm::dbSelect('patologia.categoria', 'nombre', array('params/pais', 'getListadoPais'), NULL, array('class'=>'input-xlarge input-required mask-pint show-errors data-toggle="tooltip" title="Ingrese la categoria de la patología"'), NULL, 'Categoria'); ?>
             </div>
 
         </div>

@@ -26,19 +26,19 @@
 
                 <div class="row-fluid">
                     <div class="span6">
-                        <?php echo DwForm::text('empresa.razon_social', array('class'=>'input-xxlarge input-required show-error'), NULL, 'Razón social'); ?>
+                        <?php echo DwForm::text('empresa.razon_social', array('class'=>'input-xxlarge input-required show-error data-toggle="tooltip" title="Ingrese razón social de la empresa'), NULL, 'Razón social'); ?>
                     </div>
                     <div class="span6">
-                        <?php echo DwForm::text('empresa.rif', array('class'=>'input-xxlarge input-required mask-alphanum show-error'), NULL, 'RIF'); ?>
+                        <?php echo DwForm::text('empresa.rif', array('class'=>'input-xxlarge input-required mask-alphanum show-error data-toggle="tooltip" title="Ingrese Rif de la empresa"'), NULL, 'RIF'); ?>
 						</div>
                 </div>
 
                 <div class="row-fluid">
                     <div class="span6">
-                        <?php echo DwForm::text('empresa.pais_id', array('class'=>'input-xxlarge input-required mask-pint show-error'), NULL, 'Pais'); ?>
+                        <?php echo DwForm::text('empresa.pais_id', array('class'=>'input-xxlarge input-required mask-pint show-error data-toggle="tooltip" title="Ingrese pais de la empresa"'), NULL, 'Pais'); ?>
                     </div>
                     <div class="span6">
-                        <?php echo DwForm::text('empresa.representante_legal', array('class'=>'input-xxlarge input-required mask-alphanum show-error'), NULL, 'Representante legal'); ?>
+                        <?php echo DwForm::text('empresa.representante_legal', array('class'=>'input-xxlarge input-required mask-alphanum show-error data-toggle="tooltip" title="Ingrese representante legal de la empresa"'), NULL, 'Representante legal'); ?>
                     </div>
                 </div>
 
@@ -47,35 +47,35 @@
                 </div>
                 <div class="row-fluid">
                     <div class="span6">
-                        <?php echo DwForm::text('empresa.estado_id', array('class'=>'input-xxlarge input-required show-error'), NULL, 'Estado'); ?>
+                        <?php echo DwForm::text('empresa.estado_id', array('class'=>'input-xxlarge input-required show-errordata-toggle="tooltip" title="Ingrese estado de la empresa"'), NULL, 'Estado'); ?>
                     </div>
                     <div class="span6">
-                        <?php echo DwForm::tel('empresa.celular', array('class'=>'input-xxlarge input-required show-error'), NULL, 'Celular'); ?>
+                        <?php echo DwForm::tel('empresa.celular', array('class'=>'input-xxlarge input-required show-error data-toggle="tooltip" title="Ingrese celular de la empresa"'), NULL, 'Celular'); ?>
                     </div>
                 </div>
                 <?php if(APP_OFFICE) { ?>
                 <div class="row-fluid">
                     <div class="span6">
-                        <?php echo DwForm::text('empresa.municipio_id', array('class'=>'input-xxlarge input-required mask-pint show-error'), NULL, 'Municipio'); ?>
+                        <?php echo DwForm::text('empresa.municipio_id', array('class'=>'input-xxlarge input-required mask-pint show-error data-toggle="tooltip" title="Ingrese municipio de la empresa"'), NULL, 'Municipio'); ?>
                     </div>
                     <div class="span6">
-                        <?php echo DwForm::tel('empresa.telefono', array('class'=>'input-xxlarge input-required show-error'), NULL, 'Telefono'); ?>
-                    </div>
-                </div>
-                <div class="row-fluid">
-                    <div class="span6">
-                        <?php echo DwForm::text('empresa.parroquia_id', array('class'=>'input-xxlarge input-required mask-pint show-error'), NULL, 'Parroquia'); ?>
-                    </div>
-                    <div class="span6">
-                        <?php echo DwForm::tel('empresa.fax', array('class'=>'input-xxlarge input-required show-error'), NULL, 'Telefono'); ?>
+                        <?php echo DwForm::tel('empresa.telefono', array('class'=>'input-xxlarge input-required show-error data-toggle="tooltip" title="Ingrese telefono de la empresa"'), NULL, 'Telefono'); ?>
                     </div>
                 </div>
                 <div class="row-fluid">
                     <div class="span6">
-                        <?php echo DwForm::email('empresa.email', array('class'=>'input-xxlarge input-required mask-email show-error'), NULL, 'Email'); ?>
+                        <?php echo DwForm::text('empresa.parroquia_id', array('class'=>'input-xxlarge input-required mask-pint show-error data-toggle="tooltip" title="Ingrese parroquia de la empresa"'), NULL, 'Parroquia'); ?>
                     </div>
                     <div class="span6">
-                        <?php echo DwForm::tel('empresa.pagina_web', array('class'=>'input-xxlarge input-required show-error'), NULL, 'Pagina Web'); ?>
+                        <?php echo DwForm::tel('empresa.fax', array('class'=>'input-xxlarge input-required show-error data-toggle="tooltip" title="ingrese fax de la empresa"'), NULL, 'Telefono'); ?>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span6">
+                        <?php echo DwForm::email('empresa.email', array('class'=>'input-xxlarge input-required mask-email show-error data-toggle="tooltip" title="Ingrese Email de la empresa"'), NULL, 'Email'); ?>
+                    </div>
+                    <div class="span6">
+                        <?php echo DwForm::tel('empresa.pagina_web', array('class'=>'input-xxlarge input-required show-error data-toggle="tooltip" title="Ingrese pagina web de la empresa"'), NULL, 'Pagina Web'); ?>
                     </div>
                 </div>
 
@@ -88,21 +88,21 @@
             <div class="tab-pane" id="tab2">
                 <div class="row-fluid">
                     <div class="span6">
-                        <?php echo DwForm::text('sucursal.direccion', array('class'=>'input-xxlarge input-required input-alphanum mask-alphanum show-error'), NULL, 'Dirección'); ?>
+                        <?php echo DwForm::text('sucursal.direccion', array('class'=>'input-xxlarge input-required input-alphanum mask-alphanum show-error data-toggle="tooltip" title="Ingrese direccion de la sucursal"'), NULL, 'Dirección'); ?>
                     </div>
                     <div class="span6">
-                        <?php echo DwForm::text('ciudad', array('class'=>'input-xxlarge input-required input-alphanum mask-alphanum show-error', 'autocomplete'=>'off'), empty($sucursal->ciudad) ? NULL : $sucursal->ciudad, 'Ciudad'); ?>
+                        <?php echo DwForm::text('ciudad', array('class'=>'input-xxlarge input-required input-alphanum mask-alphanum show-error data-toggle="tooltip" title="Ingrese ciudad de la sucursal"', 'autocomplete'=>'off'), empty($sucursal->ciudad) ? NULL : $sucursal->ciudad, 'Ciudad'); ?>
                     </div>
                 </div>
                 <div class="row-fluid">
                     <div class="span4">
-                        <?php echo DwForm::tel('sucursal.celular', array('class'=>'input-numeric mask-pint show-error'), NULL, 'Celular'); ?>
+                        <?php echo DwForm::tel('sucursal.celular', array('class'=>'input-numeric mask-pint show-error data-toggle="tooltip" title="Ingrese celular de la sucursal"'), NULL, 'Celular'); ?>
                     </div>
                     <div class="span4">
-                        <?php echo DwForm::tel('sucursal.telefono', array('class'=>'input-numeric mask-pint show-error'), NULL, 'Teléfono'); ?>
+                        <?php echo DwForm::tel('sucursal.telefono', array('class'=>'input-numeric mask-pint show-error data-toggle="tooltip" title="Ingrese telefono de la sucursal"'), NULL, 'Teléfono'); ?>
                     </div>
                     <div class="span4">
-                        <?php echo DwForm::tel('sucursal.fax', array('class'=>'input-numeric mask-pint show-error'), NULL, 'Fax'); ?>
+                        <?php echo DwForm::tel('sucursal.fax', array('class'=>'input-numeric mask-pint show-error data-toggle="tooltip" title="Ingrese el fax de la sucursal"'), NULL, 'Fax'); ?>
                     </div>
                     <?php if(!empty($sucursal->id)) { ?>
                     <?php echo DwForm::hidden('sucursal.id', NULL, $sucursal->id); ?>

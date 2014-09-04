@@ -9,7 +9,7 @@
  * @copyright   Copyright (c) 2014 E.M.S. Arroz del Alba S.A. (http://autogestion.arrozdelalba.gob.ve)
  */
 
-Load::models('beneficiarios/beneficiario','personas/persona', 'sistema/usuario','config/discapacidad', 'beneficiarios/discapacidad_beneficiario');
+Load::models('beneficiarios/beneficiario','personas/persona', 'sistema/usuario','config/discapacidad', 'beneficiarios/titular', 'beneficiarios/discapacidad_beneficiario');
 
 class beneficiarioController extends BackendController {
     /**
@@ -93,6 +93,8 @@ class beneficiarioController extends BackendController {
         $this->idtitular = $id;
         $beneficiario=new beneficiario();
         $discapacidad = new Discapacidad();
+        $titular = new Titular();
+        $this->titulares = $titular->getInformacionTitular($id);
         $this->bene = $beneficiario->getListadoBeneTitular($id);
         if(Input::hasPost('beneficiario')) {
             ActiveRecord::beginTrans();

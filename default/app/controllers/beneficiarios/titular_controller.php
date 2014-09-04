@@ -38,6 +38,7 @@ class TitularController extends BackendController {
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
         $field = (Input::hasPost('field')) ? Input::post('field') : $field;
         $value = (Input::hasPost('field')) ? Input::post('value') : $value;
+        $value = strtoupper($value);
         $titular = new Titular();
         $titulares = $titular->getAjaxTitular($field, $value, $order, $page);        
         if(empty($titulares->items)) {
@@ -53,7 +54,7 @@ class TitularController extends BackendController {
      * Método para obtener titulares
      */
     
-        //accion que busca en los titulares y devuelve el json con los datos
+    //accion que busca en los titulares y devuelve el json con los datos
     public function autocomplete() {
         View::template(NULL);
         View::select(NULL);
@@ -316,7 +317,7 @@ class TitularController extends BackendController {
         $this->cedula = $titular->cedula;
         $this->sexo = $titular->sexo;
         $this->fecha_nac = $titular->fecha_nacimiento;
-        $this->estado = strtoupper($titular->estado);
+        $this->estado = strtoupper($titular->esta2);
         $this->municipio = strtoupper($titular->municipio);
         $this->estado_civil = strtoupper($titular->estado_civil);
         switch ($this->estado_civil) {
