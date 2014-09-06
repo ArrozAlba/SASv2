@@ -17,6 +17,7 @@ Load::models('proveedorsalud/medico');
 Load::models('proveedorsalud/especialidad');
 Load::models('beneficiarios/titular');
 Load::models('beneficiarios/beneficiario');
+Load::models('config/patologia');
 
 class SolicitudServicioController extends BackendController {
     /**
@@ -89,7 +90,16 @@ class SolicitudServicioController extends BackendController {
             DwMessage::get('id_no_found');
             return DwRedirect::toAction('registro');
         }
+        ActiveRecord::beginTrans();
+
+        $sol = $solicitud_servicio->getInformacionSolicitudServicio($id);
+        $sol->estado_solicitud="A";
+        $sol->save();
         
+
+
+
+
         if(Input::hasPost('solicitud_servicio') && DwSecurity::isValidKey(Input::post('solicitud_servicio_id_key'), 'form_key')) {
             if(SolicitudServicio::setSolicitudServicio('update', Input::post('solicitud_servicio'), array('id'=>$id))){
                 DwMessage::valid('La solicitud se ha contabilizado correctamente!');

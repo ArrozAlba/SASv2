@@ -34,6 +34,13 @@
             </tbody>
         </table>
 
+        <div class="row-fluid">
+            <div class="span6">
+                <?php echo DwForm::textarea('solicitud_servicio.motivo', array('class'=>'input-xxlarge mask-alphanum show-error'), NULL, 'Observación'); ?>
+            </div>
+            <div class="span6"> </div>
+        </div>
+
         <table id="tabla"><input type="button" id="agregar" value="Agregar Patologia" />
             <!-- Cabecera de la tabla -->
             <thead>
@@ -45,7 +52,7 @@
             <tbody>
                 <tr class="fila-base">
                     <td>   
-                    <?php echo DwForm::text('solicitud_servicio.patologia', array('class'=>'input-xxlarge input-required mask-alpha '), NULL, NULL); ?> <?php echo DwForm::hidden('solicitud_servicio.patologia_id', NULL, ''); ?>
+                    <?php echo DwForm::text('solicitud_servicio.patologia', array('class'=>'input-xxlarge input-required mask-alpha '), NULL, NULL); ?> <?php echo DwForm::hidden('patologia_id[]', NULL, ''); ?>
                     </td>
                     <td class="eliminar">Eliminar</td>
                 </tr>
