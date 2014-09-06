@@ -1,0 +1,105 @@
+<?php View::notify(); ?>
+<div class="container-fluid dw-shell-view">
+    <?php View::process($page_module, $page_title, $set_title); ?>
+    <?php echo DwForm::open('', 'post', array('id'=>'form', 'class'=>'dw-validate')); ?>
+        <div class="row-fluid">
+       <table class="table table-bordered table-hover table-striped table-condensed table-responsive">
+            <thead>
+                <tr>
+                    <th class="col-collapse" data-search="fecha">FECHA SOLICITUD</th>
+                    <th class="col-collapse" data-search="codigo">CODIGO</th>
+                    <th class="col-collapse" data-search="titular">FECHA VENCIMIENTO</th>
+                    <th class="col-collapse" data-search="beneficiario">CEDULA TITULAR</th>
+                    <th class="col-collapse" data-search="beneficiario">NOMBRES TITULAR</th>
+                    <th class="col-collapse" data-search="proveedor">BENEFICIARIO</th>
+                    <th class="col-collapse" data-search="servicio">SERVICIO</th>
+                    <th class="col-collapse" data-search="observacion">PROVEEDOR</th>
+                    <th class="col-collapse" data-search="beneficiario">MEDICO</th>
+                    <th class="col-collapse" data-search="tiposolicitud">ORSERVACION</th>
+                </tr>
+            </thead>
+            <tbody>
+               <tr>
+               <td> <?php echo $solicitud_servicio->fecha_solicitud ?></td>
+                <td> <?php echo $solicitud_servicio->codigo_solicitud ?></td>
+                <td> <?php echo $solicitud_servicio->fecha_vencimiento ?></td>
+                <td> <?php echo $solicitud_servicio->cedula ?></td>
+                <td> <?php echo $solicitud_servicio->nombre." ".$solicitud_servicio->apellido; ?></td>
+                <td> <?php echo $solicitud_servicio->nombreb." ".$solicitud_servicio->apellidob; ?></td>
+                <td> <?php echo $solicitud_servicio->servicio; ?></td>
+                <td> <?php echo $solicitud_servicio->proveedor; ?></td>
+                <td> <?php echo $solicitud_servicio->nombrem." ".$solicitud_servicio->apellidom; ?></td>
+                <td> <?php echo $solicitud_servicio->observacion; ?></td>
+               </tr>
+            </tbody>
+        </table>
+
+        <table id="tabla"><input type="button" id="agregar" value="Agregar Patologia" />
+            <!-- Cabecera de la tabla -->
+            <thead>
+                <tr>
+                    <th>Patologia</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="fila-base">
+                    <td>   
+                    <?php echo DwForm::text('solicitud_servicio.patologia', array('class'=>'input-xxlarge input-required mask-alpha '), NULL, NULL); ?> <?php echo DwForm::hidden('solicitud_servicio.patologia_id', NULL, ''); ?>
+                    </td>
+                    <td class="eliminar">Eliminar</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+        <div class="row-fluid">
+            <div class="form-actions">
+                <?php echo DwButton::save('Guardar Solicitud'); ?>
+                <?php echo DwButton::reset('form'); ?>
+                <?php echo DwButton::cancel(); ?>
+            </div>
+        </div>
+    <?php echo DwForm::close(); ?>
+</div>
+
+<script type="text/javascript">
+$(function(){
+    // Clona la fila oculta que tiene los campos base, y la agrega al final de la tabla
+    $("#agregar").on('click', function(){
+        $("#tabla tbody tr:eq(0)").clone().removeClass('fila-base').appendTo("#tabla tbody");
+    });
+    // Evento que selecciona la fila y la elimina 
+    $(document).on("click",".eliminar",function(){
+        var parent = $(this).parents().get(0);
+        $(parent).remove();
+    });
+});
+ 
+</script>
+<script type="text/javascript" >
+$(document).ready(function(){
+  select: function ll(event, ui) {
+            $('input#solicitud_servicio_codigo_solicitud').val(ui.item.codid);// Asignacion de Id en Campo
+            // $('textarea#solicitud_servicio_observacion').val(ui.item.id);// Asignacion de Id en Campo
+              }
+    $('input#solicitud_servicio_patologia').autocomplete({
+        minLength : 3 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
+            source: function(request, response) {
+                $.ajax({
+                    url: "<?php echo PUBLIC_PATH ?>config/patologia/autocomplete",
+                    data: {'busqueda':request.term},
+                    dataType: "json",
+                    type: "POST",
+                    success: function(data){
+                        response(data);
+                    }
+                });
+            },
+            select: function(event, ui) {
+            $('input#solicitud_servicio_patologia_id').val(ui.item.id);// Asignacion de Id en Campo
+            //$('textarea#solicitud_servicio_observacion').val(ui.item.id);// Asignacion de Id en Campo
+            }
+        }); 
+});
+</script>
+

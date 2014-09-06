@@ -22,7 +22,6 @@
                     <th class="col-collapse" data-search="beneficiario">BENEFICIARIO</th>
                     <th class="col-collapse" data-search="proveedor">PROVEEDOR</th>
                     <th class="col-collapse" data-search="servicio">SERVICIO</th>
-                    <th class="col-collapse" data-search="patologia">PATOLOGIA</th>
                     <th class="col-collapse" data-search="observacion">OBSERVACION</th>
                     <th class="col-collapse" data-search="tiposolicitud">TIPO SOLICITUD</th>
                     <th class="col-collapse" data-search="estado">ESTADO</th>
@@ -31,8 +30,8 @@
             </thead>
             <tbody>
                 <?php foreach($solicitud_servicios->items as $solicitud_servicio): ?>
-                    <?php $key_upd = DwSecurity::getKey($solicitud_servicio->id, 'upd_solicitud_servicio'); ?>
-                    <?php $key_del = DwSecurity::getKey($solicitud_servicio->id, 'del_solicitud_servicio'); ?>
+                    <?php $key_upd = DwSecurity::getKey($solicitud_servicio->idsolicitudservicio, 'upd_solicitud_servicio'); ?>
+                    <?php $key_del = DwSecurity::getKey($solicitud_servicio->idsolicitudservicio, 'del_solicitud_servicio'); ?>
                     <tr>
                         <td><?php echo $solicitud_servicios->counter; ?></td>
                         <td><?php echo $solicitud_servicio->fecha_solicitud; ?></td>
@@ -41,13 +40,12 @@
                         <td><?php echo strtoupper($solicitud_servicio->nombre); echo ' '; echo strtoupper($solicitud_servicio->apellido);?></td>
                         <td><?php echo strtoupper($solicitud_servicio->proveedor); ?></td>
                         <td><?php echo strtoupper($solicitud_servicio->servicio); ?></td>
-                        <td><?php echo strtoupper($solicitud_servicio->patologia); ?></td>
                         <td><?php echo strtoupper($solicitud_servicio->observacion); ?></td>
                         <td><?php echo strtoupper($solicitud_servicio->tiposolicitud); ?></td>
                         <td><?php echo ($solicitud_servicio->estado_solicitud == 'C') ? '<span class="label label-success" title="'.$solicitud_servicio->tiposolicitud.'" rel="tooltip">CONTABILIZADA</span>' : '<span class="label label-important" title="'.$solicitud_servicio->estado_solicitud.'" rel="tooltip">POR CONTABILIZAR</span>' ; ?>
                         </td>
                         <td>
-                        <?php echo ($solicitud_servicio->estado_solicitud == 'C') ? DwHtml::buttonTable('REVERSAR SOLICITUD', "solicitudes/solicitud_servicio/modificar/$key_upd/", null, 'warning', 'repeat') : DwHtml::buttonTable('CONTABILIZAR SOLICITUD', "solicitudes/solicitud_servicio/contabilizar/$key_upd/", null, 'default', 'list'); ?>
+                        <?php echo DwHtml::buttonTable('CONTABILIZAR SOLICITUD', "solicitudes/solicitud_servicio/contabilizacion/$key_upd/", null, 'default', 'list'); ?>
                         </td>
                     </tr>
                     <?php $solicitud_servicios->counter++; ?>
