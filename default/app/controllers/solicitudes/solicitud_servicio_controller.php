@@ -96,9 +96,7 @@ class SolicitudServicioController extends BackendController {
         $sol->estado_solicitud="A";
         $sol->save();
         
-
-
-
+//aun no entrompo bien aqui 
 
         if(Input::hasPost('solicitud_servicio') && DwSecurity::isValidKey(Input::post('solicitud_servicio_id_key'), 'form_key')) {
             if(SolicitudServicio::setSolicitudServicio('update', Input::post('solicitud_servicio'), array('id'=>$id))){
