@@ -68,19 +68,31 @@ class SolicitudServicioController extends BackendController {
         	$this->page_title = 'Aprobación de Solicitudes de Atención Primaria';
     }
     /**
-     * Método para contabilizar
+     * Método para cargar las solicitudes siniestradas para mandar a facturar
      */
-    public function contabilizar($order='order.nombre.asc', $page='pag.1') { 
+    public function facturacion($order='order.nombre.asc', $page='pag.1') { 
+        $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
+        $solicitud_servicio = new SolicitudServicio();        
+        $this->solicitud_servicios = $solicitud_servicio->getListadoSiniestrosSolicitudServicio($order, $page);
+        $this->order = $order;        
+        $this->page_title = 'Cargar Facturas a las solicitudes de Atención Primaria';
+    }
+
+     /**
+     * Método para 
+     */
+    public function aprobadas($order='order.nombre.asc', $page='pag.1') { 
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
         $solicitud_servicio = new SolicitudServicio();        
         $this->solicitud_servicios = $solicitud_servicio->getListadoContabilizarSolicitudServicio($order, $page);
         $this->order = $order;        
         $this->page_title = 'Contabilizar Solicitudes de Atención Primaria';
     }
+
      /**
-     * Método para contabilizar
+     * Método para cargar los siniestros
      */
-    public function contabilizacion($key) { 
+    public function siniestro($key) { 
         if(!$id = DwSecurity::isValidKey($key, 'upd_solicitud_servicio', 'int')) {
             return DwRedirect::toAction('registro');
         }        
@@ -107,6 +119,43 @@ class SolicitudServicioController extends BackendController {
         $this->solicitud_servicio = $solicitud_servicio;
         $this->page_title = 'Contabilizar solicitud';        
     }
+
+
+     /**
+     * Método para cargar los siniestros
+     */
+    public function facturar($key) { 
+        if(!$id = DwSecurity::isValidKey($key, 'upd_solicitud_servicio', 'int')) {
+            return DwRedirect::toAction('registro');
+        }        
+        
+        $solicitud_servicio = new SolicitudServicio();
+        if(!$solicitud_servicio->getInformacionSolicitudServicio($id)) {            
+            DwMessage::get('id_no_found');
+            return DwRedirect::toAction('registro');
+        }
+      /*  ActiveRecord::beginTrans();
+
+        $sol = $solicitud_servicio->getInformacionSolicitudServicio($id);
+        $sol->estado_solicitud="A";
+        $sol->save();
+        */
+            //aun no entrompo bien aqui 
+
+        if(Input::hasPost('solicitud_servicio') && DwSecurity::isValidKey(Input::post('solicitud_servicio_id_key'), 'form_key')) {
+            if(SolicitudServicio::setSolicitudServicio('update', Input::post('solicitud_servicio'), array('id'=>$id))){
+                DwMessage::valid('La solicitud se ha contabilizado correctamente!');
+                return DwRedirect::toAction('registro');
+            }
+        } 
+        $this->solicitud_servicio = $solicitud_servicio;
+        $this->page_title = 'Cargar Facturas a la solicitud';        
+    }
+
+
+
+
+
 
     /**
      * Método para agregar
@@ -317,4 +366,3 @@ class SolicitudServicioController extends BackendController {
         return DwRedirect::toAction('listar');
     }
 }
-

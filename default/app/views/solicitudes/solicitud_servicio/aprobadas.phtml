@@ -42,10 +42,10 @@
                         <td><?php echo strtoupper($solicitud_servicio->servicio); ?></td>
                         <td><?php echo strtoupper($solicitud_servicio->observacion); ?></td>
                         <td><?php echo strtoupper($solicitud_servicio->tiposolicitud); ?></td>
-                        <td><?php echo ($solicitud_servicio->estado_solicitud == 'C') ? '<span class="label label-success" title="'.$solicitud_servicio->tiposolicitud.'" rel="tooltip">CONTABILIZADA</span>' : '<span class="label label-important" title="'.$solicitud_servicio->estado_solicitud.'" rel="tooltip">POR CONTABILIZAR</span>' ; ?>
+                        <td><?php echo ($solicitud_servicio->estado_solicitud == 'C') ? '<span class="label label-success" title="'.$solicitud_servicio->tiposolicitud.'" rel="tooltip">CONTABILIZADA</span>' : '<span class="label label-important" title="'.$solicitud_servicio->estado_solicitud.'" rel="tooltip">POR CARGAR SINIESTRO</span>' ; ?>
                         </td>
                         <td>
-                        <?php echo DwHtml::buttonTable('CONTABILIZAR SOLICITUD', "solicitudes/solicitud_servicio/contabilizacion/$key_upd/", null, 'default', 'list'); ?>
+                        <?php echo DwHtml::buttonTable('CARGAR SINIESTRO', "solicitudes/solicitud_servicio/siniestro/$key_upd/", null, 'default', 'list'); ?>
                         </td>
                     </tr>
                     <?php $solicitud_servicios->counter++; ?>
