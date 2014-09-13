@@ -8,7 +8,6 @@
  * @copyright    
  */
 class Patologia extends ActiveRecord {
-    
     /**
      * Constante para definir el id de la oficina principal
      */
@@ -18,14 +17,7 @@ class Patologia extends ActiveRecord {
      * Método para definir las relaciones y validaciones
      */
     protected function initialize() {
-    /*  $this->belongs_to('empresa');
-        $this->belongs_to('ciudad');
-        $this->has_many('usuario');
-
-        $this->validates_presence_of('sucursal', 'message: Ingresa el nombre de la sucursal');        
-        $this->validates_presence_of('direccion', 'message: Ingresa la dirección de la sucursal.');
-        $this->validates_presence_of('ciudad_id', 'message: Indica la ciudad de ubicación de la sucursal.');
-    */            
+        $this->has_many('solicitud_servicio_patologia');
     }  
         
     /**
@@ -40,7 +32,6 @@ class Patologia extends ActiveRecord {
         $condicion ="patologia.id = '$id'";
         return $this->find_first("columns: $columnas", "join: $join", "conditions: $condicion");
     } 
-    
     /**
      * Método que devuelve las sucursales
      * @param string $order
@@ -60,7 +51,6 @@ class Patologia extends ActiveRecord {
             return $this->find("columns: $columns", "join: $join", "order: $order", "page: $page");            
         }
     }
-    
     /**
      * Método para setear
      * @param string $method Método a ejecutar (create, update, save)
@@ -113,9 +103,7 @@ class Patologia extends ActiveRecord {
             DwMessage::error('Lo sentimos, pero ya existe una sucursal registrada con el mismo nombre y ciudad.');
             return 'cancel';
         }
-        
     }
-    
     /**
      * Callback que se ejecuta antes de eliminar
      */
@@ -125,5 +113,4 @@ class Patologia extends ActiveRecord {
             return 'cancel';
         }
     }
-    
 }

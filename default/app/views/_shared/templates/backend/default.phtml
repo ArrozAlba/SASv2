@@ -17,6 +17,7 @@
         <?php Tag::css('style'); ?>
         <?php Tag::css('backend/base'); ?>
         <?php Tag::css('backend/style'); ?>
+        <?php Tag::css('backend/style_fact'); ?>
         <?php Tag::css('backend/themes/'.SKIN.'/'.SKIN); ?>
         <?php Tag::css('file-upload'); ?>
         <?php Tag::css('jquery.autocomplete'); ?>
@@ -70,6 +71,8 @@
         <![endif]-->
         <?php echo Tag::js('utils/var').PHP_EOL; ?>
         <?php echo Tag::js('utils/validador').PHP_EOL; ?>
+        <?php echo Tag::js('utils/factura').PHP_EOL; ?>
+        <?php echo Tag::js('utils/jquery.asmselect').PHP_EOL; ?>
 
 
         <script type="text/javascript">

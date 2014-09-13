@@ -103,7 +103,7 @@ class ModelAuth extends Auth2
         $username = filter_var($username, FILTER_SANITIZE_MAGIC_QUOTES);
         $Model = Load::model($this->_model);        
         $Model2 = Load::model($this->_model2);        
-        if ($user = $Model->find_first("$this->_login = '$username'") && $pass = $Model2->find_first("$this->_pass = '$password'")) {
+        if ($user = $Model->find_first("$this->_login = '$username'") && $pass = $Model2->find("columns: password","conditions: password='".$password."'","order: fecha_fin DESC","limit: 1 ")) {
             // Carga los atributos indicados en sesion
             $user = $Model->find_first("$this->_login = '$username'");
             foreach ($this->_fields as $field) {

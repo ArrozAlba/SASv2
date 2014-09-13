@@ -24,6 +24,9 @@ class SolicitudServicio extends ActiveRecord {
         $this->has_one('patologia');
         $this->has_one('proveedor');
         $this->has_one('proveedor_medico');
+        $this->has_many('solicitud_servicio_patologia');
+
+        
         //$this->has_one('titular');
         $this->validates_presence_of('fecha_solicitud', 'message: Ingresa la fecha de Solicitud');
         $this->validates_presence_of('fecha_vencimiento', 'message: Ingresa la fecha de Vencimiento de la Solicitud');
@@ -35,16 +38,14 @@ class SolicitudServicio extends ActiveRecord {
         $this->validates_presence_of('servicio_id', 'message: Ingresa el nombre del representante legal.');
         $this->validates_presence_of('observacion', 'message: Ingresa la pagina Web de la empresa');
     }  
-
-    
     /**
-     * Método para ver la información de una sucursal
+     * Método para ver 
      * @param int|string $id
-     * @return Sucursal
+     * @return 
      */
     public function getInformacionSolicitudServicio($id, $isSlug=false) {
         $id = ($isSlug) ? Filter::get($id, 'string') : Filter::get($id, 'numeric');
-        $columnas = 'a.id idsolicitudservicio, a.estado_solicitud, a.tiposolicitud_id, a.fecha_solicitud, a.codigo_solicitud, a.titular_id, a.beneficiario_id, a.proveedor_id, a.medico_id, a.servicio_id, a.fecha_vencimiento, a.observacion,b.id idmedico, b.nombre1 as nombrem, b.apellido1 as apellidom, c.cedula, c.celular, c.nombre1 as nombre, c.apellido1 as apellido, c.id as idtitular, d.id idproveedor, d.nombre_corto as proveedor, e.id as idservicio, e.descripcion as servicio, f.nombre1 as nombreb, f.apellido1 as apellidob, f.id as idbeneficiario, g.id idtiposolicitud, g.nombre as tiposolicitud ';
+        $columnas = 'a.id, a.estado_solicitud, a.tiposolicitud_id, a.fecha_solicitud, a.codigo_solicitud, a.titular_id, a.beneficiario_id, a.proveedor_id, a.medico_id, a.servicio_id, a.fecha_vencimiento, a.motivo_rechazo, a.observacion,b.id idmedico, b.nombre1 as nombrem, b.apellido1 as apellidom, c.cedula, c.celular, c.nombre1 as nombre, c.apellido1 as apellido, c.id as idtitular, d.id idproveedor, d.nombre_corto as proveedor, e.id as idservicio, e.descripcion as servicio, f.nombre1 as nombreb, f.apellido1 as apellidob, f.id as idbeneficiario, g.id idtiposolicitud, g.nombre as tiposolicitud ';
         $join= 'as a INNER JOIN titular as c ON (a.titular_id = c.id) ';
         $join.= 'INNER JOIN medico as b ON (a.medico_id = b.id) ';
         $join.= 'INNER JOIN proveedor as d ON (a.proveedor_id = d.id) ';
@@ -61,19 +62,15 @@ class SolicitudServicio extends ActiveRecord {
      */
     public function getReporteSolicitudServicio($id, $isSlug=false) {
         $id = ($isSlug) ? Filter::get($id, 'string') : Filter::get($id, 'numeric');
-        $columnas= 'a.id, a.estado_solicitud, a.tiposolicitud_id, a.fecha_solicitud, a.codigo_solicitud, a.titular_id, a.beneficiario_id, a.patologia_id, a.proveedor_id, a.medico_id, a.servicio_id, a.fecha_vencimiento, a.observacion, b.celular, b.nombre1, b.nombre2, b.apellido1,b.apellido2, b.nacionalidad, b.sexo, b.cedula, b.telefono, c.id as idtitular, d.id idproveedor, d.razon_social as proveedor, d.direccion as direccionp, e.id as idservicio, e.descripcion as servicio, f.id idpatologia, f.descripcion as patologia, g.id idtiposolicitud, g.nombre as tiposolicitud, h.nombre1 as nombrem1, h.nombre2 as nombrem2, h.apellido1 as apellidom1, h.apellido2 as apellidom2';
+        $columnas= 'a.id, a.estado_solicitud, a.tiposolicitud_id, a.fecha_solicitud, a.codigo_solicitud, a.titular_id, a.beneficiario_id, a.proveedor_id, a.medico_id, a.servicio_id, a.fecha_vencimiento, a.observacion, c.celular, c.nombre1, c.nombre2, c.apellido1, c.apellido2, c.nacionalidad, c.sexo, c.cedula,  c.telefono, c.id as idtitular, d.id idproveedor, d.razon_social as proveedor, d.direccion as direccionp, e.id as idservicio, e.descripcion as servicio, g.id idtiposolicitud, g.nombre as tiposolicitud, h.nombre1 as nombrem1, h.nombre2 as nombrem2, h.apellido1 as apellidom1, h.apellido2 as apellidom2';
         $join= 'as a INNER JOIN titular as c ON (a.titular_id = c.id) ';
-        $join.= 'INNER JOIN persona as b ON (c.persona_id = b.id) ';        
         $join.= 'INNER JOIN proveedor as d ON (a.proveedor_id = d.id) ';
         $join.= 'INNER JOIN servicio as e ON (a.servicio_id = e.id) ';
-        $join.= 'INNER JOIN patologia as f ON (a.patologia_id = f.id) ';
         $join.= 'INNER JOIN tiposolicitud as g ON (a.tiposolicitud_id = g.id) ';
         $join.= 'INNER JOIN medico as h ON (a.medico_id = h.id) ';
-        $condicion = "a.id = '$id'";
+        $condicion = "a.id = '$id' ";
         return $this->find_first("columns: $columnas", "join: $join", "conditions: $condicion");
     } 
-        
-
     /**
      * Método que devuelve las sucursales
      * @param string $order
@@ -128,11 +125,10 @@ class SolicitudServicio extends ActiveRecord {
      * @return ActiveRecord
      */
     public function getListadoContabilizarSolicitudServicio($order='order.descripcion.asc', $page='', $empresa=null) {
-        $columnas = 'a.id as idsolicitudservicio, a.estado_solicitud, a.tiposolicitud_id, a.fecha_solicitud, a.codigo_solicitud, a.titular_id, a.beneficiario_id, a.patologia_id, a.proveedor_id, a.medico_id, a.servicio_id, a.fecha_vencimiento, a.observacion, c.celular, c.nombre1 as nombre, c.apellido1 as apellido, c.id as idtitular, d.id as idproveedor, d.nombre_corto as proveedor, e.id as idservicio, e.descripcion as servicio, f.id idpatologia, f.descripcion as patologia, g.id as idtiposolicitud, g.nombre as tiposolicitud ';
+        $columnas = 'a.id as idsolicitudservicio, a.estado_solicitud, a.tiposolicitud_id, a.fecha_solicitud, a.codigo_solicitud, a.titular_id, a.beneficiario_id, a.proveedor_id, a.medico_id, a.servicio_id, a.fecha_vencimiento, a.observacion, c.celular, c.nombre1 as nombre, c.apellido1 as apellido, c.id as idtitular, d.id as idproveedor, d.nombre_corto as proveedor, e.id as idservicio, e.descripcion as servicio, g.id as idtiposolicitud, g.nombre as tiposolicitud ';
         $join= 'as a INNER JOIN titular as c ON (a.titular_id = c.id) ';
         $join.= 'INNER JOIN proveedor as d ON (a.proveedor_id = d.id) ';
         $join.= 'INNER JOIN servicio as e ON (a.servicio_id = e.id) ';
-        $join.= 'INNER JOIN patologia as f ON (a.patologia_id = f.id) ';
         $join.= 'INNER JOIN tiposolicitud as g ON (a.tiposolicitud_id = g.id) ';
         $conditions = "a.estado_solicitud = 'A' or a.estado_solicitud = 'C' ";
         $order = $this->get_order($order, 'a', array('solicitud_servicio'=>array('ASC'=>'solicitud_servicio.descripcion ASC, solicitud_servicio.tipo_solicitud_servicio ASC',
@@ -144,6 +140,29 @@ class SolicitudServicio extends ActiveRecord {
             return $this->find("columns: $columnas", "join: $join", "conditions: $conditions", "order: $order", "page: $page");            
         }
     }
+    /*
+    Metodo para listar las Solicitudes con los siniestros ya cargados 
+    */
+    public function getListadoSiniestrosSolicitudServicio($order='order.descripcion.asc', $page='', $empresa=null) {
+        $columnas = 'a.id as idsolicitudservicio, a.estado_solicitud, a.tiposolicitud_id, a.fecha_solicitud, a.codigo_solicitud, a.titular_id, a.beneficiario_id, a.proveedor_id, a.medico_id, a.servicio_id, a.fecha_vencimiento, a.observacion, c.celular, c.nombre1 as nombre, c.apellido1 as apellido, c.id as idtitular, d.id as idproveedor, d.nombre_corto as proveedor, e.id as idservicio, e.descripcion as servicio, g.id as idtiposolicitud, g.nombre as tiposolicitud ';
+        $join= 'as a INNER JOIN titular as c ON (a.titular_id = c.id) ';
+        $join.= 'INNER JOIN proveedor as d ON (a.proveedor_id = d.id) ';
+        $join.= 'INNER JOIN servicio as e ON (a.servicio_id = e.id) ';
+        $join.= 'INNER JOIN tiposolicitud as g ON (a.tiposolicitud_id = g.id) ';
+        $conditions = "a.estado_solicitud = 'S'";
+        $order = $this->get_order($order, 'a', array('solicitud_servicio'=>array('ASC'=>'solicitud_servicio.descripcion ASC, solicitud_servicio.tipo_solicitud_servicio ASC',
+                                                                              'DESC'=>'solicitud_servicio.descripcion DESC, solicitud_servicio.tipo_solicitud_servicio ASC',
+                                                                              )));
+        if($page) {                
+            return $this->paginated("columns: $columnas", "join: $join", "conditions: $conditions", "order: $order", "page: $page");
+        } else {
+            return $this->find("columns: $columnas", "join: $join", "conditions: $conditions", "order: $order", "page: $page");            
+        }
+    }
+
+
+
+
     /**
      * Método que devuelve las sucursales
      * @param string $order
