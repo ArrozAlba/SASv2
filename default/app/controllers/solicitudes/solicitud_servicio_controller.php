@@ -96,22 +96,23 @@ class SolicitudServicioController extends BackendController {
         if(!$id = DwSecurity::isValidKey($key, 'upd_solicitud_servicio', 'int')) {
             return DwRedirect::toAction('registro');
         }        
-        
         $solicitud_servicio = new SolicitudServicio();
         if(!$solicitud_servicio->getInformacionSolicitudServicio($id)) {            
             DwMessage::get('id_no_found');
             return DwRedirect::toAction('registro');
         }
-        ActiveRecord::beginTrans();
-
-        $sol = $solicitud_servicio->getInformacionSolicitudServicio($id);
-        $sol->estado_solicitud="A";
-        $sol->save();
-        
-//aun no entrompo bien aqui 
+        //aun no entrompo bien aqui 
 
         if(Input::hasPost('solicitud_servicio') && DwSecurity::isValidKey(Input::post('solicitud_servicio_id_key'), 'form_key')) {
+            ActiveRecord::beginTrans();
+            $sol = $solicitud_servicio->getInformacionSolicitudServicio($id);
+            $sol->estado_solicitud="A";
+            $sol->save();
+            
+
             if(SolicitudServicio::setSolicitudServicio('update', Input::post('solicitud_servicio'), array('id'=>$id))){
+
+
                 DwMessage::valid('La solicitud se ha contabilizado correctamente!');
                 return DwRedirect::toAction('registro');
             }
