@@ -21,7 +21,7 @@ class SolicitudServicioPatologia extends ActiveRecord {
     public static function setSolServicioPatolgia($datos,$idsolicitud){
         $obj = new SolicitudServicioPatologia();
         $obj->begin();
-        if(!empty($datos)) {
+        if(!empty($datos)){
             foreach($datos as $value) {                 
                // $data = explode('-', $value); //el formato es 1-4 = recurso_id-perfil_id
                 $obj->solicitud_servicio_id = $data[0];
