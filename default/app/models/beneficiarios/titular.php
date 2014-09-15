@@ -280,7 +280,6 @@ class Titular extends ActiveRecord {
         }
         //validand cantidad de nros del telefono y celular 
         if (strlen($this->celular)>1 && (strlen($this->celular)<11)) {
-            echo strlen($this->celular);
             DwMessage::error('Faltan números al telefono Movil (celular) ');
                 return 'cancel';
         }

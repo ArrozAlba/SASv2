@@ -18,7 +18,6 @@
             <li><a href="#tab2" data-toggle="tab">Direccion de Habitación</a></li>
             <li><a href="#tab3" data-toggle="tab">Información laboral</a></li>
             <li><a href="#tab4" data-toggle="tab">Cargar Archivos</a></li>
- 
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="tab1">
@@ -124,7 +123,7 @@
                         <?php echo DwForm::text('titular.direccion_habitacion', array('class'=>'input-xxlarge input-required show-error data-toggle="tooltip" title="Escriba Direcciòn de Habitaciòn Actual del Titular"'), NULL ,'Dirección de Habitación'); ?>
                     </div>
                     <div class="span6">
-                        <?php echo DwForm::email('titular.correo_electronico', array('class'=>'input-xxlarge show-error data-toggle="tooltip" title="Escriba Direcciòn de Correo Electrònico o E-mail"'), NULL ,'Correo Electrònico','Ejemplo: "ArrozAlba@hotmail.com"'); ?>
+                        <?php echo DwForm::email('titular.correo_electronico', array('class'=>'input-xxlarge show-error data-toggle="tooltip" title="Escriba Direcciòn de Correo Electronico o E-mail"'), NULL ,'Correo Electronico','Ejemplo: "ArrozAlba@hotmail.com"'); ?>
                     </div>
                 </div>
             </div><!--cierre del tab2-->
@@ -210,7 +209,7 @@ $(function(){
     var cedula = document.getElementById("titular_cedula");
     var telefono = document.getElementById("titular_telefono");
     var celular = document.getElementById("titular_celular");
-    cedula.maxLength = 8;
+    cedula.maxLength = 11;
     telefono.maxLength = 11;
     celular.maxLength = 11;
     //VALIDAR NRO MINIMO ( NO PERMITIR MENOS DE 11 Xd)
