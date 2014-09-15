@@ -1,13 +1,14 @@
 <?php
 /**
- * Dailyscript - Web | App | Media
+ * S.A.S
  *
- * Descripcion: Controlador que se encarga de la gestión de los usuarios del sistema
+ * Descripcion: Controlador para la gestion de Claves 
  *
- * @category    
- * @package     Controllers 
- * @author      Iván D. Meléndez (ivan.melendez@dailycript.com.co)
- * @copyright   Copyright (c) 2013 Dailyscript Team (http://www.dailyscript.com.co)
+ * @category
+ * @package     Controllers
+ * @subpackage
+ * @author      Javier León (jel1284@gmail.com)
+ * @copyright   Copyright (c) 2014 UPTP / E.M.S. Arroz del Alba S.A. (http://autogestion.arrozdelalba.gob.ve) 
  */
 
 Load::models('beneficiarios/titular', 'config/sucursal', 'sistema/usuario_clave');
@@ -19,37 +20,45 @@ class UsuarioClaveController extends BackendController {
      */
     protected function before_filter() {
         //Se cambia el nombre del módulo actual
-        $this->page_module = 'Gestión de Clave de Usuarios';
+        $this->page_module = 'Usuarios';
     }
+        /**
+     * Método para cambiar clave
+     */
+
     public function cambiar_clave() {
-    $usuval = UsuarioClave::clave_valida(Session::get('id'));
-    $this->title = 'Cambiar clave del usuario';
-    $usuario_clave = new UsuarioClave();
-    //$usuario = $usuario->getUsuarioByEmail($email);
-    $this->id = $usuario_clave->usuario_id;
-    
-    if ($usuval!=1 ) {
-    if (Input::hasPost('usuario_clave')) {
-        try {
-            $data = Input::post('usuario_clave');
-            $id=Session::get('id');
-            if (Load::model('usuario_clave')->cambiar_clave($id, $data['password'], $data['repassword'])) {
-            Flash::success('Cambio de clave realizado exitosamente.');
-            return Router::redirect('/');
-            } else {
-            Input::delete();
-            //$this->usuario = new Usuario(Input::post('usuario'));
+        $this->page_title = 'Cambiar clave del usuario';
+        $usuval = UsuarioClave::clave_valida(Session::get('id'));
+        //$id=Session::get('id');
+        //$data = Input::post('usuario_clave'); 
+        //Load::model('sistema/usuario_clave')->cambiar_clave($id, $data['password'], $data['repassword']);
+        //DwMessage::warning('variable $data: '.var_dump($data).'');               
+
+        
+        //if ($usuval!=1) {
+            if (Input::hasPost('usuario_clave')) {
+                try {
+                    $data = Input::post('usuario_clave');                
+                    $id=Session::get('id');
+                         if (Load::model('sistema/usuario_clave')->cambiar_clave($id, $data['password'], $data['repassword'])) {
+                            Flash::success('Cambio de clave realizado exitosamente.');
+                            
+                            DwAuth::logout();
+                        return Router::redirect('/sistema/login/entrar');
+                        } else {
+                            Input::delete();
+                        }
+                }catch (KumbiaException $kex) {
+                    Input::delete();
+                    Flash::warning("Lo sentimos ha ocurrido un error:");
+                    Flash::error($kex->getMessage());
+                }
+
+                
             }
-        } catch (KumbiaException $kex) {
-        Input::delete();
-        Flash::warning("Lo sentimos ha ocurrido un error:");
-        Flash::error($kex->getMessage());
-        }
-    }
-    } else {
-        Flash::error('La clave para reseteo es incorrecta o ya fue usado.');
-        return Router::redirect('usuario/mail_reset/');
-    }
+            DwMessage::info('clave actualizada');
+        //}        
+        //    DwMessage::warning('Clave aun es valida');
     }
     /**
      * Método principal
