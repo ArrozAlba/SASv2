@@ -248,6 +248,8 @@ class Titular extends ActiveRecord {
         $this->fecha_ingreso = Filter::get($this->fecha_ingreso, 'string'); 
         $this->profesion_id = Filter::get($this->profesion_id, 'numeric');
         $this->departamento_id = Filter::get($this->departamento_id, 'numeric');
+        $this->celular = Filter::get($this->celular, 'numeric');
+        $this->telefono = Filter::get($this->telefono, 'numeric');
         $this->cargo_id = Filter::get($this->cargo_id, 'numeric'); 
         $this->observacion = Filter::get($this->observacion, 'string');
         $this->nombre1 = strtoupper($this->nombre1);
@@ -277,12 +279,13 @@ class Titular extends ActiveRecord {
             return 'cancel';
         }
         //validand cantidad de nros del telefono y celular 
-        if (strlen($this->celular)>1 || strlen($this->celular)<11){
-            DwMessage::error('Faltan numeros al telefono Movil (celular) ');
+        if (strlen($this->celular)>1 && (strlen($this->celular)<11)) {
+            echo strlen($this->celular);
+            DwMessage::error('Faltan números al telefono Movil (celular) ');
                 return 'cancel';
         }
-        if (strlen($this->telefono)>1 || strlen($this->telefono)<11){
-            DwMessage::error('Faltan numeros al telefono Fijo');
+        if (strlen($this->telefono)>1 && (strlen($this->telefono)<11) ){
+            DwMessage::error('Faltan números al telefono Fijo');
                 return 'cancel';
         }
     }
