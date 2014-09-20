@@ -24,9 +24,10 @@ class SolicitudServicioPatologia extends ActiveRecord {
         if(!empty($datos)){
             foreach($datos as $value) {                 
                // $data = explode('-', $value); //el formato es 1-4 = recurso_id-perfil_id
-                $obj->solicitud_servicio_id = $data[0];
-                $obj->solicitud_servcio_id = $idsolicitud;
-                if($obj->exists("solicitud_servicio_id=$obj->solicitud_servicio_id AND patologia_id=$obj->idsolicitud")){
+                $obj->patologia = $datos[1];
+                echo $p = $value[1];
+                //$obj->solicitud_servcio_id = $idsolicitud;
+                if($obj->exists("solicitud_servicio_id=$idsolicitud AND patologia_id=$p")){
                     continue;
                 }
                 if(!$obj->create()) {            

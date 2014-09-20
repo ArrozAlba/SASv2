@@ -32,8 +32,9 @@
                 <td> <?php echo $solicitud_servicio->observacion; ?></td>
                </tr>
             </tbody>
-        </table>
-
+        </table> 
+         <?php  $key_upd = DwSecurity::getKey($solicitud_servicio->id, 'upd_solicitud_servicio'); ?> 
+         <?php echo DwForm::hidden('solicitud_servicio.id', NULL, $key_upd); ?>
         <div class="row-fluid">
             <div class="span6">
                 <?php echo DwForm::textarea('solicitud_servicio.motivo', array('class'=>'input-xxlarge mask-alphanum show-error'), NULL, 'Motivo de Consulta'); ?>
@@ -42,25 +43,26 @@
                 <?php echo DwForm::textarea('solicitud_servicio.diagnostico', array('class'=>'input-xxlarge mask-alphanum show-error'), NULL, 'Diagnostico'); ?>
             </div>
         </div>
+        <div class="row-fluid">
+            <div class="span12">
+              <input name="agregar" type="button" id="agregar" value="Agregar" title="Agregar Patologia" onclick="if(!crear(this)){return false;}" />
+            </div>
+            
 
-        <table id="tabla"><input type="button" id="agregar" value="Agregar Patologia" />
-            <!-- Cabecera de la tabla -->
-            <thead>
-                <tr>
-                    <th>Patologia</th>
-                    <th>&nbsp;</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="fila-base">
-                    <td>   
-                    <?php echo DwForm::text('solicitud_servicio.patologia', array('class'=>'input-xxlarge input-required mask-alpha '), NULL, NULL); ?> <?php echo DwForm::hidden('patologia_id[]', NULL, ''); ?>
-                    </td>
-                    <td class="eliminar">Eliminar</td>
-                </tr>
-            </tbody>
-        </table>
+              <input class="input-xxlarge mask-alphanum" name="solicitud_servicio.patologia" id="solicitud_servicio_patologia"  type="text" onfocus = "if(this.value=='Buscar Medicinas') {this.value=''; this.style.color='#000'}" onblur="if(this.value==''){this.value='Buscar Patologia'; this.style.color='#909090'}" />
+             
+
+             <input type="hidden" name="solicitud_servicio_patologia_id" id="solicitud_servicio_patologia_id" >
+               
+            <!-- DIV PARA AGREGAR LAS PATOLOGIAS CON EL METODO DE ANDRES XD -->
+
+            <div id="ocultar" style="display:none;" class="row-fluid">
+            <div id="capa_datos"></div>
+            </div>
+
         </div>
+
+    </div>
         <div class="row-fluid">
             <div class="form-actions">
                 <?php echo DwButton::save('Siguiente'); ?>
@@ -71,20 +73,6 @@
     <?php echo DwForm::close(); ?>
 </div>
 
-<script type="text/javascript">
-$(function(){
-    // Clona la fila oculta que tiene los campos base, y la agrega al final de la tabla
-    $("#agregar").on('click', function(){
-        $("#tabla tbody tr:eq(0)").clone().removeClass('fila-base').appendTo("#tabla tbody");
-    });
-    // Evento que selecciona la fila y la elimina 
-    $(document).on("click",".eliminar",function(){
-        var parent = $(this).parents().get(0);
-        $(parent).remove();
-    });
-});
- 
-</script>
 <script type="text/javascript" >
 $(document).ready(function(){
   select: function ll(event, ui) {
@@ -112,3 +100,82 @@ $(document).ready(function(){
 });
 </script>
 
+<script type="text/javascript" >
+//funcion para borrar los objetos creados.
+function borrar(obj) {  
+  field = document.getElementById('capa_datos'); 
+  field.removeChild(document.getElementById(obj));    
+  icremento--; 
+   if(icremento==1){
+      $("#ocultar").css("display", "none"); 
+  }
+  return true;
+}
+
+
+var icremento =1;
+function crear(obj) {
+    if(icremento>5){
+        $("#capa_datos").css({                     
+                "margin": "auto",
+                "text-align":"center",
+                "width": "auto",
+                "height": "124px",      
+                "padding": "2px",
+                "border-radius": "4px",
+                "overflow": "auto"
+            })
+    }
+
+    var patologia = document.getElementById('solicitud_servicio_patologia').value;   
+    var patologia_id = document.getElementById('solicitud_servicio_patologia_id').value;
+//para validar que no repita el patologia en el arreglo.
+   for(var i=0;i<document.getElementsByName('patologia_id[]').length;i++)
+    {                               
+        if (document.getElementsByName('patologia_id[]')[i].value==patologia_id){
+            alert('Estas intentando agregar una patologia con caracteristicas iguales.\nVerifica los datos!');
+            return false;
+        }                 
+    } 
+      field = document.getElementById('capa_datos'); 
+      contenedor = document.createElement('div'); 
+      contenedor.id = 'div'+icremento; 
+      field.appendChild(contenedor); 
+    //patologia id
+      boton = document.createElement('input'); 
+      boton.type = 'hidden'; 
+      boton.name = 'patologia_id'+'[]';
+      boton.vAlign= "middle";
+      boton.id ='patologia_id'+'[]';
+      boton.value =  document.getElementById('solicitud_servicio_patologia_id').value;    
+      
+      contenedor.appendChild(boton); 
+    //cantidad Campo de texto
+      boton = document.createElement('input'); 
+      boton.type = 'text'; 
+      boton.name = 'patologia'+'[]';
+      boton.id = 'cant';
+      boton.vAlign= "middle";
+      boton.value =  document.getElementById('solicitud_servicio_patologia').value;
+      boton.readOnly = true;
+      boton.size='4';
+      boton.className ="input-xxlarge"
+      contenedor.appendChild(boton); 
+        //Boton de borrado 
+      boton = document.createElement('input');
+      boton.vAlign= "middle";
+
+      boton.type = 'button'; 
+      boton.width= '15';
+      boton.height= '15';
+      boton.src = "";
+      boton.name = 'div'+icremento;
+      boton.value = "Eliminar"
+      boton.onclick = function () {borrar(this.name)} 
+      contenedor.appendChild(boton); 
+      icremento++;    
+    $("#ocultar").css("display", "block");
+    return true;    
+}
+
+</script>

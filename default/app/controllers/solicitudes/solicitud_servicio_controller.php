@@ -17,7 +17,7 @@ Load::models('proveedorsalud/medico');
 Load::models('proveedorsalud/especialidad');
 Load::models('beneficiarios/titular');
 Load::models('beneficiarios/beneficiario');
-Load::models('config/patologia');
+Load::models('config/patologia', 'solicitudes/solicitud_servicio_patologia');
 
 class SolicitudServicioController extends BackendController {
     /**
@@ -97,33 +97,39 @@ class SolicitudServicioController extends BackendController {
             return DwRedirect::toAction('registro');
         }        
         $solicitud_servicio = new SolicitudServicio();
+        $solicitud_servicio_patologia = new SolicitudServicioPatologia();
         if(!$solicitud_servicio->getInformacionSolicitudServicio($id)) {            
             DwMessage::get('id_no_found');
             return DwRedirect::toAction('registro');
         }
         //aun no entrompo bien aqui 
 
-        if(Input::hasPost('solicitud_servicio') && DwSecurity::isValidKey(Input::post('solicitud_servicio_id_key'), 'form_key')) {
+        if(Input::hasPost('solicitud_servicio')) {
             ActiveRecord::beginTrans();
-            $sol = $solicitud_servicio->getInformacionSolicitudServicio($id);
-            $sol->estado_solicitud="A";
-            $sol->save();
-            
-
-            if(SolicitudServicio::setSolicitudServicio('update', Input::post('solicitud_servicio'), array('id'=>$id))){
-
-
+            $e = extract(Input::post('patologia_id[]'));
+            echo $e;
+            if(SolicitudServicioPatologia::setSolServicioPatolgia(Input::post('patologia_id'), $id)) {
+                $sol = $solicitud_servicio->getInformacionSolicitudServicio($id);
+                $sol->diagnostico= Input::post('solicitud_servicio[diagnostico]');
+                $sol->motivo= Input::post('solicitud_servicio[motivo]');
+                $sol->estado_solicitud="S";
+                $sol->save();
+                ActiveRecord::commitTrans();
                 DwMessage::valid('La solicitud se ha contabilizado correctamente!');
-                return DwRedirect::toAction('registro');
+                return DwRedirect::toAction('facturacion');
+            }else{
+                ActiveRecord::rollbackTrans();
+                DwMessage::error('La solicitud ha dao peos!');
+                return DwRedirect::toAction('aprobadas');
             }
         } 
         $this->solicitud_servicio = $solicitud_servicio;
-        $this->page_title = 'Contabilizar solicitud';        
+        $this->page_title = 'Cargar Siniestro';        
     }
 
 
      /**
-     * Método para cargar los siniestros
+     * Método para cargar las facturas
      */
     public function facturar($key) { 
         if(!$id = DwSecurity::isValidKey($key, 'upd_solicitud_servicio', 'int')) {
@@ -152,11 +158,6 @@ class SolicitudServicioController extends BackendController {
         $this->solicitud_servicio = $solicitud_servicio;
         $this->page_title = 'Cargar Facturas a la solicitud';        
     }
-
-
-
-
-
 
     /**
      * Método para agregar
