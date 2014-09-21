@@ -102,21 +102,18 @@ class SolicitudServicioController extends BackendController {
             DwMessage::get('id_no_found');
             return DwRedirect::toAction('registro');
         }
-        //aun no entrompo bien aqui 
-
         if(Input::hasPost('solicitud_servicio')) {
             ActiveRecord::beginTrans();
-            $e = extract(Input::post('patologia_id[]'));
-            echo $e;
             if(SolicitudServicioPatologia::setSolServicioPatolgia(Input::post('patologia_id'), $id)) {
                 $sol = $solicitud_servicio->getInformacionSolicitudServicio($id);
-                $sol->diagnostico= Input::post('solicitud_servicio[diagnostico]');
-                $sol->motivo= Input::post('solicitud_servicio[motivo]');
+
+                $sol->diagnostico = strtoupper(Input::post('diagnostico'));
+                $sol->motivo = strtoupper(Input::post('motivo'));
                 $sol->estado_solicitud="S";
-                $sol->save();
-                ActiveRecord::commitTrans();
+                $sol->save();               
+                ActiveRecord::commitTrans();    
                 DwMessage::valid('La solicitud se ha contabilizado correctamente!');
-                return DwRedirect::toAction('facturacion');
+                 return DwRedirect::toAction('facturacion');
             }else{
                 ActiveRecord::rollbackTrans();
                 DwMessage::error('La solicitud ha dao peos!');
