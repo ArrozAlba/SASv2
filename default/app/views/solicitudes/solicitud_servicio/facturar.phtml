@@ -1,4 +1,4 @@
-<?php View::notify(); ?>
+  <?php View::notify(); ?>
 <div class="container-fluid dw-shell-view">
     <?php View::process($page_module, $page_title, $set_title); ?>
     <?php echo DwForm::open('', 'post', array('id'=>'form', 'class'=>'dw-validate')); ?>
@@ -33,6 +33,16 @@
                </tr>
             </tbody>
         </table>
+
+        <?php 
+
+       // var_dump($solicitud_servicio_patologias);
+        foreach($solicitud_servicio_patologias->items as $a): ?>
+          <tr>
+            <td><?php echo $a->descripcion; ?></td>
+          </tr>
+          <?php $solicitud_servicio_patologias->counter++; ?>
+        <?php endforeach; ?>
 
      <div id="page-wrap">
      <div id="header">FACTURA </div>

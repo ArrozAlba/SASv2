@@ -6,7 +6,7 @@
  *
  * @category    
  * @package     Controllers 
- * @author      Javier León (jel1284@gmail.com)
+ * @author      JAlexis Borges (jel1284@gmail.com)
  * @copyright   Copyright (c) 2014 UPTP - (PNFI Team) (https://github.com/ArrozAlba/SASv2)
  */
 Load::models('solicitudes/solicitud_servicio');
@@ -45,8 +45,6 @@ class SolicitudServicioController extends BackendController {
         $this->order = $order;        
         $this->page_title = 'Listado de Solicitudes de Atención Primaria';
     }
-
-    
     /**
      * Método para registro
      */
@@ -106,7 +104,7 @@ class SolicitudServicioController extends BackendController {
             ActiveRecord::beginTrans();
             if(SolicitudServicioPatologia::setSolServicioPatolgia(Input::post('patologia_id'), $id)) {
                 $sol = $solicitud_servicio->getInformacionSolicitudServicio($id);
-
+                //Input::post('diagnostico') cambie el nombre del campo para poder tomar el valor revisar en el view 
                 $sol->diagnostico = strtoupper(Input::post('diagnostico'));
                 $sol->motivo = strtoupper(Input::post('motivo'));
                 $sol->estado_solicitud="S";
@@ -123,8 +121,6 @@ class SolicitudServicioController extends BackendController {
         $this->solicitud_servicio = $solicitud_servicio;
         $this->page_title = 'Cargar Siniestro';        
     }
-
-
      /**
      * Método para cargar las facturas
      */
@@ -132,20 +128,15 @@ class SolicitudServicioController extends BackendController {
         if(!$id = DwSecurity::isValidKey($key, 'upd_solicitud_servicio', 'int')) {
             return DwRedirect::toAction('registro');
         }        
-        
         $solicitud_servicio = new SolicitudServicio();
+        $solicitud_servicio_patologia = new SolicitudServicioPatologia();
+        $solicitud_servicio_patologia->getInformacionSolicitudServicioPatologia($id);
+        //if((!$solicitud_servicio->getInformacionSolicitudServicio($id) ) || (!$solicitud_servicio_patologia->getInformacionSolicitudServicioPatologia($id)) ) {            
         if(!$solicitud_servicio->getInformacionSolicitudServicio($id)) {            
             DwMessage::get('id_no_found');
             return DwRedirect::toAction('registro');
         }
-      /*  ActiveRecord::beginTrans();
-
-        $sol = $solicitud_servicio->getInformacionSolicitudServicio($id);
-        $sol->estado_solicitud="A";
-        $sol->save();
-        */
-            //aun no entrompo bien aqui 
-
+        
         if(Input::hasPost('solicitud_servicio') && DwSecurity::isValidKey(Input::post('solicitud_servicio_id_key'), 'form_key')) {
             if(SolicitudServicio::setSolicitudServicio('update', Input::post('solicitud_servicio'), array('id'=>$id))){
                 DwMessage::valid('La solicitud se ha contabilizado correctamente!');
@@ -153,6 +144,7 @@ class SolicitudServicioController extends BackendController {
             }
         } 
         $this->solicitud_servicio = $solicitud_servicio;
+        $this->solicitud_servicio_patologias= $solicitud_servicio_patologia;
         $this->page_title = 'Cargar Facturas a la solicitud';        
     }
 

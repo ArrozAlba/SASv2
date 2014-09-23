@@ -37,19 +37,17 @@
          <?php echo DwForm::hidden('solicitud_servicio.id', NULL, $key_upd); ?>
         <div class="row-fluid">
             <div class="span6">
-                <?php echo DwForm::textarea('motivo', array('class'=>'input-xxlarge mask-alphanum show-error'), NULL, 'Motivo de Consulta'); ?>
+                <?php echo DwForm::textarea('motivo', array('class'=>'input-xxlarge mask-alphanum input-required show-error'), NULL, 'Motivo de Consulta'); ?>
             </div>
             <div class="span6"> 
-                <?php echo DwForm::textarea('diagnostico', array('class'=>'input-xxlarge mask-alphanum show-error'), NULL, 'Diagnostico'); ?>
+                <?php echo DwForm::textarea('diagnostico', array('class'=>'input-xxlarge mask-alphanum input-required show-error'), NULL, 'Diagnostico'); ?>
             </div>
         </div>
         <div class="row-fluid">
             <div class="span12">
               <input name="agregar" type="button" id="agregar" value="Agregar" title="Agregar Patologia" onclick="if(!crear(this)){return false;}" />
             </div>
-            
-
-              <input class="input-xxlarge mask-alphanum" name="solicitud_servicio.patologia" id="solicitud_servicio_patologia"  type="text" onfocus = "if(this.value=='Buscar Medicinas') {this.value=''; this.style.color='#000'}" onblur="if(this.value==''){this.value='Buscar Patologia'; this.style.color='#909090'}" />
+                <input class="input-xxlarge mask-alphanum" name="solicitud_servicio.patologia" id="solicitud_servicio_patologia"  type="text" onfocus = "if(this.value=='Buscar Medicinas') {this.value=''; this.style.color='#000'}" onblur="if(this.value==''){this.value='Buscar Patologia'; this.style.color='#909090'}" />
              
 
              <input type="hidden" name="solicitud_servicio_patologia_id" id="solicitud_servicio_patologia_id" >
@@ -59,7 +57,6 @@
             <div id="ocultar" style="display:none;" class="row-fluid">
             <div id="capa_datos"></div>
             </div>
-
         </div>
 
     </div>
@@ -126,9 +123,14 @@ function crear(obj) {
                 "overflow": "auto"
             })
     }
-
     var patologia = document.getElementById('solicitud_servicio_patologia').value;   
     var patologia_id = document.getElementById('solicitud_servicio_patologia_id').value;
+    //valida que no este vacio lo que se envia
+    if(patologia==""){
+      alert('No se puede agregar! \nCampo en blanco');
+      document.getElementById('solicitud_servicio_patologia').focus();
+      return false;
+    }
 //para validar que no repita el patologia en el arreglo.
    for(var i=0;i<document.getElementsByName('patologia_id[]').length;i++)
     {                               
@@ -143,7 +145,7 @@ function crear(obj) {
       field.appendChild(contenedor); 
     //patologia id
       boton = document.createElement('input'); 
-      boton.type = 'text'; 
+      boton.type = 'hidden'; 
       boton.name = 'patologia_id[]';
       boton.vAlign= "middle";
       boton.id ='patologia_id'+'[]';
@@ -174,8 +176,10 @@ function crear(obj) {
       boton.onclick = function () {borrar(this.name)} 
       contenedor.appendChild(boton); 
       icremento++;    
+      document.getElementById('solicitud_servicio_patologia').value = "";
+      document.getElementById('solicitud_servicio_patologia').focus();
     $("#ocultar").css("display", "block");
-    return true;    
+    return true;
 }
 
 </script>
