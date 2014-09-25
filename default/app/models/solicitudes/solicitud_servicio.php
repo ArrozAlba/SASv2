@@ -4,7 +4,7 @@
  * @category
  * @package     Models SolicitudServicio
  * @subpackage
- * @author      alexis borges
+ * @author      Alexis Borges
  * @copyright    
  */
 class SolicitudServicio extends ActiveRecord {
@@ -160,9 +160,6 @@ class SolicitudServicio extends ActiveRecord {
         }
     }
 
-
-
-
     /**
      * Método que devuelve las sucursales
      * @param string $order
@@ -228,10 +225,25 @@ class SolicitudServicio extends ActiveRecord {
      * Callback que se ejecuta antes de eliminar
      */
     public function before_delete() {
-        /*if($this->id == 1) { //Para no eliminar la información de sucursal
-            DwMessage::warning('Lo sentimos, pero esta sucursal no se puede eliminar.');
-            return 'cancel';
-        }*/
+      
     }
+
+
+
+    //MIE3NTARAS
+
+
+
+     public  function getInformacionSolicitudServicioPatologia($id, $order='solicitud_servicio_patologia.id') {
+        $id = Filter::get($id, 'numeric');
+        $columnas = 'solicitud_servicio_patologia.* , P.* ';
+        $join= 'INNER JOIN solicitud_servicio_patologia ON (solicitud_servicio_patologia.solicitud_servicio_id = solicitud_servicio.id) ';
+        $join.= 'INNER JOIN patologia as P ON (P.id = solicitud_servicio_patologia.patologia_id) ';
+        
+        $condicion = "solicitud_servicio_patologia.solicitud_servicio_id = '$id'"; 
+
+        // return $this->find("columns: $columnas", "join: $join", "conditions: $condicion", "order: $order");
+        return $this->find("columns: $columnas", "conditions: $condicion", "join: $join", "order: $order");
+    } 
     
 }

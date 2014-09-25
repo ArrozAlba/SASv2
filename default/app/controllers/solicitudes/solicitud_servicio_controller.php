@@ -2,11 +2,9 @@
 /**
  * UPTP - (PNFI Sección 1236) 
  *
- * Descripcion: Controlador que se encarga de la gestión de las profesiones de la empresa
- *
  * @category    
  * @package     Controllers 
- * @author      Javier León (jel1284@gmail.com)
+ * @author      Alexis Borges (jel1284@gmail.com)
  * @copyright   Copyright (c) 2014 UPTP - (PNFI Team) (https://github.com/ArrozAlba/SASv2)
  */
 Load::models('solicitudes/solicitud_servicio');
@@ -17,7 +15,7 @@ Load::models('proveedorsalud/medico');
 Load::models('proveedorsalud/especialidad');
 Load::models('beneficiarios/titular');
 Load::models('beneficiarios/beneficiario');
-Load::models('config/patologia');
+Load::models('config/patologia', 'solicitudes/solicitud_servicio_patologia');
 
 class SolicitudServicioController extends BackendController {
     /**
@@ -45,8 +43,6 @@ class SolicitudServicioController extends BackendController {
         $this->order = $order;        
         $this->page_title = 'Listado de Solicitudes de Atención Primaria';
     }
-
-    
     /**
      * Método para registro
      */
@@ -88,7 +84,6 @@ class SolicitudServicioController extends BackendController {
         $this->order = $order;        
         $this->page_title = 'Contabilizar Solicitudes de Atención Primaria';
     }
-
      /**
      * Método para cargar los siniestros
      */
@@ -97,66 +92,55 @@ class SolicitudServicioController extends BackendController {
             return DwRedirect::toAction('registro');
         }        
         $solicitud_servicio = new SolicitudServicio();
+        $solicitud_servicio_patologia = new SolicitudServicioPatologia();
         if(!$solicitud_servicio->getInformacionSolicitudServicio($id)) {            
             DwMessage::get('id_no_found');
             return DwRedirect::toAction('registro');
         }
-        //aun no entrompo bien aqui 
-
-        if(Input::hasPost('solicitud_servicio') && DwSecurity::isValidKey(Input::post('solicitud_servicio_id_key'), 'form_key')) {
+        if(Input::hasPost('solicitud_servicio')) {
             ActiveRecord::beginTrans();
-            $sol = $solicitud_servicio->getInformacionSolicitudServicio($id);
-            $sol->estado_solicitud="A";
-            $sol->save();
-            
-
-            if(SolicitudServicio::setSolicitudServicio('update', Input::post('solicitud_servicio'), array('id'=>$id))){
-
-
+            if(SolicitudServicioPatologia::setSolServicioPatolgia(Input::post('patologia_id'), $id)) {
+                $sol = $solicitud_servicio->getInformacionSolicitudServicio($id);
+                //Input::post('diagnostico') cambie el nombre del campo para poder tomar el valor revisar en el view 
+                $sol->diagnostico = strtoupper(Input::post('diagnostico'));
+                $sol->motivo = strtoupper(Input::post('motivo'));
+                $sol->estado_solicitud="S";
+                $sol->save();               
+                ActiveRecord::commitTrans();    
                 DwMessage::valid('La solicitud se ha contabilizado correctamente!');
-                return DwRedirect::toAction('registro');
+                 return DwRedirect::toAction('facturacion');
+            }else{
+                ActiveRecord::rollbackTrans();
+                DwMessage::error('La solicitud ha dao peos!');
+                return DwRedirect::toAction('aprobadas');
             }
         } 
         $this->solicitud_servicio = $solicitud_servicio;
-        $this->page_title = 'Contabilizar solicitud';        
+        $this->page_title = 'Cargar Siniestro';        
     }
-
-
      /**
-     * Método para cargar los siniestros
+     * Método para cargar las facturas
      */
-    public function facturar($key) { 
+    public function facturar($key){
         if(!$id = DwSecurity::isValidKey($key, 'upd_solicitud_servicio', 'int')) {
             return DwRedirect::toAction('registro');
-        }        
-        
+        }
         $solicitud_servicio = new SolicitudServicio();
+        $obj = new SolicitudServicioPatologia();
+        $this->sol[] =  $obj->getInformacionSolicitudServicioPatologia($id);
         if(!$solicitud_servicio->getInformacionSolicitudServicio($id)) {            
             DwMessage::get('id_no_found');
             return DwRedirect::toAction('registro');
         }
-      /*  ActiveRecord::beginTrans();
-
-        $sol = $solicitud_servicio->getInformacionSolicitudServicio($id);
-        $sol->estado_solicitud="A";
-        $sol->save();
-        */
-            //aun no entrompo bien aqui 
-
-        if(Input::hasPost('solicitud_servicio') && DwSecurity::isValidKey(Input::post('solicitud_servicio_id_key'), 'form_key')) {
+      /*  if(Input::hasPost('solicitud_servicio') && DwSecurity::isValidKey(Input::post('solicitud_servicio_id_key'), 'form_key')) {
             if(SolicitudServicio::setSolicitudServicio('update', Input::post('solicitud_servicio'), array('id'=>$id))){
                 DwMessage::valid('La solicitud se ha contabilizado correctamente!');
                 return DwRedirect::toAction('registro');
             }
-        } 
+        }*/ 
         $this->solicitud_servicio = $solicitud_servicio;
         $this->page_title = 'Cargar Facturas a la solicitud';        
     }
-
-
-
-
-
 
     /**
      * Método para agregar

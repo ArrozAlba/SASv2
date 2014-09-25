@@ -29,10 +29,32 @@
                 <td> <?php echo $solicitud_servicio->servicio; ?></td>
                 <td> <?php echo $solicitud_servicio->proveedor; ?></td>
                 <td> <?php echo $solicitud_servicio->nombrem." ".$solicitud_servicio->apellidom; ?></td>
-                <td> <?php echo $solicitud_servicio->observacion; ?></td>
+                <td> <?php echo strtoupper($solicitud_servicio->observacion); ?></td>
                </tr>
             </tbody>
         </table>
+
+        <div class="row-fluid" > 
+        <?php $sol; ?>
+        <table class="table table-bordered table-hover table-striped table-condensed table-responsive">
+            <thead>
+                <tr>
+                    <th class="col-collapse" data-search="fecha">DESCRIPCION</th>
+                </tr>
+                </thead>
+        <tbody>
+        <?php foreach($sol->items as $solicitud_servicio_patologia): ?>
+            <tr>
+              <td><?php echo $sol->counter; ?></td>
+              <td><?php echo $solicitud_servicio_patologia->descripcion; ?></td>
+              <td><?php echo $solicitud_servicio_patologia->id ; ?></td>
+            </tr>
+          <?php $sol->counter++; ?>
+        <?php endforeach; ?>
+        </tbody>
+        </table>
+  </div>
+
 
      <div id="page-wrap">
      <div id="header">FACTURA </div>
