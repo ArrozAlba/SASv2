@@ -2,11 +2,9 @@
 /**
  * UPTP - (PNFI Sección 1236) 
  *
- * Descripcion: Controlador que se encarga de la gestión de las profesiones de la empresa
- *
  * @category    
  * @package     Controllers 
- * @author      JAlexis Borges (jel1284@gmail.com)
+ * @author      Alexis Borges (jel1284@gmail.com)
  * @copyright   Copyright (c) 2014 UPTP - (PNFI Team) (https://github.com/ArrozAlba/SASv2)
  */
 Load::models('solicitudes/solicitud_servicio');
@@ -86,7 +84,6 @@ class SolicitudServicioController extends BackendController {
         $this->order = $order;        
         $this->page_title = 'Contabilizar Solicitudes de Atención Primaria';
     }
-
      /**
      * Método para cargar los siniestros
      */
@@ -124,27 +121,24 @@ class SolicitudServicioController extends BackendController {
      /**
      * Método para cargar las facturas
      */
-    public function facturar($key) { 
+    public function facturar($key){
         if(!$id = DwSecurity::isValidKey($key, 'upd_solicitud_servicio', 'int')) {
             return DwRedirect::toAction('registro');
-        }        
+        }
         $solicitud_servicio = new SolicitudServicio();
-        $solicitud_servicio_patologia = new SolicitudServicioPatologia();
-        $solicitud_servicio_patologia->getInformacionSolicitudServicioPatologia($id);
-        //if((!$solicitud_servicio->getInformacionSolicitudServicio($id) ) || (!$solicitud_servicio_patologia->getInformacionSolicitudServicioPatologia($id)) ) {            
+        $obj = new SolicitudServicioPatologia();
+        $this->sol[] =  $obj->getInformacionSolicitudServicioPatologia($id);
         if(!$solicitud_servicio->getInformacionSolicitudServicio($id)) {            
             DwMessage::get('id_no_found');
             return DwRedirect::toAction('registro');
         }
-        
-        if(Input::hasPost('solicitud_servicio') && DwSecurity::isValidKey(Input::post('solicitud_servicio_id_key'), 'form_key')) {
+      /*  if(Input::hasPost('solicitud_servicio') && DwSecurity::isValidKey(Input::post('solicitud_servicio_id_key'), 'form_key')) {
             if(SolicitudServicio::setSolicitudServicio('update', Input::post('solicitud_servicio'), array('id'=>$id))){
                 DwMessage::valid('La solicitud se ha contabilizado correctamente!');
                 return DwRedirect::toAction('registro');
             }
-        } 
+        }*/ 
         $this->solicitud_servicio = $solicitud_servicio;
-        $this->solicitud_servicio_patologias= $solicitud_servicio_patologia;
         $this->page_title = 'Cargar Facturas a la solicitud';        
     }
 
