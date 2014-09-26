@@ -28,6 +28,26 @@ class ProfesionController extends BackendController {
     public function index() {
         DwRedirect::toAction('listar');
     }
+
+    /**
+     * Método para buscar
+     */
+    public function buscar($field='sucursal', $value='none', $order='order.id.asc', $page=1) {        
+        $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
+        $field = (Input::hasPost('field')) ? Input::post('field') : $field;
+        $value = (Input::hasPost('field')) ? Input::post('value') : $value;
+        $value = strtoupper($value);
+        $profesion = new Profesion();
+        $profesiones = $profesion->getAjaxProfesiones($field, $value, $order, $page);
+        if(empty($profesiones->items)) {
+            DwMessage::info('No se han encontrado registros');
+        }
+        $this->profesiones = $profesiones;
+        $this->order = $order;
+        $this->field = $field;
+        $this->value = $value;
+        $this->page_title = 'Búsqueda de profesiones del sistema';        
+    }
     
     /**
      * Método para listar

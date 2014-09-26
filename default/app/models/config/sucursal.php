@@ -100,7 +100,58 @@ class Sucursal extends ActiveRecord {
         //MAYUSCULAS A LA BD
         $this->sucursal = strtoupper($this->sucursal);
         $this->direccion = strtoupper($this->direccion);
-    }   
+    }
+    /**
+     * Método para buscar sucursales
+     */
+    public function getAjaxSucursales($field, $value, $order='', $page=0) {
+        $value = Filter::get($value, 'string');
+        if( strlen($value) < 1 OR ($value=='none') ) {
+            return NULL;
+        }
+        if($field=='parroquia'){ $field ='parroquia.nombre';}
+
+        $columns = 'sucursal.*, parroquia.*, parroquia.id as idparroquia ';
+        $join = 'INNER JOIN parroquia  ON  sucursal.parroquia_id = parroquia.id ';   
+        $order = $this->get_order($order, 'sucursal', array(                        
+            'sucursal' => array(
+                'ASC'=>'sucursal.sucursal ASC, sucursal.direccion ASC', 
+                'DESC'=>'sucursal.sucursal DESC, sucursal.direccion DESC'
+            ),
+            'direccion' => array(
+                'ASC'=>'sucursal.direccion ASC, sucursal.sucursal ASC', 
+                'DESC'=>'sucursal.direccion DESC, sucursal.sucursal DESC'
+            ),
+            'celular' => array(
+                'ASC'=>'sucursal.cedula ASC, sucursal.apellido1 ASC', 
+                'DESC'=>'sucursal.cedula DESC, titular.apellido1 DESC'
+            ),
+            'parroquia' => array(
+                'ASC'=>'parroquia.nombre ASC, sucursal.sucursal ASC', 
+                'DESC'=>'parroquia.nombre DESC, sucursal.sucursal DESC'
+            ),
+            'telefono' => array(
+                'ASC'=>'sucursal.telefono ASC, sucursal.sucursal ASC, sucursal.direccion ASC', 
+                'DESC'=>'sucursal.telefono DESC, sucursal.sucursal DESC, sucursal.direccion DESC'
+            ),
+        ));
+        
+        //Defino los campos habilitados para la búsqueda
+        $fields = array('sucursal', 'direccion', 'celular','parroquia.nombre', 'telefono');
+        if(!in_array($field, $fields)) {
+            $field = 'sucursal';
+        }        
+        //if(! ($field=='parroquia' && $value=='todas') ) {
+          $conditions= " $field LIKE '%$value%'";
+        //} 
+
+        if($page) {
+            return $this->paginated("columns: $columns", "join: $join","conditions: $conditions",  "order: $order", "page: $page");
+        } else {
+            return $this->find("columns: $columns", "join: $join","conditions: $conditions", "order: $order");
+        }  
+        //"conditions: $conditions",
+    } 
     /**
      * Callback que se ejecuta antes de eliminar
      */

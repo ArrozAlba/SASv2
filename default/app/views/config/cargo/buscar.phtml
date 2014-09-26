@@ -6,10 +6,11 @@
             form_action: '<?php echo PUBLIC_PATH; ?>config/cargo/buscar/',
             form_load_data : 'dw-shell-content',
             order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
-            order_action: $.KumbiaPHP.publicPath+"config/cargo/listar/"
+            order_action: $.KumbiaPHP.publicPath+"config/cargo/buscar/<?php echo $field.'/'.$value.'/'; ?>"
         });
     });
 </script>
+
 <div class="container-fluid dw-shell-view">
 
     <?php View::process($page_module, $page_title, $set_title); ?>
@@ -17,6 +18,7 @@
     <div class="btn-toolbar btn-toolbar-top">
         <div class="btn-actions">
             <?php echo DwHtml::button("config/cargo/agregar/", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
+            <?php echo DwHtml::button("config/cargo/listar/", 'listar', array('class'=>'btn-warning'), 'ok', APP_AJAX); ?>
         </div>
     </div>
 
@@ -32,25 +34,26 @@
                 </tr>
             </thead>
             <tbody>
+                <?php if($cargos) { ?>
                 <?php foreach($cargos->items as $cargo): ?>
                     <?php $key_upd = DwSecurity::getKey($cargo->id, 'upd_cargo'); ?>
                     <?php $key_del = DwSecurity::getKey($cargo->id, 'del_cargo'); ?>
                     <tr>
                         <td><?php echo $cargos->counter; ?></td>
-                        <td><?php echo $cargo->nombre; ?></td>
-                        <td><?php echo $cargo->observacion; ?></td>
+                        <td><?php echo ($field=='nombre') ? DwUtils::resaltar($value, $cargo->nombre) : $cargo->nombre; ?></td>
+                        <td><?php echo ($field=='direccion') ? DwUtils::resaltar($value, $cargo->observacion) : $cargo->observacion; ?></td>
                         <td>
-                            <?php echo DwHtml::buttonTable('Modificar Profeson', "config/cargo/editar/$key_upd/", null, 'info', 'edit'); ?>
-                            <?php echo DwHtml::buttonTable('Eliminar Profesion', "config/cargo/eliminar/$key_del/", array('class'=>'js-confirm', 'confirm-title'=>'Eliminar cargo', 'confirm-body'=>'Está seguro de eliminar este cargo? <br />Recuerda que esta operación no se puede reversar.'), 'danger', 'ban-circle'); ?>
+                            <?php echo DwHtml::buttonTable('Modificar cargo', "config/cargo/editar/$key_upd/", NULL, 'info', 'edit'); ?>
+                            <?php echo DwHtml::buttonTable('Eliminar cargo', "config/cargo/eliminar/$key_del/", array('class'=>'js-confirm', 'confirm-title'=>'Eliminar profesión', 'confirm-body'=>'Está seguro de eliminar este cargo? <br />Recuerda que esta operación no se puede reversar.'), 'danger', 'ban-circle'); ?>                      
                         </td>
                     </tr>
                     <?php $cargos->counter++; ?>
                 <?php endforeach; ?>
             </tbody>
+            <?php } ?>
         </table>
 
     </div>
 
-    <?php View::partial('paginators/default', false, array('page'=>$cargos, 'url'=>"config/cargo/listar/$order/")); ?>
-
+    <?php View::partial('paginators/default', false, array('page'=>$cargos, 'url'=>"config/cargo/buscar/$field/$value/$order/")); ?>
 </div>
