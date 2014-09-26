@@ -62,31 +62,6 @@
 
         <?php View::partial('backend/footer'); ?>
 
-        <div id="dw-loading-content" class="alpha60"></div>
-        <div id="dw-spinner" class="preview dw-corner-all dw-shadow-dark"></div>
-
-        <?php echo Tag::js('bootstrap/bootstrap.min').PHP_EOL; ?>
-        <?php echo Tag::js('bootstrap/bootstrap-datepicker').PHP_EOL; ?>
-        <?php echo Tag::js('jquery/jquery.kumbiaphp').PHP_EOL; ?>
-        <?php echo Tag::js('jquery/jquery.keyfilter').PHP_EOL; ?>
-        <?php echo Tag::js('jquery/jquery.dwgrid').PHP_EOL; ?>
-        <?php echo Tag::js('jquery/jquery.dwload').PHP_EOL; ?>
-        <?php echo Tag::js('vendors/jsspin.min').PHP_EOL; ?>
-        <?php echo Tag::js('jquery/jquery.spin').PHP_EOL; ?>
-        <?php echo Tag::js('flot/jquery.flot').PHP_EOL; ?>
-        <?php echo Tag::js('flot/jquery.flot.pie').PHP_EOL; ?>
-        <?php echo Tag::js('charts/area').PHP_EOL; ?>
-        <?php echo Tag::js('charts/donut').PHP_EOL; ?>
-        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-        <!--[if lt IE 9]>
-        <?php echo Tag::js('vendors/html5').PHP_EOL; ?>
-        <![endif]-->
-        <?php echo Tag::js('utils/var').PHP_EOL; ?>
-        <?php echo Tag::js('utils/validador').PHP_EOL; ?>
-        <?php echo Tag::js('utils/factura').PHP_EOL; ?>
-        <?php echo Tag::js('utils/jquery.asmselect').PHP_EOL; ?>
-
-
 
         <script type="text/javascript">
             $(document).ready(function() {
@@ -169,6 +144,31 @@
                 $("[rel=tooltip]").tooltip();
             });
         </script>
+        <div id="dw-loading-content" class="alpha60"></div>
+        <div id="dw-spinner" class="preview dw-corner-all dw-shadow-dark"></div>
+
+        <?php echo Tag::js('bootstrap/bootstrap.min').PHP_EOL; ?>
+        <?php echo Tag::js('bootstrap/bootstrap-datepicker').PHP_EOL; ?>
+        <?php echo Tag::js('jquery/jquery.kumbiaphp').PHP_EOL; ?>
+        <?php echo Tag::js('jquery/jquery.keyfilter').PHP_EOL; ?>
+        <?php echo Tag::js('jquery/jquery.dwgrid').PHP_EOL; ?>
+        <?php echo Tag::js('jquery/jquery.dwload').PHP_EOL; ?>
+        <?php echo Tag::js('vendors/jsspin.min').PHP_EOL; ?>
+        <?php echo Tag::js('jquery/jquery.spin').PHP_EOL; ?>
+        <?php echo Tag::js('flot/jquery.flot').PHP_EOL; ?>
+        <?php echo Tag::js('flot/jquery.flot.pie').PHP_EOL; ?>
+        <?php echo Tag::js('charts/area').PHP_EOL; ?>
+        <?php echo Tag::js('charts/donut').PHP_EOL; ?>
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+        <?php echo Tag::js('vendors/html5').PHP_EOL; ?>
+        <![endif]-->
+        <?php echo Tag::js('utils/var').PHP_EOL; ?>
+        <?php echo Tag::js('utils/validador').PHP_EOL; ?>
+        <?php echo Tag::js('utils/factura').PHP_EOL; ?>
+        <?php echo Tag::js('utils/jquery.asmselect').PHP_EOL; ?>
+
+
 <script type="text/javascript">
 $(document).ready(function(){
     $(".row-fluid input ").tooltip({
