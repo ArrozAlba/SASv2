@@ -152,7 +152,7 @@ class SolicitudServicioController extends BackendController {
         $this->codigods=$nroids+1;
 		$correlativ= new Tiposolicitud();
         $codigocorrelativo = $correlativ->find("columns: correlativo","conditions: id=1 ", "limit: 1 ");
-         foreach ($codigocorrelativo as $cargoa) {
+        foreach ($codigocorrelativo as $cargoa) {
                     $this->cargoas[] = $cargoa->correlativo;
                 }
         $this->codigodd=$this->cargoas[0].'00'.$this->codigods;
