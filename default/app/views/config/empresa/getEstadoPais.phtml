@@ -1,0 +1,18 @@
+<label>Estado<span class="req">*</span></label>
+<?php
+    echo Form::dbSelect("empresa.estado_id", 'nombre', array('estado', 'buscar',$pais_id, 'class'=>'input-xxlarge'), '                   ----  Seleccione  ----              ');
+?>		
+ 
+<script type='text/javascript'>
+$("#empresa_estado_id").click(function(){
+    var estado_id     =   $('#empresa_estado_id').val();
+        $.ajax({
+          type: "POST",
+          url: "<?php echo PUBLIC_PATH . 'config/empresa/getMunicipioEstado/'; ?>",
+          data: "estado_id=" + estado_id,
+          success: function(html){
+            $("#div_municipio").html(html);
+          }
+        });
+});
+</script>

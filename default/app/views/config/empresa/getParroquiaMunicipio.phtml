@@ -1,0 +1,5 @@
+<label>Municipio<span class="req">*</span></label>
+<?php
+    echo Form::dbSelect("empresa.parroquia_id", 'nombre', array('parroquia','buscar',$municipio_id), '           -  Seleccione  -           ');
+?>		
+ 

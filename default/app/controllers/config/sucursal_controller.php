@@ -40,7 +40,6 @@ class SucursalController extends BackendController {
         $this->order = $order;        
         $this->page_title = 'Listado de sucursales';
     }
-    
     /**
      * Método para agregar
      */
@@ -77,12 +76,11 @@ class SucursalController extends BackendController {
         }
         
         if(Input::hasPost('sucursal') && DwSecurity::isValidKey(Input::post('sucursal_id_key'), 'form_key')) {
-            if(Sucursal::setSucursal('update', Input::post('sucursal'), array('id'=>$id, 'empresa_id'=>$sucursal->empresa_id, 'parroquia_id'=>Input::post('parroquia_id')))) {
+            if(Sucursal::setSucursal('update', Input::post('sucursal'), array('id'=>$id, 'empresa_id'=>$sucursal->empresa_id))){
                 DwMessage::valid('La sucursal se ha actualizado correctamente!');
                 return DwRedirect::toAction('listar');
             }
         } 
-        //$this->parroquias = Load::model('params/parroquia')->getParroquiasToJson();
         $this->sucursal = $sucursal;
         $this->page_title = 'Actualizar sucursal';        
     }

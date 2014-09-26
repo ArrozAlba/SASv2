@@ -6,43 +6,38 @@
     <?php echo DwForm::open('', 'post', array('id'=>'form', 'class'=>'dw-validate')); ?>
 
 		<div class="row-fluid">
-            <div class="span6">
-                <?php echo DwForm::text('sucursal.sucursal', array('class'=>'input-xxlarge input-required input-alphanum mask-alphanum show-error'), NULL, 'Nombre de la sucursal'); ?>
+            <div class="span4">
+                 <?php echo DwForm::text('sucursal.sucursal', array('class'=>'input-xlarge input-required input-alphanum mask-alphanum show-error data-toggle="tooltip" title="Nombre de la Sucursal"'), NULL, 'Nombre de la sucursal','Ejemplo Upsa Piritu, Biceabasto La Colonia'); ?>
             </div>
-            <div class="span6">
-				<?php echo DwForm::dbSelect('sucursal.pais_id', 'nombre', array('params/pais', 'getListadoPais'), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Pais'); ?>
-            </div>            
-        </div>
-        <div class="row-fluid">
-            <div class="span6">
-                <?php echo DwForm::dbSelect('sucursal.estado_id', 'nombre', array('params/estado', 'getListadoEstado'), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Estado'); ?>
+            <div class="span4">
+				<?php echo DwForm::dbSelect('sucursal.pais_id', 'nombre', array('params/pais', 'getListadoPais'), NULL, array('class'=>'input-xlarge input-required input-list show-errors'), $sucursal->pais_id, 'País'); ?>
             </div>
-            <div class="span6">
-                <?php echo DwForm::dbSelect('sucursal.municipio_id', 'nombre', array('params/municipio', 'getListadoMunicipio'), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Municipio'); ?>
+            <div class="span4">
+                <div id='div_estado'><?php echo DwForm::dbSelect('sucursal.estado_id', 'nombre', array('params/estado', 'getListadoEstado'), $sucursal->estado_id, array('class'=>'input-xlarge input-required mask-pint show-errors'), NULL, 'Estado'); ?></div>
             </div>
         </div>
         <div class="row-fluid">
-            <div class="span6">
-				<?php echo DwForm::dbSelect('sucursal.parroquia_id', 'nombre', array('params/parroquia', 'getListadoParroquia'), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Parroquia'); ?>
-                
+             <div class="span4">
+                <div id='div_municipio'><?php echo DwForm::dbSelect('sucursal.municipio_id', 'nombre', array('params/municipio', 'getListadoMunicipio'), $sucursal->municipio_id, array('class'=>'input-xlarge input-required mask-pint show-errors'), NULL, 'Municipio'); ?></div>
             </div>
-            <div class="span6">
-                <?php echo DwForm::text('sucursal.direccion', array('class'=>'input-xxlarge input-required input-alphanum mask-alphanum show-error'), NULL, 'Dirección'); ?>
+            <div class="span4">
+                <div id='div_parroquia'><?php echo DwForm::dbSelect('sucursal.parroquia_id', 'nombre', array('params/parroquia', 'getListadoParroquia'), $sucursal->parroquia_id, array('class'=>'input-xlarge input-required mask-pint show-errors'), NULL, 'Parroquia'); ?></div>
+            </div>
+             <div class="span4">
+                <?php echo DwForm::text('sucursal.direccion', array('class'=>'input-xlarge input-required input-alphanum mask-alphanum show-error data-toggle="tooltip" title="Dirección"'), NULL, 'Dirección'); ?>
             </div>
         </div>
         <div class="row-fluid">
             <div class="span4">
-                <?php echo DwForm::tel('sucursal.celular', array('class'=>'input-numeric mask-pint show-error'), NULL, 'Celular'); ?>
+                <?php echo DwForm::tel('sucursal.celular', array('class'=>'input-numeric mask-pint show-error data-toggle="tooltip" title="Telefono Movil"'), NULL, 'Telefono Movil','Ejemplo 04143554584'); ?>
             </div>
             <div class="span4">
-                <?php echo DwForm::tel('sucursal.telefono', array('class'=>'input-numeric mask-pint show-error'), NULL, 'Teléfono'); ?>
+                <?php echo DwForm::tel('sucursal.telefono', array('class'=>'input-numeric mask-pint show-error data-toggle="tooltip" title="Telefono Fijo"'), NULL, 'Teléfono Fijo','Ejemplo 02556210536'); ?>
             </div>
             <div class="span4">
-                <?php echo DwForm::tel('sucursal.fax', array('class'=>'input-numeric mask-pint show-error'), NULL, 'Fax'); ?>
+                <?php echo DwForm::tel('sucursal.fax', array('class'=>'input-numeric mask-pint show-error data-toggle="tooltip" title="Numero del Fax"'), NULL, 'Fax','Ejempo 02556221023'); ?>
             </div>
         </div>
-
-
             <?php echo DwForm::hiddenKey('sucursal.id', $sucursal->id); ?>
         </div>
 
@@ -55,3 +50,18 @@
         </div>
     <?php echo DwForm::close(); ?>
 </div>
+
+<!-- Script para obtener por Ajax Los Estados en funcion de los paises  -->
+<script type='text/javascript'>
+$("#sucursal_pais_id").click(function(){
+    var pais_id     =   $('#sucursal_pais_id').val();
+        $.ajax({
+          type: "POST",
+          url: "<?php echo PUBLIC_PATH . 'config/sucursal/getEstadoPais/'; ?>",
+          data: "pais_id=" + pais_id,
+          success: function(html){
+            $("#div_estado").html(html);
+          }
+        });
+});
+</script>

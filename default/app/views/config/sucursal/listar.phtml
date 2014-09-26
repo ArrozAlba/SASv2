@@ -1,8 +1,10 @@
 <?php View::notify(); ?>
-
 <script type="text/javascript">
     $(function() {
         $('table').dwGrid({
+            form_search: true,
+            form_action: '<?php echo PUBLIC_PATH; ?>config/sucursal/buscar/',
+            form_load_data : 'dw-shell-content',
             order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
             order_action: $.KumbiaPHP.publicPath+"config/sucursal/listar/"
         });
@@ -19,7 +21,7 @@
         </div>
     </div>
 
-    <div class="dw-overflow">
+    <div class="dw-overflow" id="data-result">
 
         <table class="table table-bordered table-hover table-striped table-condensed table-responsive">
             <thead>
