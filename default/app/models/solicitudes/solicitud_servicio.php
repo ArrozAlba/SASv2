@@ -24,19 +24,15 @@ class SolicitudServicio extends ActiveRecord {
         $this->has_one('patologia');
         $this->has_one('proveedor');
         $this->has_one('proveedor_medico');
-        $this->has_many('solicitud_servicio_patologia');
-
-        
         //$this->has_one('titular');
-        $this->validates_presence_of('fecha_solicitud', 'message: Ingresa la fecha de Solicitud');
+        /*$this->validates_presence_of('fecha_solicitud', 'message: Ingresa la fecha de Solicitud');
         $this->validates_presence_of('fecha_vencimiento', 'message: Ingresa la fecha de Vencimiento de la Solicitud');
         $this->validates_presence_of('titular_id', 'message: Ingresa la Cedula del Titular');        
         $this->validates_presence_of('beneficiario_id', 'message: Ingresa la Cedula del Beneficiario');
         $this->validates_presence_of('proveedor_id', 'message: Ingresa el Estado de Origen de la empresa');
         $this->validates_presence_of('medico_id', 'message: Ingresa el Municipio de Origen de la empresa');
         $this->validates_presence_of('patologia_id', 'message: Ingresa la Parroquia de la empresa');
-        $this->validates_presence_of('servicio_id', 'message: Ingresa el nombre del representante legal.');
-        $this->validates_presence_of('observacion', 'message: Ingresa la pagina Web de la empresa');
+        $this->validates_presence_of('servicio_id', 'message: Ingresa el nombre del representante legal.');*/
     }  
     /**
      * Método para ver 
@@ -205,20 +201,6 @@ class SolicitudServicio extends ActiveRecord {
      * Método que se ejecuta antes de guardar y/o modificar     
      */
     public function before_save() {        
-        /* 
-        $this->slug = DwUtils::getSlug($this->sucursal); 
-        $this->direccion = Filter::get($this->direccion, 'string');
-        $this->telefono = Filter::get($this->telefono, 'numeric');
-        $this->celular = Filter::get($this->celular, 'numeric');
-        $this->fax = Filter::get($this->fax, 'numeric');        
-        
-        $conditions = "sucursal = '$this->sucursal' AND ciudad_id = $this->ciudad_id AND empresa_id = $this->empresa_id";
-        $conditions.= (isset($this->id)) ? " AND id != $this->id" : '';
-        if($this->count("conditions: $conditions")) {
-            DwMessage::error('Lo sentimos, pero ya existe una sucursal registrada con el mismo nombre y ciudad.');
-            return 'cancel';
-        }
-   */     
     }
     
     /**
@@ -227,13 +209,7 @@ class SolicitudServicio extends ActiveRecord {
     public function before_delete() {
       
     }
-
-
-
     //MIE3NTARAS
-
-
-
      public  function getInformacionSolicitudServicioPatologia($id, $order='solicitud_servicio_patologia.id') {
         $id = Filter::get($id, 'numeric');
         $columnas = 'solicitud_servicio_patologia.* , P.* ';
