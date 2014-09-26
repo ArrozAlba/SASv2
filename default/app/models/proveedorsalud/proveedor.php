@@ -111,7 +111,12 @@ class Proveedor extends ActiveRecord {
             DwMessage::error('Lo sentimos, pero ya existe un Proveedor registrada con el mismo rif.');
             return 'cancel';
         }
-        
+        $this->rif = strtoupper($this->rif);
+        $this->razon_social = strtoupper($this->razon_social);
+        $this->nombre_corto = strtoupper($this->nombre_corto);
+        $this->correo_electronico = strtoupper($this->correo_electronico);
+        $this->direccion = strtoupper($this->direccion);
+        $this->observacion = strtoupper($this->observacion);
     }
     
     /**
