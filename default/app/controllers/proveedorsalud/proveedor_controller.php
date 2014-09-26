@@ -1,16 +1,15 @@
 <?php
 /**
- * Alexis
- *
  * Descripcion: Controlador que se encarga de la gestión de los Proveedors de la empresa
  *
  * @category    
  * @package     Controllers 
- * @author      Iván D. Meléndez (ivan.melendez@dailycript.com.co)
+ * @author     Alexis Borges (tuaalexis@gmail.com)
  * @copyright   Copyright (c) 2013 Dailyscript Team (http://www.dailyscript.com.co)
  */
 
 Load::models('proveedorsalud/proveedor');
+Load::models('params/pais', 'params/estado', 'params/municipio', 'params/parroquia');
 
 class ProveedorController extends BackendController {
     
@@ -59,13 +58,18 @@ class ProveedorController extends BackendController {
      * Método para agregar
      */
     public function agregar() {
-    //    $empresa = Session::get('empresa', 'config');
+        $pais = new Pais(); 
+        $estado = new Estado(); 
+        $municipio = new Municipio();
         if(Input::hasPost('proveedor')) {
             if(Proveedor::setProveedor('create', Input::post('proveedor'))) {
                 DwMessage::valid('El proveedor se ha registrado correctamente!');
                 return DwRedirect::toAction('listar');
             }            
-        } 
+        }
+        $this->pais = $pais->getListadoPais();           
+        $this->estado = $estado->getListadoEstado(); 
+        $this->municipio = $municipio->getListadoMunicipio(); 
         $this->page_title = 'Agregar Proveedor';
     }
     
@@ -116,5 +120,20 @@ class ProveedorController extends BackendController {
         }
         
         return DwRedirect::toAction('listar');
+    }
+
+    public function getEstadoPais(){
+       View::response('view'); 
+       $this->pais_id=Input::post('pais_id');
+    }
+
+    public function getMunicipioEstado(){
+       View::response('view'); 
+       $this->estado_id=Input::post('estado_id');
+    }
+
+     public function getParroquiaMunicipio(){
+       View::response('view'); 
+       $this->municipio_id=Input::post('municipio_id');
     }
 }
