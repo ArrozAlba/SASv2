@@ -3,6 +3,9 @@
 <script type="text/javascript">
     $(function() {
         $('table').dwGrid({
+            form_search: true,
+            form_action: '<?php echo PUBLIC_PATH; ?>config/cobertura/buscar/',
+            form_load_data : 'dw-shell-content',
             order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
             order_action: $.KumbiaPHP.publicPath+"config/cobertura/listar/"
         });
@@ -19,15 +22,15 @@
         </div>
     </div>
 
-    <div class="dw-overflow">
+    <div class="dw-overflow" id="data-result">
 
         <table class="table table-bordered table-hover table-striped table-condensed table-responsive">
             <thead>
                 <tr>
                     <th>NUM</th>
-                    <th class="col-collapse" data-search="nombre">DESCRIPCION</th>
-                    <th class="col-collapse" data-search="direccion">MONTO COBERTURA</th>
-                    <th class="col-collapse" data-search="direccion">FECHA INICIO</th>
+                    <th class="col-collapse" data-search="descripcion">DESCRIPCION</th>
+                    <th class="col-collapse" data-search="monto">MONTO COBERTURA</th>
+                    <th class="col-collapse" data-search="fecha">FECHA INICIO</th>
                     <th class="col-collapse" data-search="direccion">FECHA FIN</th>
                     <th class="col-collapse" data-search="direccion">OBSERVACION</th>
                     <th class="btn-actions no-responsive" style="width: 100px;">ACCIONES</th>
