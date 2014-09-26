@@ -41,7 +41,7 @@ class Usuario extends ActiveRecord {
         $intento = $usuario->find("columns: id,intentos","conditions: id='".$idusuario."'","order: id DESC","limit: 1 ");
         $intento1 = $intento[0]->intentos;
         if($intento1 == 3){
-                    return 100;
+                    return 1;
         }
                     return 2;
     }    
@@ -80,7 +80,7 @@ class Usuario extends ActiveRecord {
                         //Session::set('nombre1', $usuario->nombre1);
                         //Session::set('apellido1', $usuario->apellido1);                           
                             //return DwRedirect::to('sistema/usuario_clave/cambiar_clave');
-                        DwMessage::error('usuintentos. '.$usuintentos.'<br />Si esta información es incorrecta contacta al administrador del sistema.');
+                        //DwMessage::error('usuintentos. '.$usuintentos.'<br />Si esta información es incorrecta contacta al administrador del sistema.');
                         }
                         if($usuval!=1 ) { 
                            // DwAuth::logout();
