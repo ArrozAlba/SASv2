@@ -1,9 +1,10 @@
+<label>Municipio<span class="req">*</span></label>
 <?php
     echo Form::dbSelect("sucursal.municipio_id", 'nombre', array('municipio','buscar',$estado_id), '           -  Seleccione  -           ');
 ?>		
  
 <script type='text/javascript'>
-$("#sucursal_municipio_id").change(function(){
+$("#sucursal_municipio_id").click(function(){
     var municipio_id     =   $('#sucursal_municipio_id').val();
         $.ajax({
           type: "POST",

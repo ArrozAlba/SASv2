@@ -91,12 +91,15 @@ class Sucursal extends ActiveRecord {
      * Método que se ejecuta antes de guardar y/o modificar     
      */
     public function before_save() {        
-        $conditions = "sucursal = '$this->sucursal' AND parroquia_id = $this->parroquia_id AND empresa_id = $this->empresa_id";
+    /*    $conditions = "sucursal = '$this->sucursal' AND parroquia_id = $this->parroquia_id AND empresa_id = $this->empresa_id";
         $conditions.= (isset($this->id)) ? " AND id != $this->id" : '';
         if($this->count("conditions: $conditions")) {
             DwMessage::error('Lo sentimos, pero ya existe una sucursal registrada con el mismo nombre y parroquia.');
             return 'cancel';
-        }   
+        }*/
+        //MAYUSCULAS A LA BD
+        $this->sucursal = strtoupper($this->sucursal);
+        $this->direccion = strtoupper($this->direccion);
     }   
     /**
      * Callback que se ejecuta antes de eliminar

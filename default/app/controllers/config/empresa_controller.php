@@ -11,6 +11,7 @@
  */
 
 Load::models('config/empresa', 'config/sucursal');
+Load::models('params/pais', 'params/estado', 'params/municipio', 'params/parroquia');
 
 class EmpresaController extends BackendController {
 
@@ -26,6 +27,9 @@ class EmpresaController extends BackendController {
      * Método principal
      */
     public function index() {
+        $pais = new Pais(); 
+        $estado = new Estado(); 
+        $municipio = new Municipio();
 
         if(Input::hasPost('empresa')) {
             if(DwSecurity::isValidKey(Input::post('empresa_id_key'), 'form_key')) {
@@ -50,6 +54,9 @@ class EmpresaController extends BackendController {
         }
 
         $this->empresa = $empresa;
+        $this->pais = $pais->getListadoPais();           
+        $this->estado = $estado->getListadoEstado(); 
+        $this->municipio = $municipio->getListadoMunicipio();
         $this->page_title = 'Información de la empresa';
     }
 
@@ -66,6 +73,20 @@ class EmpresaController extends BackendController {
         }
         sleep(1);//Por la velocidad del script no permite que se actualize el archivo
         View::json($data);
+    }
+    public function getEstadoPais(){
+       View::response('view'); 
+       $this->pais_id=Input::post('pais_id');
+    }
+
+    public function getMunicipioEstado(){
+       View::response('view'); 
+       $this->estado_id=Input::post('estado_id');
+    }
+
+     public function getParroquiaMunicipio(){
+       View::response('view'); 
+       $this->municipio_id=Input::post('municipio_id');
     }
 
 }
