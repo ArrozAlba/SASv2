@@ -127,7 +127,7 @@ class SolicitudServicioController extends BackendController {
         }
         $solicitud_servicio = new SolicitudServicio();
         $obj = new SolicitudServicioPatologia();
-        $this->sol[] =  $obj->getInformacionSolicitudServicioPatologia($id);
+        $this->sol =  $obj->getInformacionSolicitudServicioPatologia($id);
         if(!$solicitud_servicio->getInformacionSolicitudServicio($id)) {            
             DwMessage::get('id_no_found');
             return DwRedirect::toAction('registro');
