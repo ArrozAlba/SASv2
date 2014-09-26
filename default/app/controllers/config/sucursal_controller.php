@@ -1,7 +1,5 @@
 <?php
 /**
- * Dailyscript - Web | App | Media
- *
  * Descripcion: Controlador que se encarga de la gestión de las sucursales de la empresa
  *
  * @category    
@@ -28,6 +26,25 @@ class SucursalController extends BackendController {
      */
     public function index() {
         DwRedirect::toAction('listar');
+    }
+    /**
+     * Método para buscar
+     */
+    public function buscar($field='sucursal', $value='none', $order='order.id.asc', $page=1) {        
+        $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
+        $field = (Input::hasPost('field')) ? Input::post('field') : $field;
+        $value = (Input::hasPost('field')) ? Input::post('value') : $value;
+        $value = strtoupper($value);
+        $sucursal = new Sucursal();
+        $sucursales = $sucursal->getAjaxSucursales($field, $value, $order, $page);
+        if(empty($sucursales->items)) {
+            DwMessage::info('No se han encontrado registros');
+        }
+        $this->sucursales = $sucursales;
+        $this->order = $order;
+        $this->field = $field;
+        $this->value = $value;
+        $this->page_title = 'Búsqueda de sucursales del sistema';        
     }
     
     /**

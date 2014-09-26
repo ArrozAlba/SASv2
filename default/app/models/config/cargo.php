@@ -113,6 +113,42 @@ class Cargo extends ActiveRecord {
         }
         
     }
+    /**
+     * Método para buscar cargos
+     */
+    public function getAjaxCargos($field, $value, $order='', $page=0) {
+        $value = Filter::get($value, 'string');
+        if( strlen($value) < 1 OR ($value=='none') ) {
+            return NULL;
+        }
+        $columns = 'cargo.* ';
+        $order = $this->get_order($order, 'nombre', array(                        
+            'nombre' => array(
+                'ASC'=>'cargo.nombre ASC, cargo.nombre ASC', 
+                'DESC'=>'cargo.nombre DESC, cargo.nombre DESC'
+            ),
+            'observacion' => array(
+                'ASC'=>'cargo.observacion ASC, cargo.observacion ASC', 
+                'DESC'=>'cargo.observacion DESC, cargo.observacion DESC'
+            ),
+        ));
+        
+        //Defino los campos habilitados para la búsqueda
+        $fields = array('nombre', 'observacion');
+        if(!in_array($field, $fields)) {
+            $field = 'nombre';
+        }        
+        //if(! ($field=='parroquia' && $value=='todas') ) {
+          $conditions= " $field LIKE '%$value%'";
+        //} 
+
+        if($page) {
+            return $this->paginated("columns: $columns", "conditions: $conditions",  "order: $order", "page: $page");
+        } else {
+            return $this->find("columns: $columns", "conditions: $conditions", "order: $order");
+        }  
+        //"conditions: $conditions",
+    } 
     
     /**
      * Callback que se ejecuta antes de eliminar

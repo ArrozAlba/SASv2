@@ -19,7 +19,7 @@
         </div>
         <div class="row-fluid">
             <div class="span3">
-                <?php echo DwForm::text('proveedor.telefono1', array('class'=>'input-numeric input-xlarge mask-pint show-error data-toggle="tooltip" title="Ingrese Teléfono Fijo del Proveedor"'), NULL, 'Teléfono Fijo'); ?>
+                <?php echo DwForm::text('proveedor.telefono1', array('class'=>'input-numeric input-required input-xlarge mask-pint show-error data-toggle="tooltip" title="Ingrese Teléfono Fijo del Proveedor"'), NULL, 'Teléfono Fijo'); ?>
             </div>
              <div class="span3">
                 <?php echo DwForm::tel('proveedor.telefono2', array('class'=>'input-numeric input-xlarge mask-pint show-error data-toggle="tooltip" title="Ingrese Teléfono Móvil del Proveedor"'), NULL, 'Teléfono Móvil'); ?>
@@ -78,4 +78,19 @@ $("#proveedor_pais_id").click(function(){
         });
 });
 </script>
+
+<script type="text/javascript">
+$(function(){
+    var rif = document.getElementById("proveedor_rif");
+    var telefono1 = document.getElementById("proveedor_telefono1");
+    var telefono2 = document.getElementById("proveedor_telefono2");
+    var celular = document.getElementById("proveedor_celular");
+    rif.maxLength = 10;
+    telefono1.maxLength = 11;
+    telefono2.maxLength = 11;
+    celular.maxLength = 11;
+
+})
+</script>
+
 

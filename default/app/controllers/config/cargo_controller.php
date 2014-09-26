@@ -28,6 +28,26 @@ class CargoController extends BackendController {
     public function index() {
         DwRedirect::toAction('listar');
     }
+    /**
+     * Método para buscar
+     */
+    public function buscar($field='sucursal', $value='none', $order='order.id.asc', $page=1) {        
+        $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
+        $field = (Input::hasPost('field')) ? Input::post('field') : $field;
+        $value = (Input::hasPost('field')) ? Input::post('value') : $value;
+        $value = strtoupper($value);
+        $cargo = new Cargo();
+        $cargos = $cargo->getAjaxCargos($field, $value, $order, $page);
+        if(empty($cargos->items)) {
+            DwMessage::info('No se han encontrado registros');
+        }
+        $this->cargos = $cargos;
+        $this->order = $order;
+        $this->field = $field;
+        $this->value = $value;
+        $this->page_title = 'Búsqueda de cargos del sistema';        
+    }
+    
     
     /**
      * Método para listar

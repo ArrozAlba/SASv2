@@ -41,7 +41,7 @@ class Discapacidad extends ActiveRecord {
      * @return ActiveRecord
      */
     public function getListadoDiscapacidad($order='order.nombre.asc', $page='', $empresa=null) {
-        $columns = 'discapacidad.id, discapacidad.nombre, discapacidad.observacion';
+        $columns = 'discapacidad.id iddiscapacidad, discapacidad.nombre discapacidad, discapacidad.observacion';
         $join = '';
         $order = $this->get_order($order, 'discapacidad', array('discapacidad'=>array('ASC'=>'discapacidad.id ASC',
                                                                               'DESC'=>'discapacidad.id DESC'),
