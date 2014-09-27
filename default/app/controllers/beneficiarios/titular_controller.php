@@ -23,14 +23,44 @@ class TitularController extends BackendController {
         //Se cambia el nombre del módulo actual
         $this->page_module = 'Titular';
     }
-    
     /**
      * Método principal
      */
     public function index() {
         DwRedirect::toAction('listar');
     }
-    
+
+    /** Metodo para rechazar con motivo una solicitud **/
+    public function excluir($key) {        
+        if(!$idt = DwSecurity::isValidKey($key, 'excluir_usuario', 'int')) {
+            return DwRedirect::toAction('listar');
+        }
+        $titular = new Titular();
+        $titu = $titular->getInformacionTitular($idt);
+        $titudireccion = $titular->getInformacionDireccionTitular($idt);
+        if(!$titu) {            
+            DwMessage::get('id_no_found');
+            return DwRedirect::toAction('listar');
+        }
+        if(Input::hasPost('titular')) {
+            $es = "0";
+            //$motivo = $_POST['solicitud_servicio'];
+            if(Titular::setTitular('update', Input::post('titular'), array('estado'=>$es))){
+                DwMessage::valid('¡El titular se ha Excluido con Exito!.');
+                return DwRedirect::toAction('listar');
+            }       
+        } 
+        $this->page_title = 'Excluir Titular';
+        $this->titulares = $titu;
+        $this->titudireccion = $titudireccion;
+
+
+    /*    $titu->id = $titu->idtitular; //para poder actualizar 
+        $titu->estado='0';
+        $titu->save();
+        $this->page_title = 'Excluir Titular';  
+        return DwRedirect::toAction('listar');*/
+    }
     /**
      * Método para buscar
      */
@@ -53,7 +83,6 @@ class TitularController extends BackendController {
 /**
      * Método para obtener titulares
      */
-    
     //accion que busca en los titulares y devuelve el json con los datos
     public function autocomplete() {
         View::template(NULL);
@@ -118,8 +147,6 @@ class TitularController extends BackendController {
             $this->municipio = $municipio->getListadoMunicipio(); 
             $this->sucursal = $sucursal->getListadoSucursal(); 
         }
-
-
     $this->discapacidad = $discapacidad->getListadoDiscapacidad();
     $this->page_title = 'Agregar';
     }
@@ -296,8 +323,7 @@ class TitularController extends BackendController {
            } 
            return $bisiesto; 
         } 
-
-    
+   
     /**
      * Método para formar el reporte en pdf 
      */
