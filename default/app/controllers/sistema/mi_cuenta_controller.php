@@ -10,7 +10,7 @@
  * @copyright   Copyright (c) 2013 Dailyscript Team (http://www.dailyscript.com.co)
  */
 
-Load::models('personas/persona', 'config/sucursal');
+Load::models('beneficiarios/titular', 'config/sucursal');
 
 class MiCuentaController extends BackendController {
 
