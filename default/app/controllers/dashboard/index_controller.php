@@ -29,8 +29,8 @@ class IndexController extends BackendController {
         $nrobeneficiarioids = $cbeneficiarios->count();
         $this->codigodd2=$nrobeneficiarioids;		
         
-        $solicitud_servicio = new SolicitudServicio();
-        $nroids = $solicitud_servicio->count();
+        $csolicitud_servicio = new SolicitudServicio();
+        $nroids = $csolicitud_servicio->count();
         $this->codigodd=$nroids;
         
         $this->ct = ($this->codigodd1+$this->codigodd2 * $this->codigodd)/1000; 
