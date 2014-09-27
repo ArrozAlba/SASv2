@@ -32,11 +32,9 @@
                     <th class="col-collapse" data-search="apellido">APELLIDO</th>
                     <th class="col-collapse" data-search="nomina">NOMINA</th>
                     <th class="col-collapse" data-search="departamento">DEPARTAMENTO</th>
-                    <?if(APP_OFFICE) { //Si está activa la opción de oficinas ?>
                     <th class="col-collapse" data-search="sucursal">SUCURSAL</th>
-                    <? } ?>
                     <th class="col-collapse" data-search="estado">ESTADO</th>
-                    <th class="btn-actions no-responsive" style="width: 150px;">ACCIONES</th>
+                    <th class="btn-actions no-responsive" style="width: 200px;">ACCIONES</th>
                 </tr>
             </thead>
             <tbody>
@@ -57,9 +55,13 @@
                         <? } ?>
                          <td><?php if ($titular->estado == 1){ echo '<span class="label label-success">Activo</span>'; } else{ echo '<span class="label label-important">Inactivo</span>';}?></td>
                         <td>
-                            <?php echo DwHtml::buttonTable('Agregar Beneficiarios', "beneficiarios/beneficiario/agregar/$key_shw/", NULL, 'success', 'user'); ?>
-                            <?php echo DwHtml::buttonTable('Ver titular', "beneficiarios/titular/reportetitular/$key_shw/", NULL, 'warning', 'search'); ?>
-                            <?php echo DwHtml::buttonTable('Modificar titular', "beneficiarios/titular/editar/$key_upd/", NULL, 'info', 'edit'); ?>
+                            <?php echo DwHtml::buttonTable('Agregar Beneficiarios', "beneficiarios/beneficiario/agregar/$key_shw/", NULL, 'success', 'user');
+                            echo DwHtml::buttonTable('Ver titular', "beneficiarios/titular/reportetitular/$key_shw/", NULL, 'warning', 'search');
+                            echo DwHtml::buttonTable('Modificar titular', "beneficiarios/titular/editar/$key_upd/", NULL, 'info', 'edit');
+                            if(Session::get('perfil_id')<=3) { 
+                                echo DwHtml::buttonTable('Excluir Titular', "beneficiarios/titular/excluir/$key_upd/", array('class'=>'js-confirm', 'confirm-title'=>'Excluir Titular', 'confirm-body'=>'¿Está seguro de Excluir el Titular? <br />'), 'danger', 'repeat');
+                            }
+                            ?>
                         </td>
                     </tr>
                     <?php $titulares->counter++; ?>
