@@ -54,8 +54,7 @@ class Titular extends ActiveRecord {
         $rs = $obj->$method();
         return ($rs) ? $obj : FALSE;
     }
-
-
+    //editar el titular
     public static function setETitular($method, $data=array(), $optData=array()) {
         $obj = new Titular($data);
         if(!empty($optData)) {
@@ -259,6 +258,8 @@ class Titular extends ActiveRecord {
         $this->apellido2 = strtoupper($this->apellido2);
         $this->observacion = strtoupper($this->observacion);
         $this->direccion = strtoupper($this->direccion);
+        $this->motivo_exclusion = strtoupper($this->motivo_exclusion);
+        $this->motivo_reactivacion = strtoupper($this->motivo_reactivacion);
         $this->correo_electronico = strtoupper($this->correo_electronico);
         $a = $this->estado_id = Filter::get($this->estado_id, 'numeric');
         $this->municipio_id = Filter::get($this->municipio_id, 'numeric');

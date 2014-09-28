@@ -30,7 +30,7 @@ class TitularController extends BackendController {
         DwRedirect::toAction('listar');
     }
 
-    /** Metodo para rechazar con motivo una solicitud **/
+    /** Metodo para excluir  a u titular **/
     public function excluir($key) {        
         if(!$idt = DwSecurity::isValidKey($key, 'excluir_usuario', 'int')) {
             return DwRedirect::toAction('listar');
@@ -53,13 +53,29 @@ class TitularController extends BackendController {
         $this->page_title = 'Excluir Titular';
         $this->titulares = $titu;
         $this->titudireccion = $titudireccion;
-
-
-    /*    $titu->id = $titu->idtitular; //para poder actualizar 
-        $titu->estado='0';
-        $titu->save();
-        $this->page_title = 'Excluir Titular';  
-        return DwRedirect::toAction('listar');*/
+    }
+    /** Metodo para reactivar un titular una vez haya sido desactivado es decir excluido**/
+    public function reactivar($key) {        
+        if(!$idt = DwSecurity::isValidKey($key, 'reactivar_usuario', 'int')) {
+            return DwRedirect::toAction('listar');
+        }
+        $titular = new Titular();
+        $titu = $titular->getInformacionTitular($idt);
+        $titudireccion = $titular->getInformacionDireccionTitular($idt);
+        if(!$titu) {            
+            DwMessage::get('id_no_found');
+            return DwRedirect::toAction('listar');
+        }
+        if(Input::hasPost('titular')) {
+            $es = "1";
+            if(Titular::setTitular('update', Input::post('titular'), array('estado'=>$es))){
+                DwMessage::valid('¡El titular se ha Reactivado con Exito!.');
+                return DwRedirect::toAction('listar');
+            }       
+        } 
+        $this->page_title = 'Reactivar Titular';
+        $this->titulares = $titu;
+        $this->titudireccion = $titudireccion;
     }
     /**
      * Método para buscar
@@ -164,6 +180,7 @@ class TitularController extends BackendController {
             DwMessage::get('id_no_found');    
             return DwRedirect::toAction('listar');
         }
+        
         $titularh = new Titular();
         $titularh->getInformacionDireccionTitular($id);
         if(Input::hasPost('titular')) {
