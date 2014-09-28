@@ -71,12 +71,12 @@ class UsuarioClave extends ActiveRecord {
      * @return object ActiveRecord
      */
     public static function setClave($method, $data, $optData=null) {
-        $obj = new ClaveUsuario($data);
+        $obj = new UsuarioClave($data);
         if($optData) {
             $obj->dump_result_self($optData);
         }
         if(!empty($obj->id)) { //Si va a actualizar
-            $old = new Usuario();
+            $old = new UsuarioClave();
             $old->find_first($obj->id);
             if(!empty($obj->oldpassword)) { //Si cambia de claves
                 if(empty($obj->password) OR empty($obj->repassword)) {
@@ -107,7 +107,9 @@ class UsuarioClave extends ActiveRecord {
             if(isset($obj->id)) { //Mantengo la contraseña anterior                    
                 $obj->password = $old->password;                                
             }
-        } 
+        }
+        $obj->fecha_inicio = date('Y-m-d');
+        
         $rs = $obj->$method();
         if($rs) {
             ($method == 'create') ? DwAudit::debug("Se ha registrado el usuario $obj->usuario_id en el sistema") : DwAudit::debug("Se ha modificado la información del usuario $obj->usuario_id");
