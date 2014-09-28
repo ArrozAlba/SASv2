@@ -1,0 +1,52 @@
+<?php View::notify(); ?>
+<div class="container-fluid dw-shell-view">
+<?php View::process($page_module, $page_title, $set_title); ?>
+<?php echo DwForm::open('', 'post', array('id'=>'form', 'class'=>'dw-validate')); ?>
+  <div class="row-fluid">
+    <div class="span12">
+      <?php echo DwForm::textarea('titular.motivo_exclusion', array('class'=>'mask-hidden show-error input-xxlarge mask-alpha '), NULL, 'Motivo de la exclusión'); ?>
+    </div>
+  </div>
+  <?php echo DwForm::hidden('titular.cedula', NULL, $titulares->cedula);
+  echo DwForm::hidden('titular.nombre1', NULL, $titulares->nombre1);
+  echo DwForm::hidden('titular.apellido1', NULL, $titulares->apellido1);
+  echo DwForm::hidden('titular.nombre2', NULL, $titulares->nombre2);
+  echo DwForm::hidden('titular.apellido2', NULL, $titulares->apellido2);
+  echo DwForm::hidden('titular.usuario_id', NULL, $titulares->usuario_id);
+  echo DwForm::hidden('titular.nacionalidad', NULL, $titulares->nacionalidad ); 
+echo DwForm::hidden('titular.sexo', NULL, $titulares->sexo); 
+echo DwForm::hidden('titular.fecha_nacimiento', NULL, $titulares->fecha_nacimiento); 
+echo DwForm::hidden('titular.sucursal_id', NULL, $titulares->idsucursal);
+ echo DwForm::hidden('titular.pais_id', NULL, $titulares->idpais);
+echo DwForm::hidden('titular.estado_id', NULL, $titulares->idestado); 
+echo DwForm::hidden('titular.municipio_id', NULL, $titulares->idmunicipio );
+   echo DwForm::hidden('titular.parroquia_id', NULL, $titulares->idparroquia); 
+   echo DwForm::hidden('titular.direccion_habitacion', NULL, $titulares->direccion_habitacion);
+   echo DwForm::hidden('titular.hpais_id', NULL, $titudireccion->idhpais); 
+   echo DwForm::hidden('titular.hestado', NULL, $titudireccion->idhestado );
+   echo DwForm::hidden('titular.hmunicipio', NULL, $titudireccion->idmunicipio);
+   echo DwForm::hidden('titular.hparroquia', NULL, $titudireccion->idhparroquia );
+echo DwForm::hidden('titular.celular', NULL, $titulares->celular);
+echo DwForm::hidden('titular.telefono', NULL, $titulares->telefono );
+echo DwForm::hidden('titular.correo_electronico', NULL, $titulares->correo_electronico );
+echo DwForm::hidden('titular.estado_civil', NULL, $titulares->estado_civil );  
+echo DwForm::hidden('titular.grupo_sanguineo', NULL, $titulares->grupo_sanguineo);
+echo DwForm::hidden('titular.tipoempleado_id', NULL, $titulares->idtipoempleado);
+echo DwForm::hidden('titular.fecha_ingreso', NULL, $titulares->fecha_ingreso ); 
+echo DwForm::hidden('titular.profesion_id', NULL, $titulares->idprofesion);
+echo DwForm::hidden('titular.cargo_id', NULL, $titulares->idcargo ); 
+echo DwForm::hidden('titular.departamento_id', NULL, $titulares->iddepartamento);
+echo DwForm::hidden('titular.observacion', NULL, $titulares->observacion ); 
+echo DwForm::hidden('titular.id', NULL, $titulares->idtitular); 
+$fecha_exclusion = date("Y-m-d");
+echo DwForm::hidden('titular.fotografia', NULL, $titulares->fotografia);
+echo DwForm::hidden('titular.fecha_exclusion', NULL, $fecha_exclusion);?>
+  <div class="row-fluid">
+    <div class="form-actions">
+      <?php echo DwButton::save('Guardar Motivo Exclusión'); ?>
+      <?php echo DwButton::reset('form'); ?>
+      <?php echo DwButton::cancel(); ?>
+    </div>
+  </div>
+    <?php echo DwForm::close(); ?>
+</div>

@@ -86,16 +86,16 @@
 
                 </div>
                 <div class="row-fluid">
-                    <label>Discapacidad</label>
+                <table class="table table-responsive">
+                    <tr> <label>Discapacidad</label>
                     <?php foreach($discapacidad as $dis) { ?>
-                        <div class="span1">
-                            <th class="no-responsive dw-text-center"><?php 
+                        <?php 
                             echo DwForm::check('discapacidad[]', $dis->iddiscapacidad); 
                             echo $dis->discapacidad; ?>
-                            </th>
-                        </div>
                         <?php } 
                     ?>
+                   </tr>
+                </table>
                 </div>
             <label>(*) Campos Obligatorios </label>
             </div><!--Cierrre del Tab1-->
@@ -216,6 +216,21 @@ $(function(){
 })
 </script>
 
+<!-- para validad que si se marca ninguno en patologias desactive las demas -->
+<script type='text/javascript'>
+
+
+function chequear(obj) {  
+  var patologia_id = document.getElementById('solicitud_servicio_patologia_id').value;
+//para validar que no repita el patologia en el arreglo.
+   for(var i=0;i<document.getElementsByName('patologia_id[]').length;i++)
+    {                               
+        if (document.getElementsByName('patologia_id[]')[i].value==patologia_id){
+            alert('Estas intentando agregar una patologia con caracteristicas iguales.\nVerifica los datos!');
+            return false;
+        }                 
+} 
+</script>
 <!-- Script crear el usuario y la contraseña  -->
 <script type='text/javascript'>
 $("#titular_nombre1").change(function(){

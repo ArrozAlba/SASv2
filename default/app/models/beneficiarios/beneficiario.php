@@ -24,11 +24,8 @@ class beneficiario extends ActiveRecord {
      * Método que devuelve el inner join con el estado_usuario
      * @return string
      */
-//public static function getInnerEstado() {
-//return "INNER JOIN (SELECT usuario_id, CASE estado_usuario WHEN ".EstadoUsuario::COD_ACTIVO." THEN '".EstadoUsuario::ACTIVO."' WHEN ".EstadoUsuario::COD_BLOQUEADO." THEN '".EstadoUsuario::BLOQUEADO."' ELSE 'INDEFINIDO' END AS estado_usuario, descripcion FROM (SELECT * FROM estado_usuario ORDER BY estado_usuario.id DESC ) AS estado_usuario GROUP BY estado_usuario.usuario_id,estado_usuario.estado_usuario, descripcion) AS estado_usuario ON estado_usuario.usuario_id = usuario.id ";        
-//    }
     /**
-     * Método para obtener titulares
+     * Método para oobtener_beneficiarios
      * @return obj
      */
    public function obtener_beneficiarios($beneficiario) {
@@ -45,7 +42,6 @@ class beneficiario extends ActiveRecord {
         }
         return array('no hubo coincidencias');
     }
-        
     /**
      * Método para setear un Objeto
      * @param string    $method     Método a ejecutar (create, update)
@@ -123,11 +119,11 @@ class beneficiario extends ActiveRecord {
       $paren = Filter::get($this->parentesco_id, 'numeric');
       $titu = Filter::get($this->titular_id, 'numeric');
       $parti = Filter::get($this->participacion, 'numeric');
-
       $columns = 'beneficiario.participacion, beneficiario.parentesco_id ';
       $conditions = "titular_id = $titu ";
       $bene = $this->find("columns: $columns", "conditions: $conditions");
 
+      if($_POST["metodo"]!="editar"){
       $acum = 0;
       foreach($bene as $bn):
         if (($bn->parentesco_id==$paren)&&($bn->parentesco_id==2)){
@@ -161,13 +157,15 @@ class beneficiario extends ActiveRecord {
       }elseif ($paren==5) {
         $this->sexo='M';
       }
-
       //espos@ 2
       //madre 4 padre 5 concubino 3 
       if(($acum>=100)&&($parti>0)) {
             DwMessage::error('Lo sentimos, pero ya has agotado la cobertura de la poliza de vida asignada a tus beneficiarios.');
             return 'cancel';
       }
+      } //cierre del if de metodo de edicion
+
+      
       //guardar en mayusculas todo
       $this->nombre1 = strtoupper($this->nombre1);
       $this->nombre2 = strtoupper($this->nombre2);
@@ -190,11 +188,22 @@ class beneficiario extends ActiveRecord {
         $condicion = "beneficiario.id = $beneficiario";        
         return $this->find_first("columns: $columns", "conditions: $condicion");
     } 
+    //editar el beneficiario
+    public static function setEBeneficiario($method, $data=array(), $optData=array()) {
+        $obj = new beneficiario($data);
+        if(!empty($optData)) {
+            $obj->dump_result_self($optData);
+        }
+        $method = 'update';
+        $rs = $obj->$method();
+        return ($rs) ? $obj : FALSE;
+    }
+
 
 
 //------ Listado de todos los beneficiarios de un titular en especificoooo ----- 16/07/2014 
     public function getListadoBeneTitular($titular){
-       return $this->find_all_by_sql("SELECT DATE_PART('year', now()) - DATE_PART('year', beneficiario.fecha_nacimiento) as edad, beneficiario.cedula, beneficiario.nombre1, beneficiario.nombre2, beneficiario.apellido1, beneficiario.fecha_nacimiento, beneficiario.nacionalidad, beneficiario.apellido2, beneficiario.sexo, beneficiario.participacion, beneficiario.id, beneficiario_tipo.descripcion, parentesco.id as idparentesco, parentesco.descripcion as parentesco FROM beneficiario INNER JOIN beneficiario_tipo ON beneficiario.beneficiario_tipo_id = beneficiario_tipo.id INNER JOIN parentesco ON beneficiario.parentesco_id = parentesco.id WHERE beneficiario.titular_id = $titular");
+       return $this->find_all_by_sql("SELECT DATE_PART('year', now()) - DATE_PART('year', beneficiario.fecha_nacimiento) as edad, beneficiario.cedula, beneficiario.nombre1, beneficiario.nombre2, beneficiario.apellido1, beneficiario.fecha_nacimiento, beneficiario.nacionalidad, beneficiario.apellido2, beneficiario.sexo, beneficiario.participacion, beneficiario.estado_beneficiario, beneficiario.id, beneficiario_tipo.descripcion, parentesco.id as idparentesco, parentesco.descripcion as parentesco FROM beneficiario INNER JOIN beneficiario_tipo ON beneficiario.beneficiario_tipo_id = beneficiario_tipo.id INNER JOIN parentesco ON beneficiario.parentesco_id = parentesco.id WHERE (beneficiario.titular_id = $titular) and (beneficiario.estado_beneficiario='1')");
     }
 }
 ?>

@@ -50,7 +50,6 @@ class beneficiarioController extends BackendController {
 /**
      * Método para obtener beneficiarios
      */
-
     public function getBeneficiarios(){
        View::response('view'); 
        $this->titular_id=Input::post('titular_id');
@@ -91,7 +90,7 @@ class beneficiarioController extends BackendController {
         }
         //El id del titular que tendra a los beneficiarios asociados
         $this->idtitular = $id;
-        $beneficiario=new beneficiario();
+        $beneficiario = new beneficiario();
         $discapacidad = new Discapacidad();
         $titular = new Titular();
         $this->titulares = $titular->getInformacionTitular($id);
@@ -118,33 +117,25 @@ class beneficiarioController extends BackendController {
      * Método para editar
      */
     public function editar($key) {        
-        if(!$id = DwSecurity::isValidKey($key, 'upd_beneficiario', 'int')) {
-            return DwRedirect::toAction('listar');
+        if(!$id = DwSecurity::isValidKey($key, 'editar_bene', 'int')) {
+            return DwRedirect::toAction('titular/listar');
         }
-        
         $beneficiario = new beneficiario();
+        $discapacidad_bene = new DiscapacidadBeneficiario();
+        $discapacidad = new Discapacidad();
+        $this->discapacidad = $discapacidad->getListadoDiscapacidad();
+        $this->discapacidad_bene = $discapacidad_bene->getDiscapacidadBeneficiario($id);
         if(!$beneficiario->getInformacionbeneficiario($id)) {
             DwMessage::get('id_no_found');    
-            return DwRedirect::toAction('listar');
-        }                
-        
+            return DwRedirect::toAction('titular/listar');
+        }
         if(Input::hasPost('beneficiario')) {
-            if(DwSecurity::isValidKey(Input::post('beneficiario_id_key'), 'form_key')) {
-                ActiveRecord::beginTrans();
-                //Guardo la persona
-                $persona = Persona::setPersona('update', Input::post('persona'), array('id'=>$beneficiario->persona_id));
-                if($persona) {
-                    if(beneficiario::setbeneficiario('update', Input::post('beneficiario'), array('id'=>$beneficiario->persona_id))) {
-                        ActiveRecord::commitTrans();
-                        DwMessage::valid('El beneficiario se ha actualizado correctamente.');
-                        return DwRedirect::toAction('listar');
-                    }
-                } else {
-                    ActiveRecord::rollbackTrans();
-                } 
+            $beneficiario = beneficiario::setEBeneficiario('update', Input::post('beneficiario'), Input::post('metodo')) ;
+            if($beneficiario){
+                DwMessage::valid('El Beneficiario se ha actualizado correctamente.');
+                return DwRedirect::toAction('../titular/listar');
             }
-        }        
-        $this->temas = DwUtils::getFolders(dirname(APP_PATH).'/public/css/backend/themes/');
+        }
         $this->beneficiario = $beneficiario;
         $this->page_title = 'Actualizar beneficiario';
     }
