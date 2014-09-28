@@ -62,7 +62,7 @@
                                 echo DwHtml::buttonTable('Excluir Titular', "beneficiarios/titular/excluir/$key_ina/", array('class'=>'js-confirm', 'confirm-title'=>'Excluir Titular', 'confirm-body'=>'¿Está seguro de Excluir el Titular? <br />'), 'danger', 'repeat');
                             }
                             if((Session::get('perfil_id')<=3) && ($titular->estado!=1) ){ 
-                                echo DwHtml::buttonTable('Excluir Titular', "beneficiarios/titular/excluir/$key_ina/", array('class'=>'js-confirm', 'confirm-title'=>'Reactivar Titular', 'confirm-body'=>'¿Está seguro de Excluir el Titular? <br />'), 'success', 'repeat');
+                                echo DwHtml::buttonTable('Reactivar Titular', "beneficiarios/titular/reactivar/$key_rea/", array('class'=>'js-confirm', 'confirm-title'=>'Reactivar Titular', 'confirm-body'=>'¿Está seguro de Excluir el Titular? <br />'), 'success', 'repeat');
                             }
                            ?>
                         </td>
