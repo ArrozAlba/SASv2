@@ -8,24 +8,24 @@
     </div>
   </div>
   <?php echo DwForm::hidden('titular.cedula', NULL, $titulares->cedula);
-  echo DwForm::hidden('titular.nombre1', NULL, $titulares->nombre1);
-  echo DwForm::hidden('titular.apellido1', NULL, $titulares->apellido1);
-  echo DwForm::hidden('titular.nombre2', NULL, $titulares->nombre2);
-  echo DwForm::hidden('titular.apellido2', NULL, $titulares->apellido2);
-  echo DwForm::hidden('titular.usuario_id', NULL, $titulares->usuario_id);
-  echo DwForm::hidden('titular.nacionalidad', NULL, $titulares->nacionalidad ); 
+echo DwForm::hidden('titular.nombre1', NULL, $titulares->nombre1);
+echo DwForm::hidden('titular.apellido1', NULL, $titulares->apellido1);
+echo DwForm::hidden('titular.nombre2', NULL, $titulares->nombre2);
+echo DwForm::hidden('titular.apellido2', NULL, $titulares->apellido2);
+echo DwForm::hidden('titular.usuario_id', NULL, $titulares->usuario_id);
+echo DwForm::hidden('titular.nacionalidad', NULL, $titulares->nacionalidad ); 
 echo DwForm::hidden('titular.sexo', NULL, $titulares->sexo); 
 echo DwForm::hidden('titular.fecha_nacimiento', NULL, $titulares->fecha_nacimiento); 
 echo DwForm::hidden('titular.sucursal_id', NULL, $titulares->idsucursal);
- echo DwForm::hidden('titular.pais_id', NULL, $titulares->idpais);
+echo DwForm::hidden('titular.pais_id', NULL, $titulares->idpais);
 echo DwForm::hidden('titular.estado_id', NULL, $titulares->idestado); 
 echo DwForm::hidden('titular.municipio_id', NULL, $titulares->idmunicipio );
-   echo DwForm::hidden('titular.parroquia_id', NULL, $titulares->idparroquia); 
-   echo DwForm::hidden('titular.direccion_habitacion', NULL, $titulares->direccion_habitacion);
-   echo DwForm::hidden('titular.hpais_id', NULL, $titudireccion->idhpais); 
-   echo DwForm::hidden('titular.hestado', NULL, $titudireccion->idhestado );
-   echo DwForm::hidden('titular.hmunicipio', NULL, $titudireccion->idmunicipio);
-   echo DwForm::hidden('titular.hparroquia', NULL, $titudireccion->idhparroquia );
+echo DwForm::hidden('titular.parroquia_id', NULL, $titulares->idparroquia); 
+echo DwForm::hidden('titular.direccion_habitacion', NULL, $titulares->direccion_habitacion);
+echo DwForm::hidden('titular.hpais_id', NULL, $titudireccion->idhpais); 
+echo DwForm::hidden('titular.hestado', NULL, $titudireccion->idhestado );
+echo DwForm::hidden('titular.hmunicipio', NULL, $titudireccion->idmunicipio);
+echo DwForm::hidden('titular.hparroquia', NULL, $titudireccion->idhparroquia );
 echo DwForm::hidden('titular.celular', NULL, $titulares->celular);
 echo DwForm::hidden('titular.telefono', NULL, $titulares->telefono );
 echo DwForm::hidden('titular.correo_electronico', NULL, $titulares->correo_electronico );
@@ -45,8 +45,8 @@ echo DwForm::hidden('titular.fecha_exclusion', NULL, $fecha_exclusion);?>
     <div class="form-actions">
       <?php echo DwButton::save('Guardar Motivo Exclusión'); ?>
       <?php echo DwButton::reset('form'); ?>
-      <?php echo DwButton::cancel(); ?>
+      <?php echo DwButton::cancel('beneficiarios/titular/listar'); ?>
     </div>
   </div>
-    <?php echo DwForm::close(); ?>
+<?php echo DwForm::close(); ?>
 </div>

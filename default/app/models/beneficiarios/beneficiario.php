@@ -112,9 +112,32 @@ class beneficiario extends ActiveRecord {
     }
 
     /**
-     * Callback que se ejecuta antes de guardar/modificar
+     * Método para obtener la información de un beneficiario solo la informacion basica a traves de su id
+     * @return type
      */
-    public function before_save() {
+    public function getInformacionbeneficiario($beneficiario) {
+        $beneficiario = Filter::get($beneficiario, 'int');
+        if(!$beneficiario) {
+            return NULL;
+        }
+        $columns = 'beneficiario.*';
+        $condicion = "beneficiario.id = $beneficiario";        
+        return $this->find_first("columns: $columns", "conditions: $condicion");
+    } 
+    //editar el beneficiario
+    public static function setEBeneficiario($method, $data=array(), $optData=array()) {
+        $obj = new beneficiario($data);
+        if(!empty($optData)) {
+            $obj->dump_result_self($optData);
+        }
+        $method = 'update';
+        $rs = $obj->$method();
+        return ($rs) ? $obj : FALSE;
+    }
+/**
+* Callback que se ejecuta antes de guardar/modificar
+*/
+  public function before_save() {
     // validar aqui lo del tipo de beneficiario ;) 
       $paren = Filter::get($this->parentesco_id, 'numeric');
       $titu = Filter::get($this->titular_id, 'numeric');
@@ -142,8 +165,19 @@ class beneficiario extends ActiveRecord {
             DwMessage::error('Ya existe el benficiario Padre agregado.');
             return 'cancel';
         }
-        elseif ( (($bn->parentesco_id==2)&&($paren==3))||( ($paren==3)&&($bn->parentesco_id==2) ) ) {
+        elseif ( (($bn->parentesco_id==2)&&($paren==3))||( ($paren==2)&&($bn->parentesco_id==3) ) ) {
             DwMessage::error('Ya existe un Esposo(a), no puede agregar un Concubino(a) o Visceversa.');
+            return 'cancel';
+        }
+        //evitar que añada un beneficiario (esposa, o concubino) si ha excluido recientemente uno 
+        $bn->fecha_exclusion;
+        $actual = date("Y-m-d");
+        $datetime1 = new DateTime($bn->fecha_exclusion);
+        $datetime2 = new DateTime($actual);
+        $intervalo = $datetime1->diff($datetime2, $absolute=true);
+        $mes = $intervalo->format('%a');
+        if(((($bn->parentesco_id==2)&&($paren==3))||(($paren==2)&&($bn->parentesco_id==3))) || ($mes <=6)){
+          DwMessage::error('No puede Cargar, Esposo(a) o Concubino(a) hasta que haya trasncurrido 6 meses desde la exclusión del anterior.');
             return 'cancel';
         }
         $acum = $acum + $bn->participacion;
@@ -163,9 +197,24 @@ class beneficiario extends ActiveRecord {
             DwMessage::error('Lo sentimos, pero ya has agotado la cobertura de la poliza de vida asignada a tus beneficiarios.');
             return 'cancel';
       }
-      } //cierre del if de metodo de edicion
+      //no AGREGAR BENEFICIARIO S EXTERNOS SI NO HAY DISPONIBLIDAD DE LA PARTICIPACION EN LA POLIZA DE VIDA
+      if(($acum>=100)&&($this->beneficiario_tipo_id=="2") ) {
+        DwMessage::error('No puedes agregar beneficiarios externos ya que has agotado la participación en la poliza de vida.');
+        return 'cancel';
+      }
 
-      
+      //validar lo de los hijos mayores de 18 sean externos 
+        $fecha = $this->fecha_nacimiento;
+        $ano  = substr($fecha,0,4);
+        $anoac = date("Y");
+        if(($anoac-$ano >18)&&($this->parentesco_id=="1")){
+            $this->beneficiario_tipo_id = "2";
+        }
+      $this->fecha_inclusion = date("y-m-d");
+      } //cierre del if de metodo distindo de edicion
+
+      //fecha inclusion
+
       //guardar en mayusculas todo
       $this->nombre1 = strtoupper($this->nombre1);
       $this->nombre2 = strtoupper($this->nombre2);
@@ -174,32 +223,9 @@ class beneficiario extends ActiveRecord {
       $this->observacion = strtoupper($this->observacion);
       $this->direccion = strtoupper($this->direccion);
       $this->correo_electronico = strtoupper($this->correo_electronico);
+      $this->motivo_exclusion = strtoupper($this->motivo_exclusion);
+      $this->motivo_reactivacion = strtoupper($this->motivo_reactivacion);
     }    
-    /**
-     * Método para obtener la información de un beneficiario solo la informacion basica a traves de su id
-     * @return type
-     */
-    public function getInformacionbeneficiario($beneficiario) {
-        $beneficiario = Filter::get($beneficiario, 'int');
-        if(!$beneficiario) {
-            return NULL;
-        }
-        $columns = 'beneficiario.*';
-        $condicion = "beneficiario.id = $beneficiario";        
-        return $this->find_first("columns: $columns", "conditions: $condicion");
-    } 
-    //editar el beneficiario
-    public static function setEBeneficiario($method, $data=array(), $optData=array()) {
-        $obj = new beneficiario($data);
-        if(!empty($optData)) {
-            $obj->dump_result_self($optData);
-        }
-        $method = 'update';
-        $rs = $obj->$method();
-        return ($rs) ? $obj : FALSE;
-    }
-
-
 
 //------ Listado de todos los beneficiarios de un titular en especificoooo ----- 16/07/2014 
     public function getListadoBeneTitular($titular){

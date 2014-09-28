@@ -46,6 +46,27 @@ class beneficiarioController extends BackendController {
         $this->value = $value;
         $this->page_title = 'Búsqueda de beneficiarios del sistema';        
     }
+    /** Metodo para excluir  a un beneficiario **/
+    public function excluir($key) {        
+        if(!$id = DwSecurity::isValidKey($key, 'excluir_bene', 'int')) {
+            return DwRedirect::toAction('listar');
+        }
+        $beneficiario = new beneficiario();
+        $bene = $beneficiario->getInformacionbeneficiario($id);
+        if(!$bene) {            
+            DwMessage::get('id_no_found');
+            return DwRedirect::toAction('listar');
+        }
+        if(Input::hasPost('beneficiario')) {
+            $es = "0";
+            if(beneficiario::setEBeneficiario('update', Input::post('beneficiario'), array('estado_beneficiario'=>$es))){
+                DwMessage::valid('¡El beneficiario se ha Excluido con Exito!.');
+                return DwRedirect::toAction('listar');
+            }       
+        } 
+        $this->page_title = 'Excluir Beneficiario';
+        $this->beneficiarios = $bene;
+    }
 
 /**
      * Método para obtener beneficiarios

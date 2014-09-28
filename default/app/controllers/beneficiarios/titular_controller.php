@@ -29,7 +29,6 @@ class TitularController extends BackendController {
     public function index() {
         DwRedirect::toAction('listar');
     }
-
     /** Metodo para excluir  a u titular **/
     public function excluir($key) {        
         if(!$idt = DwSecurity::isValidKey($key, 'excluir_usuario', 'int')) {

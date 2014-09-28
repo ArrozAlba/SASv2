@@ -1,0 +1,44 @@
+<?php View::notify(); ?>
+<div class="container-fluid dw-shell-view">
+<?php View::process($page_module, $page_title, $set_title); ?>
+<?php echo DwForm::open('', 'post', array('id'=>'form', 'class'=>'dw-validate')); ?>
+  <div class="row-fluid">
+    <div class="span12">
+      <?php echo DwForm::textarea('beneficiario.motivo_exclusion', array('class'=>'mask-hidden show-error input-xxlarge mask-alpha '), NULL, 'Motivo de la exclusión'); ?>
+    </div>
+  </div>
+  <?php echo DwForm::hidden('beneficiario.cedula', NULL, $beneficiarios->cedula);
+echo DwForm::hidden('metodo', NULL, 'editar');
+echo DwForm::hidden('beneficiario.id', NULL, $beneficiarios->id);
+echo DwForm::hidden('beneficiario.nombre1', NULL, $beneficiarios->nombre1);
+echo DwForm::hidden('beneficiario.apellido1', NULL, $beneficiarios->apellido1);
+echo DwForm::hidden('beneficiario.nombre2', NULL, $beneficiarios->nombre2);
+echo DwForm::hidden('beneficiario.apellido2', NULL, $beneficiarios->apellido2);
+echo DwForm::hidden('beneficiario.nacionalidad', NULL, $beneficiarios->nacionalidad ); 
+echo DwForm::hidden('beneficiario.sexo', NULL, $beneficiarios->sexo); 
+echo DwForm::hidden('beneficiario.fecha_nacimiento', NULL, $beneficiarios->fecha_nacimiento); 
+echo DwForm::hidden('beneficiario.correo_electronico', NULL, $beneficiarios->correo_electronico );
+echo DwForm::hidden('beneficiario.grupo_sanguineo', NULL, $beneficiarios->grupo_sanguineo);
+echo DwForm::hidden('beneficiario.fecha_inclusion', NULL, $beneficiarios->fecha_inclusion);
+echo DwForm::hidden('beneficiario.celular', NULL, $beneficiarios->celular);
+echo DwForm::hidden('beneficiario.telefono', NULL, $beneficiarios->telefono );
+echo DwForm::hidden('beneficiario.titular_id', NULL, $beneficiarios->titular_id );
+echo DwForm::hidden('beneficiario.beneficiario_tipo_id', NULL, $beneficiarios->beneficiario_tipo_id);
+echo DwForm::hidden('beneficiario.observacion', NULL, $beneficiarios->observacion);
+echo DwForm::hidden('beneficiario.participacion', NULL, $beneficiarios->participacion); 
+echo DwForm::hidden('beneficiario.parentesco_id', NULL, $beneficiarios->parentesco_id );
+echo DwForm::hidden('beneficiario.motivo_reactivacion', NULL, $beneficiarios->motivo_reactivacion);
+echo DwForm::hidden('beneficiario.estado_beneficiario', NULL, $beneficiarios->estado_beneficiario); 
+echo DwForm::hidden('beneficiario.estado_civil', NULL, $beneficiarios->estado_civil);
+$fecha_exclusion = date("Y-m-d");
+echo DwForm::hidden('beneficiario.fotografia', NULL, $beneficiarios->fotografia);
+echo DwForm::hidden('beneficiario.fecha_exclusion', NULL, $fecha_exclusion);?>
+  <div class="row-fluid">
+    <div class="form-actions">
+      <?php echo DwButton::save('Guardar Motivo Exclusión'); ?>
+      <?php echo DwButton::reset('form'); ?>
+      <?php echo DwButton::cancel('beneficiarios/beneficiario/listar'); ?>
+    </div>
+  </div>
+<?php echo DwForm::close(); ?>
+</div>

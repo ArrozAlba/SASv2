@@ -72,15 +72,15 @@
                         <?php echo DwForm::dbSelect('titular.pais_id', 'nombre', array('params/pais', 'getListadoPais'), NULL, array('class'=>'input-xlarge input-required mask-pint show-errors data-toggle="tooltip" title="Seleccione Lugar u/o Paìs de Nacimiento"'), NULL ,'Paìs Nacimiento'); ?>
                     </div>
                     <div class="span3">
-                        <label>Estado</label>
-                        <div id='div_estado'><select class="input-xlarge"> <option value=""> Seleccione:</option></select></div>
+                        <label>Estado<span class="req">*</span> </label>
+                        <div id='div_estado'><select class="input-xlarge input-required"> <option value=""> Seleccione:</option></select></div>
                     </div>
                     <div class="span3">
-                        <label>Municipio</label>
+                        <label>Municipio<span class="req">*</span></label>
                         <div id='div_municipio'><select class="input-xlarge"> <option value=""> Seleccione:</option></select></div>
                     </div>
                     <div class="span3">
-                        <label>Parroquia</label>
+                        <label>Parroquia<span class="req">*</span></label>
                         <div id='div_parroquia'><select class="input-xlarge"> <option value=""> Seleccione:</option></select></div>  
                     </div>
 
@@ -97,7 +97,7 @@
                    </tr>
                 </table>
                 </div>
-            <label>(*) Campos Obligatorios </label>
+            <label><span class="req">(*)</span> Campos Obligatorios </label>
             </div><!--Cierrre del Tab1-->
             <!-- Datos de direccion de Habitacion-->
             <div class="tab-pane" id="tab2">
@@ -106,15 +106,15 @@
                         <?php echo DwForm::dbSelect('titular.hpais_id', 'nombre', array('params/pais', 'getListadoPais'), NULL, array('class'=>'input-large input-required mask-pint show-errors data-toggle="tooltip" title="Seleccione Paìs de Residencia Actual"'), NULL ,'Paìs Residencia'); ?>
                     </div>
                     <div class="span3">
-                        <label>Estado</label>
+                        <label>Estado<span class="req">*</span></label>
                         <div id='div_hestado'> <select class="input-xlarge"> <option value=""> Seleccione:</option></select></div>
                     </div>
                     <div class="span3">
-                        <label>Municipio</label>
+                        <label>Municipio<span class="req">*</span></label>
                         <div id='div_hmunicipio'><select class="input-xlarge"> <option value=""> Seleccione:</option></select></div>
                     </div>
                     <div class="span3">
-                        <label>Parroquia</label>
+                        <label>Parroquia<span class="req">*</span></label>
                         <div id='div_hparroquia'><select class="input-xlarge"> <option value=""> Seleccione:</option></select></div>  
                     </div>
                 </div>
@@ -144,7 +144,7 @@
                         <?php echo DwForm::dbSelect('titular.sucursal_id', array('sucursal', 'parroquia'), array('config/sucursal', 'getListadoSucursal'), array('todas'=>'Todas'), array('class'=>'input-xlarge input-required mask-pint show-errors data-toggle="tooltip" title="Seleccione la UPSA o Sucursal a donde Pertenece el Titular  "'), NULL ,'Sucursal / UPSA'); ?>
                     </div>
                     <div class="span4">
-                     <label>Departamento</label>
+                     <label>Departamento<span class="req">*</span></label>
                         <div id='div_departamento'><select class="input-xlarge"> <option value=""> Seleccione:</option></select></div>
 	                </div>
                     <div class="span4">
