@@ -54,8 +54,7 @@ class Titular extends ActiveRecord {
         $rs = $obj->$method();
         return ($rs) ? $obj : FALSE;
     }
-
-
+    //editar el titular
     public static function setETitular($method, $data=array(), $optData=array()) {
         $obj = new Titular($data);
         if(!empty($optData)) {
@@ -142,7 +141,7 @@ class Titular extends ActiveRecord {
         if(!$titular) {
             return NULL;
         }
-        $columns = 'municipio.nombre as municipio, municipio.id as idmunicipio, parroquia.nombre as parroquia, parroquia.id as idparroquia,  estado.nombre as esta2, estado.id as idestado, pais.nombre as pais, pais.id as idpais, titular.*, titular.id as idtitular, titular.estado as estado_titular,  profesion.id, profesion.nombre as profesion, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id as iddepartamento, departamento.nombre as departamento, sucursal.id as idsucursal, sucursal.sucursal ';
+        $columns = 'municipio.nombre as municipio, municipio.id as idmunicipio, parroquia.nombre as parroquia, parroquia.id as idparroquia,  estado.nombre as esta2, estado.id as idestado, pais.nombre as pais, pais.id as idpais, titular.*, titular.id as idtitular, titular.estado as estado_titular, profesion.id idprofesion,  profesion.nombre as profesion, tipoempleado.id idtipoempleado, tipoempleado.nombre as tipoe, departamento.id as iddepartamento, departamento.nombre as departamento, sucursal.id as idsucursal, sucursal.sucursal, cargo.id idcargo, cargo.nombre ';
         $join = 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';
         $join.= 'INNER JOIN profesion ON  titular.profesion_id = profesion.id ';
         $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';
@@ -151,6 +150,7 @@ class Titular extends ActiveRecord {
         $join.= 'INNER JOIN estado ON  titular.estado_id = estado.id ';
         $join.= 'INNER JOIN municipio ON  titular.municipio_id = municipio.id ';
         $join.= 'INNER JOIN parroquia ON  titular.parroquia_id = parroquia.id ';
+        $join.= 'INNER JOIN cargo ON cargo.id = titular.cargo_id ';
         $condicion = "titular.id = $titular";        
         return $this->find_first("columns: $columns", "join: $join", "conditions: $condicion");
     }
@@ -161,7 +161,7 @@ class Titular extends ActiveRecord {
         if(!$titular) {
             return NULL;
         }
-        $columns = 'parroquia.nombre as hparroquia, estado.nombre as hestado, estado.id as idhestado,  pais.nombre as hpais, pais.id as idhpais, titular.id ';
+        $columns = 'parroquia.nombre as hparroquia, parroquia.id as idhparroquia ,estado.nombre as hestado, estado.id as idhestado, pais.nombre as hpais, pais.id as idhpais, titular.id ';
         $join= 'INNER JOIN pais ON  titular.hpais_id = pais.id ';
         $join.= 'INNER JOIN estado ON  titular.hestado_id = estado.id ';
         $join.= 'INNER JOIN parroquia ON  titular.hparroquia_id = parroquia.id ';
@@ -258,6 +258,8 @@ class Titular extends ActiveRecord {
         $this->apellido2 = strtoupper($this->apellido2);
         $this->observacion = strtoupper($this->observacion);
         $this->direccion = strtoupper($this->direccion);
+        $this->motivo_exclusion = strtoupper($this->motivo_exclusion);
+        $this->motivo_reactivacion = strtoupper($this->motivo_reactivacion);
         $this->correo_electronico = strtoupper($this->correo_electronico);
         $a = $this->estado_id = Filter::get($this->estado_id, 'numeric');
         $this->municipio_id = Filter::get($this->municipio_id, 'numeric');

@@ -12,9 +12,7 @@
 </script>
 
 <div class="container-fluid dw-shell-view">
-
     <?php View::process($page_module, $page_title, $set_title); ?>
-
     <div class="btn-toolbar btn-toolbar-top">
         <div class="btn-actions">
             <?php echo DwHtml::button("beneficiarios/titular/agregar/", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
@@ -41,7 +39,7 @@
                 <?php foreach($titulares->items as $titular): ?>
                     <?php $key_shw = DwSecurity::getKey($titular->idtitular, 'shw_titular'); ?>
                     <?php $key_upd = DwSecurity::getKey($titular->idtitular, 'upd_titular'); ?>
-                    <?php $key_ina = DwSecurity::getKey($titular->idtitular, 'bloquear_usuario'); ?>
+                    <?php $key_ina = DwSecurity::getKey($titular->idtitular, 'excluir_usuario'); ?>
                     <?php $key_rea = DwSecurity::getKey($titular->idtitular, 'reactivar_usuario'); ?>
                     <tr>
                         <td><?php echo $titulares->counter; ?></td>
@@ -50,18 +48,21 @@
                         <td><?php echo $titular->apellido1; ?></td>
                         <td><?php echo $titular->tipoe; ?></td>
                         <td><?php echo $titular->departamento; ?></td>
-                        <?if(APP_OFFICE) { //Si está activa la opción de oficinas ?>
                         <td><?php echo $titular->sucursal; ?></td>
-                        <? } ?>
-                         <td><?php if ($titular->estado == 1){ echo '<span class="label label-success">Activo</span>'; } else{ echo '<span class="label label-important">Inactivo</span>';}?></td>
+                        <td><?php if ($titular->estado == 1){ echo '<span class="label label-success">Activo</span>'; } else{ echo '<span class="label label-important">Inactivo</span>'; } ?></td>
                         <td>
-                            <?php echo DwHtml::buttonTable('Agregar Beneficiarios', "beneficiarios/beneficiario/agregar/$key_shw/", NULL, 'success', 'user');
+                            <?php if ($titular->estado==1){ 
+                            echo DwHtml::buttonTable('Agregar Beneficiarios', "beneficiarios/beneficiario/agregar/$key_shw/", NULL, 'success', 'user'); 
                             echo DwHtml::buttonTable('Ver titular', "beneficiarios/titular/reportetitular/$key_shw/", NULL, 'warning', 'search');
-                            echo DwHtml::buttonTable('Modificar titular', "beneficiarios/titular/editar/$key_upd/", NULL, 'info', 'edit');
-                            if(Session::get('perfil_id')<=3) { 
-                                echo DwHtml::buttonTable('Excluir Titular', "beneficiarios/titular/excluir/$key_upd/", array('class'=>'js-confirm', 'confirm-title'=>'Excluir Titular', 'confirm-body'=>'¿Está seguro de Excluir el Titular? <br />'), 'danger', 'repeat');
+                            echo DwHtml::buttonTable('Modificar titular', "beneficiarios/titular/editar/$key_upd/", NULL, 'info', 'edit'); 
                             }
-                            ?>
+                            if((Session::get('perfil_id')<=3) && ($titular->estado==1) ){ 
+                                echo DwHtml::buttonTable('Excluir Titular', "beneficiarios/titular/excluir/$key_ina/", array('class'=>'js-confirm', 'confirm-title'=>'Excluir Titular', 'confirm-body'=>'¿Está seguro de Excluir el Titular? <br/>'), 'danger', 'repeat');
+                            }
+                            if((Session::get('perfil_id')<=3) && ($titular->estado!=1) ){ 
+                                echo DwHtml::buttonTable('Reactivar Titular', "beneficiarios/titular/reactivar/$key_rea/", array('class'=>'js-confirm', 'confirm-title'=>'Reactivar Titular', 'confirm-body'=>'¿Está seguro de Reactivar el Titular? <br />'), 'success', 'repeat');
+                            }
+                           ?>
                         </td>
                     </tr>
                     <?php $titulares->counter++; ?>

@@ -29,14 +29,12 @@ class DiscapacidadBeneficiario extends ActiveRecord {
      * @param int $perfil Identificador el perfil del usuario
      * @return array object ActieRecord
      */
-    public function getRecursoPerfil($perfil) {
-        $perfil = Filter::get($perfil,'numeric');
-        $columnas = 'recurso_perfil.*, recurso.modulo, recurso.controlador, recurso.accion, recurso.descripcion, recurso.estado';
-        $join = 'INNER JOIN recurso ON recurso.id = recurso_perfil.recurso_id';        
-        $condicion = "recurso_perfil.perfil_id = '$perfil'";
-        $order = 'recurso.modulo ASC, recurso.controlador ASC,  recurso.registrado_at ASC';
-        if($perfil) {
-            return $this->find("columns: $columnas", "join: $join", "conditions: $condicion", "order: $order");
+    public function getDiscapacidadBeneficiario($id) {
+        $id = Filter::get($id,'numeric');
+        $columnas = 'discapacidad_beneficiario.* ';
+        $condicion = "beneficiario_id = '$id'";
+        if($id) {
+            return $this->find("columns: $columnas", "conditions: $condicion");
         }
         return false;                                
     }
