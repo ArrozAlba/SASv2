@@ -11,7 +11,7 @@
  * @copyright   Copyright (c) 2014 UPTP / E.M.S. Arroz del Alba S.A. (http://autogestion.arrozdelalba.gob.ve) 
  */
 
-Load::models('beneficiarios/titular', 'config/sucursal');
+Load::models('beneficiarios/titular', 'config/sucursal', 'sistema/usuario_clave');
 
 class UsuarioController extends BackendController {
     
@@ -63,7 +63,7 @@ class UsuarioController extends BackendController {
     
     /**
      * Método para agregar
-     */
+
     public function agregar() {
         if(Input::hasPost('titular') && Input::hasPost('usuario')) {
             ActiveRecord::beginTrans();
@@ -82,7 +82,29 @@ class UsuarioController extends BackendController {
         }
         $this->page_title = 'Agregar usuario';
     }
-    
+    */
+        /**
+     * Método para agregar
+     */
+    public function agregar() {
+         if(Input::hasPost('usuario') && Input::hasPost('usuario_clave')) {
+            ActiveRecord::beginTrans();
+            //Guardo usuario
+            $usuario = Usuario::setUsuario('create', Input::post('usuario'));
+            if($usuario) {
+                if(UsuarioClave::setClave('create', Input::post('usuario_clave'), array('usuario_id'=>$usuario->id))) {
+                    ActiveRecord::commitTrans();
+                    DwMessage::valid('El Usuario se ha creado correctamente.');
+                    return DwRedirect::toAction('listar');
+                }
+            } else {
+                ActiveRecord::rollbackTrans();
+            }
+             
+        }
+        $this->page_title = 'Agregar Usuario';
+        
+    }
     /**
      * Método para editar
      */

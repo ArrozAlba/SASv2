@@ -305,43 +305,17 @@ class Usuario extends ActiveRecord {
      * @return object ActiveRecord
      */
     public static function setUsuario($method, $data, $optData=null) {
-        $obj = new Usuario($data);
+        $obj = new Usuario($data);   
         if($optData) {
             $obj->dump_result_self($optData);
         }
+
         if(!empty($obj->id)) { //Si va a actualizar
             $old = new Usuario();
             $old->find_first($obj->id);
-            if(!empty($obj->oldpassword)) { //Si cambia de claves
-                if(empty($obj->password) OR empty($obj->repassword)) {
-                    DwMessage::error("Indica la nueva contraseña");
-                    return false;
-                }
-                $obj->oldpassword = md5(sha1($obj->oldpassword));
-                if($obj->oldpassword !== $old->password) {
-                    DwMessage::error("La contraseña anterior no coincide con la registrada. Verifica los datos e intente nuevamente");
-                    return false;
-                }
-            }                       
+                                   
         }
-        //Verifico si las contraseñas coinciden (password y repassword)
-        if( (!empty($obj->password) && !empty($obj->repassword) ) OR ($method=='create')  ) { 
-            if($method=='create' && (empty($obj->password))) {
-                DwMessage::error("Indica la contraseña para el inicio de sesión");
-                return false;
-            }
-            $obj->password = md5(sha1($obj->password));
-            //$obj->repassword = md5(sha1($obj->repassword)); mientras luego borrar lo de abajo 
-            $obj->repassword = $obj->password;            
-            if($obj->password !== $obj->repassword) {
-                DwMessage::error('Las contraseñas no coinciden. Verifica los datos e intenta nuevamente.');
-                return 'cancel';
-            }
-        } else {
-            if(isset($obj->id)) { //Mantengo la contraseña anterior                    
-                $obj->password = $old->password;                                
-            }
-        } 
+ 
         $rs = $obj->$method();
         if($rs) {
             ($method == 'create') ? DwAudit::debug("Se ha registrado el usuario $obj->login en el sistema") : DwAudit::debug("Se ha modificado la información del usuario $obj->login");
@@ -385,14 +359,14 @@ class Usuario extends ActiveRecord {
             return 'cancel';
         }
         //Verifico si ya se encuentra registrado
-        if($this->_getRegisteredField('titular_id', $this->titular_id, $this->id)) {
-            DwMessage::error('La titular registrada ya posee una cuenta de usuario.');
-            return 'cancel';
-        } 
-        if($this->_getRegisteredField('titular_id', $this->titular_id, $this->cedula)) {
-            DwMessage::error('La Cedula registrada ya posee una cuenta de usuario.');
-            return 'cancel';
-        } 
+        //if($this->_getRegisteredField('titular_id', $this->titular_id, $this->id)) {
+        //    DwMessage::error('La titular registrada ya posee una cuenta de usuario.');
+        //    return 'cancel';
+        //} 
+        //if($this->_getRegisteredField('titular_id', $this->titular_id, $this->cedula)) {
+        //    DwMessage::error('La Cedula registrada ya posee una cuenta de usuario.');
+        //    return 'cancel';
+        //} 
         //Verifico si se encuentra el mail registrado
         if($this->_getRegisteredField('email', $this->email, $this->id)) {
             DwMessage::error('El correo electrónico ya se encuentra registrado.');

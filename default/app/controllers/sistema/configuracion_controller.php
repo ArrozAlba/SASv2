@@ -10,7 +10,7 @@
  * @copyright   Copyright (c) 2013 Dailyscript Team (http://www.dailyscript.com.co)
  */
 
-Load::models('sistema/sistema');
+Load::models('sistema/sistema','sistema/configuracion');
 
 class ConfiguracionController extends BackendController {
 
@@ -58,6 +58,29 @@ class ConfiguracionController extends BackendController {
         }
         $this->config = DwConfig::read('config', '', true);
         $this->page_module = 'Configuración general';
+    }
+
+   /**
+     * Método para las configuraciones de seguridad
+     */
+    public function seguridad() {
+          if(Input::hasPost('seguridad')) {
+              //var_dump(Input::Post('seguridad'));
+                if(Configuracion::setConfiguracion('update', Input::post('seguridad'))) {
+                    DwMessage::valid('Los datos se han actualizado correctamente');
+                } else {
+                    DwMessage::get('error_form');
+                }
+            
+        }
+
+        $configuracion = new Configuracion();
+        if(!$configuracion->getInformacionConfiguracion()) {
+            DwMessage::get('id_no_found');
+            return DwRedirect::toRoute('module: dashboard', 'controller: index');
+        }
+        $this->configuracion = $configuracion;
+        $this->page_module = 'Configuración de Seguridad';
     }
 
     /**
