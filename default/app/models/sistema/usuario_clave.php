@@ -11,7 +11,7 @@
  * @copyright   Copyright (c) 2014 UPTP / E.M.S. Arroz del Alba S.A. (http://autogestion.arrozdelalba.gob.ve) 
  */
 
-Load::models('sistema/usuario', 'sistema/acceso');
+Load::models('sistema/usuario', 'sistema/acceso', 'sistema/configuracion');
 
 class UsuarioClave extends ActiveRecord {
     
@@ -109,6 +109,10 @@ class UsuarioClave extends ActiveRecord {
             }
         }
         $obj->fecha_inicio = date('Y-m-d');
+        $fecha = date('Y-m-j');
+        $nuevafecha = strtotime ( '+2 day' , strtotime ( $fecha ) ) ;
+        $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
+        echo $nuevafecha;
         
         $rs = $obj->$method();
         if($rs) {

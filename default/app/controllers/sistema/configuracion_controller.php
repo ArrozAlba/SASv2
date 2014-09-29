@@ -65,7 +65,8 @@ class ConfiguracionController extends BackendController {
      */
     public function seguridad() {
           if(Input::hasPost('seguridad')) {
-                if(Configuracion::setConfiguracion('save', Input::post('seguridad'))) {
+              //var_dump(Input::Post('seguridad'));
+                if(Configuracion::setConfiguracion('update', Input::post('seguridad'))) {
                     DwMessage::valid('Los datos se han actualizado correctamente');
                 } else {
                     DwMessage::get('error_form');
@@ -78,7 +79,7 @@ class ConfiguracionController extends BackendController {
             DwMessage::get('id_no_found');
             return DwRedirect::toRoute('module: dashboard', 'controller: index');
         }
-
+        $this->configuracion = $configuracion;
         $this->page_module = 'Configuración de Seguridad';
     }
 
