@@ -3,7 +3,7 @@
     $(function() {
         $('table').dwGrid({
             order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
-            order_action: $.KumbiaPHP.publicPath+"solicitudes/solicitud_servicio/registro/"
+            order_action: $.KumbiaPHP.publicPath+"solicitudes/solicitud_odontologica/registro/"
         });
     });
 </script>
@@ -11,7 +11,7 @@
     <?php View::process($page_module, $page_title, $set_title); ?>
     <div class="btn-toolbar btn-toolbar-top">
         <div class="btn-actions">
-            <?php echo DwHtml::button("solicitudes/solicitud_servicio/agregar", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
+            <?php echo DwHtml::button("solicitudes/solicitud_odontologica/agregar", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
         </div>
     </div>
     <div class="dw-overflow">
