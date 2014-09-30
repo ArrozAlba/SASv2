@@ -1,0 +1,26 @@
+<?php View::notify(); ?>
+<div class="container-fluid dw-shell-view">
+<?php View::process($page_module, $page_title, $set_title); ?>
+<?php echo DwForm::open('', 'post', array('id'=>'form', 'class'=>'dw-validate')); ?>
+  <div class="row-fluid">
+    <div class="span12">
+      <?php echo DwForm::textarea('solicitud_servicio.motivo_rechazo', array('class'=>'mask-text show-error input-xxlarge mask-alpha '), NULL, 'Motivo del rechazo'); ?>
+    </div>
+  </div>
+  <?php echo DwForm::hiddenKey('solicitud_servicio.id', $solicitud_servicio->idsolicitudservicio); ?>
+  <?php echo DwForm::hidden('solicitud_servicio.servicio_id', NULL, $solicitud_servicio->idservicio ); ?>
+  <?php echo DwForm::hidden('solicitud_servicio.codigo_solicitud', NULL, $solicitud_servicio->codigo_solicitud ); ?>
+  <?php echo DwForm::hidden('solicitud_servicio.titular_id', NULL, $solicitud_servicio->idtitular ); ?>
+  <?php echo DwForm::hidden('solicitud_servicio.beneficiario_id', NULL, $solicitud_servicio->idbeneficiario ); ?>
+  <?php echo DwForm::hidden('solicitud_servicio.proveedor_id', NULL, $solicitud_servicio->idproveedor ); ?>
+  <?php echo DwForm::hidden('solicitud_servicio.medico_id', NULL, $solicitud_servicio->idmedico ); ?>
+  <?php echo DwForm::hidden('solicitud_servicio.tiposolicitud_id', NULL, '1'); ?>
+  <div class="row-fluid">
+    <div class="form-actions">
+      <?php echo DwButton::save('Guardar Solicitud'); ?>
+      <?php echo DwButton::reset('form'); ?>
+      <?php echo DwButton::cancel(); ?>
+    </div>
+  </div>
+    <?php echo DwForm::close(); ?>
+</div>
