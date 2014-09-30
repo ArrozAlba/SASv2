@@ -67,11 +67,6 @@ class Titular extends ActiveRecord {
         return ($rs) ? $obj : FALSE;
     }
 
-    /**
-     * Método para listar Titulares
-     * @return obj
-     */
-
     public function getListadotitular($estado, $order='', $page=0) {
         $columns = 'titular.*, titular.id as idtitular, sucursal.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';       
         $join= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
@@ -102,7 +97,15 @@ class Titular extends ActiveRecord {
             return $this->find("columns: $columns", "join: $join", "order: $order");
         }  
     }
+    public function getListadotitularreporte() {
+        $columns = 'titular.*, titular.id as idtitular, sucursal.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';       
+        $join= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
+        $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';
+        $join.= 'INNER JOIN sucursal ON departamento.sucursal_id = sucursal.id';
 
+            return $this->find("columns: $columns", "join: $join");
+          
+    }
     /**
      * Método para obtener titulares
      * @return obj
