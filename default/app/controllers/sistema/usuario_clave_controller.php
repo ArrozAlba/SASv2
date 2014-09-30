@@ -11,7 +11,7 @@
  * @copyright   Copyright (c) 2014 UPTP / E.M.S. Arroz del Alba S.A. (http://autogestion.arrozdelalba.gob.ve) 
  */
 
-Load::models('beneficiarios/titular', 'config/sucursal', 'sistema/usuario_clave');
+Load::models('beneficiarios/titular', 'config/sucursal', 'sistema/usuario_clave', 'sistema/configuracion');
 
 class UsuarioClaveController extends BackendController {
     
@@ -28,6 +28,13 @@ class UsuarioClaveController extends BackendController {
 
     public function cambiar_clave() {
         $this->page_title = 'Cambiar clave del usuario';
+        $config = new Configuracion();
+        $this->configs = $config->getInformacionConfiguracion();
+        DwMessage::warning('variable $config1: '.var_dump($config->getInformacionConfiguracion()).'');               
+        //$diasadicional = UsuarioClave::diasadicionales();
+        //DwMessage::warning('variable $diasadicional: '.$this->config->dias_caducidad_clave.'');               
+        return false;
+        
         $usuval = UsuarioClave::clave_valida(Session::get('id'));
         //$id=Session::get('id');
         //$data = Input::post('usuario_clave'); 
@@ -35,14 +42,13 @@ class UsuarioClaveController extends BackendController {
         //DwMessage::warning('variable $data: '.var_dump($data).'');               
 
         
-        //if ($usuval!=1) {
+        if ($usuval!=1) {
             if (Input::hasPost('usuario_clave')) {
                 try {
                     $data = Input::post('usuario_clave');                
                     $id=Session::get('id');
                          if (Load::model('sistema/usuario_clave')->cambiar_clave($id, $data['password'], $data['repassword'])) {
                             Flash::success('Cambio de clave realizado exitosamente.');
-                            
                             DwAuth::logout();
                         return Router::redirect('/sistema/login/entrar');
                         } else {
@@ -55,9 +61,9 @@ class UsuarioClaveController extends BackendController {
                 }
 
                 
-            }
-            DwMessage::info('clave actualizada');
-        //}        
+            }else {
+            DwMessage::info('clave aun es valida'); }
+        }        
         //    DwMessage::warning('Clave aun es valida');
     }
     /**

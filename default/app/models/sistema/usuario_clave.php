@@ -36,15 +36,34 @@ class UsuarioClave extends ActiveRecord {
         }
                     return 0;
     }
+    public static function fecha_final($fechainicio,$diasadicionales) {    
+       $nuevafecha = strtotime ( '+'.$diasadicionales.' day' , strtotime ( $fechainicio ) ) ;
+       $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
+       $fecha_fin = $nuevafecha;
+       return Flash::error('Fecha Inicial: '.$fechainicio.' Fecha Final: '.$fecha_fin.' Dias Caducidad:'.$diasadicionales.' ');
+    }
+    public static function diasadicionales() {    
+        $configseg = new Configuracion();
+        $configseg1 = $configseg->getInformacionConfiguracion();
+            return $configseg1[1]->dias_caducidad_clave;
+    }
+    
     public function cambiar_clave($usuario_id, $clave, $clave2) {
+    $ffinal =UsuarioClave::fecha_final();
+    return false;
         if ($clave == $clave2) {
             if (strlen($clave) >= 6) {
                 $usuario_clave = $this->find("columns: id,usuario_id,password,fecha_fin","conditions: usuario_id='".$usuario_id."'","order: fecha_fin DESC","limit: 1 ");
                 if ($usuario_clave) {
                     $usuario_clave[0]->usuario_id = $usuario_id;
                     $usuario_clave[0]->fecha_inicio = date('Y-m-d');
-                    $usuario_clave[0]->fecha_fin = date('Y-m-d');
+                    $ffinal =UsuarioClave::fecha_final($usuario_clave[0]->fecha_inicio);
+                    return Flash::error('dias caducidad: '.var_dump($ffinal).' ');
+                    $nuevafecha = strtotime ( '+'.$configseg1->dias_caducidad_clave.' day' , strtotime ( $usuario_clave[0]->fecha_inicio ) ) ;
+                    $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
+                    $usuario_clave[0]->fecha_fin = $nuevafecha;
                     $usuario_clave[0]->password = sha1($clave);
+                    return Flash::error('dias caducidad: '.$configseg0.' fecha inicio:'.$usuario_clave[0]->fecha_inicio.' fecha fin: '.$usuario_clave[0]->fecha_fin.' var nuevafecha: '.$nuevafecha.'');
                     if ($usuario_clave[0]->create()) {
                         return true;
                     } else {
@@ -55,7 +74,7 @@ class UsuarioClave extends ActiveRecord {
                 }
             
             }
-                Flash::error(' La clave debe tener al menos tres (6) caracteres');
+                Flash::error(' La clave debe tener al menos seis (6) caracteres');
             return false;
         } else {
             throw new KumbiaException('Las claves no coinciden');

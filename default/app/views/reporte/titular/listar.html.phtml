@@ -1,0 +1,39 @@
+<?php View::notify(); ?>
+
+<div class="container-fluid dw-shell-view">
+
+    <?php View::process($page_module, $page_title, $set_title); ?>
+
+          <table class="table table-bordered table-hover table-striped table-condensed table-responsive">
+            <thead>
+                <tr>
+                    <th>NUM</th>
+                    <th class="col-collapse" data-search="cedula">CEDULA</th>
+                    <th class="col-collapse" data-search="nombre">NOMBRE</th>
+                    <th class="col-collapse" data-search="apellido">APELLIDO</th>
+                    <th class="col-collapse" data-search="nomina">NOMINA</th>
+                    <th class="col-collapse" data-search="departamento">DEPARTAMENTO</th>
+                    <th class="col-collapse" data-search="sucursal">SUCURSAL</th>
+                    <th class="col-collapse" data-search="estado">ESTADO</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($titulares[0] as $titular): ?>
+                    <tr>
+                        <td><?php echo $titulares->id; ?></td>
+                        <td><?php echo $titular[0]->cedula; ?></td>
+                        <td><?php echo $titular->nombre1; ?></td>
+                        <td><?php echo $titular->apellido1; ?></td>
+                        <td><?php echo $titular->tipoe; ?></td>
+                        <td><?php echo $titular->departamento; ?></td>
+                        <td><?php echo $titular->sucursal; ?></td>
+                        <td><?php if ($titular->estado == 1){ echo '<span class="label label-success">Activo</span>'; } else{ echo '<span class="label label-important">Inactivo</span>'; } ?></td>
+                        <td>
+                           ?>
+                        </td>
+                    </tr>
+                    <?php //$titulares->counter++; ?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+</div>

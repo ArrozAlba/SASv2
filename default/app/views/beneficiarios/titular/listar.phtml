@@ -16,6 +16,7 @@
     <div class="btn-toolbar btn-toolbar-top">
         <div class="btn-actions">
             <?php echo DwHtml::button("beneficiarios/titular/agregar/", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
+            <?php echo DwButton::report("titular/listar/", 'html', 'Reporte de Titulares', 'imprimir'); ?>
         </div>
     </div>
 
