@@ -22,16 +22,30 @@ class TitularController extends BackendController {
         $this->page_module = 'Titular';
     }
         
- /**
-     * Método para listar
+    /**
+     * Método para crear reporte de listado de todos los titulares
      */
     public function listar($formato='html') { 
         $titular = new Titular();
-        $this->titulares = $titular->getListadoTitularreporte();
+        $this->titulares = $titular->getListadoTitularReporte();
         $this->page_module = 'Titulares del sistema ';
         $this->page_format = $formato;
         $this->page_title = 'Listado de titulares del sistema';  
     }
-        
+
+    /**
+     * Método para crear reporte de listado los titulares  una vez pasados por la busqueda 
+     */
+    public function listado($field='nombre1', $value='none', $order='order.id.asc', $formato='html'){
+        $field = (Input::hasPost('field')) ? Input::post('field') : $field;
+        $value = (Input::hasPost('field')) ? Input::post('value') : $value;
+        $value = strtoupper($value);
+        $titular = new Titular();
+        $titulares = $titular->getListadoTitularFiltrado($field, $value, $order);        
+        $this->titulares = $titulares;
+        $this->page_module = 'Titulares del sistema ';
+        $this->page_format = $formato;
+        $this->page_title = 'Búsqueda de titulares del sistema';        
+    }       
 }
 
