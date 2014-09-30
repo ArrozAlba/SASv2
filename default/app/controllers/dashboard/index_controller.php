@@ -33,10 +33,10 @@ class IndexController extends BackendController {
         $nroids = $csolicitud_servicio->count();
         $this->codigodd=$nroids;
         
-        $this->ct = ($this->codigodd1+$this->codigodd2 * $this->codigodd)/1000; 
+        $this->ct = ($this->codigodd1+$this->codigodd2 * $this->codigodd)/100; 
 	
         $solicitud_servicio = new SolicitudServicio();        
-        $this->solicitud_servicios = $solicitud_servicio->getListadoRegistroSolicitudServicio();
+        $this->solicitud_servicios = $solicitud_servicio->getListadoRegistroSolicitudServicioEscritorio();
     
     }
 }

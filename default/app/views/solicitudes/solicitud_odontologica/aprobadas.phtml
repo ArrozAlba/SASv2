@@ -3,16 +3,13 @@
     $(function() {
         $('table').dwGrid({
             order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
-            order_action: $.KumbiaPHP.publicPath+"solicitudes/solicitud_carta/registro/"
+            order_action: $.KumbiaPHP.publicPath+"solicitudes/solicitud_servicio/contabilizar/"
         });
     });
 </script>
 <div class="container-fluid dw-shell-view">
     <?php View::process($page_module, $page_title, $set_title); ?>
     <div class="btn-toolbar btn-toolbar-top">
-        <div class="btn-actions">
-            <?php echo DwHtml::button("solicitudes/solicitud_carta/agregar", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
-        </div>
     </div>
     <div class="dw-overflow">
         <table class="table table-bordered table-hover table-striped table-condensed table-responsive">
@@ -25,7 +22,6 @@
                     <th class="col-collapse" data-search="beneficiario">BENEFICIARIO</th>
                     <th class="col-collapse" data-search="proveedor">PROVEEDOR</th>
                     <th class="col-collapse" data-search="servicio">SERVICIO</th>
-                    <th class="col-collapse" data-search="patologia">PATOLOGIA</th>
                     <th class="col-collapse" data-search="observacion">OBSERVACION</th>
                     <th class="col-collapse" data-search="tiposolicitud">TIPO SOLICITUD</th>
                     <th class="col-collapse" data-search="estado">ESTADO</th>
@@ -44,14 +40,12 @@
                         <td><?php echo strtoupper($solicitud_servicio->nombre); echo ' '; echo strtoupper($solicitud_servicio->apellido);?></td>
                         <td><?php echo strtoupper($solicitud_servicio->proveedor); ?></td>
                         <td><?php echo strtoupper($solicitud_servicio->servicio); ?></td>
-                        <td><?php echo strtoupper($solicitud_servicio->patologia); ?></td>
                         <td><?php echo strtoupper($solicitud_servicio->observacion); ?></td>
                         <td><?php echo strtoupper($solicitud_servicio->tiposolicitud); ?></td>
-                        <td><?php echo ($solicitud_servicio->estado_solicitud == 'R') ? '<span class="label label-success" title="'.$solicitud_servicio->tiposolicitud.' PENDIENTE POR APROBAR" rel="tooltip">REGISTRADA</span>' : '<span class="label label-important" title="'.$solicitud_servicio->estado_solicitud.'" rel="tooltip">EMITIDA</span>'; ; ?></td>
+                        <td><?php echo ($solicitud_servicio->estado_solicitud == 'C') ? '<span class="label label-success" title="'.$solicitud_servicio->tiposolicitud.'" rel="tooltip">CONTABILIZADA</span>' : '<span class="label label-important" title="'.$solicitud_servicio->estado_solicitud.'" rel="tooltip">POR CARGAR SINIESTRO</span>' ; ?>
                         </td>
                         <td>
-                            <?php echo DwHtml::buttonTable('Modificar Solicitud', "solicitudes/solicitud_servicio/editar/$key_upd/", null, 'info', 'edit'); ?>
-                            <?php echo DwHtml::buttonTable('Eliminar Solicitud', "solicitudes/solicitud_servicio/eliminar/$key_del/", array('class'=>'js-confirm', 'confirm-title'=>'Eliminar solicitud_medicina', 'confirm-body'=>'Está seguro de eliminar este solicitud_medicina? <br />Recuerda que esta operación no se puede reversar.'), 'danger', 'ban-circle'); ?>
+                        <?php echo DwHtml::buttonTable('CARGAR SINIESTRO', "solicitudes/solicitud_servicio/siniestro/$key_upd/", null, 'default', 'list'); ?>
                         </td>
                     </tr>
                     <?php $solicitud_servicios->counter++; ?>
@@ -59,5 +53,5 @@
             </tbody>
         </table>
     </div>
-    <?php View::partial('paginators/default', false, array('page'=>$solicitud_servicios, 'url'=>"solicitudes/solicitud_servicio/listar/$order/")); ?>
+    <?php View::partial('paginators/default', false, array('page'=>$solicitud_servicios, 'url'=>"solicitudes/solicitud_servicio/contabilizar/$order/")); ?>
 </div>
