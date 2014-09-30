@@ -90,6 +90,10 @@ class Titular extends ActiveRecord {
                 'ASC'=>'tipoempleado.nombre ASC, titular.apellido1 ASC, titular.nombre1 ASC', 
                 'DESC'=>'tipoempleado.nombre DESC, titular.apellido1 DESC, titular.nombre1 DESC'
             ),
+             'departamento' => array(
+                'ASC'=>'departamento.nombre ASC, titular.apellido1 ASC, titular.nombre1 ASC', 
+                'DESC'=>'departamento.nombre DESC, titular.apellido1 DESC, titular.nombre1 DESC'
+            ),
         ));
         if($page) {
             return $this->paginated("columns: $columns", "join: $join", "order: $order", "page: $page");
@@ -97,11 +101,12 @@ class Titular extends ActiveRecord {
             return $this->find("columns: $columns", "join: $join", "order: $order");
         }  
     }
-    public function getListadotitularreporte() {
+    public function getListadoTitularReporte() {
          $columns = 'titular.*, titular.id as idtitular, sucursal.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';       
         $join= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
         $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';
         $join.= 'INNER JOIN sucursal ON departamento.sucursal_id = sucursal.id';
+        $join.= ' ORDER BY titular.cedula ';
         return $this->find("columns: $columns", "join: $join");
        
         /*$columns = 'titular.*, titular.id as idtitular, sucursal.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';       
@@ -249,6 +254,43 @@ class Titular extends ActiveRecord {
         }  
         //"conditions: $conditions",
     }
+    /**
+     * Método para buscar Titular y enviarlo al reporte
+     */
+    public function getListadoTitularFiltrado($field, $value, $order='') {
+        $value = Filter::get($value, 'string');
+        if( strlen($value) < 1 OR ($value=='none') ) {
+            return NULL;
+        }
+        if($field=='apellido'){ $field ='apellido1';}
+        if($field=='nomina'){ $field ='tipoempleado.nombre';}
+        if($field=='departamento'){ $field ='departamento.nombre';}
+        if($field=='sucursal'){ $field ='sucursal.sucursal';}
+
+        $columns = 'titular.*, titular.id as idtitular, tipoempleado.id as idtipoempleado, tipoempleado.nombre as nomina, departamento.id, departamento.nombre as departamento, sucursal.* ';
+        $join = 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
+        $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';   
+        $join.= 'INNER JOIN sucursal  ON  departamento.sucursal_id = sucursal.id ';
+        $order ='titular.cedula ';
+        //$conditions = "";//Por el super usuario
+
+        //Defino los campos habilitados para la búsqueda
+        $fields = array('cedula', 'nombre1', 'apellido1','tipoempleado.nombre', 'departamento.nombre','sucursal.sucursal');
+        if(!in_array($field, $fields)) {
+            $field = 'nombre1';
+        }        
+        if(! ($field=='sucursal' && $value=='todas') ) {
+          $conditions= " $field LIKE '%$value%'";
+        } 
+
+        return $this->find("columns: $columns", "join: $join","conditions: $conditions", "order: $order");
+        //"conditions: $conditions",
+    }
+
+
+
+
+
     /**
      * Callback que se ejecuta antes de guardar/modificar
      */
