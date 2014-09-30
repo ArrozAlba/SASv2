@@ -109,10 +109,17 @@ class UsuarioClave extends ActiveRecord {
             }
         }
         $obj->fecha_inicio = date('Y-m-d');
-        $fecha = date('Y-m-j');
-        $nuevafecha = strtotime ( '+2 day' , strtotime ( $fecha ) ) ;
+        $configseg = new Configuracion();
+        $configseg1 = $configseg->getInformacionConfiguracion();
+        $nuevafecha = strtotime ( '+'.$configseg1->dias_caducidad_clave.' day' , strtotime ( $obj->fecha_inicio ) ) ;
         $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
-        echo $nuevafecha;
+        $obj->fecha_fin = $nuevafecha;
+
+        //return DwMessage::error('La configuracion es: '.$configseg1->dias_caducidad_clave.' la fecha inicio es: '.$obj->fecha_inicio.' la fecha final es: '.$nuevafecha.'.');
+        //$fecha = date('Y-m-j');
+        //$nuevafecha = strtotime ( '+2 day' , strtotime ( $fecha ) ) ;
+        //$nuevafecha = date ( 'Y-m-j' , $nuevafecha );
+        //echo $nuevafecha;
         
         $rs = $obj->$method();
         if($rs) {
