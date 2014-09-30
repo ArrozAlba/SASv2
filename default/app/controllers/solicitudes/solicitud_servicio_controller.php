@@ -19,6 +19,10 @@ Load::models('config/patologia', 'solicitudes/solicitud_servicio_patologia');
 
 class SolicitudServicioController extends BackendController {
     /**
+     * Constante para definir el tipo de solicitud
+     */
+    const TPS = 1;    
+    /**
      * Método que se ejecuta antes de cualquier acción
      */
     protected function before_filter() {
@@ -49,7 +53,7 @@ class SolicitudServicioController extends BackendController {
     public function registro($order='order.nombre.asc', $page='pag.1') { 
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
         $solicitud_servicio = new SolicitudServicio();        
-        $this->solicitud_servicios = $solicitud_servicio->getListadoRegistroSolicitudServicio($order, $page,$tps='1');
+        $this->solicitud_servicios = $solicitud_servicio->getListadoRegistroSolicitudServicio($order, $page,$tps=self::TPS);
         $this->order = $order;        
         $this->page_title = 'Registro de Solicitudes de Atención Primaria';
     }
@@ -59,7 +63,7 @@ class SolicitudServicioController extends BackendController {
     public function aprobacion($order='order.nombre.asc', $page='pag.1') { 
     		$page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
         	$solicitud_servicio = new SolicitudServicio();        
-        	$this->solicitud_servicios = $solicitud_servicio->getListadoAprobacionSolicitudServicio($order, $page,$tps='1');
+        	$this->solicitud_servicios = $solicitud_servicio->getListadoAprobacionSolicitudServicio($order, $page,$tps=self::TPS);
         	$this->order = $order;        
         	$this->page_title = 'Aprobación de Solicitudes de Atención Primaria';
     }
@@ -69,7 +73,7 @@ class SolicitudServicioController extends BackendController {
     public function facturacion($order='order.nombre.asc', $page='pag.1') { 
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
         $solicitud_servicio = new SolicitudServicio();        
-        $this->solicitud_servicios = $solicitud_servicio->getListadoSiniestrosSolicitudServicio($order, $page,$tps='1');
+        $this->solicitud_servicios = $solicitud_servicio->getListadoSiniestrosSolicitudServicio($order, $page,$tps=self::TPS);
         $this->order = $order;        
         $this->page_title = 'Cargar Facturas a las solicitudes de Atención Primaria';
     }
@@ -80,7 +84,7 @@ class SolicitudServicioController extends BackendController {
     public function aprobadas($order='order.nombre.asc', $page='pag.1') { 
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
         $solicitud_servicio = new SolicitudServicio();        
-        $this->solicitud_servicios = $solicitud_servicio->getListadoContabilizarSolicitudServicio($order, $page,$tps='1');
+        $this->solicitud_servicios = $solicitud_servicio->getListadoContabilizarSolicitudServicio($order, $page,$tps=self::TPS);
         $this->order = $order;        
         $this->page_title = 'Contabilizar Solicitudes de Atención Primaria';
     }
@@ -148,10 +152,10 @@ class SolicitudServicioController extends BackendController {
     public function agregar() {
         $empresa = Session::get('empresa', 'config');
         $solicitud_servicio = new SolicitudServicio();
-        $nroids = $solicitud_servicio->count("tiposolicitud_id = 1");
+        $nroids = $solicitud_servicio->count("tiposolicitud_id = ".self::TPS);
         $this->codigods=$nroids+1;
 		$correlativ= new Tiposolicitud();
-        $codigocorrelativo = $correlativ->find("columns: correlativo","conditions: id=1 ", "limit: 1 ");
+        $codigocorrelativo = $correlativ->find("columns: correlativo","conditions: id=".self::TPS." ", "limit: 1 ");
         foreach ($codigocorrelativo as $cargoa) {
                     $this->cargoas[] = $cargoa->correlativo;
                 }
