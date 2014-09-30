@@ -98,12 +98,18 @@ class Titular extends ActiveRecord {
         }  
     }
     public function getListadotitularreporte() {
-        $columns = 'titular.*, titular.id as idtitular, sucursal.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';       
+         $columns = 'titular.*, titular.id as idtitular, sucursal.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';       
+        $join= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
+        $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';
+        $join.= 'INNER JOIN sucursal ON departamento.sucursal_id = sucursal.id';
+        return $this->find("columns: $columns", "join: $join");
+       
+        /*$columns = 'titular.*, titular.id as idtitular, sucursal.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';       
         $join= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
         $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';
         $join.= 'INNER JOIN sucursal ON departamento.sucursal_id = sucursal.id';
 
-            return $this->find("columns: $columns", "join: $join");
+            return $this->find("columns: $columns", "join: $join");*/
           
     }
     /**

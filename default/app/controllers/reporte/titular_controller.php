@@ -29,7 +29,8 @@ class TitularController extends BackendController {
         $titular = new Titular();
         $this->titulares = $titular->getListadoTitularreporte();
         $this->page_module = 'Titulares del sistema ';
-        $this->page_format = $formato;     
+        $this->page_format = $formato;
+        $this->page_title = 'Listado de titulares del sistema';  
     }
         
 }
