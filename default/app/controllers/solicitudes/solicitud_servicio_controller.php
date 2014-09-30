@@ -49,7 +49,7 @@ class SolicitudServicioController extends BackendController {
     public function registro($order='order.nombre.asc', $page='pag.1') { 
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
         $solicitud_servicio = new SolicitudServicio();        
-        $this->solicitud_servicios = $solicitud_servicio->getListadoRegistroSolicitudServicio($order, $page);
+        $this->solicitud_servicios = $solicitud_servicio->getListadoRegistroSolicitudServicio($order, $page,$tps='1');
         $this->order = $order;        
         $this->page_title = 'Registro de Solicitudes de Atención Primaria';
     }
@@ -59,7 +59,7 @@ class SolicitudServicioController extends BackendController {
     public function aprobacion($order='order.nombre.asc', $page='pag.1') { 
     		$page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
         	$solicitud_servicio = new SolicitudServicio();        
-        	$this->solicitud_servicios = $solicitud_servicio->getListadoAprobacionSolicitudServicio($order, $page);
+        	$this->solicitud_servicios = $solicitud_servicio->getListadoAprobacionSolicitudServicio($order, $page,$tps='1');
         	$this->order = $order;        
         	$this->page_title = 'Aprobación de Solicitudes de Atención Primaria';
     }
@@ -69,7 +69,7 @@ class SolicitudServicioController extends BackendController {
     public function facturacion($order='order.nombre.asc', $page='pag.1') { 
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
         $solicitud_servicio = new SolicitudServicio();        
-        $this->solicitud_servicios = $solicitud_servicio->getListadoSiniestrosSolicitudServicio($order, $page);
+        $this->solicitud_servicios = $solicitud_servicio->getListadoSiniestrosSolicitudServicio($order, $page,$tps='1');
         $this->order = $order;        
         $this->page_title = 'Cargar Facturas a las solicitudes de Atención Primaria';
     }
@@ -80,7 +80,7 @@ class SolicitudServicioController extends BackendController {
     public function aprobadas($order='order.nombre.asc', $page='pag.1') { 
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
         $solicitud_servicio = new SolicitudServicio();        
-        $this->solicitud_servicios = $solicitud_servicio->getListadoContabilizarSolicitudServicio($order, $page);
+        $this->solicitud_servicios = $solicitud_servicio->getListadoContabilizarSolicitudServicio($order, $page,$tps='1');
         $this->order = $order;        
         $this->page_title = 'Contabilizar Solicitudes de Atención Primaria';
     }
