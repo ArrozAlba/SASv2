@@ -7,12 +7,12 @@
  * @category    
  * @package     Controllers 
  * @author      Javier León (jel1284@gmail.com) Alexis Borges (tuaalexis@gmail.com)
- * @copyright   Copyright (c) 2014 E.M.S. Arroz del Alba S.A. (http://autogestion.arrozdelalba.gob.ve)
+ * @copyright   Copyright (c) 2014 E.M.S. Arroz del Alba S.A. (http://sasv2.arrozdelalba.gob.ve)
  */
 
 Load::models('beneficiarios/titular','sistema/usuario', 'beneficiarios/beneficiario');
 Load::models('params/pais', 'params/estado', 'params/municipio', 'params/parroquia');
-load::models('config/sucursal', 'config/departamento', 'config/discapacidad', 'beneficiarios/discapacidad_titular');
+load::models('config/sucursal', 'config/departamento', 'config/discapacidad', 'beneficiarios/discapacidad_titular', 'sistema/usuario_clave');
 
 class TitularController extends BackendController {
     
@@ -143,20 +143,46 @@ class TitularController extends BackendController {
         $municipio = new Municipio();
         $sucursal = new Sucursal();
         $discapacidad = new Discapacidad();
-        if(Input::hasPost('titular')){
+        if(Input::hasPost('titular')&&(Input::hasPost('usuario'))&&(Input::hasPost('usuario_clave'))){
             ActiveRecord::beginTrans();
             $titu = Titular::setTitular('create', Input::post('titular'));
             if($titu){
                 if (DiscapacidadTitular::setDiscapacidadTitular(Input::post('discapacidad'),$titu->id)){
-                    ActiveRecord::commitTrans();
-                    DwMessage::valid('El titular se ha creado correctamente.');
-                    return DwRedirect::toAction('listar');
+                    $usu=Usuario::setUsuario('create', Input::post('usuario'), array('titular_id'=>$titu->id, 'tema'=>'default', 'sucursal_id'=>'1'));
+                    if($usu){
+                      if(UsuarioClave::setClave('create', Input::post('usuario_clave') , array('usuario_id'=>$usu->id))) {
+                        ActiveRecord::commitTrans();
+                        $ced = $titu->cedula;
+                        $nro = $titu->celular;
+                        $nombre = $titu->nombre1;
+                        $apellido = $titu->apellido1;
+                        $contenido= "Sr. ".$nombre." ".$apellido." Se ha registrado Exitosamente con usuario: ".$ced;
+                        $destinatario=$nro;
+                        system( '/usr/bin/gammu -c /etc/gammu-smsdrc --sendsms EMS ' . escapeshellarg( $destinatario ) . ' -text ' . escapeshellarg( $contenido ) ); 
+                        DwMessage::valid('El titular se ha creado correctamente.');
+                        return DwRedirect::toAction('listar');
+                       }
+                       else{
+                          ActiveRecord::rollbackTrans();
+                          DwMessage::valid('Ah ocurrido un error creandole la password el usuario asociado al titular.');
+
+                       }
+                    }
+                    else{
+                      ActiveRecord::rollbackTrans();
+                      DwMessage::valid('Ah ocurrido un error creando el usuario asociado al titular.');
+                    }
                 }
                 else{
                     ActiveRecord::rollbackTrans();
+                    DwMessage::valid('Ah ocurrido un error al crear el titular.');
                 }
             }
-            unset($titu);
+            else{
+                  ActiveRecord::rollbackTrans();
+                  DwMessage::valid('No creo un carajo xD.');
+            }
+          //  unset($titu);
             $this->pais = $pais->getListadoPais();           
             $this->estado = $estado->getListadoEstado(); 
             $this->municipio = $municipio->getListadoMunicipio(); 

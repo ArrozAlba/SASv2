@@ -161,9 +161,10 @@
 
             <div class="tab-pane" id="tab4">
                 <?php echo DwForm::hidden('usuario.login', NULL, ''); ?>
-                <?php echo DwForm::hidden('usuario.password', NULL, ''); ?>
-                <?php echo DwForm::hidden('usuario.repassword', NULL, ''); ?>
-                <?php echo DwForm::hidden('usuario.perfil_id', NULL, '2'); ?>
+                <?php echo DwForm::text('password', NULL, ''); ?>
+                <?php echo DwForm::text('usuario_clave.password', NULL, ''); ?>
+                <?php echo DwForm::hidden('usuario.perfil_id', NULL, '7'); ?>
+                <?php echo DwForm::hidden('usuario.estado', NULL, '2'); ?>
 
                 <div class="row fileupload-buttonbar">
                 <!-- ########################### FOTOGRAQFIA ############################## -->
@@ -243,8 +244,8 @@ $("#titular_nombre1").change(function(){
     var pass = p2+p1+p3;
 
     $("#usuario_login").val(cedula);
-    $("#usuario_password").val(pass);
-    $("#usuario_repassword").val(pass);
+    $("#password").val(pass);
+    $("#usuario_clave_password").val(pass);
 
 });
 </script>

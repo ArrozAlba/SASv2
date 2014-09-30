@@ -20,7 +20,7 @@
         <div class="btn-actions">
             <?php echo DwHtml::button("beneficiarios/titular/agregar/", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
             <?php echo DwHtml::button("beneficiarios/titular/listar/", 'listar', array('class'=>'btn-warning'), 'ok', APP_AJAX); ?>
-            <?php echo DwButton::report("beneficiarios/titular/imprimir/$fecha/", 'html', 'Reporte Filtrado', 'imprimir'); ?>
+            <?php echo DwButton::report("titular/listado/$field/$value/", 'html', 'Reporte Filtrado', 'imprimir'); ?>
 
         </div>
     </div>
