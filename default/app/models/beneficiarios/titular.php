@@ -286,11 +286,6 @@ class Titular extends ActiveRecord {
         return $this->find("columns: $columns", "join: $join","conditions: $conditions", "order: $order");
         //"conditions: $conditions",
     }
-
-
-
-
-
     /**
      * Callback que se ejecuta antes de guardar/modificar
      */
@@ -314,6 +309,13 @@ class Titular extends ActiveRecord {
         $this->correo_electronico = strtoupper($this->correo_electronico);
         $a = $this->estado_id = Filter::get($this->estado_id, 'numeric');
         $this->municipio_id = Filter::get($this->municipio_id, 'numeric');
+
+        //creando contraseñaa...
+
+     //   $ced = substr($this->cedula, )
+
+
+
 
         //validando correo electronico
         if($this->correo_electronico!=''){ 
