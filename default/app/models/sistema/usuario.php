@@ -244,7 +244,7 @@ class Usuario extends ActiveRecord {
     
     
     public function getListadoUsuario($estado, $order='', $page=0) {
-        $columns = 'usuario.*, perfil.perfil, titular.cedula, titular.nombre1, titular.apellido1, estado_usuario.estado_usuario, estado_usuario.descripcion, sucursal.sucursal';
+        $columns = 'usuario.*, perfil.perfil, titular.cedul1a, titular.nombre1, titular.apellido1, estado_usuario.estado_usuario, estado_usuario.descripcion, sucursal.sucursal';
         $join = self::getInnerEstado();
         $join.= 'INNER JOIN perfil ON perfil.id = usuario.perfil_id ';
         $join.= 'INNER JOIN titular ON titular.id = usuario.titular_id ';        
