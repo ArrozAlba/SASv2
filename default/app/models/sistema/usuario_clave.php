@@ -57,13 +57,20 @@ class UsuarioClave extends ActiveRecord {
                 if ($usuario_clave) {
                     $usuario_clave[0]->usuario_id = $usuario_id;
                     $usuario_clave[0]->fecha_inicio = date('Y-m-d');
-                    $ffinal =UsuarioClave::fecha_final($usuario_clave[0]->fecha_inicio);
-                    return Flash::error('dias caducidad: '.var_dump($ffinal).' ');
-                    $nuevafecha = strtotime ( '+'.$configseg1->dias_caducidad_clave.' day' , strtotime ( $usuario_clave[0]->fecha_inicio ) ) ;
+                    //$ffinal =UsuarioClave::fecha_final($usuario_clave[0]->fecha_inicio);
+                    //return Flash::error('dias caducidad: '.var_dump($ffinal).' ');
+                    $configseg = new Configuracion();
+                    $configseg1 = $configseg->getInformacionConfiguracion();
+                    $nuevafecha = strtotime ( '+'.$configseg1->dias_caducidad_clave.' day' , strtotime ( $obj->fecha_inicio ) ) ;
                     $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
+                   // $obj->fecha_fin = $nuevafecha;
+
+
+                    //$nuevafecha = strtotime ( '+'.$configseg1->dias_caducidad_clave.' day' , strtotime ( $usuario_clave[0]->fecha_inicio ) ) ;
+                    //$nuevafecha = date ( 'Y-m-j' , $nuevafecha );
                     $usuario_clave[0]->fecha_fin = $nuevafecha;
                     $usuario_clave[0]->password = sha1($clave);
-                    return Flash::error('dias caducidad: '.$configseg0.' fecha inicio:'.$usuario_clave[0]->fecha_inicio.' fecha fin: '.$usuario_clave[0]->fecha_fin.' var nuevafecha: '.$nuevafecha.'');
+                    //return Flash::error('dias caducidad: '.$configseg0.' fecha inicio:'.$usuario_clave[0]->fecha_inicio.' fecha fin: '.$usuario_clave[0]->fecha_fin.' var nuevafecha: '.$nuevafecha.'');
                     if ($usuario_clave[0]->create()) {
                         return true;
                     } else {

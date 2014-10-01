@@ -30,10 +30,10 @@ class UsuarioClaveController extends BackendController {
         $this->page_title = 'Cambiar clave del usuario';
         $config = new Configuracion();
         $this->configs = $config->getInformacionConfiguracion();
-        DwMessage::warning('variable $config1: '.var_dump($config->getInformacionConfiguracion()).'');               
+        //DwMessage::warning('variable $config1: '.var_dump($config->getInformacionConfiguracion()).'');               
         //$diasadicional = UsuarioClave::diasadicionales();
         //DwMessage::warning('variable $diasadicional: '.$this->config->dias_caducidad_clave.'');               
-        return false;
+        //return false;
         
         $usuval = UsuarioClave::clave_valida(Session::get('id'));
         //$id=Session::get('id');
