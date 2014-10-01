@@ -146,17 +146,18 @@ class TitularController extends BackendController {
         if(Input::hasPost('titular')&&(Input::hasPost('usuario'))&&(Input::hasPost('usuario_clave'))){
             ActiveRecord::beginTrans();
             $titu = Titular::setTitular('create', Input::post('titular'));
+            $clave = Input::post('password');
             if($titu){
                 if (DiscapacidadTitular::setDiscapacidadTitular(Input::post('discapacidad'),$titu->id)){
                     $usu=Usuario::setUsuario('create', Input::post('usuario'), array('titular_id'=>$titu->id, 'tema'=>'default', 'sucursal_id'=>'1'));
                     if($usu){
-                      if(UsuarioClave::setClave('create', Input::post('usuario_clave') , array('usuario_id'=>$usu->id))) {
+                      if(UsuarioClave::setClave('create', Input::post('usuario_clave') , array('usuario_id'=>$usu->id) )) {
                         ActiveRecord::commitTrans();
                         $ced = $titu->cedula;
                         $nro = $titu->celular;
                         $nombre = $titu->nombre1;
                         $apellido = $titu->apellido1;
-                        $contenido= "Sr. ".$nombre." ".$apellido." Se ha registrado Exitosamente con usuario: ".$ced;
+                        $contenido= "Sr. ".$nombre." ".$apellido." Se ha registrado Exitosamente con usuario: ".$ced." y su clave es ".$clave;
                         $destinatario=$nro;
                         system( '/usr/bin/gammu -c /etc/gammu-smsdrc --sendsms EMS ' . escapeshellarg( $destinatario ) . ' -text ' . escapeshellarg( $contenido ) ); 
                         DwMessage::valid('El titular se ha creado correctamente.');
