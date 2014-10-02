@@ -1,11 +1,4 @@
 function print_today() {
-  // ***********************************************
-  // AUTHOR: WWW.CGISCRIPT.NET, LLC
-  // URL: http://www.cgiscript.net
-  // Use the script, just leave this message intact.
-  // Download your FREE CGI/Perl Scripts today!
-  // ( http://www.cgiscript.net/scripts.htm )
-  // ***********************************************
   var now = new Date();
   var months = new Array('January','February','March','April','May','June','July','August','September','October','November','December');
   var date = ((now.getDate()<10) ? "0" : "")+ now.getDate();
@@ -97,15 +90,16 @@ function bind() {
 }
 
 $(document).ready(function() {
-
+  update_combo();
+  alert(combo);
   $('input').click(function(){
     $(this).select();
   });
 
   $("#paid").blur(update_balance);
-   
   $("#addrow").click(function(){
-    $(".item-row:last").after('<tr class="item-row"><td class="item-name"><div class="delete-wpr"> <input type="text" class="input-medium"> <a class="delete" href="javascript:;" title="Remove row">X</a></div></td><td><input type="text" class="input-small"></td><td class="description">  <input type="text" class="input-xlarge"> </td><td><input type="text" class="cost input-small"></td><td> <input type="text" class="qty input-small"> </td><td><span class="price"></span></td></tr>');
+    var aux = '<tr class="item-row"><td class="item-name"><div class="delete-wpr"> <select name="patologia"><?php echo $combobit; ?></select ><a class="delete" href="javascript:;" title="Remove row">X</a></div></td><td><input type="text" class="input-small"></td><td class="description"><input type="text" class="input-xlarge"> </td><td><input type="text" class="cost input-small"></td><td> <input type="text" class="qty input-small"></td><td><span class="price"></span></td></tr>'
+    $(".item-row:last").after(aux);
     if ($(".delete").length > 0) $(".delete").show();
     bind();
   });
@@ -135,5 +129,4 @@ $(document).ready(function() {
   });
   
   $("#date").val(print_today());
-  
 });

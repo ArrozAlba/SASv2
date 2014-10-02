@@ -29,27 +29,14 @@
                 <td> <?php echo $solicitud_servicio->servicio; ?></td>
                 <td> <?php echo $solicitud_servicio->proveedor; ?></td>
                 <td> <?php echo $solicitud_servicio->nombrem." ".$solicitud_servicio->apellidom; ?></td>
-                <td> <?php echo strtoupper($solicitud_servicio->observacion); ?></td>
+                <td> <?php echo ($solicitud_servicio->observacion); ?></td>
                </tr>
             </tbody>
         </table>
-
         <div class="row-fluid" > 
-
-
-        <?php foreach($sol as $solicitud_servicio_patologia): ?>
-            <tr>
-              <td><?php echo $solicitud_servicio_patologia->descripcion; ?></td>
-            </tr>
-
-        <?php endforeach; ?>
-
-        <?php echo DwForm::select('titular.estado_civil', array($sol), array('class'=>'input-xlarge input-required show-error data-toggle="tooltip" title="Estado Civil" '), NULL, 'Estado Civil:'); ?>
-
-
-  </div>
-
-
+        <?php $combobit =""; foreach($sol as $solicitud_servicio_patologia): 
+          $combobit .=" <option value='".$solicitud_servicio_patologia->id."'>".$solicitud_servicio_patologia->descripcion."</option>"; endforeach; ?>
+        </div>
      <div id="page-wrap">
      <div id="header">FACTURA </div>
         <div id="customer">
@@ -84,7 +71,8 @@
           </tr>
           
           <tr class="item-row">
-              <td class="item-name"><div class="delete-wpr"> <input type="text" class="input-medium"> <a class="delete" href="javascript:;" title="Remove row">X</a></div></td>
+              <td class="item-name"><div class="delete-wpr">
+              <select name="patologia"><?php echo $combobit; ?></select><a class="delete" href="javascript:;" title="Remove row">X</a></div></td>
               <td><input type="text" class="input-small"></td>
               <td class="description"> <input type="text" class="input-xlarge"></td>
               <td><input type="text" class="cost input-small"></td>
@@ -127,30 +115,14 @@
     <?php echo DwForm::close(); ?>
 </div>
 
-<script type="text/javascript" >
-$(document).ready(function(){
-  select: function ll(event, ui) {
-            $('input#solicitud_servicio_codigo_solicitud').val(ui.item.codid);// Asignacion de Id en Campo
-            // $('textarea#solicitud_servicio_observacion').val(ui.item.id);// Asignacion de Id en Campo
-              }
-    $('input#solicitud_servicio_patologia').autocomplete({
-        minLength : 3 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
-            source: function(request, response) {
-                $.ajax({
-                    url: "<?php echo PUBLIC_PATH ?>config/patologia/autocomplete",
-                    data: {'busqueda':request.term},
-                    dataType: "json",
-                    type: "POST",
-                    success: function(data){
-                        response(data);
-                    }
-                });
-            },
-            select: function(event, ui) {
-            $('input#solicitud_servicio_patologia_id').val(ui.item.id);// Asignacion de Id en Campo
-            //$('textarea#solicitud_servicio_observacion').val(ui.item.id);// Asignacion de Id en Campo
-            }
-        }); 
-});
+<script type="text/javascript">
+function update_combo() {
+  var combo = "<?php echo $combobit; ?>"
+
+
+}
+
+
+
 </script>
 
