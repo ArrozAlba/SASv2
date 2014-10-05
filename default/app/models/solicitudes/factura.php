@@ -32,7 +32,6 @@ class Factura extends ActiveRecord {
         return $this->find_first("columns: $columnas", "join: $join", "conditions: $condicion");
     } 
     public function getInformacionUltimaFactura() {
-        $id = Filter::get($id, 'numeric');
         $columnas = 'factura.*';
         $order = 'factura.id DESC';
         return $this->find_first("columns: $columnas", "order: $order");
