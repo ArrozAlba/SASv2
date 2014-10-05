@@ -14,7 +14,7 @@ class SolicitudServicioFactura extends ActiveRecord {
         $obj->begin();
         $j=0;
         while($j<count($idfactura)){ 
-            $obj->factura_id = $idfactura[$j];
+            $obj->factura_id = $idfactura;
             $obj->solicitud_servicio_id = $idsolicitud;
             if($obj->exists("factura_id='$obj->factura_id' AND solicitud_servicio_id='$obj->solicitud_servicio_id'")){
                     continue;

@@ -161,7 +161,7 @@ class SolicitudServicio extends ActiveRecord {
         $join.= 'INNER JOIN servicio as e ON (a.servicio_id = e.id) ';
         $join.= 'INNER JOIN tiposolicitud as g ON (a.tiposolicitud_id = g.id) ';
         $join.= 'INNER JOIN beneficiario as h ON (a.beneficiario_id = h.id) ';
-        $conditions = "g.id = '$tps' and a.estado_solicitud = 'S'";
+        $conditions = "g.id = '$tps' and  (a.estado_solicitud = 'S' or a.estado_solicitud = 'G') ";
         $order = $this->get_order($order, 'a', array('solicitud_servicio'=>array('ASC'=>'solicitud_servicio.descripcion ASC, solicitud_servicio.tipo_solicitud_servicio ASC',
                                                                               'DESC'=>'solicitud_servicio.descripcion DESC, solicitud_servicio.tipo_solicitud_servicio ASC',
                                                                               )));

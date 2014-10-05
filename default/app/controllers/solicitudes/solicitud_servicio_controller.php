@@ -131,7 +131,7 @@ class SolicitudServicioController extends BackendController {
         }
         $solicitud_servicio = new SolicitudServicio();
         $obj = new SolicitudServicioPatologia();
-        $factura = new Factura();
+        //$factura = new Factura();
         $factura_dt = new FacturaDt();
         $this->sol =  $obj->getInformacionSolicitudServicioPatologia($id);
         if(!$solicitud_servicio->getInformacionSolicitudServicio($id)) {            
@@ -140,12 +140,11 @@ class SolicitudServicioController extends BackendController {
         }
         if(Input::hasPost('factura')) {
             ActiveRecord::beginTrans();
-            $factura = Factura::setFactura('create', Input::post('factura'));
-            if($factura){
-                $fact = $factura->getInformacionUltimaFactura();
-                if(FacturaDt::setFacturaDt(Input::post('descripcion'), Input::post('cantidad'), Input::post('monto'), Input::post('exento'), $fact->id)) {
-                    $solfactura = new SolicitudServicioFactura();
-                    if(SolicitudServicioFactura::setSolicitudServicioFactura($fact->id, $id)){
+            $factu = Factura::setFactura('create', Input::post('factura'));
+            if($factu){
+                if(FacturaDt::setFacturaDt(Input::post('descripcion'), Input::post('cantidad'), Input::post('monto'), Input::post('exento'), $factu->id)) {
+                    $solfactura = SolicitudServicioFactura::setSolicitudServicioFactura($factu->id, $id);
+                    if($solfactura){
                         if(Input::post('multifactura')){ //para saber si va a cargar multiples facturas sobre esa solicitud 
                             $solser = $solicitud_servicio->getInformacionSolicitudServicio($id);
                             $solser->estado_solicitud="G"; //estado G parcialmente facturada 
@@ -179,7 +178,6 @@ class SolicitudServicioController extends BackendController {
             else{
                 ActiveRecord::rollbackTrans();
                 DwMessage::error('La Factura ha dao peos!');
-
             }
         }
         $this->solicitud_servicio = $solicitud_servicio;
