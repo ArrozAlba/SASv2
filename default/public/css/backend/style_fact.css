@@ -22,13 +22,13 @@
 #meta td.meta-head { text-align: left; background: #eee; }
 #meta td textarea { width: 100%; height: 20px; text-align: right; }
 
-#items { clear: both; width: 100%; margin: 30px 0 0 0; border: 1px solid black; }
+#items { clear: both; width: 100%; margin: 5px 0 0 0; border: 1px solid black; }
 #items th { background: #eee; }
 #items textarea { width: 80px; height: 50px; }
 #items tr.item-row td { border: 0; vertical-align: top; }
 #items td.description { width: 300px; }
 #items td.item-name { width: 175px; }
-#items td.description textarea, #items td.item-name textarea { width: 100%; }
+#items td.description textarea, #items td.item-name textarea { width: 100%; padding-right: 15px; }
 #items td.total-line { border-right: 0; text-align: right; }
 #items td.total-value { border-left: 0; padding: 10px; }
 #items td.total-value textarea { height: 20px; background: none; }

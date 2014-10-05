@@ -1740,7 +1740,6 @@ ALTER SEQUENCE estado_usuario_id_seq OWNED BY estado_usuario.id;
 --
 
 CREATE TABLE factura (
-    id integer NOT NULL,
     usuario_id integer,
     fecha_registro timestamp with time zone DEFAULT now() NOT NULL,
     fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
@@ -1749,7 +1748,8 @@ CREATE TABLE factura (
     nro_factura integer,
     observacion character varying(250),
     monto double precision,
-    iva integer
+    iva integer,
+    id integer NOT NULL
 );
 
 
@@ -1816,7 +1816,6 @@ COMMENT ON COLUMN factura.observacion IS 'Observacion';
 --
 
 CREATE TABLE factura_dt (
-    id integer NOT NULL,
     usuario_id integer,
     fecha_registro timestamp with time zone DEFAULT now() NOT NULL,
     fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
@@ -1824,7 +1823,8 @@ CREATE TABLE factura_dt (
     cantidad integer,
     monto numeric(11,2) NOT NULL,
     exento boolean,
-    factura_id integer
+    factura_id integer NOT NULL,
+    id integer NOT NULL
 );
 
 
@@ -1863,6 +1863,48 @@ COMMENT ON COLUMN factura_dt.monto IS 'Monto del Item';
 --
 
 COMMENT ON COLUMN factura_dt.exento IS 'Item Exento del Iva';
+
+
+--
+-- Name: factura_dt_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
+--
+
+CREATE SEQUENCE factura_dt_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.factura_dt_id_seq OWNER TO arrozalba;
+
+--
+-- Name: factura_dt_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
+--
+
+ALTER SEQUENCE factura_dt_id_seq OWNED BY factura_dt.id;
+
+
+--
+-- Name: factura_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
+--
+
+CREATE SEQUENCE factura_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.factura_id_seq OWNER TO arrozalba;
+
+--
+-- Name: factura_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
+--
+
+ALTER SEQUENCE factura_id_seq OWNED BY factura.id;
 
 
 --
@@ -2306,7 +2348,6 @@ ALTER SEQUENCE municipio_id_seq OWNED BY municipio.id;
 --
 
 CREATE TABLE orden_pago (
-    id integer NOT NULL,
     usuario_id integer,
     fecha_registro timestamp with time zone DEFAULT now() NOT NULL,
     fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
@@ -2314,7 +2355,8 @@ CREATE TABLE orden_pago (
     numero_cheque integer,
     fecha_cheque date,
     monto numeric(11,2) NOT NULL,
-    observacion character varying(250)
+    observacion character varying(250),
+    id integer NOT NULL
 );
 
 
@@ -2339,13 +2381,13 @@ COMMENT ON COLUMN orden_pago.monto IS 'Monto total de la orden pago';
 --
 
 CREATE TABLE orden_pago_factura (
-    id integer NOT NULL,
     usuario_id integer,
     fecha_registro timestamp with time zone DEFAULT now() NOT NULL,
     fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
     orden_pago_id integer,
     factura_id integer,
-    monto numeric(11,2) NOT NULL
+    monto numeric(11,2) NOT NULL,
+    id integer NOT NULL
 );
 
 
@@ -2363,6 +2405,48 @@ COMMENT ON TABLE orden_pago_factura IS 'Modelo para manipular el Detalle de los 
 --
 
 COMMENT ON COLUMN orden_pago_factura.monto IS 'Monto del Item';
+
+
+--
+-- Name: orden_pago_factura_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
+--
+
+CREATE SEQUENCE orden_pago_factura_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.orden_pago_factura_id_seq OWNER TO arrozalba;
+
+--
+-- Name: orden_pago_factura_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
+--
+
+ALTER SEQUENCE orden_pago_factura_id_seq OWNED BY orden_pago_factura.id;
+
+
+--
+-- Name: orden_pago_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
+--
+
+CREATE SEQUENCE orden_pago_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.orden_pago_id_seq OWNER TO arrozalba;
+
+--
+-- Name: orden_pago_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
+--
+
+ALTER SEQUENCE orden_pago_id_seq OWNED BY orden_pago.id;
 
 
 --
@@ -3608,7 +3692,7 @@ COMMENT ON COLUMN solicitud_servicio.observacion IS 'Observacion';
 CREATE TABLE solicitud_servicio_factura (
     id integer NOT NULL,
     solicitud_servicio_id integer NOT NULL,
-    factura_id integer
+    factura_id integer NOT NULL
 );
 
 
@@ -3673,90 +3757,6 @@ CREATE TABLE solicitud_servicio_patologia (
 
 
 ALTER TABLE public.solicitud_servicio_patologia OWNER TO arrozalba;
-
---
--- Name: solicitud_servicio_patologia_factura_dt_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
---
-
-CREATE SEQUENCE solicitud_servicio_patologia_factura_dt_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.solicitud_servicio_patologia_factura_dt_id_seq OWNER TO arrozalba;
-
---
--- Name: solicitud_servicio_patologia_factura_dt_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
---
-
-ALTER SEQUENCE solicitud_servicio_patologia_factura_dt_id_seq OWNED BY factura_dt.id;
-
-
---
--- Name: solicitud_servicio_patologia_factura_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
---
-
-CREATE SEQUENCE solicitud_servicio_patologia_factura_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.solicitud_servicio_patologia_factura_id_seq OWNER TO arrozalba;
-
---
--- Name: solicitud_servicio_patologia_factura_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
---
-
-ALTER SEQUENCE solicitud_servicio_patologia_factura_id_seq OWNED BY factura.id;
-
-
---
--- Name: solicitud_servicio_patologia_factura_pagos_dt_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
---
-
-CREATE SEQUENCE solicitud_servicio_patologia_factura_pagos_dt_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.solicitud_servicio_patologia_factura_pagos_dt_id_seq OWNER TO arrozalba;
-
---
--- Name: solicitud_servicio_patologia_factura_pagos_dt_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
---
-
-ALTER SEQUENCE solicitud_servicio_patologia_factura_pagos_dt_id_seq OWNED BY orden_pago_factura.id;
-
-
---
--- Name: solicitud_servicio_patologia_factura_pagos_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
---
-
-CREATE SEQUENCE solicitud_servicio_patologia_factura_pagos_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.solicitud_servicio_patologia_factura_pagos_id_seq OWNER TO arrozalba;
-
---
--- Name: solicitud_servicio_patologia_factura_pagos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
---
-
-ALTER SEQUENCE solicitud_servicio_patologia_factura_pagos_id_seq OWNED BY orden_pago.id;
-
 
 --
 -- Name: solicitud_servicio_patologia_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
@@ -4962,14 +4962,14 @@ ALTER TABLE ONLY estado_usuario ALTER COLUMN id SET DEFAULT nextval('estado_usua
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
-ALTER TABLE ONLY factura ALTER COLUMN id SET DEFAULT nextval('solicitud_servicio_patologia_factura_id_seq'::regclass);
+ALTER TABLE ONLY factura ALTER COLUMN id SET DEFAULT nextval('factura_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
-ALTER TABLE ONLY factura_dt ALTER COLUMN id SET DEFAULT nextval('solicitud_servicio_patologia_factura_dt_id_seq'::regclass);
+ALTER TABLE ONLY factura_dt ALTER COLUMN id SET DEFAULT nextval('factura_dt_id_seq'::regclass);
 
 
 --
@@ -4998,6 +4998,20 @@ ALTER TABLE ONLY menu ALTER COLUMN id SET DEFAULT nextval('menu_id_seq'::regclas
 --
 
 ALTER TABLE ONLY municipio ALTER COLUMN id SET DEFAULT nextval('municipio_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY orden_pago ALTER COLUMN id SET DEFAULT nextval('orden_pago_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY orden_pago_factura ALTER COLUMN id SET DEFAULT nextval('orden_pago_factura_id_seq'::regclass);
 
 
 --
@@ -5580,6 +5594,25 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 2017	92516	arrozalba	2014-10-01 10:47:11.305159-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{498,127.0.0.1,NULL,1,1,NULL,"2014-10-01 10:47:11.305159-04:30","2014-10-01 10:47:11.305159-04:30",NULL,NULL}
 2018	92516	arrozalba	2014-10-01 12:48:34.67744-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{499,127.0.0.1,NULL,1,1,NULL,"2014-10-01 12:48:34.67744-04:30","2014-10-01 12:48:34.67744-04:30",NULL,NULL}
 2019	92516	arrozalba	2014-10-01 19:58:32.590022-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{500,127.0.0.1,NULL,1,1,NULL,"2014-10-01 19:58:32.590022-04:30","2014-10-01 19:58:32.590022-04:30",NULL,NULL}
+2020	92516	arrozalba	2014-10-01 20:51:59.521084-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{501,127.0.0.1,NULL,1,1,NULL,"2014-10-01 20:51:59.521084-04:30","2014-10-01 20:51:59.521084-04:30",NULL,NULL}
+2021	92516	arrozalba	2014-10-02 08:55:16.172125-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{502,127.0.0.1,NULL,1,1,NULL,"2014-10-02 08:55:16.172125-04:30","2014-10-02 08:55:16.172125-04:30",NULL,NULL}
+2022	92516	arrozalba	2014-10-05 10:03:12.380647-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{503,127.0.0.1,NULL,1,1,NULL,"2014-10-05 10:03:12.380647-04:30","2014-10-05 10:03:12.380647-04:30",NULL,NULL}
+2023	92516	arrozalba	2014-10-05 12:10:26.227853-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{504,127.0.0.1,NULL,1,1,NULL,"2014-10-05 12:10:26.227853-04:30","2014-10-05 12:10:26.227853-04:30",NULL,NULL}
+2025	92516	arrozalba	2014-10-05 14:03:52.507993-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{505,127.0.0.1,NULL,1,1,NULL,"2014-10-05 14:03:52.507993-04:30","2014-10-05 14:03:52.507993-04:30",NULL,NULL}
+2027	92643	arrozalba	2014-10-05 14:09:00.474358-04:30	127.0.0.1	INSERT	INSERT INTO factura (usuario_id,fecha_registro,fecha_modificado,fecha_factura,nro_control,nro_factura,observacion,monto,iva) VALUES (NULL,DEFAULT,DEFAULT,'2014-10-05','1','1',NULL,NULL,NULL)	factura	\N	\N	{2,NULL,NULL,NULL,1,1,NULL,2014-10-05,"2014-10-05 14:09:00.474358-04:30","2014-10-05 14:09:00.474358-04:30"}
+2028	92649	arrozalba	2014-10-05 14:09:00.474358-04:30	127.0.0.1	INSERT	INSERT INTO factura_dt (usuario_id,fecha_registro,fecha_modificado,descripcion,cantidad,monto,exento,factura_id) VALUES (NULL,DEFAULT,DEFAULT,'acetaminofen','2','34.4','on',NULL)	factura_dt	\N	\N	{1,34.40,t,2,NULL,NULL,acetaminofen,"2014-10-05 14:09:00.474358-04:30","2014-10-05 14:09:00.474358-04:30"}
+2029	92649	arrozalba	2014-10-05 14:09:00.474358-04:30	127.0.0.1	INSERT	INSERT INTO factura_dt (usuario_id,fecha_registro,fecha_modificado,descripcion,cantidad,monto,exento,factura_id) VALUES (NULL,'2014-10-05 14:09:00.474358-04:30','2014-10-05 14:09:00.474358-04:30','consulta ginecologo','1','750.00',NULL,NULL)	factura_dt	\N	\N	{2,750.00,NULL,1,NULL,NULL,"consulta ginecologo","2014-10-05 14:09:00.474358-04:30","2014-10-05 14:09:00.474358-04:30"}
+2030	92516	arrozalba	2014-10-05 15:23:23.286464-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{506,127.0.0.1,NULL,1,1,NULL,"2014-10-05 15:23:23.286464-04:30","2014-10-05 15:23:23.286464-04:30",NULL,NULL}
+2031	92649	postgres	2014-10-05 15:26:33.164377-04:30	127.0.0.1	DELETE	DELETE FROM public.factura_dt WHERE id = '2'::integer	factura_dt	{id,monto,exento,cantidad,factura_id,usuario_id,descripcion,fecha_registro,fecha_modificado}	{2,750.00,NULL,1,NULL,NULL,"consulta ginecologo","2014-10-05 14:09:00.474358-04:30","2014-10-05 14:09:00.474358-04:30"}	\N
+2032	92649	postgres	2014-10-05 15:26:33.181661-04:30	127.0.0.1	DELETE	DELETE FROM public.factura_dt WHERE id = '1'::integer	factura_dt	{id,monto,exento,cantidad,factura_id,usuario_id,descripcion,fecha_registro,fecha_modificado}	{1,34.40,t,2,NULL,NULL,acetaminofen,"2014-10-05 14:09:00.474358-04:30","2014-10-05 14:09:00.474358-04:30"}	\N
+2033	92643	postgres	2014-10-05 15:26:40.261665-04:30	127.0.0.1	DELETE	DELETE FROM public.factura WHERE id = '2'::integer	factura	{id,iva,monto,usuario_id,nro_control,nro_factura,observacion,fecha_factura,fecha_registro,fecha_modificado}	{2,NULL,NULL,NULL,1,1,NULL,2014-10-05,"2014-10-05 14:09:00.474358-04:30","2014-10-05 14:09:00.474358-04:30"}	\N
+2034	92516	arrozalba	2014-10-05 16:15:49.805555-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{507,127.0.0.1,NULL,1,1,NULL,"2014-10-05 16:15:49.805555-04:30","2014-10-05 16:15:49.805555-04:30",NULL,NULL}
+2035	92643	arrozalba	2014-10-05 16:16:34.993051-04:30	127.0.0.1	INSERT	INSERT INTO factura (usuario_id,fecha_registro,fecha_modificado,fecha_factura,nro_control,nro_factura,observacion,monto,iva) VALUES (NULL,DEFAULT,DEFAULT,'2014-10-05','2','2','cargando multiples facturas a ver que lo que ','115.50',NULL)	factura	\N	\N	{3,NULL,115.5,NULL,2,2,"cargando multiples facturas a ver que lo que ",2014-10-05,"2014-10-05 16:16:34.993051-04:30","2014-10-05 16:16:34.993051-04:30"}
+2036	92649	arrozalba	2014-10-05 16:16:34.993051-04:30	127.0.0.1	INSERT	INSERT INTO factura_dt (usuario_id,fecha_registro,fecha_modificado,descripcion,cantidad,monto,exento,factura_id) VALUES (NULL,DEFAULT,DEFAULT,'articulo 1','1','25.5','on',NULL)	factura_dt	\N	\N	{3,25.50,t,1,NULL,NULL,"articulo 1","2014-10-05 16:16:34.993051-04:30","2014-10-05 16:16:34.993051-04:30"}
+2037	92649	arrozalba	2014-10-05 16:16:34.993051-04:30	127.0.0.1	INSERT	INSERT INTO factura_dt (usuario_id,fecha_registro,fecha_modificado,descripcion,cantidad,monto,exento,factura_id) VALUES (NULL,'2014-10-05 16:16:34.993051-04:30','2014-10-05 16:16:34.993051-04:30','arituclo 2','3','30',NULL,NULL)	factura_dt	\N	\N	{4,30.00,NULL,3,NULL,NULL,"arituclo 2","2014-10-05 16:16:34.993051-04:30","2014-10-05 16:16:34.993051-04:30"}
+2038	92643	postgres	2014-10-05 16:29:25.400244-04:30	127.0.0.1	DELETE	DELETE FROM public.factura WHERE id = '3'::integer	factura	{id,iva,monto,usuario_id,nro_control,nro_factura,observacion,fecha_factura,fecha_registro,fecha_modificado}	{3,NULL,115.5,NULL,2,2,"cargando multiples facturas a ver que lo que ",2014-10-05,"2014-10-05 16:16:34.993051-04:30","2014-10-05 16:16:34.993051-04:30"}	\N
+2039	92649	postgres	2014-10-05 16:29:41.99801-04:30	127.0.0.1	DELETE	DELETE FROM public.factura_dt WHERE id = '4'::integer	factura_dt	{id,monto,exento,cantidad,factura_id,usuario_id,descripcion,fecha_registro,fecha_modificado}	{4,30.00,NULL,3,NULL,NULL,"arituclo 2","2014-10-05 16:16:34.993051-04:30","2014-10-05 16:16:34.993051-04:30"}	\N
+2040	92649	postgres	2014-10-05 16:29:42.011091-04:30	127.0.0.1	DELETE	DELETE FROM public.factura_dt WHERE id = '3'::integer	factura_dt	{id,monto,exento,cantidad,factura_id,usuario_id,descripcion,fecha_registro,fecha_modificado}	{3,25.50,t,1,NULL,NULL,"articulo 1","2014-10-05 16:16:34.993051-04:30","2014-10-05 16:16:34.993051-04:30"}	\N
 \.
 
 
@@ -5587,7 +5620,7 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 -- Name: audit_log_log_id_seq; Type: SEQUENCE SET; Schema: audit_log; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('audit_log_log_id_seq', 2019, true);
+SELECT pg_catalog.setval('audit_log_log_id_seq', 2044, true);
 
 
 SET search_path = public, pg_catalog;
@@ -5853,6 +5886,13 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 498	1	2014-10-01 10:47:11.305159-04:30	2014-10-01 10:47:11.305159-04:30	1	\N	\N	\N	\N	127.0.0.1
 499	1	2014-10-01 12:48:34.67744-04:30	2014-10-01 12:48:34.67744-04:30	1	\N	\N	\N	\N	127.0.0.1
 500	1	2014-10-01 19:58:32.590022-04:30	2014-10-01 19:58:32.590022-04:30	1	\N	\N	\N	\N	127.0.0.1
+501	1	2014-10-01 20:51:59.521084-04:30	2014-10-01 20:51:59.521084-04:30	1	\N	\N	\N	\N	127.0.0.1
+502	1	2014-10-02 08:55:16.172125-04:30	2014-10-02 08:55:16.172125-04:30	1	\N	\N	\N	\N	127.0.0.1
+503	1	2014-10-05 10:03:12.380647-04:30	2014-10-05 10:03:12.380647-04:30	1	\N	\N	\N	\N	127.0.0.1
+504	1	2014-10-05 12:10:26.227853-04:30	2014-10-05 12:10:26.227853-04:30	1	\N	\N	\N	\N	127.0.0.1
+505	1	2014-10-05 14:03:52.507993-04:30	2014-10-05 14:03:52.507993-04:30	1	\N	\N	\N	\N	127.0.0.1
+506	1	2014-10-05 15:23:23.286464-04:30	2014-10-05 15:23:23.286464-04:30	1	\N	\N	\N	\N	127.0.0.1
+507	1	2014-10-05 16:15:49.805555-04:30	2014-10-05 16:15:49.805555-04:30	1	\N	\N	\N	\N	127.0.0.1
 \.
 
 
@@ -5860,7 +5900,7 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 -- Name: acceso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('acceso_id_seq', 500, true);
+SELECT pg_catalog.setval('acceso_id_seq', 507, true);
 
 
 --
@@ -6411,7 +6451,7 @@ SELECT pg_catalog.setval('estado_usuario_id_seq', 17, true);
 -- Data for Name: factura; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
-COPY factura (id, usuario_id, fecha_registro, fecha_modificado, fecha_factura, nro_control, nro_factura, observacion, monto, iva) FROM stdin;
+COPY factura (usuario_id, fecha_registro, fecha_modificado, fecha_factura, nro_control, nro_factura, observacion, monto, iva, id) FROM stdin;
 \.
 
 
@@ -6419,8 +6459,22 @@ COPY factura (id, usuario_id, fecha_registro, fecha_modificado, fecha_factura, n
 -- Data for Name: factura_dt; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
-COPY factura_dt (id, usuario_id, fecha_registro, fecha_modificado, descripcion, cantidad, monto, exento, factura_id) FROM stdin;
+COPY factura_dt (usuario_id, fecha_registro, fecha_modificado, descripcion, cantidad, monto, exento, factura_id, id) FROM stdin;
 \.
+
+
+--
+-- Name: factura_dt_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
+--
+
+SELECT pg_catalog.setval('factura_dt_id_seq', 4, true);
+
+
+--
+-- Name: factura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
+--
+
+SELECT pg_catalog.setval('factura_id_seq', 7, true);
 
 
 --
@@ -6896,7 +6950,7 @@ SELECT pg_catalog.setval('municipio_id_seq', 334, true);
 -- Data for Name: orden_pago; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
-COPY orden_pago (id, usuario_id, fecha_registro, fecha_modificado, nro_orden, numero_cheque, fecha_cheque, monto, observacion) FROM stdin;
+COPY orden_pago (usuario_id, fecha_registro, fecha_modificado, nro_orden, numero_cheque, fecha_cheque, monto, observacion, id) FROM stdin;
 \.
 
 
@@ -6904,8 +6958,22 @@ COPY orden_pago (id, usuario_id, fecha_registro, fecha_modificado, nro_orden, nu
 -- Data for Name: orden_pago_factura; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
-COPY orden_pago_factura (id, usuario_id, fecha_registro, fecha_modificado, orden_pago_id, factura_id, monto) FROM stdin;
+COPY orden_pago_factura (usuario_id, fecha_registro, fecha_modificado, orden_pago_id, factura_id, monto, id) FROM stdin;
 \.
+
+
+--
+-- Name: orden_pago_factura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
+--
+
+SELECT pg_catalog.setval('orden_pago_factura_id_seq', 1, false);
+
+
+--
+-- Name: orden_pago_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
+--
+
+SELECT pg_catalog.setval('orden_pago_id_seq', 1, false);
 
 
 --
@@ -23426,34 +23494,6 @@ COPY solicitud_servicio_patologia (id, usuario_id, fecha_registro, fecha_modific
 
 
 --
--- Name: solicitud_servicio_patologia_factura_dt_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
---
-
-SELECT pg_catalog.setval('solicitud_servicio_patologia_factura_dt_id_seq', 1, false);
-
-
---
--- Name: solicitud_servicio_patologia_factura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
---
-
-SELECT pg_catalog.setval('solicitud_servicio_patologia_factura_id_seq', 1, false);
-
-
---
--- Name: solicitud_servicio_patologia_factura_pagos_dt_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
---
-
-SELECT pg_catalog.setval('solicitud_servicio_patologia_factura_pagos_dt_id_seq', 1, false);
-
-
---
--- Name: solicitud_servicio_patologia_factura_pagos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
---
-
-SELECT pg_catalog.setval('solicitud_servicio_patologia_factura_pagos_id_seq', 1, false);
-
-
---
 -- Name: solicitud_servicio_patologia_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -24222,6 +24262,22 @@ ALTER TABLE ONLY estado_usuario
 
 
 --
+-- Name: factura_dt_id_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+ALTER TABLE ONLY factura_dt
+    ADD CONSTRAINT factura_dt_id_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: factura_id_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+ALTER TABLE ONLY factura
+    ADD CONSTRAINT factura_id_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: medicina_descripcion_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24291,6 +24347,22 @@ ALTER TABLE ONLY municipio
 
 ALTER TABLE ONLY profesion
     ADD CONSTRAINT nombre UNIQUE (nombre);
+
+
+--
+-- Name: orden_pago_factura_id_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+ALTER TABLE ONLY orden_pago_factura
+    ADD CONSTRAINT orden_pago_factura_id_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orden_pago_id_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+ALTER TABLE ONLY orden_pago
+    ADD CONSTRAINT orden_pago_id_pkey PRIMARY KEY (id);
 
 
 --
@@ -24499,38 +24571,6 @@ ALTER TABLE ONLY servicio_proveedor
 
 ALTER TABLE ONLY servicio_tiposolicitud
     ADD CONSTRAINT servicio_tiposolicitud_pkey PRIMARY KEY (id);
-
-
---
--- Name: solicitud_dt_factura_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
---
-
-ALTER TABLE ONLY factura_dt
-    ADD CONSTRAINT solicitud_dt_factura_pkey PRIMARY KEY (id);
-
-
---
--- Name: solicitud_factura_pagos__dt_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
---
-
-ALTER TABLE ONLY orden_pago_factura
-    ADD CONSTRAINT solicitud_factura_pagos__dt_pkey PRIMARY KEY (id);
-
-
---
--- Name: solicitud_factura_pagos_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
---
-
-ALTER TABLE ONLY orden_pago
-    ADD CONSTRAINT solicitud_factura_pagos_pkey PRIMARY KEY (id);
-
-
---
--- Name: solicitud_factura_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
---
-
-ALTER TABLE ONLY factura
-    ADD CONSTRAINT solicitud_factura_pkey PRIMARY KEY (id);
 
 
 --
@@ -25603,19 +25643,27 @@ ALTER TABLE ONLY estado_usuario
 
 
 --
--- Name: factura_dt_factura_dt_id_kfey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
---
-
-ALTER TABLE ONLY factura_dt
-    ADD CONSTRAINT factura_dt_factura_dt_id_kfey FOREIGN KEY (factura_id) REFERENCES factura(id);
-
-
---
--- Name: factura_sol_ser_fact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+-- Name: facrtura_sol_ser_factura_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY solicitud_servicio_factura
-    ADD CONSTRAINT factura_sol_ser_fact_id_fkey FOREIGN KEY (factura_id) REFERENCES factura(id);
+    ADD CONSTRAINT facrtura_sol_ser_factura_id_fkey FOREIGN KEY (factura_id) REFERENCES factura(id);
+
+
+--
+-- Name: factura_factura_dt_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY factura_dt
+    ADD CONSTRAINT factura_factura_dt_id_fkey FOREIGN KEY (factura_id) REFERENCES factura(id);
+
+
+--
+-- Name: factura_orden_pago_factura_id_pkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY orden_pago_factura
+    ADD CONSTRAINT factura_orden_pago_factura_id_pkey FOREIGN KEY (factura_id) REFERENCES factura(id);
 
 
 --
@@ -25659,19 +25707,11 @@ ALTER TABLE ONLY municipio
 
 
 --
--- Name: orden_pago_factura_dt_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+-- Name: orden_pago_orden_pa_fact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY orden_pago_factura
-    ADD CONSTRAINT orden_pago_factura_dt_fkey FOREIGN KEY (orden_pago_id) REFERENCES orden_pago(id);
-
-
---
--- Name: orden_pago_factura_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
---
-
-ALTER TABLE ONLY orden_pago_factura
-    ADD CONSTRAINT orden_pago_factura_id_fkey FOREIGN KEY (factura_id) REFERENCES factura(id);
+    ADD CONSTRAINT orden_pago_orden_pa_fact_id_fkey FOREIGN KEY (orden_pago_id) REFERENCES orden_pago(id);
 
 
 --

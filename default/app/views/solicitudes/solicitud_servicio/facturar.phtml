@@ -41,44 +41,38 @@
      <div id="header">FACTURA </div>
         <div id="customer">
             <table id="meta">
-                <tr>
-                    <td class="meta-head">Nro de Factura</td>
-                    <td> <input type="text" id="" class="input-medium" name="nro_factura"> </td>
-                </tr>
-                  <tr>
-                    <td class="meta-head">Nro de Control</td>
-                    <td> <input type="text" id="" class="input-medium" name="nro_control"> </td>
-                </tr>
-                <tr>
-                    <td class="meta-head">Fecha</td>
-                    <td><input type="text" id="" class="input-medium" name="fecha_factura"></td>
-                </tr>
-                <tr>
-                    <td class="meta-head">Monto Total</td>
-                    <td><div class="due"></div></td>
-                </tr>
+            <div class="row-fluid">
+              <div class="span3">
+                <?php echo DwForm::text('factura.nro_factura', array('class'=>'input-medium input-required mask-num'), NULL, 'Nro Factura'); ?>
+              </div>
+              <div class="span3"> 
+                <?php echo DwForm::text('factura.nro_control', array('class'=>'input-medium input-required mask-num '), NULL, 'Nro Control'); ?>
+              </div>
+              <div class="span3"> 
+                <?php echo DwForm::date('factura.fecha_factura', array('class'=>'input-medium input-required'), NULL, 'Fecha Factura'); ?>
+              </div>
+            </div>
             </table>
         </div>
         
-        <table id="items">
+        <table id="items" >
           <tr>
-              <th>Articulo</th>
               <th>Descripcion</th>
-              <th>Costo Unitario</th>
               <th>Cantidad</th>
-              <th>Precio</th>
-              <th></th>
+              <th>Costo Unitario</th>
+              <th>Exento</th>
+              <th colspan="2">Total Articulo</th>
+
           </tr>
-          
           <tr class="item-row">
-              <td class="item-name"><div class="delete-wpr"> <input type="text" class="input-medium"><a class="delete" href="javascript:;" title="Remove row">X</a></div></td>
-              <td class="description"> <input type="text" class="input-xlarge"></td>
-              <td><input type="text" class="cost input-small"></td>
-              <td><input type="text" class="qty input-small"></td>
+              <td class="description"><div class="delete-wpr"> <input type="text" name="descripcion[]" class="input-xlarge"><a class="delete" href="javascript:;" title="Remove row">X</a></div></td>
+              <td><input type="text" name="cantidad[]" class="qty input-small mask-num"></td>
+              <td><input type="text" name="monto[]" class="cost input-small mask-num"></td>
+              <td><input type="checkbox" name="exento[]"></td>
               <td><span class="price"></span></td>
           </tr>
           <tr id="hiderow">
-            <td colspan="5"><a id="addrow" href="javascript:;" title="Add a row">Agregar Articulo</a></td>
+            <td colspan="6"><a id="addrow" href="javascript:;" title="Add a row">Agregar Articulo</a></td>
           </tr>
           <tr>
               <td colspan="2" class="blank"> </td>
@@ -90,17 +84,23 @@
               <td colspan="2" class="blank"> </td>
               <td colspan="1" class="blank"> </td>
               <td colspan="2" class="total-line">Total</td>
-              <td class="total-value"><div id="total"></div></td>
+              <td class="total-value"> <?php echo DwForm::text('factura.monto', array('class'=>'input-small input-required readonly'), NULL, NULL); ?>  </td>
           </tr>
           <tr>
               <td colspan="2" class="blank"> </td>
               <td colspan="1" class="blank"> </td>
-              <td colspan="2" class="total-line">Monto a cancelar</td>
 
-              <td class="total-value"><input type="text" class="input-small" id="paid"></td>
           </tr>
         </table>
     </div>
+      <div class="row-fluid">
+        <div class="span6">
+          <?php echo DwForm::textarea('factura.observacion', array('class'=>'input-xxlarge  mask-alpha'), NULL, 'Observaciones'); ?>
+        </div>
+        <div class="span6"> 
+        <span>Cargar Multiples Facturas</span> <input type="checkbox" name="multifactura"></div>
+      </div>
+
 
     </div>
     <div class="row-fluid">
@@ -112,15 +112,3 @@
     </div>
     <?php echo DwForm::close(); ?>
 </div>
-
-<script type="text/javascript">
-function update_combo() {
-  var combo = "<?php echo $combobit; ?>"
-
-
-}
-
-
-
-</script>
-

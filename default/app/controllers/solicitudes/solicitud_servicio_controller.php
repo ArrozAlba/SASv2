@@ -7,7 +7,7 @@
  * @author      Alexis Borges (jel1284@gmail.com)
  * @copyright   Copyright (c) 2014 UPTP - (PNFI Team) (https://github.com/ArrozAlba/SASv2)
  */
-Load::models('solicitudes/solicitud_servicio');
+Load::models('solicitudes/solicitud_servicio', 'solicitudes/factura', 'solicitudes/factura_dt');
 Load::models('config/tiposolicitud');
 Load::models('proveedorsalud/proveedor');
 Load::models('proveedorsalud/servicio');
@@ -15,7 +15,7 @@ Load::models('proveedorsalud/medico');
 Load::models('proveedorsalud/especialidad');
 Load::models('beneficiarios/titular');
 Load::models('beneficiarios/beneficiario');
-Load::models('config/patologia', 'solicitudes/solicitud_servicio_patologia');
+Load::models('config/patologia', 'solicitudes/solicitud_servicio_patologia', 'solicitudes/solicitud_servicio_factura');
 
 class SolicitudServicioController extends BackendController {
     /**
@@ -131,17 +131,57 @@ class SolicitudServicioController extends BackendController {
         }
         $solicitud_servicio = new SolicitudServicio();
         $obj = new SolicitudServicioPatologia();
+        $factura = new Factura();
+        $factura_dt = new FacturaDt();
         $this->sol =  $obj->getInformacionSolicitudServicioPatologia($id);
         if(!$solicitud_servicio->getInformacionSolicitudServicio($id)) {            
             DwMessage::get('id_no_found');
             return DwRedirect::toAction('registro');
         }
-      /*  if(Input::hasPost('solicitud_servicio') && DwSecurity::isValidKey(Input::post('solicitud_servicio_id_key'), 'form_key')) {
-            if(SolicitudServicio::setSolicitudServicio('update', Input::post('solicitud_servicio'), array('id'=>$id))){
-                DwMessage::valid('La solicitud se ha contabilizado correctamente!');
-                return DwRedirect::toAction('registro');
+        if(Input::hasPost('factura')) {
+            ActiveRecord::beginTrans();
+            $factura = Factura::setFactura('create', Input::post('factura'));
+            if($factura){
+                $fact = $factura->getInformacionUltimaFactura();
+                if(FacturaDt::setFacturaDt(Input::post('descripcion'), Input::post('cantidad'), Input::post('monto'), Input::post('exento'), $fact->id)) {
+                    $solfactura = new SolicitudServicioFactura();
+                    if(SolicitudServicioFactura::setSolicitudServicioFactura($fact->id, $id)){
+                        if(Input::post('multifactura')){ //para saber si va a cargar multiples facturas sobre esa solicitud 
+                            $solser = $solicitud_servicio->getInformacionSolicitudServicio($id);
+                            $solser->estado_solicitud="G"; //estado G parcialmente facturada 
+                            $solser->save();
+                            ActiveRecord::commitTrans();
+                            DwMessage::valid('Se ha cargado la factura exitosamente!');
+                            $key_upd = DwSecurity::getKey($id, 'upd_solicitud_servicio'); 
+                            return DwRedirect::toAction('facturar/'.$key_upd);   //retorna a la misma visata de facturacion 
+                        }
+                        else{
+                            $solser = $solicitud_servicio->getInformacionSolicitudServicio($id);
+                            $solser->estado_solicitud="F";
+                            $solser->save();
+                            ActiveRecord::commitTrans();
+                            DwMessage::valid('Se ha cargado la factura exitosamente!');
+                          return DwRedirect::toAction('facturacion');     
+                        }
+
+                    }
+                    else{
+                        ActiveRecord::rollbackTrans();
+                        DwMessage::error('No se pudo enviar a cargar multiples facturas!');
+                    }
+
+                }
+                else{
+                    ActiveRecord::rollbackTrans();
+                    DwMessage::error('Los detalles de la Factura no se han cargado correctamente Intente de nuevo!');
+                }
             }
-        }*/ 
+            else{
+                ActiveRecord::rollbackTrans();
+                DwMessage::error('La Factura ha dao peos!');
+
+            }
+        }
         $this->solicitud_servicio = $solicitud_servicio;
         $this->page_title = 'Cargar Facturas a la solicitud';        
     }

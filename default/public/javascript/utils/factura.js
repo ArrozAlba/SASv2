@@ -63,9 +63,9 @@ function update_total() {
   total = roundNumber(total,2);
 
   $('#subtotal').html("Bs.F "+total);
-  $('#total').html("Bs.F "+total);
+  $('#factura_monto').val(total);
   
-  update_balance();
+  //update_balance();
 }
 
 function update_balance() {
@@ -90,15 +90,14 @@ function bind() {
 }
 
 $(document).ready(function() {
-  update_combo();
-  alert(combo);
+
   $('input').click(function(){
     $(this).select();
   });
 
   $("#paid").blur(update_balance);
   $("#addrow").click(function(){
-    var aux = '<tr class="item-row"><td class="item-name"><div class="delete-wpr"> <select name="patologia"><?php echo $combobit; ?></select ><a class="delete" href="javascript:;" title="Remove row">X</a></div></td><td><input type="text" class="input-small"></td><td class="description"><input type="text" class="input-xlarge"> </td><td><input type="text" class="cost input-small"></td><td> <input type="text" class="qty input-small"></td><td><span class="price"></span></td></tr>'
+    var aux = '<tr class="item-row"><td class="description"><div class="delete-wpr"><input type="text" name="descripcion[]" class="input-xlarge"> <a class="delete" href="javascript:;" title="Remove row">X</a></div></td><td><input type="text" name="cantidad[]" class="qty input-small"></td><td><input type="text" name="monto[]" class="cost input-small"></td><td> <input type="checkbox" name="exento[]" ></td><td><span class="price"></span></td></tr>'
     $(".item-row:last").after(aux);
     if ($(".delete").length > 0) $(".delete").show();
     bind();

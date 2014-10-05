@@ -7,7 +7,7 @@
  * @author      Alexis borges
  * @copyright    
  */
-class Factura extends ActiveRecord {
+class FacturaDt extends ActiveRecord {
     /**
      * Constante para definir el id de la oficina principal
      */
@@ -30,12 +30,6 @@ class Factura extends ActiveRecord {
         $join = '';
         $condicion ="factura.id = '$id'";
         return $this->find_first("columns: $columnas", "join: $join", "conditions: $condicion");
-    } 
-    public function getInformacionUltimaFactura() {
-        $id = Filter::get($id, 'numeric');
-        $columnas = 'factura.*';
-        $order = 'factura.id DESC';
-        return $this->find_first("columns: $columnas", "order: $order");
     } 
     /**
      * Método que devuelve las facrturas
@@ -67,15 +61,38 @@ class Factura extends ActiveRecord {
      * @param array $otherData Array con datos adicionales
      * @return Obj
      */
-    public static function setFactura($method, $data, $optData=null) {
+    public static function setFacturaDtwwww($method, $data, $optData=null) {
         //Se aplica la autocarga
-        $obj = new Factura($data);
+        $obj = new FacturaDt($data);
         //Se verifica si contiene una data adicional para autocargar
         if ($optData) {
             $obj->dump_result_self($optData);
         }   
         $rs = $obj->$method();
         return ($rs) ? $obj : FALSE;
+    }
+
+    public static function setFacturaDt($descripcion, $cantidad, $monto, $exento, $idfactura){
+        $obj = new FacturaDt();
+        $obj->begin();
+        
+        $j=0;
+        while($j<count($descripcion)){ 
+            $obj->descripcion = $descripcion[$j];
+            $obj->cantidad = $cantidad[$j];
+            $obj->monto = $monto[$j];
+            $obj->exento = $exento[$j];
+            if($obj->exists("descripcion='$obj->descripcion' AND cantidad='$obj->cantidad' AND monto='$obj->monto'")){
+                    continue;
+                }
+                if(!$obj->create()) {            
+                    $obj->rollback();
+                    return FALSE;
+                }
+        $j++;
+        }
+        $obj->commit();
+        return TRUE;
     }
     /**
      * Método que se ejecuta antes de guardar y/o modificar     
