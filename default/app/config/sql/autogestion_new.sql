@@ -2335,34 +2335,34 @@ COMMENT ON COLUMN orden_pago.monto IS 'Monto total de la orden pago';
 
 
 --
--- Name: orden_pago_factura_dt; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
+-- Name: orden_pago_factura; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
-CREATE TABLE orden_pago_factura_dt (
+CREATE TABLE orden_pago_factura (
     id integer NOT NULL,
     usuario_id integer,
     fecha_registro timestamp with time zone DEFAULT now() NOT NULL,
     fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
     orden_pago_id integer,
-    factura_dt_id integer,
+    factura_id integer,
     monto numeric(11,2) NOT NULL
 );
 
 
-ALTER TABLE public.orden_pago_factura_dt OWNER TO arrozalba;
+ALTER TABLE public.orden_pago_factura OWNER TO arrozalba;
 
 --
--- Name: TABLE orden_pago_factura_dt; Type: COMMENT; Schema: public; Owner: arrozalba
+-- Name: TABLE orden_pago_factura; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
-COMMENT ON TABLE orden_pago_factura_dt IS 'Modelo para manipular el Detalle de la Facturacion de las Solicitudes de Servicios asociados a una patologia';
+COMMENT ON TABLE orden_pago_factura IS 'Modelo para manipular el Detalle de los pagos asociados a unas faturas determinadas Solicitudes de Servicios ';
 
 
 --
--- Name: COLUMN orden_pago_factura_dt.monto; Type: COMMENT; Schema: public; Owner: arrozalba
+-- Name: COLUMN orden_pago_factura.monto; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
-COMMENT ON COLUMN orden_pago_factura_dt.monto IS 'Monto del Item';
+COMMENT ON COLUMN orden_pago_factura.monto IS 'Monto del Item';
 
 
 --
@@ -3602,6 +3602,40 @@ COMMENT ON COLUMN solicitud_servicio.observacion IS 'Observacion';
 
 
 --
+-- Name: solicitud_servicio_factura; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+CREATE TABLE solicitud_servicio_factura (
+    id integer NOT NULL,
+    solicitud_servicio_id integer NOT NULL,
+    factura_id integer
+);
+
+
+ALTER TABLE public.solicitud_servicio_factura OWNER TO arrozalba;
+
+--
+-- Name: solicitud_servicio_factura_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
+--
+
+CREATE SEQUENCE solicitud_servicio_factura_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.solicitud_servicio_factura_id_seq OWNER TO arrozalba;
+
+--
+-- Name: solicitud_servicio_factura_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
+--
+
+ALTER SEQUENCE solicitud_servicio_factura_id_seq OWNED BY solicitud_servicio_factura.id;
+
+
+--
 -- Name: solicitud_servicio_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -3700,7 +3734,7 @@ ALTER TABLE public.solicitud_servicio_patologia_factura_pagos_dt_id_seq OWNER TO
 -- Name: solicitud_servicio_patologia_factura_pagos_dt_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
 --
 
-ALTER SEQUENCE solicitud_servicio_patologia_factura_pagos_dt_id_seq OWNED BY orden_pago_factura_dt.id;
+ALTER SEQUENCE solicitud_servicio_patologia_factura_pagos_dt_id_seq OWNED BY orden_pago_factura.id;
 
 
 --
@@ -5069,6 +5103,13 @@ ALTER TABLE ONLY servicio ALTER COLUMN id SET DEFAULT nextval('servicio_id_seq':
 --
 
 ALTER TABLE ONLY solicitud_servicio ALTER COLUMN id SET DEFAULT nextval('solicitud_servicio_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY solicitud_servicio_factura ALTER COLUMN id SET DEFAULT nextval('solicitud_servicio_factura_id_seq'::regclass);
 
 
 --
@@ -6860,10 +6901,10 @@ COPY orden_pago (id, usuario_id, fecha_registro, fecha_modificado, nro_orden, nu
 
 
 --
--- Data for Name: orden_pago_factura_dt; Type: TABLE DATA; Schema: public; Owner: arrozalba
+-- Data for Name: orden_pago_factura; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
-COPY orden_pago_factura_dt (id, usuario_id, fecha_registro, fecha_modificado, orden_pago_id, factura_dt_id, monto) FROM stdin;
+COPY orden_pago_factura (id, usuario_id, fecha_registro, fecha_modificado, orden_pago_id, factura_id, monto) FROM stdin;
 \.
 
 
@@ -23351,6 +23392,21 @@ COPY solicitud_servicio (id, usuario_id, fecha_registro, fecha_modificado, estad
 
 
 --
+-- Data for Name: solicitud_servicio_factura; Type: TABLE DATA; Schema: public; Owner: arrozalba
+--
+
+COPY solicitud_servicio_factura (id, solicitud_servicio_id, factura_id) FROM stdin;
+\.
+
+
+--
+-- Name: solicitud_servicio_factura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
+--
+
+SELECT pg_catalog.setval('solicitud_servicio_factura_id_seq', 1, false);
+
+
+--
 -- Name: solicitud_servicio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
@@ -24457,7 +24513,7 @@ ALTER TABLE ONLY factura_dt
 -- Name: solicitud_factura_pagos__dt_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
-ALTER TABLE ONLY orden_pago_factura_dt
+ALTER TABLE ONLY orden_pago_factura
     ADD CONSTRAINT solicitud_factura_pagos__dt_pkey PRIMARY KEY (id);
 
 
@@ -24483,6 +24539,14 @@ ALTER TABLE ONLY factura
 
 ALTER TABLE ONLY solicitud_servicio
     ADD CONSTRAINT solicitud_servicio_codigo_solicitud_key UNIQUE (codigo_solicitud);
+
+
+--
+-- Name: solicitud_servicio_factura_id_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+ALTER TABLE ONLY solicitud_servicio_factura
+    ADD CONSTRAINT solicitud_servicio_factura_id_pkey PRIMARY KEY (id);
 
 
 --
@@ -25547,11 +25611,11 @@ ALTER TABLE ONLY factura_dt
 
 
 --
--- Name: factura_dt_orden_pago_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+-- Name: factura_sol_ser_fact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
-ALTER TABLE ONLY orden_pago_factura_dt
-    ADD CONSTRAINT factura_dt_orden_pago_fkey FOREIGN KEY (factura_dt_id) REFERENCES factura_dt(id);
+ALTER TABLE ONLY solicitud_servicio_factura
+    ADD CONSTRAINT factura_sol_ser_fact_id_fkey FOREIGN KEY (factura_id) REFERENCES factura(id);
 
 
 --
@@ -25598,8 +25662,16 @@ ALTER TABLE ONLY municipio
 -- Name: orden_pago_factura_dt_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
-ALTER TABLE ONLY orden_pago_factura_dt
+ALTER TABLE ONLY orden_pago_factura
     ADD CONSTRAINT orden_pago_factura_dt_fkey FOREIGN KEY (orden_pago_id) REFERENCES orden_pago(id);
+
+
+--
+-- Name: orden_pago_factura_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY orden_pago_factura
+    ADD CONSTRAINT orden_pago_factura_id_fkey FOREIGN KEY (factura_id) REFERENCES factura(id);
 
 
 --
@@ -25832,6 +25904,14 @@ ALTER TABLE ONLY solicitud_servicio
 
 ALTER TABLE ONLY solicitud_servicio
     ADD CONSTRAINT solicitud_servicio_servicio_id_fkey FOREIGN KEY (servicio_id) REFERENCES servicio(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: solicitud_servicio_sol_ser_fact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY solicitud_servicio_factura
+    ADD CONSTRAINT solicitud_servicio_sol_ser_fact_id_fkey FOREIGN KEY (solicitud_servicio_id) REFERENCES solicitud_servicio(id);
 
 
 --
