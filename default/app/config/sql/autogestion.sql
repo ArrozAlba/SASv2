@@ -1372,7 +1372,7 @@ CREATE TABLE proveedor (
     fecha_registro timestamp with time zone DEFAULT now() NOT NULL,
     fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
     rif character varying(10) NOT NULL,
-    razon_social character varying(30) NOT NULL,
+    razon_social character varying(100) NOT NULL,
     nombre_corto character varying(30) NOT NULL,
     pais_id integer NOT NULL,
     estado_id integer NOT NULL,
@@ -5812,6 +5812,7 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 498	1	2014-10-01 10:47:11.305159-04:30	2014-10-01 10:47:11.305159-04:30	1	\N	\N	\N	\N	127.0.0.1
 499	1	2014-10-01 12:48:34.67744-04:30	2014-10-01 12:48:34.67744-04:30	1	\N	\N	\N	\N	127.0.0.1
 500	1	2014-10-01 19:58:32.590022-04:30	2014-10-01 19:58:32.590022-04:30	1	\N	\N	\N	\N	127.0.0.1
+508	1	2014-10-01 15:49:46.67412-04:30	2014-10-01 15:49:46.67412-04:30	1	\N	\N	\N	\N	127.0.0.1
 \.
 
 
@@ -5842,6 +5843,7 @@ SELECT pg_catalog.setval('backup_id_seq', 1, false);
 --
 
 COPY beneficiario (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1, nombre2, apellido1, apellido2, nacionalidad, sexo, fecha_nacimiento, correo_electronico, grupo_sanguineo, fecha_inclusion, fecha_exclusion, celular, telefono, titular_id, beneficiario_tipo_id, observacion, participacion, parentesco_id, motivo_exclusion, motivo_reactivacion, estado_beneficiario, estado_civil) FROM stdin;
+29	\N	2014-08-22 17:02:21.5904-04:30	2014-08-22 17:02:21.5904-04:30	87438323	ADSFASDF	\N	DASFSDFASD	\N	E	M	2010-08-01	\N	N/A	1900-01-01	1900-01-01	\N	\N	1	1	\N	100	2	\N	\N	1	\N
 30	\N	2014-09-15 15:04:22.854665-04:30	2014-09-15 15:04:22.854665-04:30	7596492	PETRA	ALEJANDRINA	DIAZ	RODRIGUEZ	V	F	1963-11-26	\N	N/A	1900-01-01	1900-01-01	\N	\N	277	1	\N	0	4	\N	\N	1	\N
 32	\N	2014-09-15 15:10:55.820311-04:30	2014-09-15 15:10:55.820311-04:30	28382972	MARIA	DE LOS ANGELES	RICO	DIAZ	V	F	2001-04-06	\N	N/A	1900-01-01	1900-01-01	\N	\N	277	1	\N	50	1	\N	\N	1	\N
 34	\N	2014-09-15 15:33:40.443521-04:30	2014-09-15 15:33:40.443521-04:30	27937797	ANDRES	ANTONIO	ARIAS	ESPINO	V	M	1999-06-08	\N	N/A	1900-01-01	1900-01-01	\N	\N	276	1	\N	50	1	\N	\N	1	\N
@@ -5914,6 +5916,7 @@ COPY beneficiario (id, usuario_id, fecha_registro, fecha_modificado, cedula, nom
 99	\N	2014-09-18 15:33:29.639893-04:30	2014-09-18 15:33:29.639893-04:30	11114565	NELSON	JOVANNY	NIÑO	MONTOYA	V	M	1973-01-10	\N	N/A	1900-01-01	1900-01-01	\N	\N	175	1	\N	0	2	\N	\N	1	\N
 100	\N	2014-09-18 15:48:07.725691-04:30	2014-09-18 15:48:07.725691-04:30	1122241	TERESA	DE JESUS	RODRIGUEZ	RIVERO	V	F	1942-10-03	\N	N/A	1900-01-01	1900-01-01	\N	\N	178	1	\N	25	4	\N	\N	1	\N
 101	\N	2014-09-18 15:49:23.587695-04:30	2014-09-18 15:49:23.587695-04:30	27636044	LUIS	MANUEL	GARRIDO	LINARES	V	M	1998-07-04	\N	N/A	1900-01-01	1900-01-01	\N	\N	178	1	\N	25	1	\N	\N	1	\N
+102	\N	2014-09-19 13:21:55.090032-04:30	2014-09-19 13:21:55.090032-04:30	81288458	ZOILA	DE LAS MERCEDES	FIERRO	PIZARRO	V	F	1943-08-24	\N	N/A	1900-01-01	1900-01-01	\N	\N	151	1	\N	100	4	\N	\N	1	\N
 103	\N	2014-09-19 13:48:18.588569-04:30	2014-09-19 13:48:18.588569-04:30	1222492	MARIA	\N	ARANGUREN	DE HENRIQUEZ	V	F	1930-04-17	\N	N/A	1900-01-01	1900-01-01	\N	\N	270	1	\N	25	4	\N	\N	1	\N
 104	\N	2014-09-19 13:50:28.249491-04:30	2014-09-19 13:50:28.249491-04:30	29889516	FERNANDO	JOSE	HENRIQUEZ	MENDOZA	V	M	1997-05-11	\N	N/A	1900-01-01	1900-01-01	\N	\N	270	1	\N	25	1	\N	\N	1	\N
 105	\N	2014-09-19 13:54:12.117885-04:30	2014-09-19 13:54:12.117885-04:30	29847368	KATERINE	DEL CARMEN	HENRIQUEZ	MENDOZA	V	F	1999-07-30	\N	N/A	1900-01-01	1900-01-01	\N	\N	270	1	\N	25	1	\N	\N	1	\N
@@ -5980,12 +5983,6 @@ COPY beneficiario (id, usuario_id, fecha_registro, fecha_modificado, cedula, nom
 166	\N	2014-09-22 15:10:44.380166-04:30	2014-09-22 15:10:44.380166-04:30	16914011	MANUEL	ANTONIO	RAMIREZ	PEREZ	V	M	1980-06-24	\N	N/A	1900-01-01	1900-01-01	\N	\N	272	1	\N	100	2	\N	\N	1	\N
 167	\N	2014-09-22 15:31:18.931819-04:30	2014-09-22 15:31:18.931819-04:30	5367935	MARITZA	DEL ROSARIO	ESPINOZA	\N	V	F	1958-08-05	\N	N/A	1900-01-01	1900-01-01	\N	\N	169	1	\N	50	4	\N	\N	1	\N
 168	\N	2014-09-22 15:32:18.67773-04:30	2014-09-22 15:32:18.67773-04:30	3514285	JOSE	ARGENIS	PADILLA	PEREZ	V	M	1946-11-06	\N	N/A	1900-01-01	1900-01-01	\N	\N	169	1	\N	50	5	\N	\N	1	\N
-102	\N	2014-09-19 13:21:55.090032-04:30	2014-09-19 13:21:55.090032-04:30	81288458	ZOILA	DE LAS MERCEDES	FIERRO	PIZARRO	V	F	2014-09-28	\N	N/A	1900-01-01	1900-01-01	97239719238	45234532454	151	1	\N	100	4	\N	\N	1	S
-29	\N	2014-08-22 17:02:21.5904-04:30	2014-08-22 17:02:21.5904-04:30	87438323	JUANITA	\N	PETRA	\N	V	F	1990-03-01	\N	N/A	1900-01-01	1900-01-01	87687686868	\N	1	1	\N	100	2	\N	\N	1	S
-169	\N	2014-09-28 01:13:20.688098-04:30	2014-09-28 01:13:20.688098-04:30	20654231	PETRICA	\N	LAOTRA	AMANTES	V	F	2014-09-28	\N	N/A	1900-01-01	1900-01-01	64654654646	65465464646	1	1	\N	0	1	\N	\N	1	S
-170	\N	2014-09-28 10:16:44.749814-04:30	2014-09-28 10:16:44.749814-04:30	20643647	PEPITO	\N	DE LA CONCPCION	\N	V	M	2014-04-08	\N	N/A	1900-01-01	1900-01-01	\N	\N	151	1	\N	0	1	\N	\N	1	S
-173	\N	2014-09-28 14:52:38.829377-04:30	2014-09-28 14:52:38.829377-04:30	13132132	KJHKJH	\N	SDFASDFAS	\N	V	M	2014-04-10	\N	N/A	1900-01-01	2014-09-28	\N	\N	151	1	\N	0	3	PRBANDO OSNIDO	\N	0	S
-171	\N	2014-09-28 14:40:35.079764-04:30	2014-09-28 14:40:35.079764-04:30	145684879	JUAN	\N	GALINDEZ	\N	V	M	1988-09-01	\N	N/A	1900-01-01	\N	04124578965	02855789987	151	2	\N	0	1	\N	\N	1	S
 \.
 
 
@@ -5993,7 +5990,7 @@ COPY beneficiario (id, usuario_id, fecha_registro, fecha_modificado, cedula, nom
 -- Name: beneficiario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('beneficiario_id_seq', 173, true);
+SELECT pg_catalog.setval('beneficiario_id_seq', 168, true);
 
 
 --
@@ -6158,10 +6155,6 @@ COPY discapacidad (id, usuario_id, fecha_registro, fecha_modificado, nombre, obs
 
 COPY discapacidad_beneficiario (id, beneficiario_id, discapacidad_id) FROM stdin;
 1	29	2
-2	102	2
-3	170	4
-4	170	5
-5	171	4
 \.
 
 
@@ -6169,7 +6162,7 @@ COPY discapacidad_beneficiario (id, beneficiario_id, discapacidad_id) FROM stdin
 -- Name: discapacidad_beneficiario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('discapacidad_beneficiario_id_seq', 5, true);
+SELECT pg_catalog.setval('discapacidad_beneficiario_id_seq', 1, true);
 
 
 --
@@ -6455,7 +6448,6 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 50	\N	2014-07-30 14:27:26.593054-04:30	2014-07-30 14:27:26.593054-04:30	30	47	Anular	solicitudes/solicitud_medicina/anular	205	icon-remove-sign	1	1
 51	\N	2014-07-30 15:14:45.308621-04:30	2014-07-30 15:14:45.308621-04:30	32	48	Registro	solicitudes/solicitud_odontologica/registro	222	icon-plus-sign	1	1
 52	\N	2014-07-30 15:19:32.343134-04:30	2014-07-30 15:19:32.343134-04:30	32	49	Aprobacion	solicitudes/solicitud_odontologica/aprobacion	223	icon-ok-sign	1	1
-53	\N	2014-07-30 15:31:18.854185-04:30	2014-07-30 15:31:18.854185-04:30	32	50	Contabilizar	solicitudes/solicitud_odontologica/contabilizar	224	icon-check	1	1
 54	\N	2014-07-30 15:34:10.258296-04:30	2014-07-30 15:34:10.258296-04:30	32	51	Anular	solicitudes/solicitud_odontologica/anular	225	icon-remove-sign	1	1
 55	\N	2014-07-30 15:55:09.056613-04:30	2014-07-30 15:55:09.056613-04:30	33	52	Registro	solicitudes/solicitud_examen/registro	232	icon-plus-sign	1	1
 56	\N	2014-07-30 15:55:38.334131-04:30	2014-07-30 15:55:38.334131-04:30	33	53	Aprobacion	solicitudes/solicitud_examen/aprobacion	233	icon-ok-sign	1	1
@@ -6483,6 +6475,7 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 30	\N	2014-03-16 13:24:43.632516-04:30	2014-03-16 13:24:43.632516-04:30	29	27	Solicitud de Medicinas	#	201	icon-th	1	1
 15	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	\N	\N	Configuraciones	config/empresa/	800	icon-wrench	1	1
 1	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	\N	\N	Escritorio	dashboard/	10	icon-home	1	1
+53	\N	2014-07-30 15:31:18.854185-04:30	2014-07-30 15:31:18.854185-04:30	32	50	aprobadas	solicitudes/solicitud_odontologica/contabilizar	224	icon-check	1	1
 70	\N	2014-07-30 20:27:20.039277-04:30	2014-07-30 20:27:20.039277-04:30	67	62	Contabilizar	solicitudes/solicitud_carta/contabilizar	264	icon-check	1	1
 71	\N	2014-07-30 20:29:29.133166-04:30	2014-07-30 20:29:29.133166-04:30	67	63	Anular	solicitudes/solicitud_carta/anular	265	icon-remove-sign	1	1
 72	\N	2014-08-20 14:31:37.537946-04:30	2014-08-20 14:31:37.537946-04:30	3	69	cambio clave	sistema/usuario_clave/cambiar_clave	912	\N	1	1
@@ -23010,10 +23003,15 @@ SELECT pg_catalog.setval('profesion_id_seq', 185, true);
 --
 
 COPY proveedor (id, usuario_id, fecha_registro, fecha_modificado, rif, razon_social, nombre_corto, pais_id, estado_id, municipio_id, parroquia_id, direccion, celular, telefono1, telefono2, fax, correo_electronico, observacion, tipo) FROM stdin;
-1	\N	2014-05-10 12:03:55.159164-04:30	2014-05-10 12:03:55.159164-04:30	g20082054	CENTRO MEDICO DE LOS LLANOS	CEMELL	240	69	223	715	av las lagrimas	\N	02222	02222	02222	cemell@gmail.com	asdas	\N
-5	\N	2014-07-28 18:02:07.563286-04:30	2014-07-28 18:02:07.563286-04:30	j20000	 POLICLINICA SAN JAVIER 	SAN JAVIER	240	69	223	715	Av. Andres Bello entre carr. 33 y 34 .	\N	0251-2736943	\N	\N	\N	\N	\N
-3	\N	2014-07-28 17:59:34.253814-04:30	2014-07-28 17:59:34.253814-04:30	g20082055	HPO HOSPITAL DE OCCIDENTE C.A.	HPO	240	69	223	715	Av. Vencedores de Araure Araure Portuguesa 	\N	0255-6004760	\N	\N	\N	\N	\N
-6	\N	2014-09-26 00:12:05.408965-04:30	2014-09-26 00:12:05.408965-04:30	J-123589-0	ALEXIS BORHES	ALEX	240	69	223	716	SADFASDFAS SDFA SDFF	\N	34324423423	23423423423	\N	\N	ASDFASDFA324R5 EWFASDADS	F
+2	\N	2014-07-28 17:59:34.253814-04:30	2014-07-28 17:59:34.253814-04:30	J303168167	HPO HOSPITAL DE OCCIDENTE C.A.	CLINICA HPO	240	69	223	715	Av. Vencedores de Araure Araure Av. Vencedores de Araure Araure Portuguesa  	\N	0255-6004760	\N	\N	\N	\N	C
+3	\N	2014-07-28 18:02:07.563286-04:30	2014-07-28 18:02:07.563286-04:30	J308524158	CLINICA SAN JOSE C.A. 	CLINICA SAN JOSE	240	69	223	715	Av. 13 de Junio con Teo Capriles Edi. San José sector el trapiche	\N	0255-6212213	0255-3218789	\N	\N	\N	C
+4	\N	2014-09-26 00:12:05.408965-04:30	2014-09-26 00:12:05.408965-04:30	J085013768	MEDICA PORTUGUESA, C.A.	CLINICA VARGAS	240	69	223	716	Av. 28 con Teo Capriles Urb el pilar Araure – Portuguesa 	0424-5235274	 	 	\N	\N	 	C
+5	\N	2014-09-30 19:26:24.088765-04:30	2014-09-30 19:26:24.088765-04:30	V052704258	HENRY JOSE CAMACHO CASTELLANOS 	CLINICA DR. CAMACHO	240	69	223	715	AV.  ROMULO GALLEGOS PIRITU - ESTADO PORTUGUESA 	0424-5078054	 	\N	\N	\N	\N	C
+6	\N	2014-10-01 15:43:38.896921-04:30	2014-10-01 15:43:38.896921-04:30	J085277072	UNIDAD GINECO OBSTETRA OSCAR RAUL CASAL,C.A.	CLINICA CASAL	240	69	223	715	CALLE 29 ENTRE AVENIDAS 34 Y 35 CASA 34-38 SECTOR CENTRO ACARIGUA ESTADO PORTUGUESA 	\N	0255-6214283	0255-6150606	\N	\N	\N	C
+1	\N	2014-05-10 12:03:55.159164-04:30	2014-05-10 12:03:55.159164-04:30	J085258310	CLINICA DE ESPECIALIDADES MEDICAS LOS LLANOS, C.A.	CLINICA CEMELL	240	69	223	715	Av. las lágrimas con Av 14 Araure 	\N	0255-6001100	 	 	cemell@gmail.com	 	C
+7	\N	2014-10-01 15:45:23.683786-04:30	2014-10-01 15:45:23.683786-04:30	J303056911	 CENTRO MEDICO SAN FRANCISCO C.A.	CLINICA SAN FRANCISCO	240	69	223	715	Calle 15 entre carreras 22 y 23	\N	0251-2524715	\N	\N	\N	\N	C
+8	\N	2014-10-01 15:48:24.25959-04:30	2014-10-01 15:48:24.25959-04:30	J304160518	 UNIDAD QUIRURGICA LOS LEONES, C.A 	CLINICA LOS LEONES	240	69	223	715	AV LLOS LEONES ENTRE AV LARA Y MADRID	\N	0251-2530693	0251-2531871	\N	\N	\N	C
+9	\N	2014-10-01 15:58:23.627588-04:30	2014-10-01 15:58:23.627588-04:30	J303395163	CLINICA SANTA MARIA, C.A. 	CLINICA SANTA MARIA	240	69	223	715	AV. PAEZ ESQUINA CALLE 20 Y 21 SECTOR VILLA PASTORA. ACARIGUA ESTADO PORTUGUESA 	\N	\N	\N	\N	\N	\N	\N
 \.
 
 
@@ -23021,7 +23019,7 @@ COPY proveedor (id, usuario_id, fecha_registro, fecha_modificado, rif, razon_soc
 -- Name: proveedor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('proveedor_id_seq', 6, true);
+SELECT pg_catalog.setval('proveedor_id_seq', 7, true);
 
 
 --
@@ -23106,43 +23104,43 @@ COPY recurso (id, usuario_id, fecha_registro, fecha_modificado, modulo, controla
 28	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	solicitud_servicio	*	solicitudes/solicitud_servicio/*	Página para la gestión de Ordenes Medicas	1
 38	\N	2014-06-09 10:56:31.211246-04:30	2014-06-09 10:56:31.211246-04:30	solicitudes	solicitud_servicio	registro	solicitudes/solicitud_servicio/registro	Crear registro de solicitudes de servicio	1
 39	\N	2014-06-09 11:26:54.260015-04:30	2014-06-09 11:26:54.260015-04:30	solicitudes	solicitud_servicio	aprobacion	solicitudes/solicitud_servicio/aprobacion	Aprobacion de las Solicitudes de Servicio de Atención Primaria	1
-40	\N	2014-06-09 11:27:18.560757-04:30	2014-06-09 11:27:18.560757-04:30	solicitudes	solicitud_servicio	contabilizar	solicitudes/solicitud_servicio/contabilizar	Contabilizar las Solicitudes de Atención Primaria	1
 41	\N	2014-06-09 11:30:37.965083-04:30	2014-06-09 11:30:37.965083-04:30	solicitudes	solicitud_servicio	anular	solicitudes/solicitud_servicio/anular	Anular Solicitudes de Servicio Atención Primaria	1
 42	\N	2014-06-24 15:50:26.79701-04:30	2014-06-24 15:50:26.79701-04:30	proveedorsalud	servicio	*	proveedorsalud/servicio/*	Modulo para el registro de servicios profesionales	1
 43	\N	2014-06-24 23:50:31.046028-04:30	2014-06-24 23:50:31.046028-04:30	config	tiposolicitud	*	config/tiposolicitud/*	Gestionar los tipos de solicitudes dentro del sistema	1
 44	\N	2014-07-30 09:29:21.417534-04:30	2014-07-30 09:29:21.417534-04:30	solicitudes	solicitud_medicina	registro	solicitudes/solicitud_medicina/registro	Crear registro de solicitudes de medicina	1
 45	\N	2014-07-30 09:29:37.643509-04:30	2014-07-30 09:29:37.643509-04:30	solicitudes	solicitud_medicina	aprobacion	solicitudes/solicitud_medicina/aprobacion	Aprobacion de las Solicitudes de medicina	1
-46	\N	2014-07-30 09:30:27.955985-04:30	2014-07-30 09:30:27.955985-04:30	solicitudes	solicitud_medicina	contabilizar	solicitudes/solicitud_medicina/contabilizar	Contabilizar las Solicitudes de medicina	1
 47	\N	2014-07-30 09:30:55.82575-04:30	2014-07-30 09:30:55.82575-04:30	solicitudes	solicitud_medicina	anular	solicitudes/solicitud_medicina/anular	Anular Solicitudes de medicina	1
 48	\N	2014-07-30 14:37:24.664168-04:30	2014-07-30 14:37:24.664168-04:30	solicitudes	solicitud_odontologica	registro	solicitudes/solicitud_odontologica/registro	Crear registro de solicitudes odontologicas	1
 49	\N	2014-07-30 14:38:27.461241-04:30	2014-07-30 14:38:27.461241-04:30	solicitudes	solicitud_odontologica	aprobacion	solicitudes/solicitud_odontologica/aprobacion	Aprobacion de las Solicitudes odontologicas	1
 27	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	solicitud_medicina	*	solicitudes/solicitud_medicina/*	Página para la gestión de solicitudes de medicina	1
 29	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	solicitud_odontologica	*	solicitudes/solicitud_odontologica/*	Página para la gestión de Solicitudes Odontologicas	1
-50	\N	2014-07-30 14:40:58.865859-04:30	2014-07-30 14:40:58.865859-04:30	solicitudes	solicitud_odontologica	contabilizar	solicitudes/solicitud_odontologica/contabilizar	Contabilizar las Solicitudes odontologicas	1
 51	\N	2014-07-30 14:41:30.926049-04:30	2014-07-30 14:41:30.926049-04:30	solicitudes	solicitud_odontologica	anular	solicitudes/solicitud_odontologica/anular	Anular Solicitudes odontologicas	1
 52	\N	2014-07-30 14:44:57.241013-04:30	2014-07-30 14:44:57.241013-04:30	solicitudes	solicitud_examen	registro	solicitudes/solicitud_examen/registro	Crear registro de solicitudes de Examenes Medicos y de Laboratorio	1
 53	\N	2014-07-30 14:45:13.204799-04:30	2014-07-30 14:45:13.204799-04:30	solicitudes	solicitud_examen	aprobacion	solicitudes/solicitud_examen/aprobacion	Aprobar registro de solicitudes de Examenes Medicos y de Laboratorio	1
 32	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	solicitud_funeraria	*	solicitudes/solicitud_funeraria/*	Página para la gestión de Funeraria	1
 30	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	solicitud_examen	*	solicitudes/solicitud_examen/*	Página para la gestión de Examenes Medicos	1
-54	\N	2014-07-30 14:45:33.497835-04:30	2014-07-30 14:45:33.497835-04:30	solicitudes	solicitud_examen	contabilizar	solicitudes/solicitud_examen/contabilizar	Contabilizar registro de solicitudes de Examenes Medicos y de Laboratorio	1
+46	\N	2014-07-30 09:30:27.955985-04:30	2014-07-30 09:30:27.955985-04:30	solicitudes	solicitud_medicina	aprobadas	solicitudes/solicitud_medicina/contabilizar	Contabilizar las Solicitudes de medicina	1
+54	\N	2014-07-30 14:45:33.497835-04:30	2014-07-30 14:45:33.497835-04:30	solicitudes	solicitud_examen	aprobadas	solicitudes/solicitud_examen/contabilizar	Contabilizar registro de solicitudes de Examenes Medicos y de Laboratorio	1
+40	\N	2014-06-09 11:27:18.560757-04:30	2014-06-09 11:27:18.560757-04:30	solicitudes	solicitud_servicio	aprobadas	solicitudes/solicitud_servicio/contabilizar	Contabilizar las Solicitudes de Atención Primaria	1
 55	\N	2014-07-30 14:47:03.996344-04:30	2014-07-30 14:47:03.996344-04:30	solicitudes	solicitud_examen	anular	solicitudes/solicitud_examen/anular	Anular registro de solicitudes de Examenes Medicos y de Laboratorio	1
 56	\N	2014-07-30 14:51:48.968255-04:30	2014-07-30 14:51:48.968255-04:30	solicitudes	solicitud_reembolso	registro	solicitudes/solicitud_reembolso/registro	Crear registro de solicitudes de reembolso	1
 57	\N	2014-07-30 14:52:53.720865-04:30	2014-07-30 14:52:53.720865-04:30	solicitudes	solicitud_reembolso	aprobacion	solicitudes/solicitud_reembolso/aprobacion	Aprobar registro de solicitudes de reembolso	1
-58	\N	2014-07-30 14:53:12.72641-04:30	2014-07-30 14:53:12.72641-04:30	solicitudes	solicitud_reembolso	contabilizar	solicitudes/solicitud_reembolso/contabilizar	contabilizar registro de solicitudes de reembolso	1
 59	\N	2014-07-30 14:53:44.635347-04:30	2014-07-30 14:53:44.635347-04:30	solicitudes	solicitud_reembolso	anular	solicitudes/solicitud_reembolso/anular	Anular registro de solicitudes de reembolso	1
 60	\N	2014-07-30 14:56:54.45487-04:30	2014-07-30 14:56:54.45487-04:30	solicitudes	solicitud_carta	registro	solicitudes/solicitud_carta/registro	Crear registro de solicitudes de Carta Aval	1
 61	\N	2014-07-30 14:57:18.873272-04:30	2014-07-30 14:57:18.873272-04:30	solicitudes	solicitud_carta	aprobacion	solicitudes/solicitud_carta/aprobacion	Aprobacion de registro de solicitudes de Carta Aval	1
-62	\N	2014-07-30 14:57:37.619569-04:30	2014-07-30 14:57:37.619569-04:30	solicitudes	solicitud_carta	contabilizar	solicitudes/solicitud_carta/contabilizar	contabilizar registro de solicitudes de Carta Aval	1
 63	\N	2014-07-30 14:57:57.378824-04:30	2014-07-30 14:57:57.378824-04:30	solicitudes	solicitud_carta	anular	solicitudes/solicitud_carta/anular	Anular registro de solicitudes de Carta Aval	1
 64	\N	2014-07-30 14:59:44.870946-04:30	2014-07-30 14:59:44.870946-04:30	solicitudes	solicitud_funeraria	registro	solicitudes/solicitud_funeraria/registro	Crear registro de solicitudes de Funeraria	1
 65	\N	2014-07-30 15:00:00.870462-04:30	2014-07-30 15:00:00.870462-04:30	solicitudes	solicitud_funeraria	aprobacion	solicitudes/solicitud_funeraria/aprobacion	Aprobar registro de solicitudes de Funeraria	1
-66	\N	2014-07-30 15:00:20.714269-04:30	2014-07-30 15:00:20.714269-04:30	solicitudes	solicitud_funeraria	contabilizar	solicitudes/solicitud_funeraria/contabilizar	Contabilizar registro de solicitudes de Funeraria	1
 67	\N	2014-07-30 15:00:38.990127-04:30	2014-07-30 15:00:38.990127-04:30	solicitudes	solicitud_funeraria	anular	solicitudes/solicitud_funeraria/anular	Anular registro de solicitudes de Funeraria	1
 31	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	solicitud_reembolso	*	solicitudes/solicitud_reembolso/*	Página para la gestión de Ordenes Medicas	1
 68	\N	2014-07-30 19:28:17.953379-04:30	2014-07-30 19:28:17.953379-04:30	solicitudes	solicitud_carta	*	solicitudes/solicitud_carta/*	Pagina para gestionar cartas avales	1
 69	\N	2014-08-20 14:29:28.051792-04:30	2014-08-20 14:29:28.051792-04:30	sistema	usuario_clave	cambiar_clave	sistema/usuario_clave/cambiar_clave	Modulo para la gestion de cambio de clave	1
 71	\N	2014-09-06 15:50:53.459536-04:30	2014-09-06 15:50:53.459536-04:30	solicitudes	solicitud_servicio	facturacion	solicitudes/solicitud_servicio/facturacion	CArgar las facturas con sus detalles al siniestro respectivo	1
 70	\N	2014-09-06 14:39:26.552626-04:30	2014-09-06 14:39:26.552626-04:30	solicitudes	solicitud_servicio	pagos	solicitudes/solicitud_servicio/pagos	Pagar las facturas correspondientes a las facturas	1
+50	\N	2014-07-30 14:40:58.865859-04:30	2014-07-30 14:40:58.865859-04:30	solicitudes	solicitud_odontologica	aprobadas	solicitudes/solicitud_odontologica/contabilizar	Contabilizar las Solicitudes odontologicas	1
+58	\N	2014-07-30 14:53:12.72641-04:30	2014-07-30 14:53:12.72641-04:30	solicitudes	solicitud_reembolso	aprobadas	solicitudes/solicitud_reembolso/contabilizar	contabilizar registro de solicitudes de reembolso	1
+62	\N	2014-07-30 14:57:37.619569-04:30	2014-07-30 14:57:37.619569-04:30	solicitudes	solicitud_carta	aprobadas	solicitudes/solicitud_carta/contabilizar	contabilizar registro de solicitudes de Carta Aval	1
+66	\N	2014-07-30 15:00:20.714269-04:30	2014-07-30 15:00:20.714269-04:30	solicitudes	solicitud_funeraria	aprobadas	solicitudes/solicitud_funeraria/contabilizar	Contabilizar registro de solicitudes de Funeraria	1
 \.
 
 
@@ -23343,10 +23341,6 @@ SELECT pg_catalog.setval('servicio_tiposolicitud_id_seq', 1, false);
 --
 
 COPY solicitud_servicio (id, usuario_id, fecha_registro, fecha_modificado, estado_solicitud, tiposolicitud_id, fecha_solicitud, codigo_solicitud, titular_id, beneficiario_id, beneficiario_tipo, proveedor_id, medico_id, fecha_vencimiento, servicio_id, motivo, motivo_anulacion, observacion, motivo_rechazo, diagnostico, multifactura) FROM stdin;
-7	\N	2014-09-02 21:13:00.714053-04:30	2014-09-02 21:13:00.714053-04:30	S	1	1900-01-25	SASCM-0001	1	29	1	5	1	2014-09-24	14	DOLOR EN LA NALGAA	\N	cemmel	rancia	NALGA DAÑADA DEFECTUOSA	\N
-19	\N	2014-09-03 09:39:35.149734-04:30	2014-09-03 09:39:35.149734-04:30	S	1	2014-09-03	SASCM-0003	1	29	1	1	1	2014-09-18	1	\N	\N	ESCRIBIENDO UNA OBSERVACION LO SUFICIENTEMENTE GRANDE PARA VER COMPORTAMIENTO	\N	\N	\N
-8	\N	2014-09-02 21:27:31.841705-04:30	2014-09-02 21:27:31.841705-04:30	A	1	2014-09-02	SASCM-0002	1	29	1	5	1	2014-09-02	3	no fue la mejor cpcio tiene que cmbia rl lkjhy jdk djme pal akdfj wqodcuyg hfsd fasd jksdftgdn kiNBSDY  OIY   	\N	camb ianda para poder ahora si aprobar	no fue la mejor cpcio tiene que cmbia rl lkjhy jdk djme pal akdfj wqodcuyg hfsd fasd jksdftgdn kiNBSDY  OIY   	\N	\N
-27	\N	2014-09-26 18:42:33.833452-04:30	2014-09-26 18:42:33.833452-04:30	R	1	2014-09-26	SASCM-0004	1	29	1	1	1	2014-09-26	1	\N	\N	\N	\N	\N	\N
 \.
 
 
@@ -23354,7 +23348,7 @@ COPY solicitud_servicio (id, usuario_id, fecha_registro, fecha_modificado, estad
 -- Name: solicitud_servicio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('solicitud_servicio_id_seq', 27, true);
+SELECT pg_catalog.setval('solicitud_servicio_id_seq', 1, true);
 
 
 --
@@ -23362,10 +23356,6 @@ SELECT pg_catalog.setval('solicitud_servicio_id_seq', 27, true);
 --
 
 COPY solicitud_servicio_patologia (id, usuario_id, fecha_registro, fecha_modificado, patologia_id, solicitud_servicio_id, motivo, observacion) FROM stdin;
-1	\N	2014-09-09 14:31:00.343019-04:30	2014-09-09 14:31:00.343019-04:30	18367	19	\N	\N
-2	\N	2014-09-09 14:31:18.064334-04:30	2014-09-09 14:31:18.064334-04:30	18365	19	\N	\N
-17	\N	2014-09-20 22:12:04.099443-04:30	2014-09-20 22:12:04.099443-04:30	28108	7	\N	\N
-18	\N	2014-09-20 22:21:38.214754-04:30	2014-09-20 22:21:38.214754-04:30	27643	7	\N	\N
 \.
 
 
@@ -23401,7 +23391,7 @@ SELECT pg_catalog.setval('solicitud_servicio_patologia_factura_pagos_id_seq', 1,
 -- Name: solicitud_servicio_patologia_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('solicitud_servicio_patologia_id_seq', 21, true);
+SELECT pg_catalog.setval('solicitud_servicio_patologia_id_seq', 22, true);
 
 
 --
@@ -23632,6 +23622,7 @@ COPY titular (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1,
 146	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	16040045	MARTIN	RAMON	PARRA	ARANGUREN	V	M	1980-05-25	1	240	69	229	732	BARRIO TIERRA FLOJA CARRERA 5 CON CALLE 2	240	69	229	732	S	04145619554		UPS.PIRITU2@ARROZDELALBA.GOB.VE	N/A	1	2009-12-01	86	43	16	N/A	1	\N	\N	\N	\N	\N
 147	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	20642330	CARLOS	ANTONIO	ARANGUREN	ALVARADO	V	M	1989-09-27	1	240	69	229	732	BARRIO LIMONCITO CALLE 1	240	69	229	732	S	04245383204	02568083241	MONCHI_GRATELORACHO@HOTMAIL.COM	N/A	1	2009-05-04	86	43	16	N/A	1	\N	\N	\N	\N	\N
 149	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	14981118	ANGEL	ANTONIO	PEREZ		V	M	1980-04-21	1	240	69	229	732	BARRIO BRISAS DE ELENA, CALLE 8 AL FINAL	240	69	229	732	S	04269141417		ELKUKIPEREZ@HOTMAIL.COM	N/A	1	2012-11-07	86	43	16		1	\N	\N	\N	\N	\N
+151	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	16416882	ABINADAL	ABELIS	GUEVARA	TORREALBA	V	M	1980-09-03	1	240	69	229	732	BARRIO EL LIBERTADOR CALLE 3.	240	69	229	732	c	04264944316		UPS.PIRITU2@ARROZDELALBA.GOB.VE	N/A	1	2009-12-01	86	43	16		1	\N	\N	\N	\N	\N
 148	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	13556353	PEDRO	JOSE	SANCHEZ	ZAVARCE	V	M	1978-03-18	1	240	69	229	732	URB MIRAFLORES CALLE 1 #46	240	69	229	732	S	04265510152	\N	PJSZAVARCE@GMAIL.COM	\N	1	2012-01-03	116	6	16	N/A	1	\N	\N	\N	\N	\N
 154	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	17796642	MILAGROS	EVANGELISTA	GALLEGOS	BONILLA	V	F	1985-05-07	1	240	69	229	732	URB LA CONCORDIA AV PRINCIPAL #80	240	69	229	732	S	04145548299	02554146560	MGMILAGROS.13@GMAIL.COM	\N	1	2010-02-22	38	9	16	N/A	1	\N	\N	\N	\N	\N
 152	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	21561653	MARYELIS	DE LOS ANGELES	ANGULO	CASTILLO	V	F	1992-05-05	1	240	69	229	732	BARRIO LA MARINERA CALLE 2	240	69	229	732	S	04169207846	02563950313	MARYELISANGULO@GMAIL.COM	\N	1	2011-10-01	114	16	16	N/A	1	\N	\N	\N	\N	\N
@@ -23744,6 +23735,7 @@ COPY titular (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1,
 271	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	10639122	JOSE	GREGORIO	MENDOZA	MUÑOZ	V	M	1966-04-19	1	240	69	229	732	CALLE 5, CASA NUM 127, BARRIO LA MARINERA PIRITU ESTADO PORTUGUESA	240	69	229	732	S	04162193270	04269117153		N/A	1	2014-05-23	86	43	16	N/A	1	\N	\N	\N	\N	\N
 273	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	11078582	JUANA	MARIA	CASTAÑEDA	DE UNDA	V	F	1970-10-29	1	240	69	229	732	UR.FUNDACION MENDOZA AVENIDA 02, ESQUINA CALLE 06, NRO H78	240	69	229	732	C	04145579797	02556236302	JUANACDEUNDA29@GMAIL.COM	N/A	1	2014-07-01	86	43	16	N/A	1	\N	\N	\N	\N	\N
 4	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	12090662	ROSMARY	\N	MENDEZ	DE BONILLA	V	F	1974-12-09	1	240	69	229	732	URB. MOLINOS I CALLE 5 #29	240	69	229	732	C	04268080521	02556228293	DELVMENDEZ@HOTMAIL.COM	\N	1	2011-06-16	86	43	16	N/A	1	\N	\N	\N	\N	\N
+1	1	2014-08-09 11:49:07.877445-04:30	2014-08-09 11:49:07.877445-04:30	20643647	ALEXIS	JOSE	BORGES	TUA	V	M	2014-04-03	1	240	69	229	732	urb 12 de octubre calle 9 entre av 6 y 7 	240	69	229	732	S	04167012111	\N	TUAALEXIS@GMAIL.COM	A-	1	2013-01-29	86	43	16	N/A	1	\N	\N	\N	\N	\N
 2	\N	2014-08-09 17:38:17.859252-04:30	2014-08-09 17:38:17.859252-04:30	16753367	JAVIER	ENRIQUE	LEON	\N	V	M	1984-12-09	1	240	69	229	732	baraure diagonal al inces	240	69	229	732	S	04162546908	\N	JEL1284@GMAIL.COM	A-	1	2008-10-01	86	43	16	N/A	1	\N	\N	\N	\N	\N
 276	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	07549548	AMADO	ANTONIO	ARIAS	MEDINA	V	M	1964-02-04	4	240	69	229	732	BARRIO TIERRA FLOJA 1, CALLE 06 ENTRE CARRERAS 5 Y 6	240	69	229	732	C	04245828916	\N	\N	\N	1	2014-05-23	86	43	16	N/A	1	\N	\N	\N	\N	\N
 180	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	20809291	SERGIO	ALEJANDRO	VALERA	\N	V	M	1990-03-18	1	240	69	229	732	URB BETTY HERRERA	240	69	229	732	S	04149553185	\N	SERGIOALEJANDROVALERA90@GMAIL.COM	\N	2	2011-07-01	1	16	20	\N	1	\N	\N	\N	\N	\N
@@ -23802,8 +23794,8 @@ COPY usuario (id, usuario_id, fecha_registro, fecha_modificado, fecha_desactivac
 --
 
 COPY usuario_clave (id, usuario_id, fecha_registro, fecha_modificado, password, fecha_inicio, fecha_fin) FROM stdin;
-2	2	2014-08-24 19:06:32.517357-04:30	2014-08-24 19:06:32.517357-04:30	d93a5def7511da3d0f2d171d9c344e91	2014-08-01	2014-08-20
-1	1	2014-08-09 11:51:21.701566-04:30	2014-08-09 11:51:21.701566-04:30	d93a5def7511da3d0f2d171d9c344e91	2014-08-01	2014-08-20
+1	2	2014-08-24 19:06:32.517357-04:30	2014-08-24 19:06:32.517357-04:30	d93a5def7511da3d0f2d171d9c344e91	2014-08-01	2014-08-20
+2	1	2014-08-09 11:51:21.701566-04:30	2014-08-09 11:51:21.701566-04:30	d93a5def7511da3d0f2d171d9c344e91	2014-08-01	2014-08-20
 3	1	2014-08-24 19:08:40.683729-04:30	2014-08-24 19:08:40.683729-04:30	d93a5def7511da3d0f2d171d9c344e91	2014-08-21	2014-12-02
 27	1	2014-09-25 18:41:49.226228-04:30	2014-09-25 18:41:49.226228-04:30	20eabe5d64b0e216796e834f52d61fd0b70332fc	2014-09-25	2014-09-25
 28	2	2014-09-27 12:38:55.894302-04:30	2014-09-27 12:38:55.894302-04:30	cd5ea73cd58f827fa78eef7197b8ee606c99b2e6	2014-09-27	2014-09-27
