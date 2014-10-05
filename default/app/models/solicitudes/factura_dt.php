@@ -82,6 +82,7 @@ class FacturaDt extends ActiveRecord {
             $obj->cantidad = $cantidad[$j];
             $obj->monto = $monto[$j];
             $obj->exento = $exento[$j];
+            $obj->factura_id = $idfactura;
             if($obj->exists("descripcion='$obj->descripcion' AND cantidad='$obj->cantidad' AND monto='$obj->monto'")){
                     continue;
                 }
