@@ -5388,6 +5388,7 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 1809	86817	arrozalba	2014-09-19 13:20:21.933639-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{437,127.0.0.1,NULL,1,1,NULL,"2014-09-19 13:20:21.933639-04:30","2014-09-19 13:20:21.933639-04:30",NULL,NULL}
 1810	86817	arrozalba	2014-09-20 20:36:16.199057-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{438,127.0.0.1,NULL,1,1,NULL,"2014-09-20 20:36:16.199057-04:30","2014-09-20 20:36:16.199057-04:30",NULL,NULL}
 1811	87075	arrozalba	2014-09-20 21:35:10.974776-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET estado_solicitud = 'S',tiposolicitud_id = '1',fecha_solicitud = '1900-01-25',codigo_solicitud = 'SASCM-0001',titular_id = '1',beneficiario_id = '29',proveedor_id = '5',medico_id = '1',fecha_vencimiento = '2014-09-24',servicio_id = '14',observacion = 'cemmel',motivo_rechazo = 'rancia' WHERE  id = '7'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
+2036	92649	arrozalba	2014-10-05 16:16:34.993051-04:30	127.0.0.1	INSERT	INSERT INTO factura_dt (usuario_id,fecha_registro,fecha_modificado,descripcion,cantidad,monto,exento,factura_id) VALUES (NULL,DEFAULT,DEFAULT,'articulo 1','1','25.5','on',NULL)	factura_dt	\N	\N	{3,25.50,t,1,NULL,NULL,"articulo 1","2014-10-05 16:16:34.993051-04:30","2014-10-05 16:16:34.993051-04:30"}
 1812	87075	postgres	2014-09-20 21:37:28.241447-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET estado_solicitud='A'::text WHERE id = '7'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1813	87075	arrozalba	2014-09-20 21:39:49.838909-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET estado_solicitud = 'S',tiposolicitud_id = '1',fecha_solicitud = '1900-01-25',codigo_solicitud = 'SASCM-0001',titular_id = '1',beneficiario_id = '29',proveedor_id = '5',medico_id = '1',fecha_vencimiento = '2014-09-24',servicio_id = '14',observacion = 'cemmel',motivo_rechazo = 'rancia' WHERE  id = '7'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1814	87075	postgres	2014-09-20 21:40:11.46001-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET estado_solicitud='A'::text WHERE id = '7'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
@@ -5608,11 +5609,23 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 2033	92643	postgres	2014-10-05 15:26:40.261665-04:30	127.0.0.1	DELETE	DELETE FROM public.factura WHERE id = '2'::integer	factura	{id,iva,monto,usuario_id,nro_control,nro_factura,observacion,fecha_factura,fecha_registro,fecha_modificado}	{2,NULL,NULL,NULL,1,1,NULL,2014-10-05,"2014-10-05 14:09:00.474358-04:30","2014-10-05 14:09:00.474358-04:30"}	\N
 2034	92516	arrozalba	2014-10-05 16:15:49.805555-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{507,127.0.0.1,NULL,1,1,NULL,"2014-10-05 16:15:49.805555-04:30","2014-10-05 16:15:49.805555-04:30",NULL,NULL}
 2035	92643	arrozalba	2014-10-05 16:16:34.993051-04:30	127.0.0.1	INSERT	INSERT INTO factura (usuario_id,fecha_registro,fecha_modificado,fecha_factura,nro_control,nro_factura,observacion,monto,iva) VALUES (NULL,DEFAULT,DEFAULT,'2014-10-05','2','2','cargando multiples facturas a ver que lo que ','115.50',NULL)	factura	\N	\N	{3,NULL,115.5,NULL,2,2,"cargando multiples facturas a ver que lo que ",2014-10-05,"2014-10-05 16:16:34.993051-04:30","2014-10-05 16:16:34.993051-04:30"}
-2036	92649	arrozalba	2014-10-05 16:16:34.993051-04:30	127.0.0.1	INSERT	INSERT INTO factura_dt (usuario_id,fecha_registro,fecha_modificado,descripcion,cantidad,monto,exento,factura_id) VALUES (NULL,DEFAULT,DEFAULT,'articulo 1','1','25.5','on',NULL)	factura_dt	\N	\N	{3,25.50,t,1,NULL,NULL,"articulo 1","2014-10-05 16:16:34.993051-04:30","2014-10-05 16:16:34.993051-04:30"}
 2037	92649	arrozalba	2014-10-05 16:16:34.993051-04:30	127.0.0.1	INSERT	INSERT INTO factura_dt (usuario_id,fecha_registro,fecha_modificado,descripcion,cantidad,monto,exento,factura_id) VALUES (NULL,'2014-10-05 16:16:34.993051-04:30','2014-10-05 16:16:34.993051-04:30','arituclo 2','3','30',NULL,NULL)	factura_dt	\N	\N	{4,30.00,NULL,3,NULL,NULL,"arituclo 2","2014-10-05 16:16:34.993051-04:30","2014-10-05 16:16:34.993051-04:30"}
 2038	92643	postgres	2014-10-05 16:29:25.400244-04:30	127.0.0.1	DELETE	DELETE FROM public.factura WHERE id = '3'::integer	factura	{id,iva,monto,usuario_id,nro_control,nro_factura,observacion,fecha_factura,fecha_registro,fecha_modificado}	{3,NULL,115.5,NULL,2,2,"cargando multiples facturas a ver que lo que ",2014-10-05,"2014-10-05 16:16:34.993051-04:30","2014-10-05 16:16:34.993051-04:30"}	\N
 2039	92649	postgres	2014-10-05 16:29:41.99801-04:30	127.0.0.1	DELETE	DELETE FROM public.factura_dt WHERE id = '4'::integer	factura_dt	{id,monto,exento,cantidad,factura_id,usuario_id,descripcion,fecha_registro,fecha_modificado}	{4,30.00,NULL,3,NULL,NULL,"arituclo 2","2014-10-05 16:16:34.993051-04:30","2014-10-05 16:16:34.993051-04:30"}	\N
 2040	92649	postgres	2014-10-05 16:29:42.011091-04:30	127.0.0.1	DELETE	DELETE FROM public.factura_dt WHERE id = '3'::integer	factura_dt	{id,monto,exento,cantidad,factura_id,usuario_id,descripcion,fecha_registro,fecha_modificado}	{3,25.50,t,1,NULL,NULL,"articulo 1","2014-10-05 16:16:34.993051-04:30","2014-10-05 16:16:34.993051-04:30"}	\N
+2045	487860	arrozalba	2014-10-05 18:24:10.25479-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{508,127.0.0.1,NULL,1,1,NULL,"2014-10-05 18:24:10.25479-04:30","2014-10-05 18:24:10.25479-04:30",NULL,NULL}
+2046	488018	jelitox	2014-10-05 18:43:56.621481-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='ProfesiÓn'::text WHERE id = '19'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{19,config/profesion/listar,Profesion,NULL,1,15,803,18,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{19,config/profesion/listar,ProfesiÓn,NULL,1,15,803,18,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2047	488018	jelitox	2014-10-05 18:44:02.286244-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Profesión'::text WHERE id = '19'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{19,config/profesion/listar,ProfesiÓn,NULL,1,15,803,18,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{19,config/profesion/listar,Profesión,NULL,1,15,803,18,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2048	488018	jelitox	2014-10-05 18:44:18.028685-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Patología'::text WHERE id = '24'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{24,config/patologia/listar,Patologia,NULL,1,15,808,23,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{24,config/patologia/listar,Patología,NULL,1,15,808,23,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2049	488018	jelitox	2014-10-05 18:44:47.960841-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Solicitudes Odontológicas'::text WHERE id = '32'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{32,#,"Solicitudes Odontologicas",icon-th,1,29,221,29,NULL,1,"2014-03-16 13:27:52.745733-04:30","2014-03-16 13:27:52.745733-04:30"}	{32,#,"Solicitudes Odontológicas",icon-th,1,29,221,29,NULL,1,"2014-03-16 13:27:52.745733-04:30","2014-03-16 13:27:52.745733-04:30"}
+2050	488018	jelitox	2014-10-05 18:45:00.288704-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Médico'::text WHERE id = '39'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{39,proveedorsalud/medico/listar,Medico,icon-user,1,36,603,35,NULL,1,"2014-04-22 10:09:32.70358-04:30","2014-04-22 10:09:32.70358-04:30"}	{39,proveedorsalud/medico/listar,Médico,icon-user,1,36,603,35,NULL,1,"2014-04-22 10:09:32.70358-04:30","2014-04-22 10:09:32.70358-04:30"}
+2051	488018	jelitox	2014-10-05 18:45:10.600966-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Aprobación'::text WHERE id = '48'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{48,solicitudes/solicitud_medicina/aprobacion,Aprobacion,icon-ok-sign,1,30,203,45,NULL,1,"2014-07-30 14:26:23.724504-04:30","2014-07-30 14:26:23.724504-04:30"}	{48,solicitudes/solicitud_medicina/aprobacion,Aprobación,icon-ok-sign,1,30,203,45,NULL,1,"2014-07-30 14:26:23.724504-04:30","2014-07-30 14:26:23.724504-04:30"}
+2052	488018	jelitox	2014-10-05 18:45:17.060694-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Aprobación'::text WHERE id = '52'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{52,solicitudes/solicitud_odontologica/aprobacion,Aprobacion,icon-ok-sign,1,32,223,49,NULL,1,"2014-07-30 15:19:32.343134-04:30","2014-07-30 15:19:32.343134-04:30"}	{52,solicitudes/solicitud_odontologica/aprobacion,Aprobación,icon-ok-sign,1,32,223,49,NULL,1,"2014-07-30 15:19:32.343134-04:30","2014-07-30 15:19:32.343134-04:30"}
+2053	488018	jelitox	2014-10-05 18:45:25.164643-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Aprobación'::text WHERE id = '56'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{56,solicitudes/solicitud_examen/aprobacion,Aprobacion,icon-ok-sign,1,33,233,53,NULL,1,"2014-07-30 15:55:38.334131-04:30","2014-07-30 15:55:38.334131-04:30"}	{56,solicitudes/solicitud_examen/aprobacion,Aprobación,icon-ok-sign,1,33,233,53,NULL,1,"2014-07-30 15:55:38.334131-04:30","2014-07-30 15:55:38.334131-04:30"}
+2054	488018	jelitox	2014-10-05 18:45:31.69311-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Aprobación'::text WHERE id = '60'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{60,solicitudes/solicitud_reembolso/aprobacion,Aprobacion,icon-ok-sign,1,34,243,57,NULL,1,"2014-07-30 16:03:33.102309-04:30","2014-07-30 16:03:33.102309-04:30"}	{60,solicitudes/solicitud_reembolso/aprobacion,Aprobación,icon-ok-sign,1,34,243,57,NULL,1,"2014-07-30 16:03:33.102309-04:30","2014-07-30 16:03:33.102309-04:30"}
+2055	488018	jelitox	2014-10-05 18:45:41.557256-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Aprobación'::text WHERE id = '64'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{64,solicitudes/solicitud_funeraria/aprobacion,Aprobacion,icon-ok-sign,1,35,253,65,NULL,1,"2014-07-30 16:07:03.414714-04:30","2014-07-30 16:07:03.414714-04:30"}	{64,solicitudes/solicitud_funeraria/aprobacion,Aprobación,icon-ok-sign,1,35,253,65,NULL,1,"2014-07-30 16:07:03.414714-04:30","2014-07-30 16:07:03.414714-04:30"}
+2056	488018	jelitox	2014-10-05 18:45:47.544867-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Aprobación'::text WHERE id = '69'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{69,solicitudes/solicitud_carta/aprobacion,Aprobacion,icon-ok-sign,1,67,263,61,NULL,1,"2014-07-30 20:26:05.938004-04:30","2014-07-30 20:26:05.938004-04:30"}	{69,solicitudes/solicitud_carta/aprobacion,Aprobación,icon-ok-sign,1,67,263,61,NULL,1,"2014-07-30 20:26:05.938004-04:30","2014-07-30 20:26:05.938004-04:30"}
+2057	488018	jelitox	2014-10-05 18:46:04.96835-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Contraseñas'::text WHERE id = '72'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{72,sistema/usuario_clave/cambiar_clave,"cambio clave",NULL,1,3,912,69,NULL,1,"2014-08-20 14:31:37.537946-04:30","2014-08-20 14:31:37.537946-04:30"}	{72,sistema/usuario_clave/cambiar_clave,Contraseñas,NULL,1,3,912,69,NULL,1,"2014-08-20 14:31:37.537946-04:30","2014-08-20 14:31:37.537946-04:30"}
 \.
 
 
@@ -5620,7 +5633,7 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 -- Name: audit_log_log_id_seq; Type: SEQUENCE SET; Schema: audit_log; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('audit_log_log_id_seq', 2044, true);
+SELECT pg_catalog.setval('audit_log_log_id_seq', 2057, true);
 
 
 SET search_path = public, pg_catalog;
@@ -5893,6 +5906,7 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 505	1	2014-10-05 14:03:52.507993-04:30	2014-10-05 14:03:52.507993-04:30	1	\N	\N	\N	\N	127.0.0.1
 506	1	2014-10-05 15:23:23.286464-04:30	2014-10-05 15:23:23.286464-04:30	1	\N	\N	\N	\N	127.0.0.1
 507	1	2014-10-05 16:15:49.805555-04:30	2014-10-05 16:15:49.805555-04:30	1	\N	\N	\N	\N	127.0.0.1
+508	1	2014-10-05 18:24:10.25479-04:30	2014-10-05 18:24:10.25479-04:30	1	\N	\N	\N	\N	127.0.0.1
 \.
 
 
@@ -5900,7 +5914,7 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 -- Name: acceso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('acceso_id_seq', 507, true);
+SELECT pg_catalog.setval('acceso_id_seq', 508, true);
 
 
 --
@@ -6526,22 +6540,18 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 13	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	13	Visor de sucesos	sistema/sucesos/	910	icon-filter	1	1
 14	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	14	Sistema	sistema/configuracion/	911	icon-wrench	1	1
 16	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	15	Empresa	config/empresa/	876	icon-briefcase	1	1
-19	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	18	Profesion	config/profesion/listar	803	\N	1	1
 20	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	19	Cargo	config/cargo/listar	804	\N	1	1
 21	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	20	Cobertura	config/cobertura/listar	805	\N	1	1
 22	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	21	Departamento	config/departamento/listar	806	\N	1	1
 23	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	22	Discapacidad	config/discapacidad/listar	807	\N	1	1
-24	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	23	Patologia	config/patologia/listar	808	\N	1	1
 25	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	24	Recaudos	config/recaudo/listar	809	\N	1	1
 26	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	28	25	Titular	beneficiarios/titular/listar	101	icon-user	1	1
 45	\N	2014-06-24 15:51:37.984221-04:30	2014-06-24 15:51:37.984221-04:30	36	42	Servicio	proveedorsalud/servicio/	605	icon-th	1	1
 46	\N	2014-06-24 23:52:34.310536-04:30	2014-06-24 23:52:34.310536-04:30	15	43	Tipo de Solicitudes	config/tiposolicitud/listar	810	icon-th	1	1
 17	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	16	Sucursales	config/sucursal/listar/	802	icon-sitemap	1	1
 47	\N	2014-07-30 14:25:46.578584-04:30	2014-07-30 14:25:46.578584-04:30	30	44	Registro	solicitudes/solicitud_medicina/registro	202	icon-plus-sign	1	1
-48	\N	2014-07-30 14:26:23.724504-04:30	2014-07-30 14:26:23.724504-04:30	30	45	Aprobacion	solicitudes/solicitud_medicina/aprobacion	203	icon-ok-sign	1	1
 49	\N	2014-07-30 14:26:53.261228-04:30	2014-07-30 14:26:53.261228-04:30	30	46	Contabilizar	solicitudes/solicitud_medicina/contabilizar	204	icon-check	1	1
 31	\N	2014-03-16 13:26:21.282386-04:30	2014-03-16 13:26:21.282386-04:30	29	28	Atención Primaria	#	211	icon-th	1	1
-32	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	29	Solicitudes Odontologicas	#	221	icon-th	1	1
 33	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	30	Exámenes Médicos	#	231	icon-th	1	1
 34	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	31	Solicitudes de Reembolso	#	241	icon-th	1	1
 35	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	32	Funeraria	#	251	icon-th	1	1
@@ -6549,28 +6559,22 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 42	\N	2014-06-09 11:28:23.150623-04:30	2014-06-09 11:28:23.150623-04:30	31	39	Aprobación	solicitudes/solicitud_servicio/aprobacion	213	icon-ok-sign	1	1
 50	\N	2014-07-30 14:27:26.593054-04:30	2014-07-30 14:27:26.593054-04:30	30	47	Anular	solicitudes/solicitud_medicina/anular	205	icon-remove-sign	1	1
 51	\N	2014-07-30 15:14:45.308621-04:30	2014-07-30 15:14:45.308621-04:30	32	48	Registro	solicitudes/solicitud_odontologica/registro	222	icon-plus-sign	1	1
-52	\N	2014-07-30 15:19:32.343134-04:30	2014-07-30 15:19:32.343134-04:30	32	49	Aprobacion	solicitudes/solicitud_odontologica/aprobacion	223	icon-ok-sign	1	1
 53	\N	2014-07-30 15:31:18.854185-04:30	2014-07-30 15:31:18.854185-04:30	32	50	Contabilizar	solicitudes/solicitud_odontologica/contabilizar	224	icon-check	1	1
 54	\N	2014-07-30 15:34:10.258296-04:30	2014-07-30 15:34:10.258296-04:30	32	51	Anular	solicitudes/solicitud_odontologica/anular	225	icon-remove-sign	1	1
 55	\N	2014-07-30 15:55:09.056613-04:30	2014-07-30 15:55:09.056613-04:30	33	52	Registro	solicitudes/solicitud_examen/registro	232	icon-plus-sign	1	1
-56	\N	2014-07-30 15:55:38.334131-04:30	2014-07-30 15:55:38.334131-04:30	33	53	Aprobacion	solicitudes/solicitud_examen/aprobacion	233	icon-ok-sign	1	1
 57	\N	2014-07-30 15:56:20.014958-04:30	2014-07-30 15:56:20.014958-04:30	33	54	Contabilizar	solicitudes/solicitud_examen/contabilizar	234	icon-check	1	1
 58	\N	2014-07-30 15:56:51.212513-04:30	2014-07-30 15:56:51.212513-04:30	33	55	Anular	solicitudes/solicitud_examen/anular	235	icon-remove-sign	1	1
 59	\N	2014-07-30 16:02:17.372533-04:30	2014-07-30 16:02:17.372533-04:30	34	56	Registro	solicitudes/solicitud_reembolso/registro	242	icon-plus-sign	1	1
-60	\N	2014-07-30 16:03:33.102309-04:30	2014-07-30 16:03:33.102309-04:30	34	57	Aprobacion	solicitudes/solicitud_reembolso/aprobacion	243	icon-ok-sign	1	1
 61	\N	2014-07-30 16:04:13.959142-04:30	2014-07-30 16:04:13.959142-04:30	34	58	Contabilizar	solicitudes/solicitud_reembolso/contabilizar	244	icon-check	1	1
 62	\N	2014-07-30 16:05:13.790258-04:30	2014-07-30 16:05:13.790258-04:30	34	59	Anular	solicitudes/solicitud_reembolso/anular	245	icon-remove-sign	1	1
 63	\N	2014-07-30 16:06:13.758372-04:30	2014-07-30 16:06:13.758372-04:30	35	64	Registro	solicitudes/solicitud_funeraria/registro	252	icon-plus-sign	1	1
-64	\N	2014-07-30 16:07:03.414714-04:30	2014-07-30 16:07:03.414714-04:30	35	65	Aprobacion	solicitudes/solicitud_funeraria/aprobacion	253	icon-ok-sign	1	1
 65	\N	2014-07-30 16:10:05.371277-04:30	2014-07-30 16:10:05.371277-04:30	35	66	Contabilizar	solicitudes/solicitud_funeraria/contabilizar	254	icon-check	1	1
 66	\N	2014-07-30 16:13:09.462772-04:30	2014-07-30 16:13:09.462772-04:30	35	67	Anular	solicitudes/solicitud_funeraria/anular	255	icon-remove-sign	1	1
 2	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	1	2	Escritorio	dashboard/	11	icon-home	1	1
 68	\N	2014-07-30 20:07:05.413317-04:30	2014-07-30 20:07:05.413317-04:30	67	60	Registro	solicitudes/solicitud_carta/registro	262	icon-plus-sign	1	1
 67	\N	2014-07-30 19:32:00.487102-04:30	2014-07-30 19:32:00.487102-04:30	29	68	Carta Aval	#	261	icon-th	1	1
 44	\N	2014-06-09 11:31:13.991409-04:30	2014-06-09 11:31:13.991409-04:30	31	41	Anular	solicitudes/solicitud_servicio/anular	217	icon-remove-sign	1	1
-69	\N	2014-07-30 20:26:05.938004-04:30	2014-07-30 20:26:05.938004-04:30	67	61	Aprobacion	solicitudes/solicitud_carta/aprobacion	263	icon-ok-sign	1	1
 38	\N	2014-04-22 10:09:02.242857-04:30	2014-04-22 10:09:02.242857-04:30	36	36	Especialidad	proveedorsalud/especialidad/listar	601	icon-magic	1	1
-39	\N	2014-04-22 10:09:32.70358-04:30	2014-04-22 10:09:32.70358-04:30	36	35	Medico	proveedorsalud/medico/listar	603	icon-user	1	1
 40	\N	2014-04-22 14:52:02.983257-04:30	2014-04-22 14:52:02.983257-04:30	36	37	Medicinas	proveedorsalud/medicina/listar	604	icon-th	1	1
 29	\N	2014-03-16 13:23:40.74219-04:30	2014-03-16 13:23:40.74219-04:30	\N	\N	Solicitudes	solicitudes/solicitud_servicio/registro	200	icon-th	1	1
 28	\N	2014-03-16 12:46:04.752491-04:30	2014-03-16 12:46:04.752491-04:30	\N	\N	Titular	beneficiarios/titular/	100	icon-user	1	1
@@ -6579,14 +6583,24 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 15	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	\N	\N	Configuraciones	config/empresa/	800	icon-wrench	1	1
 1	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	\N	\N	Escritorio	dashboard/	10	icon-home	1	1
 70	\N	2014-07-30 20:27:20.039277-04:30	2014-07-30 20:27:20.039277-04:30	67	62	Contabilizar	solicitudes/solicitud_carta/contabilizar	264	icon-check	1	1
+24	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	23	Patología	config/patologia/listar	808	\N	1	1
+32	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	29	Solicitudes Odontológicas	#	221	icon-th	1	1
+39	\N	2014-04-22 10:09:32.70358-04:30	2014-04-22 10:09:32.70358-04:30	36	35	Médico	proveedorsalud/medico/listar	603	icon-user	1	1
+48	\N	2014-07-30 14:26:23.724504-04:30	2014-07-30 14:26:23.724504-04:30	30	45	Aprobación	solicitudes/solicitud_medicina/aprobacion	203	icon-ok-sign	1	1
+52	\N	2014-07-30 15:19:32.343134-04:30	2014-07-30 15:19:32.343134-04:30	32	49	Aprobación	solicitudes/solicitud_odontologica/aprobacion	223	icon-ok-sign	1	1
+56	\N	2014-07-30 15:55:38.334131-04:30	2014-07-30 15:55:38.334131-04:30	33	53	Aprobación	solicitudes/solicitud_examen/aprobacion	233	icon-ok-sign	1	1
+60	\N	2014-07-30 16:03:33.102309-04:30	2014-07-30 16:03:33.102309-04:30	34	57	Aprobación	solicitudes/solicitud_reembolso/aprobacion	243	icon-ok-sign	1	1
+64	\N	2014-07-30 16:07:03.414714-04:30	2014-07-30 16:07:03.414714-04:30	35	65	Aprobación	solicitudes/solicitud_funeraria/aprobacion	253	icon-ok-sign	1	1
+69	\N	2014-07-30 20:26:05.938004-04:30	2014-07-30 20:26:05.938004-04:30	67	61	Aprobación	solicitudes/solicitud_carta/aprobacion	263	icon-ok-sign	1	1
 71	\N	2014-07-30 20:29:29.133166-04:30	2014-07-30 20:29:29.133166-04:30	67	63	Anular	solicitudes/solicitud_carta/anular	265	icon-remove-sign	1	1
-72	\N	2014-08-20 14:31:37.537946-04:30	2014-08-20 14:31:37.537946-04:30	3	69	cambio clave	sistema/usuario_clave/cambiar_clave	912	\N	1	1
 27	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	28	26	Beneficiario	beneficiarios/beneficiario/listar	102	icon-user	2	1
 43	\N	2014-06-09 11:28:56.829577-04:30	2014-06-09 11:28:56.829577-04:30	31	40	Cargar Siniestro	solicitudes/solicitud_servicio/aprobadas	214	icon-plus-sign	1	1
 74	\N	2014-09-06 15:52:58.31682-04:30	2014-09-06 15:52:58.31682-04:30	31	71	Cargar Facturas	solicitudes/solicitud_servicio/facturacion	215	icon-plus-sign	1	1
 73	\N	2014-09-06 14:46:03.610789-04:30	2014-09-06 14:46:03.610789-04:30	31	70	Orden de pago	solicitudes/solicitud_servicio/pagos	216	icon-plus-sign	1	1
 37	\N	2014-04-22 09:57:03.54549-04:30	2014-04-22 09:57:03.54549-04:30	36	34	Proveedor	proveedorsalud/proveedor/listar	602	icon-briefcase	1	1
 36	\N	2014-04-22 09:51:53.400012-04:30	2014-04-22 09:51:53.400012-04:30	\N	\N	Provedores de Salud	proveedorsalud/proveedor/listar	600	icon-group	1	1
+19	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	18	Profesión	config/profesion/listar	803	\N	1	1
+72	\N	2014-08-20 14:31:37.537946-04:30	2014-08-20 14:31:37.537946-04:30	3	69	Contraseñas	sistema/usuario_clave/cambiar_clave	912	\N	1	1
 \.
 
 
