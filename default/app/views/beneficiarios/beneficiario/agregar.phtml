@@ -22,13 +22,13 @@
                     <thead>
                         <tr>
                             <th>NUM</th>
-                            <th class="col-collapse" data-search="cedula">CEDULA</th>
+                            <th class="col-collapse" data-search="cedula">CÉDULA</th>
                             <th class="col-collapse" data-search="nombre1">NOMBRES</th>
                             <th class="col-collapse" data-search="apellido1">APELLIDOS</th>
                             <th class="col-collapse" data-search="titular">TIPO BENFICIARIO</th>
                             <th class="col-collapse" data-search="titular">SEXO</th>
                             <th class="col-collapse" data-search="parentesco">PARENTESCO</th>
-                            <th class="col-collapse">PARTICIPACION</th>
+                            <th class="col-collapse">PARTICIPACIÓN</th>
                             <th class="btn-actions no-responsive" style="width: 80px;">ACCIONES</th>
                         </tr>
                     </thead>
@@ -84,7 +84,7 @@
                         <?php echo DwForm::select('beneficiario.nacionalidad', array(''=>'Seleccione:','V'=>'Venezolana', 'E'=>'Extranjera'), array('class'=>'input-xlarge input-required show-error'), NULL, 'Nacionalidad:'); ?>
                     </div>
                     <div class="span3">
-                        <?php echo DwForm::text('beneficiario.cedula', array('class'=>'input-xlarge mask-pint input-numeric input-required show-error'), NULL, 'Cedula de Identidad'); ?>
+                        <?php echo DwForm::text('beneficiario.cedula', array('class'=>'input-xlarge mask-pint input-numeric input-required show-error'), NULL, 'Cédula de Identidad'); ?>
                     </div>
                     <div class="span3">
                         <?php echo DwForm::select('beneficiario.estado_civil', array(''=>'Seleccione:', 'S'=>'Soltero', 'c'=>'Concubinato','C'=>'Casado', 'D'=>'Divorciado', 'V'=>'Viudo'), array('class'=>'input-xlarge input-required show-error'), NULL, 'Estado Civil'); ?>
