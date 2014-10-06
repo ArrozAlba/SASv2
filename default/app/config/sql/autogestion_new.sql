@@ -5626,6 +5626,10 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 2055	488018	jelitox	2014-10-05 18:45:41.557256-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Aprobación'::text WHERE id = '64'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{64,solicitudes/solicitud_funeraria/aprobacion,Aprobacion,icon-ok-sign,1,35,253,65,NULL,1,"2014-07-30 16:07:03.414714-04:30","2014-07-30 16:07:03.414714-04:30"}	{64,solicitudes/solicitud_funeraria/aprobacion,Aprobación,icon-ok-sign,1,35,253,65,NULL,1,"2014-07-30 16:07:03.414714-04:30","2014-07-30 16:07:03.414714-04:30"}
 2056	488018	jelitox	2014-10-05 18:45:47.544867-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Aprobación'::text WHERE id = '69'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{69,solicitudes/solicitud_carta/aprobacion,Aprobacion,icon-ok-sign,1,67,263,61,NULL,1,"2014-07-30 20:26:05.938004-04:30","2014-07-30 20:26:05.938004-04:30"}	{69,solicitudes/solicitud_carta/aprobacion,Aprobación,icon-ok-sign,1,67,263,61,NULL,1,"2014-07-30 20:26:05.938004-04:30","2014-07-30 20:26:05.938004-04:30"}
 2057	488018	jelitox	2014-10-05 18:46:04.96835-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Contraseñas'::text WHERE id = '72'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{72,sistema/usuario_clave/cambiar_clave,"cambio clave",NULL,1,3,912,69,NULL,1,"2014-08-20 14:31:37.537946-04:30","2014-08-20 14:31:37.537946-04:30"}	{72,sistema/usuario_clave/cambiar_clave,Contraseñas,NULL,1,3,912,69,NULL,1,"2014-08-20 14:31:37.537946-04:30","2014-08-20 14:31:37.537946-04:30"}
+2058	94021	arrozalba	2014-10-05 19:11:54.751674-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{509,127.0.0.1,NULL,1,1,NULL,"2014-10-05 19:11:54.751674-04:30","2014-10-05 19:11:54.751674-04:30",NULL,NULL}
+2059	94021	arrozalba	2014-10-05 20:18:14.61294-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{510,127.0.0.1,NULL,1,1,NULL,"2014-10-05 20:18:14.61294-04:30","2014-10-05 20:18:14.61294-04:30",NULL,NULL}
+2060	94360	postgres	2014-10-05 20:26:27.066834-04:30	127.0.0.1	INSERT	INSERT INTO public.tiposolicitud(nombre) VALUES ('REEMBOLSOS'::text)	tiposolicitud	\N	\N	{7,REEMBOLSOS,NULL,NULL,NULL,"2014-10-05 20:26:27.066834-04:30","2014-10-05 20:26:27.066834-04:30"}
+2061	94360	postgres	2014-10-05 20:26:51.79175-04:30	127.0.0.1	UPDATE	UPDATE public.tiposolicitud SET correlativo='SASRE-0'::text WHERE id = '7'::integer	tiposolicitud	{id,nombre,usuario_id,correlativo,observacion,fecha_registro,fecha_modificado}	{7,REEMBOLSOS,NULL,NULL,NULL,"2014-10-05 20:26:27.066834-04:30","2014-10-05 20:26:27.066834-04:30"}	{7,REEMBOLSOS,NULL,SASRE-0,NULL,"2014-10-05 20:26:27.066834-04:30","2014-10-05 20:26:27.066834-04:30"}
 \.
 
 
@@ -5633,7 +5637,7 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 -- Name: audit_log_log_id_seq; Type: SEQUENCE SET; Schema: audit_log; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('audit_log_log_id_seq', 2057, true);
+SELECT pg_catalog.setval('audit_log_log_id_seq', 2061, true);
 
 
 SET search_path = public, pg_catalog;
@@ -5907,6 +5911,8 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 506	1	2014-10-05 15:23:23.286464-04:30	2014-10-05 15:23:23.286464-04:30	1	\N	\N	\N	\N	127.0.0.1
 507	1	2014-10-05 16:15:49.805555-04:30	2014-10-05 16:15:49.805555-04:30	1	\N	\N	\N	\N	127.0.0.1
 508	1	2014-10-05 18:24:10.25479-04:30	2014-10-05 18:24:10.25479-04:30	1	\N	\N	\N	\N	127.0.0.1
+509	1	2014-10-05 19:11:54.751674-04:30	2014-10-05 19:11:54.751674-04:30	1	\N	\N	\N	\N	127.0.0.1
+510	1	2014-10-05 20:18:14.61294-04:30	2014-10-05 20:18:14.61294-04:30	1	\N	\N	\N	\N	127.0.0.1
 \.
 
 
@@ -5914,7 +5920,7 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 -- Name: acceso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('acceso_id_seq', 508, true);
+SELECT pg_catalog.setval('acceso_id_seq', 510, true);
 
 
 --
@@ -23580,6 +23586,7 @@ COPY tiposolicitud (id, usuario_id, fecha_registro, fecha_modificado, nombre, ob
 4	\N	2014-06-02 16:42:33.182268-04:30	2014-06-02 16:42:33.182268-04:30	EXAMENES ESPECIALES	\N	SASEE-0
 5	\N	2014-06-02 16:44:56.932481-04:30	2014-06-02 16:44:56.932481-04:30	SERVICIOS FUNERARIOS	\N	SASSF-0
 6	\N	2014-07-29 01:01:02.633039-04:30	2014-07-29 01:01:02.633039-04:30	CARTA AVAL	\N	SASCA-0
+7	\N	2014-10-05 20:26:27.066834-04:30	2014-10-05 20:26:27.066834-04:30	REEMBOLSOS	\N	SASRE-0
 \.
 
 
@@ -23587,7 +23594,7 @@ COPY tiposolicitud (id, usuario_id, fecha_registro, fecha_modificado, nombre, ob
 -- Name: tiposolicitud_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('tiposolicitud_id_seq', 6, true);
+SELECT pg_catalog.setval('tiposolicitud_id_seq', 7, true);
 
 
 --
