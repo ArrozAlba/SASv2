@@ -79,7 +79,12 @@ class Factura extends ActiveRecord {
     /**
      * Método que se ejecuta antes de guardar y/o modificar     
      */
-    public function before_save() {        
+    public function before_save() {
+        
+
+
+
+
     }
     /**
      * Callback que se ejecuta antes de eliminar

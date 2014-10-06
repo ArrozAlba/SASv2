@@ -122,9 +122,9 @@ class SolicitudServicioController extends BackendController {
         $this->solicitud_servicio = $solicitud_servicio;
         $this->page_title = 'Cargar Siniestro';        
     }
-     /**
-     * Método para cargar las facturas
-     */
+    /**
+    * Método para cargar las facturas
+    */
     public function facturar($key){
         if(!$id = DwSecurity::isValidKey($key, 'upd_solicitud_servicio', 'int')) {
             return DwRedirect::toAction('registro');
