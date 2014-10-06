@@ -79,7 +79,17 @@ class Factura extends ActiveRecord {
     /**
      * Método que se ejecuta antes de guardar y/o modificar     
      */
-    public function before_save() {        
+    public function before_save() {
+     $actual = new DateTime("now");
+     $vencimiento = new DateTime($this->fecha_factura);
+     if($vencimiento>$actual){
+        DwMessage::error('La Fecha de la factura no puede ser mayor a la actual');
+        return 'cancel';
+     }
+
+
+
+
     }
     /**
      * Callback que se ejecuta antes de eliminar

@@ -53,7 +53,7 @@ class SolicitudReembolsoController extends BackendController {
     public function registro($order='order.nombre.asc', $page='pag.1') { 
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
         $solicitud_reembolso = new SolicitudServicio();        
-        $this->solicitud_reembolsos = $solicitud_reembolso->getListadoRegistroSolicitudServicio($order, $page, $tps=self::TPS);
+        $this->solicitud_reembolsos = $solicitud_reembolso->getListadoFacturasSolicitudServicioReembolso($order, $page, $tps=self::TPS);
         $this->order = $order;        
         $this->page_title = 'Registro de Solicitudes de Atención Primaria';
     }
@@ -139,31 +139,70 @@ class SolicitudReembolsoController extends BackendController {
     }//cierre del condicional del Input(post)
         $this->page_title = 'Agregar Solicitud deReembolso';
     }//CIERRE DE la funcion agregar
+
     /**
-    *Metodo para aprobar las solicitudes (Cambiar de Estatus)
+    * Método para cargar las facturas en caso que de los reeembolso tengan mas de una
     */
-    public function aprobar($key){
-    	if(!$id = DwSecurity::isValidKey($key, 'upd_solicitud_servicio', 'int')) {
-            return DwRedirect::toAction('aprobacion');
-        } 
-        //Mejorar esta parte  implementando algodon de seguridad
-        $solicitud_reembolso = new SolicitudServicio();
-        $sol = $solicitud_reembolso->getInformacionSolicitudServicio($id);
-        $sol->estado_solicitud="A";
-        $sol->save();
+    public function facturar($key){
+        if(!$id = DwSecurity::isValidKey($key, 'upd_solicitud_servicio', 'int')) {
+            return DwRedirect::toAction('registro');
+        }
+        $solicitud_servicio = new SolicitudServicio();
+        $obj = new SolicitudServicioPatologia();
+        //$factura = new Factura();
+        $factura_dt = new FacturaDt();
+        $this->sol =  $obj->getInformacionSolicitudServicioPatologia($id);
+        if(!$solicitud_servicio->getInformacionSolicitudServicio($id)) {            
+            DwMessage::get('id_no_found');
+            return DwRedirect::toAction('registro');
+        }
+        if(Input::hasPost('factura')) {
+            ActiveRecord::beginTrans();
+            $factu = Factura::setFactura('create', Input::post('factura'));
+            if($factu){
+                if(FacturaDt::setFacturaDt(Input::post('descripcion'), Input::post('cantidad'), Input::post('monto'), Input::post('exento'), $factu->id)) {
+                    $solfactura = SolicitudServicioFactura::setSolicitudServicioFactura($factu->id, $id);
+                    if($solfactura){
+                        if(Input::post('multifactura')){ //para saber si va a cargar multiples facturas sobre esa solicitud 
+                            $solser = $solicitud_servicio->getInformacionSolicitudServicio($id);
+                            $solser->estado_solicitud="G"; //estado G parcialmente facturada 
+                            $solser->save();
+                            ActiveRecord::commitTrans();
+                            DwMessage::valid('Se ha cargado la factura exitosamente!');
+                            $key_upd = DwSecurity::getKey($id, 'upd_solicitud_servicio'); 
+                            return DwRedirect::toAction('facturar/'.$key_upd);   //retorna a la misma visata de facturacion 
+                        }
+                        else{
+                            $solser = $solicitud_servicio->getInformacionSolicitudServicio($id);
+                            $solser->estado_solicitud="F";
+                            $solser->save();
+                            ActiveRecord::commitTrans();
+                            DwMessage::valid('Se ha cargado la factura exitosamente!');
+                          return DwRedirect::toAction('facturacion');     
+                        }
 
-        //$sol-> codigo_solicitud es para crear el reporte
-        $cod = $sol->codigo_solicitud;
-        $nro = $sol->celular;
-        $nombre = $sol->nombre;
-        $apellido = $sol->apellido;
-        
-        $contenido= "Sr. ".$nombre." ".$apellido." Su solicitud ha sido aprobada Aprobada con el codigo: ".$cod;
-        $destinatario=$nro;
-        system( '/usr/bin/gammu -c /etc/gammu-smsdrc --sendsms EMS ' . escapeshellarg( $destinatario ) . ' -text ' . escapeshellarg( $contenido ) ); 
+                    }
+                    else{
+                        ActiveRecord::rollbackTrans();
+                        DwMessage::error('No se pudo enviar a cargar multiples facturas!');
+                    }
 
-        return DwRedirect::toAction('reporte_aprobacion/'.$id);
+                }
+                else{
+                    ActiveRecord::rollbackTrans();
+                    DwMessage::error('Los detalles de la Factura no se han cargado correctamente Intente de nuevo!');
+                }
+            }
+            else{
+                ActiveRecord::rollbackTrans();
+                DwMessage::error('La Factura ha dao peos!');
+            }
+        }
+        $this->solicitud_servicio = $solicitud_servicio;
+        $this->page_title = 'Cargar Facturas a la solicitud';        
     }
+    
+  
     /**
     *Metodo para aprobar las solicitudes (Cambiar de Estatus)
     */
@@ -182,7 +221,7 @@ class SolicitudReembolsoController extends BackendController {
     /**
      * Método para formar el reporte en pdf 
      */
-    public function reporte_aprobacion($id) { 
+    public function reporte_reembolso($id) { 
         View::template(NULL);       
        // if(!$id = DwSecurity::isValidKey($key, 'upd_solicitud_servicio', 'int')) {
        //     return DwRedirect::toAction('aprobacion');

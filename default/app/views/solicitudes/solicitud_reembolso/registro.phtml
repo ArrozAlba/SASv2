@@ -25,7 +25,6 @@
                     <th class="col-collapse" data-search="beneficiario">BENEFICIARIO</th>
                     <th class="col-collapse" data-search="proveedor">PROVEEDOR</th>
                     <th class="col-collapse" data-search="servicio">SERVICIO</th>
-                    <th class="col-collapse" data-search="patologia">PATOLOGIA</th>
                     <th class="col-collapse" data-search="observacion">OBSERVACION</th>
                     <th class="col-collapse" data-search="tiposolicitud">TIPO SOLICITUD</th>
                     <th class="col-collapse" data-search="estado">ESTADO</th>
@@ -33,31 +32,29 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($solicitud_servicios->items as $solicitud_servicio): ?>
-                    <?php $key_upd = DwSecurity::getKey($solicitud_servicio->idsolicitudservicio, 'upd_solicitud_servicio'); ?>
-                    <?php $key_del = DwSecurity::getKey($solicitud_servicio->idsolicitudservicio, 'del_solicitud_servicio'); ?>
+                <?php foreach($solicitud_reembolsos->items as $solicitud_reembolso): ?>
+                    <?php $key_upd = DwSecurity::getKey($solicitud_reembolso->idsolicitudservicio, 'upd_solicitud_servicio'); ?>
+                    <?php $key_del = DwSecurity::getKey($solicitud_reembolso->idsolicitudservicio, 'del_solicitud_servicio'); ?>
                     <tr>
-                        <td><?php echo $solicitud_servicios->counter; ?></td>
-                        <td><?php echo $solicitud_servicio->fecha_solicitud; ?></td>
-                        <td><?php echo $solicitud_servicio->codigo_solicitud; ?></td>
-                        <td><?php echo strtoupper($solicitud_servicio->nombre); echo ' '; echo strtoupper($solicitud_servicio->apellido);?></td>
-                        <td><?php echo strtoupper($solicitud_servicio->nombre); echo ' '; echo strtoupper($solicitud_servicio->apellido);?></td>
-                        <td><?php echo strtoupper($solicitud_servicio->proveedor); ?></td>
-                        <td><?php echo strtoupper($solicitud_servicio->servicio); ?></td>
-                        <td><?php echo strtoupper($solicitud_servicio->patologia); ?></td>
-                        <td><?php echo strtoupper($solicitud_servicio->observacion); ?></td>
-                        <td><?php echo strtoupper($solicitud_servicio->tiposolicitud); ?></td>
-                        <td><?php echo ($solicitud_servicio->estado_solicitud == 'R') ? '<span class="label label-success" title="'.$solicitud_servicio->tiposolicitud.' PENDIENTE POR APROBAR" rel="tooltip">REGISTRADA</span>' : '<span class="label label-important" title="'.$solicitud_servicio->estado_solicitud.'" rel="tooltip">EMITIDA</span>'; ; ?></td>
+                        <td><?php echo $solicitud_reembolsos->counter; ?></td>
+                        <td><?php echo $solicitud_reembolso->fecha_solicitud; ?></td>
+                        <td><?php echo $solicitud_reembolso->codigo_solicitud; ?></td>
+                        <td><?php echo $solicitud_reembolso->nombre; echo ' '; echo $solicitud_reembolso->apellido;?></td>
+                        <td><?php echo $solicitud_reembolso->nombreb; echo ' '; echo $solicitud_reembolso->apellidob;?></td>
+                        <td><?php echo $solicitud_reembolso->proveedor; ?></td>
+                        <td><?php echo $solicitud_reembolso->servicio; ?></td>
+                        <td><?php echo $solicitud_reembolso->observacion; ?></td>
+                        <td><?php echo $solicitud_reembolso->tiposolicitud; ?></td>
+                        <td><?php echo ($solicitud_reembolso->estado_solicitud == 'G') ? '<span class="label label-important" title="'.$solicitud_reembolso->tiposolicitud.'" rel="tooltip">FACTURADA PARCIAL</span>' : '<span class="label label-success" title="Por cargar Facturas '.$solicitud_reembolso->estado_solicitud.'" rel="tooltip">FACTURADAS</span>' ; ?>
                         </td>
                         <td>
-                            <?php echo DwHtml::buttonTable('Modificar Solicitud', "solicitudes/solicitud_servicio/editar/$key_upd/", null, 'info', 'edit'); ?>
-                            <?php echo DwHtml::buttonTable('Eliminar Solicitud', "solicitudes/solicitud_servicio/eliminar/$key_del/", array('class'=>'js-confirm', 'confirm-title'=>'Eliminar solicitud_medicina', 'confirm-body'=>'Está seguro de eliminar este solicitud_medicina? <br />Recuerda que esta operación no se puede reversar.'), 'danger', 'ban-circle'); ?>
+                        <?php echo DwHtml::buttonTable('CARGAR FACTURAS', "solicitudes/solicitud_reembolso/facturar/$key_upd/", null, 'default', 'list'); ?>
                         </td>
                     </tr>
-                    <?php $solicitud_servicios->counter++; ?>
+                    <?php $solicitud_reembolsos->counter++; ?>
                 <?php endforeach; ?>
             </tbody>
         </table>
     </div>
-    <?php View::partial('paginators/default', false, array('page'=>$solicitud_servicios, 'url'=>"solicitudes/solicitud_servicio/listar/$order/")); ?>
+    <?php View::partial('paginators/default', false, array('page'=>$solicitud_reembolsos, 'url'=>"solicitudes/solicitud_reembolso/listar/$order/")); ?>
 </div>
