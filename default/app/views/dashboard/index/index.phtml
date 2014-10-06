@@ -1,5 +1,8 @@
 <?php View::notify(); ?>
 <div class="container-fluid dw-shell-view">
+
+
+    
     
     <?php View::process($page_module, $page_title, $set_title); ?>
             <?php if(Session::get('perfil_id')<=3) { ?>
@@ -35,9 +38,14 @@
 				</div> <!-- /widget-header -->
 				
 				<div class="widget-content">					
-                
-                
-                
+                    <div style="width:80%">
+                    <h5>Montos Cancelados por Solicitudes:</h5>
+                        <div>
+                            <canvas id="piechart" height="450" width="600"></canvas>
+                        </div>
+                                            <div id="pielegend"></div>
+
+                    </div>
                 
                 
 				</div> <!-- /widget-content -->
@@ -168,9 +176,41 @@
 +     <p>Sesion : <?php  echo var_dump($_SESSION); ?> </p>
 -->	
 </div>
-
+<?php 
+echo "<script language='JavaScript'>\n"; 
+echo "var js_reembolsos = new Array();\n"; 
+$ix = 0; 
+foreach($hreembolso_periodos as $key) 
+{ 
+  echo "js_reembolsos[$key->mes] = $key->total_reembolsos;\n"; 
+} 
+# .....rest of JavaScript..... 
+echo "</script>\n"; 
+                 ?>
+<?php 
+echo "<script language='JavaScript'>\n"; 
+echo "var js_farmacias = new Array();\n"; 
+$ix = 0; 
+foreach($hfarmacia_periodos as $key) 
+{ 
+  echo "js_farmacias[$key->mes] = $key->total_farmacias;\n"; 
+} 
+# .....rest of JavaScript..... 
+echo "</script>\n"; 
+                 ?>                 
+<?php 
+echo "<script language='JavaScript'>\n"; 
+echo "var js_clinicas = new Array();\n"; 
+$ix = 0; 
+foreach($hclinica_periodos as $key) 
+{ 
+  echo "js_clinicas[$key->mes] = $key->total_clinicas;\n"; 
+} 
+# .....rest of JavaScript..... 
+echo "</script>\n"; 
+                 ?>   
 	<script>
-		var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+        
 		var lineChartData = {
 			labels : ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio"],
 			datasets : [
@@ -182,7 +222,7 @@
 					pointStrokeColor : "#fff",
 					pointHighlightFill : "#fff",
 					pointHighlightStroke : "rgba(210,100,220,1)",
-					data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()],
+					data : [js_farmacias[1],js_farmacias[2],js_farmacias[3],js_farmacias[4],js_farmacias[5],js_farmacias[6],js_farmacias[7]],
                     title : 'Farmacias'
 				},
 				{
@@ -193,7 +233,7 @@
 					pointStrokeColor : "#fff",
 					pointHighlightFill : "#fff",
 					pointHighlightStroke : "rgba(220,220,220,1)",
-					data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()],
+					data : [js_clinicas[1],js_clinicas[2],js_clinicas[3],js_clinicas[4],js_clinicas[5],js_clinicas[6],js_clinicas[7]],
                     title : 'Clinicas'
 				},
 
@@ -205,25 +245,47 @@
 					pointStrokeColor : "#fff",
 					pointHighlightFill : "#fff",
 					pointHighlightStroke : "rgba(151,187,205,1)",
-					data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()],
+					data : [js_reembolsos[1],js_reembolsos[2],js_reembolsos[3],js_reembolsos[4],js_reembolsos[5],js_reembolsos[6],'0'],
                     title : 'Reembolsos'
 				}
 			]
 
 		}
+    
+		var doughnutData = [
+				{
+					value: 300.34,
+					color:"#F7464A",
+					highlight: "#FF5A5E",
+					label: "Monto Pagado Reembolsos"
+				},
+				{
+					value: 50,
+					color: "#46BFBD",
+					highlight: "#5AD3D1",
+					label: "Monto Pagado Farmacias"
+				},
+				{
+					value: 100,
+					color: "#FDB45C",
+					highlight: "#FFC870",
+					label: "Monto Pagado Clinicas"
+				}
+			];
 
+    
 	window.onload = function(){
 		var ctx = document.getElementById("canvas").getContext("2d");
 		window.myLine = new Chart(ctx).Line(lineChartData, {
 			responsive: true
 		});
 	    legend(document.getElementById("lineLegend"), lineChartData);
-  
-    
-    
-    
-    }
 
+		var ctx1 = document.getElementById("piechart").getContext("2d");
+        window.myDoughnut = new Chart(ctx1).Doughnut(doughnutData, {responsive : true});
+	    legend(document.getElementById("pieLegend"), doughnutData);
+
+}
 
 	</script>
 
