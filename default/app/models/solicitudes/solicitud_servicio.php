@@ -5,7 +5,8 @@
  * @package     Models SolicitudServicio
  * @subpackage
  * @author      Alexis Borges
- * @copyright    
+ * @copyright   Copyright (c) 2014 UPTP - (PNFI Team) (https://github.com/ArrozAlba/SASv2)
+ *
  */
 class SolicitudServicio extends ActiveRecord {
     

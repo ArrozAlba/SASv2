@@ -6,7 +6,7 @@
  *
  * @category    
  * @package     Controllers 
- * @author      Javier León (jel1284@gmail.com)
+ * @author      ALexis Borges (tuaalexis@gmail.com)
  * @copyright   Copyright (c) 2014 UPTP - (PNFI Team) (https://github.com/ArrozAlba/SASv2)
  */
 Load::models('solicitudes/reembolso');
@@ -16,9 +16,13 @@ Load::models('proveedorsalud/servicio');
 Load::models('proveedorsalud/medico');
 Load::models('proveedorsalud/especialidad');
 Load::models('beneficiarios/titular');
-Load::models('beneficiarios/beneficiario');
+Load::models('beneficiarios/beneficiario', 'solicitudes/solicitud_servicio');
 
 class SolicitudReembolsoController extends BackendController {
+    /**
+     * Constante para definir el tipo de solicitud
+     */
+    const TPS = 7;
     /**
      * Método que se ejecuta antes de cualquier acción
      */
@@ -26,7 +30,6 @@ class SolicitudReembolsoController extends BackendController {
         //Se cambia el nombre del módulo actual
         $this->page_module = 'Solicitudes';
     }
-    
     /**
      * Método principal
      */
@@ -39,7 +42,7 @@ class SolicitudReembolsoController extends BackendController {
      */
     public function listar($order='order.nombre.asc', $page='pag.1') { 
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
-        $solicitud_reembolso = new SolicitudReembolso();        
+        $solicitud_reembolso = new SolicitudServicio();        
         $this->solicitud_reembolsos = $solicitud_reembolso->getListadoReembolso($order, $page);
         $this->order = $order;        
         $this->page_title = 'Listado de Solicitudes de Atención Primaria';
@@ -51,8 +54,8 @@ class SolicitudReembolsoController extends BackendController {
      */
     public function registro($order='order.nombre.asc', $page='pag.1') { 
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
-        $solicitud_reembolso = new SolicitudReembolso();        
-        $this->solicitud_reembolsos = $solicitud_reembolso->getListadoRegistroReembolso($order, $page);
+        $solicitud_reembolso = new SolicitudServicio();        
+        $this->solicitud_reembolsos = $solicitud_reembolso->getListadoRegistroSolicitudServicio($order, $page, $tps=self::TPS);
         $this->order = $order;        
         $this->page_title = 'Registro de Solicitudes de Atención Primaria';
     }
@@ -61,7 +64,7 @@ class SolicitudReembolsoController extends BackendController {
      */
     public function aprobacion($order='order.nombre.asc', $page='pag.1') { 
     		$page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
-        	$solicitud_reembolso = new SolicitudReembolso();        
+        	$solicitud_reembolso = new SolicitudServicio();        
         	$this->solicitud_reembolsos = $solicitud_reembolso->getListadoAprobacionReembolso($order, $page);
         	$this->order = $order;        
         	$this->page_title = 'Aprobación de Solicitudes de Atención Primaria';
@@ -71,7 +74,7 @@ class SolicitudReembolsoController extends BackendController {
      */
     public function contabilizar($order='order.nombre.asc', $page='pag.1') { 
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
-        $solicitud_reembolso = new SolicitudReembolso();        
+        $solicitud_reembolso = new SolicitudServicio();        
         $this->solicitud_reembolsos = $solicitud_reembolso->getListadoContabilizarSolicitudServicio($order, $page);
         $this->order = $order;        
         $this->page_title = 'Contabilizar Solicitudes de Atención Primaria';
@@ -81,7 +84,7 @@ class SolicitudReembolsoController extends BackendController {
      */
     public function agregar() {
         $empresa = Session::get('empresa', 'config');
-        $solicitud_reembolso = new SolicitudReembolso();
+        $solicitud_reembolso = new SolicitudServicio();
         $nroids = $solicitud_reembolso->count("tiposolicitud_id = 1");
         $this->codigods=$nroids+1;
 		$correlativ= new Tiposolicitud();
@@ -93,13 +96,13 @@ class SolicitudReembolsoController extends BackendController {
         $beneficiario = new beneficiario(); 
         $this->beneficiario = $beneficiario->getListBeneficiario();              
         if(Input::hasPost('solicitud_reembolso')) {
-            if(SolicitudReembolso::setSolicitudServicio('create', Input::post('solicitud_reembolso'))) {
+            if(SolicitudServicio::setSolicitudServicio('create', Input::post('solicitud_reembolso'))) {
                 DwMessage::valid('La solicitud se ha registrado correctamente!');
                 return DwRedirect::toAction('registro');
             }            
         } 
        // $this->personas = Load::model('beneficiarios/titular')->getTitularesToJson();
-        $this->page_title = 'Agregar Solicitud de Servicio';
+        $this->page_title = 'Agregar Solicitud deReembolso';
     }
     /**
     *Metodo para aprobar las solicitudes (Cambiar de Estatus)
@@ -110,7 +113,7 @@ class SolicitudReembolsoController extends BackendController {
             return DwRedirect::toAction('aprobacion');
         } 
         //Mejorar esta parte  implementando algodon de seguridad
-        $solicitud_reembolso = new SolicitudReembolso();
+        $solicitud_reembolso = new SolicitudServicio();
         $sol = $solicitud_reembolso->getInformacionSolicitudServicio($id);
         $sol->estado_solicitud="A";
         $sol->save();
@@ -136,7 +139,7 @@ class SolicitudReembolsoController extends BackendController {
             return DwRedirect::toAction('aprobacion');
         } 
         //Mejorar esta parte  implementando algodon de seguridad
-        $solicitud_reembolso = new SolicitudReembolso();
+        $solicitud_reembolso = new SolicitudServicio();
         $sol = $solicitud_reembolso->getInformacionSolicitudServicio($id);
         $sol->estado_solicitud="R";
         $sol->save();
@@ -152,7 +155,7 @@ class SolicitudReembolsoController extends BackendController {
        // }
 
         //Mejorar esta parte  implementando algodon de seguridad
-        $solicitud_reembolso = new SolicitudReembolso();
+        $solicitud_reembolso = new SolicitudServicio();
                 if(!$sol = $solicitud_reembolso->getReporteSolicitudServicio($id)) {
             DwMessage::get('id_no_found');
         };
@@ -200,14 +203,14 @@ class SolicitudReembolsoController extends BackendController {
             return DwRedirect::toAction('registro');
         }        
         
-        $solicitud_reembolso = new SolicitudReembolso();
+        $solicitud_reembolso = new SolicitudServicio();
         if(!$solicitud_reembolso->getInformacionSolicitudServicio($id)) {            
             DwMessage::get('id_no_found');
             return DwRedirect::toAction('registro');
         }
         
         if(Input::hasPost('solicitud_reembolso') && DwSecurity::isValidKey(Input::post('solicitud_servicio_id_key'), 'form_key')) {
-            if(SolicitudReembolso::setSolicitudServicio('update', Input::post('solicitud_reembolso'), array('id'=>$id))){
+            if(SolicitudServicio::setSolicitudServicio('update', Input::post('solicitud_reembolso'), array('id'=>$id))){
                 DwMessage::valid('La solicitud se ha actualizado correctamente!');
                 return DwRedirect::toAction('contabilizar');
             }
@@ -224,13 +227,13 @@ class SolicitudReembolsoController extends BackendController {
             return DwRedirect::toAction('listar');
         }        
         
-        $solicitud_reembolso = new SolicitudReembolso();
+        $solicitud_reembolso = new SolicitudServicio();
         if(!$solicitud_reembolso->getInformacionSolicitudServicio($id)) {            
             DwMessage::get('id_no_found');
             return DwRedirect::toAction('listar');
         }                
         try {
-            if(SolicitudReembolso::setSolicitudServicio('delete', array('id'=>$solicitud_reembolso->id))) {
+            if(SolicitudServicio::setSolicitudServicio('delete', array('id'=>$solicitud_reembolso->id))) {
                 DwMessage::valid('La solicitud se ha eliminado correctamente!');
             }
         } catch(KumbiaException $e) {

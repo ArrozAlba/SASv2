@@ -17,7 +17,7 @@ Load::models('beneficiarios/titular');
 Load::models('beneficiarios/beneficiario');
 Load::models('config/patologia', 'solicitudes/solicitud_servicio_patologia');
 
-class SolicitudOdontologicaController extends BackendController {
+class SolicitudServicioController extends BackendController {
     /**
      * Constante para definir el tipo de solicitud
      */
