@@ -13,42 +13,15 @@
 					<i class="icon-star"></i>
 					<h3>Estadisticas</h3>
 				</div> <!-- /widget-header -->
-				
 				<div class="widget-content">
-					
-					<div class="stats">
-						
-						<div class="stat">
-							<span class="stat-value"><?php echo  $codigodd1; ?></span>									
-							Tituares Registrados
-						</div> <!-- /stat -->
-						
-						<div class="stat">
-							<span class="stat-value"><?php echo  $codigodd2; ?></span>									
-							Beneficiarios Registrados
-						</div> <!-- /stat -->
-						
-						<div class="stat">
-							<span class="stat-value"><?php echo  $codigodd; ?></span>									
-							Solicitudes
-						</div> <!-- /stat -->
-						
-					</div> <!-- /stats -->
-					
-					
-					<div id="chart-stats" class="stats">
-						
-						<div class="stat stat-chart">							
-							<div id="donut-chart" class="chart-holder"></div> <!-- #donut -->							
-						</div> <!-- /substat -->
-						
-						<div class="stat stat-time">									
-							<span class="stat-value"><?php echo  $ct; ?>%</span>
-							Promedio de Solicitudes por Beneficiarios
-						</div> <!-- /substat -->
-						
-					</div> <!-- /substats -->
-					
+                    <div style="width:80%">
+                    <h5>Historico de Solicitudes Anuales</h5>
+                        <div>
+                            <canvas id="canvas" height="450" width="600"></canvas>
+                        </div>
+                                            <div id="lineLegend"></div>
+
+                    </div>
 				</div> <!-- /widget-content -->
 					
 			</div> <!-- /widget -->	
@@ -62,7 +35,11 @@
 				</div> <!-- /widget-header -->
 				
 				<div class="widget-content">					
-					<div id="area-chart" class="chart-holder">sssssssssss30</div>					
+                
+                
+                
+                
+                
 				</div> <!-- /widget-content -->
 			
 			</div> <!-- /widget -->
@@ -178,7 +155,7 @@
 
 
         <?php } ?>
-    
+<!-- 
     <p>Sesion ID: <?php  echo Session::get('id'); ?> </p>
 +     <p>Sesion TITULAR_ID: <?php  echo Session::get('titular_id'); ?> </p>
 +     <p>Sesion LOGIN: <?php  echo Session::get('login'); ?> </p>
@@ -189,10 +166,66 @@
 +     <p>Sesion IP: <?php  echo Session::get('ip'); ?> </p>
 +
 +     <p>Sesion : <?php  echo var_dump($_SESSION); ?> </p>
-    
+-->	
 </div>
 
+	<script>
+		var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+		var lineChartData = {
+			labels : ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio"],
+			datasets : [
+				{
+					label: "Farmacias",
+					fillColor : "rgba(210,100,220,0.2)",
+					strokeColor : "rgba(210,100,220,1)",
+					pointColor : "rgba(210,100,220,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(210,100,220,1)",
+					data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()],
+                    title : 'Farmacias'
+				},
+				{
+					label: "Clinicas",
+					fillColor : "rgba(220,220,220,0.2)",
+					strokeColor : "rgba(220,220,220,1)",
+					pointColor : "rgba(220,220,220,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(220,220,220,1)",
+					data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()],
+                    title : 'Clinicas'
+				},
 
+				{
+					label: "Reembolsos",
+					fillColor : "rgba(151,187,205,0.2)",
+					strokeColor : "rgba(151,187,205,1)",
+					pointColor : "rgba(151,187,205,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(151,187,205,1)",
+					data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()],
+                    title : 'Reembolsos'
+				}
+			]
+
+		}
+
+	window.onload = function(){
+		var ctx = document.getElementById("canvas").getContext("2d");
+		window.myLine = new Chart(ctx).Line(lineChartData, {
+			responsive: true
+		});
+	    legend(document.getElementById("lineLegend"), lineChartData);
+  
+    
+    
+    
+    }
+
+
+	</script>
 
 
 
