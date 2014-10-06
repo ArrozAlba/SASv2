@@ -1,0 +1,110 @@
+<?php View::notify(); ?>
+<div class="container-fluid dw-shell-view">
+    <?php View::process($page_module, $page_title, $set_title); ?>
+    <?php echo DwForm::open('', 'post', array('id'=>'form', 'class'=>'dw-validate')); ?>
+    <div class="row-fluid">
+       <table class="table table-bordered table-hover table-striped table-condensed table-responsive">
+            <thead>
+                <tr>
+                    <th class="col-collapse" data-search="fecha">FECHA SOLICITUD</th>
+                    <th class="col-collapse" data-search="codigo">CODIGO</th>
+                    <th class="col-collapse" data-search="titular">FECHA VENCIMIENTO</th>
+                    <th class="col-collapse" data-search="beneficiario">CÉDULA TITULAR</th>
+                    <th class="col-collapse" data-search="beneficiario">NOMBRES TITULAR</th>
+                    <th class="col-collapse" data-search="proveedor">BENEFICIARIO</th>
+                    <th class="col-collapse" data-search="servicio">SERVICIO</th>
+                    <th class="col-collapse" data-search="observacion">PROVEEDOR</th>
+                    <th class="col-collapse" data-search="beneficiario">MÉDICO</th>
+                    <th class="col-collapse" data-search="tiposolicitud">ORSERVACIÓN</th>
+                </tr>
+            </thead>
+            <tbody>
+               <tr>
+               <td> <?php echo $solicitud_servicio->fecha_solicitud ?></td>
+                <td> <?php echo $solicitud_servicio->codigo_solicitud ?></td>
+                <td> <?php echo $solicitud_servicio->fecha_vencimiento ?></td>
+                <td> <?php echo $solicitud_servicio->cedula ?></td>
+                <td> <?php echo $solicitud_servicio->nombre." ".$solicitud_servicio->apellido; ?></td>
+                <td> <?php echo $solicitud_servicio->nombreb." ".$solicitud_servicio->apellidob; ?></td>
+                <td> <?php echo $solicitud_servicio->servicio; ?></td>
+                <td> <?php echo $solicitud_servicio->proveedor; ?></td>
+                <td> <?php echo $solicitud_servicio->nombrem." ".$solicitud_servicio->apellidom; ?></td>
+                <td> <?php echo ($solicitud_servicio->observacion); ?></td>
+               </tr>
+            </tbody>
+        </table>
+     <div id="page-wrap">
+     <div id="header">FACTURA </div>
+        <div id="customer">
+            <table id="meta">
+            <div class="row-fluid">
+              <div class="span3">
+                <?php echo DwForm::text('factura.nro_factura', array('class'=>'input-medium input-required mask-num'), NULL, 'Nro Factura'); ?>
+              </div>
+              <div class="span3"> 
+                <?php echo DwForm::text('factura.nro_control', array('class'=>'input-medium input-required mask-num '), NULL, 'Nro Control'); ?>
+              </div>
+              <div class="span3"> 
+                <?php echo DwForm::date('factura.fecha_factura', array('class'=>'input-medium input-required'), NULL, 'Fecha Factura'); ?>
+              </div>
+            </div>
+            </table>
+        </div>
+        
+        <table id="items" >
+          <tr>
+              <th>Descripcion</th>
+              <th>Cantidad</th>
+              <th>Costo Unitario</th>
+              <th>Exento</th>
+              <th colspan="2">Total Articulo</th>
+
+          </tr>
+          <tr class="item-row">
+              <td class="description"><div class="delete-wpr"> <input type="text" name="descripcion[]" class="input-xlarge"><a class="delete" href="javascript:;" title="Remove row">X</a></div></td>
+              <td><input type="text" name="cantidad[]" class="qty input-small mask-num"></td>
+              <td><input type="text" name="monto[]" class="cost input-small mask-num"></td>
+              <td><input type="checkbox" name="exento[]"></td>
+              <td><span class="price"></span></td>
+          </tr>
+          <tr id="hiderow">
+            <td colspan="6"><a id="addrow" href="javascript:;" title="Add a row">Agregar Articulo</a></td>
+          </tr>
+          <tr>
+              <td colspan="2" class="blank"> </td>
+              <td colspan="1" class="blank"> </td>
+              <td colspan="2" class="total-line">Subtotal</td>
+              <td class="total-value"><div id="subtotal"></div></td>
+          </tr>
+          <tr>
+              <td colspan="2" class="blank"> </td>
+              <td colspan="1" class="blank"> </td>
+              <td colspan="2" class="total-line">Total</td>
+              <td class="total-value"> <?php echo DwForm::text('factura.monto', array('class'=>'input-small input-required readonly'), NULL, NULL); ?>  </td>
+          </tr>
+          <tr>
+              <td colspan="2" class="blank"> </td>
+              <td colspan="1" class="blank"> </td>
+
+          </tr>
+        </table>
+    </div>
+      <div class="row-fluid">
+        <div class="span6">
+          <?php echo DwForm::textarea('factura.observacion', array('class'=>'input-xxlarge  mask-alphanum'), NULL, 'Observaciones'); ?>
+        </div>
+        <div class="span6"> 
+        <span>Cargar Multiples Facturas</span> <input type="checkbox" name="multifactura"></div>
+      </div>
+
+
+    </div>
+    <div class="row-fluid">
+        <div class="form-actions">
+            <?php echo DwButton::save('Siguiente'); ?>
+            <?php echo DwButton::reset('form'); ?>
+            <?php echo DwButton::cancel(); ?>
+        </div>
+    </div>
+    <?php echo DwForm::close(); ?>
+</div>

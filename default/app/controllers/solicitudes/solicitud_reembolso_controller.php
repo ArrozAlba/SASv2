@@ -53,7 +53,7 @@ class SolicitudReembolsoController extends BackendController {
     public function registro($order='order.nombre.asc', $page='pag.1') { 
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
         $solicitud_reembolso = new SolicitudServicio();        
-        $this->solicitud_reembolsos = $solicitud_reembolso->getListadoRegistroSolicitudServicio($order, $page, $tps=self::TPS);
+        $this->solicitud_reembolsos = $solicitud_reembolso->getListadoFacturasSolicitudServicioReembolso($order, $page, $tps=self::TPS);
         $this->order = $order;        
         $this->page_title = 'Registro de Solicitudes de Atención Primaria';
     }
