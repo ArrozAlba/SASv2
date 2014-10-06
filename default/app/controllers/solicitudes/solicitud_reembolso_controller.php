@@ -83,12 +83,11 @@ class SolicitudReembolsoController extends BackendController {
      * Método para agregar
      */
     public function agregar() {
-        $empresa = Session::get('empresa', 'config');
         $solicitud_reembolso = new SolicitudServicio();
-        $nroids = $solicitud_reembolso->count("tiposolicitud_id = 1");
+        $nroids = $solicitud_reembolso->count("tiposolicitud_id = ".self::TPS);
         $this->codigods=$nroids+1;
 		$correlativ= new Tiposolicitud();
-        $codigocorrelativo = $correlativ->find("columns: correlativo","conditions: id=1 ", "limit: 1 ");
+        $codigocorrelativo = $correlativ->find("columns: correlativo","conditions: id=".self::TPS." ", "limit: 1 ");
          foreach ($codigocorrelativo as $cargoa) {
                     $this->cargoas[] = $cargoa->correlativo;
                 }

@@ -2,87 +2,174 @@
 <div class="container-fluid dw-shell-view">
     <?php View::process($page_module, $page_title, $set_title); ?>
     <?php echo DwForm::open('', 'post', array('id'=>'form', 'class'=>'dw-validate')); ?>
+    <?php if(DESKTOP) { ?>
+     <ul class="nav nav-tabs">
+        <?php } else { ?>
+        <ul class="nav nav-pills nav-stacked">
+        <?php } ?>
+            <li class="active"><a href="#tab1" data-toggle="tab">Información del Titular</a></li>
+            <li><a href="#tab2" data-toggle="tab">Informe Medico</a></li>
+            <li><a href="#tab3" data-toggle="tab">Factura</a></li>
+        </ul>
+        <div class="tab-content">
+        <div class="tab-pane active" id="tab1">
         <div class="row-fluid">
-            <div class="span4">
-                <?php echo DwForm::text('reembolso.codigo_solicitud_id', array('class'=>'input-xlarge disabled'),$codigodd, 'Código:'); ?>
-                <?php echo DwForm::hidden('reembolso.codigo_solicitud', NULL, $codigodd); ?>
-                <?php echo DwForm::hidden('reembolso.tiposolicitud_id', NULL, '1'); ?>
-                <?php echo DwForm::hidden('reembolso.estado_solicitud', NULL, 'R'); ?>
+            <div class="span3">
+                <?php echo DwForm::text('solicitud_servicio.codigo_solicitud_id', array('class'=>'input-large disabled'),$codigodd, 'Código:'); ?>
+                <?php echo DwForm::hidden('solicitud_servicio.codigo_solicitud', NULL, $codigodd); ?>
+                <?php echo DwForm::hidden('solicitud_servicio.tiposolicitud_id', NULL, '7'); ?>
+                <?php echo DwForm::hidden('solicitud_servicio.estado_solicitud', NULL, 'S'); ?>
                 <?php ?>
             </div>
-            <div class="span4">
-                <?php echo DwForm::date('reembolso.fecha_solicitud', array('class'=>'input-required mask-date disabled input-date show-errors'), date("Y/m/d"), 'Fecha Solicitud'); ?>
+            <div class="span3">
+                <?php echo DwForm::date('solicitud_servicio.fecha_solicitud', array('class'=>'input-required mask-date readonly input-date show-errors'), date("Y/m/d"), 'Fecha Solicitud'); ?>
             </div>
-            <div class="span4">
-                <?php echo DwForm::date('reembolso.fecha_vencimiento', array('class'=>'input-required mask-date input-date show-errors'), date("Y/m/d"), 'Fecha Vencimiento'); ?>
+            <div class="span3">
+                <?php echo DwForm::date('solicitud_servicio.fecha_vencimiento', array('class'=>'input-required mask-date input-date show-errors'), date("Y/m/d"), 'Fecha Vencimiento'); ?>
             </div>
-        </div>
-        <div>
-        <div class="row-fluid">
-            <div class="span6">
-            </div>
-            <div class="span6">
-            </div>
+            <div class="span3"></div>
         </div>
         <div class="row-fluid">
-            <div class="span4">
-                <?php //echo DwForm::dbSelect('reembolso.titular_id', 'cedula', array('beneficiarios/titular', 'getListadoTitular'), NULL, array('class'=>'input-xxlarge input-required input-list show-errors'), NULL, 'Titular'); ?>
-                <?php echo DwForm::text('reembolso.titular', array('class'=>'input-xlarge mask-pint show-error input-required '), NULL, 'Cedula Titular'); ?>
-                <?php echo DwForm::hidden('reembolso.titular_id', NULL, ''); ?>
+            <div class="span3">
+                <?php echo DwForm::text('solicitud_servicio.titular', array('class'=>'input-large mask-pint show-error input-required '), NULL, 'Cedula Titular'); ?>
+                <?php echo DwForm::hidden('solicitud_servicio.titular_id', NULL, ''); ?>
             </div>
-            <div class="span6">
-                <?php echo DwForm::text('reembolso.titular_idnombre', array('class'=>'input-xxlarge disabled '), NULL, 'Nombre Titular:'); ?>
+            <div class="span3">
+                <?php echo DwForm::text('solicitud_servicio.titular_idnombre', array('class'=>'input-large disabled '), NULL, 'Nombre Titular:'); ?>
             </div>
-            <div class="span2">
-				<label>Beneficiarios:</label>
-                <div id='div_beneficiario'></div>
+            <div class="span3">
+            <label>Beneficiarios:</label>
+                <div id='div_beneficiario'>
+                  <select class="input-large"> <option value=""> Seleccione:</option></select>
+                </div>
             </div>
-		</div>
-        <div class="row-fluid">
-            <div class="span6">
-                <?php echo DwForm::text('reembolso.proveedor', array('class'=>'input-xxlarge input-required mask-alpha '), NULL, 'Proveedor'); ?>
-                <?php echo DwForm::hidden('reembolso.proveedor_id', NULL, ''); ?>
-            </div>
-            <div class="span6">
-               <?php echo DwForm::text('reembolso.medico', array('class'=>'input-xxlarge input-required mask-alpha '), NULL, 'Medico'); ?>
-               <?php echo DwForm::hidden('reembolso.medico_id', NULL, ''); ?>
+            <div class="span3">
+                <?php echo DwForm::text('solicitud_servicio.servicio', array('class'=>'input-large input-required mask-alpha '), NULL, 'Servicio'); ?>
+                <?php echo DwForm::hidden('solicitud_servicio.servicio_id', NULL, ''); ?>
             </div>
         </div>
-         </div>
         <div class="row-fluid">
-            <div class="span6">
-                <?php echo DwForm::text('reembolso.servicio', array('class'=>'input-xxlarge input-required mask-alpha '), NULL, 'Servicio'); ?>
-                <?php echo DwForm::hidden('reembolso.servicio_id', NULL, ''); ?>
+            <div class="span3">
+                <?php echo DwForm::text('solicitud_servicio.proveedor', array('class'=>'input-large input-required mask-alpha '), NULL, 'Proveedor'); ?>
+                <?php echo DwForm::hidden('solicitud_servicio.proveedor_id', NULL, ''); ?>
+            </div>
+            <div class="span3">
+               <?php echo DwForm::text('solicitud_servicio.medico', array('class'=>'input-large input-required mask-alpha'), NULL, 'Medico'); ?>
+               <?php echo DwForm::hidden('solicitud_servicio.medico_id', NULL, ''); ?>
             </div>
             <div class="span6">
-               <?php echo DwForm::text('reembolso.patologia', array('class'=>'input-xxlarge input-required mask-alpha '), NULL, 'Patologia'); ?>
-                <?php echo DwForm::hidden('reembolso.patologia_id', NULL, ''); ?>
+                <?php echo DwForm::textarea('solicitud_servicio.observacion', array('class'=>'mask-text show-error input-xxlarge mask-alpha '), NULL, 'Observacion'); ?>
+            </div>
+        </div>
+        </div><!-- FIN del tab 1 -->
+
+        <div class="tab-pane" id="tab2">
+        <div class="row-fluid">
+            <div class="span6">
+                <?php echo DwForm::textarea('motivo', array('class'=>'input-xxlarge mask-alphanum input-required show-error'), NULL, 'Motivo de Consulta'); ?>
+            </div>
+            <div class="span6"> 
+                <?php echo DwForm::textarea('diagnostico', array('class'=>'input-xxlarge mask-alphanum input-required show-error'), NULL, 'Diagnostico'); ?>
             </div>
         </div>
         <div class="row-fluid">
             <div class="span12">
-                <?php echo DwForm::textarea('reembolso.observacion', array('class'=>'mask-text show-error input-xxlarge mask-alpha '), NULL, 'Observacion'); ?>
-                <?php //echo DwForm::dbSelect('reembolso.patologia_id', 'descripcion', array('config/patologia', 'getListadoPatologia'), NULL, array('class'=>'input-xxlarge input-required mask-pint show-errors'), NULL, 'Patologia'); ?>
+              <input name="agregar" type="button" id="agregar" value="Agregar" title="Agregar Patologia" onclick="if(!crear(this)){return false;}" />
+            </div>
+                <input class="input-xxlarge mask-alphanum" name="solicitud_servicio.patologia" id="solicitud_servicio_patologia"  type="text" onfocus = "if(this.value=='Buscar Medicinas') {this.value=''; this.style.color='#000'}" onblur="if(this.value==''){this.value='Buscar Patologia'; this.style.color='#909090'}" />
+             
+
+             <input type="hidden" name="solicitud_servicio_patologia_id" id="solicitud_servicio_patologia_id" >
+               
+            <!-- DIV PARA AGREGAR LAS PATOLOGIAS CON EL METODO DE ANDRES XD -->
+
+            <div id="ocultar" style="display:none;" class="row-fluid">
+            <div id="capa_datos"></div>
             </div>
         </div>
-        <div class="row-fluid">
+        </div><!-- FIN DE LA TAB #02 -->
+        <div class="tab-pane" id="tab3">
+        <div id="page-wrap">
+     <div id="header">FACTURA </div>
+        <div id="customer">
+            <table id="meta">
+            <div class="row-fluid">
+              <div class="span3">
+                <?php echo DwForm::text('factura.nro_factura', array('class'=>'input-medium input-required mask-num'), NULL, 'Nro Factura'); ?>
+              </div>
+              <div class="span3"> 
+                <?php echo DwForm::text('factura.nro_control', array('class'=>'input-medium input-required mask-num '), NULL, 'Nro Control'); ?>
+              </div>
+              <div class="span3"> 
+                <?php echo DwForm::date('factura.fecha_factura', array('class'=>'input-medium input-required'), NULL, 'Fecha Factura'); ?>
+              </div>
+            </div>
+            </table>
         </div>
-        <div class="row-fluid">
+        
+        <table id="items" >
+          <tr>
+              <th>Descripcion</th>
+              <th>Cantidad</th>
+              <th>Costo Unitario</th>
+              <th>Exento</th>
+              <th colspan="2">Total Articulo</th>
+
+          </tr>
+          <tr class="item-row">
+              <td class="description"><div class="delete-wpr"> <input type="text" name="descripcion[]" class="input-xlarge"><a class="delete" href="javascript:;" title="Remove row">X</a></div></td>
+              <td><input type="text" name="cantidad[]" class="qty input-small mask-num"></td>
+              <td><input type="text" name="monto[]" class="cost input-small mask-num"></td>
+              <td><input type="checkbox" name="exento[]"></td>
+              <td><span class="price"></span></td>
+          </tr>
+          <tr id="hiderow">
+            <td colspan="6"><a id="addrow" href="javascript:;" title="Add a row">Agregar Articulo</a></td>
+          </tr>
+          <tr>
+              <td colspan="2" class="blank"> </td>
+              <td colspan="1" class="blank"> </td>
+              <td colspan="2" class="total-line">Subtotal</td>
+              <td class="total-value"><div id="subtotal"></div></td>
+          </tr>
+          <tr>
+              <td colspan="2" class="blank"> </td>
+              <td colspan="1" class="blank"> </td>
+              <td colspan="2" class="total-line">Total</td>
+              <td class="total-value"> <?php echo DwForm::text('factura.monto', array('class'=>'input-small input-required readonly'), NULL, NULL); ?>  </td>
+          </tr>
+          <tr>
+              <td colspan="2" class="blank"> </td>
+              <td colspan="1" class="blank"> </td>
+          </tr>
+        </table>
+        </div>
+          <div class="row-fluid">
+            <div class="span6">
+              <?php echo DwForm::textarea('factura.observacion', array('class'=>'input-xxlarge  mask-alpha'), NULL, 'Observaciones'); ?>
+            </div>
+            <div class="span6"> 
+            <span>Cargar Multiples Facturas</span> <input type="checkbox" name="multifactura"></div>
+          </div>
+           <div class="row-fluid">
             <div class="form-actions">
                 <?php echo DwButton::save('Guardar Solicitud'); ?>
                 <?php echo DwButton::reset('form'); ?>
                 <?php echo DwButton::cancel(); ?>
             </div>
         </div>
+      </div><!-- Fin del TAB #03 FACTURAS-->
+       
     <?php echo DwForm::close(); ?>
 </div>
 <script type="text/javascript" >
 $(document).ready(function(){
   select: function ll(event, ui) {
-                  $('input#reembolso_codigo_solicitud').val(ui.item.codid);// Asignacion de Id en Campo
-                 // $('textarea#reembolso_observacion').val(ui.item.id);// Asignacion de Id en Campo
+                  $('input#solicitud_servicio_codigo_solicitud').val(ui.item.codid);// Asignacion de Id en Campo
+                 // $('textarea#solicitud_servicio_observacion').val(ui.item.id);// Asignacion de Id en Campo
               }
-    $('input#reembolso_titular').autocomplete({
+    
+    $('input#solicitud_servicio_titular').autocomplete({
             minLength : 3 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
             source: function(request, response) {
                 $.ajax({
@@ -96,12 +183,12 @@ $(document).ready(function(){
                 });
               },
               select: function(event, ui) {
-                  $('input#reembolso_titular_id').val(ui.item.id);// Asignacion de Id en Campo
-                  $('input#reembolso_titular_idnombre').val(ui.item.idnombre);// Asignacion de Id en Campo
-                 // $('textarea#reembolso_observacion').val(ui.item.id);// Asignacion de Id en Campo
+                  $('input#solicitud_servicio_titular_id').val(ui.item.id);// Asignacion de Id en Campo
+                  $('input#solicitud_servicio_titular_idnombre').val(ui.item.idnombre);// Asignacion de Id en Campo
+                 // $('textarea#solicitud_servicio_observacion').val(ui.item.id);// Asignacion de Id en Campo
               }
     });
-    $('input#reembolso_beneficiario').autocomplete({
+    $('input#solicitud_servicio_beneficiario').autocomplete({
             minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
             source: function(request, response) {
                 $.ajax({
@@ -115,11 +202,11 @@ $(document).ready(function(){
                 });
               },
               select: function(event, ui) {
-                  $('input#reembolso_beneficiario_id').val(ui.item.id);// Asignacion de Id en Campo
-                  $('input#reembolso_beneficiario_idnombre').val(ui.item.idnombre);// Asignacion de Id en Campo
+                  $('input#solicitud_servicio_beneficiario_id').val(ui.item.id);// Asignacion de Id en Campo
+                  $('input#solicitud_servicio_beneficiario_idnombre').val(ui.item.idnombre);// Asignacion de Id en Campo
               }
     });
-    $( "input#reembolso_proveedor" ).autocomplete({
+    $( "input#solicitud_servicio_proveedor" ).autocomplete({
             minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
             source: function(request, response) {
                 $.ajax({
@@ -133,10 +220,10 @@ $(document).ready(function(){
                 });
               },
               select: function(event, ui) {
-                  $('input#reembolso_proveedor_id').val(ui.item.id);// Asignacion de Id en Campo
+                  $('input#solicitud_servicio_proveedor_id').val(ui.item.id);// Asignacion de Id en Campo
               }
     });
-    $('input#reembolso_medico').autocomplete({
+    $('input#solicitud_servicio_medico').autocomplete({
             minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
             source: function(request, response) {
                 $.ajax({
@@ -150,10 +237,10 @@ $(document).ready(function(){
                 });
               },
               select: function(event, ui) {
-                  $('input#reembolso_medico_id').val(ui.item.id);// Asignacion de Id en Campo
+                  $('input#solicitud_servicio_medico_id').val(ui.item.id);// Asignacion de Id en Campo
               }
     });
-    $('input#reembolso_servicio').autocomplete({
+    $('input#solicitud_servicio_servicio').autocomplete({
             minLength : 1 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
             source: function(request, response) {
                 $.ajax({
@@ -167,30 +254,12 @@ $(document).ready(function(){
                 });
               },
               select: function(event, ui) {
-                  $('input#reembolso_servicio_id').val(ui.item.id);// Asignacion de Id en Campo
-                   //$('textarea#reembolso_observacion').val(ui.item.id);// Asignacion de Id en Campo
+                  $('input#solicitud_servicio_servicio_id').val(ui.item.id);// Asignacion de Id en Campo
+                   //$('textarea#solicitud_servicio_observacion').val(ui.item.id);// Asignacion de Id en Campo
               }
     }); 
-    $('input#reembolso_patologia').autocomplete({
-            minLength : 3 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
-            source: function(request, response) {
-                $.ajax({
-                  url: "<?php echo PUBLIC_PATH ?>config/patologia/autocomplete",
-                  data: {'busqueda':request.term},
-                  dataType: "json",
-                  type: "POST",
-                  success: function(data){
-                      response(data);
-                  }
-                });
-              },
-              select: function(event, ui) {
-                  $('input#reembolso_patologia_id').val(ui.item.id);// Asignacion de Id en Campo
-                   //$('textarea#reembolso_observacion').val(ui.item.id);// Asignacion de Id en Campo
-              }
-    }); 
-$("#reembolso_titular").change(function(){
-    var titular_id     =   $('#reembolso_titular_id').val();
+$("#solicitud_servicio_titular").change(function(){
+    var titular_id     =   $('#solicitud_servicio_titular_id').val();
         $.ajax({
           type: "POST",
           url: "<?php echo PUBLIC_PATH . 'beneficiarios/beneficiario/getBeneficiarios/'; ?>",
@@ -201,4 +270,118 @@ $("#reembolso_titular").change(function(){
         });
 });
 });
+</script>
+
+<script type="text/javascript" >
+$(document).ready(function(){
+  select: function ll(event, ui) {
+            $('input#solicitud_servicio_codigo_solicitud').val(ui.item.codid);// Asignacion de Id en Campo
+            // $('textarea#solicitud_servicio_observacion').val(ui.item.id);// Asignacion de Id en Campo
+              }
+    $('input#solicitud_servicio_patologia').autocomplete({
+        minLength : 3 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
+            source: function(request, response) {
+                $.ajax({
+                    url: "<?php echo PUBLIC_PATH ?>config/patologia/autocomplete",
+                    data: {'busqueda':request.term},
+                    dataType: "json",
+                    type: "POST",
+                    success: function(data){
+                        response(data);
+                    }
+                });
+            },
+            select: function(event, ui) {
+            $('input#solicitud_servicio_patologia_id').val(ui.item.id);// Asignacion de Id en Campo
+            //$('textarea#solicitud_servicio_observacion').val(ui.item.id);// Asignacion de Id en Campo
+            }
+        }); 
+});
+</script>
+
+<script type="text/javascript" >
+//funcion para borrar los objetos creados.
+function borrar(obj) {  
+  field = document.getElementById('capa_datos'); 
+  field.removeChild(document.getElementById(obj));    
+  icremento--; 
+   if(icremento==1){
+      $("#ocultar").css("display", "none"); 
+  }
+  return true;
+}
+
+
+var icremento =1;
+function crear(obj) {
+    if(icremento>5){
+        $("#capa_datos").css({                     
+                "margin": "auto",
+                "text-align":"center",
+                "width": "auto",
+                "height": "124px",      
+                "padding": "2px",
+                "border-radius": "4px",
+                "overflow": "auto"
+            })
+    }
+    var patologia = document.getElementById('solicitud_servicio_patologia').value;   
+    var patologia_id = document.getElementById('solicitud_servicio_patologia_id').value;
+    //valida que no este vacio lo que se envia
+    if(patologia==""){
+      alert('No se puede agregar! \nCampo en blanco');
+      document.getElementById('solicitud_servicio_patologia').focus();
+      return false;
+    }
+//para validar que no repita el patologia en el arreglo.
+   for(var i=0;i<document.getElementsByName('patologia_id[]').length;i++)
+    {                               
+        if (document.getElementsByName('patologia_id[]')[i].value==patologia_id){
+            alert('Estas intentando agregar una patologia con caracteristicas iguales.\nVerifica los datos!');
+            return false;
+        }                 
+    } 
+      field = document.getElementById('capa_datos'); 
+      contenedor = document.createElement('div'); 
+      contenedor.id = 'div'+icremento; 
+      field.appendChild(contenedor); 
+    //patologia id
+      boton = document.createElement('input'); 
+      boton.type = 'hidden'; 
+      boton.name = 'patologia_id[]';
+      boton.vAlign= "middle";
+      boton.id ='patologia_id'+'[]';
+      boton.value =  document.getElementById('solicitud_servicio_patologia_id').value;    
+      
+      contenedor.appendChild(boton); 
+    //cantidad Campo de texto
+      boton = document.createElement('input'); 
+      boton.type = 'text'; 
+      boton.name = 'patologia'+'[]';
+      boton.id = 'cant';
+      boton.vAlign= "middle";
+      boton.value =  document.getElementById('solicitud_servicio_patologia').value;
+      boton.readOnly = true;
+      boton.size='4';
+      boton.className ="input-xxlarge"
+      contenedor.appendChild(boton); 
+        //Boton de borrado 
+      boton = document.createElement('input');
+      boton.vAlign= "middle";
+
+      boton.type = 'button'; 
+      boton.width= '15';
+      boton.height= '15';
+      boton.src = "";
+      boton.name = 'div'+icremento;
+      boton.value = "Eliminar"
+      boton.onclick = function () {borrar(this.name)} 
+      contenedor.appendChild(boton); 
+      icremento++;    
+      document.getElementById('solicitud_servicio_patologia').value = "";
+      document.getElementById('solicitud_servicio_patologia').focus();
+    $("#ocultar").css("display", "block");
+    return true;
+}
+
 </script>
