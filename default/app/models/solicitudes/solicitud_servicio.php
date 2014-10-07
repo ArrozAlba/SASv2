@@ -238,12 +238,12 @@ class SolicitudServicio extends ActiveRecord {
      * Método que se ejecuta antes de guardar y/o modificar     
      */
     public function before_save(){        
-     $actual = new DateTime("now");
+    /* $actual = new DateTime("now");
      $vencimiento = new DateTime($this->fecha_vencimiento);
      if(($vencimiento<$actual)||($vencimiento=$actual)){
         DwMessage::error('La Fecha de vencimiento no puede menor o igual a la fecha actual ');
         return 'cancel';
-     }
+     }*/
 
     }
     

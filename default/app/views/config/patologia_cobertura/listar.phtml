@@ -1,0 +1,61 @@
+<?php View::notify(); ?>
+<?php $old_patocobers = array(); ?>
+<script type="text/javascript">
+    $(function() {
+        $('table').dwGrid({
+            order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
+            order_action: $.KumbiaPHP.publicPath+"confi/patologia_cobertura/listar/"
+        });
+    });
+</script>
+<div class="container-fluid dw-shell-view">
+    <?php View::process($page_module, $page_title, $set_title); ?>
+    <?php echo DwForm::open('', 'post', array('id'=>'form', 'class'=>'dw-validate')); ?>
+        <div class="dw-overflow">
+            <table class="table table-bordered table-hover table-striped table-condensed">
+                <thead>
+                    <tr>
+                        <th rowspan="2" class="no-responsive dw-text-middle">CODIGO</th>
+                        <th rowspan="2" class="no-responsive col-collapse dw-text-middle">PATOLOGIA</th>
+                        <th colspan="<?php echo count($coberturas); ?>"class="no-responsive dw-text-center">COBERTURAS</th>
+                    </tr>
+                    <tr>
+                        <?php foreach($coberturas as $cobertura) { ?>
+                        <th class="no-responsive dw-text-center"><?php echo $cobertura->descripcion; ?></th>
+                        <?php } ?>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($patologias->items as $patologia) : ?>
+                    <tr>
+                        <td><?php echo $patologia->codigo; ?></td>
+                        <td><?php echo $patologia->descripcion; ?></td>
+                        <?php foreach ($coberturas as $cobertura) : ?>
+                            <?php if (in_array("$patologia->id-$cobertura->id", $patocobers)) { ?>
+                                <td>
+                                    <?php $old_patocobers[] = $patologia->id.'-'.$cobertura->id ?>
+                                    <?php echo DwForm::check('patocobers[]', $patologia->id.'-'.$cobertura->id, NULL, TRUE); ?>
+                                </td>
+                            <?php } else { ?>
+                                <td>
+                                    <?php echo DwForm::check('patocobers[]', $patologia->id.'-'.$cobertura->id); ?>
+                                </td>
+                            <?php } ?>
+                        <?php endforeach ?>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+
+            </table>
+        </div>
+        <?php echo DwForm::hidden('old_patocobers', null, join(',', $old_patocobers)); ?>
+        <div class="row-fluid">
+            <div class="form-actions">
+                <?php echo DwButton::save('Guardar Patologias Coberturas'); ?>
+                <?php echo DwButton::cancel(''); ?>
+            </div>
+        </div>
+    <?php DwForm::close() ;?>
+    <?php View::partial('paginators/default', false, array('page'=>$patologias, 'url'=>"config/patologia_cobertura/listar/$order/")); ?>
+
+</div>

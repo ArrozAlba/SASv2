@@ -20,14 +20,7 @@ class Cobertura extends ActiveRecord {
      * Método para definir las relaciones y validaciones
      */
     protected function initialize() {
-       /* $this->belongs_to('empresa');
-        $this->belongs_to('ciudad');
-        $this->has_many('usuario');
-
-        $this->validates_presence_of('sucursal', 'message: Ingresa el nombre de la sucursal');        
-        $this->validates_presence_of('direccion', 'message: Ingresa la dirección de la sucursal.');
-        $this->validates_presence_of('ciudad_id', 'message: Indica la ciudad de ubicación de la sucursal.');
-      */          
+   
     }  
     
     /**
@@ -53,10 +46,7 @@ class Cobertura extends ActiveRecord {
         $columns = 'cobertura.*';
         $join = '';        
         $conditions = "";
-        $order = $this->get_order($order, 'cobertura', array('cobertura'=>array('ASC'=>'cobertura.descripcion ASC, cobertura.tipo_cobertura ASC',
-                                                                              'DESC'=>'cobertura.descripcion DESC, cobertura.tipo_cobertura ASC',
-                                                                              ),
-                                                            'descripcion', 'tipo_cobertura', 'monto_cobertura','fecha_inicio', 'fecha_fin', 'observacion'));
+        $order = $this->get_order($order, 'cobertura', array('cobertura'=>array('ASC'=>'cobertura.descripcion ASC, cobertura.tipo_cobertura ASC', 'DESC'=>'cobertura.descripcion DESC, cobertura.tipo_cobertura ASC',),'descripcion', 'tipo_cobertura', 'monto_cobertura','fecha_inicio', 'fecha_fin', 'observacion'));
         if($page) {                
             return $this->paginated("columns: $columns", "order: $order", "page: $page");
         } else {
@@ -91,30 +81,14 @@ class Cobertura extends ActiveRecord {
      * Método que se ejecuta antes de guardar y/o modificar     
      */
     public function before_save() {        
-        /* 
-        $this->slug = DwUtils::getSlug($this->sucursal); 
-        $this->direccion = Filter::get($this->direccion, 'string');
-        $this->telefono = Filter::get($this->telefono, 'numeric');
-        $this->celular = Filter::get($this->celular, 'numeric');
-        $this->fax = Filter::get($this->fax, 'numeric');        
-        
-        $conditions = "sucursal = '$this->sucursal' AND ciudad_id = $this->ciudad_id AND empresa_id = $this->empresa_id";
-        $conditions.= (isset($this->id)) ? " AND id != $this->id" : '';
-        if($this->count("conditions: $conditions")) {
-            DwMessage::error('Lo sentimos, pero ya existe una sucursal registrada con el mismo nombre y ciudad.');
-            return 'cancel';
-        }
-   */     
+       $this->descripcion= strtoupper($this->descripcion);
+       $this->observacion= strtoupper($this->observacion);
     }
     
     /**
      * Callback que se ejecuta antes de eliminar
      */
     public function before_delete() {
-        /*if($this->id == 1) { //Para no eliminar la información de sucursal
-            DwMessage::warning('Lo sentimos, pero esta sucursal no se puede eliminar.');
-            return 'cancel';
-        }*/
     }
     
 }
