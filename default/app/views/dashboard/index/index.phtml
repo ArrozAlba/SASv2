@@ -29,30 +29,6 @@
 					
 			</div> <!-- /widget -->	
         </div> <!-- /span6 -->
-        <div class="span6">
-        			<div class="widget stacked">
-					
-				<div class="widget-header">
-					<i class="icon-signal"></i>
-					<h3>Graficos</h3>
-				</div> <!-- /widget-header -->
-				
-				<div class="widget-content">					
-                    <div style="width:80%">
-                    <h5>Montos Cancelados por Solicitudes:</h5>
-                        <div>
-                            <canvas id="piechart" height="450" width="600"></canvas>
-                        </div>
-                                            <div id="pielegend"></div>
-
-                    </div>
-                
-                
-				</div> <!-- /widget-content -->
-			
-			</div> <!-- /widget -->
-        </div>	
-
 <div class="span6">
 			<div class="widget stacked widget-table action-table">
 					
@@ -102,6 +78,31 @@
 			
 			</div> <!-- /widget -->
 </div>
+
+        <div class="span6">
+        			<div class="widget stacked">
+					
+				<div class="widget-header">
+					<i class="icon-signal"></i>
+					<h3>Graficos</h3>
+				</div> <!-- /widget-header -->
+				
+				<div class="widget-content">					
+                    <div style="width:90%">
+                    <h5>Montos Cancelados por Solicitudes:</h5>
+                        <div>
+                            <canvas id="piechart" height="450" width="600"></canvas>
+                        </div>
+                                            <div id="pielegend"></div>
+
+                    </div>
+                
+                
+				</div> <!-- /widget-content -->
+			
+			</div> <!-- /widget -->
+        </div>	
+
         </div>
 
        </div> <!-- /row -->	
@@ -257,19 +258,25 @@ echo "</script>\n";
 					value: 300.34,
 					color:"#F7464A",
 					highlight: "#FF5A5E",
-					label: "Monto Pagado Reembolsos"
+					label: "Monto Pagado Reembolsos",
+					title: "Monto Pagado Reembolsos"
+
 				},
 				{
 					value: 50,
 					color: "#46BFBD",
 					highlight: "#5AD3D1",
-					label: "Monto Pagado Farmacias"
+					label: "Monto Pagado Farmacias",
+					title: "Monto Pagado Farmacias"
+
 				},
 				{
 					value: 100,
 					color: "#FDB45C",
 					highlight: "#FFC870",
-					label: "Monto Pagado Clinicas"
+					label: "Monto Pagado Clinicas",
+					title: "Monto Pagado Clinicas"
+
 				}
 			];
 
@@ -283,7 +290,7 @@ echo "</script>\n";
 
 		var ctx1 = document.getElementById("piechart").getContext("2d");
         window.myDoughnut = new Chart(ctx1).Doughnut(doughnutData, {responsive : true});
-	    legend(document.getElementById("pieLegend"), doughnutData);
+	    legend(document.getElementById("pielegend"), doughnutData);
 
 }
 

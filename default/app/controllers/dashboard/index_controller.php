@@ -49,7 +49,7 @@ class IndexController extends BackendController {
         $this->hclinica_periodos = $hclinica_periodo->getPeriodos();     
     
     
-    
+        
     
     
     
