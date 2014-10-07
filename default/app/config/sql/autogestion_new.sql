@@ -3731,7 +3731,9 @@ CREATE TABLE solicitud_servicio (
     observacion character varying(250),
     motivo_rechazo character varying(250),
     diagnostico character varying(500),
-    multifactura character(1)
+    multifactura character(1),
+    persona_autorizada character varying(50),
+    ced_autorizado character varying(12)
 );
 
 
@@ -5820,6 +5822,23 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 2085	97203	arrozalba	2014-10-07 09:03:58.185244-04:30	127.0.0.1	INSERT	INSERT INTO recurso (usuario_id,fecha_registro,fecha_modificado,modulo,controlador,accion,recurso,descripcion,activo) VALUES (NULL,DEFAULT,DEFAULT,'config','patologia_cobertura','*','config/patologia_cobertura/*','Pantalla para casar las patologías y las coberturas','1')	recurso	\N	\N	{72,*,1,config,config/patologia_cobertura/*,NULL,patologia_cobertura,"Pantalla para casar las patologías y las coberturas","2014-10-07 09:03:58.185244-04:30","2014-10-07 09:03:58.185244-04:30"}
 2086	97105	arrozalba	2014-10-07 09:08:13.046876-04:30	127.0.0.1	INSERT	INSERT INTO menu (usuario_id,fecha_registro,fecha_modificado,menu_id,recurso_id,menu,url,posicion,icono,activo,visibilidad) VALUES (NULL,DEFAULT,DEFAULT,'15','72','Patologias Coberturas','config/patologia_cobertura/','0',NULL,'1','1')	menu	\N	\N	{75,config/patologia_cobertura/,"Patologias Coberturas",NULL,1,15,0,72,NULL,1,"2014-10-07 09:08:13.046876-04:30","2014-10-07 09:08:13.046876-04:30"}
 2087	96973	arrozalba	2014-10-07 10:23:19.231891-04:30	127.0.0.1	INSERT	INSERT INTO cobertura (usuario_id,fecha_registro,fecha_modificado,descripcion,monto_cobertura,fecha_inicio,fecha_fin,observacion,tipo_cobertura) VALUES (NULL,DEFAULT,DEFAULT,'ATENCION PRIMARIA','30000','2014-01-01','2014-12-31','ATENCION PRIMARY','2')	cobertura	\N	\N	{3,2014-12-31,NULL,"ATENCION PRIMARIA","ATENCION PRIMARY",2014-01-01,"2014-10-07 10:23:19.231891-04:30",2,30000.00,"2014-10-07 10:23:19.231891-04:30"}
+2088	97293	postgres	2014-10-07 11:48:27.307608-04:30	127.0.0.1	INSERT	INSERT INTO public.titular(id, cedula, nombre1, nombre2, apellido1, apellido2, nacionalidad, sexo, sucursal_id, pais_id, estado_id, municipio_id, parroquia_id, direccion_habitacion, hpais_id, hestado_id, hmunicipio_id, hparroquia_id, estado_civil, celular, telefono, correo_electronico, tipoempleado_id, profesion_id, departamento_id, cargo_id, estado) VALUES ('0'::integer, '----------'::text, '-----------------'::text, '-----------------'::text, '-----------------'::text, '-----------------'::text, '-'::text, '-'::text, '1'::integer, '240'::integer, '69'::integer, '234'::integer, '746'::integer, '-----------'::text, '240'::integer, '69'::integer, '229'::integer, '732'::integer, '-'::text, '----------'::text, '----------'::text, '----------'::text, '1'::integer, '1'::integer, '1'::integer, '1'::integer, '0'::integer)	titular	\N	\N	{0,-,----------,0,----------,-----------------,-----------------,240,1,240,----------,-----------------,-----------------,69,NULL,69,NULL,NULL,1,-,234,-,746,1,1900-01-01,229,732,"2014-10-07 11:48:27.307608-04:30",1,NULL,N/A,1,"2014-10-07 11:48:27.307608-04:30",1900-01-01,NULL,----------,NULL,NULL,-----------}
+2089	96929	arrozalba	2014-10-07 11:48:44.92525-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{519,127.0.0.1,NULL,1,1,NULL,"2014-10-07 11:48:44.92525-04:30","2014-10-07 11:48:44.92525-04:30",NULL,NULL}
+2090	96929	arrozalba	2014-10-07 12:54:39.116751-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{520,127.0.0.1,NULL,1,1,NULL,"2014-10-07 12:54:39.116751-04:30","2014-10-07 12:54:39.116751-04:30",NULL,NULL}
+2091	97149	postgres	2014-10-07 13:22:16.994207-04:30	127.0.0.1	UPDATE	UPDATE public.patologia SET activo=NULL::boolean WHERE id = '14189'::integer	patologia	{id,activo,codigo,usuario_id,descripcion,observacion,categoria_id,fecha_registro,fecha_modificado}	{14189,t,A00,NULL,Cólera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}	{14189,NULL,A00,NULL,Cólera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}
+2092	97149	postgres	2014-10-07 13:25:56.241573-04:30	127.0.0.1	UPDATE	UPDATE public.patologia SET activo=TRUE::boolean WHERE id = '14189'::integer	patologia	{id,activo,codigo,usuario_id,descripcion,observacion,categoria_id,fecha_registro,fecha_modificado}	{14189,NULL,A00,NULL,Cólera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}	{14189,t,A00,NULL,Cólera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}
+2093	97149	postgres	2014-10-07 13:31:41.052237-04:30	127.0.0.1	UPDATE	UPDATE public.patologia SET activo=NULL::boolean WHERE id = '14189'::integer	patologia	{id,activo,codigo,usuario_id,descripcion,observacion,categoria_id,fecha_registro,fecha_modificado}	{14189,t,A00,NULL,Cólera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}	{14189,NULL,A00,NULL,Cólera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}
+2094	97149	postgres	2014-10-07 13:32:01.885458-04:30	127.0.0.1	UPDATE	UPDATE public.patologia SET activo=TRUE::boolean WHERE id = '14189'::integer	patologia	{id,activo,codigo,usuario_id,descripcion,observacion,categoria_id,fecha_registro,fecha_modificado}	{14189,NULL,A00,NULL,Cólera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}	{14189,t,A00,NULL,Cólera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}
+2095	97149	postgres	2014-10-07 13:33:57.017275-04:30	127.0.0.1	UPDATE	UPDATE public.patologia SET descripcion='Colera'::text WHERE id = '14189'::integer	patologia	{id,activo,codigo,usuario_id,descripcion,observacion,categoria_id,fecha_registro,fecha_modificado}	{14189,t,A00,NULL,Cólera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}	{14189,t,A00,NULL,Colera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}
+2096	97149	postgres	2014-10-07 13:35:28.961517-04:30	127.0.0.1	UPDATE	UPDATE public.patologia SET activo=NULL::boolean WHERE id = '14189'::integer	patologia	{id,activo,codigo,usuario_id,descripcion,observacion,categoria_id,fecha_registro,fecha_modificado}	{14189,t,A00,NULL,Colera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}	{14189,NULL,A00,NULL,Colera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}
+2097	97149	postgres	2014-10-07 13:36:05.181866-04:30	127.0.0.1	UPDATE	UPDATE public.patologia SET activo=TRUE::boolean WHERE id = '14189'::integer	patologia	{id,activo,codigo,usuario_id,descripcion,observacion,categoria_id,fecha_registro,fecha_modificado}	{14189,NULL,A00,NULL,Colera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}	{14189,t,A00,NULL,Colera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}
+2098	97286	postgres	2014-10-07 14:00:04.157898-04:30	127.0.0.1	INSERT	INSERT INTO public.tiposolicitud(id, nombre, correlativo) VALUES ('8'::integer, 'MEDICINA'::text, 'SASME-0'::text)	tiposolicitud	\N	\N	{8,MEDICINA,NULL,SASME-0,NULL,"2014-10-07 14:00:04.157898-04:30","2014-10-07 14:00:04.157898-04:30"}
+2099	97286	postgres	2014-10-07 14:00:09.90185-04:30	127.0.0.1	UPDATE	UPDATE public.tiposolicitud SET nombre='MEDICINAS'::text WHERE id = '8'::integer	tiposolicitud	{id,nombre,usuario_id,correlativo,observacion,fecha_registro,fecha_modificado}	{8,MEDICINA,NULL,SASME-0,NULL,"2014-10-07 14:00:04.157898-04:30","2014-10-07 14:00:04.157898-04:30"}	{8,MEDICINAS,NULL,SASME-0,NULL,"2014-10-07 14:00:04.157898-04:30","2014-10-07 14:00:04.157898-04:30"}
+2100	97237	postgres	2014-10-07 14:08:54.040229-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET tiposolicitud_id='8'::integer WHERE id = '27'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,multifactura,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{27,NULL,1,1,NULL,NULL,NULL,1,NULL,1,"2014-09-26 18:42:33.833452-04:30",NULL,29,2014-09-26,SASCM-0004,R,"2014-09-26 18:42:33.833452-04:30",NULL,1,1,2014-09-26}	{27,NULL,1,1,NULL,NULL,NULL,1,NULL,1,"2014-09-26 18:42:33.833452-04:30",NULL,29,2014-09-26,SASCM-0004,R,"2014-09-26 18:42:33.833452-04:30",NULL,8,1,2014-09-26}
+2101	97028	postgres	2014-10-07 14:43:27.498509-04:30	127.0.0.1	UPDATE	UPDATE public.proveedor SET tipo='C'::text WHERE id = '5'::integer	proveedor	{id,fax,rif,tipo,celular,pais_id,direccion,estado_id,telefono1,telefono2,usuario_id,observacion,municipio_id,nombre_corto,parroquia_id,razon_social,fecha_registro,fecha_modificado,correo_electronico}	{5,NULL,j20000,NULL,NULL,240,"Av. Andres Bello entre carr. 33 y 34 .",69,0251-2736943,NULL,NULL,NULL,223,"SAN JAVIER",715," POLICLINICA SAN JAVIER ","2014-07-28 18:02:07.563286-04:30","2014-07-28 18:02:07.563286-04:30",NULL}	{5,NULL,j20000,C,NULL,240,"Av. Andres Bello entre carr. 33 y 34 .",69,0251-2736943,NULL,NULL,NULL,223,"SAN JAVIER",715," POLICLINICA SAN JAVIER ","2014-07-28 18:02:07.563286-04:30","2014-07-28 18:02:07.563286-04:30",NULL}
+2102	97028	arrozalba	2014-10-07 15:00:38.523669-04:30	127.0.0.1	INSERT	INSERT INTO proveedor (usuario_id,fecha_registro,fecha_modificado,rif,razon_social,nombre_corto,pais_id,estado_id,municipio_id,parroquia_id,direccion,celular,telefono1,telefono2,fax,correo_electronico,observacion,tipo) VALUES (NULL,DEFAULT,DEFAULT,'G-20045784','FARMACIA EL AVILA','AVILA','240','69','229','732','POR MAMANICO',NULL,'02554545545','04165555',NULL,NULL,NULL,'F')	proveedor	\N	\N	{7,NULL,G-20045784,F,NULL,240,"POR MAMANICO",69,02554545545,04165555,NULL,NULL,229,AVILA,732,"FARMACIA EL AVILA","2014-10-07 15:00:38.523669-04:30","2014-10-07 15:00:38.523669-04:30",NULL}
+2103	97096	postgres	2014-10-07 15:07:30.4629-04:30	127.0.0.1	INSERT	INSERT INTO public.medico(id, nacionalidad, cedula, rmpps, rif, nombre1, nombre2, apellido1, apellido2, sexo, celular, telefono, correo_electronico, observacion) VALUES ('0'::integer, '-'::text, '----'::text, '----'::text, '----'::text, '----'::text, '----'::text, '----'::text, '----'::text, '-'::text, '----'::text, '----'::text, '----'::text, '----'::text)	medico	\N	\N	{0,----,-,----,----,----,----,----,----,----,----,NULL,----,-,"2014-10-07 15:07:30.4629-04:30","2014-10-07 15:07:30.4629-04:30",----}
+2104	97218	postgres	2014-10-07 15:15:45.016707-04:30	127.0.0.1	INSERT	INSERT INTO public.servicio(id, descripcion) VALUES ('0'::integer, 'FARMACIAS'::text)	servicio	\N	\N	{0,NULL,FARMACIAS,NULL,"2014-10-07 15:15:45.016707-04:30","2014-10-07 15:15:45.016707-04:30"}
 \.
 
 
@@ -5827,7 +5846,7 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 -- Name: audit_log_log_id_seq; Type: SEQUENCE SET; Schema: audit_log; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('audit_log_log_id_seq', 2087, true);
+SELECT pg_catalog.setval('audit_log_log_id_seq', 2104, true);
 
 
 SET search_path = public, pg_catalog;
@@ -6111,6 +6130,8 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 516	1	2014-10-06 19:12:32.084629-04:30	2014-10-06 19:12:32.084629-04:30	1	\N	\N	\N	\N	127.0.0.1
 517	1	2014-10-06 21:51:59.940914-04:30	2014-10-06 21:51:59.940914-04:30	1	\N	\N	\N	\N	127.0.0.1
 518	1	2014-10-07 08:19:37.295158-04:30	2014-10-07 08:19:37.295158-04:30	1	\N	\N	\N	\N	127.0.0.1
+519	1	2014-10-07 11:48:44.92525-04:30	2014-10-07 11:48:44.92525-04:30	1	\N	\N	\N	\N	127.0.0.1
+520	1	2014-10-07 12:54:39.116751-04:30	2014-10-07 12:54:39.116751-04:30	1	\N	\N	\N	\N	127.0.0.1
 \.
 
 
@@ -6118,7 +6139,7 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 -- Name: acceso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('acceso_id_seq', 518, true);
+SELECT pg_catalog.setval('acceso_id_seq', 520, true);
 
 
 --
@@ -8806,6 +8827,7 @@ SELECT pg_catalog.setval('medicina_id_seq', 1, false);
 COPY medico (id, usuario_id, fecha_registro, fecha_modificado, nacionalidad, cedula, rmpps, rif, nombre1, nombre2, apellido1, apellido2, sexo, celular, telefono, correo_electronico, observacion) FROM stdin;
 1	\N	2014-06-02 18:48:19.763325-04:30	2014-06-02 18:48:19.763325-04:30	v	1	1	1	PEDRO	JOSE	PEREZ	\N	M	\N	\N	\N	\N
 2	\N	2014-07-28 18:20:48.169269-04:30	2014-07-28 18:20:48.169269-04:30	V	12	12	12	CARLOS	\N	ESCALONA	\N	M	\N	\N	\N	\N
+0	\N	2014-10-07 15:07:30.4629-04:30	2014-10-07 15:07:30.4629-04:30	-	----	----	----	----	----	----	----	-	----	----	----	----
 \.
 
 
@@ -10679,7 +10701,6 @@ SELECT pg_catalog.setval('parroquia_id_seq', 1086, true);
 --
 
 COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, codigo, descripcion, observacion, activo) FROM stdin;
-14189	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	314	A00	Cólera	\N	t
 14190	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	314	A00.0	Cólera debido a Vibrio cholerae 01, biotipo cholerae	\N	t
 14191	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	314	A00.1	Cólera debido a Vibrio cholerae 01, biotipo El Tor	\N	t
 14192	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	314	A00.9	Cólera, no especificado	\N	t
@@ -24876,6 +24897,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 28383	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	574	Z99.3	Dependencia de silla de ruedas	\N	t
 28384	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	574	Z99.8	Dependencia de otras máquinas y dispositivos capacitantes	\N	t
 28385	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	574	Z99.9	Dependencia de máquina y dispositivo capacitante, no especificada	\N	t
+14189	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	314	A00	Colera	\N	t
 \.
 
 
@@ -25428,9 +25450,10 @@ SELECT pg_catalog.setval('profesion_id_seq', 185, true);
 
 COPY proveedor (id, usuario_id, fecha_registro, fecha_modificado, rif, razon_social, nombre_corto, pais_id, estado_id, municipio_id, parroquia_id, direccion, celular, telefono1, telefono2, fax, correo_electronico, observacion, tipo) FROM stdin;
 1	\N	2014-05-10 12:03:55.159164-04:30	2014-05-10 12:03:55.159164-04:30	g20082054	CENTRO MEDICO DE LOS LLANOS	CEMELL	240	69	223	715	av las lagrimas	\N	02222	02222	02222	cemell@gmail.com	asdas	\N
-5	\N	2014-07-28 18:02:07.563286-04:30	2014-07-28 18:02:07.563286-04:30	j20000	 POLICLINICA SAN JAVIER 	SAN JAVIER	240	69	223	715	Av. Andres Bello entre carr. 33 y 34 .	\N	0251-2736943	\N	\N	\N	\N	\N
 3	\N	2014-07-28 17:59:34.253814-04:30	2014-07-28 17:59:34.253814-04:30	g20082055	HPO HOSPITAL DE OCCIDENTE C.A.	HPO	240	69	223	715	Av. Vencedores de Araure Araure Portuguesa 	\N	0255-6004760	\N	\N	\N	\N	\N
 6	\N	2014-09-26 00:12:05.408965-04:30	2014-09-26 00:12:05.408965-04:30	J-123589-0	ALEXIS BORHES	ALEX	240	69	223	716	SADFASDFAS SDFA SDFF	\N	34324423423	23423423423	\N	\N	ASDFASDFA324R5 EWFASDADS	F
+5	\N	2014-07-28 18:02:07.563286-04:30	2014-07-28 18:02:07.563286-04:30	j20000	 POLICLINICA SAN JAVIER 	SAN JAVIER	240	69	223	715	Av. Andres Bello entre carr. 33 y 34 .	\N	0251-2736943	\N	\N	\N	\N	C
+7	\N	2014-10-07 15:00:38.523669-04:30	2014-10-07 15:00:38.523669-04:30	G-20045784	FARMACIA EL AVILA	AVILA	240	69	229	732	POR MAMANICO	\N	02554545545	04165555	\N	\N	\N	F
 \.
 
 
@@ -25438,7 +25461,7 @@ COPY proveedor (id, usuario_id, fecha_registro, fecha_modificado, rif, razon_soc
 -- Name: proveedor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('proveedor_id_seq', 6, true);
+SELECT pg_catalog.setval('proveedor_id_seq', 7, true);
 
 
 --
@@ -25716,6 +25739,7 @@ COPY servicio (id, usuario_id, fecha_registro, fecha_modificado, descripcion, ob
 21	\N	2014-07-27 01:00:53.029261-04:30	2014-07-27 01:00:53.029261-04:30	CONSULTA UROLOGIA 	\N
 22	\N	2014-07-27 01:01:08.825664-04:30	2014-07-27 01:01:08.825664-04:30	CONSULTA NUTRICION Y DIETETICA	\N
 23	\N	2014-07-27 01:01:33.357318-04:30	2014-07-27 01:01:33.357318-04:30	CONSULTA FISIOTERAPIA Y REHABILITACION	\N
+0	\N	2014-10-07 15:15:45.016707-04:30	2014-10-07 15:15:45.016707-04:30	FARMACIAS	\N
 \.
 
 
@@ -25760,11 +25784,11 @@ SELECT pg_catalog.setval('servicio_tiposolicitud_id_seq', 1, false);
 -- Data for Name: solicitud_servicio; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
-COPY solicitud_servicio (id, usuario_id, fecha_registro, fecha_modificado, estado_solicitud, tiposolicitud_id, fecha_solicitud, codigo_solicitud, titular_id, beneficiario_id, beneficiario_tipo, proveedor_id, medico_id, fecha_vencimiento, servicio_id, motivo, motivo_anulacion, observacion, motivo_rechazo, diagnostico, multifactura) FROM stdin;
-19	\N	2014-09-03 09:39:35.149734-04:30	2014-09-03 09:39:35.149734-04:30	S	1	2014-09-03	SASCM-0003	1	29	1	1	1	2014-09-18	1	\N	\N	ESCRIBIENDO UNA OBSERVACION LO SUFICIENTEMENTE GRANDE PARA VER COMPORTAMIENTO	\N	\N	\N
-8	\N	2014-09-02 21:27:31.841705-04:30	2014-09-02 21:27:31.841705-04:30	A	1	2014-09-02	SASCM-0002	1	29	1	5	1	2014-09-02	3	no fue la mejor cpcio tiene que cmbia rl lkjhy jdk djme pal akdfj wqodcuyg hfsd fasd jksdftgdn kiNBSDY  OIY   	\N	camb ianda para poder ahora si aprobar	no fue la mejor cpcio tiene que cmbia rl lkjhy jdk djme pal akdfj wqodcuyg hfsd fasd jksdftgdn kiNBSDY  OIY   	\N	\N
-27	\N	2014-09-26 18:42:33.833452-04:30	2014-09-26 18:42:33.833452-04:30	R	1	2014-09-26	SASCM-0004	1	29	1	1	1	2014-09-26	1	\N	\N	\N	\N	\N	\N
-7	\N	2014-09-02 21:13:00.714053-04:30	2014-09-02 21:13:00.714053-04:30	F	1	1900-01-25	SASCM-0001	1	29	1	5	1	2014-09-24	14	DOLOR EN LA NALGAA	\N	cemmel	rancia	NALGA DAÑADA DEFECTUOSA	\N
+COPY solicitud_servicio (id, usuario_id, fecha_registro, fecha_modificado, estado_solicitud, tiposolicitud_id, fecha_solicitud, codigo_solicitud, titular_id, beneficiario_id, beneficiario_tipo, proveedor_id, medico_id, fecha_vencimiento, servicio_id, motivo, motivo_anulacion, observacion, motivo_rechazo, diagnostico, multifactura, persona_autorizada, ced_autorizado) FROM stdin;
+19	\N	2014-09-03 09:39:35.149734-04:30	2014-09-03 09:39:35.149734-04:30	S	1	2014-09-03	SASCM-0003	1	29	1	1	1	2014-09-18	1	\N	\N	ESCRIBIENDO UNA OBSERVACION LO SUFICIENTEMENTE GRANDE PARA VER COMPORTAMIENTO	\N	\N	\N	\N	\N
+8	\N	2014-09-02 21:27:31.841705-04:30	2014-09-02 21:27:31.841705-04:30	A	1	2014-09-02	SASCM-0002	1	29	1	5	1	2014-09-02	3	no fue la mejor cpcio tiene que cmbia rl lkjhy jdk djme pal akdfj wqodcuyg hfsd fasd jksdftgdn kiNBSDY  OIY   	\N	camb ianda para poder ahora si aprobar	no fue la mejor cpcio tiene que cmbia rl lkjhy jdk djme pal akdfj wqodcuyg hfsd fasd jksdftgdn kiNBSDY  OIY   	\N	\N	\N	\N
+7	\N	2014-09-02 21:13:00.714053-04:30	2014-09-02 21:13:00.714053-04:30	F	1	1900-01-25	SASCM-0001	1	29	1	5	1	2014-09-24	14	DOLOR EN LA NALGAA	\N	cemmel	rancia	NALGA DAÑADA DEFECTUOSA	\N	\N	\N
+27	\N	2014-09-26 18:42:33.833452-04:30	2014-09-26 18:42:33.833452-04:30	R	8	2014-09-26	SASCM-0004	1	29	1	1	1	2014-09-26	1	\N	\N	\N	\N	\N	\N	\N	\N
 \.
 
 
@@ -25882,6 +25906,7 @@ COPY tiposolicitud (id, usuario_id, fecha_registro, fecha_modificado, nombre, ob
 5	\N	2014-06-02 16:44:56.932481-04:30	2014-06-02 16:44:56.932481-04:30	SERVICIOS FUNERARIOS	\N	SASSF-0
 6	\N	2014-07-29 01:01:02.633039-04:30	2014-07-29 01:01:02.633039-04:30	CARTA AVAL	\N	SASCA-0
 7	\N	2014-10-05 20:26:27.066834-04:30	2014-10-05 20:26:27.066834-04:30	REEMBOLSOS	\N	SASRE-0
+8	\N	2014-10-07 14:00:04.157898-04:30	2014-10-07 14:00:04.157898-04:30	MEDICINAS	\N	SASME-0
 \.
 
 
@@ -26180,6 +26205,7 @@ COPY titular (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1,
 282	\N	2014-09-30 13:33:22.638273-04:30	2014-09-30 13:33:22.638273-04:30	12123123	JUANCETES	\N	MORA	\N	V	M	1980-09-01	1	240	70	247	795	asdfasdfasdf	240	63	139	429	C	04167012111	\N	\N	N/A	4	2014-09-16	6	39	13	\N	1	default.png	\N	\N	\N	\N
 283	\N	2014-09-30 13:39:47.069974-04:30	2014-09-30 13:39:47.069974-04:30	87123123	RECARGAR	\N	KLDJKLL	\N	E	F	1990-09-01	1	240	69	233	743	adsfasdfas	240	58	67	205	D	04167012111	\N	\N	N/A	4	2009-12-01	6	12	3	\N	1	default.png	\N	\N	\N	\N
 284	\N	2014-09-30 15:39:05.984712-04:30	2014-09-30 15:39:05.984712-04:30	12098765	ISAAC	\N	GUITIERREZ	\N	V	F	1984-02-01	1	240	69	234	746	sdfsdfasdf	240	69	229	732	c	04125048738	\N	\N	A-	1	2014-09-23	4	7	14	FSDAFDFSDSD	1	default.png	\N	\N	\N	\N
+0	\N	2014-10-07 11:48:27.307608-04:30	2014-10-07 11:48:27.307608-04:30	----------	-----------------	-----------------	-----------------	-----------------	-	-	1900-01-01	1	240	69	234	746	-----------	240	69	229	732	-	----------	----------	----------	N/A	1	1900-01-01	1	1	1	\N	0	\N	\N	\N	\N	\N
 \.
 
 
