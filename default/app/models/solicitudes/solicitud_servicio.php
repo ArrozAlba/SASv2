@@ -172,6 +172,26 @@ class SolicitudServicio extends ActiveRecord {
             return $this->find("columns: $columnas", "join: $join", "conditions: $conditions", "order: $order", "page: $page");            
         }
     }
+    /*
+    Metodo para listar las Solicitudes con facturas cargadas (especialmente con los siniestros ya cargados 
+    */
+    public function getListadoFacturasSolicitudServicioReembolso($order='order.descripcion.asc', $page='',$tps,$empresa=null) {
+        $columnas = 'a.id as idsolicitudservicio, a.estado_solicitud, a.tiposolicitud_id, a.fecha_solicitud, a.codigo_solicitud, a.titular_id, a.beneficiario_id, a.proveedor_id, a.medico_id, a.servicio_id, a.fecha_vencimiento, a.observacion, c.celular, c.nombre1 as nombre, c.apellido1 as apellido, c.id as idtitular, d.id as idproveedor, d.nombre_corto as proveedor, e.id as idservicio, e.descripcion as servicio, g.id as idtiposolicitud, g.nombre as tiposolicitud,  h.nombre1 as nombreb, h.apellido1 as apellidob, h.id as idbeneficiario ';
+        $join= 'as a INNER JOIN titular as c ON (a.titular_id = c.id) ';
+        $join.= 'INNER JOIN proveedor as d ON (a.proveedor_id = d.id) ';
+        $join.= 'INNER JOIN servicio as e ON (a.servicio_id = e.id) ';
+        $join.= 'INNER JOIN tiposolicitud as g ON (a.tiposolicitud_id = g.id) ';
+        $join.= 'INNER JOIN beneficiario as h ON (a.beneficiario_id = h.id) ';
+        $conditions = "g.id = '$tps' and  (a.estado_solicitud = 'F' or a.estado_solicitud = 'G') ";
+        $order = $this->get_order($order, 'a', array('solicitud_servicio'=>array('ASC'=>'solicitud_servicio.descripcion ASC, solicitud_servicio.tipo_solicitud_servicio ASC',
+                                                                              'DESC'=>'solicitud_servicio.descripcion DESC, solicitud_servicio.tipo_solicitud_servicio ASC',
+                                                                              )));
+        if($page) {                
+            return $this->paginated("columns: $columnas", "join: $join", "conditions: $conditions", "order: $order", "page: $page");
+        } else {
+            return $this->find("columns: $columnas", "join: $join", "conditions: $conditions", "order: $order", "page: $page");            
+        }
+    }
 
     /**
      * Método que devuelve las sucursales
@@ -217,7 +237,14 @@ class SolicitudServicio extends ActiveRecord {
     /**
      * Método que se ejecuta antes de guardar y/o modificar     
      */
-    public function before_save() {        
+    public function before_save(){        
+     $actual = new DateTime("now");
+     $vencimiento = new DateTime($this->fecha_vencimiento);
+     if(($vencimiento<$actual)||($vencimiento=$actual)){
+        DwMessage::error('La Fecha de vencimiento no puede menor o igual a la fecha actual ');
+        return 'cancel';
+     }
+
     }
     
     /**
