@@ -41,14 +41,12 @@ class Patologia extends ActiveRecord {
     public function getListadoPatologia($order='order.nombre.asc', $page='', $empresa=null) {
         $columns = 'patologia.*';
         $join = '';        
-        //$conditions 
-        $order = $this->get_order($order, 'patologia', array('patologia'=>array('ASC'=>'patologia.nombre ASC, patologia.observacion ASC',
-                                                                              'DESC'=>'patologia.nombre DESC, patologia.observacion ASC'),
-                                                            'observacion'));
+        $conditions ="activo=TRUE ";
+        $order = $this->get_order($order, 'patologia', array('patologia'=>array('ASC'=>'patologia.nombre ASC, patologia.observacion ASC','DESC'=>'patologia.nombre DESC, patologia.observacion ASC'),'observacion'));
         if($page) {                
-            return $this->paginated("columns: $columns", "join: $join", "order: $order", "page: $page");
+            return $this->paginated("columns: $columns", "join: $join", "order: $order", "conditions: $conditions", "page: $page");
         } else {
-            return $this->find("columns: $columns", "join: $join", "order: $order", "page: $page");            
+            return $this->find("columns: $columns", "join: $join", "order: $order", "conditions: $conditions", "page: $page");            
         }
     }
     /**
@@ -79,7 +77,7 @@ class Patologia extends ActiveRecord {
    public function obtener_patologias($patologia) {
         if ($patologia != '') {
             $patologia = stripcslashes($patologia);
-            $res = $this->find('columns: id,descripcion', "descripcion like '%{$patologia}%'");
+            $res = $this->find('columns: id,descripcion', "descripcion like '%{$patologia}%' AND activo=TRUE" );
             if ($res) {
                 foreach ($res as $patologia) {
                     $patologias[] = array('id'=>$patologia->id,'value'=>$patologia->descripcion);
@@ -100,7 +98,7 @@ class Patologia extends ActiveRecord {
         $conditions = "descripcion = '$this->descripcion'";
         $conditions.= (isset($this->id)) ? " AND id != $this->id" : '';
         if($this->count("conditions: $conditions")) {
-            DwMessage::error('Lo sentimos, pero ya existe una sucursal registrada con el mismo nombre y ciudad.');
+            DwMessage::error('Lo sentimos, pero ya existe una patologia registrada con el mismo nombre.');
             return 'cancel';
         }
     }

@@ -54,6 +54,19 @@ class ProveedorController extends BackendController {
             //json_encode nos devolverá el array en formato json ["aragua","carabobo","..."]
         }
     }            
+    /*metodo para obtener los proveedores de tipo farmacia.. MEtodo solo lo usan las medicinas ;)*/
+    public function autocompleteFarmacia() {
+        View::template(NULL);
+        View::select(NULL);
+        if (Input::isAjax()) { //solo devolvemos los estados si se accede desde ajax 
+            $busqueda = Input::post('busqueda');
+            $proveedores = Load::model('proveedorsalud/proveedor')->obtener_proveedores_farmacias($busqueda);
+            die(json_encode($proveedores)); // solo devolvemos los datos, sin template ni vista
+            //json_encode nos devolverá el array en formato json ["aragua","carabobo","..."]
+        }
+    }      
+
+
     /**
      * Método para agregar
      */

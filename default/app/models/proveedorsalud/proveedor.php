@@ -46,7 +46,7 @@ class Proveedor extends ActiveRecord {
    public function obtener_proveedores($proveedor) {
         if ($proveedor != '') {
             $proveedor = stripcslashes(strtoupper($proveedor));
-            $res = $this->find('columns: id,nombre_corto, razon_social', "nombre_corto like '%{$proveedor}%' or razon_social like '%{$proveedor}%'");
+            $res = $this->find('columns: id,nombre_corto, razon_social', " nombre_corto like '%{$proveedor}%'  or  razon_social like '%{$proveedor}%' ");
             if ($res) {
                 foreach ($res as $proveedor) {
                     $proveedores[] = array('id'=>$proveedor->id,'value'=>$proveedor->nombre_corto);
@@ -55,7 +55,20 @@ class Proveedor extends ActiveRecord {
             }
         }
         return array('no hubo coincidencias');
-    }        
+    }
+    public function obtener_proveedores_farmacias($proveedor) {
+        if ($proveedor != '') {
+            $proveedor = stripcslashes(strtoupper($proveedor));
+            $res = $this->find('columns: id,nombre_corto, razon_social', " (nombre_corto like '%{$proveedor}%'  or  razon_social like '%{$proveedor}%' ) and (tipo='F') ");
+            if ($res) {
+                foreach ($res as $proveedor) {
+                    $proveedores[] = array('id'=>$proveedor->id,'value'=>$proveedor->nombre_corto);
+                }
+                return $proveedores;
+            }
+        }
+        return array('no hubo coincidencias');
+    }         
     /**
      * Método que devuelve las sucursales
      * @param string $order

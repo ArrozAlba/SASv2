@@ -127,7 +127,7 @@ class TitularController extends BackendController {
     /**
      * Método para listar
      */
-    public function listar($order='order.id.asc', $page='pag.1') { 
+    public function listar($order='order.id.desc', $page='pag.1') { 
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
         $titular = new Titular();
         $this->titulares = $titular->getListadoTitular('todos', $order, $page);

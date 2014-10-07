@@ -1,0 +1,60 @@
+<?php View::notify(); ?>
+<script type="text/javascript">
+    $(function() {
+        $('table').dwGrid({
+            order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
+            order_action: $.KumbiaPHP.publicPath+"solicitudes/solicitud_medicina/registro/"
+        });
+    });
+</script>
+<div class="container-fluid dw-shell-view">
+    <?php View::process($page_module, $page_title, $set_title); ?>
+    <div class="btn-toolbar btn-toolbar-top">
+        <div class="btn-actions">
+            <?php echo DwHtml::button("solicitudes/solicitud_medicina/agregar", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
+        </div>
+    </div>
+    <div class="dw-overflow">
+        <table class="table table-bordered table-hover table-striped table-condensed table-responsive">
+            <thead>
+                <tr>
+                    <th>NUM</th>
+                    <th class="col-collapse" data-search="fecha">FECHA</th>
+                    <th class="col-collapse" data-search="codigo">CODIGO</th>
+                    <th class="col-collapse" data-search="titular">TITULAR</th>
+                    <th class="col-collapse" data-search="beneficiario">BENEFICIARIO</th>
+                    <th class="col-collapse" data-search="proveedor">PROVEEDOR</th>
+                    <th class="col-collapse" data-search="servicio">SERVICIO</th>
+                    <th class="col-collapse" data-search="observacion">OBSERVACION</th>
+                    <th class="col-collapse" data-search="tiposolicitud">TIPO SOLICITUD</th>
+                    <th class="col-collapse" data-search="estado">ESTADO</th>
+                    <th class="btn-actions no-responsive" style="width: 100px;">ACCIONES</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($solicitud_medicinas->items as $solicitud_medicina): ?>
+                    <?php $key_upd = DwSecurity::getKey($solicitud_medicina->idsolicitudservicio, 'upd_solicitud_servicio'); ?>
+                    <?php $key_del = DwSecurity::getKey($solicitud_medicina->idsolicitudservicio, 'del_solicitud_servicio'); ?>
+                    <tr>
+                        <td><?php echo $solicitud_medicinas->counter; ?></td>
+                        <td><?php echo $solicitud_medicina->fecha_solicitud; ?></td>
+                        <td><?php echo $solicitud_medicina->codigo_solicitud; ?></td>
+                        <td><?php echo $solicitud_medicina->nombre; echo ' '; echo $solicitud_medicina->apellido;?></td>
+                        <td><?php echo $solicitud_medicina->nombreb; echo ' '; echo $solicitud_medicina->apellidob;?></td>
+                        <td><?php echo $solicitud_medicina->proveedor; ?></td>
+                        <td><?php echo $solicitud_medicina->servicio; ?></td>
+                        <td><?php echo $solicitud_medicina->observacion; ?></td>
+                        <td><?php echo $solicitud_medicina->tiposolicitud; ?></td>
+                        <td><?php echo ($solicitud_medicina->estado_solicitud == 'R') ? '<span class="label label-success" title="'.$solicitud_medicina->tiposolicitud.' PENDIENTE POR APROBAR" rel="tooltip">EN ESPERA </span>' : '<span class="label label-important" title="'.$solicitud_medicina->estado_solicitud.' RECHAZADA CON OBSERVACIONES" rel="tooltip">RECHAZADA</span>'; ; ?></td>
+                        <td>
+                         <?php echo ($solicitud_medicina->estado_solicitud == 'R') ? DwHtml::buttonTable('MODIFICAR', "solicitudes/solicitud_medicina/editar/$key_upd/", null, 'info','edit') : DwHtml::buttonTable('MODIFICAR', "solicitudes/solicitud_medicina/modificar/$key_upd/", null, 'info', 'edit');  ?>
+                            <?php echo DwHtml::buttonTable('Eliminar Solicitud', "solicitudes/solicitud_medicina/eliminar/$key_del/", array('class'=>'js-confirm', 'confirm-title'=>'Eliminar solicitud_medicina', 'confirm-body'=>'Está seguro de eliminar este solicitud_medicina? <br />Recuerda que esta operación no se puede reversar.'), 'danger', 'ban-circle'); ?>
+                        </td>
+                    </tr>
+                    <?php $solicitud_medicinas->counter++; ?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php View::partial('paginators/default', false, array('page'=>$solicitud_medicinas, 'url'=>"solicitudes/solicitud_medicina/listar/$order/")); ?>
+</div>
