@@ -660,7 +660,7 @@ CREATE TABLE cobertura (
     fecha_inicio date DEFAULT '1900-01-01'::date,
     fecha_fin date DEFAULT '1900-01-01'::date,
     observacion character varying(250),
-    tipo_cobertura_id integer NOT NULL
+    tipo_cobertura integer NOT NULL
 );
 
 
@@ -2933,8 +2933,8 @@ ALTER SEQUENCE patologia_categoria_id_seq OWNED BY patologia_categoria.id;
 
 CREATE TABLE patologia_cobertura (
     id integer NOT NULL,
-    patologia_id integer,
-    cobertura_id integer
+    patologia_id integer NOT NULL,
+    cobertura_id integer NOT NULL
 );
 
 
@@ -4100,7 +4100,7 @@ ALTER SEQUENCE sucursal_id_seq OWNED BY sucursal.id;
 
 CREATE TABLE tipo_cobertura (
     id integer NOT NULL,
-    desripcion character varying(200) NOT NULL,
+    descripcion character varying(200) NOT NULL,
     estatus integer DEFAULT 1 NOT NULL
 );
 
@@ -5692,6 +5692,7 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 1944	91099	postgres	2014-09-28 14:51:53.677925-04:30	127.0.0.1	DELETE	DELETE FROM public.beneficiario WHERE id = '172'::integer	beneficiario	{id,sexo,cedula,celular,nombre1,nombre2,telefono,apellido1,apellido2,titular_id,usuario_id,observacion,estado_civil,nacionalidad,parentesco_id,participacion,fecha_registro,fecha_exclusion,fecha_inclusion,grupo_sanguineo,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,estado_beneficiario,motivo_reactivacion,beneficiario_tipo_id}	{172,M,5464646464,NULL,ALEXI,NULL,NULL,BORHES,NULL,151,NULL,NULL,c,E,6,0,"2014-09-28 14:51:14.501247-04:30",1900-01-01,1900-01-01,N/A,"2014-09-28 14:51:14.501247-04:30",2014-05-06,NULL,NULL,1,NULL,2}	\N
 1945	91099	arrozalba	2014-09-28 14:52:38.829377-04:30	127.0.0.1	INSERT	INSERT INTO beneficiario (usuario_id,fecha_registro,fecha_modificado,cedula,nombre1,nombre2,apellido1,apellido2,nacionalidad,sexo,fecha_nacimiento,correo_electronico,grupo_sanguineo,fecha_inclusion,fecha_exclusion,celular,telefono,titular_id,beneficiario_tipo_id,observacion,participacion,parentesco_id,motivo_exclusion,motivo_reactivacion,estado_beneficiario,estado_civil) VALUES (NULL,DEFAULT,DEFAULT,'13132132','KJHKJH',NULL,'SDFASDFAS',NULL,'V','M','2014-04-10',NULL,DEFAULT,DEFAULT,DEFAULT,NULL,NULL,'151','1',NULL,'0','3',NULL,NULL,DEFAULT,'S')	beneficiario	\N	\N	{173,M,13132132,NULL,KJHKJH,NULL,NULL,SDFASDFAS,NULL,151,NULL,NULL,S,V,3,0,"2014-09-28 14:52:38.829377-04:30",1900-01-01,1900-01-01,N/A,"2014-09-28 14:52:38.829377-04:30",2014-04-10,NULL,NULL,1,NULL,1}
 1957	479670	jelitox	2014-09-30 11:07:20.435234-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET url='solicitudes/index'::text WHERE id = '29'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{29,solicitudes/,Solicitudes,icon-th,1,NULL,200,NULL,NULL,1,"2014-03-16 13:23:40.74219-04:30","2014-03-16 13:23:40.74219-04:30"}	{29,solicitudes/index,Solicitudes,icon-th,1,NULL,200,NULL,NULL,1,"2014-03-16 13:23:40.74219-04:30","2014-03-16 13:23:40.74219-04:30"}
+2069	97062	arrozalba	2014-10-06 19:16:06.949918-04:30	127.0.0.1	INSERT	INSERT INTO factura_dt (usuario_id,fecha_registro,fecha_modificado,descripcion,cantidad,monto,exento,factura_id) VALUES (NULL,DEFAULT,DEFAULT,'acetaminofen','2','45.9',NULL,'8')	factura_dt	\N	\N	{5,45.90,NULL,2,8,NULL,acetaminofen,"2014-10-06 19:16:06.949918-04:30","2014-10-06 19:16:06.949918-04:30"}
 1946	91099	arrozalba	2014-09-28 15:52:52.531909-04:30	127.0.0.1	UPDATE	UPDATE beneficiario SET cedula = '13132132',nombre1 = 'KJHKJH',nombre2 = NULL,apellido1 = 'SDFASDFAS',apellido2 = NULL,nacionalidad = 'V',sexo = 'M',fecha_nacimiento = '2014-04-10',correo_electronico = NULL,grupo_sanguineo = 'N/A',fecha_inclusion = '1900-01-01',fecha_exclusion = '2014-09-28',celular = NULL,telefono = NULL,titular_id = '151',beneficiario_tipo_id = '1',observacion = NULL,participacion = '0',parentesco_id = '3',motivo_exclusion = 'PRBANDO OSNIDO',motivo_reactivacion = NULL,estado_beneficiario = '0',estado_civil = 'S' WHERE  id = '173'	beneficiario	{id,sexo,cedula,celular,nombre1,nombre2,telefono,apellido1,apellido2,titular_id,usuario_id,observacion,estado_civil,nacionalidad,parentesco_id,participacion,fecha_registro,fecha_exclusion,fecha_inclusion,grupo_sanguineo,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,estado_beneficiario,motivo_reactivacion,beneficiario_tipo_id}	{173,M,13132132,NULL,KJHKJH,NULL,NULL,SDFASDFAS,NULL,151,NULL,NULL,S,V,3,0,"2014-09-28 14:52:38.829377-04:30",1900-01-01,1900-01-01,N/A,"2014-09-28 14:52:38.829377-04:30",2014-04-10,NULL,NULL,1,NULL,1}	{173,M,13132132,NULL,KJHKJH,NULL,NULL,SDFASDFAS,NULL,151,NULL,NULL,S,V,3,0,"2014-09-28 14:52:38.829377-04:30",2014-09-28,1900-01-01,N/A,"2014-09-28 14:52:38.829377-04:30",2014-04-10,"PRBANDO OSNIDO",NULL,0,NULL,1}
 1947	91099	postgres	2014-09-28 16:17:28.551381-04:30	127.0.0.1	UPDATE	UPDATE public.beneficiario SET fecha_exclusion=NULL::date WHERE id = '171'::integer	beneficiario	{id,sexo,cedula,celular,nombre1,nombre2,telefono,apellido1,apellido2,titular_id,usuario_id,observacion,estado_civil,nacionalidad,parentesco_id,participacion,fecha_registro,fecha_exclusion,fecha_inclusion,grupo_sanguineo,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,estado_beneficiario,motivo_reactivacion,beneficiario_tipo_id}	{171,M,145684879,04124578965,JUAN,NULL,02855789987,GALINDEZ,NULL,151,NULL,NULL,S,V,1,0,"2014-09-28 14:40:35.079764-04:30",1900-01-01,1900-01-01,N/A,"2014-09-28 14:40:35.079764-04:30",1988-09-01,NULL,NULL,1,NULL,2}	{171,M,145684879,04124578965,JUAN,NULL,02855789987,GALINDEZ,NULL,151,NULL,NULL,S,V,1,0,"2014-09-28 14:40:35.079764-04:30",NULL,1900-01-01,N/A,"2014-09-28 14:40:35.079764-04:30",1988-09-01,NULL,NULL,1,NULL,2}
 1948	91085	arrozalba	2014-09-30 09:51:09.393627-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{476,127.0.0.1,NULL,1,1,NULL,"2014-09-30 09:51:09.393627-04:30","2014-09-30 09:51:09.393627-04:30",NULL,NULL}
@@ -5785,6 +5786,7 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 2050	488018	jelitox	2014-10-05 18:45:00.288704-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Médico'::text WHERE id = '39'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{39,proveedorsalud/medico/listar,Medico,icon-user,1,36,603,35,NULL,1,"2014-04-22 10:09:32.70358-04:30","2014-04-22 10:09:32.70358-04:30"}	{39,proveedorsalud/medico/listar,Médico,icon-user,1,36,603,35,NULL,1,"2014-04-22 10:09:32.70358-04:30","2014-04-22 10:09:32.70358-04:30"}
 2051	488018	jelitox	2014-10-05 18:45:10.600966-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Aprobación'::text WHERE id = '48'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{48,solicitudes/solicitud_medicina/aprobacion,Aprobacion,icon-ok-sign,1,30,203,45,NULL,1,"2014-07-30 14:26:23.724504-04:30","2014-07-30 14:26:23.724504-04:30"}	{48,solicitudes/solicitud_medicina/aprobacion,Aprobación,icon-ok-sign,1,30,203,45,NULL,1,"2014-07-30 14:26:23.724504-04:30","2014-07-30 14:26:23.724504-04:30"}
 2052	488018	jelitox	2014-10-05 18:45:17.060694-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Aprobación'::text WHERE id = '52'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{52,solicitudes/solicitud_odontologica/aprobacion,Aprobacion,icon-ok-sign,1,32,223,49,NULL,1,"2014-07-30 15:19:32.343134-04:30","2014-07-30 15:19:32.343134-04:30"}	{52,solicitudes/solicitud_odontologica/aprobacion,Aprobación,icon-ok-sign,1,32,223,49,NULL,1,"2014-07-30 15:19:32.343134-04:30","2014-07-30 15:19:32.343134-04:30"}
+2068	97056	arrozalba	2014-10-06 19:16:06.949918-04:30	127.0.0.1	INSERT	INSERT INTO factura (usuario_id,fecha_registro,fecha_modificado,fecha_factura,nro_control,nro_factura,observacion,monto,iva) VALUES (NULL,DEFAULT,DEFAULT,'2014-10-06','1234','1234','CARGANDO FACTURAS PARCIALES ','141.80',NULL)	factura	\N	\N	{8,NULL,141.8,NULL,1234,1234,"CARGANDO FACTURAS PARCIALES ",2014-10-06,"2014-10-06 19:16:06.949918-04:30","2014-10-06 19:16:06.949918-04:30"}
 2053	488018	jelitox	2014-10-05 18:45:25.164643-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Aprobación'::text WHERE id = '56'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{56,solicitudes/solicitud_examen/aprobacion,Aprobacion,icon-ok-sign,1,33,233,53,NULL,1,"2014-07-30 15:55:38.334131-04:30","2014-07-30 15:55:38.334131-04:30"}	{56,solicitudes/solicitud_examen/aprobacion,Aprobación,icon-ok-sign,1,33,233,53,NULL,1,"2014-07-30 15:55:38.334131-04:30","2014-07-30 15:55:38.334131-04:30"}
 2054	488018	jelitox	2014-10-05 18:45:31.69311-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Aprobación'::text WHERE id = '60'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{60,solicitudes/solicitud_reembolso/aprobacion,Aprobacion,icon-ok-sign,1,34,243,57,NULL,1,"2014-07-30 16:03:33.102309-04:30","2014-07-30 16:03:33.102309-04:30"}	{60,solicitudes/solicitud_reembolso/aprobacion,Aprobación,icon-ok-sign,1,34,243,57,NULL,1,"2014-07-30 16:03:33.102309-04:30","2014-07-30 16:03:33.102309-04:30"}
 2055	488018	jelitox	2014-10-05 18:45:41.557256-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Aprobación'::text WHERE id = '64'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{64,solicitudes/solicitud_funeraria/aprobacion,Aprobacion,icon-ok-sign,1,35,253,65,NULL,1,"2014-07-30 16:07:03.414714-04:30","2014-07-30 16:07:03.414714-04:30"}	{64,solicitudes/solicitud_funeraria/aprobacion,Aprobación,icon-ok-sign,1,35,253,65,NULL,1,"2014-07-30 16:07:03.414714-04:30","2014-07-30 16:07:03.414714-04:30"}
@@ -5799,6 +5801,25 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 2064	489181	arrozalba	2014-10-06 08:47:04.42332-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{513,127.0.0.1,NULL,1,1,NULL,"2014-10-06 08:47:04.42332-04:30","2014-10-06 08:47:04.42332-04:30",NULL,NULL}
 2065	489181	arrozalba	2014-10-06 12:01:22.247922-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{514,127.0.0.1,NULL,1,1,NULL,"2014-10-06 12:01:22.247922-04:30","2014-10-06 12:01:22.247922-04:30",NULL,NULL}
 2066	489181	arrozalba	2014-10-06 13:39:03.9619-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{515,127.0.0.1,NULL,1,1,NULL,"2014-10-06 13:39:03.9619-04:30","2014-10-06 13:39:03.9619-04:30",NULL,NULL}
+2067	96929	arrozalba	2014-10-06 19:12:32.084629-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{516,127.0.0.1,NULL,1,1,NULL,"2014-10-06 19:12:32.084629-04:30","2014-10-06 19:12:32.084629-04:30",NULL,NULL}
+2070	97062	arrozalba	2014-10-06 19:16:06.949918-04:30	127.0.0.1	INSERT	INSERT INTO factura_dt (usuario_id,fecha_registro,fecha_modificado,descripcion,cantidad,monto,exento,factura_id) VALUES (NULL,'2014-10-06 19:16:06.949918-04:30','2014-10-06 19:16:06.949918-04:30','AGUA ','1','50',NULL,'8')	factura_dt	\N	\N	{6,50.00,NULL,1,8,NULL,"AGUA ","2014-10-06 19:16:06.949918-04:30","2014-10-06 19:16:06.949918-04:30"}
+2071	97056	arrozalba	2014-10-06 19:17:14.151046-04:30	127.0.0.1	INSERT	INSERT INTO factura (usuario_id,fecha_registro,fecha_modificado,fecha_factura,nro_control,nro_factura,observacion,monto,iva) VALUES (NULL,DEFAULT,DEFAULT,'2014-10-01','12','23','HHH','76.50',NULL)	factura	\N	\N	{9,NULL,76.5,NULL,12,23,HHH,2014-10-01,"2014-10-06 19:17:14.151046-04:30","2014-10-06 19:17:14.151046-04:30"}
+2072	97062	arrozalba	2014-10-06 19:17:14.151046-04:30	127.0.0.1	INSERT	INSERT INTO factura_dt (usuario_id,fecha_registro,fecha_modificado,descripcion,cantidad,monto,exento,factura_id) VALUES (NULL,DEFAULT,DEFAULT,'articulo 1','1','25.5',NULL,'9')	factura_dt	\N	\N	{7,25.50,NULL,1,9,NULL,"articulo 1","2014-10-06 19:17:14.151046-04:30","2014-10-06 19:17:14.151046-04:30"}
+2073	97062	arrozalba	2014-10-06 19:17:14.151046-04:30	127.0.0.1	INSERT	INSERT INTO factura_dt (usuario_id,fecha_registro,fecha_modificado,descripcion,cantidad,monto,exento,factura_id) VALUES (NULL,'2014-10-06 19:17:14.151046-04:30','2014-10-06 19:17:14.151046-04:30','arituclo 2','2','25.5',NULL,'9')	factura_dt	\N	\N	{8,25.50,NULL,2,9,NULL,"arituclo 2","2014-10-06 19:17:14.151046-04:30","2014-10-06 19:17:14.151046-04:30"}
+2074	97056	arrozalba	2014-10-06 19:18:32.296466-04:30	127.0.0.1	INSERT	INSERT INTO factura (usuario_id,fecha_registro,fecha_modificado,fecha_factura,nro_control,nro_factura,observacion,monto,iva) VALUES (NULL,DEFAULT,DEFAULT,'2014-10-06','43','23',NULL,'153.00',NULL)	factura	\N	\N	{10,NULL,153,NULL,43,23,NULL,2014-10-06,"2014-10-06 19:18:32.296466-04:30","2014-10-06 19:18:32.296466-04:30"}
+2075	97062	arrozalba	2014-10-06 19:18:32.296466-04:30	127.0.0.1	INSERT	INSERT INTO factura_dt (usuario_id,fecha_registro,fecha_modificado,descripcion,cantidad,monto,exento,factura_id) VALUES (NULL,DEFAULT,DEFAULT,'arituclo 2','3','25.5',NULL,'10')	factura_dt	\N	\N	{9,25.50,NULL,3,10,NULL,"arituclo 2","2014-10-06 19:18:32.296466-04:30","2014-10-06 19:18:32.296466-04:30"}
+2076	97062	arrozalba	2014-10-06 19:18:32.296466-04:30	127.0.0.1	INSERT	INSERT INTO factura_dt (usuario_id,fecha_registro,fecha_modificado,descripcion,cantidad,monto,exento,factura_id) VALUES (NULL,'2014-10-06 19:18:32.296466-04:30','2014-10-06 19:18:32.296466-04:30','articulo 1','3','25.5',NULL,'10')	factura_dt	\N	\N	{10,25.50,NULL,3,10,NULL,"articulo 1","2014-10-06 19:18:32.296466-04:30","2014-10-06 19:18:32.296466-04:30"}
+2077	97237	arrozalba	2014-10-06 19:18:32.412563-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET estado_solicitud = 'G',tiposolicitud_id = '1',fecha_solicitud = '1900-01-25',codigo_solicitud = 'SASCM-0001',titular_id = '1',beneficiario_id = '29',proveedor_id = '5',medico_id = '1',fecha_vencimiento = '2014-09-24',servicio_id = '14',observacion = 'cemmel',motivo_rechazo = 'rancia' WHERE  id = '7'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,multifactura,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,"DOLOR EN LA NALGAA",1,1,NULL,"NALGA DAÑADA DEFECTUOSA",cemmel,14,NULL,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,"DOLOR EN LA NALGAA",1,1,NULL,"NALGA DAÑADA DEFECTUOSA",cemmel,14,NULL,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,G,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
+2078	96929	arrozalba	2014-10-06 21:51:59.940914-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{517,127.0.0.1,NULL,1,1,NULL,"2014-10-06 21:51:59.940914-04:30","2014-10-06 21:51:59.940914-04:30",NULL,NULL}
+2079	97056	arrozalba	2014-10-06 21:52:37.406428-04:30	127.0.0.1	INSERT	INSERT INTO factura (usuario_id,fecha_registro,fecha_modificado,fecha_factura,nro_control,nro_factura,observacion,monto,iva) VALUES (NULL,DEFAULT,DEFAULT,'2014-10-05','1','34','asdfsdf','702.00',NULL)	factura	\N	\N	{11,NULL,702,NULL,1,34,asdfsdf,2014-10-05,"2014-10-06 21:52:37.406428-04:30","2014-10-06 21:52:37.406428-04:30"}
+2080	97062	arrozalba	2014-10-06 21:52:37.406428-04:30	127.0.0.1	INSERT	INSERT INTO factura_dt (usuario_id,fecha_registro,fecha_modificado,descripcion,cantidad,monto,exento,factura_id) VALUES (NULL,DEFAULT,DEFAULT,'dfasdf','3','234',NULL,'11')	factura_dt	\N	\N	{11,234.00,NULL,3,11,NULL,dfasdf,"2014-10-06 21:52:37.406428-04:30","2014-10-06 21:52:37.406428-04:30"}
+2081	97237	arrozalba	2014-10-06 21:52:37.528518-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET estado_solicitud = 'F',tiposolicitud_id = '1',fecha_solicitud = '1900-01-25',codigo_solicitud = 'SASCM-0001',titular_id = '1',beneficiario_id = '29',proveedor_id = '5',medico_id = '1',fecha_vencimiento = '2014-09-24',servicio_id = '14',observacion = 'cemmel',motivo_rechazo = 'rancia' WHERE  id = '7'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,multifactura,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,"DOLOR EN LA NALGAA",1,1,NULL,"NALGA DAÑADA DEFECTUOSA",cemmel,14,NULL,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,G,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,"DOLOR EN LA NALGAA",1,1,NULL,"NALGA DAÑADA DEFECTUOSA",cemmel,14,NULL,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,F,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
+2082	96973	arrozalba	2014-10-06 22:22:56.717546-04:30	127.0.0.1	INSERT	INSERT INTO cobertura (usuario_id,fecha_registro,fecha_modificado,descripcion,monto_cobertura,fecha_inicio,fecha_fin,observacion,tipo_cobertura) VALUES (NULL,DEFAULT,DEFAULT,'ODONTOLOGIA','6000','2014-01-01','2014-12-31','duracion de la cobertura anual de odontologia','2')	cobertura	\N	\N	{2,2014-12-31,NULL,ODONTOLOGIA,"duracion de la cobertura anual de odontologia",2014-01-01,"2014-10-06 22:22:56.717546-04:30",2,6000.00,"2014-10-06 22:22:56.717546-04:30"}
+2083	96973	postgres	2014-10-06 22:23:57.286885-04:30	127.0.0.1	UPDATE	UPDATE public.cobertura SET observacion='COBERTURA ANUAL DE ODONTOLOGIA'::text WHERE id = '2'::integer	cobertura	{id,fecha_fin,usuario_id,descripcion,observacion,fecha_inicio,fecha_registro,tipo_cobertura,monto_cobertura,fecha_modificado}	{2,2014-12-31,NULL,ODONTOLOGIA,"duracion de la cobertura anual de odontologia",2014-01-01,"2014-10-06 22:22:56.717546-04:30",2,6000.00,"2014-10-06 22:22:56.717546-04:30"}	{2,2014-12-31,NULL,ODONTOLOGIA,"COBERTURA ANUAL DE ODONTOLOGIA",2014-01-01,"2014-10-06 22:22:56.717546-04:30",2,6000.00,"2014-10-06 22:22:56.717546-04:30"}
+2084	96929	arrozalba	2014-10-07 08:19:37.295158-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{518,127.0.0.1,NULL,1,1,NULL,"2014-10-07 08:19:37.295158-04:30","2014-10-07 08:19:37.295158-04:30",NULL,NULL}
+2085	97203	arrozalba	2014-10-07 09:03:58.185244-04:30	127.0.0.1	INSERT	INSERT INTO recurso (usuario_id,fecha_registro,fecha_modificado,modulo,controlador,accion,recurso,descripcion,activo) VALUES (NULL,DEFAULT,DEFAULT,'config','patologia_cobertura','*','config/patologia_cobertura/*','Pantalla para casar las patologías y las coberturas','1')	recurso	\N	\N	{72,*,1,config,config/patologia_cobertura/*,NULL,patologia_cobertura,"Pantalla para casar las patologías y las coberturas","2014-10-07 09:03:58.185244-04:30","2014-10-07 09:03:58.185244-04:30"}
+2086	97105	arrozalba	2014-10-07 09:08:13.046876-04:30	127.0.0.1	INSERT	INSERT INTO menu (usuario_id,fecha_registro,fecha_modificado,menu_id,recurso_id,menu,url,posicion,icono,activo,visibilidad) VALUES (NULL,DEFAULT,DEFAULT,'15','72','Patologias Coberturas','config/patologia_cobertura/','0',NULL,'1','1')	menu	\N	\N	{75,config/patologia_cobertura/,"Patologias Coberturas",NULL,1,15,0,72,NULL,1,"2014-10-07 09:08:13.046876-04:30","2014-10-07 09:08:13.046876-04:30"}
+2087	96973	arrozalba	2014-10-07 10:23:19.231891-04:30	127.0.0.1	INSERT	INSERT INTO cobertura (usuario_id,fecha_registro,fecha_modificado,descripcion,monto_cobertura,fecha_inicio,fecha_fin,observacion,tipo_cobertura) VALUES (NULL,DEFAULT,DEFAULT,'ATENCION PRIMARIA','30000','2014-01-01','2014-12-31','ATENCION PRIMARY','2')	cobertura	\N	\N	{3,2014-12-31,NULL,"ATENCION PRIMARIA","ATENCION PRIMARY",2014-01-01,"2014-10-07 10:23:19.231891-04:30",2,30000.00,"2014-10-07 10:23:19.231891-04:30"}
 \.
 
 
@@ -5806,7 +5827,7 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 -- Name: audit_log_log_id_seq; Type: SEQUENCE SET; Schema: audit_log; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('audit_log_log_id_seq', 2066, true);
+SELECT pg_catalog.setval('audit_log_log_id_seq', 2087, true);
 
 
 SET search_path = public, pg_catalog;
@@ -6087,6 +6108,9 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 513	1	2014-10-06 08:47:04.42332-04:30	2014-10-06 08:47:04.42332-04:30	1	\N	\N	\N	\N	127.0.0.1
 514	1	2014-10-06 12:01:22.247922-04:30	2014-10-06 12:01:22.247922-04:30	1	\N	\N	\N	\N	127.0.0.1
 515	1	2014-10-06 13:39:03.9619-04:30	2014-10-06 13:39:03.9619-04:30	1	\N	\N	\N	\N	127.0.0.1
+516	1	2014-10-06 19:12:32.084629-04:30	2014-10-06 19:12:32.084629-04:30	1	\N	\N	\N	\N	127.0.0.1
+517	1	2014-10-06 21:51:59.940914-04:30	2014-10-06 21:51:59.940914-04:30	1	\N	\N	\N	\N	127.0.0.1
+518	1	2014-10-07 08:19:37.295158-04:30	2014-10-07 08:19:37.295158-04:30	1	\N	\N	\N	\N	127.0.0.1
 \.
 
 
@@ -6094,7 +6118,7 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 -- Name: acceso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('acceso_id_seq', 515, true);
+SELECT pg_catalog.setval('acceso_id_seq', 518, true);
 
 
 --
@@ -6327,7 +6351,9 @@ SELECT pg_catalog.setval('cargo_id_seq', 21, true);
 -- Data for Name: cobertura; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
-COPY cobertura (id, usuario_id, fecha_registro, fecha_modificado, descripcion, monto_cobertura, fecha_inicio, fecha_fin, observacion, tipo_cobertura_id) FROM stdin;
+COPY cobertura (id, usuario_id, fecha_registro, fecha_modificado, descripcion, monto_cobertura, fecha_inicio, fecha_fin, observacion, tipo_cobertura) FROM stdin;
+2	\N	2014-10-06 22:22:56.717546-04:30	2014-10-06 22:22:56.717546-04:30	ODONTOLOGIA	6000.00	2014-01-01	2014-12-31	COBERTURA ANUAL DE ODONTOLOGIA	2
+3	\N	2014-10-07 10:23:19.231891-04:30	2014-10-07 10:23:19.231891-04:30	ATENCION PRIMARIA	30000.00	2014-01-01	2014-12-31	ATENCION PRIMARY	2
 \.
 
 
@@ -6335,7 +6361,7 @@ COPY cobertura (id, usuario_id, fecha_registro, fecha_modificado, descripcion, m
 -- Name: cobertura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('cobertura_id_seq', 1, true);
+SELECT pg_catalog.setval('cobertura_id_seq', 3, true);
 
 
 --
@@ -6646,6 +6672,10 @@ SELECT pg_catalog.setval('estado_usuario_id_seq', 17, true);
 --
 
 COPY factura (usuario_id, fecha_registro, fecha_modificado, fecha_factura, nro_control, nro_factura, observacion, monto, iva, id) FROM stdin;
+\N	2014-10-06 19:16:06.949918-04:30	2014-10-06 19:16:06.949918-04:30	2014-10-06	1234	1234	CARGANDO FACTURAS PARCIALES 	141.800000000000011	\N	8
+\N	2014-10-06 19:17:14.151046-04:30	2014-10-06 19:17:14.151046-04:30	2014-10-01	12	23	HHH	76.5	\N	9
+\N	2014-10-06 19:18:32.296466-04:30	2014-10-06 19:18:32.296466-04:30	2014-10-06	43	23	\N	153	\N	10
+\N	2014-10-06 21:52:37.406428-04:30	2014-10-06 21:52:37.406428-04:30	2014-10-05	1	34	asdfsdf	702	\N	11
 \.
 
 
@@ -6654,6 +6684,13 @@ COPY factura (usuario_id, fecha_registro, fecha_modificado, fecha_factura, nro_c
 --
 
 COPY factura_dt (usuario_id, fecha_registro, fecha_modificado, descripcion, cantidad, monto, exento, factura_id, id) FROM stdin;
+\N	2014-10-06 19:16:06.949918-04:30	2014-10-06 19:16:06.949918-04:30	acetaminofen	2	45.90	\N	8	5
+\N	2014-10-06 19:16:06.949918-04:30	2014-10-06 19:16:06.949918-04:30	AGUA 	1	50.00	\N	8	6
+\N	2014-10-06 19:17:14.151046-04:30	2014-10-06 19:17:14.151046-04:30	articulo 1	1	25.50	\N	9	7
+\N	2014-10-06 19:17:14.151046-04:30	2014-10-06 19:17:14.151046-04:30	arituclo 2	2	25.50	\N	9	8
+\N	2014-10-06 19:18:32.296466-04:30	2014-10-06 19:18:32.296466-04:30	arituclo 2	3	25.50	\N	10	9
+\N	2014-10-06 19:18:32.296466-04:30	2014-10-06 19:18:32.296466-04:30	articulo 1	3	25.50	\N	10	10
+\N	2014-10-06 21:52:37.406428-04:30	2014-10-06 21:52:37.406428-04:30	dfasdf	3	234.00	\N	11	11
 \.
 
 
@@ -6661,14 +6698,14 @@ COPY factura_dt (usuario_id, fecha_registro, fecha_modificado, descripcion, cant
 -- Name: factura_dt_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('factura_dt_id_seq', 4, true);
+SELECT pg_catalog.setval('factura_dt_id_seq', 11, true);
 
 
 --
 -- Name: factura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('factura_id_seq', 7, true);
+SELECT pg_catalog.setval('factura_id_seq', 11, true);
 
 
 --
@@ -8857,6 +8894,7 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 36	\N	2014-04-22 09:51:53.400012-04:30	2014-04-22 09:51:53.400012-04:30	\N	\N	Provedores de Salud	proveedorsalud/proveedor/listar	600	icon-group	1	1
 19	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	18	Profesión	config/profesion/listar	803	\N	1	1
 72	\N	2014-08-20 14:31:37.537946-04:30	2014-08-20 14:31:37.537946-04:30	3	69	Contraseñas	sistema/usuario_clave/cambiar_clave	912	\N	1	1
+75	\N	2014-10-07 09:08:13.046876-04:30	2014-10-07 09:08:13.046876-04:30	15	72	Patologias Coberturas	config/patologia_cobertura/	0	\N	1	1
 \.
 
 
@@ -8864,7 +8902,7 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 -- Name: menu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('menu_id_seq', 74, true);
+SELECT pg_catalog.setval('menu_id_seq', 75, true);
 
 
 --
@@ -25152,7 +25190,7 @@ COPY patologia_cobertura (id, patologia_id, cobertura_id) FROM stdin;
 -- Name: patologia_cobertura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('patologia_cobertura_id_seq', 1, false);
+SELECT pg_catalog.setval('patologia_cobertura_id_seq', 5, true);
 
 
 --
@@ -25522,6 +25560,7 @@ COPY recurso (id, usuario_id, fecha_registro, fecha_modificado, modulo, controla
 69	\N	2014-08-20 14:29:28.051792-04:30	2014-08-20 14:29:28.051792-04:30	sistema	usuario_clave	cambiar_clave	sistema/usuario_clave/cambiar_clave	Modulo para la gestion de cambio de clave	1
 71	\N	2014-09-06 15:50:53.459536-04:30	2014-09-06 15:50:53.459536-04:30	solicitudes	solicitud_servicio	facturacion	solicitudes/solicitud_servicio/facturacion	CArgar las facturas con sus detalles al siniestro respectivo	1
 70	\N	2014-09-06 14:39:26.552626-04:30	2014-09-06 14:39:26.552626-04:30	solicitudes	solicitud_servicio	pagos	solicitudes/solicitud_servicio/pagos	Pagar las facturas correspondientes a las facturas	1
+72	\N	2014-10-07 09:03:58.185244-04:30	2014-10-07 09:03:58.185244-04:30	config	patologia_cobertura	*	config/patologia_cobertura/*	Pantalla para casar las patologías y las coberturas	1
 \.
 
 
@@ -25529,7 +25568,7 @@ COPY recurso (id, usuario_id, fecha_registro, fecha_modificado, modulo, controla
 -- Name: recurso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('recurso_id_seq', 71, true);
+SELECT pg_catalog.setval('recurso_id_seq', 72, true);
 
 
 --
@@ -25646,7 +25685,7 @@ COPY recurso_perfil (id, usuario_id, fecha_registro, fecha_modificado, recurso_i
 -- Name: recurso_perfil_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('recurso_perfil_id_seq', 419, true);
+SELECT pg_catalog.setval('recurso_perfil_id_seq', 420, true);
 
 
 --
@@ -25722,10 +25761,10 @@ SELECT pg_catalog.setval('servicio_tiposolicitud_id_seq', 1, false);
 --
 
 COPY solicitud_servicio (id, usuario_id, fecha_registro, fecha_modificado, estado_solicitud, tiposolicitud_id, fecha_solicitud, codigo_solicitud, titular_id, beneficiario_id, beneficiario_tipo, proveedor_id, medico_id, fecha_vencimiento, servicio_id, motivo, motivo_anulacion, observacion, motivo_rechazo, diagnostico, multifactura) FROM stdin;
-7	\N	2014-09-02 21:13:00.714053-04:30	2014-09-02 21:13:00.714053-04:30	S	1	1900-01-25	SASCM-0001	1	29	1	5	1	2014-09-24	14	DOLOR EN LA NALGAA	\N	cemmel	rancia	NALGA DAÑADA DEFECTUOSA	\N
 19	\N	2014-09-03 09:39:35.149734-04:30	2014-09-03 09:39:35.149734-04:30	S	1	2014-09-03	SASCM-0003	1	29	1	1	1	2014-09-18	1	\N	\N	ESCRIBIENDO UNA OBSERVACION LO SUFICIENTEMENTE GRANDE PARA VER COMPORTAMIENTO	\N	\N	\N
 8	\N	2014-09-02 21:27:31.841705-04:30	2014-09-02 21:27:31.841705-04:30	A	1	2014-09-02	SASCM-0002	1	29	1	5	1	2014-09-02	3	no fue la mejor cpcio tiene que cmbia rl lkjhy jdk djme pal akdfj wqodcuyg hfsd fasd jksdftgdn kiNBSDY  OIY   	\N	camb ianda para poder ahora si aprobar	no fue la mejor cpcio tiene que cmbia rl lkjhy jdk djme pal akdfj wqodcuyg hfsd fasd jksdftgdn kiNBSDY  OIY   	\N	\N
 27	\N	2014-09-26 18:42:33.833452-04:30	2014-09-26 18:42:33.833452-04:30	R	1	2014-09-26	SASCM-0004	1	29	1	1	1	2014-09-26	1	\N	\N	\N	\N	\N	\N
+7	\N	2014-09-02 21:13:00.714053-04:30	2014-09-02 21:13:00.714053-04:30	F	1	1900-01-25	SASCM-0001	1	29	1	5	1	2014-09-24	14	DOLOR EN LA NALGAA	\N	cemmel	rancia	NALGA DAÑADA DEFECTUOSA	\N
 \.
 
 
@@ -25734,6 +25773,10 @@ COPY solicitud_servicio (id, usuario_id, fecha_registro, fecha_modificado, estad
 --
 
 COPY solicitud_servicio_factura (id, solicitud_servicio_id, factura_id) FROM stdin;
+1	7	8
+2	7	9
+3	7	10
+4	7	11
 \.
 
 
@@ -25741,7 +25784,7 @@ COPY solicitud_servicio_factura (id, solicitud_servicio_id, factura_id) FROM std
 -- Name: solicitud_servicio_factura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('solicitud_servicio_factura_id_seq', 1, false);
+SELECT pg_catalog.setval('solicitud_servicio_factura_id_seq', 4, true);
 
 
 --
@@ -25795,7 +25838,9 @@ SELECT pg_catalog.setval('sucursal_id_seq', 4, true);
 -- Data for Name: tipo_cobertura; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
-COPY tipo_cobertura (id, desripcion, estatus) FROM stdin;
+COPY tipo_cobertura (id, descripcion, estatus) FROM stdin;
+1	INDIVIDUAL	1
+2	GRUPAL	1
 \.
 
 
@@ -25803,7 +25848,7 @@ COPY tipo_cobertura (id, desripcion, estatus) FROM stdin;
 -- Name: tipo_cpbertura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('tipo_cpbertura_id_seq', 1, false);
+SELECT pg_catalog.setval('tipo_cpbertura_id_seq', 2, true);
 
 
 --
@@ -27798,7 +27843,7 @@ ALTER TABLE ONLY cobertura
 --
 
 ALTER TABLE ONLY cobertura
-    ADD CONSTRAINT coberura_tipo_cobertura_id_fkey FOREIGN KEY (tipo_cobertura_id) REFERENCES tipo_cobertura(id);
+    ADD CONSTRAINT coberura_tipo_cobertura_id_fkey FOREIGN KEY (tipo_cobertura) REFERENCES tipo_cobertura(id);
 
 
 --

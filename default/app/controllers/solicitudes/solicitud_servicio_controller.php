@@ -177,7 +177,7 @@ class SolicitudServicioController extends BackendController {
             }
             else{
                 ActiveRecord::rollbackTrans();
-                DwMessage::error('La Factura ha dao peos!');
+                DwMessage::error('La Factura no se ha cargado con exito!');
             }
         }
         $this->solicitud_servicio = $solicitud_servicio;

@@ -6,7 +6,7 @@
  *
  * @category    
  * @package     Controllers 
- * @author      Iván D. Meléndez (ivan.melendez@dailycript.com.co)
+ * @author      ALexis Borges
  * @copyright   Copyright (c) 2013 Dailyscript Team (http://www.dailyscript.com.co)
  */
 
