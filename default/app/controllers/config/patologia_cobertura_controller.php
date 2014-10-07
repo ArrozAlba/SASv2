@@ -28,7 +28,6 @@ class PatologiaCoberturaController extends BackendController {
      * Método para listar
      */
     public function listar($order='order.modulo.asc', $page='pag.1') { 
-        
         if(Input::hasPost('patocobers') OR Input::hasPost('old_patocobers')) {
             if(PatologiaCobertura::setPatologiaCobertura(Input::post('patocobers'), Input::post('old_patocobers'))) {
                 DwMessage::valid('Los patologias se han asociado correcatamete a las coberturas!');                
