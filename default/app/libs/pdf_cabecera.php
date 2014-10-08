@@ -9,8 +9,8 @@ class PDF extends FPDF
 	function Header()
 	{
 		//Logo Reparar Ruta
-		//$ruta = 'cintillo.png';
-		//$this->Image($ruta,8,8,199,25);
+		echo $ruta = PUBLIC_PATH;
+		$this->Image($ruta,8,8,199,25);
 		//Título		
 		$t=utf8_decode('PLANILLA DE AFILIACIÓN');
 		$this->Ln(20);
