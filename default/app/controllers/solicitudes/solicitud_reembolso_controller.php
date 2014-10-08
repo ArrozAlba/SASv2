@@ -16,7 +16,7 @@ Load::models('proveedorsalud/servicio');
 Load::models('proveedorsalud/medico');
 Load::models('proveedorsalud/especialidad');
 Load::models('beneficiarios/titular');
-Load::models('beneficiarios/beneficiario', 'solicitudes/solicitud_servicio');
+Load::models('beneficiarios/beneficiario', 'solicitudes/solicitud_servicio', 'solicitudes/hreembolso');
 Load::models('config/patologia', 'solicitudes/solicitud_servicio_patologia', 'solicitudes/solicitud_servicio_factura');
 
 class SolicitudReembolsoController extends BackendController {
@@ -35,27 +35,48 @@ class SolicitudReembolsoController extends BackendController {
      * Método principal
      */
     public function index() {
-        DwRedirect::toAction('registro');
+        DwRedirect::toAction('index');
     }
+    /**
+     * Método para buscar
+     */
+    public function buscar($field='nombre1', $value='none', $order='order.id.asc', $page=1) {        
+        $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
+        $field = (Input::hasPost('field')) ? Input::post('field') : $field;
+        $value = (Input::hasPost('field')) ? Input::post('value') : $value;
+        $value = strtoupper($value);
+        $reembolso = new Hreembolso();
+        $reembolsos = $reembolso->getAjaxReembolsos($field, $value, $order, $page);        
+        if(empty($reembolsos->items)) {
+            DwMessage::info('No se han encontrado registros');
+        }
+        $this->reembolsos = $reembolsos;
+        $this->order = $order;
+        $this->field = $field;
+        $this->value = $value;
+        $this->page_title = 'Búsqueda de Reemnbolsos del sistema';        
+    }    
+
+
     /**
      * Método para listar
      */
     public function listar($order='order.nombre.asc', $page='pag.1') { 
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
         $solicitud_reembolso = new SolicitudServicio();        
-        $this->solicitud_reembolsos = $solicitud_reembolso->getListadoReembolso($order, $page);
+        $this->solicitud_reembolsos = $solicitud_reembolso->getListadoSolicitudServicio($order, $page);
         $this->order = $order;        
         $this->page_title = 'Listado de Solicitudes de Atención Primaria';
     }
     /**
      * Método para registro
      */
-    public function registro($order='order.nombre.asc', $page='pag.1') { 
+    public function registro($order='order.titular.asc', $page='pag.1') { 
         $page = (Filter::get($page, 'page') > 0) ? Filter::get($page, 'page') : 1;
-        $solicitud_reembolso = new SolicitudServicio();        
-        $this->solicitud_reembolsos = $solicitud_reembolso->getListadoFacturasSolicitudServicioReembolso($order, $page, $tps=self::TPS);
+        $solicitud_reembolso = new Hreembolso();        
+        $this->solicitud_reembolsos = $solicitud_reembolso->getListadoHReembolso($order, $page);
         $this->order = $order;        
-        $this->page_title = 'Registro de Solicitudes de Atención Primaria';
+        $this->page_title = 'Registro de Solicitudes de Reembolso';
     }
     /**
      * Método para aprobacion

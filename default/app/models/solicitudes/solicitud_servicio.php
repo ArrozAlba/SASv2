@@ -200,14 +200,14 @@ class SolicitudServicio extends ActiveRecord {
      * @return ActiveRecord
      */
     public function getListadoSolicitudServicio($order='order.descripcion.asc', $page='', $empresa=null) {
-        $columnas = 'a.id as idsolicitudservicio, a.estado_solicitud, a.tiposolicitud_id, a.fecha_solicitud, a.codigo_solicitud, a.titular_id, a.beneficiario_id, a.patologia_id, a.proveedor_id, a.medico_id, a.servicio_id, a.fecha_vencimiento, a.observacion, c.celular, c.nombre1 as nombre, c.apellido1 as apellido, c.id as idtitular, d.id as idproveedor, d.nombre_corto as proveedor, e.id as idservicio, e.descripcion as servicio, f.id idpatologia, f.descripcion as patologia, g.id as idtiposolicitud, g.nombre as tiposolicitud ';
+        $columnas = 'a.id as idsolicitudservicio, a.estado_solicitud, a.tiposolicitud_id, a.fecha_solicitud, a.codigo_solicitud, a.titular_id, a.beneficiario_id, a.proveedor_id, a.medico_id, a.servicio_id, a.fecha_vencimiento, a.observacion, c.celular, c.nombre1 as nombre, c.apellido1 as apellido, c.id as idtitular, d.id as idproveedor, d.nombre_corto as proveedor, e.id as idservicio, e.descripcion as servicio, g.id as idtiposolicitud, g.nombre as tiposolicitud, h.nombre1 as nombreb, h.apellido1 as apellidob, h.id as idbeneficiario ';
         $join= 'as a INNER JOIN titular as c ON (a.titular_id = c.id) ';
         $join.= 'INNER JOIN proveedor as d ON (a.proveedor_id = d.id) ';
         $join.= 'INNER JOIN servicio as e ON (a.servicio_id = e.id) ';
-        $join.= 'INNER JOIN patologia as f ON (a.patologia_id = f.id) ';
         $join.= 'INNER JOIN tiposolicitud as g ON (a.tiposolicitud_id = g.id) ';
+        $join.= 'INNER JOIN beneficiario as h ON (a.beneficiario_id = h.id) ';
         $conditions = "";
-        $order = $this->get_order($order, 'solicitud_servicio', array('solicitud_servicio'=>array('ASC'=>'solicitud_servicio.descripcion ASC, solicitud_servicio.tipo_solicitud_servicio ASC',
+        $order = $this->get_order($order, 'a', array('solicitud_servicio'=>array('ASC'=>'solicitud_servicio.descripcion ASC, solicitud_servicio.tipo_solicitud_servicio ASC',
                                                                               'DESC'=>'solicitud_servicio.descripcion DESC, solicitud_servicio.tipo_solicitud_servicio ASC',
                                                                               )));
         if($page) {                
@@ -216,6 +216,34 @@ class SolicitudServicio extends ActiveRecord {
             return $this->find("columns: $columnas", "join: $join", "order: $order", "page: $page");            
         }
     }
+    // REPORTE FILTRADO PARA EL REEMBOLSO 
+    public function getListadoReembolsoPersona($fechai, $fechaf, $titular){
+        $columnas = 'a.id as idsolicitudservicio, a.estado_solicitud, a.tiposolicitud_id, a.fecha_solicitud, a.codigo_solicitud, a.titular_id, a.beneficiario_id, a.proveedor_id, a.medico_id, a.servicio_id, a.fecha_vencimiento, a.observacion, c.celular, c.nombre1 as nombre, c.apellido1 as apellido, c.id as idtitular, d.id as idproveedor, d.nombre_corto as proveedor, e.id as idservicio, e.descripcion as servicio, g.id as idtiposolicitud, g.nombre as tiposolicitud, h.nombre1 as nombreb, h.apellido1 as apellidob, h.id as idbeneficiario ';
+        $join= 'as a INNER JOIN titular as c ON (a.titular_id = c.id) ';
+        $join.= 'INNER JOIN proveedor as d ON (a.proveedor_id = d.id) ';
+        $join.= 'INNER JOIN servicio as e ON (a.servicio_id = e.id) ';
+        $join.= 'INNER JOIN tiposolicitud as g ON (a.tiposolicitud_id = g.id) ';
+        $join.= 'INNER JOIN beneficiario as h ON (a.beneficiario_id = h.id) ';
+        $conditions = "a.tiposolicitud_id='8' and titular.cedula=$titular";
+        if($page) {                
+            return $this->paginated("columns: $columnas", "join: $join", "page: $page", "conditions: $conditions");
+        } else {
+            return $this->find("columns: $columnas", "join: $join", "page: $page", "conditions: $conditions");            
+        }
+
+    }
+    //reporte de la dataq de historico 
+
+     public function getListadoHReembolso($order='order.descripcion.asc', $page='', $empresa=null){
+        if($page) {                
+            return $this->paginated_by_sql("SELECT * FROM hreembolso order by $order ");
+        } else {
+            return $this->find_by_sq("SELECT * FROM hreembolso");            
+        }
+    }
+    
+
+
     /**
      * Método para setear
      * @param string $method Método a ejecutar (create, update, save)
