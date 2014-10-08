@@ -314,9 +314,6 @@ class Titular extends ActiveRecord {
 
      //   $ced = substr($this->cedula, )
 
-
-
-
         //validando correo electronico
         if($this->correo_electronico!=''){ 
             $valEmail = Validate::mail($this->correo_electronico);

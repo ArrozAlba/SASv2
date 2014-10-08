@@ -244,7 +244,7 @@ class SolicitudServicio extends ActiveRecord {
         DwMessage::error('La Fecha de vencimiento no puede menor o igual a la fecha actual ');
         return 'cancel';
      }*/
-
+     $this->observacion = strtoupper($this->observacion);
     }
     
     /**

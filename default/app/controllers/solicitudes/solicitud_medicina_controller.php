@@ -17,7 +17,7 @@ Load::models('proveedorsalud/medico');
 Load::models('proveedorsalud/especialidad');
 Load::models('beneficiarios/titular');
 Load::models('beneficiarios/beneficiario', 'solicitudes/solicitud_servicio');
-Load::models('config/patologia', 'solicitudes/solicitud_servicio_patologia', 'solicitudes/solicitud_servicio_factura');
+Load::models('config/patologia', 'solicitudes/solicitud_servicio_patologia', 'solicitudes/solicitud_servicio_factura', 'solicitudes/solicitud_servicio_dt');
 
 class SolicitudMedicinaController extends BackendController {
     /**
@@ -81,63 +81,34 @@ class SolicitudMedicinaController extends BackendController {
      * Método para agregar
      */
     public function agregar() {
-        $solicitud_medicina = new SolicitudServicio();
-        $nroids = $solicitud_medicina->count("tiposolicitud_id = ".self::TPS);
+        $empresa = Session::get('empresa', 'config');
+        $solicitud_servicio = new SolicitudServicio();
+        $nroids = $solicitud_servicio->count("tiposolicitud_id = ".self::TPS);
         $this->codigods=$nroids+1;
-		$correlativ= new Tiposolicitud();
+        $correlativ= new Tiposolicitud();
         $codigocorrelativo = $correlativ->find("columns: correlativo","conditions: id=".self::TPS." ", "limit: 1 ");
-         foreach ($codigocorrelativo as $cargoa) {
+        foreach ($codigocorrelativo as $cargoa) {
                     $this->cargoas[] = $cargoa->correlativo;
                 }
         $this->codigodd=$this->cargoas[0].'00'.$this->codigods;
         $beneficiario = new beneficiario(); 
-        $this->beneficiario = $beneficiario->getListBeneficiario();              
-        if(Input::hasPost('solicitud_servicio')&&(Input::hasPost('factura')) ) {
+        $this->beneficiario = $beneficiario->getListBeneficiario();
+        if(Input::hasPost('solicitud_servicio')) {
             ActiveRecord::beginTrans();
-            $sol_reembolso = SolicitudServicio::setSolicitudServicio('create', Input::post('solicitud_servicio'));
-            if($sol_reembolso){
-                if(SolicitudServicioPatologia::setSolServicioPatolgia(Input::post('patologia_id'), $sol_reembolso->id)){
-                    $factu = Factura::setFactura('create', Input::post('factura'));
-                    if($factu){
-                        if(FacturaDt::setFacturaDt(Input::post('descripcion'), Input::post('cantidad'), Input::post('monto'), Input::post('exento'), $factu->id)) {
-                            $solfactura = SolicitudServicioFactura::setSolicitudServicioFactura($factu->id, $sol_reembolso->id);
-                            if($solfactura){
-                                if(Input::post('multifactura')){ //para saber si va a cargar multiples facturas sobre esa solicitud 
-                                    //$solser = $solicitud_servicio->getInformacionSolicitudServicio($sol_reembolso->id);
-                                    $sol_reembolso->estado_solicitud="G"; //estado G parcialmente facturada 
-                                    $sol_reembolso->save();
-                                    ActiveRecord::commitTrans();
-                                    DwMessage::valid('Se ha cargado la factura exitosamente!');
-                                    $key_upd = DwSecurity::getKey($sol_reembolso->id, 'upd_solicitud_servicio'); 
-                                    return DwRedirect::toAction('facturar/'.$key_upd);   //retorna a la misma visata de facturacion 
-                                } //cierre de postmiltifactura
-                                else{
-                                    //$solser = $solicitud_servicio->getInformacionSolicitudServicio($sol_reembolso->id);
-                                    $sol_reembolso->estado_solicitud="F";
-                                    $sol_reembolso->save();
-                                    ActiveRecord::commitTrans();
-                                    DwMessage::valid('Se ha cargado la factura exitosamente!');
-                                    return DwRedirect::toAction('registro');     
-                                }
-                            }//cierre solfactura
-                            else{
-                                ActiveRecord::rollbackTrans();
-                                DwMessage::error('No se pudo enviar a cargar multiples facturas!');
-                            }
-                        }//cierre de facturaDT
-                        else{
-                            ActiveRecord::rollbackTrans();
-                            DwMessage::error('Los detalles de la Factura no se han cargado correctamente Intente de nuevo!');
-                        }
-                    }//cierrre factura
-                    else{
-                        ActiveRecord::rollbackTrans();
-                        DwMessage::error('La Factura ha dao peos!');
-                    }
-            } //cierre de solicitudpatolgoia           
-        } //cierre sol_reembolso, que es donde se carga la solicitud
-    }//cierre del condicional del Input(post)
-        $this->page_title = 'Agregar Solicitud deReembolso';
+            $soli = SolicitudServicio::setSolicitudServicio('create', Input::post('solicitud_servicio'));
+            if($soli){
+                if(SolicitudServicioDt::setSolServicioMedicina(Input::post('medicina_id'), $soli->id)) {
+                    ActiveRecord::commitTrans();
+                    DwMessage::valid('La solicitud se ha creado correctamente!');
+                    return DwRedirect::toAction('registro');
+                }else{
+                    ActiveRecord::rollbackTrans();
+                    DwMessage::error('No se han cargado las medicinas correctamente!');
+                    return DwRedirect::toAction('agregar');
+                }
+            }            
+        } 
+        $this->page_title = 'Agregar Solicitud de Medicinas';
     }//CIERRE DE la funcion agregar
 
     /**

@@ -145,7 +145,7 @@ class beneficiario extends ActiveRecord {
       $conditions = "titular_id = $titu ";
       $bene = $this->find("columns: $columns", "conditions: $conditions");
 
-      if($_POST["metodo"]!="editar"){
+      if($_POST["metodo"]!="editar"){ //es agregar
       $acum = 0;
       foreach($bene as $bn):
         if (($bn->parentesco_id==$paren)&&($bn->parentesco_id==2)){
