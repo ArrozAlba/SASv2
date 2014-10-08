@@ -30,6 +30,33 @@ as mes, count(w.fsiniestro) as total_clinicas  FROM hclinicas w
  GROUP BY  date_part('month'::text, w.fsiniestro)
  order by mes");
     }
+    public function getCountClinicastitular($id) {
+        return $this->find_all_by_sql("SELECT CASE WHEN COUNT(1) = 0
+THEN 0
+ELSE count(tcedula) END
+from hclinicas where tcedula ='".$id."'  and pcedula = '".$id."'  
+");
+    }
+    public function getCountClinicasbeneficiario($id) {
+        return $this->find_all_by_sql("SELECT CASE WHEN COUNT(1) = 0
+THEN 0
+ELSE count(tcedula) END
+from hclinicas where tcedula ='".$id."' and pcedula <> '".$id."' 
+");
+    }
 
+
+    public function getMontoClinicastitular($id) {
+        return $this->find_all_by_sql("SELECT CASE WHEN count(1) = 0
+THEN 0
+ELSE sum(monto_egreso)  END
+from hclinicas where tcedula ='".$id."' and pcedula = '".$id."'");
+    }
+    public function getMontoClinicasbeneficiario($id) {
+        return $this->find_all_by_sql("SELECT CASE WHEN count(1) = 0
+THEN 0
+ELSE sum(monto_egreso)  END
+from hclinicas where tcedula ='".$id."' and pcedula <> '".$id."'");
+    }
 }
 ?>

@@ -5929,6 +5929,16 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 2149	97105	arrozalba	2014-10-07 23:01:56.409196-04:30	127.0.0.1	UPDATE	UPDATE menu SET menu_id = '3',recurso_id = '10',menu = 'Permisos',url = 'sistema/privilegio/listar/',posicion = '905',icono = 'icon-magic',visibilidad = '1' WHERE  id = '10'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{10,sistema/privilegio/listar/,Permisos,icon-magic,1,3,907,10,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{10,sistema/privilegio/listar/,Permisos,icon-magic,1,3,905,10,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
 2150	97105	arrozalba	2014-10-07 23:02:44.763062-04:30	127.0.0.1	UPDATE	UPDATE menu SET menu_id = '3',recurso_id = '5',menu = 'Auditorías',url = 'sistema/auditoria/',posicion = '96',icono = 'icon-eye-open',visibilidad = '1' WHERE  id = '5'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{5,sistema/auditoria/,Auditorías,icon-eye-open,1,3,902,5,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{5,sistema/auditoria/,Auditorías,icon-eye-open,1,3,96,5,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
 2151	97105	arrozalba	2014-10-07 23:03:50.245155-04:30	127.0.0.1	UPDATE	UPDATE menu SET menu_id = '3',recurso_id = '5',menu = 'Auditorías',url = 'sistema/auditoria/',posicion = '908',icono = 'icon-eye-open',visibilidad = '1' WHERE  id = '5'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{5,sistema/auditoria/,Auditorías,icon-eye-open,1,3,96,5,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{5,sistema/auditoria/,Auditorías,icon-eye-open,1,3,908,5,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2153	493691	jelitox	2014-10-08 09:04:24.800284-04:30	127.0.0.1	INSERT	INSERT INTO public.usuario(id, sucursal_id, titular_id, login, perfil_id, tema, app_ajax, datagrid) VALUES ('22'::integer, '1'::integer, '164'::integer, '10135498'::text, '7'::integer, 'default'::text, '1'::integer, '30'::integer)	usuario	\N	\N	{22,default,NULL,10135498,NULL,1,30,NULL,7,164,NULL,1,NULL,"2014-10-08 09:04:24.800284-04:30","2014-10-08 09:04:24.800284-04:30",NULL}
+2154	493425	jelitox	2014-10-08 09:04:59.22785-04:30	127.0.0.1	INSERT	INSERT INTO public.estado_usuario(usuario_id, estado_usuario, descripcion) VALUES ('22'::integer, '1'::integer, 'Activado'::text)	estado_usuario	\N	\N	{19,22,Activado,1,"2014-10-08 09:04:59.22785-04:30","2014-10-08 09:04:59.22785-04:30"}
+2155	493305	arrozalba	2014-10-08 09:08:50.320697-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{530,127.0.0.1,NULL,1,2,NULL,"2014-10-08 09:08:50.320697-04:30","2014-10-08 09:08:50.320697-04:30",NULL,NULL}
+2156	493305	arrozalba	2014-10-08 09:09:07.017287-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('22',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{531,127.0.0.1,NULL,22,1,NULL,"2014-10-08 09:09:07.017287-04:30","2014-10-08 09:09:07.017287-04:30",NULL,NULL}
+2157	493691	jelitox	2014-10-08 09:17:27.161501-04:30	127.0.0.1	INSERT	INSERT INTO public.usuario(id, sucursal_id, titular_id, login, perfil_id, tema, app_ajax, datagrid) VALUES ('23'::integer, '1'::integer, '160'::integer, '14092771'::text, '7'::integer, 'default'::text, '1'::integer, '30'::integer)	usuario	\N	\N	{23,default,NULL,14092771,NULL,1,30,NULL,7,160,NULL,1,NULL,"2014-10-08 09:17:27.161501-04:30","2014-10-08 09:17:27.161501-04:30",NULL}
+2158	493305	arrozalba	2014-10-08 09:19:09.675207-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('22',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{532,127.0.0.1,NULL,22,2,NULL,"2014-10-08 09:19:09.675207-04:30","2014-10-08 09:19:09.675207-04:30",NULL,NULL}
+2159	493425	jelitox	2014-10-08 09:19:59.132051-04:30	127.0.0.1	INSERT	INSERT INTO public.estado_usuario(usuario_id, estado_usuario, descripcion) VALUES ('23'::integer, '1'::integer, 'Activado por admin'::text)	estado_usuario	\N	\N	{20,23,"Activado por admin",1,"2014-10-08 09:19:59.132051-04:30","2014-10-08 09:19:59.132051-04:30"}
+2160	493305	arrozalba	2014-10-08 09:20:28.406241-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('23',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{533,127.0.0.1,NULL,23,2,NULL,"2014-10-08 09:20:28.406241-04:30","2014-10-08 09:20:28.406241-04:30",NULL,NULL}
+2161	493305	arrozalba	2014-10-08 09:20:38.255836-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('23',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{534,127.0.0.1,NULL,23,1,NULL,"2014-10-08 09:20:38.255836-04:30","2014-10-08 09:20:38.255836-04:30",NULL,NULL}
+2162	493305	arrozalba	2014-10-08 09:20:47.844653-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('23',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{535,127.0.0.1,NULL,23,2,NULL,"2014-10-08 09:20:47.844653-04:30","2014-10-08 09:20:47.844653-04:30",NULL,NULL}
 \.
 
 
@@ -5936,7 +5946,7 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 -- Name: audit_log_log_id_seq; Type: SEQUENCE SET; Schema: audit_log; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('audit_log_log_id_seq', 2152, true);
+SELECT pg_catalog.setval('audit_log_log_id_seq', 2162, true);
 
 
 SET search_path = public, pg_catalog;
@@ -6231,6 +6241,12 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 527	1	2014-10-07 21:46:42.77672-04:30	2014-10-07 21:46:42.77672-04:30	1	\N	\N	\N	\N	127.0.0.1
 528	1	2014-10-07 22:07:00.965135-04:30	2014-10-07 22:07:00.965135-04:30	1	\N	\N	\N	\N	192.168.1.221
 529	1	2014-10-07 23:04:24.682691-04:30	2014-10-07 23:04:24.682691-04:30	2	\N	\N	\N	\N	192.168.1.53
+530	1	2014-10-08 09:08:50.320697-04:30	2014-10-08 09:08:50.320697-04:30	2	\N	\N	\N	\N	127.0.0.1
+531	22	2014-10-08 09:09:07.017287-04:30	2014-10-08 09:09:07.017287-04:30	1	\N	\N	\N	\N	127.0.0.1
+532	22	2014-10-08 09:19:09.675207-04:30	2014-10-08 09:19:09.675207-04:30	2	\N	\N	\N	\N	127.0.0.1
+533	23	2014-10-08 09:20:28.406241-04:30	2014-10-08 09:20:28.406241-04:30	2	\N	\N	\N	\N	127.0.0.1
+534	23	2014-10-08 09:20:38.255836-04:30	2014-10-08 09:20:38.255836-04:30	1	\N	\N	\N	\N	127.0.0.1
+535	23	2014-10-08 09:20:47.844653-04:30	2014-10-08 09:20:47.844653-04:30	2	\N	\N	\N	\N	127.0.0.1
 \.
 
 
@@ -6238,7 +6254,7 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 -- Name: acceso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('acceso_id_seq', 529, true);
+SELECT pg_catalog.setval('acceso_id_seq', 535, true);
 
 
 --
@@ -6779,6 +6795,8 @@ COPY estado_usuario (id, usuario_id, fecha_registro, fecha_modificado, estado_us
 15	19	2014-09-30 15:39:06.451669-04:30	2014-09-30 15:39:06.451669-04:30	1	Activado por registro inicial
 16	20	2014-09-30 15:48:59.899894-04:30	2014-09-30 15:48:59.899894-04:30	1	Activado por registro inicial
 17	21	2014-09-30 15:51:05.691958-04:30	2014-09-30 15:51:05.691958-04:30	1	Activado por registro inicial
+19	22	2014-10-08 09:04:59.22785-04:30	2014-10-08 09:04:59.22785-04:30	1	Activado
+20	23	2014-10-08 09:19:59.132051-04:30	2014-10-08 09:19:59.132051-04:30	1	Activado por admin
 \.
 
 
@@ -6786,7 +6804,7 @@ COPY estado_usuario (id, usuario_id, fecha_registro, fecha_modificado, estado_us
 -- Name: estado_usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('estado_usuario_id_seq', 17, true);
+SELECT pg_catalog.setval('estado_usuario_id_seq', 20, true);
 
 
 --
@@ -26349,6 +26367,8 @@ COPY usuario (id, usuario_id, fecha_registro, fecha_modificado, fecha_desactivac
 19	\N	2014-09-30 15:39:06.383719-04:30	2014-09-30 15:39:06.383719-04:30	\N	1	284	12098765	7	\N	default	1	0	\N	\N	\N
 20	\N	2014-09-30 15:48:59.899894-04:30	2014-09-30 15:48:59.899894-04:30	\N	1	\N	programer	3	\N	\N	1	30	\N	\N	\N
 21	\N	2014-09-30 15:51:05.691958-04:30	2014-09-30 15:51:05.691958-04:30	\N	1	\N	isaloj	2	\N	\N	1	30	\N	\N	\N
+22	\N	2014-10-08 09:04:24.800284-04:30	2014-10-08 09:04:24.800284-04:30	\N	1	164	10135498	7	\N	default	1	30	\N	\N	\N
+23	\N	2014-10-08 09:17:27.161501-04:30	2014-10-08 09:17:27.161501-04:30	\N	1	160	14092771	7	\N	default	1	30	\N	\N	\N
 \.
 
 
@@ -26367,6 +26387,8 @@ COPY usuario_clave (id, usuario_id, fecha_registro, fecha_modificado, password, 
 31	19	2014-09-30 15:39:06.535769-04:30	2014-09-30 15:39:06.535769-04:30	00a6852dc998700cff068aa1ac5f8a2f	2014-09-30	2014-12-31
 32	20	2014-09-30 15:48:59.899894-04:30	2014-09-30 15:48:59.899894-04:30	d93a5def7511da3d0f2d171d9c344e91	2014-09-30	1969-12-31
 33	21	2014-09-30 15:51:05.691958-04:30	2014-09-30 15:51:05.691958-04:30	d93a5def7511da3d0f2d171d9c344e91	2014-09-30	1969-12-31
+34	22	2014-10-08 09:05:54.567859-04:30	2014-10-08 09:05:54.567859-04:30	20eabe5d64b0e216796e834f52d61fd0b70332fc	2014-09-30	2014-10-30
+40	23	2014-10-08 09:18:08.039486-04:30	2014-10-08 09:18:08.039486-04:30	20eabe5d64b0e216796e834f52d61fd0b70332fc	2014-09-30	2014-10-30
 \.
 
 
@@ -26374,7 +26396,7 @@ COPY usuario_clave (id, usuario_id, fecha_registro, fecha_modificado, password, 
 -- Name: usuario_clave_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('usuario_clave_id_seq', 33, true);
+SELECT pg_catalog.setval('usuario_clave_id_seq', 40, true);
 
 
 --

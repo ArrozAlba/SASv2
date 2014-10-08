@@ -30,5 +30,33 @@ as mes, count(w.ffactura) as total_farmacias  FROM hfarmacias w
  GROUP BY  date_part('month'::text, w.ffactura)
  order by mes");
     }
+    public function getCountFarmaciastitular($id) {
+        return $this->find_all_by_sql("SELECT CASE WHEN COUNT(1) = 0
+THEN 0
+ELSE count(tcedula) END
+from hfarmacias where tcedula ='".$id."'  and pcedula = '".$id."'  
+");
+    }
+    public function getCountFarmaciasbeneficiario($id) {
+        return $this->find_all_by_sql("SELECT CASE WHEN COUNT(1) = 0
+THEN 0
+ELSE count(tcedula) END
+from hfarmacias where tcedula ='".$id."' and pcedula <> '".$id."' 
+");
+    }
+
+
+    public function getMontoFarmaciastitular($id) {
+        return $this->find_all_by_sql("SELECT CASE WHEN count(1) = 0
+THEN 0
+ELSE sum(total_pagar)  END
+from hfarmacias where tcedula ='".$id."' and pcedula = '".$id."'");
+    }
+    public function getMontoFarmaciasbeneficiario($id) {
+        return $this->find_all_by_sql("SELECT CASE WHEN count(1) = 0
+THEN 0
+ELSE sum(total_pagar)  END
+from hfarmacias where tcedula ='".$id."' and pcedula <> '".$id."'");
+    }
 }
 ?>
