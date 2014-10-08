@@ -32,30 +32,34 @@ as mes, count(w.fecha_solicitud) as total_reembolsos  FROM hreembolso w
     }
 
     public function getCountRembolsostitular($id) {
-        return $this->find_all_by_sql("select count(tcedula) as totalsol1 from hreembolso where tcedula ='".$id."' and pcedula = '".$id."' 
- group by tcedula
+        return $this->find_all_by_sql("SELECT CASE WHEN COUNT(1) = 0
+THEN 0
+ELSE count(tcedula) END
+from hreembolso where tcedula ='".$id."'  and pcedula = '".$id."'  
+");
+    }
+    public function getCountRembolsosbeneficiario($id) {
+        return $this->find_all_by_sql("SELECT CASE WHEN COUNT(1) = 0
+THEN 0
+ELSE count(tcedula) END
+from hreembolso where tcedula ='".$id."' and pcedula <> '".$id."' 
 ");
     }
 
-    public function getCountRembolsosbeneficiario($id) {
-        return $this->find_all_by_sql("select count(tcedula) as totalsol
- from hreembolso where tcedula ='".$id."' and pcedula <> '".$id."' 
- group by tcedula");
-    }
 
     public function getMontoRembolsostitular($id) {
-        return $this->find_all_by_sql("select tcedula, sum(monto_pagado_reembolso) as monto
- from hreembolso where tcedula ='".$id."' and pcedula = '".$id."' 
- group by tcedula");
+        return $this->find_all_by_sql("SELECT CASE WHEN count(1) = 0
+THEN 0
+ELSE sum(monto_pagado_reembolso)  END
+from hreembolso where tcedula ='".$id."' and pcedula = '".$id."'");
     }
     public function getMontoRembolsosbeneficiario($id) {
-        return $this->find_all_by_sql("select tcedula, sum(monto_pagado_reembolso) as monto
- from hreembolso where tcedula ='".$id."' and pcedula <> '".$id."' 
- group by tcedula
-");
+        return $this->find_all_by_sql("SELECT CASE WHEN count(1) = 0
+THEN 0
+ELSE sum(monto_pagado_reembolso)  END
+from hreembolso where tcedula ='".$id."' and pcedula <> '".$id."'");
     }
     
-
-
 }
+
 ?>
