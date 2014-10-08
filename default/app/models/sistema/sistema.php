@@ -161,8 +161,8 @@ class Sistema {
                 $data = explode(']', $row);
                 $new_log[$contador]['item'] = $contador;
                 $new_log[$contador]['fecha'] = date("Y-m-d H:i:s", strtotime(trim($data[0],'[')));
-                $new_log[$contador]['tipo'] = trim($data[1],'[');
-                $new_log[$contador]['descripcion'] = trim($data[2],'[');
+                $new_log[$contador]['tipo'] = trim($data[1]);
+                $new_log[$contador]['descripcion'] = trim($data[2]);
                 $contador++;
             }                
         }

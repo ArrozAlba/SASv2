@@ -48,7 +48,9 @@ class IndexController extends BackendController {
         $hclinica_periodo = new Hclinicas();        
         $this->hclinica_periodos = $hclinica_periodo->getPeriodos();     
     
-    
+        $datotitular = new Titular();
+        $titularid = Session::get('id');
+        $this->datostitular = $datotitular->getInformacionTitular($titularid); 
         
     
     
