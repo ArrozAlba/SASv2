@@ -1,0 +1,41 @@
+<?php View::notify(); ?>
+
+<div class="container-fluid dw-shell-view">
+
+    <?php //View::process($page_module, $page_title, $set_title); ?>
+        <table class="table table-bordered table-hover table-striped table-condensed table-responsive">
+
+            <thead>
+                <tr>
+                    <th colspan="10">
+                        <?php echo Html::img('cintillo.png','cintilo'); ?>
+                    </th>
+                </tr>
+                <tr>
+                    <th>NUM</th>
+                    <th class="col-collapse" data-search="cedula">CEDULA</th>
+                    <th class="col-collapse" data-search="nombre">NOMBRE</th>
+                    <th class="col-collapse" data-search="apellido">APELLIDO</th>
+                    <th class="col-collapse" data-search="nomina">SOLICITUDES</th>
+                    <th class="col-collapse" data-search="departamento">DEPARTAMENTO</th>
+                    <th class="col-collapse" data-search="sucursal">SUCURSAL</th>
+                    <th class="col-collapse" data-search="estado">ESTADO</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $i=1; foreach($reembolsos as $rembolso): ?>
+                    <tr>
+                        <td><?php echo $i; ?></td>
+                        <td><?php echo $rembolso->cedula; ?></td>
+                        <td><?php echo $rembolso->nombre; ?></td>
+                        <td><?php echo $rembolso->apellido; ?></td>
+                        <td><?php echo $rembolso->fecha_solicitud; ?></td>
+
+                      
+                    </tr>
+                    <?php $i++; ?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+

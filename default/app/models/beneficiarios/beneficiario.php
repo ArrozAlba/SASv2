@@ -173,9 +173,9 @@ class beneficiario extends ActiveRecord {
         $actual = date("Y-m-d");
         $datetime1 = new DateTime($bn->fecha_exclusion);
         $datetime2 = new DateTime($actual);
-        $intervalo = $datetime1->diff($datetime2, $absolute=true);
+        $intervalo = $datetime1->diff($datetime2, $absolute=false);
         $mes = $intervalo->format('%a');
-        if(((($bn->parentesco_id==2)&&($paren==3))||(($paren==2)&&($bn->parentesco_id==3))) || ($mes <=6)){
+        if(((($bn->parentesco_id==2)&&($paren==3))||(($paren==2)&&($bn->parentesco_id==3))) && ($mes <=6)){
           DwMessage::error('No puede Cargar, Esposo(a) o Concubino(a) hasta que haya trasncurrido 6 meses desde la exclusión del anterior.');
             return 'cancel';
         }

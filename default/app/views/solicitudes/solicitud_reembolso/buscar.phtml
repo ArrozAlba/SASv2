@@ -1,0 +1,77 @@
+<?php View::notify(); ?>
+
+<script type="text/javascript">
+    $(function() {
+        $('table').dwGrid({
+            form_search: true,
+            form_action: '<?php echo PUBLIC_PATH; ?>solicitudes/solicitud_reembolso/buscar/',
+            form_load_data : 'dw-shell-content',
+            order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
+            order_action: $.KumbiaPHP.publicPath+"solicitudes/solicitud_reembolso/buscar/<?php echo $field.'/'.$value.'/'; ?>"
+        });
+    });
+</script>
+
+<div class="container-fluid dw-shell-view">
+
+    <?php View::process($page_module, $page_title, $set_title); ?>
+
+    <div class="btn-toolbar btn-toolbar-top">
+        <div class="btn-actions">
+            <?php echo DwHtml::button("solicitudes/solicitud_reembolso/agregar/", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
+            <?php echo DwHtml::button("solicitudes/solicitud_reembolso/registro/", 'listar', array('class'=>'btn-warning'), 'ok', APP_AJAX); ?>
+            <?php echo DwButton::report("solicitud_reembolso/listar/$field/$value/", 'html', 'Reporte Filtrado', 'imprimir'); ?>
+
+        </div>
+    </div>
+
+    <div class="dw-overflow" id="data-result">
+
+        <table class="table table-bordered table-hover table-striped table-condensed table-responsive">
+            <thead>
+                <tr>
+                    <th>NUM</th>
+                    <th class="col-collapse" data-search="fecha_solicitud">FECHA SOLCITUD</th>
+                    <th class="col-collapse" data-search="fecha_recibido">FECHA RECIBIDO </th>
+                    <th class="col-collapse" data-search="titular">TITULAR</th>
+                    <th class="col-collapse" data-search="paciente">PACIENTE</th>
+                    <th class="col-collapse" data-search="parentesco">PARENTESCO</th>
+                    <th class="col-collapse" data-search="factura">FACTURA</th>
+                    <th class="col-collapse" data-search="sede">SEDE</th>
+                    <th class="col-collapse" data-search="tipo_nomina">TIPO NOMINA</th>
+                    <th class="col-collapse" data-search="tipo_gasto">TIPO GASTO</th>
+                    <th class="col-collapse" data-search="monto_solicitado">MONTO SOLICITADO</th>
+                    <th class="col-collapse" data-search="monto_pagado">MONTO PAGADO</th>
+                    <th class="col-collapse" data-search="total_cancelar">TOTAL CANCELADO</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if($reembolsos) { ?>
+                <?php foreach($reembolsos->items as $reembolso): ?>
+                    <tr>
+                        <td><?php echo $reembolsos->counter; ?></td>
+                        <td><?php echo ($field=='fecha_solicitud') ? DwUtils::resaltar($value, $reembolso->fecha_solicitud) : $reembolso->fecha_solicitud; ?></td>
+                        <td><?php echo ($field=='fecha_recibido') ? DwUtils::resaltar($value, $reembolso->fecha_recibido) : $reembolso->fecha_recibido; ?></td>
+                        <td><?php echo ($field=='titular') ? DwUtils::resaltar($value, $reembolso->titular) : $reembolso->titular; ?></td>
+                        <td><?php echo ($field=='paciente') ? DwUtils::resaltar($value, $reembolso->paciente) : $reembolso->paciente; ?></td>
+                        <td><?php echo ($field=='parentesco') ? DwUtils::resaltar($value, $reembolso->parentesco) : $reembolso->parentesco; ?></td>
+                        <td><?php echo ($field=='factura') ? DwUtils::resaltar($value, $reembolso->factura) : $reembolso->factura; ?></td>
+                        <td><?php echo ($field=='sede') ? DwUtils::resaltar($value, $reembolso->sede) : $reembolso->sede; ?></td>
+                        <td><?php echo ($field=='tipo_nomina') ? DwUtils::resaltar($value, $reembolso->tipo_nomina) : $reembolso->departamento; ?></td>
+                        <td><?php echo ($field=='tipo_gasto') ? DwUtils::resaltar($value, $reembolso->tipo_gasto) : $reembolso->tipo_gasto; ?></td>
+                        <td><?php echo ($field=='monto_solicitado') ? DwUtils::resaltar($value, $reembolso->monto_solicitado) : $reembolso->monto_solicitado; ?></td>
+                        <td><?php echo ($field=='monto_pagado') ? DwUtils::resaltar($value, $reembolso->monto_pagado) : $reembolso->monto_pagado; ?></td>
+                        <td><?php echo ($field=='total_cancelar') ? DwUtils::resaltar($value, $reembolso->total_cancelar) : $reembolso->total_cancelar; ?></td>
+                      
+                    </tr>
+                    <?php $reembolsos->counter++; ?>
+                <?php endforeach; ?>
+            </tbody>
+            <?php } ?>
+        </table>
+
+    </div>
+
+    <?php View::partial('paginators/default', false, array('page'=>$reembolsos, 'url'=>"solicitudes/solicitud_reembolso/registro/$order/")); ?>
+
+</div>

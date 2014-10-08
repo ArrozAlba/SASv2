@@ -1,28 +1,16 @@
 <?php View::notify(); ?>
-<script type="text/javascript">
-    $(function() {
-        $('table').dwGrid({
-            form_search: true,
-            form_action: '<?php echo PUBLIC_PATH; ?>solicitudes/solicitud_reembolso/buscar/',
-            form_load_data : 'dw-shell-content',
-            order_attr: '<?php echo (APP_AJAX) ? 'class="dw-ajax dw-spinner"' : ''; ?>',
-            order_action: $.KumbiaPHP.publicPath+"solicitudes/solicitud_reembolso/registro/"
-        });
-    });
-</script>
+
 <div class="container-fluid dw-shell-view">
+
     <?php View::process($page_module, $page_title, $set_title); ?>
+         <table class="table table-bordered table-hover table-striped table-condensed table-responsive">
+             <thead>
+              <tr>
+                    <th colspan="10"> 
+                    <?php echo Html::img('cintillo.png', 'cabecera')?>
+                    </th>
+                </tr>
 
-    <div class="btn-toolbar btn-toolbar-top">
-        <div class="btn-actions">
-            <?php echo DwHtml::button("solicitudes/solicitud_reembolso/agregar", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
-            <?php echo DwButton::report("solicitud_reembolso/listado/", 'html', 'Reporte de Reembolsos', 'imprimir'); ?>
-        </div>
-    </div>
-    <div class="dw-overflow">
-
-        <table class="table table-bordered table-hover table-striped table-condensed table-responsive">
-            <thead>
                 <tr>
                     <th>NUM</th>
                     <th class="col-collapse" data-search="fecha_solicitud">FECHA SOLCITUD</th>
@@ -40,9 +28,9 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($solicitud_reembolsos->items as $reemboloso): ?>
+                <?php $i=1; foreach($reembolsos as $reemboloso): ?>
                     <tr>
-                        <td><?php echo $solicitud_reembolsos->counter; ?></td>
+                        <td><?php echo $i; ?></td>
                         <td><?php echo $reemboloso->fecha_solicitud; ?></td>
                         <td><?php echo $reemboloso->fecha_recibido; ?></td>
                         <td><?php echo $reemboloso->titular; ?></td>
@@ -56,12 +44,8 @@
                         <td><?php echo $reemboloso->monto_pagado; ?></td>
                         <td><?php echo $reemboloso->total_cancelar; ?></td>
                     </tr>
-                    <?php $solicitud_reembolsos->counter++; ?>
+                    <?php $i++; ?>
                 <?php endforeach; ?>
             </tbody>
         </table>
-
-    </div>
-
-    <?php View::partial('paginators/default', false, array('page'=>$solicitud_reembolsos, 'url'=>"solicitudes/solicitud_reembolso/registro/$order/")); ?>
 </div>
