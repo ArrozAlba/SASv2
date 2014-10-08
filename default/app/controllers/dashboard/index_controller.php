@@ -52,8 +52,20 @@ class IndexController extends BackendController {
         $titularid = Session::get('id');
         $this->datostitular = $datotitular->getInformacionTitular($titularid); 
         
-    
-    
+        $idcedula = '16753367';
+        $hreembolso_counttitu = new Hreembolso();        
+        $this->hreembolso_countitular = $hreembolso_counttitu->getCountRembolsostitular($idcedula);
+        
+        $hreembolso_montotitu = new Hreembolso();        
+        $this->hreembolso_montotitular = $hreembolso_montotitu->getMontoRembolsostitular($idcedula);
+
+        $hreembolso_countbene = new Hreembolso();        
+        $this->hreembolso_countbeneficiario = $hreembolso_countbene->getCountRembolsosbeneficiario($idcedula);
+
+        $hreembolso_montobene = new Hreembolso();        
+        $this->hreembolso_montobeneficiario = $hreembolso_montobene->getMontoRembolsosbeneficiario($idcedula);
+
+                
     
     
     

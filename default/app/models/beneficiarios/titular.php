@@ -155,7 +155,7 @@ class Titular extends ActiveRecord {
         if(!$titular) {
             return NULL;
         }
-        $columns = 'municipio.nombre as municipio, municipio.id as idmunicipio, parroquia.nombre as parroquia, parroquia.id as idparroquia,  estado.nombre as esta2, estado.id as idestado, pais.nombre as pais, pais.id as idpais, titular.*, titular.id as idtitular, titular.estado as estado_titular, profesion.id idprofesion,  profesion.nombre as profesion, tipoempleado.id idtipoempleado, tipoempleado.nombre as tipoe, departamento.id as iddepartamento, departamento.nombre as departamento, sucursal.id as idsucursal, sucursal.sucursal, cargo.id idcargo, cargo.nombre ';
+        $columns = 'municipio.nombre as municipio, municipio.id as idmunicipio, parroquia.nombre as parroquia, parroquia.id as idparroquia,  estado.nombre as esta2, estado.id as idestado, pais.nombre as pais, pais.id as idpais, titular.*, titular.id as idtitular, titular.estado as estado_titular, profesion.id idprofesion,  profesion.nombre as profesion, tipoempleado.id idtipoempleado, tipoempleado.nombre as tipoe, departamento.id as iddepartamento, departamento.nombre as departamento, sucursal.id as idsucursal, sucursal.sucursal, cargo.id as idcargo, cargo.nombre  as cargo';
         $join = 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';
         $join.= 'INNER JOIN profesion ON  titular.profesion_id = profesion.id ';
         $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';

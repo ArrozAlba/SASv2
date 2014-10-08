@@ -41,19 +41,19 @@
 							</tr>                            
                             <tr>
                                 <td><b>SEDE:</b></td>
-                                <td><?php echo Session::get('id');?> </td>
+                                <td><?php echo $datostitular->sucursal;?></td>
                                 <td><b>DEPARTAMENTO:</b></td>
-                                <td><?php echo date('Y-m-d');?> </td>
+                                <td><?php echo $datostitular->departamento;?></td>
                                 <td><b>CARGO:</b></td>
-                                <td><?php echo date('Y-m-d');?></td>
+                                <td><?php echo $datostitular->cargo;?></td>
 							</tr>                               
                             <tr>
+                                <td><b>TELEFONO LOCAL:</b></td>
+                                <td><?php echo $datostitular->telefono;?></td>
                                 <td><b>TELEFONO MOVIL:</b></td>
-                                <td><?php echo Session::get('id');?> </td>
+                                <td><?php echo $datostitular->celular;?></td>
                                 <td><b>CORREO ELECTRONICO:<b></td>
-                                <td><?php echo date('Y-m-d');?> </td>
-                                <td></td>
-                                <td></td>
+                                <td><?php echo $datostitular->correo_electronico;?></td>
 							</tr>            
 
 						</tbody>
@@ -78,8 +78,8 @@
                             <tr>
                                 <td>0</td>
                                 <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
+                                <td><?php echo $hreembolso_countitular[1]->totalsol;?></td>
+                                <td><?php echo var_dump($hreembolso_countbeneficiario->totalsol);?></td>
 
 							</tr>
                             <tr>
@@ -91,8 +91,8 @@
                             <tr>
                                 <td>0</td>
                                 <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
+                                <td><?php echo $hreembolso_montotitular->monto;?></td>
+                                <td><?php echo $hreembolso_montobeneficiario->monto;?></td>
 
 							</tr>
 						</tbody>
