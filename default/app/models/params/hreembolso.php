@@ -31,5 +31,31 @@ as mes, count(w.fecha_solicitud) as total_reembolsos  FROM hreembolso w
  order by mes");
     }
 
+    public function getCountRembolsostitular($id) {
+        return $this->find_all_by_sql("select count(tcedula) as totalsol1 from hreembolso where tcedula ='".$id."' and pcedula = '".$id."' 
+ group by tcedula
+");
+    }
+
+    public function getCountRembolsosbeneficiario($id) {
+        return $this->find_all_by_sql("select count(tcedula) as totalsol
+ from hreembolso where tcedula ='".$id."' and pcedula <> '".$id."' 
+ group by tcedula");
+    }
+
+    public function getMontoRembolsostitular($id) {
+        return $this->find_all_by_sql("select tcedula, sum(monto_pagado_reembolso) as monto
+ from hreembolso where tcedula ='".$id."' and pcedula = '".$id."' 
+ group by tcedula");
+    }
+    public function getMontoRembolsosbeneficiario($id) {
+        return $this->find_all_by_sql("select tcedula, sum(monto_pagado_reembolso) as monto
+ from hreembolso where tcedula ='".$id."' and pcedula <> '".$id."' 
+ group by tcedula
+");
+    }
+    
+
+
 }
 ?>
