@@ -3,9 +3,111 @@
 
 
     
-    
     <?php View::process($page_module, $page_title, $set_title); ?>
             <?php if(Session::get('perfil_id')<=3) { ?>
+
+         <div class="row">
+      	<div class="span6">
+      		<div class="widget stacked">
+					
+				<div class="widget-header">
+					<i class="icon-star"></i>
+					<h3>Estadisticas</h3>
+				</div> <!-- /widget-header -->
+				<div class="widget-content">
+                    <div style="width:80%">
+                    <h5>Historico de Solicitudes Anuales</h5>
+                        <div>
+                            <canvas id="canvas" height="450" width="600"></canvas>
+                        </div>
+                                            <div id="lineLegend"></div>
+
+                    </div>
+				</div> <!-- /widget-content -->
+					
+			</div> <!-- /widget -->	
+        </div> <!-- /span6 -->
+<div class="span6">
+			<div class="widget stacked widget-table action-table">
+					
+				<div class="widget-header">
+					<i class="icon-th-list"></i>
+					<h3>Solicitudes Por Aprobar</h3>
+				</div> <!-- /widget-header -->
+				
+				<div class="widget-content">
+					
+					<table class="table table-striped table-bordered">
+						<thead>
+							<tr>
+                                <th>Codigo Solicitud</th>
+                                <th>Titular</th>
+                                <th>Beneficiario</th>
+								<th>Proveedor</th>
+								<th>Servicio</th>
+                                
+								<th class="td-actions">Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+                             <?php foreach($solicitud_servicios as $solicitud_servicio): ?>
+							<tr>
+                        <td><?php echo $solicitud_servicio->codigo_solicitud; ?></td>
+                        <td><?php echo strtoupper($solicitud_servicio->nombre); echo ' '; echo strtoupper($solicitud_servicio->apellido);?></td>
+                        <td><?php echo strtoupper($solicitud_servicio->nombre); echo ' '; echo strtoupper($solicitud_servicio->apellido);?></td>
+                        <td><?php echo strtoupper($solicitud_servicio->proveedor); ?></td>
+                        <td><?php echo strtoupper($solicitud_servicio->servicio); ?></td>
+								<td class="td-actions">
+									<a href="javascript:;" class="btn btn-small btn-warning">
+										<i class="btn-icon-only icon-ok"></i>										
+									</a>
+									
+									<a href="javascript:;" class="btn btn-small">
+										<i class="btn-icon-only icon-remove"></i>										
+									</a>
+								</td>
+							</tr>
+                                            <?php endforeach; ?>
+
+							</tbody>
+						</table>
+					
+				</div> <!-- /widget-content -->
+			
+			</div> <!-- /widget -->
+</div>
+
+        <div class="span6">
+        			<div class="widget stacked">
+					
+				<div class="widget-header">
+					<i class="icon-signal"></i>
+					<h3>Graficos</h3>
+				</div> <!-- /widget-header -->
+				
+				<div class="widget-content">					
+                    <div style="width:90%">
+                    <h5>Montos Cancelados por Solicitudes:</h5>
+                        <div>
+                            <canvas id="piechart" height="450" width="600"></canvas>
+                        </div>
+                                            <div id="pielegend"></div>
+
+                    </div>
+                
+                
+				</div> <!-- /widget-content -->
+			
+			</div> <!-- /widget -->
+        </div>	
+
+        </div>
+
+       </div> <!-- /row -->	
+       
+    
+
+    <?php } else { ?>
 <div class="span12">
 			<div class="widget stacked widget-table action-table">
 					
@@ -76,10 +178,10 @@
                                 <td><b>SOLICITUDES CLINICAS:<b></td>
 							</tr>
                             <tr>
-                                <td>0</td>
-                                <td>0</td>
-                                <td><?php echo $hreembolso_countitular[1]->totalsol;?></td>
-                                <td><?php echo var_dump($hreembolso_countbeneficiario->totalsol);?></td>
+                                <td><?php echo ($hfarmacia_countitular[0]->count+$hreembolso_countitular[0]->count+$hclinica_countitular[0]->count);?></td>
+                                <td><?php echo $hfarmacia_countitular[0]->count;?></td>
+                                <td><?php echo $hreembolso_countitular[0]->count;?></td>
+                                <td><?php echo $hclinica_countitular[0]->count;?></td>
 
 							</tr>
                             <tr>
@@ -89,10 +191,10 @@
                                 <td><b>MONTO SOLICITUDES CLINICAS:<b></td>
 							</tr>
                             <tr>
-                                <td>0</td>
-                                <td>0</td>
-                                <td><?php echo $hreembolso_montotitular->monto;?></td>
-                                <td><?php echo $hreembolso_montobeneficiario->monto;?></td>
+                                <td><?php echo ($hreembolso_montotitular[0]->sum+ $hfarmacia_montotitular[0]->sum+$hclinica_montotitular[0]->sum).' Bs.';?></td>
+                                <td><?php echo $hfarmacia_montotitular[0]->sum.' Bs.';?></td>
+                                <td><?php echo $hreembolso_montotitular[0]->sum.' Bs.';?></td>
+                                <td><?php echo $hclinica_montotitular[0]->sum.' Bs.';?></td>
 
 							</tr>
 						</tbody>
@@ -109,22 +211,25 @@
                             </tr>
 						</thead>
 						<tbody>
-                            <tr>
+                <tr>
                                 <td><b>CEDULA DE IDENTIDAD:</b></td>
                                 <td><b>NOMBRES:</b></td>
                                 <td><b>APELLIDOS:</b></td>
-                                <td><b>FECHA DE NACIMIENTO:<b></td>
-                                <td><b>SEXO:<b></td>
                                 <td><b>PARENTESCO:<b></td>
+                                <td><b>FECHA NACIMIENTO:<b></td>
+                                
 							</tr>
-                            <tr>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-							</tr>
+                    <?php foreach($beneficiarios as $beneficiario): ?>
+                    <tr>
+                    
+                        <td><?php echo $beneficiario->cedula; ?></td>
+                        <td><?php echo $beneficiario->nombre1.' '.$beneficiario->nombre2; ?></td>
+                        <td><?php echo $beneficiario->apellido1.' '.$beneficiario->apellido2; ?></td>
+                        <td><?php echo $beneficiario->parentesco; ?></td>
+                        <td><?php echo $beneficiario->fecha_nacimiento; ?></td>
+                        
+                    </tr>
+                                    <?php endforeach; ?>
                             
 						</tbody>
 						</table>
@@ -146,10 +251,10 @@
                                 <td><b>SOLICITUDES CLINICAS:<b></td>
 							</tr>
                             <tr>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
+                                <td><?php echo ($hfarmacia_countbeneficiario[0]->count+$hreembolso_countbeneficiario[0]->count+$hclinica_countbeneficiario[0]->count);?></td>
+                                <td><?php echo $hfarmacia_countbeneficiario[0]->count;?></td>
+                                <td><?php echo $hreembolso_countbeneficiario[0]->count;?></td>
+                                <td><?php echo $hclinica_countbeneficiario[0]->count;?></td>
 
 							</tr>
                             <tr>
@@ -159,10 +264,10 @@
                                 <td><b>MONTO SOLICITUDES CLINICAS:<b></td>
 							</tr>
                             <tr>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
+                                <td><?php echo ($hreembolso_montobeneficiario[0]->sum+ $hfarmacia_montobeneficiario[0]->sum+$hclinica_montobeneficiario[0]->sum).' Bs.';?></td>
+                                <td><?php echo $hfarmacia_montobeneficiario[0]->sum.' Bs.';?></td>
+                                <td><?php echo $hreembolso_montobeneficiario[0]->sum.' Bs.';?></td>
+                                <td><?php echo $hclinica_montobeneficiario[0]->sum.' Bs.';?></td>
 
 							</tr>
 						</tbody>
@@ -170,62 +275,7 @@
 					
 				</div> <!-- /widget-content -->                
 			</div> <!-- /widget -->
-</div>        
-       <div class="span6">
-
-        			<div class="widget widget-nopad stacked">
-						
-				<div class="widget-header">
-					<i class="icon-list-alt"></i>
-					<h3>Cuenta Individual </h3>
-				</div> <!-- /widget-header -->
-				
-				<div class="widget-content">
-					
-					<ul class="news-items">
-						<li>
-							
-							<div class="news-item-detail">										
-								<a href="javascript:;" class="news-item-title">Duis aute irure dolor in reprehenderit</a>
-								<p class="news-item-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-							</div>
-							
-							<div class="news-item-date">
-								<span class="news-item-day">08</span>
-								<span class="news-item-month">Mar</span>
-							</div>
-						</li>
-						<li>
-							<div class="news-item-detail">										
-								<a href="javascript:;" class="news-item-title">Duis aute irure dolor in reprehenderit</a>
-								<p class="news-item-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-							</div>
-							
-							<div class="news-item-date">
-								<span class="news-item-day">08</span>
-								<span class="news-item-month">Mar</span>
-							</div>
-						</li>
-						<li>
-							<div class="news-item-detail">										
-								<a href="javascript:;" class="news-item-title">Duis aute irure dolor in reprehenderit</a>
-								<p class="news-item-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-							</div>
-							
-							<div class="news-item-date">
-								<span class="news-item-day">08</span>
-								<span class="news-item-month">Mar</span>
-							</div>
-						</li>
-					</ul>
-					
-				</div> <!-- /widget-content -->
-			
-			</div> <!-- /widget -->	
-        </div>
-
-    <?php } else { ?>
-
+</div>    
  
 
         <?php } ?>

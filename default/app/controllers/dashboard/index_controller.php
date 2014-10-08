@@ -49,10 +49,11 @@ class IndexController extends BackendController {
         $this->hclinica_periodos = $hclinica_periodo->getPeriodos();     
     
         $datotitular = new Titular();
-        $titularid = Session::get('id');
+        $titularid = Session::get('titular_id');
         $this->datostitular = $datotitular->getInformacionTitular($titularid); 
+        $cedtitular = $datotitular->getInformacionTitular($titularid); 
         
-        $idcedula = '16753367';
+        $idcedula = $cedtitular->cedula;
         $hreembolso_counttitu = new Hreembolso();        
         $this->hreembolso_countitular = $hreembolso_counttitu->getCountRembolsostitular($idcedula);
         
@@ -64,9 +65,33 @@ class IndexController extends BackendController {
 
         $hreembolso_montobene = new Hreembolso();        
         $this->hreembolso_montobeneficiario = $hreembolso_montobene->getMontoRembolsosbeneficiario($idcedula);
+######################################## Farmacias
+        $hfarmacia_counttitu = new Hfarmacias();        
+        $this->hfarmacia_countitular = $hfarmacia_counttitu->getCountFarmaciastitular($idcedula);
+        
+        $hfarmacia_montotitu = new Hfarmacias();        
+        $this->hfarmacia_montotitular = $hfarmacia_montotitu->getMontoFarmaciastitular($idcedula);
 
-                
+        $hfarmacia_countbene = new Hfarmacias();        
+        $this->hfarmacia_countbeneficiario = $hfarmacia_countbene->getCountFarmaciasbeneficiario($idcedula);
+
+        $hfarmacia_montobene = new Hfarmacias();        
+        $this->hfarmacia_montobeneficiario = $hfarmacia_montobene->getMontoFarmaciasbeneficiario($idcedula);                
+#################################### clinicas 
+        $hclinica_counttitu = new Hclinicas();        
+        $this->hclinica_countitular = $hclinica_counttitu->getCountClinicastitular($idcedula);
+        
+        $hclinica_montotitu = new Hclinicas();        
+        $this->hclinica_montotitular = $hclinica_montotitu->getMontoClinicastitular($idcedula);
+
+        $hclinica_countbene = new Hclinicas();        
+        $this->hclinica_countbeneficiario = $hclinica_countbene->getCountClinicasbeneficiario($idcedula);
+
+        $hclinica_montobene = new Hclinicas();        
+        $this->hclinica_montobeneficiario = $hclinica_montobene->getMontoClinicasbeneficiario($idcedula);                
     
+        $beneficiario = new beneficiario();        
+        $this->beneficiarios = $beneficiario->getListadoBeneTitular($titularid);         
     
     
     
