@@ -2,6 +2,16 @@
 <div class="container-fluid dw-shell-view">
     <?php View::process($page_module, $page_title, $set_title); ?>
     <?php echo DwForm::open('', 'post', array('id'=>'form', 'class'=>'dw-validate')); ?>
+    <?php if(DESKTOP) { ?>
+     <ul class="nav nav-tabs">
+        <?php } else { ?>
+        <ul class="nav nav-pills nav-stacked">
+        <?php } ?>
+            <li class="active"><a href="#tab1" data-toggle="tab">Datos de Solicitud</a></li>
+            <li><a href="#tab2" data-toggle="tab">Medicinas</a></li>
+        </ul>
+        <div class="tab-content">
+        <div class="tab-pane active" id="tab1">
         <div class="row-fluid">
             <div class="span3">
                 <?php echo DwForm::text('solicitud_servicio.codigo_solicitud_id', array('class'=>'input-large disabled'),$codigodd, 'Código:'); ?>
@@ -36,11 +46,62 @@
                 </div>
             </div>
 		    </div>
+
         <div class="row-fluid">
+            <div class="span3">
+              <?php echo DwForm::text('solicitud_servicio.persona_autorizada', array('class'=>'input-large mask-alpha'), NULL, 'Persona Autorizada:'); ?>
+
+            </div>
+            <div class="span3">
+            <?php echo DwForm::text('solicitud_servicio.ced_autorizado', array('class'=>'input-large mask-num'), NULL, 'Cédula Autorizado:'); ?>
+            </div>
             <div class="span6">
                 <?php echo DwForm::textarea('solicitud_servicio.observacion', array('class'=>'mask-text show-error input-xxlarge mask-alpha '), NULL, 'Observacion'); ?>
             </div>
         </div>
+        </div><!-- FIN del tab 1 -->
+        <div class="tab-pane" id="tab2">
+             
+        <table>   
+            <tr>
+              <td width="47">&nbsp;</td>
+              <td width="93">Medicamentos:</td>
+              <td width="257">
+
+              <input style="color:#909090" name="medicamento" id="medicamento"  size="40"  type="text" value="Buscar Medicinas" onfocus = "if(this.value=='Buscar Medicinas') {this.value=''; this.style.color='#000'}" onblur="if(this.value==''){this.value='Buscar Medicinas'; this.style.color='#909090'}" />
+
+
+              </td>
+              <td width="70">Cantidad:</td>
+              <td width="159"><input name="cantidad" type="text" id="cantidad" size="20"  /></td>
+              <td width="86">&nbsp;</td>
+            </tr>
+             <tr>
+               <td>&nbsp;</td>
+               <td>&nbsp;</td>
+               <td>&nbsp;</td>
+               <td>&nbsp;</td>
+               <td>&nbsp;</td>
+               <td>&nbsp;</td>       
+             </tr>
+          </table></fieldset>
+          <table  width="747" border="0">
+              <tr>
+              <td width="296">&nbsp;</td>
+              <td width="96"> <input name="agregar" type="button" id="agregar" value="Agregar"disabled="disabled" title="Agregar un servicio"class='btn_guardar_desact btn_guardar_act_img3'  onclick="if(!crear(this)){return false;}" />
+              </td>
+              <td width="341">&nbsp;</td>
+              </tr>
+              <tr>
+               <td colspan="4"><div id="ocultar" style="display:none; text-align:center;"><fieldset><input id="marco" type="text" size="64" value=" Descripci&oacute;n de Medicamento " style=" background:#E1F0FF; text-align:center;" readonly/><input name="marco" id="marco" type="text" size="9" value=" Cantidad " style=" background:#E1F0FF; text-align:center;" readonly/><div id="capa_datos"></div>
+          </fieldset></div></td>
+              </tr>
+          </table>
+
+
+
+
+
         <div class="row-fluid">
             <?php echo DwForm::hidden('solicitud_servicio.medico_id', NULL, '0'); ?>
             <?php echo DwForm::hidden('solicitud_servicio.servicio_id', NULL, '0'); ?>
@@ -50,8 +111,124 @@
                 <?php echo DwButton::cancel(); ?>
             </div>
         </div>
+        </div><!-- FIN DE LA TAB #02 -->
     <?php echo DwForm::close(); ?>
 </div>
+
+
+<script type="text/javascript" >
+$(document).ready(function(){
+  select: function ll(event, ui) {
+            $('input#solicitud_servicio_codigo_solicitud').val(ui.item.codid);// Asignacion de Id en Campo
+            // $('textarea#solicitud_servicio_observacion').val(ui.item.id);// Asignacion de Id en Campo
+              }
+    $('input#solicitud_servicio_patologia').autocomplete({
+        minLength : 3 , //le indicamos que busque a partir de haber escrito dos o mas caracteres en el input
+            source: function(request, response) {
+                $.ajax({
+                    url: "<?php echo PUBLIC_PATH ?>proveedorsalud/medicina/autocomplete",
+                    data: {'busqueda':request.term},
+                    dataType: "json",
+                    type: "POST",
+                    success: function(data){
+                        response(data);
+                    }
+                });
+            },
+            select: function(event, ui) {
+            $('input#solicitud_servicio_patologia_id').val(ui.item.id);// Asignacion de Id en Campo
+            //$('textarea#solicitud_servicio_observacion').val(ui.item.id);// Asignacion de Id en Campo
+            }
+        }); 
+});
+</script>
+
+<script type="text/javascript" >
+//funcion para borrar los objetos creados.
+function borrar(obj) {  
+  field = document.getElementById('capa_datos'); 
+  field.removeChild(document.getElementById(obj));    
+  icremento--; 
+   if(icremento==1){
+      $("#ocultar").css("display", "none"); 
+  }
+  return true;
+}
+
+
+var icremento =1;
+function crear(obj) {
+  if(icremento>5){
+    $("#capa_datos").css({               
+          "margin": "auto",
+        "text-align":"center",
+        "width": "auto",
+        "height": "124px",    
+        "padding": "2px",
+        "border-radius": "4px",
+        "overflow": "auto"
+      })
+  } 
+   
+  var medicamento = document.getElementById('medicamento').value;   
+//para validar que no repita el medicamento en el arreglo.
+  for(var i=0;i<document.getElementsByName('medicamento[]').length;i++)
+  {               
+    if (document.getElementsByName('medicamento[]')[i].value==medicamento){
+      jAlert('Estas intentando enviar un medicamento con caracteristicas iguales.\nVerifica los datos!');
+      return false;
+    }         
+  } 
+  field = document.getElementById('capa_datos'); 
+  contenedor = document.createElement('div'); 
+  contenedor.id = 'div'+icremento; 
+  field.appendChild(contenedor); 
+//Medicamento nombre
+  boton = document.createElement('input'); 
+  boton.type = 'text'; 
+  boton.name = 'medicamento'+'[]';
+  boton.vAlign= "middle";
+  boton.id ='med';
+  boton.value =  document.getElementById('medicamento').value;    
+  boton.readOnly = true;
+  boton.size='65';
+  contenedor.appendChild(boton); 
+//cantidad Campo de texto
+  boton = document.createElement('input'); 
+  boton.type = 'text'; 
+  boton.name = 'cantidad'+'[]';
+  boton.id = 'cant';
+  boton.vAlign= "middle";
+  boton.value =  document.getElementById('cantidad').value;
+  boton.readOnly = true;
+  boton.size='4';
+  contenedor.appendChild(boton); 
+//Boton de borrado 
+  boton = document.createElement('input');
+  boton.vAlign= "middle";
+  boton.type = 'image'; 
+  boton.width= '15';
+  boton.height= '15';
+  boton.src = "";
+  boton.name = 'div'+icremento;   
+  boton.onclick = function () {borrar(this.name)} 
+  contenedor.appendChild(boton); 
+  icremento++;    
+$("#ocultar").css("display", "block");
+return true;  
+}
+//funcion para borrar los objetos creados.
+function borrar(obj) {  
+  field = document.getElementById('capa_datos'); 
+  field.removeChild(document.getElementById(obj));    
+  icremento--; 
+   if(icremento==1){
+    $("#ocultar").css("display", "none"); 
+  }
+  return true;
+}
+</script>
+
 <script type="text/javascript" >
 $(document).ready(function(){
   select: function ll(event, ui) {
