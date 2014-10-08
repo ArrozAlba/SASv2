@@ -33,6 +33,7 @@
                     <th>NUM</th>
                     <th class="col-collapse" data-search="fecha_solicitud">FECHA SOLCITUD</th>
                     <th class="col-collapse" data-search="fecha_recibido">FECHA RECIBIDO </th>
+                    <th class="col-collapse" data-search="tcedula">CEDULA TITULAR </th>
                     <th class="col-collapse" data-search="titular">TITULAR</th>
                     <th class="col-collapse" data-search="paciente">PACIENTE</th>
                     <th class="col-collapse" data-search="parentesco">PARENTESCO</th>
@@ -52,6 +53,7 @@
                         <td><?php echo $reembolsos->counter; ?></td>
                         <td><?php echo ($field=='fecha_solicitud') ? DwUtils::resaltar($value, $reembolso->fecha_solicitud) : $reembolso->fecha_solicitud; ?></td>
                         <td><?php echo ($field=='fecha_recibido') ? DwUtils::resaltar($value, $reembolso->fecha_recibido) : $reembolso->fecha_recibido; ?></td>
+                        <td><?php echo ($field=='tcedula') ? DwUtils::resaltar($value, $reembolso->tcedula) : $reembolso->tcedula; ?></td>
                         <td><?php echo ($field=='titular') ? DwUtils::resaltar($value, $reembolso->titular) : $reembolso->titular; ?></td>
                         <td><?php echo ($field=='paciente') ? DwUtils::resaltar($value, $reembolso->paciente) : $reembolso->paciente; ?></td>
                         <td><?php echo ($field=='parentesco') ? DwUtils::resaltar($value, $reembolso->parentesco) : $reembolso->parentesco; ?></td>
