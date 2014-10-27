@@ -4,7 +4,7 @@
 
     
     <?php View::process($page_module, $page_title, $set_title); ?>
-            <?php if(Session::get('perfil_id')<=3) { ?>
+            <?php if(Session::get('perfil_id')==5) { ?>
 
          <div class="row">
       	<div class="span6">
@@ -105,9 +105,11 @@
 
        </div> <!-- /row -->	
        
-    
+ <?php } elseif (Session::get('perfil_id')==3)  { ?>
+					<h3>especialista<?php echo Session::get('nombre1').' '.Session::get('apellido1');?>  </h3>
 
-    <?php } else { ?>
+
+    <?php } elseif (Session::get('perfil_id')==7)  { ?>
 <div class="span12">
 			<div class="widget stacked widget-table action-table">
 					
@@ -278,19 +280,27 @@
 </div>    
  
 
-        <?php } ?>
-<!-- 
+        <?php } elseif (Session::get('perfil_id')==6) { ?>
+					<h3>enlace<?php echo Session::get('nombre1').' '.Session::get('apellido1');?>  </h3>
+
     <p>Sesion ID: <?php  echo Session::get('id'); ?> </p>
-+     <p>Sesion TITULAR_ID: <?php  echo Session::get('titular_id'); ?> </p>
-+     <p>Sesion LOGIN: <?php  echo Session::get('login'); ?> </p>
-+     <p>Sesion TEMA: <?php  echo Session::get('tema'); ?> </p>
-+     <p>Sesion AJAX: <?php  echo Session::get('ajax'); ?> </p>
-+     <p>Sesion DATAGRID: <?php  echo Session::get('datagrid'); ?> </p>
-+     <p>Sesion PERFIL_ID: <?php  echo Session::get('perfil_id'); ?> </p>
-+     <p>Sesion IP: <?php  echo Session::get('ip'); ?> </p>
-+
-+     <p>Sesion : <?php  echo var_dump($_SESSION); ?> </p>
--->	
+     <p>Sesion TITULAR_ID: <?php  echo Session::get('titular_id'); ?> </p>
+     <p>Sesion LOGIN: <?php  echo Session::get('login'); ?> </p>
+     <p>Sesion TEMA: <?php  echo Session::get('tema'); ?> </p>
+     <p>Sesion AJAX: <?php  echo Session::get('ajax'); ?> </p>
+     <p>Sesion DATAGRID: <?php  echo Session::get('datagrid'); ?> </p>
+     <p>Sesion PERFIL_ID: <?php  echo Session::get('perfil_id'); ?> </p>
+     <p>Sesion IP: <?php  echo Session::get('ip'); ?> </p>
+     <p>Sesion : <?php  echo var_dump($_SESSION); ?> </p>
+
+
+<?php } elseif (Session::get('perfil_id')==8) { ?>
+<h3>proveedor<?php echo Session::get('nombre1').' '.Session::get('apellido1');?>  </h3>
+
+<?php } else { ?>
+
+<?php }  ?>
+
 </div>
 <?php 
 echo "<script language='JavaScript'>\n"; 

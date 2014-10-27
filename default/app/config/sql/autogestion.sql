@@ -3,6 +3,7 @@
 --
 
 SET statement_timeout = 0;
+SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -660,7 +661,7 @@ CREATE TABLE cobertura (
     fecha_inicio date DEFAULT '1900-01-01'::date,
     fecha_fin date DEFAULT '1900-01-01'::date,
     observacion character varying(250),
-    tipo_cobertura_id integer NOT NULL
+    tipo_cobertura integer NOT NULL
 );
 
 
@@ -1372,7 +1373,7 @@ CREATE TABLE proveedor (
     fecha_registro timestamp with time zone DEFAULT now() NOT NULL,
     fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
     rif character varying(10) NOT NULL,
-    razon_social character varying(100) NOT NULL,
+    razon_social character varying(30) NOT NULL,
     nombre_corto character varying(30) NOT NULL,
     pais_id integer NOT NULL,
     estado_id integer NOT NULL,
@@ -1740,7 +1741,6 @@ ALTER SEQUENCE estado_usuario_id_seq OWNED BY estado_usuario.id;
 --
 
 CREATE TABLE factura (
-    id integer NOT NULL,
     usuario_id integer,
     fecha_registro timestamp with time zone DEFAULT now() NOT NULL,
     fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
@@ -1749,7 +1749,8 @@ CREATE TABLE factura (
     nro_factura integer,
     observacion character varying(250),
     monto double precision,
-    iva integer
+    iva integer,
+    id integer NOT NULL
 );
 
 
@@ -1816,7 +1817,6 @@ COMMENT ON COLUMN factura.observacion IS 'Observacion';
 --
 
 CREATE TABLE factura_dt (
-    id integer NOT NULL,
     usuario_id integer,
     fecha_registro timestamp with time zone DEFAULT now() NOT NULL,
     fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
@@ -1824,7 +1824,8 @@ CREATE TABLE factura_dt (
     cantidad integer,
     monto numeric(11,2) NOT NULL,
     exento boolean,
-    factura_id integer
+    factura_id integer NOT NULL,
+    id integer NOT NULL
 );
 
 
@@ -1863,6 +1864,212 @@ COMMENT ON COLUMN factura_dt.monto IS 'Monto del Item';
 --
 
 COMMENT ON COLUMN factura_dt.exento IS 'Item Exento del Iva';
+
+
+--
+-- Name: factura_dt_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
+--
+
+CREATE SEQUENCE factura_dt_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.factura_dt_id_seq OWNER TO arrozalba;
+
+--
+-- Name: factura_dt_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
+--
+
+ALTER SEQUENCE factura_dt_id_seq OWNED BY factura_dt.id;
+
+
+--
+-- Name: factura_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
+--
+
+CREATE SEQUENCE factura_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.factura_id_seq OWNER TO arrozalba;
+
+--
+-- Name: factura_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
+--
+
+ALTER SEQUENCE factura_id_seq OWNED BY factura.id;
+
+
+--
+-- Name: hclinicas; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+CREATE TABLE hclinicas (
+    id integer NOT NULL,
+    clave character varying(15),
+    mes character varying(10),
+    fsiniestro date,
+    factura_prefactura character varying(10),
+    titular character varying(50),
+    tcedula character varying(10),
+    paciente character varying(50),
+    pcedula character varying(10),
+    parentesco character varying(10),
+    sede character varying(30),
+    diagnostico character varying(100),
+    tipo_gasto character varying(30),
+    clinica character varying(30),
+    monto_egreso double precision
+);
+
+
+ALTER TABLE public.hclinicas OWNER TO arrozalba;
+
+--
+-- Name: TABLE hclinicas; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON TABLE hclinicas IS 'Modelo para manipular los Historicos de datos de las Clinicas';
+
+
+--
+-- Name: hclinicas_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
+--
+
+CREATE SEQUENCE hclinicas_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.hclinicas_id_seq OWNER TO arrozalba;
+
+--
+-- Name: hclinicas_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
+--
+
+ALTER SEQUENCE hclinicas_id_seq OWNED BY hclinicas.id;
+
+
+--
+-- Name: hfarmacias; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+CREATE TABLE hfarmacias (
+    id integer NOT NULL,
+    mes character varying(10),
+    frecepcion date,
+    factura_prefactura character varying(10),
+    ffactura date,
+    titular character varying(50),
+    tcedula character varying(10),
+    paciente character varying(50),
+    pcedula character varying(10),
+    parentesco character varying(10),
+    sede character varying(30),
+    farmacia character varying(30),
+    patologia_medica character varying(100),
+    tipo_gasto character varying(30),
+    total_pagar double precision
+);
+
+
+ALTER TABLE public.hfarmacias OWNER TO arrozalba;
+
+--
+-- Name: TABLE hfarmacias; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON TABLE hfarmacias IS 'Modelo para manipular los Historicos de datos de las Clinicas';
+
+
+--
+-- Name: hfarmacias_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
+--
+
+CREATE SEQUENCE hfarmacias_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.hfarmacias_id_seq OWNER TO arrozalba;
+
+--
+-- Name: hfarmacias_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
+--
+
+ALTER SEQUENCE hfarmacias_id_seq OWNED BY hfarmacias.id;
+
+
+--
+-- Name: hreembolso; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+CREATE TABLE hreembolso (
+    id integer NOT NULL,
+    periodo date,
+    titular character varying(50),
+    tcedula character varying(10),
+    paciente character varying(50),
+    pcedula character varying(10),
+    parentesco character varying(10),
+    fecha_solicitud date,
+    fecha_recibido date,
+    factura character varying(80),
+    sede character varying(30),
+    tipo_nomina character varying(15),
+    diagnostico character varying(100),
+    tipo_gasto character varying(100),
+    monto_solicitado double precision,
+    deduccion double precision,
+    monto_pagado double precision,
+    observacion character varying(150),
+    monto_pagado_reembolso double precision,
+    total_cancelar double precision
+);
+
+
+ALTER TABLE public.hreembolso OWNER TO arrozalba;
+
+--
+-- Name: TABLE hreembolso; Type: COMMENT; Schema: public; Owner: arrozalba
+--
+
+COMMENT ON TABLE hreembolso IS 'Modelo para manipular los Historicos de datos de los Reembolsos';
+
+
+--
+-- Name: hreembolso_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
+--
+
+CREATE SEQUENCE hreembolso_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.hreembolso_id_seq OWNER TO arrozalba;
+
+--
+-- Name: hreembolso_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
+--
+
+ALTER SEQUENCE hreembolso_id_seq OWNED BY hreembolso.id;
 
 
 --
@@ -2306,7 +2513,6 @@ ALTER SEQUENCE municipio_id_seq OWNED BY municipio.id;
 --
 
 CREATE TABLE orden_pago (
-    id integer NOT NULL,
     usuario_id integer,
     fecha_registro timestamp with time zone DEFAULT now() NOT NULL,
     fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
@@ -2314,7 +2520,8 @@ CREATE TABLE orden_pago (
     numero_cheque integer,
     fecha_cheque date,
     monto numeric(11,2) NOT NULL,
-    observacion character varying(250)
+    observacion character varying(250),
+    id integer NOT NULL
 );
 
 
@@ -2335,34 +2542,76 @@ COMMENT ON COLUMN orden_pago.monto IS 'Monto total de la orden pago';
 
 
 --
--- Name: orden_pago_factura_dt; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
+-- Name: orden_pago_factura; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
-CREATE TABLE orden_pago_factura_dt (
-    id integer NOT NULL,
+CREATE TABLE orden_pago_factura (
     usuario_id integer,
     fecha_registro timestamp with time zone DEFAULT now() NOT NULL,
     fecha_modificado timestamp with time zone DEFAULT now() NOT NULL,
     orden_pago_id integer,
-    factura_dt_id integer,
-    monto numeric(11,2) NOT NULL
+    factura_id integer,
+    monto numeric(11,2) NOT NULL,
+    id integer NOT NULL
 );
 
 
-ALTER TABLE public.orden_pago_factura_dt OWNER TO arrozalba;
+ALTER TABLE public.orden_pago_factura OWNER TO arrozalba;
 
 --
--- Name: TABLE orden_pago_factura_dt; Type: COMMENT; Schema: public; Owner: arrozalba
+-- Name: TABLE orden_pago_factura; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
-COMMENT ON TABLE orden_pago_factura_dt IS 'Modelo para manipular el Detalle de la Facturacion de las Solicitudes de Servicios asociados a una patologia';
+COMMENT ON TABLE orden_pago_factura IS 'Modelo para manipular el Detalle de los pagos asociados a unas faturas determinadas Solicitudes de Servicios ';
 
 
 --
--- Name: COLUMN orden_pago_factura_dt.monto; Type: COMMENT; Schema: public; Owner: arrozalba
+-- Name: COLUMN orden_pago_factura.monto; Type: COMMENT; Schema: public; Owner: arrozalba
 --
 
-COMMENT ON COLUMN orden_pago_factura_dt.monto IS 'Monto del Item';
+COMMENT ON COLUMN orden_pago_factura.monto IS 'Monto del Item';
+
+
+--
+-- Name: orden_pago_factura_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
+--
+
+CREATE SEQUENCE orden_pago_factura_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.orden_pago_factura_id_seq OWNER TO arrozalba;
+
+--
+-- Name: orden_pago_factura_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
+--
+
+ALTER SEQUENCE orden_pago_factura_id_seq OWNED BY orden_pago_factura.id;
+
+
+--
+-- Name: orden_pago_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
+--
+
+CREATE SEQUENCE orden_pago_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.orden_pago_id_seq OWNER TO arrozalba;
+
+--
+-- Name: orden_pago_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
+--
+
+ALTER SEQUENCE orden_pago_id_seq OWNED BY orden_pago.id;
 
 
 --
@@ -2685,8 +2934,8 @@ ALTER SEQUENCE patologia_categoria_id_seq OWNED BY patologia_categoria.id;
 
 CREATE TABLE patologia_cobertura (
     id integer NOT NULL,
-    patologia_id integer,
-    cobertura_id integer
+    patologia_id integer NOT NULL,
+    cobertura_id integer NOT NULL
 );
 
 
@@ -3483,7 +3732,9 @@ CREATE TABLE solicitud_servicio (
     observacion character varying(250),
     motivo_rechazo character varying(250),
     diagnostico character varying(500),
-    multifactura character(1)
+    multifactura character(1),
+    persona_autorizada character varying(50),
+    ced_autorizado character varying(12)
 );
 
 
@@ -3602,6 +3853,75 @@ COMMENT ON COLUMN solicitud_servicio.observacion IS 'Observacion';
 
 
 --
+-- Name: solicitud_servicio_dt; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+CREATE TABLE solicitud_servicio_dt (
+    id integer NOT NULL,
+    medicina_id integer,
+    examen_id integer,
+    solicitud_servicio_id integer NOT NULL
+);
+
+
+ALTER TABLE public.solicitud_servicio_dt OWNER TO arrozalba;
+
+--
+-- Name: solicitud_servicio_dt_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
+--
+
+CREATE SEQUENCE solicitud_servicio_dt_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.solicitud_servicio_dt_id_seq OWNER TO arrozalba;
+
+--
+-- Name: solicitud_servicio_dt_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
+--
+
+ALTER SEQUENCE solicitud_servicio_dt_id_seq OWNED BY solicitud_servicio_dt.id;
+
+
+--
+-- Name: solicitud_servicio_factura; Type: TABLE; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+CREATE TABLE solicitud_servicio_factura (
+    id integer NOT NULL,
+    solicitud_servicio_id integer NOT NULL,
+    factura_id integer NOT NULL
+);
+
+
+ALTER TABLE public.solicitud_servicio_factura OWNER TO arrozalba;
+
+--
+-- Name: solicitud_servicio_factura_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
+--
+
+CREATE SEQUENCE solicitud_servicio_factura_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.solicitud_servicio_factura_id_seq OWNER TO arrozalba;
+
+--
+-- Name: solicitud_servicio_factura_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
+--
+
+ALTER SEQUENCE solicitud_servicio_factura_id_seq OWNED BY solicitud_servicio_factura.id;
+
+
+--
 -- Name: solicitud_servicio_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
 --
 
@@ -3639,90 +3959,6 @@ CREATE TABLE solicitud_servicio_patologia (
 
 
 ALTER TABLE public.solicitud_servicio_patologia OWNER TO arrozalba;
-
---
--- Name: solicitud_servicio_patologia_factura_dt_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
---
-
-CREATE SEQUENCE solicitud_servicio_patologia_factura_dt_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.solicitud_servicio_patologia_factura_dt_id_seq OWNER TO arrozalba;
-
---
--- Name: solicitud_servicio_patologia_factura_dt_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
---
-
-ALTER SEQUENCE solicitud_servicio_patologia_factura_dt_id_seq OWNED BY factura_dt.id;
-
-
---
--- Name: solicitud_servicio_patologia_factura_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
---
-
-CREATE SEQUENCE solicitud_servicio_patologia_factura_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.solicitud_servicio_patologia_factura_id_seq OWNER TO arrozalba;
-
---
--- Name: solicitud_servicio_patologia_factura_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
---
-
-ALTER SEQUENCE solicitud_servicio_patologia_factura_id_seq OWNED BY factura.id;
-
-
---
--- Name: solicitud_servicio_patologia_factura_pagos_dt_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
---
-
-CREATE SEQUENCE solicitud_servicio_patologia_factura_pagos_dt_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.solicitud_servicio_patologia_factura_pagos_dt_id_seq OWNER TO arrozalba;
-
---
--- Name: solicitud_servicio_patologia_factura_pagos_dt_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
---
-
-ALTER SEQUENCE solicitud_servicio_patologia_factura_pagos_dt_id_seq OWNED BY orden_pago_factura_dt.id;
-
-
---
--- Name: solicitud_servicio_patologia_factura_pagos_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
---
-
-CREATE SEQUENCE solicitud_servicio_patologia_factura_pagos_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.solicitud_servicio_patologia_factura_pagos_id_seq OWNER TO arrozalba;
-
---
--- Name: solicitud_servicio_patologia_factura_pagos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: arrozalba
---
-
-ALTER SEQUENCE solicitud_servicio_patologia_factura_pagos_id_seq OWNED BY orden_pago.id;
-
 
 --
 -- Name: solicitud_servicio_patologia_id_seq; Type: SEQUENCE; Schema: public; Owner: arrozalba
@@ -3902,7 +4138,7 @@ ALTER SEQUENCE sucursal_id_seq OWNED BY sucursal.id;
 
 CREATE TABLE tipo_cobertura (
     id integer NOT NULL,
-    desripcion character varying(200) NOT NULL,
+    descripcion character varying(200) NOT NULL,
     estatus integer DEFAULT 1 NOT NULL
 );
 
@@ -4928,14 +5164,14 @@ ALTER TABLE ONLY estado_usuario ALTER COLUMN id SET DEFAULT nextval('estado_usua
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
-ALTER TABLE ONLY factura ALTER COLUMN id SET DEFAULT nextval('solicitud_servicio_patologia_factura_id_seq'::regclass);
+ALTER TABLE ONLY factura ALTER COLUMN id SET DEFAULT nextval('factura_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
 --
 
-ALTER TABLE ONLY factura_dt ALTER COLUMN id SET DEFAULT nextval('solicitud_servicio_patologia_factura_dt_id_seq'::regclass);
+ALTER TABLE ONLY factura_dt ALTER COLUMN id SET DEFAULT nextval('factura_dt_id_seq'::regclass);
 
 
 --
@@ -4964,6 +5200,20 @@ ALTER TABLE ONLY menu ALTER COLUMN id SET DEFAULT nextval('menu_id_seq'::regclas
 --
 
 ALTER TABLE ONLY municipio ALTER COLUMN id SET DEFAULT nextval('municipio_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY orden_pago ALTER COLUMN id SET DEFAULT nextval('orden_pago_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY orden_pago_factura ALTER COLUMN id SET DEFAULT nextval('orden_pago_factura_id_seq'::regclass);
 
 
 --
@@ -5069,6 +5319,20 @@ ALTER TABLE ONLY servicio ALTER COLUMN id SET DEFAULT nextval('servicio_id_seq':
 --
 
 ALTER TABLE ONLY solicitud_servicio ALTER COLUMN id SET DEFAULT nextval('solicitud_servicio_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY solicitud_servicio_dt ALTER COLUMN id SET DEFAULT nextval('solicitud_servicio_dt_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY solicitud_servicio_factura ALTER COLUMN id SET DEFAULT nextval('solicitud_servicio_factura_id_seq'::regclass);
 
 
 --
@@ -5195,6 +5459,7 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 1653	467447	arrozalba	2014-08-31 19:32:24.012951-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('2',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{365,127.0.0.1,NULL,2,2,NULL,"2014-08-31 19:32:24.012951-04:30","2014-08-31 19:32:24.012951-04:30",NULL,NULL}
 1654	467447	arrozalba	2014-08-31 20:46:34.982337-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{366,127.0.0.1,NULL,1,1,NULL,"2014-08-31 20:46:34.982337-04:30","2014-08-31 20:46:34.982337-04:30",NULL,NULL}
 1655	467447	arrozalba	2014-08-31 22:56:28.403071-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('2',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{367,127.0.0.1,NULL,2,1,NULL,"2014-08-31 22:56:28.403071-04:30","2014-08-31 22:56:28.403071-04:30",NULL,NULL}
+2117	97002	arrozalba	2014-10-07 21:29:21.707398-04:30	127.0.0.1	INSERT	INSERT INTO discapacidad_beneficiario (beneficiario_id,discapacidad_id) VALUES ('174','5')	discapacidad_beneficiario	\N	\N	{6,174,5}
 1656	467447	arrozalba	2014-08-31 22:56:40.95936-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('2',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{368,127.0.0.1,NULL,2,2,NULL,"2014-08-31 22:56:40.95936-04:30","2014-08-31 22:56:40.95936-04:30",NULL,NULL}
 1657	467447	arrozalba	2014-08-31 22:57:51.902666-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('2',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{369,127.0.0.1,NULL,2,1,NULL,"2014-08-31 22:57:51.902666-04:30","2014-08-31 22:57:51.902666-04:30",NULL,NULL}
 1658	467447	arrozalba	2014-08-31 22:58:00.659702-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('2',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{370,127.0.0.1,NULL,2,2,NULL,"2014-08-31 22:58:00.659702-04:30","2014-08-31 22:58:00.659702-04:30",NULL,NULL}
@@ -5235,6 +5500,7 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 1691	87075	arrozalba	2014-09-03 09:39:35.149734-04:30	127.0.0.1	INSERT	INSERT INTO solicitud_servicio (usuario_id,fecha_registro,fecha_modificado,estado_solicitud,tiposolicitud_id,fecha_solicitud,codigo_solicitud,titular_id,beneficiario_id,beneficiario_tipo,proveedor_id,medico_id,fecha_vencimiento,servicio_id,motivo,motivo_anulacion,observacion) VALUES (NULL,DEFAULT,DEFAULT,'R','1','2014/09/03','SASCM-0003','1','29',DEFAULT,'1','1','2014-09-18','1',NULL,NULL,'ningunas')	solicitud_servicio	\N	\N	{19,NULL,1,1,NULL,ningunas,1,1,"2014-09-03 09:39:35.149734-04:30",29,2014-09-03,SASCM-0003,R,"2014-09-03 09:39:35.149734-04:30",NULL,1,1,2014-09-18}
 1692	87075	arrozalba	2014-09-03 09:51:58.133007-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET estado_solicitud = 'R',tiposolicitud_id = '1',fecha_solicitud = '2014-09-02',codigo_solicitud = 'SASCM-0002',titular_id = '1',beneficiario_id = '29',proveedor_id = '5',medico_id = '1',fecha_vencimiento = '2014-09-02',servicio_id = '3',motivo = 'me da la gana',observacion = 'pedrito' WHERE  id = '8'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,observacion,servicio_id,proveedor_id,fecha_registro,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{8,"me da la gana",1,1,NULL,pedrito,3,1,"2014-09-02 21:27:31.841705-04:30",29,2014-09-02,SASCM-0002,E,"2014-09-02 21:27:31.841705-04:30",NULL,1,1,2014-09-02}	{8,"me da la gana",1,1,NULL,pedrito,3,5,"2014-09-02 21:27:31.841705-04:30",29,2014-09-02,SASCM-0002,R,"2014-09-02 21:27:31.841705-04:30",NULL,1,1,2014-09-02}
 1693	86817	arrozalba	2014-09-03 11:07:08.080205-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{396,127.0.0.1,NULL,1,1,NULL,"2014-09-03 11:07:08.080205-04:30","2014-09-03 11:07:08.080205-04:30",NULL,NULL}
+1720	86817	arrozalba	2014-09-06 14:44:40.109413-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{408,127.0.0.1,NULL,1,2,NULL,"2014-09-06 14:44:40.109413-04:30","2014-09-06 14:44:40.109413-04:30",NULL,NULL}
 1694	87075	arrozalba	2014-09-03 11:07:32.695797-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET estado_solicitud = 'E',tiposolicitud_id = '1',codigo_solicitud = 'SASCM-0002',titular_id = '1',beneficiario_id = '29',proveedor_id = '5',medico_id = '1',servicio_id = '3',motivo_rechazo = 'no fue la mejor cpcio tiene que cmbia rl lkjhy jdk djme pal akdfj wqodcuyg hfsd fasd jksdftgdn kiNBSDY  OIY   ' WHERE  id = '8'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{8,"me da la gana",1,1,NULL,pedrito,3,5,"2014-09-02 21:27:31.841705-04:30",NULL,29,2014-09-02,SASCM-0002,R,"2014-09-02 21:27:31.841705-04:30",NULL,1,1,2014-09-02}	{8,"me da la gana",1,1,NULL,pedrito,3,5,"2014-09-02 21:27:31.841705-04:30","no fue la mejor cpcio tiene que cmbia rl lkjhy jdk djme pal akdfj wqodcuyg hfsd fasd jksdftgdn kiNBSDY  OIY   ",29,2014-09-02,SASCM-0002,E,"2014-09-02 21:27:31.841705-04:30",NULL,1,1,2014-09-02}
 1695	87075	postgres	2014-09-03 11:08:24.692463-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET motivo=NULL::text WHERE id = '7'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,"no me dio la gana",1,1,NULL,"modificala ",14,5,"2014-09-02 21:13:00.714053-04:30",NULL,29,1900-01-25,SASCM-0001,E,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,NULL,1,1,NULL,"modificala ",14,5,"2014-09-02 21:13:00.714053-04:30",NULL,29,1900-01-25,SASCM-0001,E,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1696	87075	postgres	2014-09-03 11:08:27.94017-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET motivo=NULL::text WHERE id = '8'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{8,"me da la gana",1,1,NULL,pedrito,3,5,"2014-09-02 21:27:31.841705-04:30","no fue la mejor cpcio tiene que cmbia rl lkjhy jdk djme pal akdfj wqodcuyg hfsd fasd jksdftgdn kiNBSDY  OIY   ",29,2014-09-02,SASCM-0002,E,"2014-09-02 21:27:31.841705-04:30",NULL,1,1,2014-09-02}	{8,NULL,1,1,NULL,pedrito,3,5,"2014-09-02 21:27:31.841705-04:30","no fue la mejor cpcio tiene que cmbia rl lkjhy jdk djme pal akdfj wqodcuyg hfsd fasd jksdftgdn kiNBSDY  OIY   ",29,2014-09-02,SASCM-0002,E,"2014-09-02 21:27:31.841705-04:30",NULL,1,1,2014-09-02}
@@ -5242,6 +5508,7 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 1698	86817	arrozalba	2014-09-03 14:15:35.42006-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{398,127.0.0.1,NULL,1,1,NULL,"2014-09-03 14:15:35.42006-04:30","2014-09-03 14:15:35.42006-04:30",NULL,NULL}
 1699	87075	arrozalba	2014-09-03 14:51:29.948729-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET estado_solicitud = 'A',tiposolicitud_id = '1',fecha_solicitud = '2014-09-03',codigo_solicitud = 'SASCM-0003',titular_id = '1',beneficiario_id = '29',proveedor_id = '1',medico_id = '1',fecha_vencimiento = '2014-09-18',servicio_id = '1',observacion = 'ningunas',motivo_rechazo = NULL WHERE  id = '19'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{19,NULL,1,1,NULL,ningunas,1,1,"2014-09-03 09:39:35.149734-04:30",NULL,29,2014-09-03,SASCM-0003,R,"2014-09-03 09:39:35.149734-04:30",NULL,1,1,2014-09-18}	{19,NULL,1,1,NULL,ningunas,1,1,"2014-09-03 09:39:35.149734-04:30",NULL,29,2014-09-03,SASCM-0003,A,"2014-09-03 09:39:35.149734-04:30",NULL,1,1,2014-09-18}
 1700	87075	postgres	2014-09-03 14:52:20.740368-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET motivo_rechazo='rancia'::text WHERE id = '7'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,"modificala ",14,5,"2014-09-02 21:13:00.714053-04:30",NULL,29,1900-01-25,SASCM-0001,E,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,NULL,1,1,NULL,"modificala ",14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,E,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
+1719	87041	postgres	2014-09-06 14:42:25.98466-04:30	127.0.0.1	UPDATE	UPDATE public.recurso SET modulo='solicitudes'::text WHERE id = '70'::integer	recurso	{id,accion,activo,modulo,recurso,usuario_id,controlador,descripcion,fecha_registro,fecha_modificado}	{70,pagar,1,Pagos,Pagos/solicitud_servicio/pagar,NULL,solicitud_servicio,"pagar las facturas correspondientes a las facturas","2014-09-06 14:39:26.552626-04:30","2014-09-06 14:39:26.552626-04:30"}	{70,pagar,1,solicitudes,Pagos/solicitud_servicio/pagar,NULL,solicitud_servicio,"pagar las facturas correspondientes a las facturas","2014-09-06 14:39:26.552626-04:30","2014-09-06 14:39:26.552626-04:30"}
 1701	87075	arrozalba	2014-09-03 14:55:50.622847-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET estado_solicitud = 'R',tiposolicitud_id = '1',fecha_solicitud = '1900-01-25',codigo_solicitud = 'SASCM-0001',titular_id = '1',beneficiario_id = '29',proveedor_id = '5',medico_id = '1',fecha_vencimiento = '2014-09-24',servicio_id = '14',motivo = 'rancia',observacion = 'cemmel' WHERE  id = '7'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,"modificala ",14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,E,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,rancia,1,1,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,R,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1702	86817	arrozalba	2014-09-04 11:37:07.973515-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{399,127.0.0.1,NULL,1,1,NULL,"2014-09-04 11:37:07.973515-04:30","2014-09-04 11:37:07.973515-04:30",NULL,NULL}
 1703	86817	arrozalba	2014-09-04 14:11:23.746082-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{400,127.0.0.1,NULL,1,1,NULL,"2014-09-04 14:11:23.746082-04:30","2014-09-04 14:11:23.746082-04:30",NULL,NULL}
@@ -5255,8 +5522,6 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 1716	86957	postgres	2014-09-06 14:22:27.296824-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Facturaci'::text WHERE id = '43'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{43,solicitudes/solicitud_servicio/contabilizar,facturar,icon-check,1,31,214,40,NULL,1,"2014-06-09 11:28:56.829577-04:30","2014-06-09 11:28:56.829577-04:30"}	{43,solicitudes/solicitud_servicio/contabilizar,Facturaci,icon-check,1,31,214,40,NULL,1,"2014-06-09 11:28:56.829577-04:30","2014-06-09 11:28:56.829577-04:30"}
 1717	86957	postgres	2014-09-06 14:22:32.784919-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Facturación'::text WHERE id = '43'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{43,solicitudes/solicitud_servicio/contabilizar,Facturaci,icon-check,1,31,214,40,NULL,1,"2014-06-09 11:28:56.829577-04:30","2014-06-09 11:28:56.829577-04:30"}	{43,solicitudes/solicitud_servicio/contabilizar,Facturación,icon-check,1,31,214,40,NULL,1,"2014-06-09 11:28:56.829577-04:30","2014-06-09 11:28:56.829577-04:30"}
 1718	87041	arrozalba	2014-09-06 14:39:26.552626-04:30	127.0.0.1	INSERT	INSERT INTO recurso (usuario_id,fecha_registro,fecha_modificado,modulo,controlador,accion,recurso,descripcion,activo) VALUES (NULL,DEFAULT,DEFAULT,'Pagos','solicitud_servicio','pagar','Pagos/solicitud_servicio/pagar','pagar las facturas correspondientes a las facturas','1')	recurso	\N	\N	{70,pagar,1,Pagos,Pagos/solicitud_servicio/pagar,NULL,solicitud_servicio,"pagar las facturas correspondientes a las facturas","2014-09-06 14:39:26.552626-04:30","2014-09-06 14:39:26.552626-04:30"}
-1719	87041	postgres	2014-09-06 14:42:25.98466-04:30	127.0.0.1	UPDATE	UPDATE public.recurso SET modulo='solicitudes'::text WHERE id = '70'::integer	recurso	{id,accion,activo,modulo,recurso,usuario_id,controlador,descripcion,fecha_registro,fecha_modificado}	{70,pagar,1,Pagos,Pagos/solicitud_servicio/pagar,NULL,solicitud_servicio,"pagar las facturas correspondientes a las facturas","2014-09-06 14:39:26.552626-04:30","2014-09-06 14:39:26.552626-04:30"}	{70,pagar,1,solicitudes,Pagos/solicitud_servicio/pagar,NULL,solicitud_servicio,"pagar las facturas correspondientes a las facturas","2014-09-06 14:39:26.552626-04:30","2014-09-06 14:39:26.552626-04:30"}
-1720	86817	arrozalba	2014-09-06 14:44:40.109413-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{408,127.0.0.1,NULL,1,2,NULL,"2014-09-06 14:44:40.109413-04:30","2014-09-06 14:44:40.109413-04:30",NULL,NULL}
 1721	86817	arrozalba	2014-09-06 14:44:43.076326-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{409,127.0.0.1,NULL,1,1,NULL,"2014-09-06 14:44:43.076326-04:30","2014-09-06 14:44:43.076326-04:30",NULL,NULL}
 1722	87041	arrozalba	2014-09-06 14:45:30.930211-04:30	127.0.0.1	UPDATE	UPDATE recurso SET modulo = 'solicitudes',controlador = 'solicitud_servicio',accion = 'pagar',recurso = 'solicitudes/solicitud_servicio/pagar',descripcion = 'Pagar las facturas correspondientes a las facturas' WHERE  id = '70'	recurso	{id,accion,activo,modulo,recurso,usuario_id,controlador,descripcion,fecha_registro,fecha_modificado}	{70,pagar,1,solicitudes,Pagos/solicitud_servicio/pagar,NULL,solicitud_servicio,"pagar las facturas correspondientes a las facturas","2014-09-06 14:39:26.552626-04:30","2014-09-06 14:39:26.552626-04:30"}	{70,pagar,1,solicitudes,solicitudes/solicitud_servicio/pagar,NULL,solicitud_servicio,"Pagar las facturas correspondientes a las facturas","2014-09-06 14:39:26.552626-04:30","2014-09-06 14:39:26.552626-04:30"}
 1723	86957	arrozalba	2014-09-06 14:46:03.610789-04:30	127.0.0.1	INSERT	INSERT INTO menu (usuario_id,fecha_registro,fecha_modificado,menu_id,recurso_id,menu,url,posicion,icono,activo,visibilidad) VALUES (NULL,DEFAULT,DEFAULT,'29','70','orden de pago','solicitudes/solicitud_servicio/pagar','216',NULL,'1','1')	menu	\N	\N	{73,solicitudes/solicitud_servicio/pagar,"orden de pago",NULL,1,29,216,70,NULL,1,"2014-09-06 14:46:03.610789-04:30","2014-09-06 14:46:03.610789-04:30"}
@@ -5275,6 +5540,7 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 1743	87041	arrozalba	2014-09-06 15:51:47.44406-04:30	127.0.0.1	UPDATE	UPDATE recurso SET modulo = 'solicitudes',controlador = 'solicitud_servicio',accion = 'facturacion',recurso = 'solicitudes/solicitud_servicio/facturacion',descripcion = 'CArgar las facturas con sus detalles al siniestro respectivo' WHERE  id = '71'	recurso	{id,accion,activo,modulo,recurso,usuario_id,controlador,descripcion,fecha_registro,fecha_modificado}	{71,facturacion,1,"Cargar Facturas","Cargar Facturas/solicitud_servicio/facturacion",NULL,solicitud_servicio,"CArgar las facturas con sus detalles al siniestro respectivo","2014-09-06 15:50:53.459536-04:30","2014-09-06 15:50:53.459536-04:30"}	{71,facturacion,1,solicitudes,solicitudes/solicitud_servicio/facturacion,NULL,solicitud_servicio,"CArgar las facturas con sus detalles al siniestro respectivo","2014-09-06 15:50:53.459536-04:30","2014-09-06 15:50:53.459536-04:30"}
 1744	86957	arrozalba	2014-09-06 15:52:58.31682-04:30	127.0.0.1	INSERT	INSERT INTO menu (usuario_id,fecha_registro,fecha_modificado,menu_id,recurso_id,menu,url,posicion,icono,activo,visibilidad) VALUES (NULL,DEFAULT,DEFAULT,'31','71','Cargar Facturas','solicitudes/solicitud_servicio/facturacion','215',NULL,'1','1')	menu	\N	\N	{74,solicitudes/solicitud_servicio/facturacion,"Cargar Facturas",NULL,1,31,215,71,NULL,1,"2014-09-06 15:52:58.31682-04:30","2014-09-06 15:52:58.31682-04:30"}
 1745	86957	arrozalba	2014-09-06 15:53:16.043412-04:30	127.0.0.1	UPDATE	UPDATE menu SET menu_id = '31',recurso_id = '70',menu = 'Orden de pago',url = 'solicitudes/solicitud_servicio/pagar',posicion = '216',icono = 'icon-plus-sign',visibilidad = '1' WHERE  id = '73'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{73,solicitudes/solicitud_servicio/pagar,"Orden de pago",icon-plus-sign,1,31,215,70,NULL,1,"2014-09-06 14:46:03.610789-04:30","2014-09-06 14:46:03.610789-04:30"}	{73,solicitudes/solicitud_servicio/pagar,"Orden de pago",icon-plus-sign,1,31,216,70,NULL,1,"2014-09-06 14:46:03.610789-04:30","2014-09-06 14:46:03.610789-04:30"}
+1760	86817	arrozalba	2014-09-09 20:13:20.692144-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{414,127.0.0.1,NULL,1,1,NULL,"2014-09-09 20:13:20.692144-04:30","2014-09-09 20:13:20.692144-04:30",NULL,NULL}
 1746	86957	arrozalba	2014-09-06 15:53:25.723421-04:30	127.0.0.1	UPDATE	UPDATE menu SET menu_id = '31',recurso_id = '41',menu = 'Anular',url = 'solicitudes/solicitud_servicio/anular',posicion = '217',icono = 'icon-remove-sign',visibilidad = '1' WHERE  id = '44'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{44,solicitudes/solicitud_servicio/anular,Anular,icon-remove-sign,1,31,216,41,NULL,1,"2014-06-09 11:31:13.991409-04:30","2014-06-09 11:31:13.991409-04:30"}	{44,solicitudes/solicitud_servicio/anular,Anular,icon-remove-sign,1,31,217,41,NULL,1,"2014-06-09 11:31:13.991409-04:30","2014-06-09 11:31:13.991409-04:30"}
 1747	86957	arrozalba	2014-09-06 15:53:37.237741-04:30	127.0.0.1	UPDATE	UPDATE menu SET menu_id = '31',recurso_id = '71',menu = 'Cargar Facturas',url = 'solicitudes/solicitud_servicio/facturacion',posicion = '215',icono = 'icon-plus-sign',visibilidad = '1' WHERE  id = '74'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{74,solicitudes/solicitud_servicio/facturacion,"Cargar Facturas",NULL,1,31,215,71,NULL,1,"2014-09-06 15:52:58.31682-04:30","2014-09-06 15:52:58.31682-04:30"}	{74,solicitudes/solicitud_servicio/facturacion,"Cargar Facturas",icon-plus-sign,1,31,215,71,NULL,1,"2014-09-06 15:52:58.31682-04:30","2014-09-06 15:52:58.31682-04:30"}
 1749	86817	arrozalba	2014-09-08 13:25:44.922398-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{410,127.0.0.1,NULL,1,1,NULL,"2014-09-08 13:25:44.922398-04:30","2014-09-08 13:25:44.922398-04:30",NULL,NULL}
@@ -5286,7 +5552,6 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 1757	86817	arrozalba	2014-09-08 21:03:27.795905-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{411,127.0.0.1,NULL,1,1,NULL,"2014-09-08 21:03:27.795905-04:30","2014-09-08 21:03:27.795905-04:30",NULL,NULL}
 1758	86817	arrozalba	2014-09-09 08:27:17.946109-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{412,127.0.0.1,NULL,1,1,NULL,"2014-09-09 08:27:17.946109-04:30","2014-09-09 08:27:17.946109-04:30",NULL,NULL}
 1759	86817	arrozalba	2014-09-09 13:52:57.093697-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{413,127.0.0.1,NULL,1,1,NULL,"2014-09-09 13:52:57.093697-04:30","2014-09-09 13:52:57.093697-04:30",NULL,NULL}
-1760	86817	arrozalba	2014-09-09 20:13:20.692144-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{414,127.0.0.1,NULL,1,1,NULL,"2014-09-09 20:13:20.692144-04:30","2014-09-09 20:13:20.692144-04:30",NULL,NULL}
 1761	86817	arrozalba	2014-09-10 19:58:09.60465-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{415,127.0.0.1,NULL,1,1,NULL,"2014-09-10 19:58:09.60465-04:30","2014-09-10 19:58:09.60465-04:30",NULL,NULL}
 1762	87075	postgres	2014-09-10 19:58:45.24713-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET estado_solicitud='F'::text WHERE id = '19'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{19,NULL,1,1,NULL,NULL,"ESCRIBIENDO UNA OBSERVACION LO SUFICIENTEMENTE GRANDE PARA VER COMPORTAMIENTO",1,1,"2014-09-03 09:39:35.149734-04:30",NULL,29,2014-09-03,SASCM-0003,S,"2014-09-03 09:39:35.149734-04:30",NULL,1,1,2014-09-18}	{19,NULL,1,1,NULL,NULL,"ESCRIBIENDO UNA OBSERVACION LO SUFICIENTEMENTE GRANDE PARA VER COMPORTAMIENTO",1,1,"2014-09-03 09:39:35.149734-04:30",NULL,29,2014-09-03,SASCM-0003,F,"2014-09-03 09:39:35.149734-04:30",NULL,1,1,2014-09-18}
 1763	87075	postgres	2014-09-10 19:58:58.12814-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET estado_solicitud='S'::text WHERE id = '19'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{19,NULL,1,1,NULL,NULL,"ESCRIBIENDO UNA OBSERVACION LO SUFICIENTEMENTE GRANDE PARA VER COMPORTAMIENTO",1,1,"2014-09-03 09:39:35.149734-04:30",NULL,29,2014-09-03,SASCM-0003,F,"2014-09-03 09:39:35.149734-04:30",NULL,1,1,2014-09-18}	{19,NULL,1,1,NULL,NULL,"ESCRIBIENDO UNA OBSERVACION LO SUFICIENTEMENTE GRANDE PARA VER COMPORTAMIENTO",1,1,"2014-09-03 09:39:35.149734-04:30",NULL,29,2014-09-03,SASCM-0003,S,"2014-09-03 09:39:35.149734-04:30",NULL,1,1,2014-09-18}
@@ -5321,6 +5586,8 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 1799	87075	arrozalba	2014-09-17 10:42:36.75067-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET estado_solicitud = 'S',tiposolicitud_id = '1',fecha_solicitud = '1900-01-25',codigo_solicitud = 'SASCM-0001',titular_id = '1',beneficiario_id = '29',proveedor_id = '5',medico_id = '1',fecha_vencimiento = '2014-09-24',servicio_id = '14',observacion = 'cemmel',motivo_rechazo = 'rancia' WHERE  id = '7'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1800	87075	postgres	2014-09-17 10:45:07.507371-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET estado_solicitud='A'::text WHERE id = '7'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1801	86817	arrozalba	2014-09-17 11:53:38.749706-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{435,127.0.0.1,NULL,1,1,NULL,"2014-09-17 11:53:38.749706-04:30","2014-09-17 11:53:38.749706-04:30",NULL,NULL}
+1808	86817	arrozalba	2014-09-19 11:58:50.071238-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{436,127.0.0.1,NULL,1,1,NULL,"2014-09-19 11:58:50.071238-04:30","2014-09-19 11:58:50.071238-04:30",NULL,NULL}
+1809	86817	arrozalba	2014-09-19 13:20:21.933639-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{437,127.0.0.1,NULL,1,1,NULL,"2014-09-19 13:20:21.933639-04:30","2014-09-19 13:20:21.933639-04:30",NULL,NULL}
 1802	87075	arrozalba	2014-09-17 11:57:43.702438-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET estado_solicitud = 'S',tiposolicitud_id = '1',fecha_solicitud = '1900-01-25',codigo_solicitud = 'SASCM-0001',titular_id = '1',beneficiario_id = '29',proveedor_id = '5',medico_id = '1',fecha_vencimiento = '2014-09-24',servicio_id = '14',observacion = 'cemmel',motivo_rechazo = 'rancia' WHERE  id = '7'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1803	87075	postgres	2014-09-17 11:57:59.342065-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET estado_solicitud='A'::text WHERE id = '7'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1859	90003	postgres	2014-09-26 01:03:05.361096-04:30	127.0.0.1	UPDATE	UPDATE public.tipoempleado SET nombre='EMPLEADO FIJO'::text WHERE id = '4'::integer	tipoempleado	{id,nombre,usuario_id,observacion,fecha_registro,fecha_modificado}	{4,"Empleado Fijo",NULL," . ","2014-04-04 18:27:48.693538-04:30","2014-04-04 18:27:48.693538-04:30"}	{4,"EMPLEADO FIJO",NULL," . ","2014-04-04 18:27:48.693538-04:30","2014-04-04 18:27:48.693538-04:30"}
@@ -5329,10 +5596,9 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 1806	87075	arrozalba	2014-09-17 12:01:48.871908-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET estado_solicitud = 'S',tiposolicitud_id = '1',fecha_solicitud = '1900-01-25',codigo_solicitud = 'SASCM-0001',titular_id = '1',beneficiario_id = '29',proveedor_id = '5',medico_id = '1',fecha_vencimiento = '2014-09-24',servicio_id = '14',observacion = 'cemmel',motivo_rechazo = 'rancia' WHERE  id = '7'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1848	86817	arrozalba	2014-09-24 11:39:53.083309-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{443,127.0.0.1,NULL,1,1,NULL,"2014-09-24 11:39:53.083309-04:30","2014-09-24 11:39:53.083309-04:30",NULL,NULL}
 1807	87075	postgres	2014-09-17 12:02:41.310297-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET estado_solicitud='A'::text WHERE id = '7'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
-1808	86817	arrozalba	2014-09-19 11:58:50.071238-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{436,127.0.0.1,NULL,1,1,NULL,"2014-09-19 11:58:50.071238-04:30","2014-09-19 11:58:50.071238-04:30",NULL,NULL}
-1809	86817	arrozalba	2014-09-19 13:20:21.933639-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{437,127.0.0.1,NULL,1,1,NULL,"2014-09-19 13:20:21.933639-04:30","2014-09-19 13:20:21.933639-04:30",NULL,NULL}
 1810	86817	arrozalba	2014-09-20 20:36:16.199057-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{438,127.0.0.1,NULL,1,1,NULL,"2014-09-20 20:36:16.199057-04:30","2014-09-20 20:36:16.199057-04:30",NULL,NULL}
 1811	87075	arrozalba	2014-09-20 21:35:10.974776-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET estado_solicitud = 'S',tiposolicitud_id = '1',fecha_solicitud = '1900-01-25',codigo_solicitud = 'SASCM-0001',titular_id = '1',beneficiario_id = '29',proveedor_id = '5',medico_id = '1',fecha_vencimiento = '2014-09-24',servicio_id = '14',observacion = 'cemmel',motivo_rechazo = 'rancia' WHERE  id = '7'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
+2036	92649	arrozalba	2014-10-05 16:16:34.993051-04:30	127.0.0.1	INSERT	INSERT INTO factura_dt (usuario_id,fecha_registro,fecha_modificado,descripcion,cantidad,monto,exento,factura_id) VALUES (NULL,DEFAULT,DEFAULT,'articulo 1','1','25.5','on',NULL)	factura_dt	\N	\N	{3,25.50,t,1,NULL,NULL,"articulo 1","2014-10-05 16:16:34.993051-04:30","2014-10-05 16:16:34.993051-04:30"}
 1812	87075	postgres	2014-09-20 21:37:28.241447-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET estado_solicitud='A'::text WHERE id = '7'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1813	87075	arrozalba	2014-09-20 21:39:49.838909-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET estado_solicitud = 'S',tiposolicitud_id = '1',fecha_solicitud = '1900-01-25',codigo_solicitud = 'SASCM-0001',titular_id = '1',beneficiario_id = '29',proveedor_id = '5',medico_id = '1',fecha_vencimiento = '2014-09-24',servicio_id = '14',observacion = 'cemmel',motivo_rechazo = 'rancia' WHERE  id = '7'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1814	87075	postgres	2014-09-20 21:40:11.46001-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET estado_solicitud='A'::text WHERE id = '7'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
@@ -5344,19 +5610,21 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 1820	87075	postgres	2014-09-20 21:47:53.086127-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET estado_solicitud='A'::text WHERE id = '7'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1821	87075	arrozalba	2014-09-20 21:49:26.742264-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET estado_solicitud = 'S',tiposolicitud_id = '1',fecha_solicitud = '1900-01-25',codigo_solicitud = 'SASCM-0001',titular_id = '1',beneficiario_id = '29',proveedor_id = '5',medico_id = '1',fecha_vencimiento = '2014-09-24',servicio_id = '14',observacion = 'cemmel',motivo_rechazo = 'rancia' WHERE  id = '7'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1822	87075	postgres	2014-09-20 21:50:03.063844-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET estado_solicitud='a'::text WHERE id = '7'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,a,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
+1865	89958	arrozalba	2014-09-26 18:42:33.833452-04:30	127.0.0.1	INSERT	INSERT INTO solicitud_servicio (usuario_id,fecha_registro,fecha_modificado,estado_solicitud,tiposolicitud_id,fecha_solicitud,codigo_solicitud,titular_id,beneficiario_id,beneficiario_tipo,proveedor_id,medico_id,fecha_vencimiento,servicio_id,motivo,motivo_anulacion,observacion,motivo_rechazo,diagnostico,multifactura) VALUES (NULL,DEFAULT,DEFAULT,'R','1','2014/09/26','SASCM-0004','1','29',DEFAULT,'1','1','2014/09/26','1',NULL,NULL,NULL,NULL,NULL,NULL)	solicitud_servicio	\N	\N	{27,NULL,1,1,NULL,NULL,NULL,1,NULL,1,"2014-09-26 18:42:33.833452-04:30",NULL,29,2014-09-26,SASCM-0004,R,"2014-09-26 18:42:33.833452-04:30",NULL,1,1,2014-09-26}
 1823	87075	postgres	2014-09-20 21:50:09.064994-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET estado_solicitud='A'::text WHERE id = '7'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,a,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1824	87075	arrozalba	2014-09-20 21:52:11.11505-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET estado_solicitud = 'S',tiposolicitud_id = '1',fecha_solicitud = '1900-01-25',codigo_solicitud = 'SASCM-0001',titular_id = '1',beneficiario_id = '29',proveedor_id = '5',medico_id = '1',fecha_vencimiento = '2014-09-24',servicio_id = '14',observacion = 'cemmel',motivo_rechazo = 'rancia' WHERE  id = '7'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1825	87075	postgres	2014-09-20 21:52:27.88449-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET estado_solicitud='A'::text WHERE id = '7'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1826	87075	arrozalba	2014-09-20 22:05:25.168552-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET estado_solicitud = 'S',tiposolicitud_id = '1',fecha_solicitud = '1900-01-25',codigo_solicitud = 'SASCM-0001',titular_id = '1',beneficiario_id = '29',proveedor_id = '5',medico_id = '1',fecha_vencimiento = '2014-09-24',servicio_id = '14',observacion = 'cemmel',motivo_rechazo = 'rancia' WHERE  id = '7'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1827	87075	postgres	2014-09-20 22:05:59.276639-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET estado_solicitud='A'::text WHERE id = '7'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1828	87075	postgres	2014-09-20 22:06:03.340471-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET motivo='a'::text, diagnostico='a'::text WHERE id = '7'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,NULL,1,1,NULL,NULL,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,a,1,1,NULL,a,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
+1834	87075	postgres	2014-09-20 22:21:52.042763-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET estado_solicitud='A'::text WHERE id = '7'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,a,1,1,NULL,a,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,a,1,1,NULL,a,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1829	87075	arrozalba	2014-09-20 22:06:21.270225-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET estado_solicitud = 'S',tiposolicitud_id = '1',fecha_solicitud = '1900-01-25',codigo_solicitud = 'SASCM-0001',titular_id = '1',beneficiario_id = '29',proveedor_id = '5',medico_id = '1',fecha_vencimiento = '2014-09-24',servicio_id = '14',observacion = 'cemmel',motivo_rechazo = 'rancia' WHERE  id = '7'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,a,1,1,NULL,a,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,a,1,1,NULL,a,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1830	87075	postgres	2014-09-20 22:09:25.568364-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET estado_solicitud='A'::text WHERE id = '7'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,a,1,1,NULL,a,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,a,1,1,NULL,a,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1832	87075	postgres	2014-09-20 22:19:30.112088-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET estado_solicitud='A'::text WHERE id = '7'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,a,1,1,NULL,a,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,a,1,1,NULL,a,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1838	87075	postgres	2014-09-20 22:23:50.185587-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET estado_solicitud='A'::text WHERE id = '7'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,a,1,1,NULL,a,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,a,1,1,NULL,a,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1831	87075	arrozalba	2014-09-20 22:12:04.170562-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET estado_solicitud = 'S',tiposolicitud_id = '1',fecha_solicitud = '1900-01-25',codigo_solicitud = 'SASCM-0001',titular_id = '1',beneficiario_id = '29',proveedor_id = '5',medico_id = '1',fecha_vencimiento = '2014-09-24',servicio_id = '14',observacion = 'cemmel',motivo_rechazo = 'rancia' WHERE  id = '7'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,a,1,1,NULL,a,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,a,1,1,NULL,a,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1833	87075	arrozalba	2014-09-20 22:21:38.304938-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET estado_solicitud = 'S',tiposolicitud_id = '1',fecha_solicitud = '1900-01-25',codigo_solicitud = 'SASCM-0001',titular_id = '1',beneficiario_id = '29',proveedor_id = '5',medico_id = '1',fecha_vencimiento = '2014-09-24',servicio_id = '14',observacion = 'cemmel',motivo_rechazo = 'rancia' WHERE  id = '7'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,a,1,1,NULL,a,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,a,1,1,NULL,a,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
-1834	87075	postgres	2014-09-20 22:21:52.042763-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET estado_solicitud='A'::text WHERE id = '7'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,a,1,1,NULL,a,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,a,1,1,NULL,a,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
+1851	86817	arrozalba	2014-09-25 19:14:29.33926-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{446,127.0.0.1,NULL,1,1,NULL,"2014-09-25 19:14:29.33926-04:30","2014-09-25 19:14:29.33926-04:30",NULL,NULL}
 1835	87075	postgres	2014-09-20 22:22:42.74745-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET estado_solicitud='S'::text WHERE id = '7'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,a,1,1,NULL,a,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,a,1,1,NULL,a,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1836	87075	postgres	2014-09-20 22:22:53.525848-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET estado_solicitud='A'::text WHERE id = '7'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,a,1,1,NULL,a,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,a,1,1,NULL,a,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1837	87075	arrozalba	2014-09-20 22:23:12.849225-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET estado_solicitud = 'S',tiposolicitud_id = '1',fecha_solicitud = '1900-01-25',codigo_solicitud = 'SASCM-0001',titular_id = '1',beneficiario_id = '29',proveedor_id = '5',medico_id = '1',fecha_vencimiento = '2014-09-24',servicio_id = '14',observacion = 'cemmel',motivo_rechazo = 'rancia' WHERE  id = '7'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,a,1,1,NULL,a,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,a,1,1,NULL,a,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
@@ -5365,6 +5633,7 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 1849	86817	arrozalba	2014-09-24 21:18:05.630707-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{444,127.0.0.1,NULL,1,1,NULL,"2014-09-24 21:18:05.630707-04:30","2014-09-24 21:18:05.630707-04:30",NULL,NULL}
 1850	86817	arrozalba	2014-09-25 06:11:20.145576-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{445,127.0.0.1,NULL,1,1,NULL,"2014-09-25 06:11:20.145576-04:30","2014-09-25 06:11:20.145576-04:30",NULL,NULL}
 1840	87075	postgres	2014-09-20 22:25:22.051018-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET estado_solicitud='A'::text WHERE id = '7'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,a,1,1,NULL,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,a,1,1,NULL,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
+1866	89679	arrozalba	2014-09-26 18:54:50.368974-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{449,127.0.0.1,NULL,1,2,NULL,"2014-09-26 18:54:50.368974-04:30","2014-09-26 18:54:50.368974-04:30",NULL,NULL}
 1841	87075	arrozalba	2014-09-20 22:26:19.021283-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET estado_solicitud = 'S',tiposolicitud_id = '1',fecha_solicitud = '1900-01-25',codigo_solicitud = 'SASCM-0001',titular_id = '1',beneficiario_id = '29',proveedor_id = '5',medico_id = '1',fecha_vencimiento = '2014-09-24',servicio_id = '14',motivo = 'DOLOR EN LA NALGAA',observacion = 'cemmel',motivo_rechazo = 'rancia',diagnostico = 'NALGA DAÑADA DEFECTUOSA' WHERE  id = '7'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,a,1,1,NULL,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,A,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,"DOLOR EN LA NALGAA",1,1,NULL,"NALGA DAÑADA DEFECTUOSA",cemmel,14,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
 1842	86817	arrozalba	2014-09-21 10:32:44.440952-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{439,127.0.0.1,NULL,1,1,NULL,"2014-09-21 10:32:44.440952-04:30","2014-09-21 10:32:44.440952-04:30",NULL,NULL}
 1843	87075	arrozalba	2014-09-21 10:33:15.75601-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET estado_solicitud = 'R',tiposolicitud_id = '1',fecha_solicitud = '2014-09-02',codigo_solicitud = 'SASCM-0002',titular_id = '1',beneficiario_id = '29',proveedor_id = '5',medico_id = '1',fecha_vencimiento = '2014-09-02',servicio_id = '3',motivo = 'no fue la mejor cpcio tiene que cmbia rl lkjhy jdk djme pal akdfj wqodcuyg hfsd fasd jksdftgdn kiNBSDY  OIY   ',observacion = 'camb ianda para poder ahora si aprobar' WHERE  id = '8'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{8,NULL,1,1,NULL,NULL,pedrito,3,5,"2014-09-02 21:27:31.841705-04:30","no fue la mejor cpcio tiene que cmbia rl lkjhy jdk djme pal akdfj wqodcuyg hfsd fasd jksdftgdn kiNBSDY  OIY   ",29,2014-09-02,SASCM-0002,E,"2014-09-02 21:27:31.841705-04:30",NULL,1,1,2014-09-02}	{8,"no fue la mejor cpcio tiene que cmbia rl lkjhy jdk djme pal akdfj wqodcuyg hfsd fasd jksdftgdn kiNBSDY  OIY   ",1,1,NULL,NULL,"camb ianda para poder ahora si aprobar",3,5,"2014-09-02 21:27:31.841705-04:30","no fue la mejor cpcio tiene que cmbia rl lkjhy jdk djme pal akdfj wqodcuyg hfsd fasd jksdftgdn kiNBSDY  OIY   ",29,2014-09-02,SASCM-0002,R,"2014-09-02 21:27:31.841705-04:30",NULL,1,1,2014-09-02}
@@ -5374,7 +5643,6 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 1845	86817	arrozalba	2014-09-22 18:43:48.862907-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{440,127.0.0.1,NULL,1,1,NULL,"2014-09-22 18:43:48.862907-04:30","2014-09-22 18:43:48.862907-04:30",NULL,NULL}
 1846	86817	arrozalba	2014-09-23 14:22:23.416793-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{441,127.0.0.1,NULL,1,1,NULL,"2014-09-23 14:22:23.416793-04:30","2014-09-23 14:22:23.416793-04:30",NULL,NULL}
 1847	86817	arrozalba	2014-09-24 08:51:21.509291-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{442,127.0.0.1,NULL,1,1,NULL,"2014-09-24 08:51:21.509291-04:30","2014-09-24 08:51:21.509291-04:30",NULL,NULL}
-1851	86817	arrozalba	2014-09-25 19:14:29.33926-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{446,127.0.0.1,NULL,1,1,NULL,"2014-09-25 19:14:29.33926-04:30","2014-09-25 19:14:29.33926-04:30",NULL,NULL}
 1852	87128	arrozalba	2014-09-25 19:59:20.489625-04:30	127.0.0.1	UPDATE	UPDATE sucursal SET empresa_id = '1',sucursal = 'UPSA PIRITU 1',pais_id = '240',estado_id = '69',municipio_id = '224',parroquia_id = '717',direccion = 'CARRETERA NACIONAL VIA TUREN FRENDE DE AGROLEON',telefono = '02555643215',fax = NULL,celular = NULL WHERE  id = '3'	sucursal	{id,fax,celular,pais_id,sucursal,telefono,direccion,estado_id,empresa_id,usuario_id,municipio_id,parroquia_id,sucursal_slug,fecha_registro,fecha_modificado}	{3,NULL,NULL,240,"UPSA PIRITU 1",02555643215,"CARRETERA NACIONAL VIA TUREN DE AGROLEON",69,1,NULL,224,717,P1,"2014-07-14 19:59:43.615064-04:30","2014-07-14 19:59:43.615064-04:30"}	{3,NULL,NULL,240,"UPSA PIRITU 1",02555643215,"CARRETERA NACIONAL VIA TUREN FRENDE DE AGROLEON",69,1,NULL,224,717,P1,"2014-07-14 19:59:43.615064-04:30","2014-07-14 19:59:43.615064-04:30"}
 1853	87128	arrozalba	2014-09-25 19:59:40.546297-04:30	127.0.0.1	UPDATE	UPDATE sucursal SET empresa_id = '1',sucursal = 'UPSA PIRITU I',pais_id = '240',estado_id = '69',municipio_id = '224',parroquia_id = '717',direccion = 'CARRETERA NACIONAL VIA TUREN FRENDE DE AGROLEON',telefono = '02555643215',fax = NULL,celular = NULL WHERE  id = '3'	sucursal	{id,fax,celular,pais_id,sucursal,telefono,direccion,estado_id,empresa_id,usuario_id,municipio_id,parroquia_id,sucursal_slug,fecha_registro,fecha_modificado}	{3,NULL,NULL,240,"UPSA PIRITU 1",02555643215,"CARRETERA NACIONAL VIA TUREN FRENDE DE AGROLEON",69,1,NULL,224,717,P1,"2014-07-14 19:59:43.615064-04:30","2014-07-14 19:59:43.615064-04:30"}	{3,NULL,NULL,240,"UPSA PIRITU I",02555643215,"CARRETERA NACIONAL VIA TUREN FRENDE DE AGROLEON",69,1,NULL,224,717,P1,"2014-07-14 19:59:43.615064-04:30","2014-07-14 19:59:43.615064-04:30"}
 1854	86882	postgres	2014-09-25 20:17:17.23294-04:30	127.0.0.1	UPDATE	UPDATE public.discapacidad SET observacion='NECESARIA'::text WHERE id = '1'::integer	discapacidad	{id,nombre,usuario_id,observacion,fecha_registro,fecha_modificado}	{1,NINGUNA,NULL,NULL,"2014-07-07 17:03:16.045851-04:30","2014-07-07 17:03:16.045851-04:30"}	{1,NINGUNA,NULL,NECESARIA,"2014-07-07 17:03:16.045851-04:30","2014-07-07 17:03:16.045851-04:30"}
@@ -5386,8 +5654,6 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 1862	89990	postgres	2014-09-26 01:11:42.038853-04:30	127.0.0.1	UPDATE	UPDATE public.sucursal SET sucursal_slug=NULL::text WHERE id = '1'::integer	sucursal	{id,fax,celular,pais_id,sucursal,telefono,direccion,estado_id,empresa_id,usuario_id,municipio_id,parroquia_id,sucursal_slug,fecha_registro,fecha_modificado}	{1,NULL,NULL,240,"ACCION CENTRAL",02563361333,"CARRETERA PRINCIPAL VIA TUREN",69,1,NULL,224,717,WTF,"2014-03-13 12:13:18.140817-04:30","2014-03-13 12:13:18.140817-04:30"}	{1,NULL,NULL,240,"ACCION CENTRAL",02563361333,"CARRETERA PRINCIPAL VIA TUREN",69,1,NULL,224,717,NULL,"2014-03-13 12:13:18.140817-04:30","2014-03-13 12:13:18.140817-04:30"}
 1863	89679	arrozalba	2014-09-26 14:44:37.035561-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{447,127.0.0.1,NULL,1,1,NULL,"2014-09-26 14:44:37.035561-04:30","2014-09-26 14:44:37.035561-04:30",NULL,NULL}
 1864	89679	arrozalba	2014-09-26 18:38:51.332565-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{448,127.0.0.1,NULL,1,1,NULL,"2014-09-26 18:38:51.332565-04:30","2014-09-26 18:38:51.332565-04:30",NULL,NULL}
-1865	89958	arrozalba	2014-09-26 18:42:33.833452-04:30	127.0.0.1	INSERT	INSERT INTO solicitud_servicio (usuario_id,fecha_registro,fecha_modificado,estado_solicitud,tiposolicitud_id,fecha_solicitud,codigo_solicitud,titular_id,beneficiario_id,beneficiario_tipo,proveedor_id,medico_id,fecha_vencimiento,servicio_id,motivo,motivo_anulacion,observacion,motivo_rechazo,diagnostico,multifactura) VALUES (NULL,DEFAULT,DEFAULT,'R','1','2014/09/26','SASCM-0004','1','29',DEFAULT,'1','1','2014/09/26','1',NULL,NULL,NULL,NULL,NULL,NULL)	solicitud_servicio	\N	\N	{27,NULL,1,1,NULL,NULL,NULL,1,NULL,1,"2014-09-26 18:42:33.833452-04:30",NULL,29,2014-09-26,SASCM-0004,R,"2014-09-26 18:42:33.833452-04:30",NULL,1,1,2014-09-26}
-1866	89679	arrozalba	2014-09-26 18:54:50.368974-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{449,127.0.0.1,NULL,1,2,NULL,"2014-09-26 18:54:50.368974-04:30","2014-09-26 18:54:50.368974-04:30",NULL,NULL}
 1867	89679	arrozalba	2014-09-26 18:54:53.549829-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{450,127.0.0.1,NULL,1,1,NULL,"2014-09-26 18:54:53.549829-04:30","2014-09-26 18:54:53.549829-04:30",NULL,NULL}
 1868	89679	arrozalba	2014-09-26 19:10:52.054043-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{451,127.0.0.1,NULL,1,1,NULL,"2014-09-26 19:10:52.054043-04:30","2014-09-26 19:10:52.054043-04:30",NULL,NULL}
 1869	89679	arrozalba	2014-09-27 08:04:54.769526-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{452,127.0.0.1,NULL,1,1,NULL,"2014-09-27 08:04:54.769526-04:30","2014-09-27 08:04:54.769526-04:30",NULL,NULL}
@@ -5421,11 +5687,14 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 1958	479670	jelitox	2014-09-30 11:07:45.115548-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET url='solicitudes/solicitud_servicio/registro'::text WHERE id = '30'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{30,#,"Solicitud de Medicinas",icon-th,1,29,201,27,NULL,1,"2014-03-16 13:24:43.632516-04:30","2014-03-16 13:24:43.632516-04:30"}	{30,solicitudes/solicitud_servicio/registro,"Solicitud de Medicinas",icon-th,1,29,201,27,NULL,1,"2014-03-16 13:24:43.632516-04:30","2014-03-16 13:24:43.632516-04:30"}
 1898	91423	arrozalba	2014-09-27 14:32:17.27648-04:30	127.0.0.1	UPDATE	UPDATE titular SET usuario_id = NULL,fecha_registro = '2014-08-20 16:01:46.559133-04:30',fecha_modificado = '2014-08-20 16:01:46.559133-04:30',cedula = '16416882',nombre1 = 'ABINADAL',nombre2 = 'ABELIS',apellido1 = 'GUEVARA',apellido2 = 'TORREALBA',nacionalidad = 'V',sexo = 'M',fecha_nacimiento = '1980-09-03',sucursal_id = '1',pais_id = '240',estado_id = '69',municipio_id = '229',parroquia_id = '732',direccion_habitacion = 'BARRIO EL LIBERTADOR CALLE 3.',hpais_id = '240',hestado_id = '69',hmunicipio_id = '229',hparroquia_id = '732',estado_civil = 'c',celular = '04264944316',telefono = NULL,correo_electronico = 'UPS.PIRITU2@ARROZDELALBA.GOB.VE',grupo_sanguineo = 'N/A',tipoempleado_id = '1',fecha_ingreso = '2009-12-01',profesion_id = '86',departamento_id = '43',cargo_id = '16',observacion = NULL,estado = '0',fotografia = NULL WHERE  id = '151'	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,correo_electronico,direccion_habitacion}	{151,M,16416882,1,04264944316,ABINADAL,ABELIS,240,16,240,NULL,GUEVARA,TORREALBA,69,NULL,69,NULL,NULL,1,c,229,V,732,86,2009-12-01,229,732,"2014-08-20 16:01:46.559133-04:30",43,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,UPS.PIRITU2@ARROZDELALBA.GOB.VE,"BARRIO EL LIBERTADOR CALLE 3."}	{151,M,16416882,0,04264944316,ABINADAL,ABELIS,240,16,240,NULL,GUEVARA,TORREALBA,69,NULL,69,NULL,NULL,1,c,229,V,732,86,2009-12-01,229,732,"2014-08-20 16:01:46.559133-04:30",43,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,UPS.PIRITU2@ARROZDELALBA.GOB.VE,"BARRIO EL LIBERTADOR CALLE 3."}
 1899	91423	postgres	2014-09-27 14:52:39.567264-04:30	127.0.0.1	UPDATE	UPDATE public.titular SET estado='1'::integer WHERE id = '151'::integer	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,direccion_habitacion}	{151,M,16416882,0,04264944316,ABINADAL,ABELIS,240,16,240,NULL,GUEVARA,TORREALBA,69,NULL,69,NULL,NULL,1,c,229,V,732,86,2009-12-01,229,732,"2014-08-20 16:01:46.559133-04:30",43,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,NULL,UPS.PIRITU2@ARROZDELALBA.GOB.VE,"BARRIO EL LIBERTADOR CALLE 3."}	{151,M,16416882,1,04264944316,ABINADAL,ABELIS,240,16,240,NULL,GUEVARA,TORREALBA,69,NULL,69,NULL,NULL,1,c,229,V,732,86,2009-12-01,229,732,"2014-08-20 16:01:46.559133-04:30",43,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,NULL,UPS.PIRITU2@ARROZDELALBA.GOB.VE,"BARRIO EL LIBERTADOR CALLE 3."}
+1948	91085	arrozalba	2014-09-30 09:51:09.393627-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{476,127.0.0.1,NULL,1,1,NULL,"2014-09-30 09:51:09.393627-04:30","2014-09-30 09:51:09.393627-04:30",NULL,NULL}
+2021	92516	arrozalba	2014-10-02 08:55:16.172125-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{502,127.0.0.1,NULL,1,1,NULL,"2014-10-02 08:55:16.172125-04:30","2014-10-02 08:55:16.172125-04:30",NULL,NULL}
 1900	91423	arrozalba	2014-09-27 14:53:11.387456-04:30	127.0.0.1	UPDATE	UPDATE titular SET cedula = '16416882',nombre1 = 'ABINADAL',nombre2 = 'ABELIS',apellido1 = 'GUEVARA',apellido2 = 'TORREALBA',estado_id = NULL,municipio_id = NULL,celular = NULL,telefono = NULL,correo_electronico = NULL,tipoempleado_id = NULL,fecha_ingreso = NULL,profesion_id = NULL,departamento_id = NULL,cargo_id = NULL,observacion = NULL,estado = '0' WHERE  id = '151'	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,direccion_habitacion}	{151,M,16416882,1,04264944316,ABINADAL,ABELIS,240,16,240,NULL,GUEVARA,TORREALBA,69,NULL,69,NULL,NULL,1,c,229,V,732,86,2009-12-01,229,732,"2014-08-20 16:01:46.559133-04:30",43,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,NULL,UPS.PIRITU2@ARROZDELALBA.GOB.VE,"BARRIO EL LIBERTADOR CALLE 3."}	{151,M,16416882,0,NULL,ABINADAL,ABELIS,240,NULL,240,NULL,GUEVARA,TORREALBA,NULL,NULL,69,NULL,NULL,1,c,NULL,V,732,NULL,NULL,229,732,"2014-08-20 16:01:46.559133-04:30",NULL,N/A,NULL,"2014-08-20 16:01:46.559133-04:30",1980-09-03,NULL,NULL,"BARRIO EL LIBERTADOR CALLE 3."}
 1901	91423	postgres	2014-09-27 14:55:55.834314-04:30	127.0.0.1	UPDATE	UPDATE public.titular SET estado_id='59'::integer WHERE id = '151'::integer	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,direccion_habitacion}	{151,M,16416882,0,NULL,ABINADAL,ABELIS,240,NULL,240,NULL,GUEVARA,TORREALBA,NULL,NULL,69,NULL,NULL,1,c,NULL,V,732,NULL,NULL,229,732,"2014-08-20 16:01:46.559133-04:30",NULL,N/A,NULL,"2014-08-20 16:01:46.559133-04:30",1980-09-03,NULL,NULL,"BARRIO EL LIBERTADOR CALLE 3."}	{151,M,16416882,0,NULL,ABINADAL,ABELIS,240,NULL,240,NULL,GUEVARA,TORREALBA,59,NULL,69,NULL,NULL,1,c,NULL,V,732,NULL,NULL,229,732,"2014-08-20 16:01:46.559133-04:30",NULL,N/A,NULL,"2014-08-20 16:01:46.559133-04:30",1980-09-03,NULL,NULL,"BARRIO EL LIBERTADOR CALLE 3."}
 1902	91423	postgres	2014-09-27 14:55:57.646916-04:30	127.0.0.1	UPDATE	UPDATE public.titular SET municipio_id='91'::integer WHERE id = '151'::integer	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,direccion_habitacion}	{151,M,16416882,0,NULL,ABINADAL,ABELIS,240,NULL,240,NULL,GUEVARA,TORREALBA,59,NULL,69,NULL,NULL,1,c,NULL,V,732,NULL,NULL,229,732,"2014-08-20 16:01:46.559133-04:30",NULL,N/A,NULL,"2014-08-20 16:01:46.559133-04:30",1980-09-03,NULL,NULL,"BARRIO EL LIBERTADOR CALLE 3."}	{151,M,16416882,0,NULL,ABINADAL,ABELIS,240,NULL,240,NULL,GUEVARA,TORREALBA,59,NULL,69,NULL,NULL,1,c,91,V,732,NULL,NULL,229,732,"2014-08-20 16:01:46.559133-04:30",NULL,N/A,NULL,"2014-08-20 16:01:46.559133-04:30",1980-09-03,NULL,NULL,"BARRIO EL LIBERTADOR CALLE 3."}
 1903	91423	postgres	2014-09-27 14:56:06.971589-04:30	127.0.0.1	UPDATE	UPDATE public.titular SET celular='04267014312'::text WHERE id = '151'::integer	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,direccion_habitacion}	{151,M,16416882,0,NULL,ABINADAL,ABELIS,240,NULL,240,NULL,GUEVARA,TORREALBA,59,NULL,69,NULL,NULL,1,c,91,V,732,NULL,NULL,229,732,"2014-08-20 16:01:46.559133-04:30",NULL,N/A,NULL,"2014-08-20 16:01:46.559133-04:30",1980-09-03,NULL,NULL,"BARRIO EL LIBERTADOR CALLE 3."}	{151,M,16416882,0,04267014312,ABINADAL,ABELIS,240,NULL,240,NULL,GUEVARA,TORREALBA,59,NULL,69,NULL,NULL,1,c,91,V,732,NULL,NULL,229,732,"2014-08-20 16:01:46.559133-04:30",NULL,N/A,NULL,"2014-08-20 16:01:46.559133-04:30",1980-09-03,NULL,NULL,"BARRIO EL LIBERTADOR CALLE 3."}
 1904	91423	postgres	2014-09-27 15:31:52.988558-04:30	127.0.0.1	UPDATE	UPDATE public.titular SET tipoempleado_id='1'::integer WHERE id = '151'::integer	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,direccion_habitacion}	{151,M,16416882,0,04267014312,ABINADAL,ABELIS,240,NULL,240,NULL,GUEVARA,TORREALBA,59,NULL,69,NULL,NULL,1,c,91,V,732,NULL,NULL,229,732,"2014-08-20 16:01:46.559133-04:30",NULL,N/A,NULL,"2014-08-20 16:01:46.559133-04:30",1980-09-03,NULL,NULL,"BARRIO EL LIBERTADOR CALLE 3."}	{151,M,16416882,0,04267014312,ABINADAL,ABELIS,240,NULL,240,NULL,GUEVARA,TORREALBA,59,NULL,69,NULL,NULL,1,c,91,V,732,NULL,NULL,229,732,"2014-08-20 16:01:46.559133-04:30",NULL,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,NULL,NULL,"BARRIO EL LIBERTADOR CALLE 3."}
+1978	92516	arrozalba	2014-09-30 12:48:45.965431-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{485,127.0.0.1,NULL,1,1,NULL,"2014-09-30 12:48:45.965431-04:30","2014-09-30 12:48:45.965431-04:30",NULL,NULL}
 1905	91423	postgres	2014-09-27 15:31:55.615558-04:30	127.0.0.1	UPDATE	UPDATE public.titular SET profesion_id='88'::integer WHERE id = '151'::integer	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,direccion_habitacion}	{151,M,16416882,0,04267014312,ABINADAL,ABELIS,240,NULL,240,NULL,GUEVARA,TORREALBA,59,NULL,69,NULL,NULL,1,c,91,V,732,NULL,NULL,229,732,"2014-08-20 16:01:46.559133-04:30",NULL,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,NULL,NULL,"BARRIO EL LIBERTADOR CALLE 3."}	{151,M,16416882,0,04267014312,ABINADAL,ABELIS,240,NULL,240,NULL,GUEVARA,TORREALBA,59,NULL,69,NULL,NULL,1,c,91,V,732,88,NULL,229,732,"2014-08-20 16:01:46.559133-04:30",NULL,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,NULL,NULL,"BARRIO EL LIBERTADOR CALLE 3."}
 1906	91423	postgres	2014-09-27 15:31:59.654593-04:30	127.0.0.1	UPDATE	UPDATE public.titular SET departamento_id='7'::integer, cargo_id='16'::integer WHERE id = '151'::integer	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,direccion_habitacion}	{151,M,16416882,0,04267014312,ABINADAL,ABELIS,240,NULL,240,NULL,GUEVARA,TORREALBA,59,NULL,69,NULL,NULL,1,c,91,V,732,88,NULL,229,732,"2014-08-20 16:01:46.559133-04:30",NULL,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,NULL,NULL,"BARRIO EL LIBERTADOR CALLE 3."}	{151,M,16416882,0,04267014312,ABINADAL,ABELIS,240,16,240,NULL,GUEVARA,TORREALBA,59,NULL,69,NULL,NULL,1,c,91,V,732,88,NULL,229,732,"2014-08-20 16:01:46.559133-04:30",7,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,NULL,NULL,"BARRIO EL LIBERTADOR CALLE 3."}
 1907	91423	postgres	2014-09-27 15:32:09.536716-04:30	127.0.0.1	UPDATE	UPDATE public.titular SET fecha_ingreso='2009-11-17'::date WHERE id = '151'::integer	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,direccion_habitacion}	{151,M,16416882,0,04267014312,ABINADAL,ABELIS,240,16,240,NULL,GUEVARA,TORREALBA,59,NULL,69,NULL,NULL,1,c,91,V,732,88,NULL,229,732,"2014-08-20 16:01:46.559133-04:30",7,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,NULL,NULL,"BARRIO EL LIBERTADOR CALLE 3."}	{151,M,16416882,0,04267014312,ABINADAL,ABELIS,240,16,240,NULL,GUEVARA,TORREALBA,59,NULL,69,NULL,NULL,1,c,91,V,732,88,2009-11-17,229,732,"2014-08-20 16:01:46.559133-04:30",7,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,NULL,NULL,"BARRIO EL LIBERTADOR CALLE 3."}
@@ -5437,13 +5706,13 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 1912	91423	postgres	2014-09-27 15:55:46.640531-04:30	127.0.0.1	UPDATE	UPDATE public.titular SET estado='1'::integer WHERE id = '151'::integer	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,fecha_egreso,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,direccion_habitacion}	{151,M,16416882,0,04267014312,ABINADAL,ABELIS,240,16,240,NULL,GUEVARA,NULL,59,NULL,69,NULL,NULL,1,c,NULL,91,V,732,88,2009-11-17,229,732,"2014-08-20 16:01:46.559133-04:30",7,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,NULL,ABINDA@HOTMAIL.COM,"BARRIO EL LIBERTADOR CALLE 3."}	{151,M,16416882,1,04267014312,ABINADAL,ABELIS,240,16,240,NULL,GUEVARA,NULL,59,NULL,69,NULL,NULL,1,c,NULL,91,V,732,88,2009-11-17,229,732,"2014-08-20 16:01:46.559133-04:30",7,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,NULL,ABINDA@HOTMAIL.COM,"BARRIO EL LIBERTADOR CALLE 3."}
 1997	92596	arrozalba	2014-09-30 13:39:47.069974-04:30	127.0.0.1	INSERT	INSERT INTO discapacidad_titular (titular_id,discapacidad_id) VALUES ('283','2')	discapacidad_titular	\N	\N	{9,283,2}
 1913	91423	arrozalba	2014-09-27 15:59:06.856487-04:30	127.0.0.1	UPDATE	UPDATE titular SET usuario_id = NULL,cedula = '16416882',nombre1 = 'ABINADAL',nombre2 = 'ABELIS',apellido1 = 'GUEVARA',apellido2 = NULL,nacionalidad = 'V',sexo = 'M',fecha_nacimiento = '1980-09-03',sucursal_id = '1',pais_id = '240',estado_id = '59',municipio_id = '91',parroquia_id = '732',direccion_habitacion = 'BARRIO EL LIBERTADOR CALLE 3.',hpais_id = '240',estado_civil = 'c',celular = '04267014312',telefono = NULL,correo_electronico = 'ABINDA@HOTMAIL.COM',grupo_sanguineo = 'N/A',tipoempleado_id = NULL,fecha_ingreso = '2009-11-17',profesion_id = '88',departamento_id = '7',cargo_id = '16',observacion = NULL,estado = '0',fotografia = NULL,motivo_exclusion = 'es una rata inmunda' WHERE  id = '151'	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,fecha_egreso,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,direccion_habitacion}	{151,M,16416882,1,04267014312,ABINADAL,ABELIS,240,16,240,NULL,GUEVARA,NULL,59,NULL,69,NULL,NULL,1,c,NULL,91,V,732,88,2009-11-17,229,732,"2014-08-20 16:01:46.559133-04:30",7,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,NULL,ABINDA@HOTMAIL.COM,"BARRIO EL LIBERTADOR CALLE 3."}	{151,M,16416882,0,04267014312,ABINADAL,ABELIS,240,16,240,NULL,GUEVARA,NULL,59,NULL,69,NULL,NULL,1,c,NULL,91,V,732,88,2009-11-17,229,732,"2014-08-20 16:01:46.559133-04:30",7,N/A,NULL,"2014-08-20 16:01:46.559133-04:30",1980-09-03,"es una rata inmunda",ABINDA@HOTMAIL.COM,"BARRIO EL LIBERTADOR CALLE 3."}
+1919	91423	arrozalba	2014-09-27 22:07:11.251421-04:30	127.0.0.1	UPDATE	UPDATE titular SET usuario_id = NULL,cedula = '16416882',nombre1 = 'ABINADAL',nombre2 = 'ABELIS',apellido1 = 'GUEVARA',apellido2 = NULL,nacionalidad = 'V',sexo = 'M',fecha_nacimiento = '1980-09-03',sucursal_id = '1',pais_id = '240',estado_id = '59',municipio_id = '91',parroquia_id = '732',direccion_habitacion = 'BARRIO EL LIBERTADOR CALLE 3.',hpais_id = '240',estado_civil = 'c',celular = '04267014312',telefono = NULL,correo_electronico = 'ABINDA@HOTMAIL.COM',grupo_sanguineo = 'N/A',tipoempleado_id = '1',fecha_ingreso = '2009-11-17',profesion_id = '88',departamento_id = '7',cargo_id = '16',observacion = NULL,estado = '1',fotografia = NULL,motivo_exclusion = 'ES UN BALURDIN',fecha_exclusion = NULL,motivo_reactivacion = 'ESTABA ACTIVO  PERO POR ERROR SE DESACTIVO PS',fecha_reactivacion = '2014-09-27' WHERE  id = '151'	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,fecha_exclusion,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,fecha_reactivacion,motivo_reactivacion,direccion_habitacion}	{151,M,16416882,0,04267014312,ABINADAL,ABELIS,240,16,240,NULL,GUEVARA,NULL,59,NULL,69,NULL,NULL,1,c,91,V,732,88,2009-11-17,229,732,"2014-08-20 16:01:46.559133-04:30",7,2014-09-27,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,"es un balurdin",ABINDA@HOTMAIL.COM,NULL,NULL,"BARRIO EL LIBERTADOR CALLE 3."}	{151,M,16416882,1,04267014312,ABINADAL,ABELIS,240,16,240,NULL,GUEVARA,NULL,59,NULL,69,NULL,NULL,1,c,91,V,732,88,2009-11-17,229,732,"2014-08-20 16:01:46.559133-04:30",7,NULL,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,"ES UN BALURDIN",ABINDA@HOTMAIL.COM,2014-09-27,"ESTABA ACTIVO  PERO POR ERROR SE DESACTIVO PS","BARRIO EL LIBERTADOR CALLE 3."}
 1914	91423	postgres	2014-09-27 15:59:51.268337-04:30	127.0.0.1	UPDATE	UPDATE public.titular SET tipoempleado_id='1'::integer WHERE id = '151'::integer	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,fecha_egreso,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,direccion_habitacion}	{151,M,16416882,0,04267014312,ABINADAL,ABELIS,240,16,240,NULL,GUEVARA,NULL,59,NULL,69,NULL,NULL,1,c,NULL,91,V,732,88,2009-11-17,229,732,"2014-08-20 16:01:46.559133-04:30",7,N/A,NULL,"2014-08-20 16:01:46.559133-04:30",1980-09-03,"es una rata inmunda",ABINDA@HOTMAIL.COM,"BARRIO EL LIBERTADOR CALLE 3."}	{151,M,16416882,0,04267014312,ABINADAL,ABELIS,240,16,240,NULL,GUEVARA,NULL,59,NULL,69,NULL,NULL,1,c,NULL,91,V,732,88,2009-11-17,229,732,"2014-08-20 16:01:46.559133-04:30",7,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,"es una rata inmunda",ABINDA@HOTMAIL.COM,"BARRIO EL LIBERTADOR CALLE 3."}
 1915	91423	postgres	2014-09-27 16:00:03.356484-04:30	127.0.0.1	UPDATE	UPDATE public.titular SET estado='1'::integer WHERE id = '151'::integer	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,fecha_egreso,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,direccion_habitacion}	{151,M,16416882,0,04267014312,ABINADAL,ABELIS,240,16,240,NULL,GUEVARA,NULL,59,NULL,69,NULL,NULL,1,c,NULL,91,V,732,88,2009-11-17,229,732,"2014-08-20 16:01:46.559133-04:30",7,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,"es una rata inmunda",ABINDA@HOTMAIL.COM,"BARRIO EL LIBERTADOR CALLE 3."}	{151,M,16416882,1,04267014312,ABINADAL,ABELIS,240,16,240,NULL,GUEVARA,NULL,59,NULL,69,NULL,NULL,1,c,NULL,91,V,732,88,2009-11-17,229,732,"2014-08-20 16:01:46.559133-04:30",7,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,"es una rata inmunda",ABINDA@HOTMAIL.COM,"BARRIO EL LIBERTADOR CALLE 3."}
 1916	91423	arrozalba	2014-09-27 16:00:41.63967-04:30	127.0.0.1	UPDATE	UPDATE titular SET usuario_id = NULL,cedula = '16416882',nombre1 = 'ABINADAL',nombre2 = 'ABELIS',apellido1 = 'GUEVARA',apellido2 = NULL,nacionalidad = 'V',sexo = 'M',fecha_nacimiento = '1980-09-03',sucursal_id = '1',pais_id = '240',estado_id = '59',municipio_id = '91',parroquia_id = '732',direccion_habitacion = 'BARRIO EL LIBERTADOR CALLE 3.',hpais_id = '240',estado_civil = 'c',celular = '04267014312',telefono = NULL,correo_electronico = 'ABINDA@HOTMAIL.COM',grupo_sanguineo = 'N/A',tipoempleado_id = '1',fecha_ingreso = '2009-11-17',profesion_id = '88',departamento_id = '7',cargo_id = '16',observacion = NULL,estado = '0',fotografia = NULL,motivo_exclusion = 'es un balurdin',fecha_exclusion = '2014-09-27' WHERE  id = '151'	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,fecha_exclusion,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,direccion_habitacion}	{151,M,16416882,1,04267014312,ABINADAL,ABELIS,240,16,240,NULL,GUEVARA,NULL,59,NULL,69,NULL,NULL,1,c,91,V,732,88,2009-11-17,229,732,"2014-08-20 16:01:46.559133-04:30",7,NULL,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,"es una rata inmunda",ABINDA@HOTMAIL.COM,"BARRIO EL LIBERTADOR CALLE 3."}	{151,M,16416882,0,04267014312,ABINADAL,ABELIS,240,16,240,NULL,GUEVARA,NULL,59,NULL,69,NULL,NULL,1,c,91,V,732,88,2009-11-17,229,732,"2014-08-20 16:01:46.559133-04:30",7,2014-09-27,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,"es un balurdin",ABINDA@HOTMAIL.COM,"BARRIO EL LIBERTADOR CALLE 3."}
 1917	91085	arrozalba	2014-09-27 21:37:38.248732-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{472,127.0.0.1,NULL,1,1,NULL,"2014-09-27 21:37:38.248732-04:30","2014-09-27 21:37:38.248732-04:30",NULL,NULL}
 1918	91085	arrozalba	2014-09-27 21:58:09.548047-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{473,127.0.0.1,NULL,1,1,NULL,"2014-09-27 21:58:09.548047-04:30","2014-09-27 21:58:09.548047-04:30",NULL,NULL}
 1930	91099	arrozalba	2014-09-28 01:13:20.688098-04:30	127.0.0.1	INSERT	INSERT INTO beneficiario (usuario_id,fecha_registro,fecha_modificado,cedula,nombre1,nombre2,apellido1,apellido2,nacionalidad,sexo,fecha_nacimiento,correo_electronico,grupo_sanguineo,fecha_inclusion,fecha_exclusion,celular,telefono,titular_id,beneficiario_tipo_id,observacion,participacion,parentesco_id,motivo_exclusion,motivo_reactivacion,estado_beneficiario,estado_civil) VALUES (NULL,DEFAULT,DEFAULT,'20654231','PETRICA',NULL,'LAOTRA','AMANTES','V','F','2013-07-03',NULL,DEFAULT,DEFAULT,DEFAULT,'64654654646','65465464646','1','2',NULL,'0','6',NULL,NULL,DEFAULT,'S')	beneficiario	\N	\N	{169,F,20654231,64654654646,PETRICA,NULL,65465464646,LAOTRA,AMANTES,1,NULL,NULL,S,V,6,0,"2014-09-28 01:13:20.688098-04:30",1900-01-01,1900-01-01,N/A,"2014-09-28 01:13:20.688098-04:30",2013-07-03,NULL,NULL,1,NULL,2}
-1919	91423	arrozalba	2014-09-27 22:07:11.251421-04:30	127.0.0.1	UPDATE	UPDATE titular SET usuario_id = NULL,cedula = '16416882',nombre1 = 'ABINADAL',nombre2 = 'ABELIS',apellido1 = 'GUEVARA',apellido2 = NULL,nacionalidad = 'V',sexo = 'M',fecha_nacimiento = '1980-09-03',sucursal_id = '1',pais_id = '240',estado_id = '59',municipio_id = '91',parroquia_id = '732',direccion_habitacion = 'BARRIO EL LIBERTADOR CALLE 3.',hpais_id = '240',estado_civil = 'c',celular = '04267014312',telefono = NULL,correo_electronico = 'ABINDA@HOTMAIL.COM',grupo_sanguineo = 'N/A',tipoempleado_id = '1',fecha_ingreso = '2009-11-17',profesion_id = '88',departamento_id = '7',cargo_id = '16',observacion = NULL,estado = '1',fotografia = NULL,motivo_exclusion = 'ES UN BALURDIN',fecha_exclusion = NULL,motivo_reactivacion = 'ESTABA ACTIVO  PERO POR ERROR SE DESACTIVO PS',fecha_reactivacion = '2014-09-27' WHERE  id = '151'	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,fecha_exclusion,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,fecha_reactivacion,motivo_reactivacion,direccion_habitacion}	{151,M,16416882,0,04267014312,ABINADAL,ABELIS,240,16,240,NULL,GUEVARA,NULL,59,NULL,69,NULL,NULL,1,c,91,V,732,88,2009-11-17,229,732,"2014-08-20 16:01:46.559133-04:30",7,2014-09-27,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,"es un balurdin",ABINDA@HOTMAIL.COM,NULL,NULL,"BARRIO EL LIBERTADOR CALLE 3."}	{151,M,16416882,1,04267014312,ABINADAL,ABELIS,240,16,240,NULL,GUEVARA,NULL,59,NULL,69,NULL,NULL,1,c,91,V,732,88,2009-11-17,229,732,"2014-08-20 16:01:46.559133-04:30",7,NULL,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,"ES UN BALURDIN",ABINDA@HOTMAIL.COM,2014-09-27,"ESTABA ACTIVO  PERO POR ERROR SE DESACTIVO PS","BARRIO EL LIBERTADOR CALLE 3."}
 1920	91423	arrozalba	2014-09-27 22:26:17.600531-04:30	127.0.0.1	UPDATE	UPDATE titular SET usuario_id = NULL,cedula = '16416882',nombre1 = 'ABINADAL',nombre2 = 'ABELIS',apellido1 = 'GUEVARA',apellido2 = NULL,nacionalidad = 'V',sexo = 'M',fecha_nacimiento = '1980-09-03',sucursal_id = '1',pais_id = '240',estado_id = '59',municipio_id = '91',parroquia_id = '732',direccion_habitacion = 'BARRIO EL LIBERTADOR CALLE 3.',hpais_id = '240',estado_civil = 'c',celular = '04267014312',telefono = NULL,correo_electronico = 'ABINDA@HOTMAIL.COM',grupo_sanguineo = 'N/A',tipoempleado_id = '1',fecha_ingreso = '2009-11-17',profesion_id = '88',departamento_id = '7',cargo_id = '16',observacion = NULL,estado = '0',fotografia = NULL,motivo_exclusion = 'DE NUEVO PA LA PRIEBA',fecha_exclusion = '2014-09-27',motivo_reactivacion = NULL WHERE  id = '151'	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,fecha_exclusion,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,fecha_reactivacion,motivo_reactivacion,direccion_habitacion}	{151,M,16416882,1,04267014312,ABINADAL,ABELIS,240,16,240,NULL,GUEVARA,NULL,59,NULL,69,NULL,NULL,1,c,91,V,732,88,2009-11-17,229,732,"2014-08-20 16:01:46.559133-04:30",7,NULL,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,"ES UN BALURDIN",ABINDA@HOTMAIL.COM,2014-09-27,"ESTABA ACTIVO  PERO POR ERROR SE DESACTIVO PS","BARRIO EL LIBERTADOR CALLE 3."}	{151,M,16416882,0,04267014312,ABINADAL,ABELIS,240,16,240,NULL,GUEVARA,NULL,59,NULL,69,NULL,NULL,1,c,91,V,732,88,2009-11-17,229,732,"2014-08-20 16:01:46.559133-04:30",7,2014-09-27,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,"DE NUEVO PA LA PRIEBA",ABINDA@HOTMAIL.COM,2014-09-27,NULL,"BARRIO EL LIBERTADOR CALLE 3."}
 1921	91423	arrozalba	2014-09-27 22:26:27.727607-04:30	127.0.0.1	UPDATE	UPDATE titular SET usuario_id = NULL,cedula = '16416882',nombre1 = 'ABINADAL',nombre2 = 'ABELIS',apellido1 = 'GUEVARA',apellido2 = NULL,nacionalidad = 'V',sexo = 'M',fecha_nacimiento = '1980-09-03',sucursal_id = '1',pais_id = '240',estado_id = '59',municipio_id = '91',parroquia_id = '732',direccion_habitacion = 'BARRIO EL LIBERTADOR CALLE 3.',hpais_id = '240',estado_civil = 'c',celular = '04267014312',telefono = NULL,correo_electronico = 'ABINDA@HOTMAIL.COM',grupo_sanguineo = 'N/A',tipoempleado_id = '1',fecha_ingreso = '2009-11-17',profesion_id = '88',departamento_id = '7',cargo_id = '16',observacion = NULL,estado = '1',fotografia = NULL,motivo_exclusion = 'DE NUEVO PA LA PRIEBA',fecha_exclusion = '2014-09-27',motivo_reactivacion = 'REACTIVE DE NUEXW',fecha_reactivacion = '2014-09-27' WHERE  id = '151'	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,fecha_exclusion,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,fecha_reactivacion,motivo_reactivacion,direccion_habitacion}	{151,M,16416882,0,04267014312,ABINADAL,ABELIS,240,16,240,NULL,GUEVARA,NULL,59,NULL,69,NULL,NULL,1,c,91,V,732,88,2009-11-17,229,732,"2014-08-20 16:01:46.559133-04:30",7,2014-09-27,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,"DE NUEVO PA LA PRIEBA",ABINDA@HOTMAIL.COM,2014-09-27,NULL,"BARRIO EL LIBERTADOR CALLE 3."}	{151,M,16416882,1,04267014312,ABINADAL,ABELIS,240,16,240,NULL,GUEVARA,NULL,59,NULL,69,NULL,NULL,1,c,91,V,732,88,2009-11-17,229,732,"2014-08-20 16:01:46.559133-04:30",7,2014-09-27,N/A,1,"2014-08-20 16:01:46.559133-04:30",1980-09-03,"DE NUEVO PA LA PRIEBA",ABINDA@HOTMAIL.COM,2014-09-27,"REACTIVE DE NUEXW","BARRIO EL LIBERTADOR CALLE 3."}
 1922	91099	postgres	2014-09-27 23:46:41.31626-04:30	127.0.0.1	UPDATE	UPDATE public.beneficiario SET estado_beneficiario='0'::text WHERE id = '102'::integer	beneficiario	{id,sexo,cedula,celular,nombre1,nombre2,telefono,apellido1,apellido2,titular_id,usuario_id,observacion,nacionalidad,parentesco_id,participacion,fecha_registro,fecha_exclusion,fecha_inclusion,grupo_sanguineo,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,estado_beneficiario,motivo_reactivacion,beneficiario_tipo_id}	{102,F,81288458,NULL,ZOILA,"DE LAS MERCEDES",NULL,FIERRO,PIZARRO,151,NULL,NULL,V,4,100,"2014-09-19 13:21:55.090032-04:30",1900-01-01,1900-01-01,N/A,"2014-09-19 13:21:55.090032-04:30",1943-08-24,NULL,NULL,1,NULL,1}	{102,F,81288458,NULL,ZOILA,"DE LAS MERCEDES",NULL,FIERRO,PIZARRO,151,NULL,NULL,V,4,100,"2014-09-19 13:21:55.090032-04:30",1900-01-01,1900-01-01,N/A,"2014-09-19 13:21:55.090032-04:30",1943-08-24,NULL,NULL,0,NULL,1}
@@ -5457,13 +5726,13 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 1929	91099	arrozalba	2014-09-28 01:08:51.432798-04:30	127.0.0.1	UPDATE	UPDATE beneficiario SET cedula = '87438323',nombre1 = 'JUANITA',nombre2 = NULL,apellido1 = 'PETRA',apellido2 = NULL,nacionalidad = 'V',sexo = 'F',fecha_nacimiento = '1990-03-01',correo_electronico = NULL,celular = '87687686868',telefono = NULL,titular_id = '1',beneficiario_tipo_id = '1',observacion = NULL,participacion = '100',parentesco_id = '2',estado_civil = 'S' WHERE  id = '29'	beneficiario	{id,sexo,cedula,celular,nombre1,nombre2,telefono,apellido1,apellido2,titular_id,usuario_id,observacion,estado_civil,nacionalidad,parentesco_id,participacion,fecha_registro,fecha_exclusion,fecha_inclusion,grupo_sanguineo,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,estado_beneficiario,motivo_reactivacion,beneficiario_tipo_id}	{29,F,87438323,87687686868,JUANITA,NULL,NULL,PETRA,NULL,1,NULL,NULL,S,V,2,100,"2014-08-22 17:02:21.5904-04:30",1900-01-01,1900-01-01,N/A,"2014-08-22 17:02:21.5904-04:30",2014-09-28,NULL,NULL,1,NULL,1}	{29,F,87438323,87687686868,JUANITA,NULL,NULL,PETRA,NULL,1,NULL,NULL,S,V,2,100,"2014-08-22 17:02:21.5904-04:30",1900-01-01,1900-01-01,N/A,"2014-08-22 17:02:21.5904-04:30",1990-03-01,NULL,NULL,1,NULL,1}
 1931	91099	arrozalba	2014-09-28 01:14:03.600623-04:30	127.0.0.1	UPDATE	UPDATE beneficiario SET cedula = '20654231',nombre1 = 'PETRICA',nombre2 = NULL,apellido1 = 'LAOTRA',apellido2 = 'AMANTES',nacionalidad = 'V',sexo = 'F',fecha_nacimiento = '2014-09-28',correo_electronico = NULL,celular = '64654654646',telefono = '65465464646',titular_id = '1',beneficiario_tipo_id = '1',observacion = NULL,participacion = '0',parentesco_id = '2',estado_civil = 'S' WHERE  id = '169'	beneficiario	{id,sexo,cedula,celular,nombre1,nombre2,telefono,apellido1,apellido2,titular_id,usuario_id,observacion,estado_civil,nacionalidad,parentesco_id,participacion,fecha_registro,fecha_exclusion,fecha_inclusion,grupo_sanguineo,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,estado_beneficiario,motivo_reactivacion,beneficiario_tipo_id}	{169,F,20654231,64654654646,PETRICA,NULL,65465464646,LAOTRA,AMANTES,1,NULL,NULL,S,V,6,0,"2014-09-28 01:13:20.688098-04:30",1900-01-01,1900-01-01,N/A,"2014-09-28 01:13:20.688098-04:30",2013-07-03,NULL,NULL,1,NULL,2}	{169,F,20654231,64654654646,PETRICA,NULL,65465464646,LAOTRA,AMANTES,1,NULL,NULL,S,V,2,0,"2014-09-28 01:13:20.688098-04:30",1900-01-01,1900-01-01,N/A,"2014-09-28 01:13:20.688098-04:30",2014-09-28,NULL,NULL,1,NULL,1}
 1932	91085	arrozalba	2014-09-28 09:47:32.356499-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{474,127.0.0.1,NULL,1,1,NULL,"2014-09-28 09:47:32.356499-04:30","2014-09-28 09:47:32.356499-04:30",NULL,NULL}
+1937	91099	arrozalba	2014-09-28 10:16:44.749814-04:30	127.0.0.1	INSERT	INSERT INTO beneficiario (usuario_id,fecha_registro,fecha_modificado,cedula,nombre1,nombre2,apellido1,apellido2,nacionalidad,sexo,fecha_nacimiento,correo_electronico,grupo_sanguineo,fecha_inclusion,fecha_exclusion,celular,telefono,titular_id,beneficiario_tipo_id,observacion,participacion,parentesco_id,motivo_exclusion,motivo_reactivacion,estado_beneficiario,estado_civil) VALUES (NULL,DEFAULT,DEFAULT,'20643647','PEPITO',NULL,'DE LA CONCPCION',NULL,'V','M','2014-04-08',NULL,DEFAULT,DEFAULT,DEFAULT,NULL,NULL,'151','1',NULL,'0','1',NULL,NULL,DEFAULT,'S')	beneficiario	\N	\N	{170,M,20643647,NULL,PEPITO,NULL,NULL,"DE LA CONCPCION",NULL,151,NULL,NULL,S,V,1,0,"2014-09-28 10:16:44.749814-04:30",1900-01-01,1900-01-01,N/A,"2014-09-28 10:16:44.749814-04:30",2014-04-08,NULL,NULL,1,NULL,1}
+1938	91155	arrozalba	2014-09-28 10:16:44.749814-04:30	127.0.0.1	INSERT	INSERT INTO discapacidad_beneficiario (beneficiario_id,discapacidad_id) VALUES ('170','4')	discapacidad_beneficiario	\N	\N	{3,170,4}
 1933	91099	arrozalba	2014-09-28 09:48:06.077812-04:30	127.0.0.1	UPDATE	UPDATE beneficiario SET cedula = '20654231',nombre1 = 'PETRICA',nombre2 = NULL,apellido1 = 'LAOTRA',apellido2 = 'AMANTES',nacionalidad = 'V',sexo = 'F',fecha_nacimiento = '2014-09-28',correo_electronico = NULL,celular = '64654654646',telefono = '65465464646',titular_id = '1',beneficiario_tipo_id = '1',observacion = NULL,participacion = '0',parentesco_id = '1',estado_civil = 'S' WHERE  id = '169'	beneficiario	{id,sexo,cedula,celular,nombre1,nombre2,telefono,apellido1,apellido2,titular_id,usuario_id,observacion,estado_civil,nacionalidad,parentesco_id,participacion,fecha_registro,fecha_exclusion,fecha_inclusion,grupo_sanguineo,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,estado_beneficiario,motivo_reactivacion,beneficiario_tipo_id}	{169,F,20654231,64654654646,PETRICA,NULL,65465464646,LAOTRA,AMANTES,1,NULL,NULL,S,V,2,0,"2014-09-28 01:13:20.688098-04:30",1900-01-01,1900-01-01,N/A,"2014-09-28 01:13:20.688098-04:30",2014-09-28,NULL,NULL,1,NULL,1}	{169,F,20654231,64654654646,PETRICA,NULL,65465464646,LAOTRA,AMANTES,1,NULL,NULL,S,V,1,0,"2014-09-28 01:13:20.688098-04:30",1900-01-01,1900-01-01,N/A,"2014-09-28 01:13:20.688098-04:30",2014-09-28,NULL,NULL,1,NULL,1}
 1934	91423	postgres	2014-09-28 10:05:50.992447-04:30	127.0.0.1	UPDATE	UPDATE public.titular SET fecha_nacimiento='1990-12-11'::date WHERE id = '1'::integer	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,fecha_exclusion,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,fecha_reactivacion,motivo_reactivacion,direccion_habitacion}	{1,M,20643647,1,04167012111,ALEXIS,JOSE,240,16,240,NULL,BORGES,TUA,69,NULL,69,1,N/A,1,S,229,V,732,86,2013-01-29,229,732,"2014-08-09 11:49:07.877445-04:30",43,NULL,A-,1,"2014-08-09 11:49:07.877445-04:30",2014-04-03,NULL,TUAALEXIS@GMAIL.COM,NULL,NULL,"urb 12 de octubre calle 9 entre av 6 y 7 "}	{1,M,20643647,1,04167012111,ALEXIS,JOSE,240,16,240,NULL,BORGES,TUA,69,NULL,69,1,N/A,1,S,229,V,732,86,2013-01-29,229,732,"2014-08-09 11:49:07.877445-04:30",43,NULL,A-,1,"2014-08-09 11:49:07.877445-04:30",1990-12-11,NULL,TUAALEXIS@GMAIL.COM,NULL,NULL,"urb 12 de octubre calle 9 entre av 6 y 7 "}
 1935	91423	arrozalba	2014-09-28 10:13:04.61477-04:30	127.0.0.1	UPDATE	UPDATE titular SET usuario_id = '1',cedula = '20643647',nombre1 = 'ALEXIS',nombre2 = 'JOSE',apellido1 = 'BORGES',apellido2 = 'TUA',nacionalidad = 'V',sexo = 'M',fecha_nacimiento = '1990-12-11',sucursal_id = '4',pais_id = '240',estado_id = '69',municipio_id = '229',parroquia_id = '732',direccion_habitacion = 'urb 12 de octubre calle 9 entre av 6 y 7 ',hpais_id = '240',estado_civil = 'S',celular = '04167012111',telefono = NULL,correo_electronico = 'TUAALEXIS@GMAIL.COM',grupo_sanguineo = 'A-',tipoempleado_id = '1',fecha_ingreso = '2013-01-29',profesion_id = '86',departamento_id = '43',cargo_id = '16',observacion = 'N/A',estado = '0',fotografia = NULL,motivo_exclusion = 'YO QUICE',fecha_exclusion = '2014-09-28',motivo_reactivacion = NULL WHERE  id = '1'	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,fecha_exclusion,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,fecha_reactivacion,motivo_reactivacion,direccion_habitacion}	{1,M,20643647,1,04167012111,ALEXIS,JOSE,240,16,240,NULL,BORGES,TUA,69,NULL,69,1,N/A,1,S,229,V,732,86,2013-01-29,229,732,"2014-08-09 11:49:07.877445-04:30",43,NULL,A-,1,"2014-08-09 11:49:07.877445-04:30",1990-12-11,NULL,TUAALEXIS@GMAIL.COM,NULL,NULL,"urb 12 de octubre calle 9 entre av 6 y 7 "}	{1,M,20643647,0,04167012111,ALEXIS,JOSE,240,16,240,NULL,BORGES,TUA,69,NULL,69,1,N/A,4,S,229,V,732,86,2013-01-29,229,732,"2014-08-09 11:49:07.877445-04:30",43,2014-09-28,A-,1,"2014-08-09 11:49:07.877445-04:30",1990-12-11,"YO QUICE",TUAALEXIS@GMAIL.COM,NULL,NULL,"urb 12 de octubre calle 9 entre av 6 y 7 "}
 1956	479670	jelitox	2014-09-30 11:07:04.291248-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET url='solicitudes/'::text WHERE id = '29'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{29,#,Solicitudes,icon-th,1,NULL,200,NULL,NULL,1,"2014-03-16 13:23:40.74219-04:30","2014-03-16 13:23:40.74219-04:30"}	{29,solicitudes/,Solicitudes,icon-th,1,NULL,200,NULL,NULL,1,"2014-03-16 13:23:40.74219-04:30","2014-03-16 13:23:40.74219-04:30"}
 1936	91423	arrozalba	2014-09-28 10:13:22.40762-04:30	127.0.0.1	UPDATE	UPDATE titular SET usuario_id = '1',cedula = '20643647',nombre1 = 'ALEXIS',nombre2 = 'JOSE',apellido1 = 'BORGES',apellido2 = 'TUA',nacionalidad = 'V',sexo = 'M',fecha_nacimiento = '1990-12-11',sucursal_id = '4',pais_id = '240',estado_id = '69',municipio_id = '229',parroquia_id = '732',direccion_habitacion = 'urb 12 de octubre calle 9 entre av 6 y 7 ',hpais_id = '240',estado_civil = 'S',celular = '04167012111',telefono = NULL,correo_electronico = 'TUAALEXIS@GMAIL.COM',grupo_sanguineo = 'A-',tipoempleado_id = '1',fecha_ingreso = '2013-01-29',profesion_id = '86',departamento_id = '43',cargo_id = '16',observacion = 'N/A',estado = '1',fotografia = NULL,motivo_exclusion = 'YO QUICE',fecha_exclusion = '2014-09-28',motivo_reactivacion = 'LO DEVOLVI A LA VIDAAA',fecha_reactivacion = '2014-09-28' WHERE  id = '1'	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,fecha_exclusion,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,fecha_reactivacion,motivo_reactivacion,direccion_habitacion}	{1,M,20643647,0,04167012111,ALEXIS,JOSE,240,16,240,NULL,BORGES,TUA,69,NULL,69,1,N/A,4,S,229,V,732,86,2013-01-29,229,732,"2014-08-09 11:49:07.877445-04:30",43,2014-09-28,A-,1,"2014-08-09 11:49:07.877445-04:30",1990-12-11,"YO QUICE",TUAALEXIS@GMAIL.COM,NULL,NULL,"urb 12 de octubre calle 9 entre av 6 y 7 "}	{1,M,20643647,1,04167012111,ALEXIS,JOSE,240,16,240,NULL,BORGES,TUA,69,NULL,69,1,N/A,4,S,229,V,732,86,2013-01-29,229,732,"2014-08-09 11:49:07.877445-04:30",43,2014-09-28,A-,1,"2014-08-09 11:49:07.877445-04:30",1990-12-11,"YO QUICE",TUAALEXIS@GMAIL.COM,2014-09-28,"LO DEVOLVI A LA VIDAAA","urb 12 de octubre calle 9 entre av 6 y 7 "}
-1937	91099	arrozalba	2014-09-28 10:16:44.749814-04:30	127.0.0.1	INSERT	INSERT INTO beneficiario (usuario_id,fecha_registro,fecha_modificado,cedula,nombre1,nombre2,apellido1,apellido2,nacionalidad,sexo,fecha_nacimiento,correo_electronico,grupo_sanguineo,fecha_inclusion,fecha_exclusion,celular,telefono,titular_id,beneficiario_tipo_id,observacion,participacion,parentesco_id,motivo_exclusion,motivo_reactivacion,estado_beneficiario,estado_civil) VALUES (NULL,DEFAULT,DEFAULT,'20643647','PEPITO',NULL,'DE LA CONCPCION',NULL,'V','M','2014-04-08',NULL,DEFAULT,DEFAULT,DEFAULT,NULL,NULL,'151','1',NULL,'0','1',NULL,NULL,DEFAULT,'S')	beneficiario	\N	\N	{170,M,20643647,NULL,PEPITO,NULL,NULL,"DE LA CONCPCION",NULL,151,NULL,NULL,S,V,1,0,"2014-09-28 10:16:44.749814-04:30",1900-01-01,1900-01-01,N/A,"2014-09-28 10:16:44.749814-04:30",2014-04-08,NULL,NULL,1,NULL,1}
-1938	91155	arrozalba	2014-09-28 10:16:44.749814-04:30	127.0.0.1	INSERT	INSERT INTO discapacidad_beneficiario (beneficiario_id,discapacidad_id) VALUES ('170','4')	discapacidad_beneficiario	\N	\N	{3,170,4}
 1939	91155	arrozalba	2014-09-28 10:16:44.749814-04:30	127.0.0.1	INSERT	INSERT INTO discapacidad_beneficiario (beneficiario_id,discapacidad_id) VALUES ('170','5')	discapacidad_beneficiario	\N	\N	{4,170,5}
 1940	91085	arrozalba	2014-09-28 14:39:41.628613-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{475,127.0.0.1,NULL,1,1,NULL,"2014-09-28 14:39:41.628613-04:30","2014-09-28 14:39:41.628613-04:30",NULL,NULL}
 1941	91099	arrozalba	2014-09-28 14:40:35.079764-04:30	127.0.0.1	INSERT	INSERT INTO beneficiario (usuario_id,fecha_registro,fecha_modificado,cedula,nombre1,nombre2,apellido1,apellido2,nacionalidad,sexo,fecha_nacimiento,correo_electronico,grupo_sanguineo,fecha_inclusion,fecha_exclusion,celular,telefono,titular_id,beneficiario_tipo_id,observacion,participacion,parentesco_id,motivo_exclusion,motivo_reactivacion,estado_beneficiario,estado_civil) VALUES (NULL,DEFAULT,DEFAULT,'145684879','JUAN',NULL,'GALINDEZ',NULL,'V','M','1988-09-01',NULL,DEFAULT,DEFAULT,DEFAULT,'04124578965','02855789987','151','2',NULL,'0','1',NULL,NULL,DEFAULT,'S')	beneficiario	\N	\N	{171,M,145684879,04124578965,JUAN,NULL,02855789987,GALINDEZ,NULL,151,NULL,NULL,S,V,1,0,"2014-09-28 14:40:35.079764-04:30",1900-01-01,1900-01-01,N/A,"2014-09-28 14:40:35.079764-04:30",1988-09-01,NULL,NULL,1,NULL,2}
@@ -5472,9 +5741,9 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 1944	91099	postgres	2014-09-28 14:51:53.677925-04:30	127.0.0.1	DELETE	DELETE FROM public.beneficiario WHERE id = '172'::integer	beneficiario	{id,sexo,cedula,celular,nombre1,nombre2,telefono,apellido1,apellido2,titular_id,usuario_id,observacion,estado_civil,nacionalidad,parentesco_id,participacion,fecha_registro,fecha_exclusion,fecha_inclusion,grupo_sanguineo,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,estado_beneficiario,motivo_reactivacion,beneficiario_tipo_id}	{172,M,5464646464,NULL,ALEXI,NULL,NULL,BORHES,NULL,151,NULL,NULL,c,E,6,0,"2014-09-28 14:51:14.501247-04:30",1900-01-01,1900-01-01,N/A,"2014-09-28 14:51:14.501247-04:30",2014-05-06,NULL,NULL,1,NULL,2}	\N
 1945	91099	arrozalba	2014-09-28 14:52:38.829377-04:30	127.0.0.1	INSERT	INSERT INTO beneficiario (usuario_id,fecha_registro,fecha_modificado,cedula,nombre1,nombre2,apellido1,apellido2,nacionalidad,sexo,fecha_nacimiento,correo_electronico,grupo_sanguineo,fecha_inclusion,fecha_exclusion,celular,telefono,titular_id,beneficiario_tipo_id,observacion,participacion,parentesco_id,motivo_exclusion,motivo_reactivacion,estado_beneficiario,estado_civil) VALUES (NULL,DEFAULT,DEFAULT,'13132132','KJHKJH',NULL,'SDFASDFAS',NULL,'V','M','2014-04-10',NULL,DEFAULT,DEFAULT,DEFAULT,NULL,NULL,'151','1',NULL,'0','3',NULL,NULL,DEFAULT,'S')	beneficiario	\N	\N	{173,M,13132132,NULL,KJHKJH,NULL,NULL,SDFASDFAS,NULL,151,NULL,NULL,S,V,3,0,"2014-09-28 14:52:38.829377-04:30",1900-01-01,1900-01-01,N/A,"2014-09-28 14:52:38.829377-04:30",2014-04-10,NULL,NULL,1,NULL,1}
 1957	479670	jelitox	2014-09-30 11:07:20.435234-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET url='solicitudes/index'::text WHERE id = '29'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{29,solicitudes/,Solicitudes,icon-th,1,NULL,200,NULL,NULL,1,"2014-03-16 13:23:40.74219-04:30","2014-03-16 13:23:40.74219-04:30"}	{29,solicitudes/index,Solicitudes,icon-th,1,NULL,200,NULL,NULL,1,"2014-03-16 13:23:40.74219-04:30","2014-03-16 13:23:40.74219-04:30"}
+2069	97062	arrozalba	2014-10-06 19:16:06.949918-04:30	127.0.0.1	INSERT	INSERT INTO factura_dt (usuario_id,fecha_registro,fecha_modificado,descripcion,cantidad,monto,exento,factura_id) VALUES (NULL,DEFAULT,DEFAULT,'acetaminofen','2','45.9',NULL,'8')	factura_dt	\N	\N	{5,45.90,NULL,2,8,NULL,acetaminofen,"2014-10-06 19:16:06.949918-04:30","2014-10-06 19:16:06.949918-04:30"}
 1946	91099	arrozalba	2014-09-28 15:52:52.531909-04:30	127.0.0.1	UPDATE	UPDATE beneficiario SET cedula = '13132132',nombre1 = 'KJHKJH',nombre2 = NULL,apellido1 = 'SDFASDFAS',apellido2 = NULL,nacionalidad = 'V',sexo = 'M',fecha_nacimiento = '2014-04-10',correo_electronico = NULL,grupo_sanguineo = 'N/A',fecha_inclusion = '1900-01-01',fecha_exclusion = '2014-09-28',celular = NULL,telefono = NULL,titular_id = '151',beneficiario_tipo_id = '1',observacion = NULL,participacion = '0',parentesco_id = '3',motivo_exclusion = 'PRBANDO OSNIDO',motivo_reactivacion = NULL,estado_beneficiario = '0',estado_civil = 'S' WHERE  id = '173'	beneficiario	{id,sexo,cedula,celular,nombre1,nombre2,telefono,apellido1,apellido2,titular_id,usuario_id,observacion,estado_civil,nacionalidad,parentesco_id,participacion,fecha_registro,fecha_exclusion,fecha_inclusion,grupo_sanguineo,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,estado_beneficiario,motivo_reactivacion,beneficiario_tipo_id}	{173,M,13132132,NULL,KJHKJH,NULL,NULL,SDFASDFAS,NULL,151,NULL,NULL,S,V,3,0,"2014-09-28 14:52:38.829377-04:30",1900-01-01,1900-01-01,N/A,"2014-09-28 14:52:38.829377-04:30",2014-04-10,NULL,NULL,1,NULL,1}	{173,M,13132132,NULL,KJHKJH,NULL,NULL,SDFASDFAS,NULL,151,NULL,NULL,S,V,3,0,"2014-09-28 14:52:38.829377-04:30",2014-09-28,1900-01-01,N/A,"2014-09-28 14:52:38.829377-04:30",2014-04-10,"PRBANDO OSNIDO",NULL,0,NULL,1}
 1947	91099	postgres	2014-09-28 16:17:28.551381-04:30	127.0.0.1	UPDATE	UPDATE public.beneficiario SET fecha_exclusion=NULL::date WHERE id = '171'::integer	beneficiario	{id,sexo,cedula,celular,nombre1,nombre2,telefono,apellido1,apellido2,titular_id,usuario_id,observacion,estado_civil,nacionalidad,parentesco_id,participacion,fecha_registro,fecha_exclusion,fecha_inclusion,grupo_sanguineo,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,estado_beneficiario,motivo_reactivacion,beneficiario_tipo_id}	{171,M,145684879,04124578965,JUAN,NULL,02855789987,GALINDEZ,NULL,151,NULL,NULL,S,V,1,0,"2014-09-28 14:40:35.079764-04:30",1900-01-01,1900-01-01,N/A,"2014-09-28 14:40:35.079764-04:30",1988-09-01,NULL,NULL,1,NULL,2}	{171,M,145684879,04124578965,JUAN,NULL,02855789987,GALINDEZ,NULL,151,NULL,NULL,S,V,1,0,"2014-09-28 14:40:35.079764-04:30",NULL,1900-01-01,N/A,"2014-09-28 14:40:35.079764-04:30",1988-09-01,NULL,NULL,1,NULL,2}
-1948	91085	arrozalba	2014-09-30 09:51:09.393627-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{476,127.0.0.1,NULL,1,1,NULL,"2014-09-30 09:51:09.393627-04:30","2014-09-30 09:51:09.393627-04:30",NULL,NULL}
 1949	479670	jelitox	2014-09-30 10:52:39.334807-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET url='proveedorsalud/proveedor/listar'::text WHERE id = '37'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{37,proveedorsalud/proveedor/,Proveedor,icon-briefcase,1,36,602,34,NULL,1,"2014-04-22 09:57:03.54549-04:30","2014-04-22 09:57:03.54549-04:30"}	{37,proveedorsalud/proveedor/listar,Proveedor,icon-briefcase,1,36,602,34,NULL,1,"2014-04-22 09:57:03.54549-04:30","2014-04-22 09:57:03.54549-04:30"}
 1950	479670	jelitox	2014-09-30 10:52:42.981724-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET url='proveedorsalud/especialidad/listar'::text WHERE id = '38'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{38,proveedorsalud/especialidad/,Especialidad,icon-magic,1,36,601,36,NULL,1,"2014-04-22 10:09:02.242857-04:30","2014-04-22 10:09:02.242857-04:30"}	{38,proveedorsalud/especialidad/listar,Especialidad,icon-magic,1,36,601,36,NULL,1,"2014-04-22 10:09:02.242857-04:30","2014-04-22 10:09:02.242857-04:30"}
 1951	479670	jelitox	2014-09-30 10:52:47.635234-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET url='proveedorsalud/medico/listar'::text WHERE id = '39'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{39,proveedorsalud/medico/,Medico,icon-user,1,36,603,35,NULL,1,"2014-04-22 10:09:32.70358-04:30","2014-04-22 10:09:32.70358-04:30"}	{39,proveedorsalud/medico/listar,Medico,icon-user,1,36,603,35,NULL,1,"2014-04-22 10:09:32.70358-04:30","2014-04-22 10:09:32.70358-04:30"}
@@ -5499,7 +5768,7 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 1975	92875	postgres	2014-09-30 12:47:51.540189-04:30	127.0.0.1	UPDATE	UPDATE public.usuario SET estatus='3'::integer WHERE id = '12'::integer	usuario	{id,tema,email,login,estatus,app_ajax,datagrid,intentos,perfil_id,titular_id,usuario_id,sucursal_id,proveedor_id,fecha_registro,fecha_modificado,fecha_desactivacion}	{12,NULL,alexis@hotmai.com,juanito,NULL,1,30,NULL,2,NULL,NULL,1,NULL,"2014-09-30 11:58:21.172289-04:30","2014-09-30 11:58:21.172289-04:30",NULL}	{12,NULL,alexis@hotmai.com,juanito,3,1,30,NULL,2,NULL,NULL,1,NULL,"2014-09-30 11:58:21.172289-04:30","2014-09-30 11:58:21.172289-04:30",NULL}
 1976	92875	postgres	2014-09-30 12:47:53.926188-04:30	127.0.0.1	UPDATE	UPDATE public.usuario SET intentos='0'::integer WHERE id = '12'::integer	usuario	{id,tema,email,login,estatus,app_ajax,datagrid,intentos,perfil_id,titular_id,usuario_id,sucursal_id,proveedor_id,fecha_registro,fecha_modificado,fecha_desactivacion}	{12,NULL,alexis@hotmai.com,juanito,3,1,30,NULL,2,NULL,NULL,1,NULL,"2014-09-30 11:58:21.172289-04:30","2014-09-30 11:58:21.172289-04:30",NULL}	{12,NULL,alexis@hotmai.com,juanito,3,1,30,0,2,NULL,NULL,1,NULL,"2014-09-30 11:58:21.172289-04:30","2014-09-30 11:58:21.172289-04:30",NULL}
 1977	92875	postgres	2014-09-30 12:48:01.178317-04:30	127.0.0.1	UPDATE	UPDATE public.usuario SET tema='default'::text WHERE id = '12'::integer	usuario	{id,tema,email,login,estatus,app_ajax,datagrid,intentos,perfil_id,titular_id,usuario_id,sucursal_id,proveedor_id,fecha_registro,fecha_modificado,fecha_desactivacion}	{12,NULL,alexis@hotmai.com,juanito,3,1,30,0,2,NULL,NULL,1,NULL,"2014-09-30 11:58:21.172289-04:30","2014-09-30 11:58:21.172289-04:30",NULL}	{12,default,alexis@hotmai.com,juanito,3,1,30,0,2,NULL,NULL,1,NULL,"2014-09-30 11:58:21.172289-04:30","2014-09-30 11:58:21.172289-04:30",NULL}
-1978	92516	arrozalba	2014-09-30 12:48:45.965431-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{485,127.0.0.1,NULL,1,1,NULL,"2014-09-30 12:48:45.965431-04:30","2014-09-30 12:48:45.965431-04:30",NULL,NULL}
+2288	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 21 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{393,2,21,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
 1979	92858	arrozalba	2014-09-30 13:02:18.679318-04:30	127.0.0.1	INSERT	INSERT INTO titular (usuario_id,fecha_registro,fecha_modificado,cedula,nombre1,nombre2,apellido1,apellido2,nacionalidad,sexo,fecha_nacimiento,sucursal_id,pais_id,estado_id,municipio_id,parroquia_id,direccion_habitacion,hpais_id,hestado_id,hmunicipio_id,hparroquia_id,estado_civil,celular,telefono,correo_electronico,grupo_sanguineo,tipoempleado_id,fecha_ingreso,profesion_id,departamento_id,cargo_id,observacion,estado,fotografia,motivo_exclusion,fecha_exclusion,motivo_reactivacion,fecha_reactivacion) VALUES (NULL,DEFAULT,DEFAULT,'19123123','ALEXIS',NULL,'TOVAR',NULL,'V','M','1974-09-01','1','240','69','233','743','12 octubress','240','69','224','718','c','04167012111',NULL,NULL,DEFAULT,'1','2010-09-01','3','40','2','ASDFASD',DEFAULT,'default.png',NULL,NULL,NULL,NULL)	titular	\N	\N	{278,M,19123123,1,04167012111,ALEXIS,NULL,240,2,240,NULL,TOVAR,NULL,69,default.png,69,NULL,ASDFASD,1,c,233,V,743,3,2010-09-01,224,718,"2014-09-30 13:02:18.679318-04:30",40,NULL,N/A,1,"2014-09-30 13:02:18.679318-04:30",1974-09-01,NULL,NULL,NULL,NULL,"12 octubress"}
 1980	92596	arrozalba	2014-09-30 13:02:18.679318-04:30	127.0.0.1	INSERT	INSERT INTO discapacidad_titular (titular_id,discapacidad_id) VALUES ('278','5')	discapacidad_titular	\N	\N	{7,278,5}
 1981	92858	arrozalba	2014-09-30 13:09:37.035136-04:30	127.0.0.1	INSERT	INSERT INTO titular (usuario_id,fecha_registro,fecha_modificado,cedula,nombre1,nombre2,apellido1,apellido2,nacionalidad,sexo,fecha_nacimiento,sucursal_id,pais_id,estado_id,municipio_id,parroquia_id,direccion_habitacion,hpais_id,hestado_id,hmunicipio_id,hparroquia_id,estado_civil,celular,telefono,correo_electronico,grupo_sanguineo,tipoempleado_id,fecha_ingreso,profesion_id,departamento_id,cargo_id,observacion,estado,fotografia,motivo_exclusion,fecha_exclusion,motivo_reactivacion,fecha_reactivacion) VALUES (NULL,DEFAULT,DEFAULT,'20123123','JUANETO',NULL,'PEPETO',NULL,'V','M','1980-09-01','1','240','69','231','738','sadfasdfasdfasdf','240','60','93','288','c','04167012111',NULL,NULL,DEFAULT,'4','2014-09-17','3','36','14','DFAQSDF',DEFAULT,'default.png',NULL,NULL,NULL,NULL)	titular	\N	\N	{279,M,20123123,1,04167012111,JUANETO,NULL,240,14,240,NULL,PEPETO,NULL,69,default.png,60,NULL,DFAQSDF,1,c,231,V,738,3,2014-09-17,93,288,"2014-09-30 13:09:37.035136-04:30",36,NULL,N/A,4,"2014-09-30 13:09:37.035136-04:30",1980-09-01,NULL,NULL,NULL,NULL,sadfasdfasdfasdf}
@@ -5512,6 +5781,7 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 1987	92596	arrozalba	2014-09-30 13:22:24.197267-04:30	127.0.0.1	INSERT	INSERT INTO discapacidad_titular (titular_id,discapacidad_id) VALUES ('280','2')	discapacidad_titular	\N	\N	{8,280,2}
 1988	92875	arrozalba	2014-09-30 13:22:24.270263-04:30	127.0.0.1	INSERT	INSERT INTO usuario (usuario_id,fecha_registro,fecha_modificado,fecha_desactivacion,sucursal_id,titular_id,login,perfil_id,email,tema,app_ajax,datagrid,estatus,intentos,proveedor_id) VALUES (NULL,DEFAULT,DEFAULT,NULL,'1','280','19123234','7',NULL,'default',DEFAULT,'0',NULL,NULL,NULL)	usuario	\N	\N	{15,default,NULL,19123234,NULL,1,0,NULL,7,280,NULL,1,NULL,"2014-09-30 13:22:24.270263-04:30","2014-09-30 13:22:24.270263-04:30",NULL}
 1989	92636	arrozalba	2014-09-30 13:22:24.306517-04:30	127.0.0.1	INSERT	INSERT INTO estado_usuario (usuario_id,fecha_registro,fecha_modificado,estado_usuario,descripcion) VALUES ('15',DEFAULT,DEFAULT,'1','Activado por registro inicial')	estado_usuario	\N	\N	{11,15,"Activado por registro inicial",1,"2014-09-30 13:22:24.306517-04:30","2014-09-30 13:22:24.306517-04:30"}
+2018	92516	arrozalba	2014-10-01 12:48:34.67744-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{499,127.0.0.1,NULL,1,1,NULL,"2014-10-01 12:48:34.67744-04:30","2014-10-01 12:48:34.67744-04:30",NULL,NULL}
 1990	92858	arrozalba	2014-09-30 13:31:37.533912-04:30	127.0.0.1	INSERT	INSERT INTO titular (usuario_id,fecha_registro,fecha_modificado,cedula,nombre1,nombre2,apellido1,apellido2,nacionalidad,sexo,fecha_nacimiento,sucursal_id,pais_id,estado_id,municipio_id,parroquia_id,direccion_habitacion,hpais_id,hestado_id,hmunicipio_id,hparroquia_id,estado_civil,celular,telefono,correo_electronico,grupo_sanguineo,tipoempleado_id,fecha_ingreso,profesion_id,departamento_id,cargo_id,observacion,estado,fotografia,motivo_exclusion,fecha_exclusion,motivo_reactivacion,fecha_reactivacion) VALUES (NULL,DEFAULT,DEFAULT,'20123234','EDUARDODDD',NULL,'MORA',NULL,'V','M','1980-09-01','1','240','69','234','746','asdfasdfa','240','70','240','772','C','04167012111',NULL,NULL,DEFAULT,'1','2014-09-16','4','12','17',NULL,DEFAULT,'default.png',NULL,NULL,NULL,NULL)	titular	\N	\N	{281,M,20123234,1,04167012111,EDUARDODDD,NULL,240,17,240,NULL,MORA,NULL,69,default.png,70,NULL,NULL,1,C,234,V,746,4,2014-09-16,240,772,"2014-09-30 13:31:37.533912-04:30",12,NULL,N/A,1,"2014-09-30 13:31:37.533912-04:30",1980-09-01,NULL,NULL,NULL,NULL,asdfasdfa}
 1991	92875	arrozalba	2014-09-30 13:31:37.663937-04:30	127.0.0.1	INSERT	INSERT INTO usuario (usuario_id,fecha_registro,fecha_modificado,fecha_desactivacion,sucursal_id,titular_id,login,perfil_id,email,tema,app_ajax,datagrid,estatus,intentos,proveedor_id) VALUES (NULL,DEFAULT,DEFAULT,NULL,'1','281','20123234','7',NULL,'default',DEFAULT,'0',NULL,NULL,NULL)	usuario	\N	\N	{16,default,NULL,20123234,NULL,1,0,NULL,7,281,NULL,1,NULL,"2014-09-30 13:31:37.663937-04:30","2014-09-30 13:31:37.663937-04:30",NULL}
 1992	92636	arrozalba	2014-09-30 13:31:37.679148-04:30	127.0.0.1	INSERT	INSERT INTO estado_usuario (usuario_id,fecha_registro,fecha_modificado,estado_usuario,descripcion) VALUES ('16',DEFAULT,DEFAULT,'1','Activado por registro inicial')	estado_usuario	\N	\N	{12,16,"Activado por registro inicial",1,"2014-09-30 13:31:37.679148-04:30","2014-09-30 13:31:37.679148-04:30"}
@@ -5522,6 +5792,8 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 2000	92516	arrozalba	2014-09-30 13:40:23.661366-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{488,127.0.0.1,NULL,1,2,NULL,"2014-09-30 13:40:23.661366-04:30","2014-09-30 13:40:23.661366-04:30",NULL,NULL}
 2001	92516	arrozalba	2014-09-30 14:01:35.810099-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('18',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{489,127.0.0.1,NULL,18,2,NULL,"2014-09-30 14:01:35.810099-04:30","2014-09-30 14:01:35.810099-04:30",NULL,NULL}
 2002	92516	arrozalba	2014-09-30 14:07:05.651596-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{490,127.0.0.1,NULL,1,1,NULL,"2014-09-30 14:07:05.651596-04:30","2014-09-30 14:07:05.651596-04:30",NULL,NULL}
+2019	92516	arrozalba	2014-10-01 19:58:32.590022-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{500,127.0.0.1,NULL,1,1,NULL,"2014-10-01 19:58:32.590022-04:30","2014-10-01 19:58:32.590022-04:30",NULL,NULL}
+2020	92516	arrozalba	2014-10-01 20:51:59.521084-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{501,127.0.0.1,NULL,1,1,NULL,"2014-10-01 20:51:59.521084-04:30","2014-10-01 20:51:59.521084-04:30",NULL,NULL}
 2003	92858	arrozalba	2014-09-30 15:39:05.984712-04:30	127.0.0.1	INSERT	INSERT INTO titular (usuario_id,fecha_registro,fecha_modificado,cedula,nombre1,nombre2,apellido1,apellido2,nacionalidad,sexo,fecha_nacimiento,sucursal_id,pais_id,estado_id,municipio_id,parroquia_id,direccion_habitacion,hpais_id,hestado_id,hmunicipio_id,hparroquia_id,estado_civil,celular,telefono,correo_electronico,grupo_sanguineo,tipoempleado_id,fecha_ingreso,profesion_id,departamento_id,cargo_id,observacion,estado,fotografia,motivo_exclusion,fecha_exclusion,motivo_reactivacion,fecha_reactivacion) VALUES (NULL,DEFAULT,DEFAULT,'12098765','ISAAC',NULL,'GUITIERREZ',NULL,'V','F','1984-02-01','1','240','69','234','746','sdfsdfasdf','240','69','229','732','c','04125048738',NULL,NULL,'A-','1','2014-09-23','4','7','14','FSDAFDFSDSD',DEFAULT,'default.png',NULL,NULL,NULL,NULL)	titular	\N	\N	{284,F,12098765,1,04125048738,ISAAC,NULL,240,14,240,NULL,GUITIERREZ,NULL,69,default.png,69,NULL,FSDAFDFSDSD,1,c,234,V,746,4,2014-09-23,229,732,"2014-09-30 15:39:05.984712-04:30",7,NULL,A-,1,"2014-09-30 15:39:05.984712-04:30",1984-02-01,NULL,NULL,NULL,NULL,sdfsdfasdf}
 2004	92875	arrozalba	2014-09-30 15:39:06.383719-04:30	127.0.0.1	INSERT	INSERT INTO usuario (usuario_id,fecha_registro,fecha_modificado,fecha_desactivacion,sucursal_id,titular_id,login,perfil_id,email,tema,app_ajax,datagrid,estatus,intentos,proveedor_id) VALUES (NULL,DEFAULT,DEFAULT,NULL,'1','284','12098765','7',NULL,'default',DEFAULT,'0',NULL,NULL,NULL)	usuario	\N	\N	{19,default,NULL,12098765,NULL,1,0,NULL,7,284,NULL,1,NULL,"2014-09-30 15:39:06.383719-04:30","2014-09-30 15:39:06.383719-04:30",NULL}
 2005	92636	arrozalba	2014-09-30 15:39:06.451669-04:30	127.0.0.1	INSERT	INSERT INTO estado_usuario (usuario_id,fecha_registro,fecha_modificado,estado_usuario,descripcion) VALUES ('19',DEFAULT,DEFAULT,'1','Activado por registro inicial')	estado_usuario	\N	\N	{15,19,"Activado por registro inicial",1,"2014-09-30 15:39:06.451669-04:30","2014-09-30 15:39:06.451669-04:30"}
@@ -5537,8 +5809,371 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 2015	92636	arrozalba	2014-09-30 15:51:05.691958-04:30	127.0.0.1	INSERT	INSERT INTO estado_usuario (usuario_id,fecha_registro,fecha_modificado,estado_usuario,descripcion) VALUES ('21',DEFAULT,DEFAULT,'1','Activado por registro inicial')	estado_usuario	\N	\N	{17,21,"Activado por registro inicial",1,"2014-09-30 15:51:05.691958-04:30","2014-09-30 15:51:05.691958-04:30"}
 2016	92516	arrozalba	2014-10-01 08:35:02.199695-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{497,127.0.0.1,NULL,1,1,NULL,"2014-10-01 08:35:02.199695-04:30","2014-10-01 08:35:02.199695-04:30",NULL,NULL}
 2017	92516	arrozalba	2014-10-01 10:47:11.305159-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{498,127.0.0.1,NULL,1,1,NULL,"2014-10-01 10:47:11.305159-04:30","2014-10-01 10:47:11.305159-04:30",NULL,NULL}
-2018	92516	arrozalba	2014-10-01 12:48:34.67744-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{499,127.0.0.1,NULL,1,1,NULL,"2014-10-01 12:48:34.67744-04:30","2014-10-01 12:48:34.67744-04:30",NULL,NULL}
-2019	92516	arrozalba	2014-10-01 19:58:32.590022-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{500,127.0.0.1,NULL,1,1,NULL,"2014-10-01 19:58:32.590022-04:30","2014-10-01 19:58:32.590022-04:30",NULL,NULL}
+2289	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 43 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{385,5,43,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2022	92516	arrozalba	2014-10-05 10:03:12.380647-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{503,127.0.0.1,NULL,1,1,NULL,"2014-10-05 10:03:12.380647-04:30","2014-10-05 10:03:12.380647-04:30",NULL,NULL}
+2023	92516	arrozalba	2014-10-05 12:10:26.227853-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{504,127.0.0.1,NULL,1,1,NULL,"2014-10-05 12:10:26.227853-04:30","2014-10-05 12:10:26.227853-04:30",NULL,NULL}
+2025	92516	arrozalba	2014-10-05 14:03:52.507993-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{505,127.0.0.1,NULL,1,1,NULL,"2014-10-05 14:03:52.507993-04:30","2014-10-05 14:03:52.507993-04:30",NULL,NULL}
+2027	92643	arrozalba	2014-10-05 14:09:00.474358-04:30	127.0.0.1	INSERT	INSERT INTO factura (usuario_id,fecha_registro,fecha_modificado,fecha_factura,nro_control,nro_factura,observacion,monto,iva) VALUES (NULL,DEFAULT,DEFAULT,'2014-10-05','1','1',NULL,NULL,NULL)	factura	\N	\N	{2,NULL,NULL,NULL,1,1,NULL,2014-10-05,"2014-10-05 14:09:00.474358-04:30","2014-10-05 14:09:00.474358-04:30"}
+2028	92649	arrozalba	2014-10-05 14:09:00.474358-04:30	127.0.0.1	INSERT	INSERT INTO factura_dt (usuario_id,fecha_registro,fecha_modificado,descripcion,cantidad,monto,exento,factura_id) VALUES (NULL,DEFAULT,DEFAULT,'acetaminofen','2','34.4','on',NULL)	factura_dt	\N	\N	{1,34.40,t,2,NULL,NULL,acetaminofen,"2014-10-05 14:09:00.474358-04:30","2014-10-05 14:09:00.474358-04:30"}
+2029	92649	arrozalba	2014-10-05 14:09:00.474358-04:30	127.0.0.1	INSERT	INSERT INTO factura_dt (usuario_id,fecha_registro,fecha_modificado,descripcion,cantidad,monto,exento,factura_id) VALUES (NULL,'2014-10-05 14:09:00.474358-04:30','2014-10-05 14:09:00.474358-04:30','consulta ginecologo','1','750.00',NULL,NULL)	factura_dt	\N	\N	{2,750.00,NULL,1,NULL,NULL,"consulta ginecologo","2014-10-05 14:09:00.474358-04:30","2014-10-05 14:09:00.474358-04:30"}
+2030	92516	arrozalba	2014-10-05 15:23:23.286464-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{506,127.0.0.1,NULL,1,1,NULL,"2014-10-05 15:23:23.286464-04:30","2014-10-05 15:23:23.286464-04:30",NULL,NULL}
+2031	92649	postgres	2014-10-05 15:26:33.164377-04:30	127.0.0.1	DELETE	DELETE FROM public.factura_dt WHERE id = '2'::integer	factura_dt	{id,monto,exento,cantidad,factura_id,usuario_id,descripcion,fecha_registro,fecha_modificado}	{2,750.00,NULL,1,NULL,NULL,"consulta ginecologo","2014-10-05 14:09:00.474358-04:30","2014-10-05 14:09:00.474358-04:30"}	\N
+2032	92649	postgres	2014-10-05 15:26:33.181661-04:30	127.0.0.1	DELETE	DELETE FROM public.factura_dt WHERE id = '1'::integer	factura_dt	{id,monto,exento,cantidad,factura_id,usuario_id,descripcion,fecha_registro,fecha_modificado}	{1,34.40,t,2,NULL,NULL,acetaminofen,"2014-10-05 14:09:00.474358-04:30","2014-10-05 14:09:00.474358-04:30"}	\N
+2033	92643	postgres	2014-10-05 15:26:40.261665-04:30	127.0.0.1	DELETE	DELETE FROM public.factura WHERE id = '2'::integer	factura	{id,iva,monto,usuario_id,nro_control,nro_factura,observacion,fecha_factura,fecha_registro,fecha_modificado}	{2,NULL,NULL,NULL,1,1,NULL,2014-10-05,"2014-10-05 14:09:00.474358-04:30","2014-10-05 14:09:00.474358-04:30"}	\N
+2034	92516	arrozalba	2014-10-05 16:15:49.805555-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{507,127.0.0.1,NULL,1,1,NULL,"2014-10-05 16:15:49.805555-04:30","2014-10-05 16:15:49.805555-04:30",NULL,NULL}
+2035	92643	arrozalba	2014-10-05 16:16:34.993051-04:30	127.0.0.1	INSERT	INSERT INTO factura (usuario_id,fecha_registro,fecha_modificado,fecha_factura,nro_control,nro_factura,observacion,monto,iva) VALUES (NULL,DEFAULT,DEFAULT,'2014-10-05','2','2','cargando multiples facturas a ver que lo que ','115.50',NULL)	factura	\N	\N	{3,NULL,115.5,NULL,2,2,"cargando multiples facturas a ver que lo que ",2014-10-05,"2014-10-05 16:16:34.993051-04:30","2014-10-05 16:16:34.993051-04:30"}
+2037	92649	arrozalba	2014-10-05 16:16:34.993051-04:30	127.0.0.1	INSERT	INSERT INTO factura_dt (usuario_id,fecha_registro,fecha_modificado,descripcion,cantidad,monto,exento,factura_id) VALUES (NULL,'2014-10-05 16:16:34.993051-04:30','2014-10-05 16:16:34.993051-04:30','arituclo 2','3','30',NULL,NULL)	factura_dt	\N	\N	{4,30.00,NULL,3,NULL,NULL,"arituclo 2","2014-10-05 16:16:34.993051-04:30","2014-10-05 16:16:34.993051-04:30"}
+2038	92643	postgres	2014-10-05 16:29:25.400244-04:30	127.0.0.1	DELETE	DELETE FROM public.factura WHERE id = '3'::integer	factura	{id,iva,monto,usuario_id,nro_control,nro_factura,observacion,fecha_factura,fecha_registro,fecha_modificado}	{3,NULL,115.5,NULL,2,2,"cargando multiples facturas a ver que lo que ",2014-10-05,"2014-10-05 16:16:34.993051-04:30","2014-10-05 16:16:34.993051-04:30"}	\N
+2039	92649	postgres	2014-10-05 16:29:41.99801-04:30	127.0.0.1	DELETE	DELETE FROM public.factura_dt WHERE id = '4'::integer	factura_dt	{id,monto,exento,cantidad,factura_id,usuario_id,descripcion,fecha_registro,fecha_modificado}	{4,30.00,NULL,3,NULL,NULL,"arituclo 2","2014-10-05 16:16:34.993051-04:30","2014-10-05 16:16:34.993051-04:30"}	\N
+2040	92649	postgres	2014-10-05 16:29:42.011091-04:30	127.0.0.1	DELETE	DELETE FROM public.factura_dt WHERE id = '3'::integer	factura_dt	{id,monto,exento,cantidad,factura_id,usuario_id,descripcion,fecha_registro,fecha_modificado}	{3,25.50,t,1,NULL,NULL,"articulo 1","2014-10-05 16:16:34.993051-04:30","2014-10-05 16:16:34.993051-04:30"}	\N
+2045	487860	arrozalba	2014-10-05 18:24:10.25479-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{508,127.0.0.1,NULL,1,1,NULL,"2014-10-05 18:24:10.25479-04:30","2014-10-05 18:24:10.25479-04:30",NULL,NULL}
+2046	488018	jelitox	2014-10-05 18:43:56.621481-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='ProfesiÓn'::text WHERE id = '19'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{19,config/profesion/listar,Profesion,NULL,1,15,803,18,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{19,config/profesion/listar,ProfesiÓn,NULL,1,15,803,18,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2047	488018	jelitox	2014-10-05 18:44:02.286244-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Profesión'::text WHERE id = '19'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{19,config/profesion/listar,ProfesiÓn,NULL,1,15,803,18,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{19,config/profesion/listar,Profesión,NULL,1,15,803,18,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2048	488018	jelitox	2014-10-05 18:44:18.028685-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Patología'::text WHERE id = '24'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{24,config/patologia/listar,Patologia,NULL,1,15,808,23,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{24,config/patologia/listar,Patología,NULL,1,15,808,23,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2049	488018	jelitox	2014-10-05 18:44:47.960841-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Solicitudes Odontológicas'::text WHERE id = '32'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{32,#,"Solicitudes Odontologicas",icon-th,1,29,221,29,NULL,1,"2014-03-16 13:27:52.745733-04:30","2014-03-16 13:27:52.745733-04:30"}	{32,#,"Solicitudes Odontológicas",icon-th,1,29,221,29,NULL,1,"2014-03-16 13:27:52.745733-04:30","2014-03-16 13:27:52.745733-04:30"}
+2050	488018	jelitox	2014-10-05 18:45:00.288704-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Médico'::text WHERE id = '39'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{39,proveedorsalud/medico/listar,Medico,icon-user,1,36,603,35,NULL,1,"2014-04-22 10:09:32.70358-04:30","2014-04-22 10:09:32.70358-04:30"}	{39,proveedorsalud/medico/listar,Médico,icon-user,1,36,603,35,NULL,1,"2014-04-22 10:09:32.70358-04:30","2014-04-22 10:09:32.70358-04:30"}
+2051	488018	jelitox	2014-10-05 18:45:10.600966-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Aprobación'::text WHERE id = '48'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{48,solicitudes/solicitud_medicina/aprobacion,Aprobacion,icon-ok-sign,1,30,203,45,NULL,1,"2014-07-30 14:26:23.724504-04:30","2014-07-30 14:26:23.724504-04:30"}	{48,solicitudes/solicitud_medicina/aprobacion,Aprobación,icon-ok-sign,1,30,203,45,NULL,1,"2014-07-30 14:26:23.724504-04:30","2014-07-30 14:26:23.724504-04:30"}
+2052	488018	jelitox	2014-10-05 18:45:17.060694-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Aprobación'::text WHERE id = '52'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{52,solicitudes/solicitud_odontologica/aprobacion,Aprobacion,icon-ok-sign,1,32,223,49,NULL,1,"2014-07-30 15:19:32.343134-04:30","2014-07-30 15:19:32.343134-04:30"}	{52,solicitudes/solicitud_odontologica/aprobacion,Aprobación,icon-ok-sign,1,32,223,49,NULL,1,"2014-07-30 15:19:32.343134-04:30","2014-07-30 15:19:32.343134-04:30"}
+2068	97056	arrozalba	2014-10-06 19:16:06.949918-04:30	127.0.0.1	INSERT	INSERT INTO factura (usuario_id,fecha_registro,fecha_modificado,fecha_factura,nro_control,nro_factura,observacion,monto,iva) VALUES (NULL,DEFAULT,DEFAULT,'2014-10-06','1234','1234','CARGANDO FACTURAS PARCIALES ','141.80',NULL)	factura	\N	\N	{8,NULL,141.8,NULL,1234,1234,"CARGANDO FACTURAS PARCIALES ",2014-10-06,"2014-10-06 19:16:06.949918-04:30","2014-10-06 19:16:06.949918-04:30"}
+2053	488018	jelitox	2014-10-05 18:45:25.164643-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Aprobación'::text WHERE id = '56'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{56,solicitudes/solicitud_examen/aprobacion,Aprobacion,icon-ok-sign,1,33,233,53,NULL,1,"2014-07-30 15:55:38.334131-04:30","2014-07-30 15:55:38.334131-04:30"}	{56,solicitudes/solicitud_examen/aprobacion,Aprobación,icon-ok-sign,1,33,233,53,NULL,1,"2014-07-30 15:55:38.334131-04:30","2014-07-30 15:55:38.334131-04:30"}
+2054	488018	jelitox	2014-10-05 18:45:31.69311-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Aprobación'::text WHERE id = '60'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{60,solicitudes/solicitud_reembolso/aprobacion,Aprobacion,icon-ok-sign,1,34,243,57,NULL,1,"2014-07-30 16:03:33.102309-04:30","2014-07-30 16:03:33.102309-04:30"}	{60,solicitudes/solicitud_reembolso/aprobacion,Aprobación,icon-ok-sign,1,34,243,57,NULL,1,"2014-07-30 16:03:33.102309-04:30","2014-07-30 16:03:33.102309-04:30"}
+2073	97062	arrozalba	2014-10-06 19:17:14.151046-04:30	127.0.0.1	INSERT	INSERT INTO factura_dt (usuario_id,fecha_registro,fecha_modificado,descripcion,cantidad,monto,exento,factura_id) VALUES (NULL,'2014-10-06 19:17:14.151046-04:30','2014-10-06 19:17:14.151046-04:30','arituclo 2','2','25.5',NULL,'9')	factura_dt	\N	\N	{8,25.50,NULL,2,9,NULL,"arituclo 2","2014-10-06 19:17:14.151046-04:30","2014-10-06 19:17:14.151046-04:30"}
+2055	488018	jelitox	2014-10-05 18:45:41.557256-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Aprobación'::text WHERE id = '64'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{64,solicitudes/solicitud_funeraria/aprobacion,Aprobacion,icon-ok-sign,1,35,253,65,NULL,1,"2014-07-30 16:07:03.414714-04:30","2014-07-30 16:07:03.414714-04:30"}	{64,solicitudes/solicitud_funeraria/aprobacion,Aprobación,icon-ok-sign,1,35,253,65,NULL,1,"2014-07-30 16:07:03.414714-04:30","2014-07-30 16:07:03.414714-04:30"}
+2056	488018	jelitox	2014-10-05 18:45:47.544867-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Aprobación'::text WHERE id = '69'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{69,solicitudes/solicitud_carta/aprobacion,Aprobacion,icon-ok-sign,1,67,263,61,NULL,1,"2014-07-30 20:26:05.938004-04:30","2014-07-30 20:26:05.938004-04:30"}	{69,solicitudes/solicitud_carta/aprobacion,Aprobación,icon-ok-sign,1,67,263,61,NULL,1,"2014-07-30 20:26:05.938004-04:30","2014-07-30 20:26:05.938004-04:30"}
+2057	488018	jelitox	2014-10-05 18:46:04.96835-04:30	127.0.0.1	UPDATE	UPDATE public.menu SET menu='Contraseñas'::text WHERE id = '72'::integer	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{72,sistema/usuario_clave/cambiar_clave,"cambio clave",NULL,1,3,912,69,NULL,1,"2014-08-20 14:31:37.537946-04:30","2014-08-20 14:31:37.537946-04:30"}	{72,sistema/usuario_clave/cambiar_clave,Contraseñas,NULL,1,3,912,69,NULL,1,"2014-08-20 14:31:37.537946-04:30","2014-08-20 14:31:37.537946-04:30"}
+2058	94021	arrozalba	2014-10-05 19:11:54.751674-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{509,127.0.0.1,NULL,1,1,NULL,"2014-10-05 19:11:54.751674-04:30","2014-10-05 19:11:54.751674-04:30",NULL,NULL}
+2059	94021	arrozalba	2014-10-05 20:18:14.61294-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{510,127.0.0.1,NULL,1,1,NULL,"2014-10-05 20:18:14.61294-04:30","2014-10-05 20:18:14.61294-04:30",NULL,NULL}
+2060	94360	postgres	2014-10-05 20:26:27.066834-04:30	127.0.0.1	INSERT	INSERT INTO public.tiposolicitud(nombre) VALUES ('REEMBOLSOS'::text)	tiposolicitud	\N	\N	{7,REEMBOLSOS,NULL,NULL,NULL,"2014-10-05 20:26:27.066834-04:30","2014-10-05 20:26:27.066834-04:30"}
+2061	94360	postgres	2014-10-05 20:26:51.79175-04:30	127.0.0.1	UPDATE	UPDATE public.tiposolicitud SET correlativo='SASRE-0'::text WHERE id = '7'::integer	tiposolicitud	{id,nombre,usuario_id,correlativo,observacion,fecha_registro,fecha_modificado}	{7,REEMBOLSOS,NULL,NULL,NULL,"2014-10-05 20:26:27.066834-04:30","2014-10-05 20:26:27.066834-04:30"}	{7,REEMBOLSOS,NULL,SASRE-0,NULL,"2014-10-05 20:26:27.066834-04:30","2014-10-05 20:26:27.066834-04:30"}
+2062	489181	arrozalba	2014-10-05 22:05:32.21819-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{511,127.0.0.1,NULL,1,1,NULL,"2014-10-05 22:05:32.21819-04:30","2014-10-05 22:05:32.21819-04:30",NULL,NULL}
+2063	489181	arrozalba	2014-10-06 01:22:43.971831-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{512,127.0.0.1,NULL,1,1,NULL,"2014-10-06 01:22:43.971831-04:30","2014-10-06 01:22:43.971831-04:30",NULL,NULL}
+2064	489181	arrozalba	2014-10-06 08:47:04.42332-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{513,127.0.0.1,NULL,1,1,NULL,"2014-10-06 08:47:04.42332-04:30","2014-10-06 08:47:04.42332-04:30",NULL,NULL}
+2065	489181	arrozalba	2014-10-06 12:01:22.247922-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{514,127.0.0.1,NULL,1,1,NULL,"2014-10-06 12:01:22.247922-04:30","2014-10-06 12:01:22.247922-04:30",NULL,NULL}
+2066	489181	arrozalba	2014-10-06 13:39:03.9619-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{515,127.0.0.1,NULL,1,1,NULL,"2014-10-06 13:39:03.9619-04:30","2014-10-06 13:39:03.9619-04:30",NULL,NULL}
+2067	96929	arrozalba	2014-10-06 19:12:32.084629-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{516,127.0.0.1,NULL,1,1,NULL,"2014-10-06 19:12:32.084629-04:30","2014-10-06 19:12:32.084629-04:30",NULL,NULL}
+2070	97062	arrozalba	2014-10-06 19:16:06.949918-04:30	127.0.0.1	INSERT	INSERT INTO factura_dt (usuario_id,fecha_registro,fecha_modificado,descripcion,cantidad,monto,exento,factura_id) VALUES (NULL,'2014-10-06 19:16:06.949918-04:30','2014-10-06 19:16:06.949918-04:30','AGUA ','1','50',NULL,'8')	factura_dt	\N	\N	{6,50.00,NULL,1,8,NULL,"AGUA ","2014-10-06 19:16:06.949918-04:30","2014-10-06 19:16:06.949918-04:30"}
+2071	97056	arrozalba	2014-10-06 19:17:14.151046-04:30	127.0.0.1	INSERT	INSERT INTO factura (usuario_id,fecha_registro,fecha_modificado,fecha_factura,nro_control,nro_factura,observacion,monto,iva) VALUES (NULL,DEFAULT,DEFAULT,'2014-10-01','12','23','HHH','76.50',NULL)	factura	\N	\N	{9,NULL,76.5,NULL,12,23,HHH,2014-10-01,"2014-10-06 19:17:14.151046-04:30","2014-10-06 19:17:14.151046-04:30"}
+2072	97062	arrozalba	2014-10-06 19:17:14.151046-04:30	127.0.0.1	INSERT	INSERT INTO factura_dt (usuario_id,fecha_registro,fecha_modificado,descripcion,cantidad,monto,exento,factura_id) VALUES (NULL,DEFAULT,DEFAULT,'articulo 1','1','25.5',NULL,'9')	factura_dt	\N	\N	{7,25.50,NULL,1,9,NULL,"articulo 1","2014-10-06 19:17:14.151046-04:30","2014-10-06 19:17:14.151046-04:30"}
+2074	97056	arrozalba	2014-10-06 19:18:32.296466-04:30	127.0.0.1	INSERT	INSERT INTO factura (usuario_id,fecha_registro,fecha_modificado,fecha_factura,nro_control,nro_factura,observacion,monto,iva) VALUES (NULL,DEFAULT,DEFAULT,'2014-10-06','43','23',NULL,'153.00',NULL)	factura	\N	\N	{10,NULL,153,NULL,43,23,NULL,2014-10-06,"2014-10-06 19:18:32.296466-04:30","2014-10-06 19:18:32.296466-04:30"}
+2075	97062	arrozalba	2014-10-06 19:18:32.296466-04:30	127.0.0.1	INSERT	INSERT INTO factura_dt (usuario_id,fecha_registro,fecha_modificado,descripcion,cantidad,monto,exento,factura_id) VALUES (NULL,DEFAULT,DEFAULT,'arituclo 2','3','25.5',NULL,'10')	factura_dt	\N	\N	{9,25.50,NULL,3,10,NULL,"arituclo 2","2014-10-06 19:18:32.296466-04:30","2014-10-06 19:18:32.296466-04:30"}
+2076	97062	arrozalba	2014-10-06 19:18:32.296466-04:30	127.0.0.1	INSERT	INSERT INTO factura_dt (usuario_id,fecha_registro,fecha_modificado,descripcion,cantidad,monto,exento,factura_id) VALUES (NULL,'2014-10-06 19:18:32.296466-04:30','2014-10-06 19:18:32.296466-04:30','articulo 1','3','25.5',NULL,'10')	factura_dt	\N	\N	{10,25.50,NULL,3,10,NULL,"articulo 1","2014-10-06 19:18:32.296466-04:30","2014-10-06 19:18:32.296466-04:30"}
+2077	97237	arrozalba	2014-10-06 19:18:32.412563-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET estado_solicitud = 'G',tiposolicitud_id = '1',fecha_solicitud = '1900-01-25',codigo_solicitud = 'SASCM-0001',titular_id = '1',beneficiario_id = '29',proveedor_id = '5',medico_id = '1',fecha_vencimiento = '2014-09-24',servicio_id = '14',observacion = 'cemmel',motivo_rechazo = 'rancia' WHERE  id = '7'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,multifactura,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,"DOLOR EN LA NALGAA",1,1,NULL,"NALGA DAÑADA DEFECTUOSA",cemmel,14,NULL,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,S,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,"DOLOR EN LA NALGAA",1,1,NULL,"NALGA DAÑADA DEFECTUOSA",cemmel,14,NULL,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,G,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
+2078	96929	arrozalba	2014-10-06 21:51:59.940914-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{517,127.0.0.1,NULL,1,1,NULL,"2014-10-06 21:51:59.940914-04:30","2014-10-06 21:51:59.940914-04:30",NULL,NULL}
+2079	97056	arrozalba	2014-10-06 21:52:37.406428-04:30	127.0.0.1	INSERT	INSERT INTO factura (usuario_id,fecha_registro,fecha_modificado,fecha_factura,nro_control,nro_factura,observacion,monto,iva) VALUES (NULL,DEFAULT,DEFAULT,'2014-10-05','1','34','asdfsdf','702.00',NULL)	factura	\N	\N	{11,NULL,702,NULL,1,34,asdfsdf,2014-10-05,"2014-10-06 21:52:37.406428-04:30","2014-10-06 21:52:37.406428-04:30"}
+2080	97062	arrozalba	2014-10-06 21:52:37.406428-04:30	127.0.0.1	INSERT	INSERT INTO factura_dt (usuario_id,fecha_registro,fecha_modificado,descripcion,cantidad,monto,exento,factura_id) VALUES (NULL,DEFAULT,DEFAULT,'dfasdf','3','234',NULL,'11')	factura_dt	\N	\N	{11,234.00,NULL,3,11,NULL,dfasdf,"2014-10-06 21:52:37.406428-04:30","2014-10-06 21:52:37.406428-04:30"}
+2081	97237	arrozalba	2014-10-06 21:52:37.528518-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET estado_solicitud = 'F',tiposolicitud_id = '1',fecha_solicitud = '1900-01-25',codigo_solicitud = 'SASCM-0001',titular_id = '1',beneficiario_id = '29',proveedor_id = '5',medico_id = '1',fecha_vencimiento = '2014-09-24',servicio_id = '14',observacion = 'cemmel',motivo_rechazo = 'rancia' WHERE  id = '7'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,multifactura,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{7,"DOLOR EN LA NALGAA",1,1,NULL,"NALGA DAÑADA DEFECTUOSA",cemmel,14,NULL,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,G,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}	{7,"DOLOR EN LA NALGAA",1,1,NULL,"NALGA DAÑADA DEFECTUOSA",cemmel,14,NULL,5,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,F,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24}
+2082	96973	arrozalba	2014-10-06 22:22:56.717546-04:30	127.0.0.1	INSERT	INSERT INTO cobertura (usuario_id,fecha_registro,fecha_modificado,descripcion,monto_cobertura,fecha_inicio,fecha_fin,observacion,tipo_cobertura) VALUES (NULL,DEFAULT,DEFAULT,'ODONTOLOGIA','6000','2014-01-01','2014-12-31','duracion de la cobertura anual de odontologia','2')	cobertura	\N	\N	{2,2014-12-31,NULL,ODONTOLOGIA,"duracion de la cobertura anual de odontologia",2014-01-01,"2014-10-06 22:22:56.717546-04:30",2,6000.00,"2014-10-06 22:22:56.717546-04:30"}
+2083	96973	postgres	2014-10-06 22:23:57.286885-04:30	127.0.0.1	UPDATE	UPDATE public.cobertura SET observacion='COBERTURA ANUAL DE ODONTOLOGIA'::text WHERE id = '2'::integer	cobertura	{id,fecha_fin,usuario_id,descripcion,observacion,fecha_inicio,fecha_registro,tipo_cobertura,monto_cobertura,fecha_modificado}	{2,2014-12-31,NULL,ODONTOLOGIA,"duracion de la cobertura anual de odontologia",2014-01-01,"2014-10-06 22:22:56.717546-04:30",2,6000.00,"2014-10-06 22:22:56.717546-04:30"}	{2,2014-12-31,NULL,ODONTOLOGIA,"COBERTURA ANUAL DE ODONTOLOGIA",2014-01-01,"2014-10-06 22:22:56.717546-04:30",2,6000.00,"2014-10-06 22:22:56.717546-04:30"}
+2084	96929	arrozalba	2014-10-07 08:19:37.295158-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{518,127.0.0.1,NULL,1,1,NULL,"2014-10-07 08:19:37.295158-04:30","2014-10-07 08:19:37.295158-04:30",NULL,NULL}
+2085	97203	arrozalba	2014-10-07 09:03:58.185244-04:30	127.0.0.1	INSERT	INSERT INTO recurso (usuario_id,fecha_registro,fecha_modificado,modulo,controlador,accion,recurso,descripcion,activo) VALUES (NULL,DEFAULT,DEFAULT,'config','patologia_cobertura','*','config/patologia_cobertura/*','Pantalla para casar las patologías y las coberturas','1')	recurso	\N	\N	{72,*,1,config,config/patologia_cobertura/*,NULL,patologia_cobertura,"Pantalla para casar las patologías y las coberturas","2014-10-07 09:03:58.185244-04:30","2014-10-07 09:03:58.185244-04:30"}
+2086	97105	arrozalba	2014-10-07 09:08:13.046876-04:30	127.0.0.1	INSERT	INSERT INTO menu (usuario_id,fecha_registro,fecha_modificado,menu_id,recurso_id,menu,url,posicion,icono,activo,visibilidad) VALUES (NULL,DEFAULT,DEFAULT,'15','72','Patologias Coberturas','config/patologia_cobertura/','0',NULL,'1','1')	menu	\N	\N	{75,config/patologia_cobertura/,"Patologias Coberturas",NULL,1,15,0,72,NULL,1,"2014-10-07 09:08:13.046876-04:30","2014-10-07 09:08:13.046876-04:30"}
+2087	96973	arrozalba	2014-10-07 10:23:19.231891-04:30	127.0.0.1	INSERT	INSERT INTO cobertura (usuario_id,fecha_registro,fecha_modificado,descripcion,monto_cobertura,fecha_inicio,fecha_fin,observacion,tipo_cobertura) VALUES (NULL,DEFAULT,DEFAULT,'ATENCION PRIMARIA','30000','2014-01-01','2014-12-31','ATENCION PRIMARY','2')	cobertura	\N	\N	{3,2014-12-31,NULL,"ATENCION PRIMARIA","ATENCION PRIMARY",2014-01-01,"2014-10-07 10:23:19.231891-04:30",2,30000.00,"2014-10-07 10:23:19.231891-04:30"}
+2088	97293	postgres	2014-10-07 11:48:27.307608-04:30	127.0.0.1	INSERT	INSERT INTO public.titular(id, cedula, nombre1, nombre2, apellido1, apellido2, nacionalidad, sexo, sucursal_id, pais_id, estado_id, municipio_id, parroquia_id, direccion_habitacion, hpais_id, hestado_id, hmunicipio_id, hparroquia_id, estado_civil, celular, telefono, correo_electronico, tipoempleado_id, profesion_id, departamento_id, cargo_id, estado) VALUES ('0'::integer, '----------'::text, '-----------------'::text, '-----------------'::text, '-----------------'::text, '-----------------'::text, '-'::text, '-'::text, '1'::integer, '240'::integer, '69'::integer, '234'::integer, '746'::integer, '-----------'::text, '240'::integer, '69'::integer, '229'::integer, '732'::integer, '-'::text, '----------'::text, '----------'::text, '----------'::text, '1'::integer, '1'::integer, '1'::integer, '1'::integer, '0'::integer)	titular	\N	\N	{0,-,----------,0,----------,-----------------,-----------------,240,1,240,----------,-----------------,-----------------,69,NULL,69,NULL,NULL,1,-,234,-,746,1,1900-01-01,229,732,"2014-10-07 11:48:27.307608-04:30",1,NULL,N/A,1,"2014-10-07 11:48:27.307608-04:30",1900-01-01,NULL,----------,NULL,NULL,-----------}
+2089	96929	arrozalba	2014-10-07 11:48:44.92525-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{519,127.0.0.1,NULL,1,1,NULL,"2014-10-07 11:48:44.92525-04:30","2014-10-07 11:48:44.92525-04:30",NULL,NULL}
+2090	96929	arrozalba	2014-10-07 12:54:39.116751-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{520,127.0.0.1,NULL,1,1,NULL,"2014-10-07 12:54:39.116751-04:30","2014-10-07 12:54:39.116751-04:30",NULL,NULL}
+2091	97149	postgres	2014-10-07 13:22:16.994207-04:30	127.0.0.1	UPDATE	UPDATE public.patologia SET activo=NULL::boolean WHERE id = '14189'::integer	patologia	{id,activo,codigo,usuario_id,descripcion,observacion,categoria_id,fecha_registro,fecha_modificado}	{14189,t,A00,NULL,Cólera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}	{14189,NULL,A00,NULL,Cólera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}
+2092	97149	postgres	2014-10-07 13:25:56.241573-04:30	127.0.0.1	UPDATE	UPDATE public.patologia SET activo=TRUE::boolean WHERE id = '14189'::integer	patologia	{id,activo,codigo,usuario_id,descripcion,observacion,categoria_id,fecha_registro,fecha_modificado}	{14189,NULL,A00,NULL,Cólera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}	{14189,t,A00,NULL,Cólera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}
+2093	97149	postgres	2014-10-07 13:31:41.052237-04:30	127.0.0.1	UPDATE	UPDATE public.patologia SET activo=NULL::boolean WHERE id = '14189'::integer	patologia	{id,activo,codigo,usuario_id,descripcion,observacion,categoria_id,fecha_registro,fecha_modificado}	{14189,t,A00,NULL,Cólera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}	{14189,NULL,A00,NULL,Cólera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}
+2094	97149	postgres	2014-10-07 13:32:01.885458-04:30	127.0.0.1	UPDATE	UPDATE public.patologia SET activo=TRUE::boolean WHERE id = '14189'::integer	patologia	{id,activo,codigo,usuario_id,descripcion,observacion,categoria_id,fecha_registro,fecha_modificado}	{14189,NULL,A00,NULL,Cólera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}	{14189,t,A00,NULL,Cólera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}
+2108	96929	arrozalba	2014-10-07 19:02:24.494243-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{523,127.0.0.1,NULL,1,1,NULL,"2014-10-07 19:02:24.494243-04:30","2014-10-07 19:02:24.494243-04:30",NULL,NULL}
+2095	97149	postgres	2014-10-07 13:33:57.017275-04:30	127.0.0.1	UPDATE	UPDATE public.patologia SET descripcion='Colera'::text WHERE id = '14189'::integer	patologia	{id,activo,codigo,usuario_id,descripcion,observacion,categoria_id,fecha_registro,fecha_modificado}	{14189,t,A00,NULL,Cólera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}	{14189,t,A00,NULL,Colera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}
+2096	97149	postgres	2014-10-07 13:35:28.961517-04:30	127.0.0.1	UPDATE	UPDATE public.patologia SET activo=NULL::boolean WHERE id = '14189'::integer	patologia	{id,activo,codigo,usuario_id,descripcion,observacion,categoria_id,fecha_registro,fecha_modificado}	{14189,t,A00,NULL,Colera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}	{14189,NULL,A00,NULL,Colera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}
+2119	96929	arrozalba	2014-10-07 21:46:42.77672-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{527,127.0.0.1,NULL,1,1,NULL,"2014-10-07 21:46:42.77672-04:30","2014-10-07 21:46:42.77672-04:30",NULL,NULL}
+2097	97149	postgres	2014-10-07 13:36:05.181866-04:30	127.0.0.1	UPDATE	UPDATE public.patologia SET activo=TRUE::boolean WHERE id = '14189'::integer	patologia	{id,activo,codigo,usuario_id,descripcion,observacion,categoria_id,fecha_registro,fecha_modificado}	{14189,NULL,A00,NULL,Colera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}	{14189,t,A00,NULL,Colera,NULL,314,"2014-05-26 03:54:40.649496-04:30","2014-05-26 03:54:40.649496-04:30"}
+2098	97286	postgres	2014-10-07 14:00:04.157898-04:30	127.0.0.1	INSERT	INSERT INTO public.tiposolicitud(id, nombre, correlativo) VALUES ('8'::integer, 'MEDICINA'::text, 'SASME-0'::text)	tiposolicitud	\N	\N	{8,MEDICINA,NULL,SASME-0,NULL,"2014-10-07 14:00:04.157898-04:30","2014-10-07 14:00:04.157898-04:30"}
+2099	97286	postgres	2014-10-07 14:00:09.90185-04:30	127.0.0.1	UPDATE	UPDATE public.tiposolicitud SET nombre='MEDICINAS'::text WHERE id = '8'::integer	tiposolicitud	{id,nombre,usuario_id,correlativo,observacion,fecha_registro,fecha_modificado}	{8,MEDICINA,NULL,SASME-0,NULL,"2014-10-07 14:00:04.157898-04:30","2014-10-07 14:00:04.157898-04:30"}	{8,MEDICINAS,NULL,SASME-0,NULL,"2014-10-07 14:00:04.157898-04:30","2014-10-07 14:00:04.157898-04:30"}
+2100	97237	postgres	2014-10-07 14:08:54.040229-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET tiposolicitud_id='8'::integer WHERE id = '27'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,multifactura,proveedor_id,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento}	{27,NULL,1,1,NULL,NULL,NULL,1,NULL,1,"2014-09-26 18:42:33.833452-04:30",NULL,29,2014-09-26,SASCM-0004,R,"2014-09-26 18:42:33.833452-04:30",NULL,1,1,2014-09-26}	{27,NULL,1,1,NULL,NULL,NULL,1,NULL,1,"2014-09-26 18:42:33.833452-04:30",NULL,29,2014-09-26,SASCM-0004,R,"2014-09-26 18:42:33.833452-04:30",NULL,8,1,2014-09-26}
+2101	97028	postgres	2014-10-07 14:43:27.498509-04:30	127.0.0.1	UPDATE	UPDATE public.proveedor SET tipo='C'::text WHERE id = '5'::integer	proveedor	{id,fax,rif,tipo,celular,pais_id,direccion,estado_id,telefono1,telefono2,usuario_id,observacion,municipio_id,nombre_corto,parroquia_id,razon_social,fecha_registro,fecha_modificado,correo_electronico}	{5,NULL,j20000,NULL,NULL,240,"Av. Andres Bello entre carr. 33 y 34 .",69,0251-2736943,NULL,NULL,NULL,223,"SAN JAVIER",715," POLICLINICA SAN JAVIER ","2014-07-28 18:02:07.563286-04:30","2014-07-28 18:02:07.563286-04:30",NULL}	{5,NULL,j20000,C,NULL,240,"Av. Andres Bello entre carr. 33 y 34 .",69,0251-2736943,NULL,NULL,NULL,223,"SAN JAVIER",715," POLICLINICA SAN JAVIER ","2014-07-28 18:02:07.563286-04:30","2014-07-28 18:02:07.563286-04:30",NULL}
+2102	97028	arrozalba	2014-10-07 15:00:38.523669-04:30	127.0.0.1	INSERT	INSERT INTO proveedor (usuario_id,fecha_registro,fecha_modificado,rif,razon_social,nombre_corto,pais_id,estado_id,municipio_id,parroquia_id,direccion,celular,telefono1,telefono2,fax,correo_electronico,observacion,tipo) VALUES (NULL,DEFAULT,DEFAULT,'G-20045784','FARMACIA EL AVILA','AVILA','240','69','229','732','POR MAMANICO',NULL,'02554545545','04165555',NULL,NULL,NULL,'F')	proveedor	\N	\N	{7,NULL,G-20045784,F,NULL,240,"POR MAMANICO",69,02554545545,04165555,NULL,NULL,229,AVILA,732,"FARMACIA EL AVILA","2014-10-07 15:00:38.523669-04:30","2014-10-07 15:00:38.523669-04:30",NULL}
+2103	97096	postgres	2014-10-07 15:07:30.4629-04:30	127.0.0.1	INSERT	INSERT INTO public.medico(id, nacionalidad, cedula, rmpps, rif, nombre1, nombre2, apellido1, apellido2, sexo, celular, telefono, correo_electronico, observacion) VALUES ('0'::integer, '-'::text, '----'::text, '----'::text, '----'::text, '----'::text, '----'::text, '----'::text, '----'::text, '-'::text, '----'::text, '----'::text, '----'::text, '----'::text)	medico	\N	\N	{0,----,-,----,----,----,----,----,----,----,----,NULL,----,-,"2014-10-07 15:07:30.4629-04:30","2014-10-07 15:07:30.4629-04:30",----}
+2104	97218	postgres	2014-10-07 15:15:45.016707-04:30	127.0.0.1	INSERT	INSERT INTO public.servicio(id, descripcion) VALUES ('0'::integer, 'FARMACIAS'::text)	servicio	\N	\N	{0,NULL,FARMACIAS,NULL,"2014-10-07 15:15:45.016707-04:30","2014-10-07 15:15:45.016707-04:30"}
+2105	97237	arrozalba	2014-10-07 16:12:53.209202-04:30	127.0.0.1	INSERT	INSERT INTO solicitud_servicio (usuario_id,fecha_registro,fecha_modificado,estado_solicitud,tiposolicitud_id,fecha_solicitud,codigo_solicitud,titular_id,beneficiario_id,beneficiario_tipo,proveedor_id,medico_id,fecha_vencimiento,servicio_id,motivo,motivo_anulacion,observacion,motivo_rechazo,diagnostico,multifactura,persona_autorizada,ced_autorizado) VALUES (NULL,DEFAULT,DEFAULT,'R','8','2014-10-07','SASME-0002','1','29',DEFAULT,'7','0','2014-10-07','0',NULL,NULL,'pŕimer cargur de solicitud de medicina',NULL,NULL,NULL,NULL,NULL)	solicitud_servicio	\N	\N	{28,NULL,0,1,NULL,NULL,"pŕimer cargur de solicitud de medicina",0,NULL,7,NULL,"2014-10-07 16:12:53.209202-04:30",NULL,29,2014-10-07,SASME-0002,R,"2014-10-07 16:12:53.209202-04:30",NULL,8,1,2014-10-07,NULL}
+2106	96929	arrozalba	2014-10-07 17:56:34.51226-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{521,127.0.0.1,NULL,1,1,NULL,"2014-10-07 17:56:34.51226-04:30","2014-10-07 17:56:34.51226-04:30",NULL,NULL}
+2107	96929	arrozalba	2014-10-07 18:57:52.196477-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{522,127.0.0.1,NULL,1,2,NULL,"2014-10-07 18:57:52.196477-04:30","2014-10-07 18:57:52.196477-04:30",NULL,NULL}
+2109	96929	arrozalba	2014-10-07 20:24:38.277077-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{524,127.0.0.1,NULL,1,1,NULL,"2014-10-07 20:24:38.277077-04:30","2014-10-07 20:24:38.277077-04:30",NULL,NULL}
+2153	493691	jelitox	2014-10-08 09:04:24.800284-04:30	127.0.0.1	INSERT	INSERT INTO public.usuario(id, sucursal_id, titular_id, login, perfil_id, tema, app_ajax, datagrid) VALUES ('22'::integer, '1'::integer, '164'::integer, '10135498'::text, '7'::integer, 'default'::text, '1'::integer, '30'::integer)	usuario	\N	\N	{22,default,NULL,10135498,NULL,1,30,NULL,7,164,NULL,1,NULL,"2014-10-08 09:04:24.800284-04:30","2014-10-08 09:04:24.800284-04:30",NULL}
+2110	97237	postgres	2014-10-07 20:49:52.746112-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET observacion=NULL::text WHERE id = '7'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,multifactura,proveedor_id,ced_autorizado,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento,persona_autorizada}	{7,"DOLOR EN LA NALGAA",1,1,NULL,"NALGA DAÑADA DEFECTUOSA",cemmel,14,NULL,5,NULL,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,F,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24,NULL}	{7,"DOLOR EN LA NALGAA",1,1,NULL,"NALGA DAÑADA DEFECTUOSA",NULL,14,NULL,5,NULL,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,F,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24,NULL}
+2111	97237	postgres	2014-10-07 20:49:57.221476-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET observacion=NULL::text WHERE id = '8'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,multifactura,proveedor_id,ced_autorizado,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento,persona_autorizada}	{8,"no fue la mejor cpcio tiene que cmbia rl lkjhy jdk djme pal akdfj wqodcuyg hfsd fasd jksdftgdn kiNBSDY  OIY   ",1,1,NULL,NULL,"camb ianda para poder ahora si aprobar",3,NULL,5,NULL,"2014-09-02 21:27:31.841705-04:30","no fue la mejor cpcio tiene que cmbia rl lkjhy jdk djme pal akdfj wqodcuyg hfsd fasd jksdftgdn kiNBSDY  OIY   ",29,2014-09-02,SASCM-0002,A,"2014-09-02 21:27:31.841705-04:30",NULL,1,1,2014-09-02,NULL}	{8,"no fue la mejor cpcio tiene que cmbia rl lkjhy jdk djme pal akdfj wqodcuyg hfsd fasd jksdftgdn kiNBSDY  OIY   ",1,1,NULL,NULL,NULL,3,NULL,5,NULL,"2014-09-02 21:27:31.841705-04:30","no fue la mejor cpcio tiene que cmbia rl lkjhy jdk djme pal akdfj wqodcuyg hfsd fasd jksdftgdn kiNBSDY  OIY   ",29,2014-09-02,SASCM-0002,A,"2014-09-02 21:27:31.841705-04:30",NULL,1,1,2014-09-02,NULL}
+2112	97237	postgres	2014-10-07 20:50:33.318176-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET observacion=NULL::text WHERE id = '19'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,multifactura,proveedor_id,ced_autorizado,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento,persona_autorizada}	{19,NULL,1,1,NULL,NULL,"ESCRIBIENDO UNA OBSERVACION LO SUFICIENTEMENTE GRANDE PARA VER COMPORTAMIENTO",1,NULL,1,NULL,"2014-09-03 09:39:35.149734-04:30",NULL,29,2014-09-03,SASCM-0003,S,"2014-09-03 09:39:35.149734-04:30",NULL,1,1,2014-09-18,NULL}	{19,NULL,1,1,NULL,NULL,NULL,1,NULL,1,NULL,"2014-09-03 09:39:35.149734-04:30",NULL,29,2014-09-03,SASCM-0003,S,"2014-09-03 09:39:35.149734-04:30",NULL,1,1,2014-09-18,NULL}
+2113	97237	postgres	2014-10-07 20:50:35.607655-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET observacion=NULL::text WHERE id = '28'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,multifactura,proveedor_id,ced_autorizado,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento,persona_autorizada}	{28,NULL,0,1,NULL,NULL,"pŕimer cargur de solicitud de medicina",0,NULL,7,NULL,"2014-10-07 16:12:53.209202-04:30",NULL,29,2014-10-07,SASME-0002,R,"2014-10-07 16:12:53.209202-04:30",NULL,8,1,2014-10-07,NULL}	{28,NULL,0,1,NULL,NULL,NULL,0,NULL,7,NULL,"2014-10-07 16:12:53.209202-04:30",NULL,29,2014-10-07,SASME-0002,R,"2014-10-07 16:12:53.209202-04:30",NULL,8,1,2014-10-07,NULL}
+2114	97237	postgres	2014-10-07 20:51:04.527628-04:30	127.0.0.1	UPDATE	UPDATE public.solicitud_servicio SET motivo='DOLOR ABDOMINAL'::text WHERE id = '7'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,multifactura,proveedor_id,ced_autorizado,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento,persona_autorizada}	{7,"DOLOR EN LA NALGAA",1,1,NULL,"NALGA DAÑADA DEFECTUOSA",NULL,14,NULL,5,NULL,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,F,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24,NULL}	{7,"DOLOR ABDOMINAL",1,1,NULL,"NALGA DAÑADA DEFECTUOSA",NULL,14,NULL,5,NULL,"2014-09-02 21:13:00.714053-04:30",rancia,29,1900-01-25,SASCM-0001,F,"2014-09-02 21:13:00.714053-04:30",NULL,1,1,2014-09-24,NULL}
+2115	96929	arrozalba	2014-10-07 21:10:44.599792-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{525,127.0.0.1,NULL,1,1,NULL,"2014-10-07 21:10:44.599792-04:30","2014-10-07 21:10:44.599792-04:30",NULL,NULL}
+2116	96943	arrozalba	2014-10-07 21:29:21.707398-04:30	127.0.0.1	INSERT	INSERT INTO beneficiario (usuario_id,fecha_registro,fecha_modificado,cedula,nombre1,nombre2,apellido1,apellido2,nacionalidad,sexo,fecha_nacimiento,correo_electronico,grupo_sanguineo,fecha_inclusion,fecha_exclusion,celular,telefono,titular_id,beneficiario_tipo_id,observacion,participacion,parentesco_id,motivo_exclusion,motivo_reactivacion,estado_beneficiario,estado_civil) VALUES (NULL,DEFAULT,DEFAULT,'343142334','SADF',NULL,'ASDF',NULL,'V','M','2014-10-07',NULL,DEFAULT,'14-10-07',NULL,NULL,NULL,'266','1',NULL,'100','2',NULL,NULL,DEFAULT,'c')	beneficiario	\N	\N	{174,M,343142334,NULL,SADF,NULL,NULL,ASDF,NULL,266,NULL,NULL,c,V,2,100,"2014-10-07 21:29:21.707398-04:30",NULL,2007-10-14,N/A,"2014-10-07 21:29:21.707398-04:30",2014-10-07,NULL,NULL,1,NULL,1}
+2118	96929	arrozalba	2014-10-07 21:44:17.872809-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'192.168.1.53')	acceso	\N	\N	{526,192.168.1.53,NULL,1,1,NULL,"2014-10-07 21:44:17.872809-04:30","2014-10-07 21:44:17.872809-04:30",NULL,NULL}
+2120	97105	arrozalba	2014-10-07 21:48:53.524304-04:30	127.0.0.1	UPDATE	UPDATE menu SET usuario_id = NULL,fecha_registro = '2014-03-13 13:30:24.848631-04:30',fecha_modificado = '2014-03-13 13:30:24.848631-04:30',menu_id = '3',recurso_id = '4',menu = 'Accesos',url = 'sistema/acceso/listar/',posicion = '901',icono = 'icon-exchange',activo = '2',visibilidad = '1' WHERE  id = '4'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{4,sistema/acceso/listar/,Accesos,icon-exchange,1,3,901,4,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{4,sistema/acceso/listar/,Accesos,icon-exchange,2,3,901,4,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2121	97105	arrozalba	2014-10-07 21:49:18.244997-04:30	127.0.0.1	UPDATE	UPDATE menu SET usuario_id = NULL,fecha_registro = '2014-03-13 13:30:24.848631-04:30',fecha_modificado = '2014-03-13 13:30:24.848631-04:30',menu_id = '3',recurso_id = '5',menu = 'Auditorías',url = 'sistema/auditoria/',posicion = '902',icono = 'icon-eye-open',activo = '2',visibilidad = '1' WHERE  id = '5'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{5,sistema/auditoria/,Auditorías,icon-eye-open,1,3,902,5,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{5,sistema/auditoria/,Auditorías,icon-eye-open,2,3,902,5,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2122	97105	arrozalba	2014-10-07 21:49:25.832258-04:30	127.0.0.1	UPDATE	UPDATE menu SET usuario_id = NULL,fecha_registro = '2014-03-13 13:30:24.848631-04:30',fecha_modificado = '2014-03-13 13:30:24.848631-04:30',menu_id = '3',recurso_id = '6',menu = 'Backups',url = 'sistema/backup/listar/',posicion = '903',icono = 'icon-hdd',activo = '2',visibilidad = '1' WHERE  id = '6'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{6,sistema/backup/listar/,Backups,icon-hdd,1,3,903,6,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{6,sistema/backup/listar/,Backups,icon-hdd,2,3,903,6,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2123	97105	arrozalba	2014-10-07 21:49:33.06589-04:30	127.0.0.1	UPDATE	UPDATE menu SET usuario_id = NULL,fecha_registro = '2014-03-13 13:30:24.848631-04:30',fecha_modificado = '2014-03-13 13:30:24.848631-04:30',menu_id = '3',recurso_id = '7',menu = 'Mantenimiento',url = 'sistema/mantenimiento/',posicion = '904',icono = 'icon-bolt',activo = '2',visibilidad = '1' WHERE  id = '7'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{7,sistema/mantenimiento/,Mantenimiento,icon-bolt,1,3,904,7,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{7,sistema/mantenimiento/,Mantenimiento,icon-bolt,2,3,904,7,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2124	96943	arrozalba	2014-10-07 21:50:40.668307-04:30	127.0.0.1	UPDATE	UPDATE beneficiario SET cedula = '343142334',nombre1 = 'MARINES',nombre2 = NULL,apellido1 = 'ROLDAN',apellido2 = NULL,nacionalidad = 'V',sexo = 'M',fecha_nacimiento = '2014-10-07',correo_electronico = NULL,celular = NULL,telefono = NULL,titular_id = '266',beneficiario_tipo_id = '1',observacion = NULL,participacion = '100',parentesco_id = '2',motivo_exclusion = NULL,motivo_reactivacion = NULL,estado_civil = 'c' WHERE  id = '174'	beneficiario	{id,sexo,cedula,celular,nombre1,nombre2,telefono,apellido1,apellido2,titular_id,usuario_id,observacion,estado_civil,nacionalidad,parentesco_id,participacion,fecha_registro,fecha_exclusion,fecha_inclusion,grupo_sanguineo,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,estado_beneficiario,motivo_reactivacion,beneficiario_tipo_id}	{174,M,343142334,NULL,SADF,NULL,NULL,ASDF,NULL,266,NULL,NULL,c,V,2,100,"2014-10-07 21:29:21.707398-04:30",NULL,2007-10-14,N/A,"2014-10-07 21:29:21.707398-04:30",2014-10-07,NULL,NULL,1,NULL,1}	{174,M,343142334,NULL,MARINES,NULL,NULL,ROLDAN,NULL,266,NULL,NULL,c,V,2,100,"2014-10-07 21:29:21.707398-04:30",NULL,2007-10-14,N/A,"2014-10-07 21:29:21.707398-04:30",2014-10-07,NULL,NULL,1,NULL,1}
+2125	97105	arrozalba	2014-10-07 21:51:50.881845-04:30	127.0.0.1	UPDATE	UPDATE menu SET usuario_id = NULL,fecha_registro = '2014-03-13 13:30:24.848631-04:30',fecha_modificado = '2014-03-13 13:30:24.848631-04:30',menu_id = '3',recurso_id = '13',menu = 'Visor de sucesos',url = 'sistema/sucesos/',posicion = '910',icono = 'icon-filter',activo = '2',visibilidad = '1' WHERE  id = '13'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{13,sistema/sucesos/,"Visor de sucesos",icon-filter,1,3,910,13,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{13,sistema/sucesos/,"Visor de sucesos",icon-filter,2,3,910,13,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2142	97105	arrozalba	2014-10-07 22:23:05.030804-04:30	127.0.0.1	UPDATE	UPDATE menu SET menu_id = '15',recurso_id = '24',menu = 'Recaudos',url = 'config/recaudo/listar',posicion = '809',icono = 'icon-folder-open',visibilidad = '1' WHERE  id = '25'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{25,config/recaudo/listar,Recaudos,NULL,1,15,809,24,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{25,config/recaudo/listar,Recaudos,icon-folder-open,1,15,809,24,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2154	493425	jelitox	2014-10-08 09:04:59.22785-04:30	127.0.0.1	INSERT	INSERT INTO public.estado_usuario(usuario_id, estado_usuario, descripcion) VALUES ('22'::integer, '1'::integer, 'Activado'::text)	estado_usuario	\N	\N	{19,22,Activado,1,"2014-10-08 09:04:59.22785-04:30","2014-10-08 09:04:59.22785-04:30"}
+2155	493305	arrozalba	2014-10-08 09:08:50.320697-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{530,127.0.0.1,NULL,1,2,NULL,"2014-10-08 09:08:50.320697-04:30","2014-10-08 09:08:50.320697-04:30",NULL,NULL}
+2126	96943	arrozalba	2014-10-07 22:00:59.735329-04:30	127.0.0.1	UPDATE	UPDATE beneficiario SET cedula = '343142334',nombre1 = 'MARINES',nombre2 = NULL,apellido1 = 'ROLDAN',apellido2 = NULL,nacionalidad = 'V',sexo = 'M',fecha_nacimiento = '2014-10-08',correo_electronico = NULL,celular = NULL,telefono = NULL,titular_id = '266',beneficiario_tipo_id = '1',observacion = NULL,participacion = '100',parentesco_id = '2',motivo_exclusion = NULL,motivo_reactivacion = NULL,estado_civil = 'c' WHERE  id = '174'	beneficiario	{id,sexo,cedula,celular,nombre1,nombre2,telefono,apellido1,apellido2,titular_id,usuario_id,observacion,estado_civil,nacionalidad,parentesco_id,participacion,fecha_registro,fecha_exclusion,fecha_inclusion,grupo_sanguineo,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,estado_beneficiario,motivo_reactivacion,beneficiario_tipo_id}	{174,M,343142334,NULL,MARINES,NULL,NULL,ROLDAN,NULL,266,NULL,NULL,c,V,2,100,"2014-10-07 21:29:21.707398-04:30",NULL,2007-10-14,N/A,"2014-10-07 21:29:21.707398-04:30",2014-10-07,NULL,NULL,1,NULL,1}	{174,M,343142334,NULL,MARINES,NULL,NULL,ROLDAN,NULL,266,NULL,NULL,c,V,2,100,"2014-10-07 21:29:21.707398-04:30",NULL,2007-10-14,N/A,"2014-10-07 21:29:21.707398-04:30",2014-10-08,NULL,NULL,1,NULL,1}
+2127	96943	arrozalba	2014-10-07 22:01:36.464711-04:30	127.0.0.1	UPDATE	UPDATE beneficiario SET cedula = '343142334',nombre1 = 'MARINES',nombre2 = NULL,apellido1 = 'ROLDAN',apellido2 = NULL,nacionalidad = 'V',sexo = 'M',fecha_nacimiento = '2012-10-07',correo_electronico = NULL,celular = NULL,telefono = NULL,titular_id = '266',beneficiario_tipo_id = '1',observacion = NULL,participacion = '100',parentesco_id = '2',motivo_exclusion = NULL,motivo_reactivacion = NULL,estado_civil = 'c' WHERE  id = '174'	beneficiario	{id,sexo,cedula,celular,nombre1,nombre2,telefono,apellido1,apellido2,titular_id,usuario_id,observacion,estado_civil,nacionalidad,parentesco_id,participacion,fecha_registro,fecha_exclusion,fecha_inclusion,grupo_sanguineo,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,estado_beneficiario,motivo_reactivacion,beneficiario_tipo_id}	{174,M,343142334,NULL,MARINES,NULL,NULL,ROLDAN,NULL,266,NULL,NULL,c,V,2,100,"2014-10-07 21:29:21.707398-04:30",NULL,2007-10-14,N/A,"2014-10-07 21:29:21.707398-04:30",2014-10-08,NULL,NULL,1,NULL,1}	{174,M,343142334,NULL,MARINES,NULL,NULL,ROLDAN,NULL,266,NULL,NULL,c,V,2,100,"2014-10-07 21:29:21.707398-04:30",NULL,2007-10-14,N/A,"2014-10-07 21:29:21.707398-04:30",2012-10-07,NULL,NULL,1,NULL,1}
+2128	96929	arrozalba	2014-10-07 22:07:00.965135-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'192.168.1.221')	acceso	\N	\N	{528,192.168.1.221,NULL,1,1,NULL,"2014-10-07 22:07:00.965135-04:30","2014-10-07 22:07:00.965135-04:30",NULL,NULL}
+2129	97105	arrozalba	2014-10-07 22:07:04.271975-04:30	127.0.0.1	UPDATE	UPDATE menu SET usuario_id = NULL,fecha_registro = '2014-03-13 13:30:24.848631-04:30',fecha_modificado = '2014-03-13 13:30:24.848631-04:30',menu_id = '3',recurso_id = '4',menu = 'Accesos',url = 'sistema/acceso/listar/',posicion = '901',icono = 'icon-exchange',activo = '1',visibilidad = '1' WHERE  id = '4'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{4,sistema/acceso/listar/,Accesos,icon-exchange,2,3,901,4,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{4,sistema/acceso/listar/,Accesos,icon-exchange,1,3,901,4,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2130	97105	arrozalba	2014-10-07 22:07:11.980431-04:30	127.0.0.1	UPDATE	UPDATE menu SET usuario_id = NULL,fecha_registro = '2014-03-13 13:30:24.848631-04:30',fecha_modificado = '2014-03-13 13:30:24.848631-04:30',menu_id = '3',recurso_id = '7',menu = 'Mantenimiento',url = 'sistema/mantenimiento/',posicion = '904',icono = 'icon-bolt',activo = '1',visibilidad = '1' WHERE  id = '7'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{7,sistema/mantenimiento/,Mantenimiento,icon-bolt,2,3,904,7,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{7,sistema/mantenimiento/,Mantenimiento,icon-bolt,1,3,904,7,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2131	97105	arrozalba	2014-10-07 22:07:41.114189-04:30	127.0.0.1	UPDATE	UPDATE menu SET usuario_id = NULL,fecha_registro = '2014-03-13 13:30:24.848631-04:30',fecha_modificado = '2014-03-13 13:30:24.848631-04:30',menu_id = '3',recurso_id = '6',menu = 'Backups',url = 'sistema/backup/listar/',posicion = '903',icono = 'icon-hdd',activo = '1',visibilidad = '1' WHERE  id = '6'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{6,sistema/backup/listar/,Backups,icon-hdd,2,3,903,6,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{6,sistema/backup/listar/,Backups,icon-hdd,1,3,903,6,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2132	97105	arrozalba	2014-10-07 22:07:50.573863-04:30	127.0.0.1	UPDATE	UPDATE menu SET usuario_id = NULL,fecha_registro = '2014-03-13 13:30:24.848631-04:30',fecha_modificado = '2014-03-13 13:30:24.848631-04:30',menu_id = '3',recurso_id = '5',menu = 'Auditorías',url = 'sistema/auditoria/',posicion = '902',icono = 'icon-eye-open',activo = '1',visibilidad = '1' WHERE  id = '5'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{5,sistema/auditoria/,Auditorías,icon-eye-open,2,3,902,5,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{5,sistema/auditoria/,Auditorías,icon-eye-open,1,3,902,5,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2152	96929	arrozalba	2014-10-07 23:04:24.682691-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'192.168.1.53')	acceso	\N	\N	{529,192.168.1.53,NULL,1,2,NULL,"2014-10-07 23:04:24.682691-04:30","2014-10-07 23:04:24.682691-04:30",NULL,NULL}
+2133	97105	arrozalba	2014-10-07 22:12:27.651715-04:30	127.0.0.1	UPDATE	UPDATE menu SET menu_id = '15',recurso_id = '72',menu = 'Patologias Coberturas',url = 'config/patologia_cobertura/',posicion = NULL,icono = 'icon-th-large',visibilidad = '1' WHERE  id = '75'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{75,config/patologia_cobertura/,"Patologias Coberturas",NULL,1,15,0,72,NULL,1,"2014-10-07 09:08:13.046876-04:30","2014-10-07 09:08:13.046876-04:30"}	{75,config/patologia_cobertura/,"Patologias Coberturas",icon-th-large,1,15,NULL,72,NULL,1,"2014-10-07 09:08:13.046876-04:30","2014-10-07 09:08:13.046876-04:30"}
+2134	97105	arrozalba	2014-10-07 22:15:00.064543-04:30	127.0.0.1	UPDATE	UPDATE menu SET menu_id = '15',recurso_id = '18',menu = 'Profesión',url = 'config/profesion/listar',posicion = '803',icono = 'icon-briefcase',visibilidad = '1' WHERE  id = '19'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{19,config/profesion/listar,Profesión,NULL,1,15,803,18,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{19,config/profesion/listar,Profesión,icon-briefcase,1,15,803,18,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2135	97105	arrozalba	2014-10-07 22:16:45.252275-04:30	127.0.0.1	UPDATE	UPDATE menu SET menu_id = '15',recurso_id = '19',menu = 'Cargo',url = 'config/cargo/listar',posicion = '804',icono = 'icon-resize-vertical',visibilidad = '1' WHERE  id = '20'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{20,config/cargo/listar,Cargo,NULL,1,15,804,19,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{20,config/cargo/listar,Cargo,icon-resize-vertical,1,15,804,19,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2136	97105	arrozalba	2014-10-07 22:17:44.372-04:30	127.0.0.1	UPDATE	UPDATE menu SET menu_id = '15',recurso_id = '20',menu = 'Cobertura',url = 'config/cobertura/listar',posicion = '805',icono = 'icon-list-alt',visibilidad = '1' WHERE  id = '21'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{21,config/cobertura/listar,Cobertura,NULL,1,15,805,20,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{21,config/cobertura/listar,Cobertura,icon-list-alt,1,15,805,20,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2137	97105	arrozalba	2014-10-07 22:18:39.210871-04:30	127.0.0.1	UPDATE	UPDATE menu SET usuario_id = NULL,fecha_registro = '2014-03-13 13:30:24.848631-04:30',fecha_modificado = '2014-03-13 13:30:24.848631-04:30',menu_id = '15',recurso_id = '21',menu = 'Departamento',url = 'config/departamento/listar',posicion = '806',icono = NULL,activo = '2',visibilidad = '1' WHERE  id = '22'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{22,config/departamento/listar,Departamento,NULL,1,15,806,21,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{22,config/departamento/listar,Departamento,NULL,2,15,806,21,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2138	97105	arrozalba	2014-10-07 22:19:16.274988-04:30	127.0.0.1	UPDATE	UPDATE menu SET usuario_id = NULL,fecha_registro = '2014-03-13 13:30:24.848631-04:30',fecha_modificado = '2014-03-13 13:30:24.848631-04:30',menu_id = '15',recurso_id = '21',menu = 'Departamento',url = 'config/departamento/listar',posicion = '806',icono = NULL,activo = '1',visibilidad = '1' WHERE  id = '22'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{22,config/departamento/listar,Departamento,NULL,2,15,806,21,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{22,config/departamento/listar,Departamento,NULL,1,15,806,21,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2139	97105	arrozalba	2014-10-07 22:19:26.844713-04:30	127.0.0.1	UPDATE	UPDATE menu SET menu_id = '15',recurso_id = '21',menu = 'Departamento',url = 'config/departamento/listar',posicion = '806',icono = 'icon-home',visibilidad = '1' WHERE  id = '22'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{22,config/departamento/listar,Departamento,NULL,1,15,806,21,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{22,config/departamento/listar,Departamento,icon-home,1,15,806,21,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2140	97105	arrozalba	2014-10-07 22:20:17.770524-04:30	127.0.0.1	UPDATE	UPDATE menu SET menu_id = '15',recurso_id = '22',menu = 'Discapacidad',url = 'config/discapacidad/listar',posicion = '807',icono = 'icon-eye-close',visibilidad = '1' WHERE  id = '23'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{23,config/discapacidad/listar,Discapacidad,NULL,1,15,807,22,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{23,config/discapacidad/listar,Discapacidad,icon-eye-close,1,15,807,22,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2141	97105	arrozalba	2014-10-07 22:22:16.803616-04:30	127.0.0.1	UPDATE	UPDATE menu SET menu_id = '15',recurso_id = '23',menu = 'Patología',url = 'config/patologia/listar',posicion = '808',icono = 'icon-filter',visibilidad = '1' WHERE  id = '24'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{24,config/patologia/listar,Patología,NULL,1,15,808,23,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{24,config/patologia/listar,Patología,icon-filter,1,15,808,23,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2143	97105	arrozalba	2014-10-07 22:33:21.836483-04:30	127.0.0.1	UPDATE	UPDATE menu SET usuario_id = NULL,fecha_registro = '2014-03-13 13:30:24.848631-04:30',fecha_modificado = '2014-03-13 13:30:24.848631-04:30',menu_id = '3',recurso_id = '6',menu = 'Backups',url = 'sistema/backup/listar/',posicion = '903',icono = 'icon-hdd',activo = '2',visibilidad = '1' WHERE  id = '6'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{6,sistema/backup/listar/,Backups,icon-hdd,1,3,903,6,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{6,sistema/backup/listar/,Backups,icon-hdd,2,3,903,6,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2144	97105	arrozalba	2014-10-07 22:33:46.671888-04:30	127.0.0.1	UPDATE	UPDATE menu SET usuario_id = NULL,fecha_registro = '2014-03-13 13:30:24.848631-04:30',fecha_modificado = '2014-03-13 13:30:24.848631-04:30',menu_id = '3',recurso_id = '7',menu = 'Mantenimiento',url = 'sistema/mantenimiento/',posicion = '904',icono = 'icon-bolt',activo = '2',visibilidad = '1' WHERE  id = '7'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{7,sistema/mantenimiento/,Mantenimiento,icon-bolt,1,3,904,7,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{7,sistema/mantenimiento/,Mantenimiento,icon-bolt,2,3,904,7,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2145	97105	arrozalba	2014-10-07 22:47:27.606724-04:30	127.0.0.1	UPDATE	UPDATE menu SET menu_id = '3',recurso_id = '69',menu = 'Contraseñas',url = 'sistema/usuario_clave/cambiar_clave',posicion = '912',icono = 'icon-lock',visibilidad = '1' WHERE  id = '72'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{72,sistema/usuario_clave/cambiar_clave,Contraseñas,NULL,1,3,912,69,NULL,1,"2014-08-20 14:31:37.537946-04:30","2014-08-20 14:31:37.537946-04:30"}	{72,sistema/usuario_clave/cambiar_clave,Contraseñas,icon-lock,1,3,912,69,NULL,1,"2014-08-20 14:31:37.537946-04:30","2014-08-20 14:31:37.537946-04:30"}
+2146	97105	arrozalba	2014-10-07 22:59:32.410257-04:30	127.0.0.1	UPDATE	UPDATE menu SET menu_id = '3',recurso_id = '11',menu = 'Recursos',url = 'sistema/recurso/listar/',posicion = '901',icono = 'icon-lock',visibilidad = '1' WHERE  id = '11'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{11,sistema/recurso/listar/,Recursos,icon-lock,1,3,908,11,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{11,sistema/recurso/listar/,Recursos,icon-lock,1,3,901,11,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2147	97105	arrozalba	2014-10-07 23:00:31.533377-04:30	127.0.0.1	UPDATE	UPDATE menu SET menu_id = '3',recurso_id = '4',menu = 'Accesos',url = 'sistema/acceso/listar/',posicion = '908',icono = 'icon-exchange',visibilidad = '1' WHERE  id = '4'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{4,sistema/acceso/listar/,Accesos,icon-exchange,1,3,901,4,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{4,sistema/acceso/listar/,Accesos,icon-exchange,1,3,908,4,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2148	97105	arrozalba	2014-10-07 23:01:23.173177-04:30	127.0.0.1	UPDATE	UPDATE menu SET menu_id = '3',recurso_id = '12',menu = 'Usuarios',url = 'sistema/usuario/listar/',posicion = '902',icono = 'icon-user',visibilidad = '1' WHERE  id = '12'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{12,sistema/usuario/listar/,Usuarios,icon-user,1,3,909,12,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{12,sistema/usuario/listar/,Usuarios,icon-user,1,3,902,12,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2149	97105	arrozalba	2014-10-07 23:01:56.409196-04:30	127.0.0.1	UPDATE	UPDATE menu SET menu_id = '3',recurso_id = '10',menu = 'Permisos',url = 'sistema/privilegio/listar/',posicion = '905',icono = 'icon-magic',visibilidad = '1' WHERE  id = '10'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{10,sistema/privilegio/listar/,Permisos,icon-magic,1,3,907,10,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{10,sistema/privilegio/listar/,Permisos,icon-magic,1,3,905,10,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2150	97105	arrozalba	2014-10-07 23:02:44.763062-04:30	127.0.0.1	UPDATE	UPDATE menu SET menu_id = '3',recurso_id = '5',menu = 'Auditorías',url = 'sistema/auditoria/',posicion = '96',icono = 'icon-eye-open',visibilidad = '1' WHERE  id = '5'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{5,sistema/auditoria/,Auditorías,icon-eye-open,1,3,902,5,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{5,sistema/auditoria/,Auditorías,icon-eye-open,1,3,96,5,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2151	97105	arrozalba	2014-10-07 23:03:50.245155-04:30	127.0.0.1	UPDATE	UPDATE menu SET menu_id = '3',recurso_id = '5',menu = 'Auditorías',url = 'sistema/auditoria/',posicion = '908',icono = 'icon-eye-open',visibilidad = '1' WHERE  id = '5'	menu	{id,url,menu,icono,activo,menu_id,posicion,recurso_id,usuario_id,visibilidad,fecha_registro,fecha_modificado}	{5,sistema/auditoria/,Auditorías,icon-eye-open,1,3,96,5,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}	{5,sistema/auditoria/,Auditorías,icon-eye-open,1,3,908,5,NULL,1,"2014-03-13 13:30:24.848631-04:30","2014-03-13 13:30:24.848631-04:30"}
+2156	493305	arrozalba	2014-10-08 09:09:07.017287-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('22',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{531,127.0.0.1,NULL,22,1,NULL,"2014-10-08 09:09:07.017287-04:30","2014-10-08 09:09:07.017287-04:30",NULL,NULL}
+2157	493691	jelitox	2014-10-08 09:17:27.161501-04:30	127.0.0.1	INSERT	INSERT INTO public.usuario(id, sucursal_id, titular_id, login, perfil_id, tema, app_ajax, datagrid) VALUES ('23'::integer, '1'::integer, '160'::integer, '14092771'::text, '7'::integer, 'default'::text, '1'::integer, '30'::integer)	usuario	\N	\N	{23,default,NULL,14092771,NULL,1,30,NULL,7,160,NULL,1,NULL,"2014-10-08 09:17:27.161501-04:30","2014-10-08 09:17:27.161501-04:30",NULL}
+2158	493305	arrozalba	2014-10-08 09:19:09.675207-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('22',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{532,127.0.0.1,NULL,22,2,NULL,"2014-10-08 09:19:09.675207-04:30","2014-10-08 09:19:09.675207-04:30",NULL,NULL}
+2159	493425	jelitox	2014-10-08 09:19:59.132051-04:30	127.0.0.1	INSERT	INSERT INTO public.estado_usuario(usuario_id, estado_usuario, descripcion) VALUES ('23'::integer, '1'::integer, 'Activado por admin'::text)	estado_usuario	\N	\N	{20,23,"Activado por admin",1,"2014-10-08 09:19:59.132051-04:30","2014-10-08 09:19:59.132051-04:30"}
+2160	493305	arrozalba	2014-10-08 09:20:28.406241-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('23',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{533,127.0.0.1,NULL,23,2,NULL,"2014-10-08 09:20:28.406241-04:30","2014-10-08 09:20:28.406241-04:30",NULL,NULL}
+2161	493305	arrozalba	2014-10-08 09:20:38.255836-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('23',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{534,127.0.0.1,NULL,23,1,NULL,"2014-10-08 09:20:38.255836-04:30","2014-10-08 09:20:38.255836-04:30",NULL,NULL}
+2162	493305	arrozalba	2014-10-08 09:20:47.844653-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('23',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{535,127.0.0.1,NULL,23,2,NULL,"2014-10-08 09:20:47.844653-04:30","2014-10-08 09:20:47.844653-04:30",NULL,NULL}
+2163	493305	arrozalba	2014-10-08 12:52:44.779402-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{536,127.0.0.1,NULL,1,1,NULL,"2014-10-08 12:52:44.779402-04:30","2014-10-08 12:52:44.779402-04:30",NULL,NULL}
+2164	493305	arrozalba	2014-10-08 13:50:29.436281-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{537,127.0.0.1,NULL,1,2,NULL,"2014-10-08 13:50:29.436281-04:30","2014-10-08 13:50:29.436281-04:30",NULL,NULL}
+2165	493305	arrozalba	2014-10-08 14:21:42.903297-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{538,127.0.0.1,NULL,1,1,NULL,"2014-10-08 14:21:42.903297-04:30","2014-10-08 14:21:42.903297-04:30",NULL,NULL}
+2166	493305	arrozalba	2014-10-08 14:25:31.031457-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'192.168.1.69')	acceso	\N	\N	{539,192.168.1.69,NULL,1,1,NULL,"2014-10-08 14:25:31.031457-04:30","2014-10-08 14:25:31.031457-04:30",NULL,NULL}
+2167	493305	arrozalba	2014-10-08 14:33:29.489964-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'192.168.1.69')	acceso	\N	\N	{540,192.168.1.69,NULL,1,2,NULL,"2014-10-08 14:33:29.489964-04:30","2014-10-08 14:33:29.489964-04:30",NULL,NULL}
+2168	493305	arrozalba	2014-10-08 14:52:56.141743-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'192.168.1.69')	acceso	\N	\N	{541,192.168.1.69,NULL,1,1,NULL,"2014-10-08 14:52:56.141743-04:30","2014-10-08 14:52:56.141743-04:30",NULL,NULL}
+2169	493305	arrozalba	2014-10-08 15:05:08.526816-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'192.168.1.69')	acceso	\N	\N	{542,192.168.1.69,NULL,1,2,NULL,"2014-10-08 15:05:08.526816-04:30","2014-10-08 15:05:08.526816-04:30",NULL,NULL}
+2170	493305	arrozalba	2014-10-08 15:05:31.165017-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('23',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'192.168.1.69')	acceso	\N	\N	{543,192.168.1.69,NULL,23,1,NULL,"2014-10-08 15:05:31.165017-04:30","2014-10-08 15:05:31.165017-04:30",NULL,NULL}
+2171	493305	arrozalba	2014-10-08 15:08:01.259194-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('23',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'192.168.1.69')	acceso	\N	\N	{544,192.168.1.69,NULL,23,2,NULL,"2014-10-08 15:08:01.259194-04:30","2014-10-08 15:08:01.259194-04:30",NULL,NULL}
+2172	493305	arrozalba	2014-10-08 15:08:05.754109-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'192.168.1.69')	acceso	\N	\N	{545,192.168.1.69,NULL,1,1,NULL,"2014-10-08 15:08:05.754109-04:30","2014-10-08 15:08:05.754109-04:30",NULL,NULL}
+2186	148216	arrozalba	2014-10-23 00:51:40.606415-04:30	::1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'190.207.206.35')	acceso	\N	\N	{555,190.207.206.35,NULL,1,2,NULL,"2014-10-23 05:21:40.606415+00","2014-10-23 05:21:40.606415+00",NULL,NULL}
+2173	493613	arrozalba	2014-10-08 15:13:37.956326-04:30	127.0.0.1	INSERT	INSERT INTO solicitud_servicio (usuario_id,fecha_registro,fecha_modificado,estado_solicitud,tiposolicitud_id,fecha_solicitud,codigo_solicitud,titular_id,beneficiario_id,beneficiario_tipo,proveedor_id,medico_id,fecha_vencimiento,servicio_id,motivo,motivo_anulacion,observacion,motivo_rechazo,diagnostico,multifactura,persona_autorizada,ced_autorizado) VALUES (NULL,DEFAULT,DEFAULT,'S','7','2014-10-08','SASRE-0001','1','29',DEFAULT,'1','1','2014-10-08','17','consulta mensual ',NULL,NULL,NULL,'niño sano pero con doloor en el pecho ',NULL,NULL,NULL)	solicitud_servicio	\N	\N	{31,"consulta mensual ",1,1,NULL,"niño sano pero con doloor en el pecho ",NULL,17,NULL,1,NULL,"2014-10-08 15:13:37.956326-04:30",NULL,29,2014-10-08,SASRE-0001,S,"2014-10-08 15:13:37.956326-04:30",NULL,7,1,2014-10-08,NULL}
+2174	493432	arrozalba	2014-10-08 15:13:38.012878-04:30	127.0.0.1	INSERT	INSERT INTO factura (usuario_id,fecha_registro,fecha_modificado,fecha_factura,nro_control,nro_factura,observacion,monto,iva) VALUES (NULL,DEFAULT,DEFAULT,'2014-10-02','8763','4342','ninguna','50.00',NULL)	factura	\N	\N	{12,NULL,50,NULL,8763,4342,ninguna,2014-10-02,"2014-10-08 15:13:38.012878-04:30","2014-10-08 15:13:38.012878-04:30"}
+2175	493438	arrozalba	2014-10-08 15:13:38.054166-04:30	127.0.0.1	INSERT	INSERT INTO factura_dt (usuario_id,fecha_registro,fecha_modificado,descripcion,cantidad,monto,exento,factura_id) VALUES (NULL,DEFAULT,DEFAULT,'acetaminofen','1','50',NULL,'12')	factura_dt	\N	\N	{12,50.00,NULL,1,12,NULL,acetaminofen,"2014-10-08 15:13:38.054166-04:30","2014-10-08 15:13:38.054166-04:30"}
+2176	493613	arrozalba	2014-10-08 15:13:38.105577-04:30	127.0.0.1	UPDATE	UPDATE solicitud_servicio SET usuario_id = NULL,fecha_registro = '2014-10-08 15:13:37.956326-04:30',fecha_modificado = '2014-10-08 15:13:37.956326-04:30',estado_solicitud = 'F',tiposolicitud_id = '7',fecha_solicitud = '2014-10-08',codigo_solicitud = 'SASRE-0001',titular_id = '1',beneficiario_id = '29',beneficiario_tipo = '1',proveedor_id = '1',medico_id = '1',fecha_vencimiento = '2014-10-08',servicio_id = '17',motivo = 'consulta mensual ',motivo_anulacion = NULL,observacion = NULL,motivo_rechazo = NULL,diagnostico = 'niño sano pero con doloor en el pecho ',multifactura = NULL,persona_autorizada = NULL,ced_autorizado = NULL WHERE  id = '31'	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,multifactura,proveedor_id,ced_autorizado,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento,persona_autorizada}	{31,"consulta mensual ",1,1,NULL,"niño sano pero con doloor en el pecho ",NULL,17,NULL,1,NULL,"2014-10-08 15:13:37.956326-04:30",NULL,29,2014-10-08,SASRE-0001,S,"2014-10-08 15:13:37.956326-04:30",NULL,7,1,2014-10-08,NULL}	{31,"consulta mensual ",1,1,NULL,"niño sano pero con doloor en el pecho ",NULL,17,NULL,1,NULL,"2014-10-08 15:13:37.956326-04:30",NULL,29,2014-10-08,SASRE-0001,F,"2014-10-08 15:13:37.956326-04:30",NULL,7,1,2014-10-08,NULL}
+2177	148216	arrozalba	2014-10-23 00:42:25.580261-04:30	::1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'190.207.206.35')	acceso	\N	\N	{546,190.207.206.35,NULL,1,1,NULL,"2014-10-23 05:12:25.580261+00","2014-10-23 05:12:25.580261+00",NULL,NULL}
+2178	148216	arrozalba	2014-10-23 00:42:38.74684-04:30	::1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'190.207.206.35')	acceso	\N	\N	{547,190.207.206.35,NULL,1,2,NULL,"2014-10-23 05:12:38.74684+00","2014-10-23 05:12:38.74684+00",NULL,NULL}
+2179	148216	arrozalba	2014-10-23 00:43:38.596086-04:30	::1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'190.207.206.35')	acceso	\N	\N	{548,190.207.206.35,NULL,1,1,NULL,"2014-10-23 05:13:38.596086+00","2014-10-23 05:13:38.596086+00",NULL,NULL}
+2180	148216	arrozalba	2014-10-23 00:44:54.361504-04:30	::1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'190.207.206.35')	acceso	\N	\N	{549,190.207.206.35,NULL,1,2,NULL,"2014-10-23 05:14:54.361504+00","2014-10-23 05:14:54.361504+00",NULL,NULL}
+2181	148216	arrozalba	2014-10-23 00:45:04.704922-04:30	::1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'190.207.206.35')	acceso	\N	\N	{550,190.207.206.35,NULL,1,1,NULL,"2014-10-23 05:15:04.704922+00","2014-10-23 05:15:04.704922+00",NULL,NULL}
+2182	148216	arrozalba	2014-10-23 00:48:50.241076-04:30	::1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'190.207.206.35')	acceso	\N	\N	{551,190.207.206.35,NULL,1,2,NULL,"2014-10-23 05:18:50.241076+00","2014-10-23 05:18:50.241076+00",NULL,NULL}
+2183	148216	arrozalba	2014-10-23 00:48:56.930481-04:30	::1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'190.207.206.35')	acceso	\N	\N	{552,190.207.206.35,NULL,1,1,NULL,"2014-10-23 05:18:56.930481+00","2014-10-23 05:18:56.930481+00",NULL,NULL}
+2184	148216	arrozalba	2014-10-23 00:49:04.055254-04:30	::1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'190.207.206.35')	acceso	\N	\N	{553,190.207.206.35,NULL,1,2,NULL,"2014-10-23 05:19:04.055254+00","2014-10-23 05:19:04.055254+00",NULL,NULL}
+2185	148216	arrozalba	2014-10-23 00:49:47.549116-04:30	::1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'190.207.206.35')	acceso	\N	\N	{554,190.207.206.35,NULL,1,1,NULL,"2014-10-23 05:19:47.549116+00","2014-10-23 05:19:47.549116+00",NULL,NULL}
+2187	148216	arrozalba	2014-10-23 00:52:38.882476-04:30	::1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'190.207.206.35')	acceso	\N	\N	{556,190.207.206.35,NULL,1,1,NULL,"2014-10-23 05:22:38.882476+00","2014-10-23 05:22:38.882476+00",NULL,NULL}
+2188	148524	arrozalba	2014-10-23 00:59:54.750957-04:30	190.207.206.35	DELETE	DELETE FROM public.solicitud_servicio WHERE id = '31'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,multifactura,proveedor_id,ced_autorizado,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento,persona_autorizada}	{31,"consulta mensual ",1,1,NULL,"niño sano pero con doloor en el pecho ",NULL,17,NULL,1,NULL,"2014-10-08 19:43:37.956326+00",NULL,29,2014-10-08,SASRE-0001,F,"2014-10-08 19:43:37.956326+00",NULL,7,1,2014-10-08,NULL}	\N
+2189	148524	arrozalba	2014-10-23 00:59:55.244674-04:30	190.207.206.35	DELETE	DELETE FROM public.solicitud_servicio WHERE id = '28'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,multifactura,proveedor_id,ced_autorizado,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento,persona_autorizada}	{28,NULL,0,1,NULL,NULL,NULL,0,NULL,7,NULL,"2014-10-07 20:42:53.209202+00",NULL,29,2014-10-07,SASME-0002,R,"2014-10-07 20:42:53.209202+00",NULL,8,1,2014-10-07,NULL}	\N
+2190	148524	arrozalba	2014-10-23 00:59:55.701551-04:30	190.207.206.35	DELETE	DELETE FROM public.solicitud_servicio WHERE id = '27'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,multifactura,proveedor_id,ced_autorizado,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento,persona_autorizada}	{27,NULL,1,1,NULL,NULL,NULL,1,NULL,1,NULL,"2014-09-26 23:12:33.833452+00",NULL,29,2014-09-26,SASCM-0004,R,"2014-09-26 23:12:33.833452+00",NULL,8,1,2014-09-26,NULL}	\N
+2191	148524	arrozalba	2014-10-23 00:59:56.002261-04:30	190.207.206.35	DELETE	DELETE FROM public.solicitud_servicio WHERE id = '19'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,multifactura,proveedor_id,ced_autorizado,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento,persona_autorizada}	{19,NULL,1,1,NULL,NULL,NULL,1,NULL,1,NULL,"2014-09-03 14:09:35.149734+00",NULL,29,2014-09-03,SASCM-0003,S,"2014-09-03 14:09:35.149734+00",NULL,1,1,2014-09-18,NULL}	\N
+2192	148524	arrozalba	2014-10-23 00:59:56.504961-04:30	190.207.206.35	DELETE	DELETE FROM public.solicitud_servicio WHERE id = '8'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,multifactura,proveedor_id,ced_autorizado,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento,persona_autorizada}	{8,"no fue la mejor cpcio tiene que cmbia rl lkjhy jdk djme pal akdfj wqodcuyg hfsd fasd jksdftgdn kiNBSDY  OIY   ",1,1,NULL,NULL,NULL,3,NULL,5,NULL,"2014-09-03 01:57:31.841705+00","no fue la mejor cpcio tiene que cmbia rl lkjhy jdk djme pal akdfj wqodcuyg hfsd fasd jksdftgdn kiNBSDY  OIY   ",29,2014-09-02,SASCM-0002,A,"2014-09-03 01:57:31.841705+00",NULL,1,1,2014-09-02,NULL}	\N
+2193	148524	arrozalba	2014-10-23 00:59:57.152081-04:30	190.207.206.35	DELETE	DELETE FROM public.solicitud_servicio WHERE id = '7'::integer	solicitud_servicio	{id,motivo,medico_id,titular_id,usuario_id,diagnostico,observacion,servicio_id,multifactura,proveedor_id,ced_autorizado,fecha_registro,motivo_rechazo,beneficiario_id,fecha_solicitud,codigo_solicitud,estado_solicitud,fecha_modificado,motivo_anulacion,tiposolicitud_id,beneficiario_tipo,fecha_vencimiento,persona_autorizada}	{7,"DOLOR ABDOMINAL",1,1,NULL,"NALGA DAÑADA DEFECTUOSA",NULL,14,NULL,5,NULL,"2014-09-03 01:43:00.714053+00",rancia,29,1900-01-25,SASCM-0001,F,"2014-09-03 01:43:00.714053+00",NULL,1,1,2014-09-24,NULL}	\N
+2194	148216	arrozalba	2014-10-23 01:01:07.014404-04:30	190.207.206.35	TRUNCATE	TRUNCATE TABLE public.acceso	acceso	\N	\N	\N
+2195	148336	arrozalba	2014-10-23 01:02:09.568706-04:30	190.207.206.35	DELETE	DELETE FROM public.estado_usuario WHERE id = '20'::integer	estado_usuario	{id,usuario_id,descripcion,estado_usuario,fecha_registro,fecha_modificado}	{20,23,"Activado por admin",1,"2014-10-08 13:49:59.132051+00","2014-10-08 13:49:59.132051+00"}	\N
+2196	148336	arrozalba	2014-10-23 01:02:09.756813-04:30	190.207.206.35	DELETE	DELETE FROM public.estado_usuario WHERE id = '19'::integer	estado_usuario	{id,usuario_id,descripcion,estado_usuario,fecha_registro,fecha_modificado}	{19,22,Activado,1,"2014-10-08 13:34:59.22785+00","2014-10-08 13:34:59.22785+00"}	\N
+2197	148336	arrozalba	2014-10-23 01:02:09.869117-04:30	190.207.206.35	DELETE	DELETE FROM public.estado_usuario WHERE id = '17'::integer	estado_usuario	{id,usuario_id,descripcion,estado_usuario,fecha_registro,fecha_modificado}	{17,21,"Activado por registro inicial",1,"2014-09-30 20:21:05.691958+00","2014-09-30 20:21:05.691958+00"}	\N
+2198	148336	arrozalba	2014-10-23 01:02:09.9816-04:30	190.207.206.35	DELETE	DELETE FROM public.estado_usuario WHERE id = '16'::integer	estado_usuario	{id,usuario_id,descripcion,estado_usuario,fecha_registro,fecha_modificado}	{16,20,"Activado por registro inicial",1,"2014-09-30 20:18:59.899894+00","2014-09-30 20:18:59.899894+00"}	\N
+2199	148336	arrozalba	2014-10-23 01:02:10.123873-04:30	190.207.206.35	DELETE	DELETE FROM public.estado_usuario WHERE id = '15'::integer	estado_usuario	{id,usuario_id,descripcion,estado_usuario,fecha_registro,fecha_modificado}	{15,19,"Activado por registro inicial",1,"2014-09-30 20:09:06.451669+00","2014-09-30 20:09:06.451669+00"}	\N
+2200	148336	arrozalba	2014-10-23 01:02:10.289592-04:30	190.207.206.35	DELETE	DELETE FROM public.estado_usuario WHERE id = '14'::integer	estado_usuario	{id,usuario_id,descripcion,estado_usuario,fecha_registro,fecha_modificado}	{14,18,"Activado por registro inicial",1,"2014-09-30 18:09:47.214425+00","2014-09-30 18:09:47.214425+00"}	\N
+2201	148336	arrozalba	2014-10-23 01:02:10.501745-04:30	190.207.206.35	DELETE	DELETE FROM public.estado_usuario WHERE id = '13'::integer	estado_usuario	{id,usuario_id,descripcion,estado_usuario,fecha_registro,fecha_modificado}	{13,17,"Activado por registro inicial",1,"2014-09-30 18:03:22.721944+00","2014-09-30 18:03:22.721944+00"}	\N
+2202	148336	arrozalba	2014-10-23 01:02:10.679976-04:30	190.207.206.35	DELETE	DELETE FROM public.estado_usuario WHERE id = '12'::integer	estado_usuario	{id,usuario_id,descripcion,estado_usuario,fecha_registro,fecha_modificado}	{12,16,"Activado por registro inicial",1,"2014-09-30 18:01:37.679148+00","2014-09-30 18:01:37.679148+00"}	\N
+2203	148336	arrozalba	2014-10-23 01:02:10.891951-04:30	190.207.206.35	DELETE	DELETE FROM public.estado_usuario WHERE id = '11'::integer	estado_usuario	{id,usuario_id,descripcion,estado_usuario,fecha_registro,fecha_modificado}	{11,15,"Activado por registro inicial",1,"2014-09-30 17:52:24.306517+00","2014-09-30 17:52:24.306517+00"}	\N
+2204	148336	arrozalba	2014-10-23 01:02:11.126081-04:30	190.207.206.35	DELETE	DELETE FROM public.estado_usuario WHERE id = '10'::integer	estado_usuario	{id,usuario_id,descripcion,estado_usuario,fecha_registro,fecha_modificado}	{10,14,"Activado por registro inicial",1,"2014-09-30 17:39:37.172446+00","2014-09-30 17:39:37.172446+00"}	\N
+2205	148336	arrozalba	2014-10-23 01:02:11.361204-04:30	190.207.206.35	DELETE	DELETE FROM public.estado_usuario WHERE id = '9'::integer	estado_usuario	{id,usuario_id,descripcion,estado_usuario,fecha_registro,fecha_modificado}	{9,12,"Activado por registro inicial",1,"2014-09-30 16:28:21.172289+00","2014-09-30 16:28:21.172289+00"}	\N
+2206	148336	arrozalba	2014-10-23 01:02:11.580248-04:30	190.207.206.35	DELETE	DELETE FROM public.estado_usuario WHERE id = '8'::integer	estado_usuario	{id,usuario_id,descripcion,estado_usuario,fecha_registro,fecha_modificado}	{8,NULL,"Activado por registro inicial",1,"2014-08-01 00:55:08.679983+00","2014-08-01 00:55:08.679983+00"}	\N
+2207	148336	arrozalba	2014-10-23 01:02:11.852424-04:30	190.207.206.35	DELETE	DELETE FROM public.estado_usuario WHERE id = '7'::integer	estado_usuario	{id,usuario_id,descripcion,estado_usuario,fecha_registro,fecha_modificado}	{7,NULL,"Activado por registro inicial",1,"2014-07-31 23:21:29.863304+00","2014-07-31 23:21:29.863304+00"}	\N
+2208	148336	arrozalba	2014-10-23 01:02:12.03831-04:30	190.207.206.35	DELETE	DELETE FROM public.estado_usuario WHERE id = '6'::integer	estado_usuario	{id,usuario_id,descripcion,estado_usuario,fecha_registro,fecha_modificado}	{6,NULL,"Activado por registro inicial",1,"2014-07-31 23:14:22.471447+00","2014-07-31 23:14:22.471447+00"}	\N
+2209	148336	arrozalba	2014-10-23 01:02:12.202979-04:30	190.207.206.35	DELETE	DELETE FROM public.estado_usuario WHERE id = '5'::integer	estado_usuario	{id,usuario_id,descripcion,estado_usuario,fecha_registro,fecha_modificado}	{5,NULL,"Activado por registro inicial",1,"2014-07-31 20:42:58.143096+00","2014-07-31 20:42:58.143096+00"}	\N
+2210	148336	arrozalba	2014-10-23 01:02:12.477411-04:30	190.207.206.35	DELETE	DELETE FROM public.estado_usuario WHERE id = '4'::integer	estado_usuario	{id,usuario_id,descripcion,estado_usuario,fecha_registro,fecha_modificado}	{4,NULL,"Activado por registro inicial",1,"2014-03-17 23:52:19.405099+00","2014-03-17 23:52:19.405099+00"}	\N
+2211	148336	arrozalba	2014-10-23 01:02:13.120201-04:30	190.207.206.35	DELETE	DELETE FROM public.estado_usuario WHERE id = '3'::integer	estado_usuario	{id,usuario_id,descripcion,estado_usuario,fecha_registro,fecha_modificado}	{3,NULL,"Activado por registro inicial",1,"2014-03-17 23:04:56.063814+00","2014-03-17 23:04:56.063814+00"}	\N
+2212	148602	arrozalba	2014-10-23 01:02:24.986704-04:30	190.207.206.35	DELETE	DELETE FROM public.usuario WHERE id = '23'::integer	usuario	{id,tema,email,login,estatus,app_ajax,datagrid,intentos,perfil_id,titular_id,usuario_id,sucursal_id,proveedor_id,fecha_registro,fecha_modificado,fecha_desactivacion}	{23,default,NULL,14092771,NULL,1,30,NULL,7,160,NULL,1,NULL,"2014-10-08 13:47:27.161501+00","2014-10-08 13:47:27.161501+00",NULL}	\N
+2213	148602	arrozalba	2014-10-23 01:02:25.833508-04:30	190.207.206.35	DELETE	DELETE FROM public.usuario WHERE id = '22'::integer	usuario	{id,tema,email,login,estatus,app_ajax,datagrid,intentos,perfil_id,titular_id,usuario_id,sucursal_id,proveedor_id,fecha_registro,fecha_modificado,fecha_desactivacion}	{22,default,NULL,10135498,NULL,1,30,NULL,7,164,NULL,1,NULL,"2014-10-08 13:34:24.800284+00","2014-10-08 13:34:24.800284+00",NULL}	\N
+2214	148602	arrozalba	2014-10-23 01:02:26.150618-04:30	190.207.206.35	DELETE	DELETE FROM public.usuario WHERE id = '21'::integer	usuario	{id,tema,email,login,estatus,app_ajax,datagrid,intentos,perfil_id,titular_id,usuario_id,sucursal_id,proveedor_id,fecha_registro,fecha_modificado,fecha_desactivacion}	{21,NULL,NULL,isaloj,NULL,1,30,NULL,2,NULL,NULL,1,NULL,"2014-09-30 20:21:05.691958+00","2014-09-30 20:21:05.691958+00",NULL}	\N
+2215	148602	arrozalba	2014-10-23 01:02:26.566219-04:30	190.207.206.35	DELETE	DELETE FROM public.usuario WHERE id = '20'::integer	usuario	{id,tema,email,login,estatus,app_ajax,datagrid,intentos,perfil_id,titular_id,usuario_id,sucursal_id,proveedor_id,fecha_registro,fecha_modificado,fecha_desactivacion}	{20,NULL,NULL,programer,NULL,1,30,NULL,3,NULL,NULL,1,NULL,"2014-09-30 20:18:59.899894+00","2014-09-30 20:18:59.899894+00",NULL}	\N
+2216	148602	arrozalba	2014-10-23 01:02:26.862376-04:30	190.207.206.35	DELETE	DELETE FROM public.usuario WHERE id = '19'::integer	usuario	{id,tema,email,login,estatus,app_ajax,datagrid,intentos,perfil_id,titular_id,usuario_id,sucursal_id,proveedor_id,fecha_registro,fecha_modificado,fecha_desactivacion}	{19,default,NULL,12098765,NULL,1,0,NULL,7,284,NULL,1,NULL,"2014-09-30 20:09:06.383719+00","2014-09-30 20:09:06.383719+00",NULL}	\N
+2217	148602	arrozalba	2014-10-23 01:02:27.128416-04:30	190.207.206.35	DELETE	DELETE FROM public.usuario WHERE id = '18'::integer	usuario	{id,tema,email,login,estatus,app_ajax,datagrid,intentos,perfil_id,titular_id,usuario_id,sucursal_id,proveedor_id,fecha_registro,fecha_modificado,fecha_desactivacion}	{18,default,NULL,87123123,NULL,1,0,NULL,7,283,NULL,1,NULL,"2014-09-30 18:09:47.122595+00","2014-09-30 18:09:47.122595+00",NULL}	\N
+2218	148602	arrozalba	2014-10-23 01:02:27.382021-04:30	190.207.206.35	DELETE	DELETE FROM public.usuario WHERE id = '17'::integer	usuario	{id,tema,email,login,estatus,app_ajax,datagrid,intentos,perfil_id,titular_id,usuario_id,sucursal_id,proveedor_id,fecha_registro,fecha_modificado,fecha_desactivacion}	{17,default,NULL,12123123,NULL,1,0,NULL,7,282,NULL,1,NULL,"2014-09-30 18:03:22.686382+00","2014-09-30 18:03:22.686382+00",NULL}	\N
+2219	148602	arrozalba	2014-10-23 01:02:27.766007-04:30	190.207.206.35	DELETE	DELETE FROM public.usuario WHERE id = '16'::integer	usuario	{id,tema,email,login,estatus,app_ajax,datagrid,intentos,perfil_id,titular_id,usuario_id,sucursal_id,proveedor_id,fecha_registro,fecha_modificado,fecha_desactivacion}	{16,default,NULL,20123234,NULL,1,0,NULL,7,281,NULL,1,NULL,"2014-09-30 18:01:37.663937+00","2014-09-30 18:01:37.663937+00",NULL}	\N
+2220	148602	arrozalba	2014-10-23 01:02:28.0333-04:30	190.207.206.35	DELETE	DELETE FROM public.usuario WHERE id = '15'::integer	usuario	{id,tema,email,login,estatus,app_ajax,datagrid,intentos,perfil_id,titular_id,usuario_id,sucursal_id,proveedor_id,fecha_registro,fecha_modificado,fecha_desactivacion}	{15,default,NULL,19123234,NULL,1,0,NULL,7,280,NULL,1,NULL,"2014-09-30 17:52:24.270263+00","2014-09-30 17:52:24.270263+00",NULL}	\N
+2221	148602	arrozalba	2014-10-23 01:02:28.157531-04:30	190.207.206.35	DELETE	DELETE FROM public.usuario WHERE id = '14'::integer	usuario	{id,tema,email,login,estatus,app_ajax,datagrid,intentos,perfil_id,titular_id,usuario_id,sucursal_id,proveedor_id,fecha_registro,fecha_modificado,fecha_desactivacion}	{14,default,NULL,20123123,NULL,1,0,NULL,7,279,NULL,1,NULL,"2014-09-30 17:39:37.130794+00","2014-09-30 17:39:37.130794+00",NULL}	\N
+2222	148602	arrozalba	2014-10-23 01:02:28.557011-04:30	190.207.206.35	DELETE	DELETE FROM public.usuario WHERE id = '12'::integer	usuario	{id,tema,email,login,estatus,app_ajax,datagrid,intentos,perfil_id,titular_id,usuario_id,sucursal_id,proveedor_id,fecha_registro,fecha_modificado,fecha_desactivacion}	{12,default,alexis@hotmai.com,juanito,3,1,30,0,2,NULL,NULL,1,NULL,"2014-09-30 16:28:21.172289+00","2014-09-30 16:28:21.172289+00",NULL}	\N
+2223	148349	arrozalba	2014-10-23 01:03:13.411009-04:30	190.207.206.35	DELETE	DELETE FROM public.factura_dt WHERE id = '12'::integer	factura_dt	{id,monto,exento,cantidad,factura_id,usuario_id,descripcion,fecha_registro,fecha_modificado}	{12,50.00,NULL,1,12,NULL,acetaminofen,"2014-10-08 19:43:38.054166+00","2014-10-08 19:43:38.054166+00"}	\N
+2224	148349	arrozalba	2014-10-23 01:03:13.984692-04:30	190.207.206.35	DELETE	DELETE FROM public.factura_dt WHERE id = '11'::integer	factura_dt	{id,monto,exento,cantidad,factura_id,usuario_id,descripcion,fecha_registro,fecha_modificado}	{11,234.00,NULL,3,11,NULL,dfasdf,"2014-10-07 02:22:37.406428+00","2014-10-07 02:22:37.406428+00"}	\N
+2225	148349	arrozalba	2014-10-23 01:03:14.335198-04:30	190.207.206.35	DELETE	DELETE FROM public.factura_dt WHERE id = '10'::integer	factura_dt	{id,monto,exento,cantidad,factura_id,usuario_id,descripcion,fecha_registro,fecha_modificado}	{10,25.50,NULL,3,10,NULL,"articulo 1","2014-10-06 23:48:32.296466+00","2014-10-06 23:48:32.296466+00"}	\N
+2226	148349	arrozalba	2014-10-23 01:03:14.574499-04:30	190.207.206.35	DELETE	DELETE FROM public.factura_dt WHERE id = '9'::integer	factura_dt	{id,monto,exento,cantidad,factura_id,usuario_id,descripcion,fecha_registro,fecha_modificado}	{9,25.50,NULL,3,10,NULL,"arituclo 2","2014-10-06 23:48:32.296466+00","2014-10-06 23:48:32.296466+00"}	\N
+2227	148349	arrozalba	2014-10-23 01:03:14.989702-04:30	190.207.206.35	DELETE	DELETE FROM public.factura_dt WHERE id = '8'::integer	factura_dt	{id,monto,exento,cantidad,factura_id,usuario_id,descripcion,fecha_registro,fecha_modificado}	{8,25.50,NULL,2,9,NULL,"arituclo 2","2014-10-06 23:47:14.151046+00","2014-10-06 23:47:14.151046+00"}	\N
+2228	148349	arrozalba	2014-10-23 01:03:15.104211-04:30	190.207.206.35	DELETE	DELETE FROM public.factura_dt WHERE id = '7'::integer	factura_dt	{id,monto,exento,cantidad,factura_id,usuario_id,descripcion,fecha_registro,fecha_modificado}	{7,25.50,NULL,1,9,NULL,"articulo 1","2014-10-06 23:47:14.151046+00","2014-10-06 23:47:14.151046+00"}	\N
+2229	148349	arrozalba	2014-10-23 01:03:15.252124-04:30	190.207.206.35	DELETE	DELETE FROM public.factura_dt WHERE id = '6'::integer	factura_dt	{id,monto,exento,cantidad,factura_id,usuario_id,descripcion,fecha_registro,fecha_modificado}	{6,50.00,NULL,1,8,NULL,"AGUA ","2014-10-06 23:46:06.949918+00","2014-10-06 23:46:06.949918+00"}	\N
+2230	148349	arrozalba	2014-10-23 01:03:15.467812-04:30	190.207.206.35	DELETE	DELETE FROM public.factura_dt WHERE id = '5'::integer	factura_dt	{id,monto,exento,cantidad,factura_id,usuario_id,descripcion,fecha_registro,fecha_modificado}	{5,45.90,NULL,2,8,NULL,acetaminofen,"2014-10-06 23:46:06.949918+00","2014-10-06 23:46:06.949918+00"}	\N
+2231	148343	arrozalba	2014-10-23 01:03:37.926153-04:30	190.207.206.35	DELETE	DELETE FROM public.factura WHERE id = '12'::integer	factura	{id,iva,monto,usuario_id,nro_control,nro_factura,observacion,fecha_factura,fecha_registro,fecha_modificado}	{12,NULL,50,NULL,8763,4342,ninguna,2014-10-02,"2014-10-08 19:43:38.012878+00","2014-10-08 19:43:38.012878+00"}	\N
+2232	148343	arrozalba	2014-10-23 01:03:38.443099-04:30	190.207.206.35	DELETE	DELETE FROM public.factura WHERE id = '11'::integer	factura	{id,iva,monto,usuario_id,nro_control,nro_factura,observacion,fecha_factura,fecha_registro,fecha_modificado}	{11,NULL,702,NULL,1,34,asdfsdf,2014-10-05,"2014-10-07 02:22:37.406428+00","2014-10-07 02:22:37.406428+00"}	\N
+2233	148343	arrozalba	2014-10-23 01:03:38.931173-04:30	190.207.206.35	DELETE	DELETE FROM public.factura WHERE id = '10'::integer	factura	{id,iva,monto,usuario_id,nro_control,nro_factura,observacion,fecha_factura,fecha_registro,fecha_modificado}	{10,NULL,153,NULL,43,23,NULL,2014-10-06,"2014-10-06 23:48:32.296466+00","2014-10-06 23:48:32.296466+00"}	\N
+2234	148343	arrozalba	2014-10-23 01:03:39.388365-04:30	190.207.206.35	DELETE	DELETE FROM public.factura WHERE id = '9'::integer	factura	{id,iva,monto,usuario_id,nro_control,nro_factura,observacion,fecha_factura,fecha_registro,fecha_modificado}	{9,NULL,76.5,NULL,12,23,HHH,2014-10-01,"2014-10-06 23:47:14.151046+00","2014-10-06 23:47:14.151046+00"}	\N
+2235	148343	arrozalba	2014-10-23 01:03:40.656201-04:30	190.207.206.35	DELETE	DELETE FROM public.factura WHERE id = '8'::integer	factura	{id,iva,monto,usuario_id,nro_control,nro_factura,observacion,fecha_factura,fecha_registro,fecha_modificado}	{8,NULL,141.8,NULL,1234,1234,"CARGANDO FACTURAS PARCIALES ",2014-10-06,"2014-10-06 23:46:06.949918+00","2014-10-06 23:46:06.949918+00"}	\N
+2236	148289	arrozalba	2014-10-23 01:06:19.938934-04:30	190.207.206.35	DELETE	DELETE FROM public.discapacidad_beneficiario WHERE id = '6'::integer	discapacidad_beneficiario	{id,beneficiario_id,discapacidad_id}	{6,174,5}	\N
+2237	148289	arrozalba	2014-10-23 01:06:20.578237-04:30	190.207.206.35	DELETE	DELETE FROM public.discapacidad_beneficiario WHERE id = '5'::integer	discapacidad_beneficiario	{id,beneficiario_id,discapacidad_id}	{5,171,4}	\N
+2238	148289	arrozalba	2014-10-23 01:06:21.229492-04:30	190.207.206.35	DELETE	DELETE FROM public.discapacidad_beneficiario WHERE id = '4'::integer	discapacidad_beneficiario	{id,beneficiario_id,discapacidad_id}	{4,170,5}	\N
+2239	148289	arrozalba	2014-10-23 01:06:21.726703-04:30	190.207.206.35	DELETE	DELETE FROM public.discapacidad_beneficiario WHERE id = '3'::integer	discapacidad_beneficiario	{id,beneficiario_id,discapacidad_id}	{3,170,4}	\N
+2240	148289	arrozalba	2014-10-23 01:06:22.203642-04:30	190.207.206.35	DELETE	DELETE FROM public.discapacidad_beneficiario WHERE id = '2'::integer	discapacidad_beneficiario	{id,beneficiario_id,discapacidad_id}	{2,102,2}	\N
+2241	148289	arrozalba	2014-10-23 01:06:22.749478-04:30	190.207.206.35	DELETE	DELETE FROM public.discapacidad_beneficiario WHERE id = '1'::integer	discapacidad_beneficiario	{id,beneficiario_id,discapacidad_id}	{1,29,2}	\N
+2242	148585	arrozalba	2014-10-23 01:06:58.557511-04:30	190.207.206.35	DELETE	DELETE FROM public.titular WHERE id = '284'::integer	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,fecha_exclusion,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,fecha_reactivacion,motivo_reactivacion,direccion_habitacion}	{284,F,12098765,1,04125048738,ISAAC,NULL,240,14,240,NULL,GUITIERREZ,NULL,69,default.png,69,NULL,FSDAFDFSDSD,1,c,234,V,746,4,2014-09-23,229,732,"2014-09-30 20:09:05.984712+00",7,NULL,A-,1,"2014-09-30 20:09:05.984712+00",1984-02-01,NULL,NULL,NULL,NULL,sdfsdfasdf}	\N
+2243	148230	arrozalba	2014-10-23 01:07:13.360527-04:30	190.207.206.35	DELETE	DELETE FROM public.beneficiario WHERE id = '174'::integer	beneficiario	{id,sexo,cedula,celular,nombre1,nombre2,telefono,apellido1,apellido2,titular_id,usuario_id,observacion,estado_civil,nacionalidad,parentesco_id,participacion,fecha_registro,fecha_exclusion,fecha_inclusion,grupo_sanguineo,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,estado_beneficiario,motivo_reactivacion,beneficiario_tipo_id}	{174,M,343142334,NULL,MARINES,NULL,NULL,ROLDAN,NULL,266,NULL,NULL,c,V,2,100,"2014-10-08 01:59:21.707398+00",NULL,2007-10-14,N/A,"2014-10-08 01:59:21.707398+00",2012-10-07,NULL,NULL,1,NULL,1}	\N
+2244	148230	arrozalba	2014-10-23 01:07:13.835916-04:30	190.207.206.35	DELETE	DELETE FROM public.beneficiario WHERE id = '173'::integer	beneficiario	{id,sexo,cedula,celular,nombre1,nombre2,telefono,apellido1,apellido2,titular_id,usuario_id,observacion,estado_civil,nacionalidad,parentesco_id,participacion,fecha_registro,fecha_exclusion,fecha_inclusion,grupo_sanguineo,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,estado_beneficiario,motivo_reactivacion,beneficiario_tipo_id}	{173,M,13132132,NULL,KJHKJH,NULL,NULL,SDFASDFAS,NULL,151,NULL,NULL,S,V,3,0,"2014-09-28 19:22:38.829377+00",2014-09-28,1900-01-01,N/A,"2014-09-28 19:22:38.829377+00",2014-04-10,"PRBANDO OSNIDO",NULL,0,NULL,1}	\N
+2245	148230	arrozalba	2014-10-23 01:07:14.365614-04:30	190.207.206.35	DELETE	DELETE FROM public.beneficiario WHERE id = '171'::integer	beneficiario	{id,sexo,cedula,celular,nombre1,nombre2,telefono,apellido1,apellido2,titular_id,usuario_id,observacion,estado_civil,nacionalidad,parentesco_id,participacion,fecha_registro,fecha_exclusion,fecha_inclusion,grupo_sanguineo,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,estado_beneficiario,motivo_reactivacion,beneficiario_tipo_id}	{171,M,145684879,04124578965,JUAN,NULL,02855789987,GALINDEZ,NULL,151,NULL,NULL,S,V,1,0,"2014-09-28 19:10:35.079764+00",NULL,1900-01-01,N/A,"2014-09-28 19:10:35.079764+00",1988-09-01,NULL,NULL,1,NULL,2}	\N
+2246	148230	arrozalba	2014-10-23 01:07:14.908763-04:30	190.207.206.35	DELETE	DELETE FROM public.beneficiario WHERE id = '170'::integer	beneficiario	{id,sexo,cedula,celular,nombre1,nombre2,telefono,apellido1,apellido2,titular_id,usuario_id,observacion,estado_civil,nacionalidad,parentesco_id,participacion,fecha_registro,fecha_exclusion,fecha_inclusion,grupo_sanguineo,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,estado_beneficiario,motivo_reactivacion,beneficiario_tipo_id}	{170,M,20643647,NULL,PEPITO,NULL,NULL,"DE LA CONCPCION",NULL,151,NULL,NULL,S,V,1,0,"2014-09-28 14:46:44.749814+00",1900-01-01,1900-01-01,N/A,"2014-09-28 14:46:44.749814+00",2014-04-08,NULL,NULL,1,NULL,1}	\N
+2247	148230	arrozalba	2014-10-23 01:07:15.363013-04:30	190.207.206.35	DELETE	DELETE FROM public.beneficiario WHERE id = '169'::integer	beneficiario	{id,sexo,cedula,celular,nombre1,nombre2,telefono,apellido1,apellido2,titular_id,usuario_id,observacion,estado_civil,nacionalidad,parentesco_id,participacion,fecha_registro,fecha_exclusion,fecha_inclusion,grupo_sanguineo,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,estado_beneficiario,motivo_reactivacion,beneficiario_tipo_id}	{169,F,20654231,64654654646,PETRICA,NULL,65465464646,LAOTRA,AMANTES,1,NULL,NULL,S,V,1,0,"2014-09-28 05:43:20.688098+00",1900-01-01,1900-01-01,N/A,"2014-09-28 05:43:20.688098+00",2014-09-28,NULL,NULL,1,NULL,1}	\N
+2248	148296	arrozalba	2014-10-23 01:07:46.004439-04:30	190.207.206.35	DELETE	DELETE FROM public.discapacidad_titular WHERE id = '9'::integer	discapacidad_titular	{id,titular_id,discapacidad_id}	{9,283,2}	\N
+2249	148296	arrozalba	2014-10-23 01:07:46.107026-04:30	190.207.206.35	DELETE	DELETE FROM public.discapacidad_titular WHERE id = '8'::integer	discapacidad_titular	{id,titular_id,discapacidad_id}	{8,280,2}	\N
+2250	148296	arrozalba	2014-10-23 01:07:46.206455-04:30	190.207.206.35	DELETE	DELETE FROM public.discapacidad_titular WHERE id = '7'::integer	discapacidad_titular	{id,titular_id,discapacidad_id}	{7,278,5}	\N
+2251	148296	arrozalba	2014-10-23 01:07:46.302056-04:30	190.207.206.35	DELETE	DELETE FROM public.discapacidad_titular WHERE id = '6'::integer	discapacidad_titular	{id,titular_id,discapacidad_id}	{6,277,1}	\N
+2252	148585	arrozalba	2014-10-23 01:08:31.135993-04:30	190.207.206.35	DELETE	DELETE FROM public.titular WHERE id = '283'::integer	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,fecha_exclusion,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,fecha_reactivacion,motivo_reactivacion,direccion_habitacion}	{283,F,87123123,1,04167012111,RECARGAR,NULL,240,3,240,NULL,KLDJKLL,NULL,69,default.png,58,NULL,NULL,1,D,233,E,743,6,2009-12-01,67,205,"2014-09-30 18:09:47.069974+00",12,NULL,N/A,4,"2014-09-30 18:09:47.069974+00",1990-09-01,NULL,NULL,NULL,NULL,adsfasdfas}	\N
+2253	148585	arrozalba	2014-10-23 01:08:32.622017-04:30	190.207.206.35	DELETE	DELETE FROM public.titular WHERE id = '282'::integer	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,fecha_exclusion,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,fecha_reactivacion,motivo_reactivacion,direccion_habitacion}	{282,M,12123123,1,04167012111,JUANCETES,NULL,240,13,240,NULL,MORA,NULL,70,default.png,63,NULL,NULL,1,C,247,V,795,6,2014-09-16,139,429,"2014-09-30 18:03:22.638273+00",39,NULL,N/A,4,"2014-09-30 18:03:22.638273+00",1980-09-01,NULL,NULL,NULL,NULL,asdfasdfasdf}	\N
+2254	148585	arrozalba	2014-10-23 01:08:35.085425-04:30	190.207.206.35	DELETE	DELETE FROM public.titular WHERE id = '281'::integer	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,fecha_exclusion,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,fecha_reactivacion,motivo_reactivacion,direccion_habitacion}	{281,M,20123234,1,04167012111,EDUARDODDD,NULL,240,17,240,NULL,MORA,NULL,69,default.png,70,NULL,NULL,1,C,234,V,746,4,2014-09-16,240,772,"2014-09-30 18:01:37.533912+00",12,NULL,N/A,1,"2014-09-30 18:01:37.533912+00",1980-09-01,NULL,NULL,NULL,NULL,asdfasdfa}	\N
+2255	148585	arrozalba	2014-10-23 01:08:35.374424-04:30	190.207.206.35	DELETE	DELETE FROM public.titular WHERE id = '280'::integer	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,fecha_exclusion,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,fecha_reactivacion,motivo_reactivacion,direccion_habitacion}	{280,M,19123234,1,04167012111,EDUARDO,NULL,240,17,240,NULL,MORA,NULL,68,default.png,69,NULL,NULL,1,C,220,V,711,4,2014-09-16,223,716,"2014-09-30 17:52:24.197267+00",29,NULL,N/A,1,"2014-09-30 17:52:24.197267+00",1980-09-01,NULL,NULL,NULL,NULL,asdfasdfa}	\N
+2256	148585	arrozalba	2014-10-23 01:08:35.50106-04:30	190.207.206.35	DELETE	DELETE FROM public.titular WHERE id = '279'::integer	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,fecha_exclusion,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,fecha_reactivacion,motivo_reactivacion,direccion_habitacion}	{279,M,20123123,1,04167012111,JUANETO,NULL,240,14,240,NULL,PEPETO,NULL,69,default.png,60,NULL,DFAQSDF,1,c,231,V,738,3,2014-09-17,93,288,"2014-09-30 17:39:37.035136+00",36,NULL,N/A,4,"2014-09-30 17:39:37.035136+00",1980-09-01,NULL,NULL,NULL,NULL,sadfasdfasdfasdf}	\N
+2257	148216	arrozalba	2014-10-23 01:13:31.177937-04:30	::1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'190.207.206.35')	acceso	\N	\N	{557,190.207.206.35,NULL,1,2,NULL,"2014-10-23 05:43:31.177937+00","2014-10-23 05:43:31.177937+00",NULL,NULL}
+2258	148216	arrozalba	2014-10-23 01:45:11.982285-04:30	::1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'190.207.206.35')	acceso	\N	\N	{2,190.207.206.35,NULL,1,2,NULL,"2014-10-23 06:15:11.982285+00","2014-10-23 06:15:11.982285+00",NULL,NULL}
+2259	148216	arrozalba	2014-10-23 01:45:23.544489-04:30	::1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'190.207.206.35')	acceso	\N	\N	{3,190.207.206.35,NULL,1,1,NULL,"2014-10-23 06:15:23.544489+00","2014-10-23 06:15:23.544489+00",NULL,NULL}
+2260	148602	arrozalba	2014-10-23 01:47:20.399292-04:30	190.207.206.35	UPDATE	UPDATE public.usuario SET usuario_id='1'::integer WHERE id = '1'::integer	usuario	{id,tema,email,login,estatus,app_ajax,datagrid,intentos,perfil_id,titular_id,usuario_id,sucursal_id,proveedor_id,fecha_registro,fecha_modificado,fecha_desactivacion}	{1,default,NULL,admin,1,1,30,0,1,1,NULL,1,NULL,"2014-08-09 16:20:25.26152+00","2014-08-09 16:20:25.26152+00",NULL}	{1,default,NULL,admin,1,1,30,0,1,1,1,1,NULL,"2014-08-09 16:20:25.26152+00","2014-08-09 16:20:25.26152+00",NULL}
+2261	148602	arrozalba	2014-10-23 01:47:22.072938-04:30	190.207.206.35	UPDATE	UPDATE public.usuario SET usuario_id='1'::integer WHERE id = '2'::integer	usuario	{id,tema,email,login,estatus,app_ajax,datagrid,intentos,perfil_id,titular_id,usuario_id,sucursal_id,proveedor_id,fecha_registro,fecha_modificado,fecha_desactivacion}	{2,default,NULL,jelitox,2,1,50,0,3,2,NULL,1,NULL,"2014-08-09 22:09:12.728828+00","2014-08-09 22:09:12.728828+00",NULL}	{2,default,NULL,jelitox,2,1,50,0,3,2,1,1,NULL,"2014-08-09 22:09:12.728828+00","2014-08-09 22:09:12.728828+00",NULL}
+2262	148602	arrozalba	2014-10-23 01:47:36.463948-04:30	190.207.206.35	UPDATE	UPDATE public.usuario SET email='admin@admin.com'::text WHERE id = '1'::integer	usuario	{id,tema,email,login,estatus,app_ajax,datagrid,intentos,perfil_id,titular_id,usuario_id,sucursal_id,proveedor_id,fecha_registro,fecha_modificado,fecha_desactivacion}	{1,default,NULL,admin,1,1,30,0,1,1,1,1,NULL,"2014-08-09 16:20:25.26152+00","2014-08-09 16:20:25.26152+00",NULL}	{1,default,admin@admin.com,admin,1,1,30,0,1,1,1,1,NULL,"2014-08-09 16:20:25.26152+00","2014-08-09 16:20:25.26152+00",NULL}
+2263	148602	arrozalba	2014-10-23 01:50:19.685401-04:30	::1	INSERT	INSERT INTO usuario (usuario_id,fecha_registro,fecha_modificado,fecha_desactivacion,sucursal_id,titular_id,login,perfil_id,email,tema,app_ajax,datagrid,estatus,intentos,proveedor_id) VALUES (NULL,DEFAULT,DEFAULT,NULL,'1',NULL,'accioncentral','6','arrozalba@arrozdelalba.com',NULL,DEFAULT,'30',NULL,NULL,NULL)	usuario	\N	\N	{3,NULL,arrozalba@arrozdelalba.com,accioncentral,NULL,1,30,NULL,6,NULL,NULL,1,NULL,"2014-10-23 06:20:19.685401+00","2014-10-23 06:20:19.685401+00",NULL}
+2264	148336	arrozalba	2014-10-23 01:50:19.685401-04:30	::1	INSERT	INSERT INTO estado_usuario (usuario_id,fecha_registro,fecha_modificado,estado_usuario,descripcion) VALUES ('3',DEFAULT,DEFAULT,'1','Activado por registro inicial')	estado_usuario	\N	\N	{21,3,"Activado por registro inicial",1,"2014-10-23 06:20:19.685401+00","2014-10-23 06:20:19.685401+00"}
+2265	148216	arrozalba	2014-10-23 01:51:48.455291-04:30	::1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'190.207.206.35')	acceso	\N	\N	{4,190.207.206.35,NULL,1,2,NULL,"2014-10-23 06:21:48.455291+00","2014-10-23 06:21:48.455291+00",NULL,NULL}
+2266	148602	arrozalba	2014-10-23 01:59:07.115953-04:30	190.207.206.35	UPDATE	UPDATE public.usuario SET titular_id='1'::integer WHERE id = '3'::integer	usuario	{id,tema,email,login,estatus,app_ajax,datagrid,intentos,perfil_id,titular_id,usuario_id,sucursal_id,proveedor_id,fecha_registro,fecha_modificado,fecha_desactivacion}	{3,NULL,arrozalba@arrozdelalba.com,accioncentral,NULL,1,30,NULL,6,NULL,NULL,1,NULL,"2014-10-23 06:20:19.685401+00","2014-10-23 06:20:19.685401+00",NULL}	{3,NULL,arrozalba@arrozdelalba.com,accioncentral,NULL,1,30,NULL,6,1,NULL,1,NULL,"2014-10-23 06:20:19.685401+00","2014-10-23 06:20:19.685401+00",NULL}
+2267	148602	arrozalba	2014-10-23 02:03:08.554772-04:30	190.207.206.35	UPDATE	UPDATE public.usuario SET titular_id='183'::integer WHERE id = '3'::integer	usuario	{id,tema,email,login,estatus,app_ajax,datagrid,intentos,perfil_id,titular_id,usuario_id,sucursal_id,proveedor_id,fecha_registro,fecha_modificado,fecha_desactivacion}	{3,NULL,arrozalba@arrozdelalba.com,accioncentral,NULL,1,30,NULL,6,1,NULL,1,NULL,"2014-10-23 06:20:19.685401+00","2014-10-23 06:20:19.685401+00",NULL}	{3,NULL,arrozalba@arrozdelalba.com,accioncentral,NULL,1,30,NULL,6,183,NULL,1,NULL,"2014-10-23 06:20:19.685401+00","2014-10-23 06:20:19.685401+00",NULL}
+2268	148602	arrozalba	2014-10-23 02:39:25.950169-04:30	190.207.206.35	UPDATE	UPDATE public.usuario SET tema='default'::text WHERE id = '3'::integer	usuario	{id,tema,email,login,estatus,app_ajax,datagrid,intentos,perfil_id,titular_id,usuario_id,sucursal_id,proveedor_id,fecha_registro,fecha_modificado,fecha_desactivacion}	{3,NULL,arrozalba@arrozdelalba.com,accioncentral,NULL,1,30,NULL,6,183,NULL,1,NULL,"2014-10-23 06:20:19.685401+00","2014-10-23 06:20:19.685401+00",NULL}	{3,default,arrozalba@arrozdelalba.com,accioncentral,NULL,1,30,NULL,6,183,NULL,1,NULL,"2014-10-23 06:20:19.685401+00","2014-10-23 06:20:19.685401+00",NULL}
+2269	148216	arrozalba	2014-10-23 02:39:49.139276-04:30	::1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('3',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'190.207.206.35')	acceso	\N	\N	{5,190.207.206.35,NULL,3,2,NULL,"2014-10-23 07:09:49.139276+00","2014-10-23 07:09:49.139276+00",NULL,NULL}
+2270	148216	arrozalba	2014-10-23 02:39:55.98399-04:30	::1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('3',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'190.207.206.35')	acceso	\N	\N	{6,190.207.206.35,NULL,3,1,NULL,"2014-10-23 07:09:55.98399+00","2014-10-23 07:09:55.98399+00",NULL,NULL}
+2271	148216	arrozalba	2014-10-23 02:40:57.851694-04:30	::1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('3',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'190.207.206.35')	acceso	\N	\N	{7,190.207.206.35,NULL,3,2,NULL,"2014-10-23 07:10:57.851694+00","2014-10-23 07:10:57.851694+00",NULL,NULL}
+2272	148216	arrozalba	2014-10-23 02:50:34.551393-04:30	::1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'190.207.206.35')	acceso	\N	\N	{8,190.207.206.35,NULL,1,1,NULL,"2014-10-23 07:20:34.551393+00","2014-10-23 07:20:34.551393+00",NULL,NULL}
+2273	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 1 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{369,2,1,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2274	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 26 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{371,5,26,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2275	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 26 AND perfil_id = 3	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{372,3,26,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2276	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 26 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{370,2,26,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2277	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 25 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{374,5,25,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2278	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 25 AND perfil_id = 3	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{375,3,25,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2279	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 25 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{373,2,25,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2280	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 18 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{396,5,18,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2281	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 18 AND perfil_id = 3	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{397,3,18,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2282	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 18 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{395,2,18,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2283	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 19 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{383,5,19,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2284	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 19 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{382,2,19,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2285	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 24 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{377,5,24,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2286	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 24 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{376,2,24,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2287	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 21 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{394,5,21,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2290	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 43 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{384,2,43,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2291	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 15 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{387,5,15,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2292	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 15 AND perfil_id = 3	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{388,3,15,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2293	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 15 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{386,2,15,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2294	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 16 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{392,5,16,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2295	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 16 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{391,2,16,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2296	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 23 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{381,5,23,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2297	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 23 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{380,2,23,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2298	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 22 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{379,5,22,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2299	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 22 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{378,2,22,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2300	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 20 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{390,5,20,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2301	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 20 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{389,2,20,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2302	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 34 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{407,5,34,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2303	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 34 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{406,2,34,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2304	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 37 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{399,5,37,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2305	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 37 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{398,2,37,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2306	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 36 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{401,5,36,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2307	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 36 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{400,2,36,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2308	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 42 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{405,5,42,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2309	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 42 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{404,2,42,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2310	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 35 AND perfil_id = 5	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{403,5,35,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2311	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 35 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{402,2,35,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2312	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 7 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{408,2,7,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2313	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 14 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{409,2,14,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2314	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 6 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{410,2,6,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2315	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 13 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{411,2,13,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2316	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 12 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{412,2,12,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2317	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 3 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{413,2,3,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2318	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 11 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{414,2,11,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2319	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 10 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{415,2,10,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2320	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 5 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{416,2,5,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2321	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	DELETE	DELETE FROM recurso_perfil WHERE recurso_id = 9 AND perfil_id = 2	recurso_perfil	{id,perfil_id,recurso_id,usuario_id,fecha_registro,fecha_modificado}	{417,2,9,NULL,"2014-07-31 19:37:14.026936+00","2014-07-31 19:37:14.026936+00"}	\N
+2322	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,DEFAULT,DEFAULT,'1','2')	recurso_perfil	\N	\N	{421,2,1,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2323	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','26','5')	recurso_perfil	\N	\N	{422,5,26,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2324	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','26','3')	recurso_perfil	\N	\N	{423,3,26,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2325	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','26','6')	recurso_perfil	\N	\N	{424,6,26,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2326	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','26','2')	recurso_perfil	\N	\N	{425,2,26,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2327	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','25','5')	recurso_perfil	\N	\N	{426,5,25,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2328	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','25','3')	recurso_perfil	\N	\N	{427,3,25,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2329	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','25','6')	recurso_perfil	\N	\N	{428,6,25,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2330	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','25','2')	recurso_perfil	\N	\N	{429,2,25,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2331	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','18','5')	recurso_perfil	\N	\N	{430,5,18,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2332	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','18','3')	recurso_perfil	\N	\N	{431,3,18,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2333	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','18','2')	recurso_perfil	\N	\N	{432,2,18,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2334	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','19','5')	recurso_perfil	\N	\N	{433,5,19,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2335	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','19','2')	recurso_perfil	\N	\N	{434,2,19,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2336	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','24','5')	recurso_perfil	\N	\N	{435,5,24,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2337	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','24','2')	recurso_perfil	\N	\N	{436,2,24,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2338	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','21','5')	recurso_perfil	\N	\N	{437,5,21,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2339	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','21','2')	recurso_perfil	\N	\N	{438,2,21,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2340	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','43','5')	recurso_perfil	\N	\N	{439,5,43,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2341	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','43','2')	recurso_perfil	\N	\N	{440,2,43,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2342	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','15','5')	recurso_perfil	\N	\N	{441,5,15,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2343	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','15','3')	recurso_perfil	\N	\N	{442,3,15,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2344	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','15','2')	recurso_perfil	\N	\N	{443,2,15,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2345	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','16','5')	recurso_perfil	\N	\N	{444,5,16,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2346	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','16','2')	recurso_perfil	\N	\N	{445,2,16,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2347	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','23','5')	recurso_perfil	\N	\N	{446,5,23,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2348	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','23','2')	recurso_perfil	\N	\N	{447,2,23,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2349	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','22','5')	recurso_perfil	\N	\N	{448,5,22,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2350	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','22','2')	recurso_perfil	\N	\N	{449,2,22,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2351	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','20','5')	recurso_perfil	\N	\N	{450,5,20,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2352	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','20','2')	recurso_perfil	\N	\N	{451,2,20,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2353	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','34','5')	recurso_perfil	\N	\N	{452,5,34,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2354	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','34','2')	recurso_perfil	\N	\N	{453,2,34,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2355	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','37','5')	recurso_perfil	\N	\N	{454,5,37,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2356	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','37','2')	recurso_perfil	\N	\N	{455,2,37,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2357	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','36','5')	recurso_perfil	\N	\N	{456,5,36,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2358	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','36','2')	recurso_perfil	\N	\N	{457,2,36,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2359	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','42','5')	recurso_perfil	\N	\N	{458,5,42,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2360	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','42','2')	recurso_perfil	\N	\N	{459,2,42,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2361	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','35','5')	recurso_perfil	\N	\N	{460,5,35,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2362	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','35','2')	recurso_perfil	\N	\N	{461,2,35,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2363	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','7','2')	recurso_perfil	\N	\N	{462,2,7,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2364	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','14','2')	recurso_perfil	\N	\N	{463,2,14,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2365	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','6','2')	recurso_perfil	\N	\N	{464,2,6,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2366	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','13','2')	recurso_perfil	\N	\N	{465,2,13,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2367	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','12','2')	recurso_perfil	\N	\N	{466,2,12,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2368	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','3','2')	recurso_perfil	\N	\N	{467,2,3,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2369	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','11','2')	recurso_perfil	\N	\N	{468,2,11,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2370	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','10','2')	recurso_perfil	\N	\N	{469,2,10,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2371	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','5','2')	recurso_perfil	\N	\N	{470,2,5,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2372	148498	arrozalba	2014-10-23 02:52:22.338164-04:30	::1	INSERT	INSERT INTO recurso_perfil (usuario_id,fecha_registro,fecha_modificado,recurso_id,perfil_id) VALUES (NULL,'2014-10-23 07:22:22.338164+00','2014-10-23 07:22:22.338164+00','9','2')	recurso_perfil	\N	\N	{471,2,9,NULL,"2014-10-23 07:22:22.338164+00","2014-10-23 07:22:22.338164+00"}
+2373	148216	arrozalba	2014-10-23 02:52:26.703946-04:30	::1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'190.207.206.35')	acceso	\N	\N	{9,190.207.206.35,NULL,1,2,NULL,"2014-10-23 07:22:26.703946+00","2014-10-23 07:22:26.703946+00",NULL,NULL}
+2374	148216	arrozalba	2014-10-23 02:52:35.885372-04:30	::1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('3',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'190.207.206.35')	acceso	\N	\N	{10,190.207.206.35,NULL,3,1,NULL,"2014-10-23 07:22:35.885372+00","2014-10-23 07:22:35.885372+00",NULL,NULL}
+2375	18261	arrozalba	2014-10-23 03:05:44.377788-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{11,127.0.0.1,NULL,1,1,NULL,"2014-10-23 03:05:44.377788-04:30","2014-10-23 03:05:44.377788-04:30",NULL,NULL}
+2376	18261	arrozalba	2014-10-23 03:06:23.280406-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{12,127.0.0.1,NULL,1,2,NULL,"2014-10-23 03:06:23.280406-04:30","2014-10-23 03:06:23.280406-04:30",NULL,NULL}
+2377	18261	arrozalba	2014-10-23 03:06:34.812881-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('3',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{13,127.0.0.1,NULL,3,1,NULL,"2014-10-23 03:06:34.812881-04:30","2014-10-23 03:06:34.812881-04:30",NULL,NULL}
+2378	18261	arrozalba	2014-10-23 03:08:39.134956-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('3',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{14,127.0.0.1,NULL,3,2,NULL,"2014-10-23 03:08:39.134956-04:30","2014-10-23 03:08:39.134956-04:30",NULL,NULL}
+2379	18261	arrozalba	2014-10-23 03:08:44.739643-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{15,127.0.0.1,NULL,1,1,NULL,"2014-10-23 03:08:44.739643-04:30","2014-10-23 03:08:44.739643-04:30",NULL,NULL}
+2380	18261	arrozalba	2014-10-23 03:09:38.671757-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{16,127.0.0.1,NULL,1,2,NULL,"2014-10-23 03:09:38.671757-04:30","2014-10-23 03:09:38.671757-04:30",NULL,NULL}
+2381	18261	arrozalba	2014-10-23 08:12:19.646743-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{17,127.0.0.1,NULL,1,1,NULL,"2014-10-23 08:12:19.646743-04:30","2014-10-23 08:12:19.646743-04:30",NULL,NULL}
+2382	18501	jelitox	2014-10-23 08:15:09.626237-04:30	127.0.0.1	UPDATE	UPDATE public.perfil SET perfil='Enlace'::text WHERE id = '6'::integer	perfil	{id,estado,perfil,plantilla,usuario_id,fecha_registro,fecha_modificado}	{6,1,Operador,default,NULL,"2014-07-31 14:54:17.855932-04:30","2014-07-31 14:54:17.855932-04:30"}	{6,1,Enlace,default,NULL,"2014-07-31 14:54:17.855932-04:30","2014-07-31 14:54:17.855932-04:30"}
+2383	18381	jelitox	2014-10-23 08:35:59.120482-04:30	127.0.0.1	DELETE	DELETE FROM public.estado_usuario WHERE id = '21'::integer	estado_usuario	{id,usuario_id,descripcion,estado_usuario,fecha_registro,fecha_modificado}	{21,3,"Activado por registro inicial",1,"2014-10-23 01:50:19.685401-04:30","2014-10-23 01:50:19.685401-04:30"}	\N
+2384	18322	arrozalba	2014-10-23 08:41:56.572683-04:30	127.0.0.1	INSERT	INSERT INTO departamento (usuario_id,fecha_registro,fecha_modificado,nombre,observacion,sucursal_id) VALUES (NULL,DEFAULT,DEFAULT,'administracion',NULL,'5')	departamento	\N	\N	{45,administracion,NULL,NULL,5,"2014-10-23 08:41:56.572683-04:30","2014-10-23 08:41:56.572683-04:30"}
+2385	18261	jelitox	2014-10-23 09:11:22.469924-04:30	127.0.0.1	TRUNCATE	TRUNCATE TABLE public.acceso	acceso	\N	\N	\N
+2386	18647	jelitox	2014-10-23 09:11:36.415776-04:30	127.0.0.1	DELETE	DELETE FROM public.usuario WHERE id = '3'::integer	usuario	{id,tema,email,login,estatus,app_ajax,datagrid,intentos,perfil_id,titular_id,usuario_id,sucursal_id,proveedor_id,fecha_registro,fecha_modificado,fecha_desactivacion}	{3,default,arrozalba@arrozdelalba.com,accioncentral,NULL,1,30,NULL,6,183,NULL,1,NULL,"2014-10-23 01:50:19.685401-04:30","2014-10-23 01:50:19.685401-04:30",NULL}	\N
+2387	18261	arrozalba	2014-10-23 09:26:54.298429-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{18,127.0.0.1,NULL,1,1,NULL,"2014-10-23 09:26:54.298429-04:30","2014-10-23 09:26:54.298429-04:30",NULL,NULL}
+2388	18261	arrozalba	2014-10-23 10:24:15.28239-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{19,127.0.0.1,NULL,1,1,NULL,"2014-10-23 10:24:15.28239-04:30","2014-10-23 10:24:15.28239-04:30",NULL,NULL}
+2389	18275	arrozalba	2014-10-23 12:04:16.18717-04:30	127.0.0.1	INSERT	INSERT INTO beneficiario (usuario_id,fecha_registro,fecha_modificado,cedula,nombre1,nombre2,apellido1,apellido2,nacionalidad,sexo,fecha_nacimiento,correo_electronico,grupo_sanguineo,fecha_inclusion,fecha_exclusion,celular,telefono,titular_id,beneficiario_tipo_id,observacion,participacion,parentesco_id,motivo_exclusion,motivo_reactivacion,estado_beneficiario,estado_civil) VALUES (NULL,DEFAULT,DEFAULT,'197980521','ANA','VALENTINA','LAMEDA','RODRIGUEZ','V','F','2012-07-03',NULL,DEFAULT,'14-10-23',NULL,NULL,NULL,'266','1',NULL,'0','1',NULL,NULL,DEFAULT,'S')	beneficiario	\N	\N	{169,F,197980521,NULL,ANA,VALENTINA,NULL,LAMEDA,RODRIGUEZ,266,NULL,NULL,S,V,1,0,"2014-10-23 12:04:16.18717-04:30",NULL,2023-10-14,N/A,"2014-10-23 12:04:16.18717-04:30",2012-07-03,NULL,NULL,1,NULL,1}
+2390	18630	arrozalba	2014-10-23 12:08:05.477335-04:30	127.0.0.1	UPDATE	UPDATE titular SET usuario_id = NULL,cedula = '19798052',nombre1 = 'YUSMAIRA',nombre2 = 'DEL CARMEN',apellido1 = 'RODRIGUEZ',apellido2 = NULL,nacionalidad = 'V',sexo = 'F',fecha_nacimiento = '1988-03-04',sucursal_id = '4',pais_id = '240',estado_id = '69',municipio_id = '229',parroquia_id = '732',direccion_habitacion = 'URB LLANO LINDO ETAPA I CONJUNTO ESCAMPADERO CASA B-34 ARAURE',hpais_id = '240',estado_civil = 'S',celular = '04161056158',telefono = '04140573719',correo_electronico = 'YUSMA_20_36@HOTMAIL.COM',grupo_sanguineo = 'N/A',tipoempleado_id = '1',fecha_ingreso = '2010-01-01',profesion_id = '86',departamento_id = '43',cargo_id = '16',observacion = 'N/A',estado = '0',fotografia = NULL,motivo_exclusion = 'PRUEBA',fecha_exclusion = '2014-10-23',motivo_reactivacion = NULL WHERE  id = '266'	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,fecha_exclusion,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,fecha_reactivacion,motivo_reactivacion,direccion_habitacion}	{266,F,19798052,1,04161056158,YUSMAIRA,"DEL CARMEN",240,16,240,04140573719,RODRIGUEZ,"",69,NULL,69,NULL,N/A,1,S,229,V,732,86,2010-01-01,229,732,"2014-08-20 16:01:46.559133-04:30",43,NULL,N/A,1,"2014-08-20 16:01:46.559133-04:30",1988-03-04,NULL,YUSMA_20_36@HOTMAIL.COM,NULL,NULL,"URB LLANO LINDO ETAPA I CONJUNTO ESCAMPADERO CASA B-34 ARAURE"}	{266,F,19798052,0,04161056158,YUSMAIRA,"DEL CARMEN",240,16,240,04140573719,RODRIGUEZ,NULL,69,NULL,69,NULL,N/A,4,S,229,V,732,86,2010-01-01,229,732,"2014-08-20 16:01:46.559133-04:30",43,2014-10-23,N/A,1,"2014-08-20 16:01:46.559133-04:30",1988-03-04,PRUEBA,YUSMA_20_36@HOTMAIL.COM,NULL,NULL,"URB LLANO LINDO ETAPA I CONJUNTO ESCAMPADERO CASA B-34 ARAURE"}
+2391	18261	arrozalba	2014-10-23 12:10:06.162902-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'2',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{20,127.0.0.1,NULL,1,2,NULL,"2014-10-23 12:10:06.162902-04:30","2014-10-23 12:10:06.162902-04:30",NULL,NULL}
+2392	18261	arrozalba	2014-10-23 12:19:31.455952-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{21,127.0.0.1,NULL,1,1,NULL,"2014-10-23 12:19:31.455952-04:30","2014-10-23 12:19:31.455952-04:30",NULL,NULL}
+2393	18630	arrozalba	2014-10-23 12:19:47.793731-04:30	127.0.0.1	UPDATE	UPDATE titular SET usuario_id = NULL,cedula = '19798052',nombre1 = 'YUSMAIRA',nombre2 = 'DEL CARMEN',apellido1 = 'RODRIGUEZ',apellido2 = NULL,nacionalidad = 'V',sexo = 'F',fecha_nacimiento = '1988-03-04',sucursal_id = '4',pais_id = '240',estado_id = '69',municipio_id = '229',parroquia_id = '732',direccion_habitacion = 'URB LLANO LINDO ETAPA I CONJUNTO ESCAMPADERO CASA B-34 ARAURE',hpais_id = '240',estado_civil = 'S',celular = '04161056158',telefono = '04140573719',correo_electronico = 'YUSMA_20_36@HOTMAIL.COM',grupo_sanguineo = 'N/A',tipoempleado_id = '1',fecha_ingreso = '2010-01-01',profesion_id = '86',departamento_id = '43',cargo_id = '16',observacion = 'N/A',estado = '1',fotografia = NULL,motivo_exclusion = 'PRUEBA',fecha_exclusion = '2014-10-23',motivo_reactivacion = 'PASO LA PRUEBA',fecha_reactivacion = '2014-10-23' WHERE  id = '266'	titular	{id,sexo,cedula,estado,celular,nombre1,nombre2,pais_id,cargo_id,hpais_id,telefono,apellido1,apellido2,estado_id,fotografia,hestado_id,usuario_id,observacion,sucursal_id,estado_civil,municipio_id,nacionalidad,parroquia_id,profesion_id,fecha_ingreso,hmunicipio_id,hparroquia_id,fecha_registro,departamento_id,fecha_exclusion,grupo_sanguineo,tipoempleado_id,fecha_modificado,fecha_nacimiento,motivo_exclusion,correo_electronico,fecha_reactivacion,motivo_reactivacion,direccion_habitacion}	{266,F,19798052,0,04161056158,YUSMAIRA,"DEL CARMEN",240,16,240,04140573719,RODRIGUEZ,NULL,69,NULL,69,NULL,N/A,4,S,229,V,732,86,2010-01-01,229,732,"2014-08-20 16:01:46.559133-04:30",43,2014-10-23,N/A,1,"2014-08-20 16:01:46.559133-04:30",1988-03-04,PRUEBA,YUSMA_20_36@HOTMAIL.COM,NULL,NULL,"URB LLANO LINDO ETAPA I CONJUNTO ESCAMPADERO CASA B-34 ARAURE"}	{266,F,19798052,1,04161056158,YUSMAIRA,"DEL CARMEN",240,16,240,04140573719,RODRIGUEZ,NULL,69,NULL,69,NULL,N/A,4,S,229,V,732,86,2010-01-01,229,732,"2014-08-20 16:01:46.559133-04:30",43,2014-10-23,N/A,1,"2014-08-20 16:01:46.559133-04:30",1988-03-04,PRUEBA,YUSMA_20_36@HOTMAIL.COM,2014-10-23,"PASO LA PRUEBA","URB LLANO LINDO ETAPA I CONJUNTO ESCAMPADERO CASA B-34 ARAURE"}
+2394	20175	arrozalba	2014-10-27 10:22:41.440275-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{22,127.0.0.1,NULL,1,1,NULL,"2014-10-27 10:22:41.440275-04:30","2014-10-27 10:22:41.440275-04:30",NULL,NULL}
+2395	20175	arrozalba	2014-10-27 12:07:19.314673-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{23,127.0.0.1,NULL,1,1,NULL,"2014-10-27 12:07:19.314673-04:30","2014-10-27 12:07:19.314673-04:30",NULL,NULL}
+2396	20175	arrozalba	2014-10-27 14:22:43.090425-04:30	127.0.0.1	INSERT	INSERT INTO acceso (usuario_id,fecha_registro,fecha_modificado,tipo_acceso,navegador,version_navegador,sistema_operativo,nombre_equipo,ip) VALUES ('1',DEFAULT,DEFAULT,'1',NULL,NULL,NULL,NULL,'127.0.0.1')	acceso	\N	\N	{24,127.0.0.1,NULL,1,1,NULL,"2014-10-27 14:22:43.090425-04:30","2014-10-27 14:22:43.090425-04:30",NULL,NULL}
 \.
 
 
@@ -5546,7 +6181,7 @@ COPY audit_log (log_id, log_relid, log_session_user, log_when, log_client_addr, 
 -- Name: audit_log_log_id_seq; Type: SEQUENCE SET; Schema: audit_log; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('audit_log_log_id_seq', 2019, true);
+SELECT pg_catalog.setval('audit_log_log_id_seq', 2396, true);
 
 
 SET search_path = public, pg_catalog;
@@ -5556,263 +6191,13 @@ SET search_path = public, pg_catalog;
 --
 
 COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, navegador, version_navegador, sistema_operativo, nombre_equipo, ip) FROM stdin;
-245	1	2014-08-09 14:57:25.784856-04:30	2014-08-09 14:57:25.784856-04:30	2	\N	\N	\N	\N	127.0.0.1
-246	1	2014-08-09 15:12:17.378183-04:30	2014-08-09 15:12:17.378183-04:30	2	\N	\N	\N	\N	127.0.0.1
-247	1	2014-08-09 15:36:17.07698-04:30	2014-08-09 15:36:17.07698-04:30	2	\N	\N	\N	\N	127.0.0.1
-248	\N	2014-08-09 16:45:14.436316-04:30	2014-08-09 16:45:14.436316-04:30	2	\N	\N	\N	\N	127.0.0.1
-249	\N	2014-08-09 16:48:01.945581-04:30	2014-08-09 16:48:01.945581-04:30	2	\N	\N	\N	\N	127.0.0.1
-250	\N	2014-08-09 17:02:24.811327-04:30	2014-08-09 17:02:24.811327-04:30	2	\N	\N	\N	\N	127.0.0.1
-251	\N	2014-08-09 17:04:02.105676-04:30	2014-08-09 17:04:02.105676-04:30	2	\N	\N	\N	\N	127.0.0.1
-252	\N	2014-08-09 17:07:40.542995-04:30	2014-08-09 17:07:40.542995-04:30	2	\N	\N	\N	\N	127.0.0.1
-253	1	2014-08-09 17:07:46.858129-04:30	2014-08-09 17:07:46.858129-04:30	1	\N	\N	\N	\N	127.0.0.1
-254	1	2014-08-09 17:10:26.41376-04:30	2014-08-09 17:10:26.41376-04:30	2	\N	\N	\N	\N	127.0.0.1
-255	1	2014-08-09 17:11:30.331769-04:30	2014-08-09 17:11:30.331769-04:30	1	\N	\N	\N	\N	127.0.0.1
-256	1	2014-08-09 17:11:38.610813-04:30	2014-08-09 17:11:38.610813-04:30	2	\N	\N	\N	\N	127.0.0.1
-257	1	2014-08-09 17:14:15.108852-04:30	2014-08-09 17:14:15.108852-04:30	1	\N	\N	\N	\N	127.0.0.1
-258	1	2014-08-09 17:18:55.777348-04:30	2014-08-09 17:18:55.777348-04:30	2	\N	\N	\N	\N	127.0.0.1
-259	1	2014-08-09 17:19:02.037735-04:30	2014-08-09 17:19:02.037735-04:30	1	\N	\N	\N	\N	127.0.0.1
-260	1	2014-08-09 17:25:46.892977-04:30	2014-08-09 17:25:46.892977-04:30	2	\N	\N	\N	\N	127.0.0.1
-261	1	2014-08-09 17:25:54.09746-04:30	2014-08-09 17:25:54.09746-04:30	1	\N	\N	\N	\N	127.0.0.1
-262	1	2014-08-09 17:34:04.125194-04:30	2014-08-09 17:34:04.125194-04:30	2	\N	\N	\N	\N	127.0.0.1
-263	1	2014-08-09 17:35:01.113659-04:30	2014-08-09 17:35:01.113659-04:30	1	\N	\N	\N	\N	127.0.0.1
-264	1	2014-08-09 17:35:28.303068-04:30	2014-08-09 17:35:28.303068-04:30	2	\N	\N	\N	\N	127.0.0.1
-265	1	2014-08-09 17:35:33.793679-04:30	2014-08-09 17:35:33.793679-04:30	1	\N	\N	\N	\N	127.0.0.1
-266	1	2014-08-09 17:35:52.250202-04:30	2014-08-09 17:35:52.250202-04:30	2	\N	\N	\N	\N	127.0.0.1
-267	2	2014-08-09 17:40:18.743213-04:30	2014-08-09 17:40:18.743213-04:30	1	\N	\N	\N	\N	127.0.0.1
-268	2	2014-08-09 17:40:56.812748-04:30	2014-08-09 17:40:56.812748-04:30	2	\N	\N	\N	\N	127.0.0.1
-269	2	2014-08-09 17:41:06.002605-04:30	2014-08-09 17:41:06.002605-04:30	1	\N	\N	\N	\N	127.0.0.1
-270	2	2014-08-09 17:41:49.45315-04:30	2014-08-09 17:41:49.45315-04:30	2	\N	\N	\N	\N	127.0.0.1
-271	2	2014-08-09 17:41:55.728373-04:30	2014-08-09 17:41:55.728373-04:30	1	\N	\N	\N	\N	127.0.0.1
-272	2	2014-08-09 17:42:17.310343-04:30	2014-08-09 17:42:17.310343-04:30	2	\N	\N	\N	\N	127.0.0.1
-273	2	2014-08-09 17:42:24.617919-04:30	2014-08-09 17:42:24.617919-04:30	1	\N	\N	\N	\N	127.0.0.1
-274	2	2014-08-09 17:42:31.832994-04:30	2014-08-09 17:42:31.832994-04:30	2	\N	\N	\N	\N	127.0.0.1
-275	2	2014-08-09 17:44:17.428501-04:30	2014-08-09 17:44:17.428501-04:30	1	\N	\N	\N	\N	127.0.0.1
-276	2	2014-08-09 17:51:05.38297-04:30	2014-08-09 17:51:05.38297-04:30	2	\N	\N	\N	\N	127.0.0.1
-277	1	2014-08-09 17:51:10.653258-04:30	2014-08-09 17:51:10.653258-04:30	1	\N	\N	\N	\N	127.0.0.1
-278	1	2014-08-09 17:51:17.523031-04:30	2014-08-09 17:51:17.523031-04:30	2	\N	\N	\N	\N	127.0.0.1
-279	\N	2014-08-09 17:54:52.316316-04:30	2014-08-09 17:54:52.316316-04:30	2	\N	\N	\N	\N	127.0.0.1
-280	\N	2014-08-09 18:32:39.397609-04:30	2014-08-09 18:32:39.397609-04:30	2	\N	\N	\N	\N	127.0.0.1
-281	1	2014-08-09 18:33:30.346267-04:30	2014-08-09 18:33:30.346267-04:30	1	\N	\N	\N	\N	127.0.0.1
-282	1	2014-08-09 18:33:37.807343-04:30	2014-08-09 18:33:37.807343-04:30	2	\N	\N	\N	\N	127.0.0.1
-283	2	2014-08-09 18:33:44.699303-04:30	2014-08-09 18:33:44.699303-04:30	1	\N	\N	\N	\N	127.0.0.1
-284	2	2014-08-09 18:34:27.013735-04:30	2014-08-09 18:34:27.013735-04:30	2	\N	\N	\N	\N	127.0.0.1
-285	1	2014-08-09 19:10:41.465897-04:30	2014-08-09 19:10:41.465897-04:30	1	\N	\N	\N	\N	127.0.0.1
-286	1	2014-08-09 19:10:49.755922-04:30	2014-08-09 19:10:49.755922-04:30	2	\N	\N	\N	\N	127.0.0.1
-287	\N	2014-08-09 22:06:44.819374-04:30	2014-08-09 22:06:44.819374-04:30	2	\N	\N	\N	\N	127.0.0.1
-288	1	2014-08-09 22:06:51.77539-04:30	2014-08-09 22:06:51.77539-04:30	1	\N	\N	\N	\N	127.0.0.1
-289	1	2014-08-09 22:07:01.878459-04:30	2014-08-09 22:07:01.878459-04:30	2	\N	\N	\N	\N	127.0.0.1
-290	2	2014-08-09 22:07:09.509881-04:30	2014-08-09 22:07:09.509881-04:30	1	\N	\N	\N	\N	127.0.0.1
-291	2	2014-08-09 22:07:34.206789-04:30	2014-08-09 22:07:34.206789-04:30	2	\N	\N	\N	\N	127.0.0.1
-292	2	2014-08-09 22:13:38.128026-04:30	2014-08-09 22:13:38.128026-04:30	1	\N	\N	\N	\N	127.0.0.1
-293	2	2014-08-09 22:14:36.030431-04:30	2014-08-09 22:14:36.030431-04:30	2	\N	\N	\N	\N	127.0.0.1
-294	1	2014-08-09 22:16:10.881723-04:30	2014-08-09 22:16:10.881723-04:30	1	\N	\N	\N	\N	127.0.0.1
-295	1	2014-08-09 22:17:43.546462-04:30	2014-08-09 22:17:43.546462-04:30	1	\N	\N	\N	\N	127.0.0.1
-296	1	2014-08-09 22:25:03.662031-04:30	2014-08-09 22:25:03.662031-04:30	2	\N	\N	\N	\N	127.0.0.1
-297	1	2014-08-09 22:25:11.230761-04:30	2014-08-09 22:25:11.230761-04:30	1	\N	\N	\N	\N	127.0.0.1
-298	1	2014-08-09 22:36:14.377462-04:30	2014-08-09 22:36:14.377462-04:30	2	\N	\N	\N	\N	127.0.0.1
-299	1	2014-08-09 23:23:12.328093-04:30	2014-08-09 23:23:12.328093-04:30	1	\N	\N	\N	\N	127.0.0.1
-300	1	2014-08-09 23:23:38.171869-04:30	2014-08-09 23:23:38.171869-04:30	1	\N	\N	\N	\N	127.0.0.1
-301	1	2014-08-09 23:45:57.491401-04:30	2014-08-09 23:45:57.491401-04:30	2	\N	\N	\N	\N	127.0.0.1
-302	1	2014-08-09 23:46:04.099204-04:30	2014-08-09 23:46:04.099204-04:30	1	\N	\N	\N	\N	127.0.0.1
-303	1	2014-08-11 04:51:41.084807-04:30	2014-08-11 04:51:41.084807-04:30	1	\N	\N	\N	\N	127.0.0.1
-304	1	2014-08-11 04:52:52.662524-04:30	2014-08-11 04:52:52.662524-04:30	2	\N	\N	\N	\N	127.0.0.1
-305	1	2014-08-11 04:52:58.786591-04:30	2014-08-11 04:52:58.786591-04:30	1	\N	\N	\N	\N	127.0.0.1
-306	1	2014-08-11 15:03:38.707142-04:30	2014-08-11 15:03:38.707142-04:30	1	\N	\N	\N	\N	127.0.0.1
-307	1	2014-08-11 19:58:55.583999-04:30	2014-08-11 19:58:55.583999-04:30	1	\N	\N	\N	\N	127.0.0.1
-308	1	2014-08-12 11:49:54.38797-04:30	2014-08-12 11:49:54.38797-04:30	1	\N	\N	\N	\N	127.0.0.1
-309	1	2014-08-12 13:44:35.04588-04:30	2014-08-12 13:44:35.04588-04:30	1	\N	\N	\N	\N	127.0.0.1
-310	1	2014-08-12 15:52:51.157109-04:30	2014-08-12 15:52:51.157109-04:30	1	\N	\N	\N	\N	127.0.0.1
-311	1	2014-08-13 14:38:52.760619-04:30	2014-08-13 14:38:52.760619-04:30	1	\N	\N	\N	\N	127.0.0.1
-312	1	2014-08-14 04:47:53.26117-04:30	2014-08-14 04:47:53.26117-04:30	1	\N	\N	\N	\N	127.0.0.1
-313	1	2014-08-14 11:51:01.046548-04:30	2014-08-14 11:51:01.046548-04:30	1	\N	\N	\N	\N	127.0.0.1
-314	1	2014-08-14 13:55:09.655444-04:30	2014-08-14 13:55:09.655444-04:30	1	\N	\N	\N	\N	127.0.0.1
-315	1	2014-08-15 09:58:59.313819-04:30	2014-08-15 09:58:59.313819-04:30	1	\N	\N	\N	\N	127.0.0.1
-316	1	2014-08-15 19:07:11.030997-04:30	2014-08-15 19:07:11.030997-04:30	1	\N	\N	\N	\N	127.0.0.1
-317	1	2014-08-18 14:04:08.083488-04:30	2014-08-18 14:04:08.083488-04:30	1	\N	\N	\N	\N	127.0.0.1
-318	1	2014-08-19 08:23:57.663886-04:30	2014-08-19 08:23:57.663886-04:30	1	\N	\N	\N	\N	127.0.0.1
-319	1	2014-08-19 09:31:43.074524-04:30	2014-08-19 09:31:43.074524-04:30	1	\N	\N	\N	\N	127.0.0.1
-320	1	2014-08-19 13:48:52.779904-04:30	2014-08-19 13:48:52.779904-04:30	1	\N	\N	\N	\N	127.0.0.1
-321	1	2014-08-19 20:31:42.434175-04:30	2014-08-19 20:31:42.434175-04:30	1	\N	\N	\N	\N	127.0.0.1
-322	1	2014-08-20 08:21:19.480184-04:30	2014-08-20 08:21:19.480184-04:30	1	\N	\N	\N	\N	127.0.0.1
-323	1	2014-08-20 08:21:27.077224-04:30	2014-08-20 08:21:27.077224-04:30	2	\N	\N	\N	\N	127.0.0.1
-324	1	2014-08-20 08:21:33.204343-04:30	2014-08-20 08:21:33.204343-04:30	1	\N	\N	\N	\N	127.0.0.1
-325	1	2014-08-20 09:22:28.341501-04:30	2014-08-20 09:22:28.341501-04:30	1	\N	\N	\N	\N	127.0.0.1
-326	1	2014-08-20 14:28:40.920711-04:30	2014-08-20 14:28:40.920711-04:30	1	\N	\N	\N	\N	127.0.0.1
-327	1	2014-08-20 15:42:52.145319-04:30	2014-08-20 15:42:52.145319-04:30	1	\N	\N	\N	\N	127.0.0.1
-328	1	2014-08-20 20:43:28.305927-04:30	2014-08-20 20:43:28.305927-04:30	1	\N	\N	\N	\N	127.0.0.1
-329	1	2014-08-21 08:50:12.421665-04:30	2014-08-21 08:50:12.421665-04:30	1	\N	\N	\N	\N	127.0.0.1
-330	1	2014-08-21 11:44:18.464521-04:30	2014-08-21 11:44:18.464521-04:30	1	\N	\N	\N	\N	127.0.0.1
-331	1	2014-08-21 13:19:22.816509-04:30	2014-08-21 13:19:22.816509-04:30	1	\N	\N	\N	\N	127.0.0.1
-332	1	2014-08-21 20:46:40.653041-04:30	2014-08-21 20:46:40.653041-04:30	1	\N	\N	\N	\N	127.0.0.1
-333	1	2014-08-22 10:33:53.367957-04:30	2014-08-22 10:33:53.367957-04:30	1	\N	\N	\N	\N	127.0.0.1
-334	1	2014-08-22 16:36:51.525235-04:30	2014-08-22 16:36:51.525235-04:30	1	\N	\N	\N	\N	127.0.0.1
-335	1	2014-08-22 19:02:27.023752-04:30	2014-08-22 19:02:27.023752-04:30	1	\N	\N	\N	\N	127.0.0.1
-336	1	2014-08-22 20:10:04.676864-04:30	2014-08-22 20:10:04.676864-04:30	1	\N	\N	\N	\N	127.0.0.1
-337	1	2014-08-23 10:22:39.669023-04:30	2014-08-23 10:22:39.669023-04:30	1	\N	\N	\N	\N	127.0.0.1
-338	2	2014-08-24 18:24:34.908483-04:30	2014-08-24 18:24:34.908483-04:30	2	\N	\N	\N	\N	127.0.0.1
-339	2	2014-08-24 18:29:31.810002-04:30	2014-08-24 18:29:31.810002-04:30	2	\N	\N	\N	\N	127.0.0.1
-340	1	2014-08-24 18:30:47.9797-04:30	2014-08-24 18:30:47.9797-04:30	1	\N	\N	\N	\N	127.0.0.1
-341	1	2014-08-24 18:31:31.532764-04:30	2014-08-24 18:31:31.532764-04:30	2	\N	\N	\N	\N	127.0.0.1
-342	1	2014-08-24 18:31:35.925983-04:30	2014-08-24 18:31:35.925983-04:30	1	\N	\N	\N	\N	127.0.0.1
-343	1	2014-08-24 18:37:28.275277-04:30	2014-08-24 18:37:28.275277-04:30	2	\N	\N	\N	\N	127.0.0.1
-344	2	2014-08-24 18:39:17.927506-04:30	2014-08-24 18:39:17.927506-04:30	2	\N	\N	\N	\N	127.0.0.1
-345	2	2014-08-24 18:39:57.402557-04:30	2014-08-24 18:39:57.402557-04:30	2	\N	\N	\N	\N	127.0.0.1
-346	2	2014-08-24 18:41:05.798288-04:30	2014-08-24 18:41:05.798288-04:30	2	\N	\N	\N	\N	127.0.0.1
-347	2	2014-08-24 18:43:36.829654-04:30	2014-08-24 18:43:36.829654-04:30	2	\N	\N	\N	\N	127.0.0.1
-348	2	2014-08-24 18:56:30.525886-04:30	2014-08-24 18:56:30.525886-04:30	2	\N	\N	\N	\N	127.0.0.1
-349	2	2014-08-24 19:09:22.524067-04:30	2014-08-24 19:09:22.524067-04:30	2	\N	\N	\N	\N	127.0.0.1
-350	2	2014-08-24 23:33:20.197223-04:30	2014-08-24 23:33:20.197223-04:30	2	\N	\N	\N	\N	127.0.0.1
-351	2	2014-08-24 23:34:39.048613-04:30	2014-08-24 23:34:39.048613-04:30	2	\N	\N	\N	\N	127.0.0.1
-352	2	2014-08-24 23:34:52.590309-04:30	2014-08-24 23:34:52.590309-04:30	2	\N	\N	\N	\N	127.0.0.1
-353	2	2014-08-24 23:35:21.374298-04:30	2014-08-24 23:35:21.374298-04:30	2	\N	\N	\N	\N	127.0.0.1
-354	2	2014-08-24 23:35:30.178273-04:30	2014-08-24 23:35:30.178273-04:30	2	\N	\N	\N	\N	127.0.0.1
-355	1	2014-08-25 18:18:53.415757-04:30	2014-08-25 18:18:53.415757-04:30	1	\N	\N	\N	\N	127.0.0.1
-356	1	2014-08-25 18:22:51.233056-04:30	2014-08-25 18:22:51.233056-04:30	2	\N	\N	\N	\N	127.0.0.1
-357	1	2014-08-25 18:28:12.280695-04:30	2014-08-25 18:28:12.280695-04:30	1	\N	\N	\N	\N	127.0.0.1
-358	1	2014-08-25 20:48:20.112789-04:30	2014-08-25 20:48:20.112789-04:30	1	\N	\N	\N	\N	127.0.0.1
-359	1	2014-08-26 14:23:10.421677-04:30	2014-08-26 14:23:10.421677-04:30	1	\N	\N	\N	\N	127.0.0.1
-360	1	2014-08-30 15:47:12.490197-04:30	2014-08-30 15:47:12.490197-04:30	1	\N	\N	\N	\N	127.0.0.1
-361	1	2014-08-30 19:51:55.941498-04:30	2014-08-30 19:51:55.941498-04:30	1	\N	\N	\N	\N	127.0.0.1
-362	1	2014-08-31 12:33:08.511756-04:30	2014-08-31 12:33:08.511756-04:30	1	\N	\N	\N	\N	127.0.0.1
-363	1	2014-08-31 13:37:36.414024-04:30	2014-08-31 13:37:36.414024-04:30	1	\N	\N	\N	\N	127.0.0.1
-364	1	2014-08-31 18:51:39.63464-04:30	2014-08-31 18:51:39.63464-04:30	1	\N	\N	\N	\N	127.0.0.1
-365	2	2014-08-31 19:32:24.012951-04:30	2014-08-31 19:32:24.012951-04:30	2	\N	\N	\N	\N	127.0.0.1
-366	1	2014-08-31 20:46:34.982337-04:30	2014-08-31 20:46:34.982337-04:30	1	\N	\N	\N	\N	127.0.0.1
-367	2	2014-08-31 22:56:28.403071-04:30	2014-08-31 22:56:28.403071-04:30	1	\N	\N	\N	\N	127.0.0.1
-368	2	2014-08-31 22:56:40.95936-04:30	2014-08-31 22:56:40.95936-04:30	2	\N	\N	\N	\N	127.0.0.1
-369	2	2014-08-31 22:57:51.902666-04:30	2014-08-31 22:57:51.902666-04:30	1	\N	\N	\N	\N	127.0.0.1
-370	2	2014-08-31 22:58:00.659702-04:30	2014-08-31 22:58:00.659702-04:30	2	\N	\N	\N	\N	127.0.0.1
-371	2	2014-08-31 22:59:12.483994-04:30	2014-08-31 22:59:12.483994-04:30	1	\N	\N	\N	\N	127.0.0.1
-372	2	2014-08-31 22:59:19.929033-04:30	2014-08-31 22:59:19.929033-04:30	2	\N	\N	\N	\N	127.0.0.1
-373	2	2014-08-31 22:59:49.296022-04:30	2014-08-31 22:59:49.296022-04:30	1	\N	\N	\N	\N	127.0.0.1
-374	2	2014-08-31 22:59:56.909263-04:30	2014-08-31 22:59:56.909263-04:30	2	\N	\N	\N	\N	127.0.0.1
-375	2	2014-09-01 00:31:56.45856-04:30	2014-09-01 00:31:56.45856-04:30	1	\N	\N	\N	\N	127.0.0.1
-376	2	2014-09-01 00:33:00.333603-04:30	2014-09-01 00:33:00.333603-04:30	2	\N	\N	\N	\N	127.0.0.1
-377	2	2014-09-01 00:34:27.765478-04:30	2014-09-01 00:34:27.765478-04:30	1	\N	\N	\N	\N	127.0.0.1
-378	2	2014-09-01 00:34:34.370627-04:30	2014-09-01 00:34:34.370627-04:30	2	\N	\N	\N	\N	127.0.0.1
-379	2	2014-09-01 00:35:33.872037-04:30	2014-09-01 00:35:33.872037-04:30	2	\N	\N	\N	\N	127.0.0.1
-380	2	2014-09-01 00:35:59.153267-04:30	2014-09-01 00:35:59.153267-04:30	1	\N	\N	\N	\N	127.0.0.1
-381	2	2014-09-01 00:53:31.72089-04:30	2014-09-01 00:53:31.72089-04:30	2	\N	\N	\N	\N	127.0.0.1
-382	2	2014-09-01 00:54:27.043513-04:30	2014-09-01 00:54:27.043513-04:30	1	\N	\N	\N	\N	127.0.0.1
-383	2	2014-09-01 00:54:34.17348-04:30	2014-09-01 00:54:34.17348-04:30	2	\N	\N	\N	\N	127.0.0.1
-384	2	2014-09-01 00:55:12.06466-04:30	2014-09-01 00:55:12.06466-04:30	1	\N	\N	\N	\N	127.0.0.1
-385	2	2014-09-01 00:55:41.103843-04:30	2014-09-01 00:55:41.103843-04:30	2	\N	\N	\N	\N	127.0.0.1
-386	2	2014-09-01 00:55:53.764166-04:30	2014-09-01 00:55:53.764166-04:30	1	\N	\N	\N	\N	127.0.0.1
-387	1	2014-09-02 14:34:07.320482-04:30	2014-09-02 14:34:07.320482-04:30	1	\N	\N	\N	\N	127.0.0.1
-388	1	2014-09-02 17:32:45.817662-04:30	2014-09-02 17:32:45.817662-04:30	1	\N	\N	\N	\N	127.0.0.1
-389	1	2014-09-02 18:18:49.187594-04:30	2014-09-02 18:18:49.187594-04:30	1	\N	\N	\N	\N	127.0.0.1
-390	1	2014-09-02 22:22:43.188381-04:30	2014-09-02 22:22:43.188381-04:30	2	\N	\N	\N	\N	127.0.0.1
-391	1	2014-09-02 22:22:46.325725-04:30	2014-09-02 22:22:46.325725-04:30	1	\N	\N	\N	\N	127.0.0.1
-392	1	2014-09-03 09:25:46.794153-04:30	2014-09-03 09:25:46.794153-04:30	2	\N	\N	\N	\N	127.0.0.1
-393	1	2014-09-03 09:28:58.935809-04:30	2014-09-03 09:28:58.935809-04:30	2	\N	\N	\N	\N	127.0.0.1
-394	1	2014-09-03 09:30:21.294392-04:30	2014-09-03 09:30:21.294392-04:30	2	\N	\N	\N	\N	127.0.0.1
-395	1	2014-09-03 09:30:30.530412-04:30	2014-09-03 09:30:30.530412-04:30	1	\N	\N	\N	\N	127.0.0.1
-396	1	2014-09-03 11:07:08.080205-04:30	2014-09-03 11:07:08.080205-04:30	1	\N	\N	\N	\N	127.0.0.1
-397	1	2014-09-03 13:16:33.559527-04:30	2014-09-03 13:16:33.559527-04:30	1	\N	\N	\N	\N	127.0.0.1
-398	1	2014-09-03 14:15:35.42006-04:30	2014-09-03 14:15:35.42006-04:30	1	\N	\N	\N	\N	127.0.0.1
-399	1	2014-09-04 11:37:07.973515-04:30	2014-09-04 11:37:07.973515-04:30	1	\N	\N	\N	\N	127.0.0.1
-400	1	2014-09-04 14:11:23.746082-04:30	2014-09-04 14:11:23.746082-04:30	1	\N	\N	\N	\N	127.0.0.1
-401	1	2014-09-04 15:11:10.411804-04:30	2014-09-04 15:11:10.411804-04:30	1	\N	\N	\N	\N	127.0.0.1
-402	1	2014-09-04 17:46:56.672654-04:30	2014-09-04 17:46:56.672654-04:30	1	\N	\N	\N	\N	127.0.0.1
-403	1	2014-09-05 14:26:38.351642-04:30	2014-09-05 14:26:38.351642-04:30	1	\N	\N	\N	\N	127.0.0.1
-404	1	2014-09-05 19:46:42.679692-04:30	2014-09-05 19:46:42.679692-04:30	1	\N	\N	\N	\N	127.0.0.1
-405	1	2014-09-05 20:50:26.419207-04:30	2014-09-05 20:50:26.419207-04:30	1	\N	\N	\N	\N	127.0.0.1
-406	1	2014-09-06 09:23:51.067399-04:30	2014-09-06 09:23:51.067399-04:30	1	\N	\N	\N	\N	127.0.0.1
-407	1	2014-09-06 14:20:10.082585-04:30	2014-09-06 14:20:10.082585-04:30	1	\N	\N	\N	\N	127.0.0.1
-408	1	2014-09-06 14:44:40.109413-04:30	2014-09-06 14:44:40.109413-04:30	2	\N	\N	\N	\N	127.0.0.1
-409	1	2014-09-06 14:44:43.076326-04:30	2014-09-06 14:44:43.076326-04:30	1	\N	\N	\N	\N	127.0.0.1
-410	1	2014-09-08 13:25:44.922398-04:30	2014-09-08 13:25:44.922398-04:30	1	\N	\N	\N	\N	127.0.0.1
-411	1	2014-09-08 21:03:27.795905-04:30	2014-09-08 21:03:27.795905-04:30	1	\N	\N	\N	\N	127.0.0.1
-412	1	2014-09-09 08:27:17.946109-04:30	2014-09-09 08:27:17.946109-04:30	1	\N	\N	\N	\N	127.0.0.1
-413	1	2014-09-09 13:52:57.093697-04:30	2014-09-09 13:52:57.093697-04:30	1	\N	\N	\N	\N	127.0.0.1
-414	1	2014-09-09 20:13:20.692144-04:30	2014-09-09 20:13:20.692144-04:30	1	\N	\N	\N	\N	127.0.0.1
-415	1	2014-09-10 19:58:09.60465-04:30	2014-09-10 19:58:09.60465-04:30	1	\N	\N	\N	\N	127.0.0.1
-416	1	2014-09-10 19:59:51.335577-04:30	2014-09-10 19:59:51.335577-04:30	2	\N	\N	\N	\N	127.0.0.1
-417	1	2014-09-10 19:59:55.49277-04:30	2014-09-10 19:59:55.49277-04:30	1	\N	\N	\N	\N	127.0.0.1
-418	1	2014-09-10 20:00:54.905378-04:30	2014-09-10 20:00:54.905378-04:30	2	\N	\N	\N	\N	127.0.0.1
-419	2	2014-09-10 20:01:01.825135-04:30	2014-09-10 20:01:01.825135-04:30	1	\N	\N	\N	\N	127.0.0.1
-420	2	2014-09-10 20:01:08.109065-04:30	2014-09-10 20:01:08.109065-04:30	2	\N	\N	\N	\N	127.0.0.1
-421	2	2014-09-10 20:01:48.486434-04:30	2014-09-10 20:01:48.486434-04:30	1	\N	\N	\N	\N	127.0.0.1
-422	2	2014-09-10 20:02:07.040771-04:30	2014-09-10 20:02:07.040771-04:30	2	\N	\N	\N	\N	127.0.0.1
-423	2	2014-09-10 20:02:13.719796-04:30	2014-09-10 20:02:13.719796-04:30	1	\N	\N	\N	\N	127.0.0.1
-424	2	2014-09-10 20:02:20.354649-04:30	2014-09-10 20:02:20.354649-04:30	2	\N	\N	\N	\N	127.0.0.1
-425	1	2014-09-10 20:13:23.344317-04:30	2014-09-10 20:13:23.344317-04:30	1	\N	\N	\N	\N	127.0.0.1
-426	1	2014-09-10 20:24:07.136314-04:30	2014-09-10 20:24:07.136314-04:30	2	\N	\N	\N	\N	127.0.0.1
-427	2	2014-09-10 20:24:12.713248-04:30	2014-09-10 20:24:12.713248-04:30	1	\N	\N	\N	\N	127.0.0.1
-428	2	2014-09-10 20:25:31.13272-04:30	2014-09-10 20:25:31.13272-04:30	2	\N	\N	\N	\N	127.0.0.1
-429	1	2014-09-10 20:25:35.754201-04:30	2014-09-10 20:25:35.754201-04:30	1	\N	\N	\N	\N	127.0.0.1
-430	1	2014-09-15 13:15:37.634868-04:30	2014-09-15 13:15:37.634868-04:30	1	\N	\N	\N	\N	127.0.0.1
-431	1	2014-09-15 15:42:03.411546-04:30	2014-09-15 15:42:03.411546-04:30	1	\N	\N	\N	\N	127.0.0.1
-432	1	2014-09-15 20:31:18.588928-04:30	2014-09-15 20:31:18.588928-04:30	1	\N	\N	\N	\N	127.0.0.1
-433	1	2014-09-16 10:24:50.547859-04:30	2014-09-16 10:24:50.547859-04:30	1	\N	\N	\N	\N	127.0.0.1
-434	1	2014-09-17 09:03:12.663831-04:30	2014-09-17 09:03:12.663831-04:30	1	\N	\N	\N	\N	127.0.0.1
-435	1	2014-09-17 11:53:38.749706-04:30	2014-09-17 11:53:38.749706-04:30	1	\N	\N	\N	\N	127.0.0.1
-436	1	2014-09-19 11:58:50.071238-04:30	2014-09-19 11:58:50.071238-04:30	1	\N	\N	\N	\N	127.0.0.1
-437	1	2014-09-19 13:20:21.933639-04:30	2014-09-19 13:20:21.933639-04:30	1	\N	\N	\N	\N	127.0.0.1
-438	1	2014-09-20 20:36:16.199057-04:30	2014-09-20 20:36:16.199057-04:30	1	\N	\N	\N	\N	127.0.0.1
-439	1	2014-09-21 10:32:44.440952-04:30	2014-09-21 10:32:44.440952-04:30	1	\N	\N	\N	\N	127.0.0.1
-440	1	2014-09-22 18:43:48.862907-04:30	2014-09-22 18:43:48.862907-04:30	1	\N	\N	\N	\N	127.0.0.1
-441	1	2014-09-23 14:22:23.416793-04:30	2014-09-23 14:22:23.416793-04:30	1	\N	\N	\N	\N	127.0.0.1
-442	1	2014-09-24 08:51:21.509291-04:30	2014-09-24 08:51:21.509291-04:30	1	\N	\N	\N	\N	127.0.0.1
-443	1	2014-09-24 11:39:53.083309-04:30	2014-09-24 11:39:53.083309-04:30	1	\N	\N	\N	\N	127.0.0.1
-444	1	2014-09-24 21:18:05.630707-04:30	2014-09-24 21:18:05.630707-04:30	1	\N	\N	\N	\N	127.0.0.1
-445	1	2014-09-25 06:11:20.145576-04:30	2014-09-25 06:11:20.145576-04:30	1	\N	\N	\N	\N	127.0.0.1
-446	1	2014-09-25 19:14:29.33926-04:30	2014-09-25 19:14:29.33926-04:30	1	\N	\N	\N	\N	127.0.0.1
-447	1	2014-09-26 14:44:37.035561-04:30	2014-09-26 14:44:37.035561-04:30	1	\N	\N	\N	\N	127.0.0.1
-448	1	2014-09-26 18:38:51.332565-04:30	2014-09-26 18:38:51.332565-04:30	1	\N	\N	\N	\N	127.0.0.1
-449	1	2014-09-26 18:54:50.368974-04:30	2014-09-26 18:54:50.368974-04:30	2	\N	\N	\N	\N	127.0.0.1
-450	1	2014-09-26 18:54:53.549829-04:30	2014-09-26 18:54:53.549829-04:30	1	\N	\N	\N	\N	127.0.0.1
-451	1	2014-09-26 19:10:52.054043-04:30	2014-09-26 19:10:52.054043-04:30	1	\N	\N	\N	\N	127.0.0.1
-452	1	2014-09-27 08:04:54.769526-04:30	2014-09-27 08:04:54.769526-04:30	1	\N	\N	\N	\N	127.0.0.1
-453	1	2014-09-27 08:14:16.208936-04:30	2014-09-27 08:14:16.208936-04:30	1	\N	\N	\N	\N	127.0.0.1
-454	1	2014-09-27 08:18:43.187365-04:30	2014-09-27 08:18:43.187365-04:30	2	\N	\N	\N	\N	127.0.0.1
-455	1	2014-09-27 08:19:34.102499-04:30	2014-09-27 08:19:34.102499-04:30	1	\N	\N	\N	\N	127.0.0.1
-456	1	2014-09-27 11:50:49.050716-04:30	2014-09-27 11:50:49.050716-04:30	1	\N	\N	\N	\N	127.0.0.1
-457	1	2014-09-27 12:01:09.251596-04:30	2014-09-27 12:01:09.251596-04:30	1	\N	\N	\N	\N	192.168.1.108
-458	1	2014-09-27 12:38:17.900694-04:30	2014-09-27 12:38:17.900694-04:30	2	\N	\N	\N	\N	127.0.0.1
-459	1	2014-09-27 12:40:00.623738-04:30	2014-09-27 12:40:00.623738-04:30	1	\N	\N	\N	\N	127.0.0.1
-460	1	2014-09-27 12:40:22.152404-04:30	2014-09-27 12:40:22.152404-04:30	2	\N	\N	\N	\N	127.0.0.1
-461	2	2014-09-27 12:40:30.772424-04:30	2014-09-27 12:40:30.772424-04:30	1	\N	\N	\N	\N	127.0.0.1
-462	2	2014-09-27 12:40:45.497224-04:30	2014-09-27 12:40:45.497224-04:30	2	\N	\N	\N	\N	127.0.0.1
-463	1	2014-09-27 12:40:49.608171-04:30	2014-09-27 12:40:49.608171-04:30	1	\N	\N	\N	\N	127.0.0.1
-464	1	2014-09-27 12:40:55.366005-04:30	2014-09-27 12:40:55.366005-04:30	2	\N	\N	\N	\N	127.0.0.1
-465	2	2014-09-27 12:41:01.040134-04:30	2014-09-27 12:41:01.040134-04:30	1	\N	\N	\N	\N	127.0.0.1
-466	2	2014-09-27 12:41:16.907337-04:30	2014-09-27 12:41:16.907337-04:30	2	\N	\N	\N	\N	127.0.0.1
-467	2	2014-09-27 12:41:22.20029-04:30	2014-09-27 12:41:22.20029-04:30	1	\N	\N	\N	\N	127.0.0.1
-468	2	2014-09-27 12:42:18.425488-04:30	2014-09-27 12:42:18.425488-04:30	2	\N	\N	\N	\N	127.0.0.1
-469	2	2014-09-27 12:44:00.532754-04:30	2014-09-27 12:44:00.532754-04:30	1	\N	\N	\N	\N	127.0.0.1
-470	2	2014-09-27 12:44:09.712159-04:30	2014-09-27 12:44:09.712159-04:30	2	\N	\N	\N	\N	127.0.0.1
-471	1	2014-09-27 14:11:41.679505-04:30	2014-09-27 14:11:41.679505-04:30	1	\N	\N	\N	\N	127.0.0.1
-472	1	2014-09-27 21:37:38.248732-04:30	2014-09-27 21:37:38.248732-04:30	1	\N	\N	\N	\N	127.0.0.1
-473	1	2014-09-27 21:58:09.548047-04:30	2014-09-27 21:58:09.548047-04:30	1	\N	\N	\N	\N	127.0.0.1
-474	1	2014-09-28 09:47:32.356499-04:30	2014-09-28 09:47:32.356499-04:30	1	\N	\N	\N	\N	127.0.0.1
-475	1	2014-09-28 14:39:41.628613-04:30	2014-09-28 14:39:41.628613-04:30	1	\N	\N	\N	\N	127.0.0.1
-476	1	2014-09-30 09:51:09.393627-04:30	2014-09-30 09:51:09.393627-04:30	1	\N	\N	\N	\N	127.0.0.1
-477	1	2014-09-30 10:53:51.426073-04:30	2014-09-30 10:53:51.426073-04:30	1	\N	\N	\N	\N	127.0.0.1
-478	1	2014-09-30 11:58:33.232594-04:30	2014-09-30 11:58:33.232594-04:30	2	\N	\N	\N	\N	127.0.0.1
-479	12	2014-09-30 11:59:11.867857-04:30	2014-09-30 11:59:11.867857-04:30	2	\N	\N	\N	\N	127.0.0.1
-480	1	2014-09-30 11:59:16.442742-04:30	2014-09-30 11:59:16.442742-04:30	1	\N	\N	\N	\N	127.0.0.1
-481	1	2014-09-30 11:59:20.202266-04:30	2014-09-30 11:59:20.202266-04:30	2	\N	\N	\N	\N	127.0.0.1
-482	12	2014-09-30 12:00:16.371159-04:30	2014-09-30 12:00:16.371159-04:30	2	\N	\N	\N	\N	127.0.0.1
-483	12	2014-09-30 12:02:03.019752-04:30	2014-09-30 12:02:03.019752-04:30	2	\N	\N	\N	\N	127.0.0.1
-484	1	2014-09-30 12:02:06.922489-04:30	2014-09-30 12:02:06.922489-04:30	1	\N	\N	\N	\N	127.0.0.1
-485	1	2014-09-30 12:48:45.965431-04:30	2014-09-30 12:48:45.965431-04:30	1	\N	\N	\N	\N	127.0.0.1
-486	1	2014-09-30 13:10:45.683205-04:30	2014-09-30 13:10:45.683205-04:30	2	\N	\N	\N	\N	127.0.0.1
-487	1	2014-09-30 13:18:18.715506-04:30	2014-09-30 13:18:18.715506-04:30	1	\N	\N	\N	\N	127.0.0.1
-488	1	2014-09-30 13:40:23.661366-04:30	2014-09-30 13:40:23.661366-04:30	2	\N	\N	\N	\N	127.0.0.1
-489	18	2014-09-30 14:01:35.810099-04:30	2014-09-30 14:01:35.810099-04:30	2	\N	\N	\N	\N	127.0.0.1
-490	1	2014-09-30 14:07:05.651596-04:30	2014-09-30 14:07:05.651596-04:30	1	\N	\N	\N	\N	127.0.0.1
-491	1	2014-09-30 15:41:06.151728-04:30	2014-09-30 15:41:06.151728-04:30	2	\N	\N	\N	\N	127.0.0.1
-492	19	2014-09-30 15:41:56.396467-04:30	2014-09-30 15:41:56.396467-04:30	2	\N	\N	\N	\N	127.0.0.1
-493	19	2014-09-30 15:43:23.56205-04:30	2014-09-30 15:43:23.56205-04:30	2	\N	\N	\N	\N	127.0.0.1
-494	19	2014-09-30 15:43:49.061795-04:30	2014-09-30 15:43:49.061795-04:30	1	\N	\N	\N	\N	127.0.0.1
-495	19	2014-09-30 15:47:17.950573-04:30	2014-09-30 15:47:17.950573-04:30	2	\N	\N	\N	\N	127.0.0.1
-496	1	2014-09-30 15:47:20.263535-04:30	2014-09-30 15:47:20.263535-04:30	1	\N	\N	\N	\N	127.0.0.1
-497	1	2014-10-01 08:35:02.199695-04:30	2014-10-01 08:35:02.199695-04:30	1	\N	\N	\N	\N	127.0.0.1
-498	1	2014-10-01 10:47:11.305159-04:30	2014-10-01 10:47:11.305159-04:30	1	\N	\N	\N	\N	127.0.0.1
-499	1	2014-10-01 12:48:34.67744-04:30	2014-10-01 12:48:34.67744-04:30	1	\N	\N	\N	\N	127.0.0.1
-500	1	2014-10-01 19:58:32.590022-04:30	2014-10-01 19:58:32.590022-04:30	1	\N	\N	\N	\N	127.0.0.1
-508	1	2014-10-01 15:49:46.67412-04:30	2014-10-01 15:49:46.67412-04:30	1	\N	\N	\N	\N	127.0.0.1
+18	1	2014-10-23 09:26:54.298429-04:30	2014-10-23 09:26:54.298429-04:30	1	\N	\N	\N	\N	127.0.0.1
+19	1	2014-10-23 10:24:15.28239-04:30	2014-10-23 10:24:15.28239-04:30	1	\N	\N	\N	\N	127.0.0.1
+20	1	2014-10-23 12:10:06.162902-04:30	2014-10-23 12:10:06.162902-04:30	2	\N	\N	\N	\N	127.0.0.1
+21	1	2014-10-23 12:19:31.455952-04:30	2014-10-23 12:19:31.455952-04:30	1	\N	\N	\N	\N	127.0.0.1
+22	1	2014-10-27 10:22:41.440275-04:30	2014-10-27 10:22:41.440275-04:30	1	\N	\N	\N	\N	127.0.0.1
+23	1	2014-10-27 12:07:19.314673-04:30	2014-10-27 12:07:19.314673-04:30	1	\N	\N	\N	\N	127.0.0.1
+24	1	2014-10-27 14:22:43.090425-04:30	2014-10-27 14:22:43.090425-04:30	1	\N	\N	\N	\N	127.0.0.1
 \.
 
 
@@ -5820,7 +6205,7 @@ COPY acceso (id, usuario_id, fecha_registro, fecha_modificado, tipo_acceso, nave
 -- Name: acceso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('acceso_id_seq', 500, true);
+SELECT pg_catalog.setval('acceso_id_seq', 24, true);
 
 
 --
@@ -5843,7 +6228,6 @@ SELECT pg_catalog.setval('backup_id_seq', 1, false);
 --
 
 COPY beneficiario (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1, nombre2, apellido1, apellido2, nacionalidad, sexo, fecha_nacimiento, correo_electronico, grupo_sanguineo, fecha_inclusion, fecha_exclusion, celular, telefono, titular_id, beneficiario_tipo_id, observacion, participacion, parentesco_id, motivo_exclusion, motivo_reactivacion, estado_beneficiario, estado_civil) FROM stdin;
-29	\N	2014-08-22 17:02:21.5904-04:30	2014-08-22 17:02:21.5904-04:30	87438323	ADSFASDF	\N	DASFSDFASD	\N	E	M	2010-08-01	\N	N/A	1900-01-01	1900-01-01	\N	\N	1	1	\N	100	2	\N	\N	1	\N
 30	\N	2014-09-15 15:04:22.854665-04:30	2014-09-15 15:04:22.854665-04:30	7596492	PETRA	ALEJANDRINA	DIAZ	RODRIGUEZ	V	F	1963-11-26	\N	N/A	1900-01-01	1900-01-01	\N	\N	277	1	\N	0	4	\N	\N	1	\N
 32	\N	2014-09-15 15:10:55.820311-04:30	2014-09-15 15:10:55.820311-04:30	28382972	MARIA	DE LOS ANGELES	RICO	DIAZ	V	F	2001-04-06	\N	N/A	1900-01-01	1900-01-01	\N	\N	277	1	\N	50	1	\N	\N	1	\N
 34	\N	2014-09-15 15:33:40.443521-04:30	2014-09-15 15:33:40.443521-04:30	27937797	ANDRES	ANTONIO	ARIAS	ESPINO	V	M	1999-06-08	\N	N/A	1900-01-01	1900-01-01	\N	\N	276	1	\N	50	1	\N	\N	1	\N
@@ -5916,7 +6300,6 @@ COPY beneficiario (id, usuario_id, fecha_registro, fecha_modificado, cedula, nom
 99	\N	2014-09-18 15:33:29.639893-04:30	2014-09-18 15:33:29.639893-04:30	11114565	NELSON	JOVANNY	NIÑO	MONTOYA	V	M	1973-01-10	\N	N/A	1900-01-01	1900-01-01	\N	\N	175	1	\N	0	2	\N	\N	1	\N
 100	\N	2014-09-18 15:48:07.725691-04:30	2014-09-18 15:48:07.725691-04:30	1122241	TERESA	DE JESUS	RODRIGUEZ	RIVERO	V	F	1942-10-03	\N	N/A	1900-01-01	1900-01-01	\N	\N	178	1	\N	25	4	\N	\N	1	\N
 101	\N	2014-09-18 15:49:23.587695-04:30	2014-09-18 15:49:23.587695-04:30	27636044	LUIS	MANUEL	GARRIDO	LINARES	V	M	1998-07-04	\N	N/A	1900-01-01	1900-01-01	\N	\N	178	1	\N	25	1	\N	\N	1	\N
-102	\N	2014-09-19 13:21:55.090032-04:30	2014-09-19 13:21:55.090032-04:30	81288458	ZOILA	DE LAS MERCEDES	FIERRO	PIZARRO	V	F	1943-08-24	\N	N/A	1900-01-01	1900-01-01	\N	\N	151	1	\N	100	4	\N	\N	1	\N
 103	\N	2014-09-19 13:48:18.588569-04:30	2014-09-19 13:48:18.588569-04:30	1222492	MARIA	\N	ARANGUREN	DE HENRIQUEZ	V	F	1930-04-17	\N	N/A	1900-01-01	1900-01-01	\N	\N	270	1	\N	25	4	\N	\N	1	\N
 104	\N	2014-09-19 13:50:28.249491-04:30	2014-09-19 13:50:28.249491-04:30	29889516	FERNANDO	JOSE	HENRIQUEZ	MENDOZA	V	M	1997-05-11	\N	N/A	1900-01-01	1900-01-01	\N	\N	270	1	\N	25	1	\N	\N	1	\N
 105	\N	2014-09-19 13:54:12.117885-04:30	2014-09-19 13:54:12.117885-04:30	29847368	KATERINE	DEL CARMEN	HENRIQUEZ	MENDOZA	V	F	1999-07-30	\N	N/A	1900-01-01	1900-01-01	\N	\N	270	1	\N	25	1	\N	\N	1	\N
@@ -5983,6 +6366,9 @@ COPY beneficiario (id, usuario_id, fecha_registro, fecha_modificado, cedula, nom
 166	\N	2014-09-22 15:10:44.380166-04:30	2014-09-22 15:10:44.380166-04:30	16914011	MANUEL	ANTONIO	RAMIREZ	PEREZ	V	M	1980-06-24	\N	N/A	1900-01-01	1900-01-01	\N	\N	272	1	\N	100	2	\N	\N	1	\N
 167	\N	2014-09-22 15:31:18.931819-04:30	2014-09-22 15:31:18.931819-04:30	5367935	MARITZA	DEL ROSARIO	ESPINOZA	\N	V	F	1958-08-05	\N	N/A	1900-01-01	1900-01-01	\N	\N	169	1	\N	50	4	\N	\N	1	\N
 168	\N	2014-09-22 15:32:18.67773-04:30	2014-09-22 15:32:18.67773-04:30	3514285	JOSE	ARGENIS	PADILLA	PEREZ	V	M	1946-11-06	\N	N/A	1900-01-01	1900-01-01	\N	\N	169	1	\N	50	5	\N	\N	1	\N
+102	\N	2014-09-19 13:21:55.090032-04:30	2014-09-19 13:21:55.090032-04:30	81288458	ZOILA	DE LAS MERCEDES	FIERRO	PIZARRO	V	F	2014-09-28	\N	N/A	1900-01-01	1900-01-01	97239719238	45234532454	151	1	\N	100	4	\N	\N	1	S
+29	\N	2014-08-22 17:02:21.5904-04:30	2014-08-22 17:02:21.5904-04:30	87438323	JUANITA	\N	PETRA	\N	V	F	1990-03-01	\N	N/A	1900-01-01	1900-01-01	87687686868	\N	1	1	\N	100	2	\N	\N	1	S
+169	\N	2014-10-23 12:04:16.18717-04:30	2014-10-23 12:04:16.18717-04:30	197980521	ANA	VALENTINA	LAMEDA	RODRIGUEZ	V	F	2012-07-03	\N	N/A	2023-10-14	\N	\N	\N	266	1	\N	0	1	\N	\N	1	S
 \.
 
 
@@ -5990,7 +6376,7 @@ COPY beneficiario (id, usuario_id, fecha_registro, fecha_modificado, cedula, nom
 -- Name: beneficiario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('beneficiario_id_seq', 168, true);
+SELECT pg_catalog.setval('beneficiario_id_seq', 169, true);
 
 
 --
@@ -6049,7 +6435,9 @@ SELECT pg_catalog.setval('cargo_id_seq', 21, true);
 -- Data for Name: cobertura; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
-COPY cobertura (id, usuario_id, fecha_registro, fecha_modificado, descripcion, monto_cobertura, fecha_inicio, fecha_fin, observacion, tipo_cobertura_id) FROM stdin;
+COPY cobertura (id, usuario_id, fecha_registro, fecha_modificado, descripcion, monto_cobertura, fecha_inicio, fecha_fin, observacion, tipo_cobertura) FROM stdin;
+2	\N	2014-10-06 22:22:56.717546-04:30	2014-10-06 22:22:56.717546-04:30	ODONTOLOGIA	6000.00	2014-01-01	2014-12-31	COBERTURA ANUAL DE ODONTOLOGIA	2
+3	\N	2014-10-07 10:23:19.231891-04:30	2014-10-07 10:23:19.231891-04:30	ATENCION PRIMARIA	30000.00	2014-01-01	2014-12-31	ATENCION PRIMARY	2
 \.
 
 
@@ -6057,7 +6445,7 @@ COPY cobertura (id, usuario_id, fecha_registro, fecha_modificado, descripcion, m
 -- Name: cobertura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('cobertura_id_seq', 1, true);
+SELECT pg_catalog.setval('cobertura_id_seq', 3, true);
 
 
 --
@@ -6124,6 +6512,7 @@ COPY departamento (id, usuario_id, fecha_registro, fecha_modificado, nombre, obs
 41	\N	2014-04-03 10:43:29.70528-04:30	2014-04-03 10:43:29.70528-04:30	UNIDAD DE TRANSFERENCIA Y CONTROL TECNOLOGICO		1
 42	\N	2014-07-14 20:01:52.468679-04:30	2014-07-14 20:01:52.468679-04:30	ROMANA	\N	3
 43	\N	2014-08-21 13:46:23.50506-04:30	2014-08-21 13:46:23.50506-04:30	ADMINISTRACION	\N	4
+45	\N	2014-10-23 08:41:56.572683-04:30	2014-10-23 08:41:56.572683-04:30	administracion	\N	5
 \.
 
 
@@ -6131,7 +6520,7 @@ COPY departamento (id, usuario_id, fecha_registro, fecha_modificado, nombre, obs
 -- Name: departamento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('departamento_id_seq', 44, true);
+SELECT pg_catalog.setval('departamento_id_seq', 45, true);
 
 
 --
@@ -6154,7 +6543,6 @@ COPY discapacidad (id, usuario_id, fecha_registro, fecha_modificado, nombre, obs
 --
 
 COPY discapacidad_beneficiario (id, beneficiario_id, discapacidad_id) FROM stdin;
-1	29	2
 \.
 
 
@@ -6177,10 +6565,6 @@ SELECT pg_catalog.setval('discapacidad_id_seq', 7, true);
 --
 
 COPY discapacidad_titular (id, titular_id, discapacidad_id) FROM stdin;
-6	277	1
-7	278	5
-8	280	2
-9	283	2
 \.
 
 
@@ -6188,7 +6572,7 @@ COPY discapacidad_titular (id, titular_id, discapacidad_id) FROM stdin;
 -- Name: discapacidad_titular_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('discapacidad_titular_id_seq', 9, true);
+SELECT pg_catalog.setval('discapacidad_titular_id_seq', 1, true);
 
 
 --
@@ -6332,23 +6716,8 @@ SELECT pg_catalog.setval('estado_id_seq', 75, true);
 --
 
 COPY estado_usuario (id, usuario_id, fecha_registro, fecha_modificado, estado_usuario, descripcion) FROM stdin;
-3	\N	2014-03-17 18:34:56.063814-04:30	2014-03-17 18:34:56.063814-04:30	1	Activado por registro inicial
-4	\N	2014-03-17 19:22:19.405099-04:30	2014-03-17 19:22:19.405099-04:30	1	Activado por registro inicial
-5	\N	2014-07-31 16:12:58.143096-04:30	2014-07-31 16:12:58.143096-04:30	1	Activado por registro inicial
-6	\N	2014-07-31 18:44:22.471447-04:30	2014-07-31 18:44:22.471447-04:30	1	Activado por registro inicial
-7	\N	2014-07-31 18:51:29.863304-04:30	2014-07-31 18:51:29.863304-04:30	1	Activado por registro inicial
-8	\N	2014-07-31 20:25:08.679983-04:30	2014-07-31 20:25:08.679983-04:30	1	Activado por registro inicial
 1	1	2014-03-13 13:35:39.596605-04:30	2014-03-13 13:35:39.596605-04:30	1	Activo por ser el Super Usuario del Sistema
 2	2	2014-03-16 01:14:45.552613-04:30	2014-03-16 01:14:45.552613-04:30	1	Activado por registro inicial
-9	12	2014-09-30 11:58:21.172289-04:30	2014-09-30 11:58:21.172289-04:30	1	Activado por registro inicial
-10	14	2014-09-30 13:09:37.172446-04:30	2014-09-30 13:09:37.172446-04:30	1	Activado por registro inicial
-11	15	2014-09-30 13:22:24.306517-04:30	2014-09-30 13:22:24.306517-04:30	1	Activado por registro inicial
-12	16	2014-09-30 13:31:37.679148-04:30	2014-09-30 13:31:37.679148-04:30	1	Activado por registro inicial
-13	17	2014-09-30 13:33:22.721944-04:30	2014-09-30 13:33:22.721944-04:30	1	Activado por registro inicial
-14	18	2014-09-30 13:39:47.214425-04:30	2014-09-30 13:39:47.214425-04:30	1	Activado por registro inicial
-15	19	2014-09-30 15:39:06.451669-04:30	2014-09-30 15:39:06.451669-04:30	1	Activado por registro inicial
-16	20	2014-09-30 15:48:59.899894-04:30	2014-09-30 15:48:59.899894-04:30	1	Activado por registro inicial
-17	21	2014-09-30 15:51:05.691958-04:30	2014-09-30 15:51:05.691958-04:30	1	Activado por registro inicial
 \.
 
 
@@ -6356,14 +6725,14 @@ COPY estado_usuario (id, usuario_id, fecha_registro, fecha_modificado, estado_us
 -- Name: estado_usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('estado_usuario_id_seq', 17, true);
+SELECT pg_catalog.setval('estado_usuario_id_seq', 2, true);
 
 
 --
 -- Data for Name: factura; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
-COPY factura (id, usuario_id, fecha_registro, fecha_modificado, fecha_factura, nro_control, nro_factura, observacion, monto, iva) FROM stdin;
+COPY factura (usuario_id, fecha_registro, fecha_modificado, fecha_factura, nro_control, nro_factura, observacion, monto, iva, id) FROM stdin;
 \.
 
 
@@ -6371,8 +6740,2098 @@ COPY factura (id, usuario_id, fecha_registro, fecha_modificado, fecha_factura, n
 -- Data for Name: factura_dt; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
-COPY factura_dt (id, usuario_id, fecha_registro, fecha_modificado, descripcion, cantidad, monto, exento, factura_id) FROM stdin;
+COPY factura_dt (usuario_id, fecha_registro, fecha_modificado, descripcion, cantidad, monto, exento, factura_id, id) FROM stdin;
 \.
+
+
+--
+-- Name: factura_dt_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
+--
+
+SELECT pg_catalog.setval('factura_dt_id_seq', 12, true);
+
+
+--
+-- Name: factura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
+--
+
+SELECT pg_catalog.setval('factura_id_seq', 12, true);
+
+
+--
+-- Data for Name: hclinicas; Type: TABLE DATA; Schema: public; Owner: arrozalba
+--
+
+COPY hclinicas (id, clave, mes, fsiniestro, factura_prefactura, titular, tcedula, paciente, pcedula, parentesco, sede, diagnostico, tipo_gasto, clinica, monto_egreso) FROM stdin;
+1	ALBA E-001	ENERO	2014-01-02	11039590	FIDEL MEJIAS	12264438	FIDEL MEJIAS	12264438	TITULAR	PIRITU II	LUMBALGIA	EMERGENCIA	SANTA MARIA	2173.30000000000018
+2	ALBA E-002	ENERO	2014-01-03	134611	JELIBETH ALVARADO	11786981	ALVARADO JOSE	3536880	PADRE	TRANSPORTE	TRAUMATISMO TORACICO CERRADO	EMERGENCIA	ACOSTA ORTIZ	2385
+3	ALBA E-003	ENERO	2014-01-07	11039662	DOMINGO PACHECO	20642114	ANGELICA ARANGUREN	24587767	HIJA	PAYARA	SD DIARREICO AGUDO+ DESHIDRATACION MNODERADA	EMERGENCIA	SANTA MARIA	3238.65000000000009
+4	ALBA E-004	ENERO	2014-01-08	11039679	CARMEN GOMEZ	9841301	CARMEN GOMEZ	9841301	TITULAR	BICEABASTO	INFECCION RESPIRATORIA BAJA. NEUMONIA	EMERGENCIA	SANTA MARIA	3197.88000000000011
+5	ALBA H-005	ENERO	2014-01-03	A39984	JOSE LAMEDA	17797582	JOSE LAMEDA	MENOR	HIJO	PIRITU III	CELULITIS PIE DERECHO. HRB-IRB	HOSPITALIZACION	SANTA MARIA	25609.5400000000009
+6	ALBA H-006	ENERO	2014-01-05	A36992	FREDDY BRIZUELA	13906103	FREDDY BRIZUELA	MENOR	HIJO	PIRITU II	HIPERACTIVIDAD BRONQUIAL.AMIGDALITIS AGUDA. INTOLERANCIA ORAL	HOSPITALIZACION	SANTA MARIA	14051.5599999999995
+7	ALBA E-007	ENERO	2014-01-13	11039768	YESSICA GALLARDO	13354020	YANIRA HUERFANO	\N	MADRE	ACCION CENTRAL	SD DIARREICO AGUDO BACTERIANO	EMERGENCIA	SANTA MARIA	2708.69000000000005
+8	ALBA E-009	ENERO	2014-01-15	11039828	WILMER MORIAN	6680335	WILMER MORIAN	6680335	TITULAR	PIRITU II	RECTALGIA	EMERGENCIA	SANTA MARIA	2185.21000000000004
+9	ALBA E-010	ENERO	2014-01-15	11039820	HENRY BARRAGAN	12860815	FREINDY BARRAGAN	MENOR	HIJO	PAYARA	CELULITIS EN CARA	EMERGENCIA	SANTA MARIA	3395.7199999999998
+10	ALBA E-011	ENERO	2014-01-17	11039902	YAJAIRA QUERO	16292305	ORIANA RAMIREZ	MENOR	HIJA	ACCION CENTRAL	REACCION ALERGICA	EMERGENCIA	SANTA MARIA	2074.2199999999998
+11	ALBA E-012	ENERO	2014-01-03	34052	JEAN CARLOS ROJAS	15480462	DAYANA  BETANCOURT	20184672	ESPOSA	SAN ANTONIO	SD DEL TUNER CARPIANO	EMERGENCIA	PEREZ GUILLEN	2073
+12	ALBA E-013	ENERO	2014-01-08	34187	RAMON CALDERON	17937495	JAVIER CALDERON	MENOR	HIJO	MARIA DE LOS ANGELES	SD EMETICO	EMERGENCIA	PEREZ GUILLEN	1543
+13	ALBA E-014	ENERO	2014-01-14	34320	ALEXI APONTE	16384488	ALEXAMAR APONTE	MENOR	HIJA	WILLIANS LARA	SD FEBRIL	EMERGENCIA	PEREZ GUILLEN	1681
+14	ALBA E-015	ENERO	2014-01-22	34491	ARGENIS GIL	16913942	ARGENIS GIL	16913942	TITULAR	BANCO DE PAVONES	INFECCION RESPIRATORIA BAJA	EMERGENCIA	PEREZ GUILLEN	1828
+15	ALBA E-016	ENERO	2013-01-22	34492	JORGE PEREZ	10272238	JORGE PEREZ	10272238	TITULAR	BANCO DE PAVONES	COLICO NEFRITICO	EMERGENCIA	PEREZ GUILLEN	2161
+16	ALBA E-017	ENERO	2014-01-22	34489	JUAN MARCANO	19943439	JUAN MARCANO	19943439	TITULAR	RIO GUARICO	ABSCESO EN REGION AXILAR IZQUIERDO	EMERGENCIA	PEREZ GUILLEN	2682
+17	ALBA E-018	ENERO	2014-01-22	34490	JOSE LOZADA	19343039	CARMEN LOZADA	10272099	MADRE	RIO GUARICO	BRONCOESPASMO MODERADO	EMERGENCIA	PEREZ GUILLEN	2432
+18	ALBA E-019	ENERO	2014-01-22	34488	ONEL CALDERON	16747349	ONEL CALDERON	16747349	TITULAR	BANCO DE PAVONES	FRACTURA DESPLAZADA DE MUNECA IZQUIERDA	EMERGENCIA	PEREZ GUILLEN	5189
+19	ALBA E-020	ENERO	2014-01-22	34493	LUIS BETANCOURT	20523858	LUIS BETANCOURT	20523858	TITULAR	BANCO DE PAVONES	T.C.E LEVE	EMERGENCIA	PEREZ GUILLEN	2550
+20	ALBA E-021	ENERO	2014-01-22	34494	JUAN FLORES	15130874	ANA FRANCO	11795197	MADRE	WILLIANS LARA	CERVICALGIA AGUDA	EMERGENCIA	PEREZ GUILLEN	1406
+21	ALBA E-022	ENERO	2014-01-22	34495	EDGAR ASCANIO	13482626	GLADYS VELAZQUEZ	8150319	MADRE	WILLIANS LARA	DESHIDRATACION MODERADA + SD FEBRIL	EMERGENCIA	PEREZ GUILLEN	2663
+22	ALBA E-023	ENERO	2014-01-22	34496	GLADYS MERCADO	15480499	GLADYS ROMERO	4344646	MADRE	BANCO DE PAVONES	SD FEBRIL TIPO DENGUE + CEFALEA MIGRAÑOSA	EMERGENCIA	PEREZ GUILLEN	2078
+23	ALBA E-024	ENERO	2014-01-22	34497	JOSE BENAVENTA	8633844	HILDA CONTRERAS	10265729	ESPOSA	MARIA DE LOS ANGELES	CRISIS HIPERTENSIVA	EMERGENCIA	PEREZ GUILLEN	3093
+24	ALBA E-025	ENERO	2014-01-22	34498	JEAN CARLOS ROJAS	15480462	DAYANA  BETANCOURT	20184672	ESPOSA	SAN ANTONIO	CRISI DE HTA LEVE	EMERGENCIA	PEREZ GUILLEN	1321
+25	ALBA E-026	ENERO	2014-01-22	34500	JUAN MARCANO	19343439	JUAN MARCANO	19343439	TITULAR	RIO GUARICO	ABSCESO EN REGION AXILAR IZQUIERDO	EMERGENCIA	PEREZ GUILLEN	1462
+26	ALBA E-027	ENERO	2014-01-22	34510	ALEXI APONTE	16384488	ALEXI APONTE	16384488	TITULAR	WILLIANS LARA	TRAUMATISMO NASAL	EMERGENCIA	PEREZ GUILLEN	1569
+27	ALBA E-028	ENERO	2014-01-18	34419	ANGEL PEREZ	18405207	GABRIEL PEREZ	MENOR	HIJO	SAN ANTONIO	SD FEBRIL AGUDO	EMERGENCIA	PEREZ GUILLEN	2256
+28	ALBA E-029	ENERO	2014-01-22	34501	ADA PARRA	16384778	VICTORIA SANCHEZ PARRA	MENOR	HIJA	BANCO DE PAVONES	SD FEBRIL	EMERGENCIA	PEREZ GUILLEN	1262
+29	ALBA E-030	ENERO	2014-01-25	11040114	ENZO ARRIECHI	17946992	ENZO JOSUE ARRIECHI	MENOR	HIJO	MECANIZACION	ENFERMEDAD DIARREICA AGUDA FEBRIL.INFECCION RESPIRATORIA ALTA	EMERGENCIA	SANTA MARIA	3774.86000000000013
+30	ALBA E-031	ENERO	2014-01-24	11040103	JOSE MEDINA	11079247	JOSE MEDINA	11079247	HIJO	CAÑO SECO	HIPERACTIVIDAD BRONQUIAL.IRB. HIPO PERSISTENTE	EMERGENCIA	SANTA MARIA	2229.57000000000016
+31	ALBA E-032	ENERO	2014-01-28	11040193	CLAUDIA GUARENTE	13785339	SANTIAGO TRUJILLO	MENOR	HIJO	BICEABASTO	SD EMETICO AGUDO + DESHIDRATACION LEVE	EMERGENCIA	SANTA MARIA	2969.88999999999987
+32	ALBA E-033	ENERO	2014-01-29	11040231	ALEXIS TOVAR	12263227	ALEXIS TOVAR	MENOR	HIJO	CAÑO SECO	INTOLERANCIA ORAL	EMERGENCIA	SANTA MARIA	2446.73000000000002
+33	ALBA E-034	FEBRERO	2014-02-03	37040	MEDINA JOSE	11079247	MEDINA JOSE	11079247	TITULAR	CAÑO SECO	BRONCOESPASMO	HOSPITALIZACION	SANTA MARIA	11027.9400000000005
+34	ALBA E-035	ENERO	2014-01-31	11040281	ALEXANDER SANCHEZ	15341479	ADRIAN SANCHEZ	MENOR	HIJO	AGUA BLANCA	TRAUMATISMO DE OJO DERECHO	EMERGENCIA	SANTA MARIA	2788
+35	ALBA E-036	ENERO	2014-01-31	11040279	MIGUEL MEDINA	15591293	DAYRIANGEL MEDINA	MENOR	HIJA	MECANIZACION	SD FEBRIL AGUDO.SD EMETICO Y NASOFARINGITIS	EMERGENCIA	SANTA MARIA	2984.05999999999995
+36	ALBA E-037	ENERO	2014-01-22	34486	JOSE BENAVENTA	8633844	JOSE BENAVENTA	8633844	TITULAR	MARIA DE LOS ANGELES	CUERPO EXTRAÑO CORNEAL	EMERGENCIA	PEREZ GUILLEN	1847
+37	ALBA E-038	FEBRERO	2014-02-03	34824	ARGENIS GIL	16913942	YONAIKER GIL	MENOR	HIJO	BANCO DE PAVONES	GASTROENTERITIS AGUDA	EMERGENCIA	PEREZ GUILLEN	1524
+38	ALBA E-039	FEBRERO	2014-02-05	11040435	GLADYS BLANCO	12262410	JOSE CARUCI	MENOR	HIJO	EL CANDIL	CONTRACTURA DE ESTERNOCLEIDOMASTOIDEO	EMERGENCIA	SANTA MARIA	2046.92000000000007
+39	ALBA E-040	FEBRERO	2014-02-05	11040380	MARCOS CIVIRA	9045190	PAULA ESCOBAR	9564177	CONCUBINA	PAYARA	ITU. COLICO NEFRITICO	EMERGENCIA	SANTA MARIA	2941.46000000000004
+40	ALBA E-041	FEBRERO	2014-02-06	11040451	REINALDO BARROSO	12091394	MARTINA CALANCHE	14887893	CONCUBINA	ACCION CENTRAL	CERVICALGIA	EMERGENCIA	SANTA MARIA	2097.21000000000004
+41	ALBA E-042	FEBRERO	2014-02-04	34863	RONNY CORDOVA	18540169	DEXIS RODRIGUEZ	19160481	CONCUBINA	BANCO DE PAVONES	CEFALEA + LUMBALGIA	EMERGENCIA	PEREZ GUILLEN	2699
+42	ALBA E-043	FEBRERO	2014-02-05	34872	EDUARDO BETANCOURT	16640714	EDUANNYS BETANCOURT	MENOR	HIJA	BANCO DE PAVONES	GASTROENTERITIS + DESHIDRATACION LEVE	EMERGENCIA	PEREZ GUILLEN	1917
+43	ALBA E-044	FEBRERO	2014-02-05	34873	EDUARDO BETANCOURT	16640714	EDWIN BETANCOURT	MENOR	HIJO	BANCO DE PAVONES	GASTROENTERITIS	EMERGENCIA	PEREZ GUILLEN	1879
+44	ALBA E-045	FEBRERO	2014-02-05	34876	ARGENIS GIL	16913942	YONAIKER GIL	MENOR	HIJO	BANCO DE PAVONES	GASTROENTERITIS + DESHIDRATACION LEVE	EMERGENCIA	PEREZ GUILLEN	2326
+45	ALBA E-046	FEBRERO	2014-02-05	34885	JOSE BENAVENTA	8633844	ANGEL BENAVENTA	MENOR	HIJO	MARIA DE LOS ANGELES	GASTROENTERITIS + DESHIDRATACION LEVE	EMERGENCIA	PEREZ GUILLEN	2011
+46	ALBA E-047	FEBRERO	2014-02-06	34893	YOBANA MARCANO	14538117	JUDITH MARCANO	8572685	MADRE	WILLIANS LARA	SD DIARREICO AGUDO + SD EMETICO	EMERGENCIA	PEREZ GUILLEN	2018
+47	ALBA E-048	FEBRERO	2014-02-06	34901	JOSE BENAVENTA	8633844	JESUS BENAVENTA	5361670	PADRE	MARIA DE LOS ANGELES	LUMBOCIATALGIA AGUDA	EMERGENCIA	PEREZ GUILLEN	2595
+48	ALBA H-049	FEBRERO	2014-02-10	37058	MILAGROS GALLEGOS	17796642	ZADKIEL AVENDAÑO	MENOR	HIJO	ACCION CENTRAL	DESHIDRATACION MODERADA	HOSPITALIZACION	SANTA MARIA	6444.65999999999985
+49	ALBA E-050	FEBRERO	2014-02-10	11040564	ANTONIO MARTINEZ	16294812	KATHERIN MARTINEZ	MENOR	HIJA	MECANIZACION	SX EMETICO	EMERGENCIA	SANTA MARIA	2394.73999999999978
+50	ALBA E-051	FEBRERO	2014-02-11	11040580	CARDENAS JOSE	5948461	CASTILLO PETRA	\N	MADRE	PRODUCCION AGRICOLA	DESHIDRATACION MODERADA	EMERGENCIA	SANTA MARIA	2846.71000000000004
+51	ALBA H-052	FEBRERO	2014-02-11	37069	RIVERO IVAN	16414995	MATOS DAMARYS	16751467	ESPOSA	ACCION CENTRAL	CESAREA SEGMENTAREA	HOSPITALIZACION	SANTA MARIA	27562.3899999999994
+52	ALBA E-053	FEBRERO	2014-02-12	34985	LOPEZ JOSE MANUEL	15480840	LOPEZ RAFAEL	645763	PADRE	BANCO DE PAVONES	NEURITIS INTERCOSTAL	EMERGENCIA	PEREZ GUILLEN	2135
+53	ALBA H-054	FEBRERO	2014-02-12	37073	MARQUEZ YOHELYS	16294298	MARQUEZ YOHELYS	16294298	TITULAR	ACCION CENTRAL	QUISTE TORCIDO DE OVARIO	HOSPITALIZACION	SANTA MARIA	50640.2300000000032
+54	ALBA E-055	FEBRERO	2014-02-12	11040648	AULAR JEAN CARLOS	16041033	AULAR JEAN CARLOS	16041033	TITULAR	MECANIZACION	ENFERMEDAD DIARREICA AGUDA	EMERGENCIA	SANTA MARIA	2234.92999999999984
+55	ALBA E-056	FEBRERO	2014-02-12	11040608	GOMEZ CARMEN	9841301	GOMEZ ELOINA	2307694	MADRE	BICEABASTO	CRISIS HIPERTENSIVA	EMERGENCIA	SANTA MARIA	2474.32000000000016
+56	ALBA E-057	FEBRERO	2014-02-12	11040637	TOVAR ALEXIS	12263227	TOVAR ALEXIS SEBASTIAN	MENOR	HIJO	PRODUCCION AGRICOLA	CRISIS ASMA BRONQUIAL	EMERGENCIA	SANTA MARIA	2368.88000000000011
+57	ALBA E-058	FEBRERO	2014-02-13	11040622	LOPEZ YULEIMA	19053988	MORAN JUAN	MENOR	HIJO	AGUA BLANCA	SINDROME FEBRIL AGUDO	EMERGENCIA	SANTA MARIA	2166.86000000000013
+58	ALBA E-059	FEBRERO	2014-02-13	11040652	SANCHEZ ALEXANDER	15341479	SOTO MARY	15538836	ESPOSA	AGUA BLANCA	COLICO NEFRITICO	EMERGENCIA	SANTA MARIA	2295.17999999999984
+59	ALBA E-060	FEBRERO	2014-02-17	11040659	LINAREZ YACKELINE	20643168	LINAREZ YACKELINE	20643168	TITULAR	ACCION CENTRAL	AMENAZA DE ABORTO	EMERGENCIA	SANTA MARIA	3286.36000000000013
+60	ALBA H-061	FEBRERO	2014-02-11	A0037086	MIGUEL MEDINA	15591293	JOVITZA SOTELDO	17946642	ESPOSA	MECANIZACION	EAPENDICECTOMIA LAPAROSCOPICA	EMERGENCIA	SANTA MARIA	40108.7200000000012
+61	ALBA E-062	FEBRERO	2014-02-12	35021	MIGUEL ANGEL CORONADO	16640708	MIGUEL ANGEL CORONADO	16640708	TITULAR	RIO GUARICO	LUMBOCIATALGIA AGUDA	EMERGENCIA	PEREZ GUILLEN	1530
+62	ALBA E-063	FEBRERO	2014-02-14	11040707	PEDRO SANCHEZ	9569079	RAFAELA SANCHEZ	1228205	MADRE	PIRITU I	CRISIS HIPERTENSIVA	EMERGENCIA	SANTA MARIA	2099.38000000000011
+63	ALBA E-064	FEBRERO	2014-02-15	11040755	AMARILIS BASTIDAS	11851601	FELIX  CHIRINOS	7436951	ESPOSO	ACCION CENTRAL	RUPTURA DE MUSCULO SEMI MEMBRANOSO DE MUSLO DERECHO	EMERGENCIA	SANTA MARIA	2026.11999999999989
+64	ALBA E-065	FEBRERO	2014-02-16	11040768	WILMER MARQUEZ	16040072	WILMER MARQUEZ	16040072	TITULAR	ACCION CENTRAL	MORDEDURA CANINA EN HEMICARA DERECHA	EMERGENCIA	SANTA MARIA	2129.57999999999993
+65	ALBA E-066	FEBRERO	2014-02-17	11040788	JOAN FIGUEREDO	17362681	JOHANDERLIS FIGUEREDO	MENOR	HIJA	AGUA BLANCA	SINDROME FEBRIL AGUDO Y DIARREICO AGUDO	EMERGENCIA	SANTA MARIA	2482.84000000000015
+66	ALBA E-067	FEBRERO	2014-02-18	129858	ISVELIA GIL	15138928	RAMIREZ IVAN	14995558	ESPOSO	ACCION CENTRAL	LUMBOCIATALGIA AGUDA	EMERGENCIA	UQ LOS LEONES	1922.00999999999999
+67	ALBA E-068	FEBRERO	2014-02-20	11040921	NAUDIS MEDINA	18799452	NAUDIS MEDINA	18799452	TITULAR	PIRITU II	ABSCESO EN REGION CERVICAL	EMERGENCIA	SANTA MARIA	2228.17000000000007
+68	ALBA E-069	FEBRERO	2014-02-22	11040981	ERIKA DELGADO	13228242	RUBEN BASTIDAS	7434560	ESPOSO	PIRITU I	MIASIS EN NUCA	EMERGENCIA	SANTA MARIA	3561.98000000000002
+69	ALBA E-070	FEBRERO	2014-02-23	11040997	SIMON CEDEÑO	11548326	JOSE CEDEÑO	30483878	HIJO	EL CANDIL	COLICO RENOURETRAL DERECHO	EMERGENCIA	SANTA MARIA	2230.44999999999982
+70	ALBA E-071	FEBRERO	2014-02-24	11041007	DANNY DURAN	16992813	ESIDIO DURAN	4602503	PADRE	MECANIZACION	IRB	EMERGENCIA	SANTA MARIA	3979.80999999999995
+71	ALBA E-072	FEBRERO	2014-02-24	11041029	ANABEL LINAREZ	11081662	LUIS GARRIDO	27636044	HIJO	ACCION CENTRAL	ABSCESO EN CODO DERECHO	EMERGENCIA	SANTA MARIA	3381.86999999999989
+72	ALBA E-073	FEBRERO	2014-02-24	11041017	JEAN AULAR	16041033	AULAR YONNYS	25781729	HIJO	MECANIZACION	CELULITIS ABSCESADA EN ANTEBRAZO DERECHO	EMERGENCIA	SANTA MARIA	7245.46000000000004
+73	ALBA E-074	FEBRERO	2014-02-25	11041069	TOVAR ALEXIS	12263227	GAVINO TOVAR	1109596	PADRE	CAÑO SECO	HEMORROIDES EXTERNAS TROMBOSADAS Y SANGRIENTAS	EMERGENCIA	SANTA MARIA	3418.71000000000004
+74	ALBA E-075	FEBRERO	2014-02-14	35065	ARGENIS GIL	16913942	DANIELA GIL	MENOR	HIJA	BANCO DE PAVONES	SD: FEBRIL. EMETICO Y DIARREICO	EMERGENCIA	PEREZ GUILLEN	1773
+75	ALBA E-076	FEBRERO	2014-02-15	35109	JOSE BENAVENTA	8633844	BENAVENTA JESUS	5361670	PADRE	MARIA DE LOS ANGELES	COLICO BILIAR	EMERGENCIA	PEREZ GUILLEN	1581
+76	ALBA E-077	FEBRERO	2014-02-21	35244	ARGENIS GIL	16913942	YONAIKER GIL	MENOR	HIJO	BANCO DE PAVONES	INTOXICACION ALIMENTARIA	EMERGENCIA	PEREZ GUILLEN	1519
+77	ALBA E-078	FEBRERO	2014-02-23	35293	JESUS SANOJA	11795542	JESUS SANOJA	11795542	TITULAR	BANCO DE PAVONES	CERVICODORSALGIA	EMERGENCIA	PEREZ GUILLEN	2622
+78	ALBA E-079	FEBRERO	2014-02-25	35349	RAMON CALDERON	17937495	JAVIER CALDERON	MENOR	HIJO	MARIA DE LOS ANGELES	SD FEBRIL + INTOXICACION ALIMENTARIA	EMERGENCIA	PEREZ GUILLEN	2421
+79	ALBA E-080	MARZO	2014-03-03	35464	NELSON SAYAGO	13228559	GABRIEL SAYAGO	MENOR	HIJO	MARIA DE LOS ANGELES	SD FEBRIL + IRB	EMERGENCIA	PEREZ GUILLEN	1349
+80	ALBA E-081	MARZO	2014-03-04	35477	JOSE BENAVENTA	8633844	ANGEL BENAVENTA	MENOR	HIJO	MARIA DE LOS ANGELES	BRONCO ESPASMO	EMERGENCIA	PEREZ GUILLEN	1694
+81	ALBA H-082	FEBRERO	2014-02-19	A0037109	YAJAIRA QUERO	16292305	YAJAIRA QUERO	16292305	TITULAR	ACCION CENTRAL	APENDICITIS AGUDA	HOSPITALIZACION	SANTA MARIA	44530.2699999999968
+82	ALBA H-083	MARZO	2014-03-05	34857	PEDRO SANCHEZ	13556353	PEDRO SANCHEZ	13556353	TITULAR	ACCION CENTRAL	PARAFIMOSIS	HOSPITALIZACION	SANTA MARIA	22526.9500000000007
+83	ALBA E-084	MARZO	2014-03-02	138869	ALVARADO JELIBETH	11785981	ALVARADO JELIBETH	11785981	TITULAR	TRANSPORTE	DOLOR LUMBAR	EMERGENCIA	ACOSTA ORTIZ	1988
+84	ALBA E-085	FEBRERO	2014-02-27	11041128	RODOLFO ALVAREZ	14091105	FABIAN ALVAREZ	MENOR	HIJO	TRANSPORTE	AMIGDALITIS AGUDA + SD FEBRIL	EMERGENCIA	SANTA MARIA	2076.40000000000009
+85	ALBA E-086	FEBRERO	2014-02-26	11041142	TULIO VASQUEZ	11849149	CARLOS VASQUEZ	MENOR	HIJO	PIRITU II	CEFALEA – SINUSITIS	EMERGENCIA	SANTA MARIA	4184.06999999999971
+86	ALBA E-087	MARZO	2014-03-02	11041174	FRANCISCO ORTIZ	12262363	FRANCISCO ORTIZ	12262363	TITULAR	ACCION CENTRAL	MONONUCLEOSIS + IRB	EMERGENCIA	SANTA MARIA	2844.59999999999991
+87	ALBA E-088	MARZO	0814-03-03	11041182	ELVYS PADILLA	13555075	CIRELBIS PADILLA	MENOR	HIJA	EL CANDIL	SD FEBRIL AGUDO	EMERGENCIA	SANTA MARIA	2056.63999999999987
+88	ALBA E-089	MARZO	2014-03-04	11041200	ISMAEL QUERALES	14980183	ISMAR QUERALES	28231505	HIJA	PAYARA	SD FEBIL VIRAL	EMERGENCIA	SANTA MARIA	2335.80999999999995
+89	ALBA E-090	MARZO	2014-03-04	11041198	FRANCISCO ORTIZ	12262363	FRANCISCO ORTIZ	12262363	TITULAR	ACCION CENTRAL	SD FEBRIL AGUDO	EMERGENCIA	SANTA MARIA	2745
+90	ALBA E-091	FEBRERO	2014-02-10	34971	JOSE LOPEZ	15480840	VILMA CORONADO	4392736	MADRE	BANCO DE PAVONES	SD FEBRIL	EMERGENCIA	PEREZ GUILLEN	1502
+91	ALBA E-092	FEBRERO	2014-02-15	35099	DAXI BELLO	10271178	LIZDIANNY BELLO	28010153	HIJA	WILLIANS LARA	HIPOTENSION + INFECCION RESPIRATORIA	EMERGENCIA	PEREZ GUILLEN	2575
+92	ALBA E-093A	FEBRERO	2014-02-17	35147	ARGENIS GIL	16913942	ARGENIS GIL	16913942	TITULAR	BANCO DE PAVONES	IRB	EMERGENCIA	PEREZ GUILLEN	2357
+93	ALBA E-093B	FEBRERO	2014-02-27	11041119	ANABEL LINAREZ	11081662	TERESA RODRIGUEZ	1122241	MADRE	ACCION CENTRAL	LUMBALGIA MECANICA+CERVICALGIA MECANICA	EMERGENCIA	SANTA MARIA	2149.65999999999985
+94	ALBA E-094	MARZO	2014-03-06	11041267	JOSE BARRIOS	17363131	MARIA BARRIOS	MENOR	HIJA	PAYARA	SD EMETICO	EMERGENCIA	SANTA MARIA	2052.63999999999987
+95	ALBA E-095	FEBRERO	2014-02-17	35130	JOSE BENAVENTA	8633844	JESUS BENAVENTA	5361670	HIJO	MARIA DE LOS ANGELES	SD EMETICO Y FEBRIL	EMERGENCIA	PEREZ GUILLEN	1687
+96	ALBA H-096	FEBRERO	2014-02-28	A37135	NORIS CUENCA	14092771	NORIS CUENCA	14092771	TITULAR	ACCION CENTRAL	APENDICEPTOMIA LAPAROSCOPICA + HERNIORRAFIA UMBILICAL	HOSPITALIZACION	SANTA MARIA	45467.1699999999983
+97	ALBA H-097	MARZO	2014-06-06	A37149	AMADO TORCATES	11079797	GISEL TORCATES	MENOR	HIJA	PAYARA	ENFERMEDAD DIARREICA AGUDA	HOSPITALIZACION	SANTA MARIA	10275
+98	ALBA E-098	MARZO	2014-03-10	11041770	JOSE TIMAURE	14540807	JUANA MONTILLA	4608733	MADRE	AGUA BLANCA	LUMBALGIA	EMERGENCIA	SANTA MARIA	2183.86999999999989
+99	ALBA E-099	MARZO	2014-03-09	11041332	YESSICA GALLARDO	13354020	EZEQUIEL GALLARGO	MENOR	HIJA	ACCION CENTRAL	ABSCESO EN REGION CERVICAL	EMERGENCIA	SANTA MARIA	2045.51999999999998
+100	ALBA H-100	MARZO	2014-03-05	A0037143	FRANCISCO ORTIZ	12262363	FRANCISCO ORTIZ	12262363	TITULAR	ACCION CENTRAL	HEPATITIS EN ESTUDIO CON PROLONGACION DE TIEMPOS DE COAGULACION	HOSPITALIZACION	SANTA MARIA	14933.5699999999997
+101	ALBA E-101	MARZO	2014-03-12	11041473	ROSSY ALVARADO	14261165	ROSSY ALVARADO	14261165	TITULAR	PAYARA	SD VERTIGINOSO	EMERGENCIA	SANTA MARIA	2461.90000000000009
+102	ALBA H-102	MARZO	2014-03-12	34926	STALIN ROJAS	14092210	FHER ROJAS	MENOR	HIJO	ACCION CENTRAL	NEUMONIA BASAL DERECHA. ASMA LEVE	EMERGENCIA	SANTA MARIA	14896.7800000000007
+103	ALBA E-103	MARZO	2014-03-17	11041613	BELKYS CRESPO	8657682	JESUS CRESPO	2499599	PADRE	ACCION CENTRAL	IRB. ERCESTADIO V	EMERGENCIA	SANTA MARIA	3294.57000000000016
+104	ALBA E-104	MARZO	2014-03-17	11041600	MARCOS CIVIRA	9045190	PAULA ESCOBAR	9564177	CONCUBINA	PAYARA	IRB ALTA. DM TIPO II	EMERGENCIA	SANTA MARIA	4125.39999999999964
+105	ALBA E-105	MARZO	2014-03-15	11041547	MANUEL RIVERO	9844634	CARMEN CORDERO	3757891	MADRE 	PIRITU II	ARTRALGIA HOMBRO DERECHO	EMERGENCIA	SANTA MARIA	2500.26000000000022
+106	ALBA E-106	MARZO	2014-03-06	35531	ALBA FAJARDO	19760130	ALBANYS RIVERO	MENOR	HIJA	MARIA DE LOS ANGELES	SD FEBRIL + ADENOTONSULITIS	EMERGENCIA	PEREZ GUILLEN	1562
+107	ALBA E-107	MARZO	2014-03-08	35583	ARMANDO PACHECO	16435847	ARMARYS PACHECO	MENOR	HIJA	WILLIANS LARA	DOLOR ABDOMINAL	EMERGENCIA	PEREZ GUILLEN	1948
+108	ALBA E-108	MARZO	2014-03-10	35608	JUAN GARCIA	17164247	JUAN GARCIA	17164247	TITULAR	WILLIANS LARA	TRAUMATISMO EN HOMBRO DERECHO 	EMERGENCIA	PEREZ GUILLEN	1542
+109	ALBA E-109	MARZO	2014-03-16	35761	DAXY BELLO	10271178	LIZDIANNY BELLO	28010153	HIJA	WILLIANS LARA	INTOXICACION ALIMENTARIA	EMERGENCIA	PEREZ GUILLEN	1580
+110	ALBA E-110	MARZO	2014-03-17	35790	CRISTIAN LOZADA	17374281	AURA BASTIDAS	18908833	CONCUBINA	SAN ANTONIO	CERVICALGIA	EMERGENCIA	PEREZ GUILLEN	1422
+111	ALBA H-111	MARZO	2014-03-17	34981	GLADIS JIMENEZ	13353211	PANTALION JIMENEZ	12266690	PADRE	PIRITU II	PANCREATITIS AGUDA	HOSPITALIZACION	SANTA MARIA	30250.7200000000012
+112	ALBA E-112	MARZO	2014-03-19	35838	CRISTIAN AQUINO	19343805	CRISTIAN AQUINO	19343805	TITULAR	WILLIANS LARA	CEFALEA + SD FEBRIL	EMERGENCIA	PEREZ GUILLEN	1461
+113	ALBA E-113	MARZO	2014-03-15	11041560	STALIN ROJAS	14092210	JONATHAN ROJAS	MENOR	HIJA	ACCION CENTRAL	LARINGOFARINGUITIS AGUDA	EMERGENCIA	SANTA MARIA	2608.01999999999998
+114	ALBA E-114	MARZO	2014-03-18	11041654	LEVI SOLORZANO	17193785	YONAIKER SOLORZANO	MENOR	HIJO	TRANSPORTE	SD FEBRIL AGUA	EMERGENCIA	SANTA MARIA	2451.0300000000002
+115	ALBA E-115	MARZO	2014-03-21	35892	ANTYOLI ZURITA	15256114	SOFIA GONZALEZ ZURITA	MENOR	HIJA	WILLIANS LARA	SD FEBRIL	EMERGENCIA	PEREZ GUILLEN	2247
+116	ALBA E-116	MARZO	2014-03-22	35908	JOSE ANTONIO HERNANDEZ	19759261	JOSE CRISTOBAL HERNANDEZ	MENOR	HIJO	MARIA DE LOS ANGELES	BRONCO ESPASMO + DISNEA	EMERGENCIA	PEREZ GUILLEN	1927
+117	ALBA E-117	MARZO	2014-03-22	35911	ANA SANTANA	14239953	ANA SANTANA	14239953	TITULAR	MARIA DE LOS ANGELES	CEFALEA MIGRAÑOSA	EMERGENCIA	PEREZ GUILLEN	1513
+118	ALBA E-118	MARZO	2014-03-25	11041824	BARRIO ALEXIS	17364115	BARRIO ALEXIS	17364115	TITULAR	PAYARA	SD DOLOROSO ABDOMINAL COLOMPATIA	EMERGENCIA	SANTA MARIA	2272.88000000000011
+119	ALBA E-119	MARZO	2014-03-25	130947	CUERVO EMILIN	13036421	CUERVO EMILIN	13036421	TITULAR	ACCION CENTRAL	CERVICALGIA MECANICA	EMERGENCIA	UQ LOS LEONES	2080.67000000000007
+120	ALBA E-120	MARZO	2014-03-26	11041835	MARTINEZ ANTONIO	16294812	ARRIECHI PORFILIA	8658019	MADRE	MECANIZACION	DESCOMPENSACION EN HIPERGLICEMIA+HTA	EMERGENCIA	SANTA MARIA	3639.94999999999982
+121	ALBA E-121	MARZO	2014-03-26	11041805	VALDERRAMA GUSTAVO	14271811	DOMINGUEZ AMINTA	4199883	MADRE	ACCION CENTRAL	CEFALEA MIGRAÑOSA	EMERGENCIA	SANTA MARIA	2414.51000000000022
+122	ALBA E-122	MARZO	2014-03-26	11041869	CAMACARO WILLIAN	16414276	CAMACARO ALEX	MENOR	HIJO	AGUA BLANCA	SINDROME DIARREICO AGUDO FEBRIL	EMERGENCIA	SANTA MARIA	3209.17000000000007
+123	ALBA E-123	MARZO	2014-03-27	11041667	CAMEJO EDGAR	17364409	CAMEJO KENEDY	MENOR	HIJA	\N	TROMATO	EMERGENCIA	SANTA MARIA	3478.09999999999991
+124	ALBA H-124	MARZO	2014-03-25	37250	ANDRES GODOY	14980471	ANDRES GODOY	14980471	TITULAR	PAYARA	FRACTURA CONMINUTA DEDOS ANULAR Y MEDIO MANO DERECHA	HOSPITALIZACION	SANTA MARIA	49755.2900000000009
+125	ALBA H-125	MARZO	2014-03-27	35082	ANTONIO FALCON	9842041	MARITZA GUANIPA	9841486	ESPOSA	MECANIZACION	COLECIATITIS AGUDA + EVENTRACION	HOSPITALIZACION	SANTA MARIA	46947.4400000000023
+126	ALBA E-126	MARZO	2014-03-26	11041919	ANTONIO FALCON	9842041	MARITZA GUANIPA	9841486	ESPOSA	MECANIZACION	COLICO BILIAR	EMERGENCIA	SANTA MARIA	3284.94000000000005
+127	ALBA H-127	MARZO	2014-03-30	35099	JOSE FIGUEROA	9564903	FRANCISCA FIGUEROA	1228463	MADRE	PIRITU II	DIVERTICULITIS	HOSPITALIZACION	SANTA MARIA	22507.8100000000013
+128	ALBA H-128	MARZO	2014-04-01	35122	ALEXANDER SANCHEZ	15341479	ALEXANDER SANCHEZ	15341479	TITULAR	AGUA BLANCA	HEMORROIDECTOMIA	HOSPITALIZACION	SANTA MARIA	40382.1299999999974
+129	ALBA E-129	ABRIL	2014-04-03	11012198	CARLOS JARA	15892059	NELY BARRIO	5944005	MADRE	PIRITU II	INFECCION DEL TRACTO URINARIO	EMERGENCIA	SANTA MARIA	2626.01000000000022
+130	ALBA E-130	MARZO	2014-03-25	35978	MIGUEL ANGEL CORONADO	16640708	MIGUEL ANGEL CORONADO	16640708	TITULAR	RIO GUARICO	RINUSOPATIA CRONICA REAGUDIZADA 	EMERGENCIA	PEREZ GUILLEN	2518.59999999999991
+131	ALBA E-131	MARZO	2014-03-26	36015	ALBA FAJARDO	19760130	ALBANYS RIVERO	MENOR	HIJA	MARIA DE LOS ANGELES	SINDROME FEBRIL 	EMERGENCIA	PEREZ GUILLEN	1318
+132	ALBA H-132	MARZO	2014-03-29	36074	JUAN GARCIA	17164247	COROMOTO LAYA	17165617	ESPOSA	WILLIANS LARA	HERNIA UMBILICAL ATASCADA 	HOSPITALIZACION	PEREZ GUILLEN	19566
+133	ALBA E-133	ABRIL	2014-04-07	11042307	HENRY BARRAGAN	12860815	FREINDY BARRAGAN	30588981	HIJO	PAYARA	SD FEBRIL AGUDO	EMERGENCIA	SANTA MARIA	3532.63000000000011
+134	ALBA E-134	ABRIL	2014-04-09	11042409	PEDRO PIREZ	15691566	YOBEISIZ MONTILLA	16566544	ESPOSA	ACCION CENTRAL	COLICO BILIAR	EMERGENCIA	SANTA MARIA	2443.84999999999991
+135	ALBA E-135	ABRIL	2014-04-09	11042382	MARQUIS MOLINA	18871906	MATHIAS MOLINA	MENOR	HIJO	AGUA BLANCA	IRB. DIARREA AGUDA	EMERGENCIA	SANTA MARIA	3419.40999999999985
+136	ALBA E-136	ABRIL	2014-04-09	11042408	WILMER MARQUEZ	16040022	ANA CALDERON	3766727	MADRE	ACCION CENTRAL	CELULITIS EN GLUTEO DERECHO	EMERGENCIA	SANTA MARIA	2476.5
+137	ALBA E-137	ABRIL	2014-04-13	11042503	RODOLFO ALVAREZ	14091105	FABIAN ALVAREZ	MENOR	HIJO	TRANSPORTE	SD FEBRIL AGUDO. HIPERACTIVIDAD BRONQUIAL	EMERGENCIA	SANTA MARIA	4103.39999999999964
+138	ALBA E-138	ABRIL	2014-04-12	11042492	HENRY BARRAGAN	12860815	HENRY BARRAGAN	25606184	HIJO	PAYARA	TRAUMATISMO EN RODILLA	EMERGENCIA	SANTA MARIA	5702.39000000000033
+139	ALBA E-139	ABRIL	2014-04-11	11042477	ERIKA DELGADO	13228242	ERIKA DELGADO	13228242	TITULAR	PIRITU I	DOLOR ABDOMINAL  PANCREATITIS A DESCARTAR	EMERGENCIA	SANTA MARIA	2361.88000000000011
+140	ALBA H-140	ABRIL	2014-04-04	A37308	MIGUEL LOBATON	19778862	MIGUEL LOBATON	19778862	TITULAR	PIRITU II	PLASTRON APENDICULAR	HOSPITALIZACION	SANTA MARIA	67582.179999999993
+141	ALBA H-141	ABRIL	2014-04-04	ANULADO	ANULADO	ANULADO	ANULADO	ANULADO	ANULADO	ANULADO	ANULADO	ANULADO	ANULADO	0
+142	ALBA H-142	ABRIL	2014-04-05	A37314	JAVIER LEON	16753367	IBELIN LEON	MENOR	HIJA	ACCION CENTRAL	INTOLERANCIA ORAL. ADENOIDITIS. AMIGDALITIS	HOSPITALIZACION	SANTA MARIA	6885.39999999999964
+143	ALBA H-143	ABRIL	2014-04-10	A37338	PEDRO PIREZ	15691566	YOBEISIZ MONTILLA	16566544	ESPOSA	ACCION CENTRAL	PANCREATITIS AGUDA	HOSPITALIZACION	SANTA MARIA	11347.8299999999999
+144	ALBA E-144	ABRIL	2014-04-04	36221	CRISTIAN LOZADA	17374281	ARIANNYS LOZADA	MENOR	HIJA	SAN ANTONIO	BRONCO ESPASMO	EMERGENCIA	PEREZ GUILLEN	2664
+145	ALBA E-145	ABRIL	2014-04-08	36303	ARGENIS GIL	16913942	ARGENIS GIL	16913942	TITULAR	BANCO DE PAVONES	LUMBOCIATALGIA	EMERGENCIA	PEREZ GUILLEN	1741
+146	ALBA E-146	ABRIL	2014-04-14	36305	CESAR LADERA	11795056	CESAR LADERA	11795056	TITULAR	MARIA DE LOS ANGELES	TRAUMA CERRADO DE TORAX NO COMPLICADO	EMERGENCIA	PEREZ GUILLEN	2939
+147	ALBA E-147	ABRIL	2014-04-14	36417	CRISTIAN LOZADA	17374281	ARIANNYS LOZADA	MENOR	HIJA	SAN ANTONIO	IRB + CRISIS DE ASMA MODERADA	EMERGENCIA	PEREZ GUILLEN	2913
+148	ALBA E-148	ABRIL	2014-04-14	36422	FRANKLI CUENCA	22882410	YOSFRAN CUENCA	MENOR	HIJO	WILLIANS LARA	CRISIS DE ASMA MODERADA	EMERGENCIA	PEREZ GUILLEN	1806
+149	ALBA H-149	ABRIL	2014-04-12	A37351	ALEXANDER SANCHEZ	15341479	ALEXANDER SANCHEZ	15341479	TITULAR	AGUA BLANCA	P.O TARDIO DE HEMORROIDECTOMIA  COMPLICADA CON PROCTALGIA	HOSPITALIZACION	SANTA MARIA	11930
+150	ALBA E-150	ABRIL	2014-04-21	11042701	RODOLFO ALVAREZ	14091105	ROHANNY ALVAREZ	26811763	HIJA	TRANSPORTE	IRB EN CRISIS ASMATICA	EMERGENCIA	SANTA MARIA	2477.61999999999989
+151	ALBA H-151	ABRIL	2014-04-20	11042677	SONNY ALVARADO	7384272	MARIA ALVARADO	27132106	HIJA	TRANSPORTE	SINDROME DOLOROSO ABDOMINAL	EMERGENCIA	SANTA MARIA	2112.30000000000018
+152	ALBA E-152	ABRIL	2014-04-10	11042434	WILMER MARQUEZ	16040072	ANA CALDERON	3766727	MADRE	ACCION CENTRAL	ABSCESO PERIANAL	EMERGENCIA	SANTA MARIA	2051.86999999999989
+153	ALBA E-153	ABRIL	2014-04-18	A37364	AMADO TORCATES	11079797	FRANCISCA LOPEZ	4611389	MADRE	PAYARA	AMIBIASIS INTESTINAL/ IRA	HOSPITALIZACION	SANTA MARIA	12409.9400000000005
+154	ALBA E-154	ABRIL	2014-04-19	11042660	PEDRO SANCHEZ	13556353	LORENZO SANCHEZ	MENOR	HIJO	ACCION CENTRAL	FRACTURA COMPLEJA NO DESPLAZADA DE CODO DERECHO	EMERGENCIA	SANTA MARIA	7807.31999999999971
+155	ALBA H-155	ABRIL	2014-04-19	A37365	HENRRY BARRAGAN	12860815	CLAUDIA CARIEL	14540048	CONCUBINA	PAYARA	APENDICITIS AGUDA+ PERITONITIS LOCALIZADA + HERNIA UMBILICAL	HOSPITALIZACION	SANTA MARIA	54271.5
+156	ALBA E-156	ABRIL	2014-04-26	11042938	YULEIMA LOPEZ	19053988	IRIS GOMEZ	10140562	MADRE	AGUA BLANCA	NEURITIS INTERCOSTAL	EMERGENCIA	SANTA MARIA	3332.46000000000004
+157	ALBA E-157	ABRIL	2014-04-26	11042939	YULEIMA LOPEZ	19053988	JUAN MORAN	MENOR	HIJO	AGUA BLANCA	ENFERMEDAD DIARREICA AGUDA	EMERGENCIA	SANTA MARIA	2105.15999999999985
+158	ALBA E-158	ABRIL	2014-04-28	11042982	LUIS APONTE	11082374	LUIS APONTE	11082374	TITULAR	PIRITU II	FRACTURA COMPLEJA NO DESPLAZADA DE DEDO MEDIO  PIE DERECHO	EMERGENCIA	ACOSTA ORTIZ	4656.13000000000011
+159	ALBA E-159	ABRIL	2014-04-22	36537	EDGAR ASCANIO	13482629	BRAYANNIS ASCANIO	MENOR	HIJA	WILLIANS LARA	SD FEBRIL +  SD EMETICO	EMERGENCIA	PEREZ GUILLEN	1819
+160	ALBA E-160	ABRIL	2014-04-23	36586	LUIS ASCANIO	10265610	LUIS ASCANIO	10265610	TITULAR	BANCO DE PAVONES	TRAUMATISMO DE RODILLA DERECHA	EMERGENCIA	PEREZ GUILLEN	1812
+161	ALBA E-161	ABRIL	2014-04-24	36598	SILA RODRIGUEZ	8626902	JESUS RODRIGUEZ	28345509	HIJO	MARIA DE LOS ANGELES	IRA+ RINUSOPATIA CRONICA REAGUDIZADA	EMERGENCIA	PEREZ GUILLEN	3245
+162	ALBA E-162	ABRIL	2014-04-25	36635	ARMANDO PACHECO	16435847	ARMARYS PACHECO	MENOR	HIJA	WILLIANS LARA	SD FEBRIL + DOLOR ABDOMINAL	EMERGENCIA	PEREZ GUILLEN	2315
+163	ALBA E-163	ABRIL	2014-04-16	36448	JOSE ANTONIO HERNANDEZ	19759261	DEISI HERNANDEZ	MENOR	HIJO	MARIA DE LOS ANGELES	SD FEBRIL + SD TOXOINFECCIOSO + INFECCION URINARIA	EMERGENCIA	PEREZ GUILLEN	9694
+164	ALBA E-164	ABRIL	2014-04-26	36659	NELSON SAYAGO	13238559	NELSON SAYAGO	13238559	TITULAR	MARIA DE LOS ANGELES	COLICO NEFRITICO	EMERGENCIA	PEREZ GUILLEN	1565
+165	ALBA E-165	ABRIL	2014-04-27	A37408	ALIRIO ALVAREZ	14425184	JOSE ALVAREZ	MENOR	HIJO	PIRITU I	SD ADHERENCIAL INTESTINAL	HOSPITALIZACION	SANTA MARIA	8615.17000000000007
+166	ALBA E-166	ABRIL	2014-04-29	36705	MIGUEL ANGEL CORONADO	16640708	MIGUEL ANGEL CORONADO	16640708	TITULAR	RIO GUARICO	RINUSOPATIA CRONICA REAGUDIZADA 	EMERGENCIA	PEREZ GUILLEN	2122
+167	ALBA E-167	ABRIL	2014-04-29	36697	MIGUEL CORONADO	16640708	MARIANO CORONADO	MENOR	HIJO	RIO GUARICO	BRONQUITIS ASMATIFORME	EMERGENCIA	PEREZ GUILLEN	2341
+168	ALBA E-168	ABRIL	2014-04-29	36700	MIGUEL CORONADO	16640708	ANGEL CORONADO	MENOR	HIJO	RIO GUARICO	RINUSOPATIA CRONICA REAGUDIZADA 	EMERGENCIA	PEREZ GUILLEN	2287
+169	ALBA E-169	ABRIL	2014-04-29	36701	MIGUEL CORONADO	16640708	BLANCA CORONADO	MENOR	HIJA	RIO GUARICO	ADENOTONSILITIS SOBREINFECTADA	EMERGENCIA	PEREZ GUILLEN	2468
+170	ALBA E-170	ABRIL	2014-04-30	11043091	PABLO CASTILLO	21395971	PABLO CASTILLO	21395971	TITULAR	AGUA BLANCA	SD DOLOROSO ABDOMINAL SEVERO EN ESTUDIO	EMERGENCIA	SANTA MARIA	3593.2199999999998
+171	ALBA E-171	ABRIL	2014-04-30	11043097	JOSE SANCHEZ	12527097	NATALI SANCHEZ	27939451	HIJA	AGUA BLANCA	AMIGDALITIS PULTACEA	EMERGENCIA	SANTA MARIA	3283.19000000000005
+172	ALBA E-172	MAYO	2014-05-02	11043164	FIDEL MEJIAS	12264438	YANIRA VIVAS	12088194	CONCUBINA	PIRITU II	HIPOTENSION ARTERIAL. CEFALEA VASCULAR	EMERGENCIA	SANTA MARIA	2610.05999999999995
+173	ALBA E-173	MAYO	2014-05-02	11043153	RODOLFO ALVAREZ	14091105	YURAIMA CARUCI	13073222	CONCUBINA	TRANSPORTE	RINOSINUSITIS AGUDA	EMERGENCIA	SANTA MARIA	3826.34000000000015
+174	ALBA E-174	ABRIL	2014-04-29	A37422	EMILIO PINA	11847988	MARIA GONZALEZ	10644897	CONCUBINA	PIRITU I	PO INMEDIATO PE COLECISTECTOMIA  LAPAROSCOPICA	HOSPITALIZACION	SANTA MARIA	57202.8300000000017
+175	ALBA E-175	ABRIL	2014-04-29	A37421	MEDINA YONNY	18800955	LIGIA MEDINA	19282295	CONCUBINA	PAYARA 	EMBARAZO DE 40 SEMANAS	HOSPITALIZACION	SANTA MARIA	33202.7699999999968
+176	ALBA E-176	MAYO	2014-05-02	11043154	ALEXANDER SANCHEZ	15341479	ELIEZER SANCHEZ	MENOR	HIJO	AGUA BLANCA	IRB. BRONCONEUMONIA. HIPERACTIVIDAD BRONQUIAL	EMERGENCIA	SANTA MARIA	3506.13999999999987
+177	ALBA E-177	MAYO	2014-05-05	11043230	ALEXANDER SANCHEZ	15341479	JESUS SANCHEZ	MENOR	HIJO	AGUA BLANCA	SINDROME VIRAL	EMERGENCIA	SANTA MARIA	3984.90000000000009
+178	ALBA E-178	MAYO	2014-05-01	A37431	JOSE GONZALEZ	20812157	MARLENIS SIERRA	\N	MADRE	PIRITU II	PO INMEDIATO DE DRENAJE DE ABSCESO EN PIERNA DERECHA	HOSPITALIZACION	SANTA MARIA	43455.8600000000006
+179	ALBA E-179	MAYO	2014-05-06	11043298	ALEXANDER SANCHEZ	15341479	JESUS SANCHEZ	MENOR	HIJO	AGUA BLANCA	SD FEBRIL AGUDO	EMERGENCIA	SANTA MARIA	2958.63999999999987
+180	ALBA E-180	MAYO	2014-05-06	11043282	CARDENAS JOSE	5948461	PETRA CASTILLO	3868229	MADRE	CAÑO SECO	DIABETES MELLITUS TIPO II EN HIPERGLICEMIA	EMERGENCIA	SANTA MARIA	3166.84000000000015
+181	ALBA E-181	MAYO	2014-05-07	11043348	NORIS CUENCA	14092771	DOMINGA CASTRO	4611971	MADRE	ACCION CENTRAL	TRAUMATISMO CERRADO RODIILA IZQUIERDA	EMERGENCIA	SANTA MARIA	4489.60000000000036
+182	ALBA E-182	MAYO	2014-05-07	11043337	GIMMY ROJAS	12858021	BETTY ROJAS	3527210	MADRE	TRANSPORTE	DM TIPO II DESCOMPENSADA EN HIPERGLICEMIA	EMERGENCIA	SANTA MARIA	2260.86000000000013
+183	ALBA E-183	MAYO	2014-05-09	11043216	ANDRADE  JOSE GREGORIO	20273142	CAMPO LERIDA	10642977	MADRE	PAYARA	SD DOLOROSO ABDOMINAL	EMERGENCIA	SANTA MARIA	4129.3100000000004
+184	ALBA E-184	MAYO	2014-05-10	11043390	WILMER MARQUEZ	16040072	WILMER MARQUEZ	16040072	TITULAR	ACCION CENTRAL	SD EMETICO. DESHIDRATACION MODERADA	EMERGENCIA	SANTA MARIA	2090.59999999999991
+185	ALBA E-185	ABRIL	2014-04-30	36732	YANETH PAEZ	13540407	YANETH PAEZ	13540407	TITULAR	MARIA DE LOS ANGELES	IRB + HIPERACTIVIDAD BRONQUIAL 	EMERGENCIA	PEREZ GUILLEN	2860
+186	ALBA E-186	MAYO	2014-05-05	36833	JOSE MIGUEL COLON	11797313	JOSE MIGUEL COLON	11797313	TITULAR	BANCO DE PAVONES	BURSITIS EN HOMBRE DERECHO	EMERGENCIA	PEREZ GUILLEN	1803
+187	ALBA E-187	MAYO	2014-05-07	36904	RICHARD MARTINEZ	23569253	YERDENSON MARTINEZ	MENOR	HIJO	WILLIANS LARA	SD EDEMATOSO EN ESTUDIO	EMERGENCIA	PEREZ GUILLEN	2353
+188	ALBA E-188	MAYO	2014-05-07	36905	SILA RODRIGUEZ	8626902	JESUS RODRIGUEZ	28345509	HJO	MARIA DE LOS ANGELES	URTICARIA + INTOXICACION ALIMENTARIA	EMERGENCIA	PEREZ GUILLEN	1521
+189	ALBA E-189	MAYO	2014-05-10	36979	CARLOS CORDOVA	13650017	VALERIA CORDOBA	29657150	HIJA	MARIA DE LOS ANGELES	FRACTURA EXTREMO DISTAL DE TIBIA Y PERONE IZQ	EMERGENCIA	PEREZ GUILLEN	5716
+190	ALBA E-190	MAYO	2014-05-02	36800	MARIA ZERPA	16639024	MARIA ZERPA	16639024	TITULAR	WILLIANS LARA	SD FEBRIL	EMERGENCIA	PEREZ GUILLEN	2051
+191	ALBA E-191	MAYO	2014-05-09	11043415	MARQUIS MOLINA	18871906	MATHIAS MOLINA	MENOR	HIJO	AGUA BLANCA	SD FEBRIL AGUDO	EMERGENCIA	SANTA MARIA	2682.86000000000013
+192	ALBA E-192	MAYO	2014-05-10	A37471	NAUDIS PINA	19377150	ROSSANNYS TIMAURE	20641693	ESPOSA	AGUA BLANCA	APENDICEPTOMIA LAPAROSCOPICA 	HOSPITALIZACION	SANTA MARIA	52781.739999999998
+193	ALBA E-193	MAYO	2014-05-11	11043445	JOSE AVILA	13485741	JOSE AVILA	13485741	TITULAR	AGUA BLANCA	SD VERTIGINOSO. SD EMETICO	EMERGENCIA	SANTA MARIA	2680.53999999999996
+195	ALBA E-195	MAYO	2014-05-12	11043501	LEVI SOLORZANO	17198785	SCARLIS SOLORZANO	30.539.795	HIJA	TRANSPORTE	SD DOLOROSO ABDOMINAL	EMERGENCIA	SANTA MARIA	2904.40000000000009
+196	ALBA E-196	MAYO	2014-05-12	\N	MARQUIS MOLINA	18871906	MATHIAS MOLINA	MENOR	HIJO	AGUA BLANCA	SD FEBRIL AGUDO	EMERGENCIA	SANTA MARIA	4343.22000000000025
+197	ALBA H-197	MAYO	2014-05-15	A37495	ALEXANDER SANCHEZ	15341479	ALEXANDER SANCHEZ	15341479	TITULAR	AGUA BLANCA	INTOXICACION POR HERBICIDA	HOSPITALIZACION	SANTA MARIA	9125.29000000000087
+198	ALBA E-197	MAYO	2014-05-15	11043522	JOSE AVILA	13485741	FANNY AVILA	6636092	MADRE	CAÑO SECO	LOMBOCETALGIA + HTA	EMERGENCIA	SANTA MARIA	2311.9699999999998
+199	ALBA E-198	MAYO	2014-05-14	A37492	NILSON ESCALONA	14091175	AGUSTINO ESCALONA	4197637	PADRE	PIRITU I	HERNIA INGUINAL IZQ. ATASCADA. HERNIA INGUINAL DERECHA. VAICOCELE IZQUIERDA. HIDROCELE IZQUIERDA	HOSPITALIZACION	SANTA MARIA	63067.8799999999974
+200	ALBA E-199	MAYO	2014-05-11	36998	HERMINIA CASTILLO	14239182	ARACELIS CASTILLO	4345786	MADRE	MARIA DE LOS ANGELES	CEFALEA MIGRAÑOSA	EMERGENCIA	PEREZ GUILLEN	1500
+201	ALBA E-200	MAYO	2014-05-14	37068	YANETH PAEZ	13540407	MARIA BRIZUELA	8628112	MADRE	MARIA DE LOS ANGELES	DOLOR ABDOMINAL	EMERGENCIA	PEREZ GUILLEN	2733
+202	ALBA E-201	MAYO	2014-05-15	37102	CRISTIAN LOZADA	17374281	ARIANNYS LOZADA	MENOR	HIJA	SAN ANTONIO	CRISIS DE ASMA + RINUSOPATIA	EMERGENCIA	PEREZ GUILLEN	2123
+203	ALBA E-202	MAYO	2014-05-15	11043714	GUSTAVO VALDERRAMA	14271811	SOL VALDERRAMA	MENOR	HIJA	ACCION CENTRAL	FARINGOAMIGDALITIS	EMERGENCIA	SANTA MARIA	3103.55999999999995
+204	ALBA E-203	MAYO	2014-05-15	11043703	GUSTAVO VALDERRAMA	14271811	SOL VALDERRAMA	MENOR	HIJA	ACCION CENTRAL	SINDROME FEBRIL + INFECCION RESPIRATORIA BAJA	EMERGENCIA	SANTA MARIA	2977.84999999999991
+205	ALBA E-204	MAYO	2014-05-15	11043695	PEDRO SANCHEZ	13556353	ALIDA CARRERA	12964202	CONCUBINA	ACCION CENTRAL	SINDROME DIARREICO AGUDO + DESHIDRATACION MODERADA	EMERGENCIA	SANTA MARIA	3013.71000000000004
+206	ALBA E-205	MAYO	2014-05-16	11043681	EDGAR RODRIGUEZ	16495019	ORIANA RODRIGUEZ	MENOR	HIJA	ACCION CENTRAL	AMIBIASIS INTESTINAL. DESHIDRATACION . SD DIARREICO AGUDO	EMERGENCIA	SANTA MARIA	3215.78999999999996
+207	ALBA H-206	MAYO	2014-05-17	A37500	ALEXANDER BALZA	24142091	MARIALEZ BALZA	MENOR	HIJA	PIRITU I	IRB NEUMONIA BILATERAL. ITU FEBRIL.DIARREA. ANEMIA MODERADA	HOSPITALIZACION	SANTA MARIA	17173.1500000000015
+208	ALBA H-207	MAYO	2014-05-27	37412	ERASMO CAMACHO	13237349	VALERIA CAMACHO	MENOR	HIJA	MARIA DE LOS ANGELES	HERIDA CORTANTE EN LABIO INFERIOR	EMERGENCIA	PEREZ GUILLEN	14079
+209	ALBA E-208	MAYO	2014-05-25	37318	JEAN CARLOS ROJAS	15480462	FABIANA ROJAS	MENOR	HIJA	SAN ANTONIO	CRUP+SINDROME DIARREICO+SONDROME EMETICO	EMERGENCIA	PEREZ GUILLEN	3089
+210	ALBA E-209	MAYO	2014-05-28	11043908	OSMAN PRADA	17599943	OSMAN  PRADA 	MENOR	HIJO	PAYARA	SINDROME DIARREICO AGUDO  	EMERGENCIA	SANTA MARIA	3041.09000000000015
+211	ALBA E-210	MAYO	2014-05-28	11043924	ALEXANDER SANCHEZ	15341479	ELIEZER SANCHEZ	MENOR	HIJO	AGUA BLANCA	DESHIDRATACION MODERADA	EMERGENCIA	SANTA MARIA	2640.40000000000009
+212	ALBA E-211	MAYO	2014-05-28	11043921	EGRIS CARVAJAL	11543873	ANABELL CARVAJAL	MENOR	HIJA	ACCION CENTRAL	SINDROME FEBRIL AGUDO	EMERGENCIA	SANTA MARIA	3161.63000000000011
+213	ALBA E-212	MAYO	2014-05-28	11043914	ENZO ESCALONA	15071461	JHORMAN ESCALONA	30133580	HIJO	PIRITU I	ABSCESO EN PIEZ IZQUIERDO	EMERGENCIA	SANTA MARIA	3126.82999999999993
+214	ALBA H-212	MAYO	2014-05-28	37412	ERASMO CAMACHO	13237349	VALERIA CAMACHO	MENOR	HIJA	TRILLADORA	HERIDA CORTANTE EN LABIO INFERIROR	HOSPITALIZACION	PEREZ GUILLEN	14692
+215	ALBA H-213	MAYO	2014-05-29	A37524	ENZO ESCALONA	15071461	SABY ESCALONA	30133596	HIJA	PIRITU I	PERITONITIS POR APENDISITIS AGUDA	HOSPITALIZACION	SANTA MARIA	38603.2200000000012
+216	ALBA H-214	MAYO	2014-05-29	A37523	ENZO ESCALONA	15071461	JHORMAN ESCALONA	30133580	HIJO	PIRITU I	CELULITIS ABSCESADA EN PIE IZQUIERDO+OSTEOMIELITIS TACON DERECHO	HOSPITALIZACION	SANTA MARIA	36767.8700000000026
+217	ALBA E-215	MAYO	2014-05-29	37375	JESUS SANOJA	11795542	PETRA MIRABAL	8618011	MADRE	BANCO DE PAVONES	CUERPO EXTRAÑO CORNEAL OJO DERECHO	EMERGENCIA	PEREZ GUILLEN	1906
+218	ALBA E-216	MAYO	2014-05-29	37291	OCTAVIO BOLIVAR	21277484	OCTAVIO BOLIVAR	21277484	TITULAR	RIO GUARICO	TOXOPLASMOSIS OCULAR OJO DERECHO	EMERGENCIA	PEREZ GUILLEN	1942
+219	ALBA E-217	MAYO	2014-05-29	37324	ADELSO BLANCO	14925787	ZULAY SEIJAS	11797447	CONCUBINA	MARIA DE LOS ANGELES	CEFALEA MIGRAÑOSA	EMERGENCIA	PEREZ GUILLEN	1513
+220	ALBA E-218	MAYO	2014-05-28	11044079	STALIN ROJAS	14092210	FHER ROJAS	MENOR	HIJO	ACCION CENTRAL	SINDROME FEBRIL 	EMERGENCIA	SANTA MARIA	3877.98999999999978
+221	ALBA E-219	MAYO	2014-05-28	11044079	ANGEL GUERRERO	9361017	ANGEL GUERRERO	9361017	TITULAR	MECANIZACION	PROSTATITIS AGUDA	EMERGENCIA	SANTA MARIA	5472.69999999999982
+222	ALBA E-220	MAYO	2014-05-28	11044083	MARIA ZERPA	16639024	MARIA ZERPA	16639024	TITULAR	WILLIANS LARA	COLICO RENAL AGUDO	EMERGENCIA	PEREZ GUILLEN	1560
+223	ALBA E-221	MAYO	2014-05-19	37169	DAXI BELLO	10271178	LIZDIANNY BELLO	28010153	HIJA	WILLIANS LARA	INTOXICACION ALIMENTARIA	EMERGENCIA	PEREZ GUILLEN	1655
+224	ALBA E-222	MAYO	2014-05-22	37257	OCTAVIO BOLIVAR	21277484	NAHOMI CARRASQUEL	11795545	CONCUBINA	RIO GUARICO	HIPOTENSION	EMERGENCIA	PEREZ GUILLEN	2605
+225	ALBA H-223	MAYO	2014-05-27	A373531	VICTOR SEQUERA	16566845	VICTOR SEQUERA	16566845	TITULAR	PIRITU I	FX PERONE IZQ.DE MODULO TIBIAL IZQ.	HOSPITALIZACION	SANTA MARIA	67011.0800000000017
+226	ALBA E-224	MAYO	2014-05-30	11044159	VICTOR MORALES	19799308	GREVIANA MORALES	MENOR	HIJA	AGUA BLANCA	ENFERMEDAD DIARREICA AGUDA	EMERGENCIA	SANTA MARIA	4209.07999999999993
+227	ALBA E-225	MAYO	2014-05-31	11044189	OLGA ANGULO	14092444	OLGA ANGULO	14092444	TITULAR	PIRITU III	SD DOLOROSO ABDOMINAL	EMERGENCIA	SANTA MARIA	4236.25
+228	ALBA H-226A	JUNIO	2014-06-05	A37571	ALEXANDER SANCHEZ	15341479	ELIEZER SANCHEZ	MENOR	HIJO	AGUA BLANCA	HRB-IRB-CONJUNTIVITIS	HOSPITALIZACION	SANTA MARIA	16296.9899999999998
+229	ALBA H-226B	JUNIO	2009-06-03	A37563	EDGAR CAMEJO	17364409	MARYURI GIL	22100208	CONCUBINA	MECANIZACION	EMBARAZO DE 38 SEMANAS . PARTO	HOSPITALIZACION	SANTA MARIA	25328.0200000000004
+230	ALBA E-227	JUNIO	2014-06-03	11044300	ALEXIS TOVAR	12263227	ALEXIS SEBASTIAN TOVAR	MENOR	HIJO	CAÑO SECO	CRISIS AGUDA DE ASMA	EMERGENCIA	SANTA MARIA	3356.94000000000005
+231	ALBA E-228	MAYO	2014-05-30	37459	ONEL CALDERON PEREZ	16747349	JOEL CALDERON SALAZAR	MENOR	HIJO	BANCO DE PAVONES	SD DIARREICO AGUDO	EMERGENCIA	PEREZ GUILLEN	1372
+232	ALBA E-229	JUNIO	2014-06-02	37531	CARLOS CORDOVA	13650017	VALERIA CORDOBA	29657150	HIJA	MARIA DE LOS ANGELES	FX EXTREMO DISTAL DE TIBIA Y PERONE TOBILLO IZQ.	EMERGENCIA	PEREZ GUILLEN	2169
+233	ALBA E-230	JUNIO	2014-06-02	37510	GLADYS MERCADO 	15480499	GLADYS MERCADO 	15480499	TITULAR	BANCO DE PAVONES	SD EMETICO + DESHIDRATACION LEVE	EMERGENCIA	PEREZ GUILLEN	1504
+234	ALBA E-231	JUNIO	2014-06-10	37698	YECIBEL SANTOS	11089451	MARIA CABRERA	MENOR	HIJA	WILLIANS LARA	SD FEBRIL +  SD EMETICO	EMERGENCIA	PEREZ GUILLEN	2546
+235	ALBA E-232	JUNIO	2014-06-11	37736	ORANGEL BILVAO	17374577	CHRISTIAN BILVAO	MENOR	HIJO	WILLIANS LARA	TRAUMATISMO CRANEAL	EMERGENCIA	PEREZ GUILLEN	2341
+236	ALBA E-233	JUNIO	2014-06-06	11044405	MARQUIS MOLINA	18871906	MATHIAS MOLINA	MENOR	HIJO	AGUA BLANCA	SD EMETICO	EMERGENCIA	SANTA MARIA	2841.46000000000004
+237	ALBA E-234	JUNIO	2014-06-10	11044522	YAURI LINAREZ	19799594	FRANYELIS LINAREZ	MENOR	HIJA	PIRITU II	SINDROME FEBRIL 	EMERGENCIA	SANTA MARIA	3303.01999999999998
+238	ALBA E-235	JUNIO	2014-06-16	11044687	ABEL RIVERO	17601269	ABEL RIVERO	17601269	TITULAR	AGUA BLANCA	INTOXICACION CON  ORGANOS FOSFORADOS	EMERGENCIA	SANTA MARIA	2121.82000000000016
+239	ALBA E-236	JUNIO	2014-06-18	557	CLEMENTE ULACIO 	17278779	ANTIONETA DI GIOVANNI	17601879	CONCUBINA	BICEABASTO	BRONQUEOLITISIS/AMIGDALITIS	EMERGENCIA	SANTA FE	990
+240	ALBA E-237	JUNIO	2014-06-18	558	ANTONIO TIRADO	12368356	ANTONIO TIRADO	12368356	TITULAR	ACCION CENTRAL	INTOXICACION ALIMENTARIA	EMERGENCIA	SANTA FE	720
+241	ALBA E-238	JUNIO	2014-06-19	11044740	MILAGROS GALLEGOS	17796642	ZADKIEL AVENDAÑO	MENOR	HIJO	ACCION CENTRAL	SINDROME FEBRIL AGUDO	EMERGENCIA	SANTA MARIA	2210.82000000000016
+242	ALBA E-239	JUNIO	2014-06-17	37863	MIGUEL ANGEL CORONADO	16640708	ANGEL CORONADO MONTILLA	MENOR	HIJO	RIO GUARICO	SD FEBRIL AGUDO	EMERGENCIA	PEREZ GUILLEN	1376
+243	ALBA E-240	JUNIO	2014-06-19	37912	JUAN MARCANO	19943439	MARIELVIS  MARCANO	MENOR	HIJA	RIO GUARICO	SD FEBRIL AGUDO	EMERGENCIA	PEREZ GUILLEN	1767
+244	ALBA E-241	JUNIO	2014-06-19	37931	EDGAR ASCANIO	13482629	GLADYS VELAZQUEZ	8150319	MADRE	WILLIANS LARA	CONTUSION Y HEMATOMA EN 1/3 DISCAL DE PIERNA IZQ	EMERGENCIA	PEREZ GUILLEN	2990
+245	ALBA E-242	JUNIO	2014-06-19	37934	ORANGEL BILVAO	17374577	ORANGEL BILVAO	17374577	TITULAR	WILLIANS LARA	SD EMETICO + SD DIARREICO	EMERGENCIA	PEREZ GUILLEN	1754
+246	ALBA E-243	JUNIO	2014-06-20	37939	CRISTIAN LOZADA	17374281	ARIANNYS LOZADA	MENOR	HIJA	SAN ANTONIO	CRISIS DE ASMA	EMERGENCIA	PEREZ GUILLEN	2434
+247	ALBA E-244	JUNIO	2014-06-19	110448819	RODOLFO ALVAREZ	14091105	MAGDALIS CORDONES	8662015	MADRE	TRANSPORTE	SD DIARREICO AGUDO.  DESHIDRATACION MODERADA	EMERGENCIA	SANTA MARIA	3219.07000000000016
+248	ALBA E-245	JUNIO	2014-06-23	11044904	DOMINGO PACHECO	20642114	ANGEL PACHECO	HIJO 	MENOR	PAYARA	SD DIARREICO AGUDO + RINOFARINGITIS AGUDA	EMERGENCIA	SANTA MARIA	4050.23999999999978
+249	ALBA E-246	JUNIO	2014-06-25	11044990	SOLVAY RUIZ	15693248	MUJICA BELKYS	7598176	MADRE	AGUA BLANCA	LUMBALGIA	EMERGENCIA	SANTA MARIA	2139.44999999999982
+250	ALBA E-247	JUNIO	2014-06-25	11045004	ROSMARY ZABALA	18871413	ROSMARY ZABALA	18871413	TITULAR	ACCION CENTRAL	CRISIS ASMATICA. BRONCO ESPASMO AGUDO	EMERGENCIA	SANTA MARIA	3017.32000000000016
+251	ALBA E-248	JUNIO	2014-06-25	11045005	REINALDO BARROSO	12091391	MARTINA CALANCHE	14887893	CONCUBINA	ACCION CENTRAL	AMIGDALITIS PULTACEA	EMERGENCIA	SANTA MARIA	2570.92000000000007
+252	ALBA E-249	JUNIO	2014-06-26	11045032	MARQUIS MOLINA	18871906	MATHIAS MOLINA	MENOR	HIJO	AGUA BLANCA	SD FEBRIL AGUDO	EMERGENCIA	SANTA MARIA	2951.15999999999985
+253	ALBA E-250	JUNIO	2014-06-27	11045089	EGRIS CARVAJAL	11543873	EGRIS CARVAJAL	11543873	TITULAR	ACCION CENTRAL	PARALISIS FACIAL 	EMERGENCIA	SANTA MARIA	4155.72000000000025
+254	ALBA E-251	JUNIO	2014-05-27	37399	MARIA MARQUEZ	8628954	MARIA MARQUEZ	8628954	TITULAR	WILLIANS LARA	CRISIS HIPERTENSIVA	EMERGENCIA	PEREZ GUILLEN	2166
+255	ALBA E-252	JULIO	2014-07-01	11045197	PEREZ FERNANDO	16565316	FALCON FELIPA	3869652	MADRE	MECANIZACION	LUMBALGIA	EMERGENCIA	SANTA MARIA	2216.36000000000013
+256	ALBA E-253	JULIO	2014-06-19	11044808	LUGO ARGENIS	9843582	LUGO ARGENIS	9843582	TITULAR	PIRITU III	TRAUMATISMO LUMBOSACRO	EMERGENCIA	SANTA MARIA	6361.77000000000044
+257	ALBA H-254	JULIO	2014-06-27	A0037672	SOLANO ANTONIO	19637485	SOLANO ANTONIO	19637485	TITULAR	PIRITU II	FRACTURA CODO IZQUIERDO	EMERGENCIA	SANTA MARIA	40994
+258	ALBA E-255	JULIO	2014-07-06	11045351	QUERALES LUIS	17277931	QUERALES ANGEL	MENOR	HIJO	PIRITU II	SINDROME DIARREICO AGUDO  	EMERGENCIA	SANTA MARIA	2395.25
+259	ALBA E-256	JULIO	2014-07-07	11045375	BARRETO CINDY	20389614	PAÑUELA BARBARA	MENOR	HIJA	PIRITU II	SX EMETICO	EMERGENCIA	SANTA MARIA	2185.38999999999987
+260	ALBA E-257	JULIO	2014-07-07	11045381	PRADA OSMAN	17599943	OSMAN  PRADA 	17599943	TITULAR	PAYARA	ABSCESO POSTRAUMATICO EN PIERNA DERECHA	EMERGENCIA	SANTA MARIA	5465.84000000000015
+261	ALBA E-258	JULIO	2014-07-02	11045218	JORGE LANDAETA	14425236	MARYORI LANDAETA	MENOR	HIJA	PAYARA	GASTROENTERITIS	EMERGENCIA	SANTA MARIA	3237.46000000000004
+262	ALBA E-259	JULIO	2014-07-10	11045502	ROSA ERNESTINA LANDINEZ	1209259	HILDA COLMENAREZ	MENOR	HIJA	MECANIZACION	SINDROME EMETICO AGUDO 	EMERGENCIA	SANTA MARIA	2143.92999999999984
+263	ALBA E-260	JULIO	2014-07-09	11045467	ISMAEL QUERALES	14980183	ISMARY QUERALES	28004177	HIJA	PAYARA	SINDROME DIARREICO AGUDO  	EMERGENCIA	SANTA MARIA	3082.19000000000005
+194	ALBA E-194	MAYO	2014-05-11	2014-05-11	VALMERI RODRIGUEZ	21563795	NORMA JUAREZ	8655515	MADRE	PIRITU III	QUISTE CEBASEO ABSCESADO	EMERGENCIA	SANTA MARIA	4784.77000000000044
+\.
+
+
+--
+-- Name: hclinicas_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
+--
+
+SELECT pg_catalog.setval('hclinicas_id_seq', 1, false);
+
+
+--
+-- Data for Name: hfarmacias; Type: TABLE DATA; Schema: public; Owner: arrozalba
+--
+
+COPY hfarmacias (id, mes, frecepcion, factura_prefactura, ffactura, titular, tcedula, paciente, pcedula, parentesco, sede, farmacia, patologia_medica, tipo_gasto, total_pagar) FROM stdin;
+1	FEBRERO	2014-02-19	162072	2014-02-05	MIGUEL MEDINA	15491293	CARMONA HILDA	9560361	MADRE	MECANIZACION	AVILA	E.V.C ISQUEMICA	PERMANENTE	1945.57999999999993
+2	FEBRERO	2014-02-19	149967	2014-02-05	CARLOS MOLINA	10135498	COLMENARES MARIA 	1985467	MADRE	ACCION CENTRAL	AVILA	OSTEOPOROSIS 	PERMANENTE	1194.02999999999997
+3	FEBRERO	2014-02-19	262069	2014-02-05	CARLOS MOLINA	10135498	MOLINA RAFAEL	896771	PADRE	ACCION CENTRAL	AVILA	HAS	PERMANENTE	474.519999999999982
+4	FEBRERO	2014-02-19	262071	2014-02-05	COLMENAREZ HENRRI	7547441	COLMENAREZ HENRRI	7547441	TITULAR	ACCION CENTRAL	AVILA	HAS	PERMANENTE	148.810000000000002
+5	FEBRERO	2014-02-19	262069	2014-02-05	COLMENAREZ HENRRI	7547441	COLMENAREZ HENRRI	7547441	TITULAR	ACCION CENTRAL	AVILA	HAS	PERMANENTE	217.949999999999989
+6	FEBRERO	2014-02-19	150066	2014-02-06	LOPEZ WILMER	14540230	LOPEZ WILMER	14540230	TITULAR	PIRITU I	AVILA	CRISIS DE ASMA MODERADA	AMBULATORIO	505.350000000000023
+7	FEBRERO	2014-02-19	262162	2014-02-06	HOWER VIVEROS	24588289	OMAIRA RUIZ	24588396	MADRE	TRANSPORTE	AVILA	HAS. INSUF VASCULAR VENOSA	PERMANENTE	841.07000000000005
+8	FEBRERO	2014-02-19	261267	2014-02-06	CUERVO EMILIN	13036421	CUERVO HUGO	5240050	PADRE	ACCION CENTRAL	AVILA	DIABETES TIPO II	PERMANENTE	317.480000000000018
+9	FEBRERO	2014-02-19	261273	2014-02-06	VASQUEZ MIGUEL	14540230	VASQUEZ ANA	1126102	MADRE	PIRITU I	AVILA	OSTEOPENIA	AMBULATORIO	519.480000000000018
+10	FEBRERO	2014-02-19	261274	2014-02-06	VASQUEZ MIGUEL	14540230	VASQUEZ ANA	1126102	MADRE	PIRITU I	AVILA	HAS. DISLIPIDEMIA	PERMANENTE	731.139999999999986
+11	FEBRERO	2014-02-19	262206	2014-02-06	LUCENA MARY	12447000	LUCENA JACINTO	4611989	PADRE	ACCION CENTRAL	AVILA	CARDIOPATIA MIXTA	PERMANENTE	646.539999999999964
+12	FEBRERO	2014-02-19	262221	2014-02-06	LORETO INOSTROSA	24320049	ZOILA DE INOSTROZA	E-81288458	MADRE	ACCION CENTRAL	AVILA	EVCI. HAS	PERMANENTE	1574.03999999999996
+13	FEBRERO	2014-02-19	261325	2014-02-07	MARTINEZ FRANCISCO	12858761	MARTINEZ FRANCISCO	12858761	TITULAR	ACCION CENTRAL	AVILA	HTA. 	PERMANENTE	3562.55000000000018
+14	FEBRERO	2014-02-19	261326	2014-02-07	MARTINEZ FRANCISCO	12858761	BRICEÑO ZOYLA	9018348	MADRE	ACCION CENTRAL	AVILA	HAS; DISLIPIDEMIA	PERMANENTE	248.77000000000001
+15	FEBRERO	2014-02-19	292058	2014-02-07	GONZALEZ CARLOS	16966805	GONZALEZ CARLOS	16966805	TITULAR	PIRITU I	AVILA	DIABETES MELLITUS	PERMANENTE	629.120000000000005
+16	FEBRERO	2014-02-19	262231	2014-02-07	AGUIN XIOMARA	9841952	HILDA HERNANDEZ	1106361	MADRE	ACCION CENTRAL	AVILA	INSUFICIENCIA VENOZA CRONICA	PERMANENTE	504.399999999999977
+17	FEBRERO	2014-02-19	262232	2014-02-07	AGUIN XIOMARA	9841952	HILDA HERNANDEZ	1106361	MADRE	ACCION CENTRAL	AVILA	INSUFICIENCIA VENOZA CRONICA	PERMANENTE	302.389999999999986
+18	FEBRERO	2014-02-19	262233	2014-02-07	ARELLANO SALUSTRIO	5940201	ARELLANO SALUSTRIO	5940201	TITULAR	AGUA BLANCA	AVILA	HAS	PERMANENTE	757.539999999999964
+19	FEBRERO	2014-02-19	262234	2014-02-07	PERAZA FRANMER	15868665	PERAZA MARIA	9258033	MADRE	AGUA BLANCA	AVILA	FIBROMIALGIA HIPOTIROIDISMO	PERMANENTE	1532.56999999999994
+20	FEBRERO	2014-02-19	261412	2014-02-07	YUSTIZ CARMEN	11543412	YUSTIZ RICARDA	1126764	MADRE	PIRITU I	AVILA	HAS. OSTEOPENIA	PERMANENTE	600.529999999999973
+21	FEBRERO	2014-02-19	169883	2014-02-07	VASQUEZ MIGUEL	14540230	VASQUEZ MICHELL	27880255	HIJA	PIRITU I	AVILA	EPIGASTRALGIA	AMBULATORIO	137.25
+22	FEBRERO	2014-02-19	292077	2014-02-07	CUENCA NORIS	14092771	GALINDEZ DIEGO	30275.61	HIJO	ACCION CENTRAL	AVILA	BRONCO ESPASMO	AMBULATORIO	851.740000000000009
+23	FEBRERO	2014-02-19	292078	2014-02-07	CUENCA NORIS	14092771	GALINDEZ OSCAR	12527587	ESPOSO	ACCION CENTRAL	AVILA	DMNID	PERMANENTE	268.220000000000027
+24	FEBRERO	2014-02-19	169913	2014-02-07	GARCIA ALI	24653077	ARCILA LIDIA	7544764	MADRE	AGUA BLANCA	AVILA	TVP DE MII. ACV HEMORRAGICO	PERMANENTE	612.389999999999986
+25	FEBRERO	2014-02-19	150301	2014-02-08	CARLOS SOTO	19715985	SOTO RIGOBERTO	3867513	PADRE	AGUA BLANCA	AVILA	CARDIOPATIA HIPERTENSIVA	PERMANENTE	1029.77999999999997
+26	FEBRERO	2014-02-19	150302	2014-02-08	CARLOS SOTO	19715985	COLMENAREZ ARELIS	5942947	MADRE	AGUA BLANCA	AVILA	HAS. HIPERINSULINISMO	PERMANENTE	102.840000000000003
+27	FEBRERO	2014-02-19	261484	2014-02-08	ROSA JOSE	10144706	ROSA JOSE	10144706	TITULAR	AGUA BLANCA	AVILA	HAS	PERMANENTE	516.17999999999995
+28	FEBRERO	2014-02-19	170047	2014-02-08	MARIA DIAZ	14887833	YUBERIS PEREZ	4239170	MADRE	ACCION CENTRAL	AVILA	DISPEPSIA	AMBULATORIO	1027.34999999999991
+29	FEBRERO	2014-02-21	170985	2014-02-15	GUEVARA ARCANGEL	14677755	MARIA TORREALBA	4609864	MADRE	PIRITU II	AVILA	GASTRITIS CRONICA	PERMANENTE	1138.92000000000007
+30	FEBRERO	2014-02-21	262907	2014-02-15	TULIO VASQUEZ	11849149	TULIO VASQUEZ	11849149	TITULAR	PIRITU II	AVILA	SD MIGRAÑOSO	AMBULATORIO	308.089999999999975
+31	FEBRERO	2014-02-21	262905	2014-02-15	PARRA ANGEL	19637051	LURDES MAGALHAIS	24320488	ESPOSA	AGUA BLANCA	AVILA	E. HIPOTICA	AMBULATORIO	919.259999999999991
+32	FEBRERO	2014-02-21	170978	2014-02-15	SANCHEZ NEPTALY 	15341658	SANCHEZ OMAIRA	1121147	MADRE	ACCION CENTRAL	AVILA	INSUFICIENCIA VENOSA	PERMANENTE	419.319999999999993
+33	FEBRERO	2014-02-21	170909	2014-02-14	MILAGROS APONTE	13226149	MILAGROS APONTE	13226149	TITULAR	PIRITU II	AVILA	PTERIGION OD	AMBULATORIO	113.760000000000005
+34	FEBRERO	2014-02-21	292802	2014-02-14	CARLOS LOPEZ	19051990	CARLOS LOPEZ	19051990	TITULAR	PIRITU II	AVILA	TRAUMATISMO EN PIE DERECHO	AMBULATORIO	174.139999999999986
+35	FEBRERO	2014-02-21	262289	2014-02-14	DEISY GAINZA	16565969	DEISY LOPEZ	3869477	MADRE	PIRITU III	AVILA	CARDIOPATIA ISQUEMICA	PERMANENTE	1617.99000000000001
+36	FEBRERO	2014-02-21	170869	2014-02-14	JOSE FIGUEROA	9564903	FRANCISCA FIGUEROA	1228463	MADRE	PIRITU II	AVILA	 CARDIOPARTIA. HTA ESTADIO I	PERMANENTE	640.919999999999959
+37	FEBRERO	2014-02-21	163083	2014-02-14	INDEMAR FREITEZ	19172723	INDEMAR FREITEZ	19172723	TITULAR	BICEABASTO	AVILA	OTITIS. RINOFARINGITIS	AMBULATORIO	245.439999999999998
+38	FEBRERO	2014-02-21	170793	2014-02-14	JOSE SANCHEZ	12527097	ALISMAR SANCHEZ	MENOR	HIJA	AGUA BLANCA	AVILA	CEFALEA Y MAREOS	AMBULATORIO	186.800000000000011
+39	FEBRERO	2014-02-21	170792	2014-02-14	CARLOS CASTILLO	17601438	CARVAJAL ADIS	10636514	MADRE	PIRITU II	AVILA	PRE MENOSPAUSIA; HAS	PERMANENTE	93.980000000000004
+40	FEBRERO	2014-02-21	262853	2014-02-14	NORIS CUENCA	14092771	GALINDEZ DANIEL	MENOR	HIJO	ACCION CENTRAL	AVILA	HIPERACTIVIDAD BRONQUIAL	AMBULATORIO	230.449999999999989
+41	FEBRERO	2014-02-21	262181	2014-02-13	AMARILIS BASTIDAS	118451601	AMARILIS BASTIDAS	118451601	TITULAR	ACCION CENTRAL	AVILA	CERVICOBRANQUIALGIA	AMBULATORIO	586.110000000000014
+42	FEBRERO	2014-02-21	170765	2014-02-13	MORA YULY	13353300	MORA YULY	13353300	TITULAR	ACCION CENTRAL	AVILA	PANSINUSITIS. ESPOLON IMPACTANTE TABIQUE NASAL	PERMANENTE	338.199999999999989
+43	FEBRERO	2014-02-21	292832	2014-02-14	PERAZA FRANMER	15868665	PERAZA MARIA	9258033	MADRE	AGUA BLANCA	AVILA	FIBROMIALGIA. HIPOTIROIDISMO	PERMANENTE	87.769999999999996
+44	FEBRERO	2014-02-21	170884	2014-02-14	PERAZA FRANMER	15868665	PERAZA MARIA	9258033	MADRE	AGUA BLANCA	AVILA	FIBROMIALGIA. HIPOTIROIDISMO	PERMANENTE	3.29999999999999982
+45	FEBRERO	2014-02-21	170740	2014-02-13	OROPEZA JULIO	10142400	OROPEZA JULIO	10142400	TITULAR	PIRITU I	AVILA	HAS CRONICA	PERMANENTE	536.470000000000027
+46	FEBRERO	2014-02-21	262733	2014-02-13	CANDIDO ESCOBAR	10636444	CANDIDO ESCOBAR	10636444	TITULAR	PIRITU II	AVILA	HAS ESTADIO II	PERMANENTE	469.639999999999986
+47	FEBRERO	2014-02-21	170739	2014-02-13	PEREZ PEDRO	9569079	SANCHEZ RAFAELA	1228205	MADRE	PIRITU I	AVILA	ARTRITIS REMATOIDEA	PERMANENTE	779.980000000000018
+48	FEBRERO	2014-02-21	262124	2014-02-13	YELITZA MARTINEZ	15071456	YELITZA MARTINEZ	15071456	TITULAR	PIRITU II	AVILA	CELULITIS MUSLO IZQUIERDO	AMBULATORIO	581.75
+49	FEBRERO	2014-02-21	262118	2014-02-13	GRACIELA MORILLO	8660443	ISABEL DE MORILLO	1256270	MADRE	BICEABASTO	AVILA	DM TIPO II. HAS	PERMANENTE	2218.55000000000018
+50	FEBRERO	2014-02-21	170732	2014-02-13	RODRIGUEZ ENDER	16565825	RODRIGUEZ BALENTIN	8755517	PADRE	AGUA BLANCA	AVILA	MONONEUROPATIA PERIFERICA	PERMANENTE	1389.17000000000007
+51	FEBRERO	2014-02-21	292688	2014-02-13	GONZALEZ CARLOS	16966805	GONZALEZ CARLOS	16966805	TITULAR	PIRITU I	AVILA	DOLOR LUMBAR POST-TRAUMATICO	AMBULATORIO	215.129999999999995
+52	FEBRERO	2014-02-21	170704	2014-02-13	LISNEY GALINDEZ	17944278	ADDIS GALINDEZ	3907431	PADRE	PAYARA	AVILA	DM TIPO II. INSUF CARDIACA	PERMANENTE	1217.1099999999999
+53	FEBRERO	2014-02-21	292668	2014-02-13	AULAR JEAN CARLOS	16041033	AULAR JEAN CARLOS	16041033	TITULAR	MECANIZACION	AVILA	ENFERMEDAD DIARREICA AGUDA	AMBULATORIO	152.060000000000002
+54	FEBRERO	2014-02-21	162855	2014-02-13	ALEXANDER SANCHEZ	15341479	MARI SOTO	15538836	ESPOSA	AGUA BLANCA	AVILA	COLICO NEFRITICO	AMBULATORIO	273.420000000000016
+55	FEBRERO	2014-02-21	162836	2014-02-13	ROMEL MUÑOZ	13858018	ROMELIA MARQUEZ	5436297	MADRE	PAYARA	AVILA	SINDROME  ICTAL. EVC ISQUEMICA	PERMANENTE	632.67999999999995
+56	FEBRERO	2014-02-21	262691	2014-02-12	YELITZA MARTINEZ	15071456	MARIA BARRIOS	4611413	MADRE	PIRITU II	AVILA	TENDINITIS  EN HOMBRO	AMBULATORIO	455.95999999999998
+57	FEBRERO	2014-02-21	262679	2014-02-12	AMADO TORCATES	11079797	FRANCISCA LOPEZ	4611389	MADRE	PAYARA	AVILA	ARTROSIS SISTEMICA. INSUF CIRCULATORIA PERIFERICA	PERMANENTE	2382.48000000000002
+58	FEBRERO	2014-02-21	262675	2014-02-12	ROSMARY MENDEZ	12090662	LEONARDO  BONILLA	12526449	ESPOSO	PIRITU III	AVILA	HAS.DISLIPIDEMIA. HIPERGLICEMIA	PERMANENTE	1360.07999999999993
+59	FEBRERO	2014-02-21	262000	2014-02-12	DEISY GAINZA	16565969	GAINZA HENRIQUE	3319981	PADRE	PIRITU III	AVILA	ULCERA CORNEAL HERPETICA OI	AMBULATORIO	527.090000000000032
+60	FEBRERO	2014-02-21	262674	2014-02-12	ROSMARY MENDEZ	12090662	ROSA GALLARDO	5369243	MADRE	PIRITU III	AVILA	HAS. OSTEOPOROSIS. DISLIPIDEMIA	PERMANENTE	903.460000000000036
+61	FEBRERO	2014-02-21	262673	2014-02-12	ROSMARY MENDEZ	12090662	RANIA BONILLA	MENOR	HIJA	PIRITU III	AVILA	RINOSINUPATIA	AMBULATORIO	319.829999999999984
+62	FEBRERO	2014-02-21	262672	2014-02-12	CARLOS CORDOVA	19636360	CARLISMAR CORDOVA	MENOR	HIJA	PIRITU III	AVILA	DESNUTRICION MODERADA	AMBULATORIO	348.379999999999995
+63	FEBRERO	2014-02-21	262671	2014-02-12	ROSMARY MENDEZ	12090662	ROSMARY MENDEZ	12090662	TITULAR	PIRITU III	AVILA	AST HIPERMETROPICO	AMBULATORIO	313.95999999999998
+64	FEBRERO	2014-02-21	262670	2014-02-12	JAVIER PEREZ	12965923	MARIANELA ESCALONA	23579313	ESPOSA	PIRITU III	AVILA	HEMORRAGIA DISFUNCIONAL E HIPOTENSION ARTERIAL	AMBULATORIO	731.200000000000045
+65	FEBRERO	2014-02-21	262650	2014-02-12	MARCOS CIVIRA	9045190	PAULA ESCOBAR	9564177	CONYUGUE	PAYARA	AVILA	DM TIPO II DE LARGA DATA	PERMANENTE	1607.88000000000011
+66	FEBRERO	2014-02-21	261967	2014-02-12	DANNY DURAN 	16992813	HERNANDEZ RITA	7186818	MADRE	MECANIZACION	AVILA	OSTEOPENIA	PERMANENTE	204.780000000000001
+67	FEBRERO	2014-02-21	262649	2014-02-12	MARCOS CIVIRA	9045190	PAULA ESCOBAR	9564177	CONYUGUE	PAYARA	AVILA	ACUFENO INTERMITENTE OIDO IZQ Y MAREOS	AMBULATORIO	493.20999999999998
+68	FEBRERO	2014-02-21	162773	2014-02-12	CARLOS GARCIA	17362441	KARIBETH RODRIGUEZ	17276559	ESPOSA	TRANSPORTE	AVILA	EMBARAZO DE 13 SEMANAS	PERMANENTE	217.039999999999992
+69	FEBRERO	2014-02-21	162755	2014-02-12	MANJARES HIVANEL	18102664	MANJARES HIVANEL	18102664	TITULAR	MECANIZACION	AVILA	DEGENERACION DISCAL	AMBULATORIO	390.649999999999977
+70	FEBRERO	2014-02-21	162745	2014-02-12	EFREN SIERRA	7543855	EFREN SIERRA	7543855	TITULAR	PIRITU II	AVILA	DX. DORSO-LUMBALGIA. DM TIPO II	PERMANENTE	747.639999999999986
+71	FEBRERO	2014-02-21	292351	2014-02-10	MORIAN WILMER	6680335	NIERES NATIVIDAD	1225103	MADRE	PIRITU II	AVILA	INSUFICIENCIA VASCULAR GRADO II	PERMANENTE	717.32000000000005
+72	FEBRERO	2014-02-21	262470	2014-02-10	SANCHEZ PEDRO	13556353	ZAVARCE MILCAHUR	1127937	MADRE	ACCION CENTRAL	AVILA	HAS. OBESIDAD OSTEOPOROSIS	PERMANENTE	1554.70000000000005
+73	FEBRERO	2014-02-21	262469	2014-02-10	SANCHEZ PEDRO	13556353	SANCHEZ PEDRO	13556353	TITULAR	ACCION CENTRAL	AVILA	HAS	PERMANENTE	513.419999999999959
+74	FEBRERO	2014-02-21	261698	2014-02-10	COLMENAREZ ELSY	15869120	COLMENAREZ TEODORO	5954761	PADRE	PIRITU I	AVILA	CARDIOPATIA HIPERTENSIVA	PERMANENTE	428.509999999999991
+75	FEBRERO	2014-02-21	262468	2014-02-10	SANCHEZ PEDRO	13556353	SANCHEZ JUAN PEDRO	MENOR	HIJO	ACCION CENTRAL	AVILA	CUADRO ALERGICO AGUDO	AMBULATORIO	320.149999999999977
+76	FEBRERO	2014-02-21	162519	2014-02-10	ARGUELLES JOSE	17363895	CHIRINOS ELOINA	6777052	MADRE	PIRITU II	AVILA	CARDIOPATIA HIPERTENSIVA. HTA.MCEVVI	PERMANENTE	300.680000000000007
+77	FEBRERO	2014-02-21	162518	2014-02-10	COLMENAREZ JOSE	14425942	MORENO GIORGINA	4201889	MADRE	PIRITU II	AVILA	CARIDIOPATIA ISQUEMICA. DM TIPO II	PERMANENTE	1985.61999999999989
+78	FEBRERO	2014-02-21	170384	2014-02-10	DELGADO ERIKA	13228242	DI DIOMEDE ANTONIETA	12446197	MADRE	PIRITU I	AVILA	ARTRITIS REMATOIDEA	PERMANENTE	707.799999999999955
+79	FEBRERO	2014-02-21	150506	2014-02-10	RAMOS ELI	12089670	RAMOS ELI	12089670	TITULAR	PIRITU I	AVILA	DM TIPO II . HIPERGLICEMIA	PERMANENTE	1527.99000000000001
+80	FEBRERO	2014-02-21	150505	2014-02-10	RAMOS ELI	12089670	ALBERTI JENNY	14469240	ESPOSA	PIRITU I	AVILA	ARTROSIS CRONICA	AMBULATORIO	1135.77999999999997
+81	FEBRERO	2014-02-21	162487	2014-02-10	MAIKER PEÑA	14045337	PINTO YADIRA	6428189	MADRE	AGUA BLANCA	AVILA	OSTEOPENIA	PERMANENTE	219.919999999999987
+82	FEBRERO	2014-02-21	262447	2014-02-10	COLMENAREZ ANDRES	4195900	COLMENAREZ ANDRES	4195900	TITULAR	MECANIZACION	AVILA	INSUFICIENCIA CEREBROVASCULAR	AMBULATORIO	463.699999999999989
+83	FEBRERO	2014-02-21	262426	2014-02-10	GLADYS BLANCO	12262410	JOSE CARUCI	5249791	ESPOSO	EL CANDIL	AVILA	HTA ESTADIO II. DISLIPIDEMIA	PERMANENTE	1824.8900000000001
+84	FEBRERO	2014-02-21	262425	2014-02-10	GLADYS BLANCO	12262410	GLADYS BLANCO	12262410	TITULAR	EL CANDIL	AVILA	INSUFICIENCIA VENOSA	PERMANENTE	599.809999999999945
+85	FEBRERO	2014-02-21	292315	2014-02-10	JIMENEZ ASDRUBAL	11545959	RODRIGUEZ OLGA	5364812	MADRE	AGUA BLANCA	AVILA	OSTEOPOROSIS	PERMANENTE	601.580000000000041
+86	FEBRERO	2014-02-21	261877	2014-02-11	GARCIA ALI	24653077	LIDIA ARCILA	7544764	MADRE	AGUA BLANCA	AVILA	DOLOR EN HEMICRANEO DERECHO	AMBULATORIO	483.060000000000002
+87	FEBRERO	2014-02-21	262581	2014-02-11	CUENCA NORIS	12771092	CASTRO DOMINGA	4611971	MADRE	ACCION CENTRAL	AVILA	ARTRITIS REMATOIDEA. OSTEOSPOROSIS	AMBULATORIO	768.519999999999982
+88	FEBRERO	2014-02-21	262580	2014-02-11	CUENCA NORIS	12771092	GALINDEZ DANIEL	MENOR	HIJO	ACCION CENTRAL	AVILA	HIPERACTIVIDAD BRONQUIAL	AMBULATORIO	950.779999999999973
+89	FEBRERO	2014-02-21	292420	2014-02-11	JELIBETH ALVARADO	11785981	JELIBETH ALVARADO	11785981	TITULAR	TRANSPORTE	AVILA	OBESIDAD MORBIDA	PERMANENTE	132.840000000000003
+90	FEBRERO	2014-02-21	292419	2014-02-11	TIRADO ANTONIO	12368356	TIRADO ANTONIO	2514670	PADRE	PIRITU I	AVILA	FARINGO LARINGITIS	AMBULATORIO	353.519999999999982
+91	FEBRERO	2014-02-21	150659	2014-02-11	ORTIZ NESTOR	3866991	ORTIZ NESTOR	3866991	TITULAR	ACCION CENTRAL	AVILA	HAS. CARDIOPATIA ISQUEMICA	PERMANENTE	1231.99000000000001
+92	FEBRERO	2014-02-21	170508	2014-02-11	RODRIGUEZ ENDER	16565825	RODRIGUEZ BALENTIN	8755517	PADRE	AGUA BLANCA	AVILA	PARALISIS PARCIAL PERIFERICA	AMBULATORIO	445.399999999999977
+93	FEBRERO	2014-02-21	170507	2014-02-11	RODRIGUEZ ENDER	16565825	RODRIGUEZ ENDER	16565825	TITULAR	AGUA BLANCA	AVILA	AMIGDALITIS AGUDA	AMBULATORIO	35.4299999999999997
+94	FEBRERO	2014-02-21	262556	2014-02-11	LANDINEZ ROSA	12092691	LICON HILDA	3043305	MADRE	MECANIZACION	AVILA	SD METABOLICO	PERMANENTE	1193.56999999999994
+95	FEBRERO	2014-02-21	262555	2014-02-11	FREITEZ RENZO	16416522	PEREIRA OMAIRA	19282523	ESPOSA	MECANIZACION	AVILA	EMBARAZO DE 26 SEMANAS	PERMANENTE	295.860000000000014
+96	FEBRERO	2014-02-21	261807	2014-02-11	MENDEZ GIOVANNY	9837225	MENDEZ GIOVANNY	9837225	TITULAR	PIRITU II	AVILA	HTA ESTADIO II	PERMANENTE	146.52000000000001
+97	FEBRERO	2014-02-21	170463	2014-02-11	GONZALEZ MANUEL	10140861	QUINTANA MIREYA	10637302	ESPOSA	PIRITU II	AVILA	CERVICO ARTROSIS	PERMANENTE	1740.38000000000011
+98	FEBRERO	2014-02-21	162580	2014-02-11	BELKYS CRESPO 	8657682	CRESPO JESUS	2499599	PADRE	ACCION CENTRAL	AVILA	SINDROME ICTAL	PERMANENTE	1117.43000000000006
+99	FEBRERO	2014-02-21	162579	2014-02-11	BELKYS CRESPO	8657682	ANGELA COLMENAREZ	1117366	MADRE	ACCION CENTRAL	AVILA	OSTEOARTROSIS	PERMANENTE	791.690000000000055
+100	FEBRERO	2014-03-07	171735	2014-02-21	YAJAIRA QUERO	16292305	YAJAIRA QUERO	16292305	TITULAR	ACCION CENTRAL	AVILA	APENDICECTOMIA	AMBULATORIO	583.039999999999964
+101	FEBRERO	2014-03-07	164109	2014-02-24	LOPEZ CARLOS	19051990	LOPEZ CARLOS	19051990	TITULAR	PIRITU II	AVILA	CELULITIS EN PIE DERECHO	AMBULATORIO	293.29000000000002
+102	FEBRERO	2014-03-07	164073	2014-02-24	VASQUEZ MIGUEL	14540230	VASQUEZ ANA	1126102	MADRE	PIRITU I	AVILA	SD DIARREICO	AMBULATORIO	395.180000000000007
+103	FEBRERO	2014-03-07	172078	2014-02-24	CIRILO CARRASCO	14888905	DAVID CARRASCO	MENOR	HIJO	EL CANDIL	AVILA	SD GRIPAL. PARASITOSIS	AMBULATORIO	436.110000000000014
+104	FEBRERO	2014-03-07	172077	2014-02-24	CIRILO CARRASCO	14888905	DIEGO CARRASCO	MENOR	HIJO	PIRITU III	AVILA	SD GRIPAL. PARASITOSIS	AMBULATORIO	657.330000000000041
+105	FEBRERO	2014-03-07	164037	2014-02-24	DOMINGO PACHECO	20642114	ANGEL PACHECO	MENOR	HIJO	PAYARA	AVILA	SD VIRAL	AMBULATORIO	532.139999999999986
+106	FEBRERO	2014-03-07	171214	2014-02-17	FREDDY MEDINA	20025575	ELIANA VELOZ	21058596	CONCUBINA	PIRITU III	AVILA	CIARTRALGIA	AMBULATORIO	122.730000000000004
+107	FEBRERO	2014-03-07	163204	2014-02-17	FEDERICO PUERTA	7544554	FEDERICO PUERTA	7544554	TITULAR	PAYARA	AVILA	HTA	AMBULATORIO	381.660000000000025
+108	FEBRERO	2014-03-07	171228	2014-02-17	DURAN ALEXANDER	16992813	GIL MILENNY	16775860	ESPOSA	MECANIZACION	AVILA	DOLOR DE CABEZA 	AMBULATORIO	327.550000000000011
+109	FEBRERO	2014-03-07	262642	2014-02-17	JOSE RODRIGUEZ	16677390	ALICIA PIÑA	14177137	ESPOSA	AGUA BLANCA	AVILA	EMBARAZO DE 16 SEMANAS	PERMANENTE	165.400000000000006
+110	FEBRERO	2014-03-07	262649	2014-02-17	LOPEZ CARLOS	19051990	LOPEZ CARLOS	19051990	TITULAR	PIRITU II	AVILA	CELULITIS EN PIE DERECHO	AMBULATORIO	202.620000000000005
+111	FEBRERO	2014-03-07	163276	2014-02-18	ANDRES GODOY	14980471	YISNEIDY GODOY	MENOR	HIJA	PAYARA	AVILA	ABSCESO	AMBULATORIO	148.810000000000002
+112	FEBRERO	2014-03-07	171308	2014-02-18	ESCALONA ENZO	15071461	ESCALONA ENZO	15071461	TITULAR	PIRITU I	AVILA	DOLOR CERVICAL	AMBULATORIO	635.950000000000045
+113	FEBRERO	2014-03-07	171353	2014-02-18	LOPÉZ WILMER	15214008	LOPÉZ WILMER	15214008	TITULAR	PIRITU I	AVILA	NEUMONIA BASAL DERECHA	AMBULATORIO	634.210000000000036
+114	FEBRERO	2014-03-07	262734	2014-02-18	ROJAS GIMMI	12858021	ROSA VARGAS	11544365	MADRE	TRANSPORTE	AVILA	CONSULTA MEDICINA INTERNA	AMBULATORIO	543.100000000000023
+115	FEBRERO	2014-03-07	263232	2014-02-18	YARIMI  ARIAS	17795983	YARIMI  ARIAS	17795983	TITULAR	AGUA BLANCA	AVILA	EMBARAZO DE 29 SEMANAS	AMBULATORIO	477.269999999999982
+116	FEBRERO	2014-03-07	171410	2004-02-18	BELKYS CRESPO	8657682	BELKYS CRESPO	8657682	TITULAR	ACCION CENTRAL	AVILA	NEURITIS INTERCOSTAL	AMBULATORIO	1255.50999999999999
+117	FEBRERO	2014-03-07	262816	2014-02-19	PENA WILMER	18871319	PENA WILMER	18871319	TITULAR	PIRITU I	AVILA	DISLIPIDEMIA MIXTA	AMBULATORIO	197.909999999999997
+118	FEBRERO	2014-03-07	293531	2014-02-19	PINEDA WILMER	14676853	SAMUEL PINEDA	MENOR	HIJO	PIRITU II	AVILA	SD ANEMICO	AMBULATORIO	189.539999999999992
+119	FEBRERO	2014-03-07	262831	2014-02-19	GINVER GALLEGOS	16566374	GLADYS REYES	17277977	CONCUBINA	PIRITU II	AVILA	HTA	PERMANENTE	391.480000000000018
+120	FEBRERO	2014-03-07	262851	2014-02-19	JUVITO TORRES	17946898	ADRIAN TORRES	MENOR	HIJO	PAYARA	AVILA	CEFALEA. RINOFARINGITIS	AMBULATORIO	1007.95000000000005
+121	FEBRERO	2014-03-07	263359	2014-02-19	CANDIDO ESCOBAR	10636444	MARIA MARCHAN	6636890	MADRE	PIRITU II	AVILA	HIPO NEURITICO	AMBULATORIO	253.080000000000013
+122	FEBRERO	2014-03-07	163593	2014-02-19	ROSSY ALVARADO	14426165	MARBELLA PEREZ	5888563	MADRE	PAYARA	AVILA	NEURITIS INTERCOSTAL	AMBULATORIO	397.860000000000014
+123	FEBRERO	2014-03-07	163612	2014-02-19	YUSMAIRA RODRIGUEZ	19798052	ANA LAMEDA	MENOR	HIJA	PAYARA	AVILA	RINOSINUSITIS AGUDA	AMBULATORIO	581.690000000000055
+124	FEBRERO	2014-03-07	263434	2014-02-20	JULIO SEGURA	20158112	JULIO SEGURA	20158112	TITULAR	PIRITU II	AVILA	NEUMONIA QUIMICA	AMBULATORIO	337.339999999999975
+125	FEBRERO	2014-03-07	263447	2014-02-20	MANUEL RIVERO	9844634	MANUEL RIVERO	9844634	TITULAR	PIRITU II	AVILA	HTA. DESCOMPESADA	PERMANENTE	162.370000000000005
+126	FEBRERO	2014-03-07	163340	2014-02-20	JOSE TORRELES	13072133	JOSE TORRELES	13072133	TITULAR	PAYARA	AVILA	DOLOR MUSCULAR RODILLA DERECHA	AMBULATORIO	511.95999999999998
+127	FEBRERO	2014-03-07	263517	2014-02-20	YENIREE MARTINEZ	18297349	YENIREE MARTINEZ	18297349	TITULAR	PAYARA	AVILA	DOLOR PELVICO	AMBULATORIO	236.610000000000014
+128	FEBRERO	2014-03-07	171579	2014-02-20	ROSMARY MENDEZ	12090662	ROSA GALLARDO	5369243	MADRE	PIRITU III	AVILA	HERNIA DISCAL	AMBULATORIO	286.410000000000025
+129	FEBRERO	2014-03-07	263071	2014-02-20	BARELA JEAN	16415909	JOBVIER BARELA	MENOR	HIJO	AGUA BLANCA	AVILA	INFECCION FARINGO BRONQUIAL	AMBULATORIO	648.139999999999986
+130	FEBRERO	2014-03-07	263605	2014-02-21	OVIEDO JHONNY	21057110	JOSEFINA RODRIGUEZ	11076986	MADRE	AGUA BLANCA	AVILA	DOLOR CERVICAL	AMBULATORIO	357.699999999999989
+131	FEBRERO	2014-03-07	171673	2014-02-21	AULAR JEAN	16041033	AULAR JEAN	16041033	TITULAR	MECANIZACION	AVILA	SD DOLOROSO ABDOMINAL	AMBULATORIO	976.759999999999991
+132	FEBRERO	2014-03-07	263142	2014-02-21	GONZALEZ MANUEL	10140861	GONZALEZ MANUEL	10140861	TITULAR	PIRITU II	AVILA	RADICULITIS LUMBO SACRA	AMBULATORIO	892.769999999999982
+133	FEBRERO	2014-03-07	263143	2014-02-21	GONZALEZ MANUEL	10140861	MIRELLA QUINTANA	10637302	ESPOSA	PIRITU II	AVILA	DOLOR CERVICAL	AMBULATORIO	540.759999999999991
+134	FEBRERO	2014-03-07	263707	2014-02-21	MEDINA SEGUNDO	16565969	MEDINA SEGUNDO	16565969	TITULAR	PIRITU III	AVILA	HTA	AMBULATORIO	887.350000000000023
+135	FEBRERO	2014-03-07	171715	2014-02-21	ARIAS YOHALY	16567899	ARIAS MARISOL	8656017	MADRE	ACCION CENTRAL	AVILA	COLITIS	AMBULATORIO	384.149999999999977
+136	FEBRERO	2014-03-07	171719	2014-02-21	LORETO INOSTROZA	24320049	FIERRO ZOILA	E-81288458	MADRE	ACCION CENTRAL	AVILA	SD DEL TUNEL CARPIANO	AMBULATORIO	16.1999999999999993
+137	FEBRERO	2014-03-07	294116	2014-02-21	MEDINA NAUDY	18799452	MEDINA NAUDY	18799452	TITULAR	PIRITU II	AVILA	ABSCESO EN AREA CERVICAL	AMBULATORIO	210.780000000000001
+138	FEBRERO	2014-03-07	163817	2014-02-21	BASTIDAS AMARILIS	11851601	BASTIDAS AMARILIS	11851601	TITULAR	ACCION CENTRAL	AVILA	HTA	PERMANENTE	283.660000000000025
+139	FEBRERO	2014-03-07	263729	2014-02-21	GARCIA ALI	24653077	MARIALIS GARCIA	MENOR	HIJA	AGUA BLANCA	AVILA	PORIASIS INFANTIL	AMBULATORIO	188.919999999999987
+140	FEBRERO	2014-03-07	263730	2014-02-21	GARCIA ALI	24653077	GARCIA ALI	4608536	PADRE	AGUA BLANCA	AVILA	BRONCO ESPASMO AGUDO	AMBULATORIO	258.899999999999977
+141	FEBRERO	2014-03-07	294328	2014-02-23	JOSE MONTES	19170515	JOSE MONTES	19170515	TITULAR	PAYARA	AVILA	HIDRADENITIS EN AXILA	AMBULATORIO	212.97999999999999
+142	MARZO	2014-03-07	164757	2014-03-01	NORIS CUENCA	14092771	NORIS CUENCA	14092771	TITULAR	ACCION CENTRAL	AVILA	POST OP. APENDICEPTOMIA	AMBULATORIO	583.769999999999982
+234	MAYO	2014-05-06	170509	2014-04-25	PUERTA FEDERICO	7544554	PUERTA FEDERICO	7544554	TITULAR	PAYARA	AVILA	HTA	AMBULATORIO	422.759999999999991
+143	MARZO	2014-03-07	172750	2014-03-01	YONNY MEDINA	18800955	LIGIA MEDINA	19282295	CONYUGUE	PAYARA	AVILA	EMBARAZO DE 32 SEMANAS	AMBULATORIO	260.319999999999993
+144	FEBRERO	2014-03-07	295109	2014-02-28	QUERO YAJAIRA	16292305	QUERO YAJAIRA	16292305	TITULAR	ACCION CENTRAL	AVILA	POST OP. APENDICEPTOMIA	AMBULATORIO	442.819999999999993
+145	FEBRERO	2014-03-07	172525	2014-02-27	MANUEL RIVERO	9844634	MANUEL RIVERO	9844634	TITULAR	PIRITU II	AVILA	HTA. DISLIPIDEMIA	AMBULATORIO	658.289999999999964
+146	FEBRERO	2014-03-07	172505	2014-02-27	DANNY DURAN 	16992813	DURAN ANTONI	MENOR	HIJO	MECANIZACION	AVILA	SD FEBRIL. ESTOMATITIS	AMBULATORIO	960.690000000000055
+147	FEBRERO	2014-03-07	150798	2014-02-26	GALLEGOS MILAGROS	17796642	BONILLA DULCE	4197758	MADRE	ACCION CENTRAL	AVILA	HTA. DISLIPIDEMIA	PERMANENTE	653.960000000000036
+148	FEBRERO	2014-03-07	172244	2014-02-25	LINARES ANABEL	11081662	GARRIDO LUIS	27636044	HIJO	ACCION CENTRAL	AVILA	INFECCION DE POROS	AMBULATORIO	241.210000000000008
+149	FEBRERO	2014-03-07	264073	2014-02-25	CAROLINA OROPEZA	11851836	CAROLINA OROPEZA	11851836	TITULAR	CAÑO SECO	AVILA	SD DEPRESIVO	AMBULATORIO	1679.45000000000005
+150	FEBRERO	2014-03-07	294620	2014-02-25	MOLINA YANIS	16776892	CARPIO MARCELA	16414143	ESPOSA	PIRITU I	AVILA	RINOFARINGITIS AGUDA	AMBULATORIO	1416.34999999999991
+151	FEBRERO	2014-03-07	263632	2014-02-25	GREGORIA MONTES	17945099	GREGORIA MONTES	17945099	TITULAR	PAYARA	AVILA	LEUCORREA	AMBULATORIO	420.870000000000005
+152	FEBRERO	2014-03-07	263631	2014-02-25	JEAN AULAR	16041033	YONNIS AULAR	25761729	HIJO	MECANIZACION	AVILA	CELULITIS ANTE BRAZO DERECHO	AMBULATORIO	1575.91000000000008
+153	FEBRERO	2014-03-07	264028	2014-02-25	FLORES EDUARDO	20390058	FLORES RAMON	5157236	PADRE	PIRITU I	AVILA	OTITIS MEDIA	AMBULATORIO	481.259999999999991
+154	FEBRERO	2014-03-07	263611	2014-02-25	LOPEZ HECTOR	24022859	LOPEZ ESTEBAN	MENOR	HIJO	PIRITU II	AVILA	AMIGDALITIS	AMBULATORIO	430.490000000000009
+155	FEBRERO	2014-03-07	263986	2014-02-25	GREGORIA MONTES	17945099	GREGORIA MONTES	17945099	TITULAR	PAYARA	AVILA	SACRO LUMBALGIA	AMBULATORIO	217.52000000000001
+156	FEBRERO	2014-03-07	263560	2014-02-24	ROSENDO SIMON	9841670	ROSENDO SIMON	9841670	TITULAR	PIRITU II	AVILA	SD VIRAL	AMBULATORIO	127.409999999999997
+157	FEBRERO	2014-03-07	263559	2014-02-24	TULIO VASQUEZ	11849149	CARLOS VASQUEZ	MENOR	HIJO	PIRITU II	AVILA	ANEMIA AGUDA	AMBULATORIO	219.030000000000001
+158	FEBRERO	2014-03-07	172128	2014-02-24	AMADO TORCATES	11079797	AMADO TORCATES	11079797	TITULAR	PAYARA	AVILA	COLICO NEFRITICO	AMBULATORIO	419.490000000000009
+159	ABRIL	2014-04-09	155657	2014-04-15	RAMOS ELI	12089670	RAMOS ELI	12089670	TITULAR	PIRITU I	AVILA	DISLIPIDEMIA MIXTA	PERMANENTE	1444.71000000000004
+160	ABRIL	2014-04-09	178307	2014-04-15	EULOGIO GARCIA	5366913	EULOGIO GARCIA	5366913	TITULAR	PIRITU II	AVILA	DIABETES TIPO II DESCOMPENSADA	PERMANENTE	519.830000000000041
+161	ABRIL	2014-04-09	178305	2014-04-15	ALEXANDER SANCHEZ	15341479	ALEXANDER SANCHEZ	15341479	TITULAR	AGUA BLANCA	AVILA	HEMORROIDECTOMIA	AMBULATORIO	691.639999999999986
+162	ABRIL	2014-04-09	178290	2014-04-15	HIVANEL MANJARES	18102664	HIVANEL MANJARREZ	18102664	TITULAR	MECANIZACION	AVILA	COMPRENSION RAICES NERVIOSAS S1 Y L5 IZQUIERDA	PERMANENTE	289.240000000000009
+163	ABRIL	2014-04-09	267191	2014-04-15	RIVERO JOSE	11851161	GUILLERMINA YUSTIZ	1229852	MADRE	PIRITU II	AVILA	ARTROSIS DE RODILLA IZQUIERDA	PERMANENTE	2032.11999999999989
+164	ABRIL	2014-04-09	169371	2014-04-15	ELIAS ZAVARCE	13228981	ELIAS ZAVARCE	13228981	TITULAR	PIRITU II	AVILA	SINDROME VIRAL	AMBULATORIO	166.889999999999986
+165	ABRIL	2014-04-09	155539	2014-04-14	MENDOZA GREGORIO	10726265	MENDOZA ANTONELLA	26940030	HIJA	PIRITU II	AVILA	CUADRO DE BRONCOESPASMO	AMBULATORIO	278.029999999999973
+166	ABRIL	2014-04-09	267964	2014-04-14	WILMER MARQUEZ	16040072	WILMER MARQUEZ	3528866	PADRE	ACCION CENTRAL	AVILA	CHEQUEO CARDIOVASCULAR	PERMANENTE	768.460000000000036
+167	ABRIL	2014-04-09	267960	2014-04-14	JESUS LIMIA DE LA ROSA	E046925	JESUS LIMIA DE LA ROSA	E046925	TITULAR	ACCION CENTRAL	AVILA	INSUFICIENCIA VENOSA PERIFERICA	PERMANENTE	946.440000000000055
+168	ABRIL	2014-04-09	267959	2014-04-14	INOSTROZA LORETO	24320049	FIERRO ZOILA	E81288458	MADRE	MECANIZACION	AVILA	ENFERMEDAD VASCULAR CEREBRAL ISQUEMICA	PERMANENTE	1393.75999999999999
+169	ABRIL	2014-04-09	267158	2014-04-14	EMMA LEGON	11548743	EMMA RIOS	859934	MADRE	AGUA BLANCA	AVILA	DM 2 EN HIPERGLICEMIA/ HTA ESTADIO I	PERMANENTE	1485.8900000000001
+170	ABRIL	2014-04-09	169260	2014-04-14	GLADIS JIMENES	13353211	GLADIS JIMENES	13353211	TITULAR	PIRITU II	AVILA	DX DE BRONQUITIS AGUDA	AMBULATORIO	324.740000000000009
+171	ABRIL	2014-04-09	178153	2014-04-14	VARGAS ALEXANDER	5363739	PARRA LEONELA	7546841	ESPOSA	PIRITU I	AVILA	ARTRITIS REMATOIDEA	PERMANENTE	470.860000000000014
+172	ABRIL	2014-04-09	155338	2014-04-12	MORIAN WILMER	6680335	NIERES NATIVIDAD	1225103	MADRE	PIRITU II	AVILA	DX CARDIOPATIA HIPERTENSIVA/ HIPERTENCION ARTERIL II	PERMANENTE	225.240000000000009
+173	ABRIL	2014-04-09	169032	2014-04-12	ARCANGEL GUEVARA	14677755	MARIA TORREALBA	4609864	MADRE	PIRITU II	AVILA	HIPERTENSION ARTERIAL / GASTRITIS CRONICA 	PERMANENTE	1403.48000000000002
+174	ABRIL	2014-04-09	169029	2014-04-11	ANGEL PARRA	19637051	LURDES MAGALHAIS	24320488	CONCUBINA	AGUA BLANCA	AVILA	CUADRO CLINICO DE SINOPATIA	PERMANENTE	989.960000000000036
+175	ABRIL	2014-04-09	155258	2014-04-11	BELKYS CRESPO	8657682	JESUS CRESPO	2499599	PADRE	ACCION CENTRAL	AVILA	SINDROME LOCTAL TIPO MIOCLINICO/EVC ISQUEMICA	PERMANENTE	940.75
+176	ABRIL	2014-04-09	155257	2014-04-11	BELKYS CRESPO	8657682	ANGELA COLMENAREZ	1117366	MADRE	ACCION CENTRAL	AVILA	CARDIOPATIA ISQUEMICA CRONICA	PERMANENTE	983.379999999999995
+177	ABRIL	2014-04-09	155256	2014-04-11	BELKYS CRESPO	8657682	BELKYS CRESPO	8657682	TITULAR	ACCION CENTRAL	AVILA	NEURITIS INTERCOSTAL/ MASTALGIA	PERMANENTE	861.07000000000005
+178	ABRIL	2014-04-09	155251	2014-04-11	PEDRO SANCHEZ	13556353	MILCAHUR ZAVARCE	1127937	MADRE	ACCION CENTRAL	AVILA	HIPERTENSION ARTERIAL SISTEMICA/ OBESIDAD	PERMANENTE	854.120000000000005
+179	ABRIL	2014-04-09	155250	2014-04-11	PEDRO SANCHEZ	13556353	PEDRO SANCHEZ	13556353	TITULAR	ACCION CENTRAL	AVILA	HIPERTENSION ARTERIAL SISTEMICA	PERMANENTE	694.440000000000055
+180	ABRIL	2014-04-09	155216	2014-04-11	SERGIO VALERA	20809291	SERGIO VALERA	20809291	TITULAR	ACCION CENTRAL	AVILA	CONJUNTIVITIS REACTIVA	AMBULATORIO	157.550000000000011
+181	ABRIL	2014-04-09	168957	2014-04-11	FIGUEROA JOSE	13585438	FIGUEROA GILBERTO	1124036	PADRE	PIRITU II	AVILA	CRECIMIENTO PROSTATICO GRADO II	PERMANENTE	420.019999999999982
+182	ABRIL	2014-04-09	168956	2014-04-11	FIGUEROA JOSE	13585438	PEREZ ELDA	7540104	MADRE	PIRITU II	AVILA	CARDIOPATIA HIPERTENSIVA/ ESTREÑIMIENTO	PERMANENTE	107.340000000000003
+183	ABRIL	2014-04-09	168955	2014-04-11	FIGUEROA JOSE	13585438	PEREZ ELDA	7540104	MADRE	PIRITU II	AVILA	CARDIOPATIA HIPERTENSIVA/ ESTREÑIMIENTO	PERMANENTE	722.32000000000005
+184	ABRIL	2014-04-09	266969	2014-04-11	HERRI COLMENAREZ	7547441	HERRI COLMENAREZ	7547441	TITULAR	ACCION CENTRAL	AVILA	CIFRAS TENSIONALES ELEVADAS	AMBULATORIO	395.879999999999995
+185	ABRIL	2014-04-09	266954	2014-04-11	PERAZA FRANMER	15868665	PERAZA MARIA	9258033	MADRE	AGUA BLANCA	AVILA	FIBROMIALGIA/ HIPOTIROIDISMO	PERMANENTE	378.04000000000002
+186	ABRIL	2014-04-09	266952	2014-04-11	MARIA GONZALEZ	X003558	MARIA GONZALEZ	X003558	TITULAR	ACCION CENTRAL	AVILA	RINITIS AGUDA	AMBULATORIO	649.57000000000005
+187	ABRIL	2014-04-09	177775	2014-04-11	USTRERA JUNIOR	20024930	USTRERA JUNIOR	20024930	TITULAR	PIRITU II	AVILA	HERNIA DISCAL LA-L5. L5 S1. CON COMPRENSION RADICULAR SEVERA	AMBULATORIO	557.129999999999995
+188	ABRIL	2014-04-09	177736	2014-04-10	ANABEL LINAREZ	11081662	TEREZA RODRIGUEZ	1122241	MADRE	ACCION CENTRAL	AVILA	LUMBALGIA CEVERA	PERMANENTE	289.240000000000009
+189	ABRIL	2014-04-09	266916	2014-04-10	GREGORIO MENDOZA	10726265	LUZ MARIA CAMPOS	10636744	ESPOSA	PIRITU II	AVILA	SINDROME METABOLICO	AMBULATORIO	626.42999999999995
+190	ABRIL	2014-04-09	266915	2014-04-10	MENDOZA GREGORIO	10726265	MENDOZA ANTONELLA	26940030	HIJA	PIRITU II	AVILA	SINOSOPATIA RESPIRATORIA	AMBULATORIO	232.590000000000003
+191	ABRIL	2014-04-09	155132	2014-04-10	ORTIZ NESTOR	3866991	ORTIZ NESTOR	3866991	TITULAR	ACCION CENTRAL	AVILA	HPERTENSION ARTERIAL SISTEMICA/ CARDIOPATIA SISTEMICA CRONICA	PERMANENTE	1482.99000000000001
+192	ABRIL	2014-04-09	266874	2014-04-10	SANCHEZ ALEXANDER	15341479	SANCHEZ ALEXANDER	15341479	TITULAR	AGUA BLANCA	AVILA	HEMORROIDECTOMIA EXTERNA	AMBULATORIO	1315.78999999999996
+193	ABRIL	2014-04-09	266824	2014-04-10	MENDEZ GIOVANNY	9837225	MENDEZ GIOVANNY	9837225	TITULAR	PIRITU II	AVILA	HIPERTENSION ARTERIAL ESTADIO II	PERMANENTE	148.930000000000007
+194	ABRIL	2014-04-09	155060	2014-04-10	MANUEL GONZALEZ	10140861	MIREYA QUINTANA	10637302	ESPOSA	PIRITU II	AVILA	CEFALEA VASCULAR AGUDA/ SINDROME DE ANSIEDAD	PERMANENTE	2470.76999999999998
+195	ABRIL	2014-04-09	299144	2014-04-10	GLADYS BLANCO	12262410	GLADYS BLANCO	12262410	TITULAR	SAN JOSE DEL CANDIL	AVILA	INSUFICIENCIA VENOSA / SINDROME METABOLICO	PERMANENTE	447.379999999999995
+196	ABRIL	2014-04-09	299143	2014-04-10	GLADYS BLANCO	12262410	JOSE CARUCI	5249791	CONYUGE	SAN JOSE DEL CANDIL	AVILA	TRASTORNOS METABOLICOS Y ENDOCRINOS/ ENFERMEDAD ARTERIAL HIPERTENSIVA	PERMANENTE	1548.61999999999989
+197	ABRIL	2014-04-09	299142	2014-04-10	GLADYS BLANCO	12262410	BLANCO JESUS MARIA	3369826	PADRE	SAN JOSE DEL CANDIL	AVILA	HTA	PERMANENTE	947.25
+198	ABRIL	2014-04-09	177610	2014-04-10	DEISY GAINZA	16565969	DEISY LOPEZ	3869477	MADRE	PIRITU III	AVILA	CARDIOPATIA IZQUEMICA	AMBULATORIO	2791.42000000000007
+199	ABRIL	2014-04-09	267584	2014-04-09	LORETO INOSTROZA	24320049	FIERRO ZOILA	E81288458	MADRE	ACCION CENTRAL	AVILA	ENFERMEDAD VASCULAR CEREBRAL ISQUEMICA/ INFECCION URINARIA	PERMANENTE	1115.1099999999999
+200	ABRIL	2014-04-09	267565	2014-04-09	CARLOS MOLINA	10135498	CARLOS MOLINA	10135498	TITULAR	ACCION CENTRAL	AVILA	RINITIS ALERGICA	AMBULATORIO	294.930000000000007
+201	ABRIL	2014-04-09	267564	2014-04-09	CARLOS MOLINA	10135498	RAFAEL MOLINA	896771	PADRE	ACCION CENTRAL	AVILA	ENFERMEDAD BRONCOPULMONAR OBSTRUCTIVA CRONICA	PERMANENTE	526.029999999999973
+202	ABRIL	2014-04-25	179407	2014-04-24	MARTINEZ YELITZA	15071456	BARRIOS MARIA	4611413	MADRE	PIRITU II	AVILA	ARTRALGIA RODILLA DERECHA	AMBULATORIO	243.110000000000014
+203	ABRIL	2014-04-25	170329	2014-04-24	ARGUELLES JOSE	17363985	CHIRINOS ELOINA	6777052	MADRE	PIRITU II	AVILA	BRADICARDIA SINUSAL	PERMANENTE	604.960000000000036
+204	ABRIL	2014-04-25	170328	2004-04-24	COLMENAREZ JOSE	14425942	MORENO GEORGINA	4201889	MADRE	PIRITU II	AVILA	CARDIOPATIA ISQUEMICA CRONICA / DIABETES TIPO II	PERMANENTE	1171.40000000000009
+205	ABRIL	2014-04-25	170311	2014-04-24	GARCIA EULOGIO	5366913	GARCIA EULOGIO	5366913	TITULAR	PIRITU II	AVILA	DIABETES TIPO II DESCOMPENSADA	PERMANENTE	934.649999999999977
+206	ABRIL	2014-04-25	267854	2014-04-24	GALINDEZ LISNEY	17944278	GALINDEZ ADDIS	3907431	PADRE	PAYARA	AVILA	INSUFICIENCIA VENOSA CRONICA	PERMANENTE	2712.65999999999985
+207	ABRIL	2014-04-25	268538	2014-04-24	LANDAETA JORGE	14425236	TORO GRACIELA	18628567	ESPOSA	PAYARA	AVILA	VAGINITIS / COLONOPATIA / MASTODENIA	AMBULATORIO	179.819999999999993
+208	ABRIL	2014-04-25	156532	2014-04-24	INOJOSA JOSE	9572198	INOJOSA JOSE	9572198	TITULAR	PAYARA	AVILA	CARDIOPATIA MIXTA ISQUEMICA E HIPERTENSIVA	PERMANENTE	204.560000000000002
+209	ABRIL	2014-04-25	170215	2014-04-24	MUÑOZ ROMEL	13585018	MARQUEZ OMELIA	5436297	MADRE	PAYARA	AVILA	SINDROME ICTAL PARCIAL / TRASTORNOS COGNOSCITIVOS	PERMANENTE	1926.54999999999995
+210	ABRIL	2014-04-25	179272	2014-04-23	PIREZ PEDRO	15691566	PIREZ HIPOLITO	1109169	PADRE	ACCION CENTRAL	AVILA	DIABETES MELLITUS TIPO II /HTA	PERMANENTE	959.279999999999973
+211	ABRIL	2014-04-25	156501	2014-04-23	DELGADO ERIKA	13228242	DI DIOMEDE ANTONIETTA	12446197	MADRE	PIRITU II	AVILA	HTA / TIPOTIROIDISMO / OSTEOPOROSIS	PERMANENTE	1684.67000000000007
+212	ABRIL	2014-04-25	156500	2014-04-23	DELGADO ERIKA	13228242	DI DIOMEDE ANTONIETTA	12446197	MADRE	PIRITU II	AVILA	ARTRITIS REMATOIDEA	PERMANENTE	388.839999999999975
+213	ABRIL	2004-04-25	170158	2014-04-23	REYES JOSEFINA	11428317	REYES JOSEFINA	11428317	TITULAR	AGUA BLANCA	AVILA	FRIBROMIALGIAS	AMBULATORIO	232.5
+214	ABRIL	2014-04-25	156378	2014-04-23	ROSA JOSE	10144706	ROSA JOSE	10144706	TITULAR	AGUA BLANCA	AVILA	HTA	PERMANENTE	555.25
+215	ABRIL	2014-04-25	268375	2014-04-22	SULBARAN ALEXIS	10144490	SULBARAN ALEXIS	10144490	TITULAR	PIRITU II	AVILA	PRURITO EN REGION ANAL	AMBULATORIO	60.6799999999999997
+216	ABRIL	2014-04-25	169955	2014-04-22	SEQUERA VICTOR	16566845	SEQUERA VICTOR	16566845	TITULAR	PIRITU II	AVILA	CUADRO DE DOLOR EN ARICULACION GLENO-HUMERAL IZQUIERDA	AMBULATORIO	173.639999999999986
+217	ABRIL	2014-04-25	169917	2014-04-22	ORTIZ FRANCISCO	12262363	ORTIZ FRANCIS	MENOR	HIJA	DIRECTIVO	AVILA	FIEBRE Y LESION EN BRAZO	AMBULATORIO	259.430000000000007
+218	ABRIL	2014-04-25	268311	2014-04-22	GUEVARA ARCANGEL	14677755	JIMENEZ KARLA	19637184	CONYUGE	PIRITU II	AVILA	EMBARAZO DE 19 SEMANAS	PERMANENTE	282.680000000000007
+219	ABRIL	2014-04-25	156222	2014-04-22	PINEDA WILMER	14676853	PINEDA ROSAURA	5943673	MADRE	PIRITU II	AVILA	INSUFICIENCIA VENOSA ISQUEMICA CRONICA CLASE II	PERMANENTE	501.769999999999982
+220	ABRIL	2014-04-25	156212	2014-04-22	TORRES JUVITO	17946898	TORRES CRISTIAN	MENOR	HIJO	PAYARA	AVILA	RINITIS ALERGICA	AMBULATORIO	142.900000000000006
+221	ABRIL	2014-04-25	156211	2014-04-22	BARRAGAN HENRY	12860815	CARIEL CLAUDIA	14540048	CONYUGE	PAYARA	AVILA	APENDICECTOMIA LAPAROSCOPICA	AMBULATORIO	359.819999999999993
+222	ABRIL	2014-04-25	169869	2014-04-22	SOTO CARLOS	19715985	SOTO RIGOBERTO	3867513	PADRE	AGUA BLANCA	AVILA	CEFALE VASCULAR / HIPERTENSION ARTERIAL	PERMANENTE	1391.40000000000009
+223	ABRIL	2014-04-25	169868	2014-04-22	SOTO CARLOS	19715985	COLMENAREZ ARELIS	5942947	MADRE	AGUA BLANCA	AVILA	HIPERINSULINISMO POST PRANDIAL / HIPERTENSION ARTERIAL SISTEMICA	PERMANENTE	587.240000000000009
+224	ABRIL	2014-04-25	169860	2014-04-21	QUINTERO YULIMAR	17362077	QUINTERO YULIMAR	17362077	TITULAR	PIRITU I	AVILA	FLEVITIS EN MIEMBROS INFERIORES	PERMANENTE	857.360000000000014
+225	ABRIL	2014-04-25	169843	2014-04-21	MENDEZ ROSMARY	12090662	BONILLA RANIA	MENOR	HIJA	PIRITU III	AVILA	HIPERTROFIA ADENOIDEA	AMBULATORIO	139.870000000000005
+226	ABRIL	2014-04-25	268048	2014-04-16	MENDEZ GIOVANNI	9837225	PINEDA ANA	12448545	ESPOSA	PIRITU II	AVILA	DISCOPATIA L4 L5	AMBULATORIO	441.230000000000018
+227	ABRIL	2014-04-25	169478	2014-04-16	PEREZ JAVIER	12965923	PEREZ GUMERCINDA	1107884	MADRE	PIRITU III	AVILA	OSTEOPOROSIS / INSUFICIENCIA VENOSA DE MIT	PERMANENTE	895.559999999999945
+228	ABRIL	2014-04-25	267304	2014-04-15	VASQUEZ TULIO	11849149	VASQUEZ CARLOS	MENOR	HIJO	PIRITU II	AVILA	CUADRO DE ANEMIA AGUDA	AMBULATORIO	280.350000000000023
+229	ABRIL	2014-04-25	178457	2014-04-15	RODRIGUEZ JOSE	14677390	PIÑA ALICIA	14177137	CONCUBINA	AGUA BLANCA	AVILA	EMBARAZO	PERMANENTE	175.210000000000008
+230	ABRIL	2014-04-25	178456	2014-04-15	MENDEZ ROSMARY	12090662	BONILLA RANIA	MENOR	HIJA	PIRITU III	AVILA	OTITIS MEDIA IZQUIERDA	AMBULATORIO	734.610000000000014
+231	ABRIL	2014-04-25	178432	2014-04-15	MOLINA CARLOS	10135498	COLMENAREZ DOLORES	1985467	MADRE	ACCION CENTRAL	AVILA	HIPERTENSION ARTERIAL / HIPERLIPIDEMIA	PERMANENTE	2596
+232	MAYO	2014-05-06	156670	2014-04-25	CIVIRA MARCOS	9045190	ESCOBAR PAULA	9564177	ESPOSA	PAYARA	AVILA	DIABETES TIPO II	PERMANENTE	1794.31999999999994
+233	MAYO	2014-05-06	156691	2014-04-25	BARELA JEAN	16415909	JABVIER BARELA	MENOR	HIJO	AGUA BLANCA	AVILA	ANEMIA	AMBULATORIO	304.160000000000025
+235	MAYO	2014-05-06	300335	2014-04-25	QUERO YAJAIRA	16292305	QUERO YAJAIRA	16292305	TITULAR	ACCION CENTRAL	AVILA	DOLOR REGION UMBILICAL	AMBULATORIO	106.700000000000003
+236	MAYO	2014-05-06	267986	2014-04-25	CUENCAS NORIS	14092771	CASTRO DOM INGO	4611971	MADRE	ACCION CENTRAL	AVILA	ARTRITIS REMATOIDEA / OSTEOPOROSIS	PERMANENTE	888.669999999999959
+237	MAYO	2014-05-06	179780	2014-04-28	ENDER MACHADO	15491709	ENDER MACHADO	15491709	TITULAR	AGUA BLANCA	AVILA	LUMBALGIA	AMBULATORIO	162.879999999999995
+238	MAYO	2014-05-06	268891	2014-04-28	JOSE CARDENAS	5948461	PETRA CASTILLO	3868229	MADRE	CAÑO SECO	AVILA	SD METABOLICO / ARTROSIS CRONICA	PERMANENTE	581.059999999999945
+239	MAYO	2014-05-06	268236	2014-04-28	SANCHEZ PEDRO	13356353	SANCHEZ LORENZO	MENOR	HIJO	ACCION CENTRAL	AVILA	GASTRITIS MEDICAMENTOSA	AMBULATORIO	1093.59999999999991
+240	MAYO	2014-05-06	179947	2014-04-29	ALVAREZ ALIRIO	14425184	ALVAREZ JOSE	MENOR	HIJO	PIRITU I	AVILA	SINDROME ADHERENCIAL INTESTINAL	AMBULATORIO	778.769999999999982
+241	MAYO	2014-05-06	179948	2014-04-29	TULIO VASQUEZ	11849149	TULIO VASQUEZ	11849149	TITULAR	PIRITU II	AVILA	FARINGITIS	AMBULATORIO	197.349999999999994
+242	MAYO	2014-05-06	179989	2014-04-29	HENRY BARRAGAN	12860815	CLAUDIA CARIEL	14540048	CONYUGE	PAYARA	AVILA	 POST OPERATORIO DE APENDICEPTOMIA LAPAROSCOPICA	AMBULATORIO	372.95999999999998
+243	MAYO	2014-05-06	170918	2014-04-29	ORTIZ FRANCISCO	12262363	ORTIZ ANDREA	MENOR	HIJA	ACCION CENTRAL	AVILA	PERDIDA DE PESO	PERMANENTE	870.139999999999986
+244	MAYO	2014-05-06	268995	2014-04-29	JINETH RODRIGUEZ	19338681	MELIDA VASQUEZ	9157204	MADRE	ACCION CENTRAL	AVILA	HTAS. HIPERLIPIDEMIA	PERMANENTE	299.079999999999984
+245	MAYO	2014-05-06	170941	2014-04-29	YUSMAIRA RODRIGUEZ	19798052	ANA LAMEDA	MENOR	HIJA	PAYARA	AVILA	SD GRIPAL	AMBULATORIO	293.399999999999977
+246	MAYO	2014-05-06	157081	2014-04-29	COLMENAREZ ELSY	15869120	COLMENAREZ TEODORO	5954761	PADRE	PIRITU I	AVILA	HTA	AMBULATORIO	354.129999999999995
+247	MAYO	2014-05-06	268477	2014-04-30	ALIRIO SANCHEZ	12527097	NATALY SANCHEZ	MENOR	HIJA	AGUA BLANCA	AVILA	FARINGO AMIGDALITIS PULTACEA	AMBULATORIO	653.809999999999945
+248	MAYO	2014-05-06	180139	2014-04-30	YAJAIRA QUERO	16292305	RAMIREZ MATIAS	MENOR	HIJO	ACCION CENTRAL	AVILA	ANEMIA AGUDA	AMBULATORIO	278.720000000000027
+249	MAYO	2014-05-06	180140	2014-04-30	MEDINA MIGUEL	15491293	CARMONA HILDA	9560361	MADRE	MECANIZACION	AVILA	POLINEUROPATIA PERIFERICA	PERMANENTE	2918.34000000000015
+250	MAYO	2014-05-06	171135	2014-05-02	ENDER MACHADO	15491709	MELANIA GARCIA	4198706	MADRE	AGUA BLANCA	AVILA	HTA ESTADIO I. HIPERLIPIDEMIA	AMBULATORIO	2482.0300000000002
+251	MAYO	2014-05-06	171192	2014-05-02	PIREZ PEDRO PABLO	15691566	MONTLLA YOBEISIZ	16566544	ESPOSA	ACCION CENTRAL	AVILA	LITIASIS VESICULAR	PERMANENTE	1706.59999999999991
+252	MAYO	2014-05-06	268855	2014-05-05	CONDE KEVIN	17798851	CONDE KEVIN	17798851	TITULAR	ACCION CENTRAL	AVILA	INFECCION RESPIRATORIA ALTA	AMBULATORIO	407.550000000000011
+253	MAYO	2014-05-06	268931	2014-05-05	ELVIS CARRIZO	12046647	YRAIMA RODRIGUEZ	16041556	CONYUGUE	PAYARA	AVILA	HIPERTRIGLICERIDEMIA	AMBULATORIO	319.069999999999993
+254	MAYO	2014-05-06	180614	2014-05-05	ARIAS FRANKLIN	5456447	PARRA AURA	826746	MADRE	PIRITU II	AVILA	CARDIOPATIA ISQUEMICA CRONICA	PERMANENTE	2186.61000000000013
+255	MAYO 	2014-05-15	181363	2014-05-13	NAUDI PIÑA	19377150	ROSANDIS TIMAURE	20641693	ESPOSA	AGUA BLANCA	AVILA	APENDICITIS AGUDA	AMBULATORIO	589.730000000000018
+256	MAYO 	2014-05-15	171950	2014-05-08	JEAN BARELA	16415909	JEAN BARELA	16415909	TITULAR	AGUA BLANCA	AVILA	HIPERTENSION ARTERIAL / VERTIGOS	AMBULATORIO	184.259999999999991
+257	MAYO 	2014-05-15	269560	2014-05-06	ALEXANDER SANCHEZ	15341479	ELIEZER SNACHEZ	MENOR	HIJO	AGUA BLANCA	AVILA	IRB NEUMONIA PARACARDIACA DERECHA	AMBULATORIO	277.920000000000016
+258	JUNIO	2014-06-03	175094	2014-06-02	ZABALETA MILNEYVA	16751915	ZABALETA MILNEYVA	16751915	TITULAR	ACCION CENTRAL	AVILA	BRONQUITIS AGUDA	AMBULATORIO	210.110000000000014
+259	JUNIO	2014-06-03	183447	2014-06-02	SALUSTIO ORELLANO	5940201	SALUSTIO ORELLANO	5940220	TITULAR	AGUA BLANCA	AVILA	DIABETES MELLITUS II / HTA ESTADIO II	PERMANENTE	677.519999999999982
+260	JUNIO	2014-06-03	183401	2014-06-02	TONNY PACHECO	16294139	TONIMAR PACHECO	MENOR	HIJO	PIRITU II	AVILA	ANEMIA LEVE	AMBULATORIO	614.460000000000036
+261	MAYO	2014-06-03	174883	2014-05-31	CARLOS MOLINA	10135498	RAFAEL MOLINA	896771	PADRE	ACCION CENTRAL	AVILA	TU RIÑON IZQUIERDO	AMBULATORIO	472.740000000000009
+262	MAYO	2014-06-03	183042	2014-05-31	ELSY COLMENAREZ	15869120	TEODORO COLMENAREZ	5964761	PADRE	PIRITU I 	AVILA	HTA	PERMANENTE	531.600000000000023
+263	MAYO	2014-06-03	182983	2014-05-31	FRANMER PERAZA	15868665	MARIA PERAZA	9258033	MADRE	AGUA BLANCA	AVILA	FIBROMIALGIA/ HIPOTIROIDISMO	PERMANENTE	380.009999999999991
+264	MAYO	2014-06-03	271743	2014-05-30	EFREN SIERRA	17543855	EFREN SIERRA	17543855	TITULAR	PIRITU II	AVILA	DIABETES MELLITUS II 	PERMANENTE	1088.68000000000006
+265	MAYO	2014-06-03	271742	2014-05-30	JOSE GONZALEZ	20812157	MARLENIS SIERRA	8657624	MADRE	PIRITU II	AVILA	HTA / DIABETES MELLITUS TIPO II	PERMANENTE	1130.47000000000003
+266	MAYO	2014-06-03	182883	2014-05-29	ANGEL GUERRERO	9361017	ANGEL GUERRERO	9361017	TITULAR	MECANIZACION	AVILA	DOLOR /TRACTO URINARIO INFERIOR	AMBULATORIO	1821.90000000000009
+267	MAYO	2014-06-03	174662	2014-05-29	STALIN ROJA	14092210	FHER ROJAS	MENOR	HIJA	ACCION CENTRAL	AVILA	SINDROME FEBRIL AGUDO	AMBULATORIO	457.300000000000011
+268	MAYO	2014-06-03	160311	2014-05-29	AGUIN XIOMARA	9841952	HILDA HERNANDEZ	1106361	MADRE	DIRECTIVO	AVILA	DIFICULTAD VISUAL	AMBULATORIO	366.410000000000025
+269	MAYO	2014-06-03	174545	2014-05-29	MARCOS CIVIRA	9045190	PAULA ESCOBAR	9564177	CONYUGE	PAYARA	AVILA	DIABETES TIPO II 	PERMANENTE	1790.76999999999998
+270	MAYO	2014-06-03	174448	2014-05-28	YAJAIRA QUERO	16292305	MATIAS RAMIREZ	MENOR	HIJO	ACCION CENTRAL	AVILA	SANGRADO NASAL RECURRENTE	AMBULATORIO	333.230000000000018
+271	MAYO	2014-06-03	174424	2014-05-28	EULOGIO GARCIA	5366913	EULOGIO GARCIA	5366913	TITULAR	PIRITU II	AVILA	DIABETES TIPO II DESCOMPENSADA	PERMANENTE	459.120000000000005
+272	MAYO	2014-06-03	174409	2014-05-27	MIGUEL MEDINA	15491293	HILDA CARMONA	9560361	MADRE	MECANIZACION	AVILA	POLINEUROPATIA PERIFERICA SENSITIVA MOTOR	PERMANENTE	3030.13999999999987
+273	MAYO	2014-06-03	182600	2014-05-26	AMADO TORCATE	11079797	FRANCISCA LOPEZ	4611389	MADRE	PAYARA	AVILA	ARTROSIS SISTEMATICA PROGRESIVA / HTA	PERMANENTE	370.870000000000005
+274	MAYO	2014-06-03	302430	2014-05-26	JEAN AULAR	16041033	JEAN AULAR	MENOR	HIJO	MECANIZACION	AVILA	CATARRO COMUN / ANEMIA	AMBULATORIO	195.5
+275	MAYO	2014-06-03	270532	2014-05-24	JORGE LANDAETA	14425236	CARMEN MORALES	7532182	MADRE	PAYARA	AVILA	GASTROPATIA / COLONOPATIA	AMBULATORIO	1056.01999999999998
+276	MAYO	2014-06-03	271102	2014-05-23	ANABEL LINAREZ	11081662	TEREZA RODRIGUEZ	1122241	MADRE	ACCION CENTRAL	AVILA	LUMBALGIA SEVERA	PERMANENTE	296
+277	MAYO	2014-06-03	271092	2014-05-23	MARGILHYZ RODRIGUEZ	11525250	MARGILHYZ RODRIGUEZ	11525250	TITULAR	ACCION CENTRAL	AVILA	AMIGDALITIS AGUDA	AMBULATORIO	262.399999999999977
+278	MAYO	2014-06-03	159682	2014-05-23	RENZO FREITEZ	16416522	ARANZA FREITEZ	MENOR	HIJA	MECANIZACION	AVILA	COLICO DEL LACTANTE	AMBULATORIO	151.590000000000003
+279	MAYO	2014-06-03	271010	2014-05-22	JEAN AULAR	16041033	JEAN AULAR	16041033	TITULAR	MECANIZACION	AVILA	DOLOR DE CADERA	AMBULATORIO	349.199999999999989
+280	MAYO	2014-06-03	159409	2014-05-21	MILAGROS GALLEGOS	17796642	EMILY AVENDAÑO	MENOR	HIJA	ACCION CENTRAL	AVILA	GASTRITIS AGUDA	AMBULATORIO	1159.81999999999994
+327	JUNIO	2014-06-10	303715	2014-06-06	JOSE PAEZ	11712200	JOSE PAEZ	11712200	TITULAR	PIRITU I 	AVILA	BRONQUITIS AGUDA 	AMBULATORIO	59.9500000000000028
+281	MAYO	2014-06-03	159472	2014-05-21	FEDERICO PUERTAS	7544554	FEDERICO PUERTAS	7544554	TITULAR	PAYARA	AVILA	SINDROME VERTIGINOSO AGUDO 	PERMANENTE	1076.24000000000001
+282	MAYO	2014-06-03	301742	2014-05-21	WILMER MARQUEZ	16040072	WILMER MARQUEZ	3528866	TITULAR	ACCION CENTRAL	AVILA	HAS ESTADIO I/ IVC 	PERMANENTE	1044.09999999999991
+283	MAYO	2014-06-03	173555	2014-05-21	GUILLERMO AGUIN	19377858	ALEJANDRA AGUIN 	MENOR	HIJA	PIRITU II	AVILA	CIFRAS ELEVADAS DE HEMOGLOBINA Y PLAQUETAS	AMBULATORIO	481.5
+284	MAYO	2014-06-03	301716	2014-05-20	HIVANEL  MANJARES	18102664	HIVANEL  MANJARES	18102664	TITULAR	MECANIZACION	AVILA	HERNOPLASTIA INGUINAL	AMBULATORIO	116.379999999999995
+285	MAYO	2014-06-03	270810	2014-05-20	LORETO INOZTROSA	24320049	ZOILA FIERRO	81288458	MADRE	ACCION CENTRAL	AVILA	ENFERMEDAD VASCULAR CEREBRAL IZQUEMICA	PERMANENTE	2065.30000000000018
+286	MAYO	2014-06-03	270792	2014-05-20	ROSMARY MENDEZ	12090662	RANIA BONILLA	MENOR	HIJA	PIRITU III	AVILA	CUADRO DE RINOSINUSITIS	AMBULATORIO	548.090000000000032
+287	MAYO	2014-06-03	181992	2014-05-19	JOSE ARGUELLES	17363895	YOIBERTH ARGUELLES	MENOR	HIJO	PIRITU II	AVILA	HIPERACTIVIDA BRONQUIAL/PARASITOSIS	AMBULATORIO	896.850000000000023
+288	MAYO	2014-06-03	172974	2014-05-16	JOSE COLMENAREZ	14425942	GEORGINA MORENO	4201889	MADRE	PIRITU II	AVILA	CARDIOPATIA ISQUEMICA CRONICA 	PERMANENTE	1681.25999999999999
+289	MAYO	2014-06-03	158891	2014-05-16	JOSE ROSA	10144706	MARIA ROSA	MENOR	HIJA	AGUA BLANCA	AVILA	BRONQUIATITIS	AMBULATORIO	122.640000000000001
+290	MAYO	2014-06-03	270301	2014-05-15	ALEXIS TOVAR	12263227	GABINO TOVAR	1109596	PADRE	CAÑO SECO	AVILA	HERMORROIDETOMIA POR TECNICA	AMBULATORIO	1163.33999999999992
+291	MAYO	2014-06-03	172760	2014-05-15	JOSE TORRELLES	13072133	JOSE TORRELLES	13072133	TITULAR	PAYARA	AVILA	MONOARTRITIS CRONICA	PERMANENTE	592.740000000000009
+292	MAYO	2014-06-03	158637	2014-05-15	HIVANEL  MANJARES	18102664	HIVANEL  MANJARES	18102664	TITULAR	MECANIZACION	AVILA	DEGENERACION DISCAL CON PROTUCION DISCAL 	PERMANENTE	532.360000000000014
+293	MAYO	2014-06-03	158636	2014-05-15	ANGEL GERRERO	9361017	LAURA RIOS	5948007	CONCUBINA	MECANIZACION	AVILA	HTA/BOCIO MEDULAR/DIABETES MELLITUS II	PERMANENTE	1503.98000000000002
+294	MAYO	2014-06-03	158615	2014-05-14	BELKYS CRESPO	8657682	BELKYS CRESPO	8657682	TITULAR	ACCION CENTRAL	AVILA	ARTRITIS DEGENERATIVA	PERMANENTE	781.019999999999982
+295	MAYO	2014-06-03	181468	2014-05-14	CARLOS MOLINA	10135498	RAFAEL MOLINA	896771	PADRE	ACCION CENTRAL	AVILA	HIPERRENSION ARTERIAL II	PERMANENTE	156.039999999999992
+296	JUNIO	2014-06-10	160781	2014-06-03	FRANCISCO ORTIZ	12262363	ANDRE ORTIZ	MENOR	HIJA	ACCION CENTRAL	AVILA	CRISIS VEGETATIVA/PERDIDA DE PESO	AMBULATORIO	527.710000000000036
+297	JUNIO	2014-06-10	183513	2014-06-03	CARLOS MOLINA	10135498	DOLORES COLMENAREZ 	1985467	MADRE	ACCION CENTRAL	AVILA	HIPERTENSION ARTERIAIL/HIPOLIPIDERMIA	PERMANENTE	665.980000000000018
+298	JUNIO	2014-06-10	183597	2014-06-03	FEDDY MEDINA	20025575	ELIANA VELOZ	21058596	CONCUBINA	PIRITU III	AVILA	ESTREÑIMIENTO	AMBULATORIO	250.379999999999995
+299	JUNIO	2014-06-10	183599	2014-06-03	HUMBERTO MARTINEZ	11548382	HUMBERTO MARTINEZ	11548382	TITULAR	PIRITU II	AVILA	ESCABIOSIS	AMBULATORIO	14.6500000000000004
+300	JUNIO	2014-06-10	160899	2014-06-03	ALEXANDER SANCHEZ	15341479	MARY SOTO	15538836	CONCUBINA	AGUA BLANCA	AVILA	INFECCION URINARIA RECURRENTE	AMBULATORIO	274.990000000000009
+301	JUNIO	2014-06-10	175255	2014-06-03	ROSMARY MENDEZ	12090662	RANIA BONILLA	MENOR	HIJA	PIRITU III	AVILA	RINITIS OTOPICA/AMIGDALITIS II GRADO	AMBULATORIO	256.819999999999993
+302	JUNIO	2014-06-10	303237	2014-06-03	JOHN REYES	15371069	JOHANA REYES	MENOR	HIJA	ACCION CENTRAL	AVILA	DIARREA/FIEBRE/TOS	AMBULATORIO	568.110000000000014
+303	JUNIO	2014-06-10	160937	2014-06-04	NAUDIS MEDINA	18799452	YONAIKER MEDINA	MENOR	HIJO	PIRITU II	AVILA	BRONQUITIS EN TRATAMIENTO	AMBULATORIO	512.309999999999945
+304	JUNIO	2014-06-10	160946	2014-06-04	GLADYS BLANCO	12262410	JOSE CARUCI	MENOR	HIJO	SAN JOSE DEL CANDIL	AVILA	EGG	PERMANENTE	951.879999999999995
+305	JUNIO	2014-06-10	183654	2014-06-04	ARCANGEL GUEVARA	14677755	KARLA JIMENEZ	19637184	CONCUBINA	PIRITU II	AVILA	COTROL PRENATAL	PERMANENTE	634.5
+306	JUNIO	2014-06-10	183655	2014-06-04	LISNEY GALINDEZ	17944278	LISNEY GALINDEZ	17944278	TITULAR	PAYARA	AVILA	ANEMIA	AMBULATORIO	990
+307	JUNIO	2014-06-10	183656	2014-06-04	LISNEY GALINDEZ	17944278	ADDIS GALINDEZ	3907431	PADRE	PAYARA	AVILA	INSUFECIENCIA VENOSA CRONICA	PERMANENTE	2619.59999999999991
+308	JUNIO	2014-06-10	303362	2014-06-04	SERGIO USTRERA	5367225	SERGIO USTRERA	5367225	TITULAR	PIRITU II	AVILA	HTA ESTADIO I	PERMANENTE	403.879999999999995
+309	JUNIO	2014-06-10	183730	2014-06-04	HOWER VIVEROS	24588396	OMAIRA RUIZ 	24588396	MADRE	TRANSPORTE	AVILA	HIPERTENSION ARTERIAL SISTEMATICA	PERMANENTE	345.579999999999984
+310	JUNIO	2014-06-10	183746	2014-06-04	JOSE MEDINA	20156351	JOSE MEDINA	20156351	TITULAR	ACCION CENTRAL	AVILA	OTOMICOSIS OIDO IZQUIERDO	AMBULATORIO	519.42999999999995
+311	JUNIO	2014-06-10	303554	2014-06-05	EDGAR CAMEJO	17364409	MARYURI PEREZ	22100208	CONCUBINA	MECANIZACION	AVILA	PARTO EUTOPICO	AMBULATORIO	363.649999999999977
+312	JUNIO	2014-06-10	183777	2014-06-05	CANDIDO ESCOBAR	10636444	ADELAIDA PEREZ 	10639143	ESPOSA	PIRITU II	AVILA	CELULITIS EN PIEZ IZQUIERDO	AMBULATORIO	225.110000000000014
+313	JUNIO	2014-06-10	161122	2014-06-05	HERRY COLMENAREZ	7547441	HERRY COLMENAREZ	7547441	TITULAR	BICEABASTO	AVILA	CIFRAS TENSIONALES ELEVADAS	PERMANENTE	405.360000000000014
+314	JUNIO	2014-06-10	272092	2014-06-05	RENZO FREITEZ	16416522	ARANZA FREITEZ	MENOR	HIJA	MECANIZACION	AVILA	REFLUJO GASTROESOFAGICO	AMBULATORIO	295.569999999999993
+315	JUNIO	2014-06-10	303578	2014-06-05	MARY LUCENA	12447000	JACINTO LUCENA	4611989	PADRE	ACCION CENTRAL	AVILA	HIPERTENSION ARTERIAL ELEVADA	PERMANENTE	560.419999999999959
+316	JUNIO	2014-06-10	161190	2014-06-05	WILMER LOPEZ	15214008	WILMER LOPEZ	15214008	TITULAR	PIRITU I 	AVILA	HERNIA INGUINAL DERECHA	AMBULATORIO	225.219999999999999
+317	JUNIO	2014-06-10	303579	2014-06-06	NORIS CUENCA	14092771	DOMINGA CASTRO	4611971	MADRE	ACCION CENTRAL	AVILA	ARTRITIS REUMATOIDEA/OSTEOPOROSIS	PERMANENTE	950.519999999999982
+318	JUNIO	2014-06-10	303580	2014-06-05	CARMEN BARRIOS	12262084	CARMEN BARRIOS	12262084	TITULAR	ACCION CENTRAL	AVILA	SINUSOPATIA/DESVIACION DE SEPTUN NASAL	AMBULATORIO	227.77000000000001
+319	JUNIO	2014-06-10	272107	2014-06-05	LORETO INOSTROZA	24320049	ZOILA FIERRO	81288458	MADRE	ACCION CENTRAL	AVILA	EVC ISQUEMICA/CERVICOARTROSIS	PERMANENTE	1930.78999999999996
+320	JUNIO	2014-06-10	303618	2014-06-05	JAVIER LEON	16753367	KEIDA LEON	7549658	MADRE	ACCION CENTRAL	AVILA	CONTROL GINECOLOGICO	AMBULATORIO	148.210000000000008
+321	JUNIO	2014-06-10	183937	2014-06-06	ANGEL GUEVARA	19956656	ANGEL GUEVARA	19956656	TITULAR	PIRITU II	AVILA	IRRITACION PREPUCIAL/BAJO PESO	PERMANENTE	102.010000000000005
+322	JUNIO	2014-06-10	161251	2014-06-06	JOSE TORRELLES	13072133	JOSE TORRELLES	13072133	TITULAR	PAYARA	AVILA	MONOARTRITIS CRONICA	AMBULATORIO	1501.40000000000009
+323	JUNIO	2014-06-10	184007	2014-06-06	ERIKA DELGADO	13228242	ANTONIETA DI DIOMEDE	12446197	MADRE	PIRITU I 	AVILA	ARTRITIS REUMATOIDEA 	PERMANENTE	2695.23999999999978
+324	JUNIO	2014-06-10	184027	2014-06-06	ERIKA DELGADO	13228242	ANTONIETA DI DIOMEDE	12446197	MADRE	PIRITU I 	AVILA	TRASTORNO DEPRESIVO	PERMANENTE	988.5
+325	JUNIO	2014-06-10	184028	2014-06-06	ERIKA DELGADO	13228242	ANTONIETA DI DIOMEDE	12446197	MADRE	PIRITU I 	AVILA	HIPOTEROIDISMO/HTA	PERMANENTE	593.860000000000014
+326	JUNIO	2014-06-10	161346	2014-06-06	LUIS HERNANDEZ	13227668	LUIS HERNANDEZ	13227668	TITULAR	AGUA BLANCA	AVILA	DOLOR ABDOMINAL	AMBULATORIO	167.430000000000007
+328	JUNIO	2014-06-10	303719	2014-06-06	JOSE LINAREZ	11546595	JOSE LINAREZ	11546595	TITULAR	PIRITU II	AVILA	HTA SISTEMICA/DOLOR ABDOMINAL	AMBULATORIO	314.550000000000011
+329	JUNIO	2014-06-10	161377	2014-06-07	GRACIELA MORILLO	8660443	ISABEL SEGURA	1256270	MADRE	BICEABASTO	AVILA	HTA CONTROLADA/DEMENCIA VASCULAR	PERMANENTE	1863.5
+330	JUNIO	2014-06-10	175529	2014-06-07	BELKIS CRESPO	8657682	JESUS CRESPO	2491599	PADRE	ACCION CENTRAL	AVILA	SINDROME MIOCLONICO SECUNDARIO	PERMANENTE	1159.43000000000006
+331	JUNIO	2014-06-10	304129	2014-06-09	ANGEL GUERRERO	9361017	LAURA RIOS	5948007	CONCUBINA	MECANIZACION	AVILA	HTA/DIABETES MELLITUS II	PERMANENTE	1209.25999999999999
+332	JUNIO	2014-06-10	304130	2014-06-09	HIVANEL MANJARES	18102664	HIVANEL MANJARES	18102664	TITULAR	MECANIZACION	AVILA	DEGENERACION DISCAL CON PROTUCION  POSTERO CENTRAL 	PERMANENTE	516
+333	JUNIO	2014-06-10	175718	2014-06-10	GILDELIS SALCEDO	20388909	JOSE SALCEDO	5948545	PADRE	PAYARA	AVILA	BARISITIS EN HOMBRO DERECHO	AMBULATORIO	2001.52999999999997
+334	JUNIO	2014-06-10	145749	2014-06-10	FRANCISCO ORTIZ	12262363	FRANCIS ORTIZ	MENOR	HIJA	ACCION CENTRAL	AVILA	BRONQUITIS AGUDA 	AMBULATORIO	495.850000000000023
+335	JUNIO	2014-06-10	161788	2014-06-10	AMARILIS BASTIDAS	711851601	AMARILIS BASTIDAS	711851601	TITULAR	ACCION CENTRAL	AVILA	DOLOR EN REGION DE TALON IZQUIERDO	AMBULATORIO	626.960000000000036
+336	JUNIO	2014-06-10	175529	2014-06-07	BELKIS CRESPO	8657682	BELKIS CRESPO	8657682	TITULAR	ACCION CENTRAL	AVILA	ARTRITIS DEGENERATIVA	PERMANENTE	931.5
+337	JUNIO 	2014-06-17	162664	2014-06-17	ABEL RIVERO	17601269	ABEL RIVERO	17601269	TITULAR 	AGUA BLANCA	AVILA	INTOXICACION POR ORGANOS FOSFORADOS	AMBULATORIO	62.1499999999999986
+338	JUNIO 	2014-06-17	304618	2014-06-16	MARY LUCENA	12447000	JACINTO LUCENA	4611989	PADRE	ACCION CENTRAL	AVILA	PRESION ARTERIAL ELEVADA 	PERMANENTE	1522.01999999999998
+339	JUNIO 	2014-06-17	162442	2014-06-16	FRANMER PERAZA	15868665	MARIA PERAZA	9258033	MADRE	AGUA BLANCA	AVILA	FIBROMIALGIA/HIPOTIROIDISMO	PERMANENTE	139.680000000000007
+340	JUNIO 	2014-06-17	272506	2014-06-14	DEISYS GAINZA	16565969	DEISYS LOPEZ	3869477	MADRE	PIRITU I	AVILA	HTA/CARDIOPATIA ISQUEMICA	PERMANENTE	2825.7800000000002
+341	JUNIO 	2014-06-17	176292	2014-06-13	MIGUEL VASQUEZ	14540230	ANA VASQUEZ	1126102	MADRE	PIRITU I	AVILA	ENFERMEDAD DE PARKINSOMN	PERMANENTE	944.990000000000009
+342	JUNIO 	2014-06-17	162110	2014-06-13	PEDRO SANCHEZ	13556353	PEDRO SANCHEZ	13556353	TITULAR 	ACCION CENTRAL	AVILA	SINDROME ANEMICO	AMBULATORIO	304.20999999999998
+343	JUNIO 	2014-06-17	304409	2014-06-12	ABEL RIVERO	17601269	ABEL RIVERO	17601269	TITULAR 	AGUA BLANCA	AVILA	INTOXICACION  	AMBULATORIO	56.2700000000000031
+344	JUNIO 	2014-06-17	304408	2014-06-12	EMMA LEGON	11548743	EMMA RIOS	859934	MADRE	AGUA BLANCA	AVILA	DM TIPO II/HTA ESTADIO II	PERMANENTE	3256.07999999999993
+345	JUNIO 	2014-06-17	272459	2014-06-12	JHONNY OVIEDO	21057110	WILMARY OVIEDO	MENOR	HIJA	AGUA BLANCA	AVILA	INFECCION RESPIRATORIA BAJA	AMBULATORIO	61.509999999999998
+346	JUNIO 	2014-06-17	162018	2014-06-12	MARQUIS MOLINA	18871906	MATHIAS MOLINA	MENOR	HIJO	AGUA BLANCA	AVILA	RINITIS ALERGICA/ANEMIA LEVE	AMBULATORIO	2588.80999999999995
+347	JUNIO 	2014-06-17	162007	2014-06-12	ALEXANDER SANCHEZ	15341479	ELIEZER SANCHEZ	MENOR	HIJO	AGUA BLANCA	AVILA	INFECCION RESPIRATORIA	AMBULATORIO	220.860000000000014
+348	JUNIO 	2014-06-17	175970	2014-06-11	LISBETH MENDEZ	15491902	MICHELLE MENDEZ	MENOR	HIJA	AGUA BLANCA	AVILA	ASMA NO CONTROLADA	AMBULATORIO	467.139999999999986
+349	JUNIO	2014-06-27	177330	2014-06-23	ENZO ESCALONA	15071461	JHORMAN ESCALONA	30133580	HIJO	PIRITU I	AVILA	OSTEOLITIS DEL CALCACEO  IZQUIERDO	AMBULATORIO	590.580000000000041
+350	JUNIO	2014-06-27	177464	2014-06-23	JOSE COLMENAREZ	14425942	GEORGINA MORENO	4201889	MADRE	PIRITU II	AVILA	CARDIOPATIA ISQUEMICA CRONICA	PERMANENTE	1255.99000000000001
+351	JUNIO	2014-06-27	163608	2014-06-23	BELKYS CRESPO	8657682	JESUS CRESPO	2499599	PADRE	ACCION CENTRAL	AVILA	INSUFICIENCIA RENAL CRONICA	PERMANENTE	1394.6400000000001
+352	JUNIO	2014-06-27	163609	2014-06-23	BELKYS CRESPO	8657682	ANGELA COLMENAREZ	1117366	MADRE	ACCION CENTRAL	AVILA	HIPERTENSION ARTERIAL CONTROLADA	PERMANENTE	576.279999999999973
+353	JUNIO	2014-06-27	163237	2014-06-21	ANDRES GODOY	14980471	CLAUDIA VASQUEZ	3736422	MADRE	PAYARA	AVILA	H.T.A. GASTRITIS CRONICA	PERMANENTE	1925.38000000000011
+354	JUNIO	2014-06-27	177141	2014-06-20	PEREZ HENRRY	17618624	PEREZ LAYLHA	MENOR	HIJA	PIRITU II	AVILA	SINDROME ANEMICO EN TRATAMIENTO	AMBULATORIO	136.550000000000011
+355	JUNIO	2014-06-27	177114	2014-06-20	SANCHEZ ALEXANDER	15341479	ELIEZER SANCHEZ	MENOR	HIJO	AGUA BLANCA	AVILA	HIPERACTIVIDAD BRONQUIAL	AMBULATORIO	125.079999999999998
+356	JUNIO	2014-06-27	305171	2014-06-20	DANNY DURAN 	16992813	RITA HERNANDEZ	7186816	MADRE	AGUA BLANCA	AVILA	GASTRITIS AGUDA	PERMANENTE	486.839999999999975
+357	JUNIO	2014-06-27	305170	2014-06-20	DANNY DURAN 	16992813	MILENNYGIL	16775860	ESPOSA	AGUA BLANCA	AVILA	SINDROME ALERGICO ODI	AMBULATORIO	389.439999999999998
+358	JUNIO	2014-06-27	177013	2014-06-20	CARLOS SOTO	19715985	SOTO RIGOBERTO	3867513	PADRE	AGUA BLANCA	AVILA	HTA SISTEMICA. CARDIOPATIA HIPERTENSIVA	PERMANENTE	1144.45000000000005
+359	JUNIO	2014-06-27	185603	2014-06-20	RENZO FREITEZ	16416522	ARANZA FREITEZ	MENOR	HIJA 	MECANIZACION	AVILA	COLICO DEL LACTANTE	AMBULATORIO	115.810000000000002
+360	JUNIO	2014-06-27	185566	2014-06-19	JOSE EDUARDO CARDENAS	5948461	PETRA CASTILLO	3868229	MADRE	CAÑO SECO	AVILA	DIABETES TIPO II	PERMANENTE	296
+361	JUNIO	2014-06-27	176959	2014-06-19	JOSE ROSA	10144706	JOSE ROSA	10144706	TITULAR	AGUA BLANCA	AVILA	HERNIA DISCAL C4-C5	PERMANENTE	1595
+362	JUNIO	2014-06-27	185549	2014-06-19	JUNIOR MAJANO	20271985	CARMEN CORTEZ 	8655736	MADRE	AGUA BLANCA 	AVILA	HTA SISTEMICA. CARDIOPATIA HIPERTENSIVA	PERMANENTE	1142.71000000000004
+363	JUNIO	2014-06-27	304964	2014-06-18	MARIA REYES	11428317	MARQUEZ JUAN RAMON	11589418	ESPOSO	AGUA BLANCA	AVILA	DM TIPO 2. DISLIPIDEMIA	PERMANENTE	662.980000000000018
+364	JUNIO	2014-06-27	162868	2014-06-18	AGUIN XIOMARA	9841952	HILDA HERNANDEZ	1106361	MADRE	ACCION CENTRAL	AVILA	DISLIPIDEMIA. HTA ESTADIO 2	PERMANENTE	1857.97000000000003
+365	JUNIO	2014-06-27	176739	2014-06-18	MILAGROS GALLEGOS	17796642	ZADKIEL AVENDAÑO	MENOR	HIJO	ACCION CENTRAL	AVILA	SINDROME FEBRIL AGUDO	AMBULATORIO	155
+366	JUNIO	2014-06-27	162796	2014-06-18	MOLINA CARLOS	10135498	MOLINA RAFAEL	896771	PADRE	ACCION CENTRAL	AVILA	HTA ESTADIO 2	AMBULATORIO	157.050000000000011
+367	JUNIO	2014-06-27	162793	2014-06-18	MOLINA CARLOS	10135498	COLMENAREZ DE M.DOLORES	1985467	MADRE	ACCION CENTRAL	AVILA	HTA ESTADIO 2. OSTEOPOROSIS	PERMANENTE	342.480000000000018
+368	MAYO	2014-05-14	38596	2014-04-22	LINAREZ YAURI	19799594	FRANYELIS LINAREZ	MENOR	HIJA	PIRITU II	COROMOTANA	VIROSIS	AMBULATORIO	210
+369	MAYO	2014-05-14	38621	2014-04-23	TORREALBA JOSE	16753020	TORREALBA ANDREA	MENOR	HIJA	PIRITU II	COROMOTANA	FARINGITIS AGUDA / SINDROME ANEMICO	AMBULATORIO	520
+370	MAYO	2014-05-14	38622	2014-04-23	VASQUEZ TULIO	11849149	VASQUEZ CARLO	MENOR	HIJO	PIRITU II	COROMOTANA	ANEMIA AGUDA	AMBULATORIO	700
+371	MAYO	2014-05-14	38623	2014-04-23	SOLANO ANTONIO	19637485	SOLANO JAVIER	MENOR	HIJO	PIRITU II	COROMOTANA	PARASITOSIS INTESTINAL / ASTENIA	AMBULATORIO	472.009999999999991
+372	MAYO	2014-05-14	38626	2014-04-23	GALLEGOS GRINVER	16566374	GALLEGOS GRINVELIS	MENOR	HIJA	PIRITU II	COROMOTANA	CUADRO VIRAL AGUDO / PARASITOSIS	AMBULATORIO	280.009999999999991
+373	MAYO	2014-05-14	38634	2014-04-23	GALLEGOS GRINVER	16566374	GALLEGOS GRINVELIS	MENOR	HIJA	PIRITU II	COROMOTANA	CUADRO VIRAL AGUDO / PARASITOSIS	AMBULATORIO	199.990000000000009
+374	MAYO	2014-05-14	38629	2014-04-23	GONZALEZ GUILLERMO	12266407	GONZALEZ GUILLERMO	12266407	TITULAR	PIRITU I	COROMOTANA	VERTIGO	PERMANENTE	566.25
+375	MAYO	2014-05-14	38625	2014-04-23	ACOSTA ARELYS	15693833	ACOSTA ARELYS	15693833	TITULAR	ACCION CENTRAL	COROMOTANA	MICOSIS EN DEDO GORDO EN PIE DERECHO	AMBULATORIO	238.990000000000009
+376	MAYO	2014-05-14	38628	2014-04-23	OROPEZA JULIO	10142400	OROPEZA JULIO	10142400	TITULAR	PIRITU I	COROMOTANA	HIPERTENSION ARTERIAL CRONICA	PERMANENTE	200
+377	MAYO	2014-05-14	38627	2014-04-23	GALLEGOS GRINVER	16566374	REYES GLADYS	17277977	ESPOSA	PIRITU II	COROMOTANA	HIPERTENSION ARTERIAL 	PERMANENTE	600
+378	MAYO	2014-05-14	38642	2014-04-23	ARELLANO SALUSTIO	5940201	ARELLANO SALUSTIO	5940201	TITULAR	AGUA BLANCA	COROMOTANA	DIABETES MELLITUS / HIPERTENSION ARTERIAL	PERMANENTE	640.990000000000009
+379	MAYO	2014-05-14	38882	2014-05-12	ARELLANO SALUSTIO	5940201	ARELLANO SALUSTIO	5940201	TITULAR	AGUA BLANCA	COROMOTANA	DIABETES MELLITUS / HIPERTENSION ARTERIAL	PERMANENTE	520.399999999999977
+380	MAYO	2014-05-14	38646	2014-04-24	MENDEZ MAXIMILIANO	13556120	MENDEZ MAXIMILIANO	13556120	TITULAR	PIRITU II	COROMOTANA	SINDROME VERTIGINOSO / CEFALEA	AMBULATORIO	155.009999999999991
+381	MAYO	2014-05-14	38643	2014-04-24	MEDINA FREDDY	20025575	MEDINA FREDDY	20025575	TITULAR	PIRITU III	COROMOTANA	ABCESO EN TIMPANO IZQUIERDO	AMBULATORIO	373.009999999999991
+382	MAYO	2014-05-14	38647	2014-04-24	CASTILLO CARLOS	17601438	CARVAJAL ADIS	10636514	MADRE	PIRITU II	COROMOTANA	TRAUMATISMO EN HOMBRO Y RODILLA IZQUIERDA	AMBULATORIO	575
+383	MAYO	2014-05-14	38649	2014-04-24	BUSTILLOS FRANCISCO	21564162	BUSTILLOS FRANCISCO	21564162	TITULAR	PIRITU I	COROMOTANA	RINOFARINGITIS / AMIGDALITIS AGUDA	AMBULATORIO	190
+384	MAYO	2014-05-14	38650	2014-04-24	COLMENAREZ EDUARDO	12965690	SILVA DILCIA	4195959	MADRE	PIRITU I	COROMOTANA	HIPERTENSION ARTERIAL GRADO II	PERMANENTE	260.009999999999991
+385	MAYO	2014-05-14	38652	2014-04-24	FIGUEROA JOSE	13585438	FIGUEROA JOSMARLIS	MENOR	HIJA	PIRITU II	COROMOTANA	AMIGDALITIS AGUDA / OTITIS MEDIA	AMBULATORIO	624.990000000000009
+386	MAYO	2014-05-14	38657	2014-04-24	VARGAS ALEXANDER	5363739	VARGAS ALEXANDER	5363739	TITULAR	PIRITU I	COROMOTANA	HIPERTENSION ARTERIAL 	AMBULATORIO	175.009999999999991
+387	MAYO	2014-05-14	38732	2014-04-29	VARGAS ALEXANDER	5363739	VARGAS ALEXANDER	5363739	TITULAR	PIRITU I	COROMOTANA	HIPERTENSION ARTERIAL 	AMBULATORIO	1019.98000000000002
+388	MAYO	2014-05-14	38803	2014-05-05	VARGAS ALEXANDER	5363739	VARGAS ALEXANDER	5363739	TITULAR	PIRITU I	COROMOTANA	HIPERTENSION ARTERIAL 	AMBULATORIO	380.689999999999998
+389	MAYO	2014-05-14	38656	2014-04-24	VARGAS ALEXANDER	5363739	PARRA LEONELA	7546841	ESPOSA	PIRITU I	COROMOTANA	ARTRITIS REUMATOIDEA EN ACTIVIDAD	PERMANENTE	700
+390	MAYO	2014-05-14	38654	2014-04-24	CASTRO JOSE	11543604	CASTRO JOSE	11543604	TITULAR	PIRITU II	COROMOTANA	CEFALEA	AMBULATORIO	300.009999999999991
+391	MAYO	2014-05-14	38670	2014-04-25	ALVARADO JOSE	7405007	ALVARADO JOSE	7405007	TITULAR	ACCION CENTRAL	COROMOTANA	ABCESO EN REGION AXILAR	AMBULATORIO	150
+392	MAYO	2014-05-14	38674	2014-04-25	GONZALEZ CARLOS	16966805	GONZALEZ CARLOS	16966805	TITULAR	PIRITU I	COROMOTANA	DIABETES MELLITUS TIPO II EN HIPERGLICEMIA	PERMANENTE	232.990000000000009
+393	MAYO	2014-05-14	38676	2014-04-25	RAMOS ELI	12089670	RAMOS ELI	12089670	TITULAR	PIRITU I	COROMOTANA	DIABETES MELLITUS  II EN HIPERGLICEMIA / DISLIPIDEMIA MIXTA	PERMANENTE	496.990000000000009
+394	MAYO	2014-05-14	38679	2014-04-25	FIGUEROA JOSE	13585438	FIGUEROA JOSMARLIS	MENOR	HIJA	PIRITU II	COROMOTANA	AMIGDALITIS AGUDA / OTITIS MEDIA	AMBULATORIO	316
+395	MAYO	2014-05-14	38680	2014-04-25	TORRELABA LORENZO	18871213	LOBATON MARCOLINA	5366877	MADRE	PIRITU II	COROMOTANA	HTA / SOBREPESO	PERMANENTE	462.100000000000023
+396	MAYO	2014-05-14	38677	2014-04-25	VARGAS CARMEN	12262084	VARGAS CARMEN	12262084	TITULAR	ACCION CENTRAL	COROMOTANA	AMIGDALITIS AGUDA 	AMBULATORIO	449.990000000000009
+397	MAYO	2014-05-14	38678	2014-04-25	DIAZ MARIA	14887833	DIAZ MARIA	14887833	TITULAR	ACCION CENTRAL	COROMOTANA	LUMBALGIA	AMBULATORIO	240
+398	MAYO	2014-05-14	38683	2014-04-25	SIERRA EFREN	7543855	SIERRA EFREN	7543855	TITULAR	PIRITU II	COROMOTANA	DIABETES TIPO II CON DOLOR EN DEDO PEQUEÑO PIE IZQUIERDO	PERMANENTE	1269.94000000000005
+399	MAYO	2014-05-14	38685	2014-04-25	GALLEGOS GRINVER	16566374	GALLEGOS GRINVELIS	MENOR	HIJA	PIRITU II	COROMOTANA	BRONCOESPASMO	AMBULATORIO	345.019999999999982
+400	MAYO	2014-05-14	38686	2014-04-25	MARTINEZ HUMBERTO	11548382	MARTINEZ HUMBERTO	11548382	TITULAR	PIRITU II	COROMOTANA	RINITIS ALERGICA	AMBULATORIO	194.990000000000009
+401	MAYO	2014-05-14	38691	2014-04-26	GONZALEZ MANUEL	10140861	QUINTANA MIREYA	10637302	ESPOSA	PIRITU II	COROMOTANA	SINDROME ICTAL / TRASTORNOS DE ANSIEDAD	PERMANENTE	656.970000000000027
+402	MAYO	2014-05-14	38756	2014-05-02	GONZALEZ MANUEL	10140861	QUINTANA MIREYA	10637302	ESPOSA	PIRITU II	COROMOTANA	SINDROME ICTAL / TRASTORNOS DE ANSIEDAD	PERMANENTE	3024.96000000000004
+403	MAYO	2014-05-14	38884	2014-05-12	GONZALEZ MANUEL	10140861	QUINTANA MIREYA	10637302	ESPOSA	PIRITU II	COROMOTANA	SINDROME ICTAL / TRASTORNOS DE ANSIEDAD	PERMANENTE	950.309999999999945
+404	MAYO	2014-05-14	38708	2014-04-28	ARANGUREN ARTURO	21060049	ARANGUREN ROSMARY	HIJA	MENOR	PIRITU II	COROMOTANA	BRONCONEUMONIA	AMBULATORIO	364.980000000000018
+405	MAYO	2014-05-14	38714	2014-04-28	PIÑA EMILIO	11847988	GONZALEZ MARIA	10644847	CONCUBINA	PIRITU III	COROMOTANA	CUADRO DE MULTIPLES LITIASIS VESICULAR	AMBULATORIO	220
+406	MAYO	2014-05-14	38716	2014-04-28	ARIAS CARLOS	13585413	ARIAS JORDANY	29800916	HIJO	PIRITU I	COROMOTANA	CIATIALGIA	AMBULATORIO	404.439999999999998
+407	MAYO	2014-05-14	38718	2014-04-28	ALVARADO JELIBETH	11785981	ALVARADO JELIBETH	11785981	TITULAR	TRANSPORTE	COROMOTANA	BY PASS GASTRICO	PERMANENTE	200.009999999999991
+408	MAYO	2014-05-14	38748	2014-04-30	ALVARADO JELIBETH	11785981	ALVARADO JELIBETH	11785981	TITULAR	TRANSPORTE	COROMOTANA	BY PASS GASTRICO	PERMANENTE	255.349999999999994
+409	MAYO	2014-05-14	38717	2014-04-28	CUERVO EMILI	13036421	CUERVO HUGO	5240050	PADRE	ACCION CENTRAL	COROMOTANA	DIABETES MELLITUS INSULINO – DEPENDIENTE	PERMANENTE	1750.95000000000005
+410	MAYO	2014-05-14	38713	2014-04-28	HOWER VIVEROS	24588289	RUIZ OMAIRA	24588396	MADRE	TRANSPORTE	COROMOTANA	HIPERTENSION ARTERIAL SISTEMATICA	PERMANENTE	579.990000000000009
+411	MAYO	2014-05-14	38724	2014-04-29	MEDINA FREDDY	20025575	CARLINO GIANNINA	9566876	MADRE	PIRITU III	COROMOTANA	INSUFICIENCIA VASCULAR VENOSA	PERMANENTE	799.730000000000018
+412	MAYO	2014-05-14	38736	2014-04-29	PACHECO TONNY	16294139	PACHECO TONIMAR	MENOR	HIJA	PIRITU II	COROMOTANA	ANEMIA LEVE	AMBULATORIO	826.970000000000027
+413	MAYO	2014-05-14	38735	2014-04-29	SOLANO JAVIER	19637485	SOLANO JAVIER	19637485	TITULAR	PIRITU II	COROMOTANA	LUMBALGIA AGUDA	AMBULATORIO	295
+414	MAYO	2014-05-14	38733	2013-04-29	VARGAS ALEXANDER	5363739	VARGAS ALEXANDER	5363739	TITULAR	PIRITU I	COROMOTANA	HIPERTENSION ARTERIAL 	AMBULATORIO	50
+415	MAYO	2014-05-14	38731	2014-04-29	BUSTILLOS FRANCISCO	21564162	BUSTILLOS FRANCISCO	21564162	TITULAR	PIRITU I	COROMOTANA	PARACLINICOS SUGESTIVOS DE BRONQUITIS AGUDA	AMBULATORIO	600.019999999999982
+416	MAYO	2014-05-14	38734	2014-04-29	CHIRINOS NELSON	12088526	CHIRINOS NELSON	12088526	TITULAR	PIRITU I	COROMOTANA	LUMBALGIA MECANICA 	AMBULATORIO	384.550000000000011
+417	MAYO	2014-05-14	38728	2014-04-29	TIMAURE LUIS	11542710	MARTINEZ FANNY	15492975	ESPOSA	PIRITU I	COROMOTANA	OTITIS MEDIA VILATERAL	AMBULATORIO	647.990000000000009
+418	MAYO	2014-05-14	38837	2014-05-07	TIMAURE LUIS	11542710	MARTINEZ FANNY	15492975	ESPOSA	PIRITU I	COROMOTANA	OTITIS MEDIA VILATERAL	AMBULATORIO	369.980000000000018
+419	MAYO	2014-05-14	38883	2014-05-12	TIMAURE LUIS	11542710	MARTINEZ FANNY	15492975	ESPOSA	PIRITU I	COROMOTANA	OTITIS MEDIA VILATERAL	AMBULATORIO	160
+420	MAYO	2014-05-14	38745	2014-04-30	LOPEZ WILMER	15214008	LOPEZ YANNELIS	MENOR	HIJA	PIRITU I	COROMOTANA	BRONQUITIS AGUDA	AMBULATORIO	167
+421	MAYO	2014-05-14	38747	2014-04-30	COLMENAREZ ELSY	15869120	COLMENAREZ TEODORO	5954761	PADRE	PIRITU I	COROMOTANA	HIPERTENSION ARTERIAL 	PERMANENTE	183
+422	MAYO	2014-05-14	38750	2014-04-30	GUEVARA ARCANGEL	14677755	JIMENEZ CARLA	19637184	CONYUGE	PIRITU II	COROMOTANA	EMBARAZO DE 26 SEMANAS	AMBULATORIO	592.25
+423	MAYO	2014-05-14	38752	2014-04-30	MARCANO DEIVIS	12855592	MARCANO DEIVIS	12855592	TITULAR	ACCION CENTRAL	COROMOTANA	CRISIS ASMATICA	AMBULATORIO	349.980000000000018
+424	MAYO	2014-05-14	38754	2014-05-02	MORILLO GRACIELA	8660443	SEGURA ISABEL	1256270	MADRE	BICEABASTO	COROMOTANA	DIABETES MELLITUS TIPO II / HTA / HIPOTIROIDISMO	PERMANENTE	1999.96000000000004
+425	MAYO	2014-05-14	38831	2014-05-07	MORILLO GRACIELA	8660443	SEGURA ISABEL	1256270	MADRE	BICEABASTO	COROMOTANA	DIABETES MELLITUS TIPO II / HTA / HIPOTIROIDISMO	PERMANENTE	719.960000000000036
+426	MAYO	2014-05-14	38783	2014-05-05	LISCANO JORGE	12446864	NIERES HERIBERTA	2720104	MADRE	PIRITU II	COROMOTANA	SINDROME VERTIGINOSO PERIFERICO	AMBULATORIO	834.980000000000018
+427	MAYO	2014-05-14	38785	2014-05-05	COLMENAREZ HENRY	7547441	COLMENAREZ HENRY	7547441	TITULAR	BICEABASTO	COROMOTANA	CIFRAS TENSIONALES ELEVADAS	AMBULATORIO	563
+428	MAYO	2014-05-14	38786	2014-05-05	VALERA SERGIO	20809291	VALERA SERGIO	20809291	TITULAR	ACCION CENTRAL	COROMOTANA	FARINGITIS 	AMBULATORIO	349.980000000000018
+429	MAYO	2014-05-14	38791	2014-05-05	VASQUEZ TULIO	11849149	VASQUEZ CARLO	MENOR	HIJO	PIRITU II	COROMOTANA	DISLIPIDEMIA	AMBULATORIO	218.72999999999999
+430	MAYO	2014-05-14	38800	2014-05-05	LUCENA MARI LUZ	12447000	LUCENA MARI LUZ	12447000	TITULAR	ACCION CENTRAL	COROMOTANA	SINDROME VARICOSO	AMBULATORIO	390
+431	MAYO	2014-05-14	38796	2014-05-05	FIGUEROA JOSE	13585438	PEREZ ELDA	7540104	MADRE	PIRITU II	COROMOTANA	HIPERTENSION ARTERIAL SISTEMATICA	PERMANENTE	208.009999999999991
+432	MAYO	2014-05-14	38797	2014-05-05	FIGUEROA JOSE	13585438	FIGUEROA GILBERTO	1124036	PADRE	PIRITU II	COROMOTANA	CARDIOPATIA CHAGASICA E ISQUEMIA	PERMANENTE	260
+433	MAYO	2014-05-14	38793	2014-05-05	VASQUEZ TULIO	11849149	VASQUEZ CARLO	MENOR	HIJO	PIRITU II	COROMOTANA	MIGRAÑA	AMBULATORIO	136.620000000000005
+434	MAYO	2014-05-14	38799	2014-05-05	CUENCA NORIS	14092771	CUENCA NORIS	14092771	TITULAR	ACCION CENTRAL	COROMOTANA	DERMATITIS ATOPICA	AMBULATORIO	164.490000000000009
+435	MAYO	2014-05-14	38798	2014-05-05	FIGUEROA JOSE	13585438	FIGUEROA GILBERTO	1124036	PADRE	PIRITU II	COROMOTANA	DISCOPATIA LUMBOSACRA	PERMANENTE	593.980000000000018
+436	MAYO	2014-05-14	38840	2014-05-07	FIGUEROA JOSE	13585438	FIGUEROA GILBERTO	1124036	PADRE	PIRITU II	COROMOTANA	DISCOPATIA LUMBOSACRA	PERMANENTE	201.419999999999987
+437	MAYO	2014-05-14	38782	2014-05-05	MENDEZ GIOVANNI	9837225	MENDEZ GIOVANNI	9837225	TITULAR	PIRITU II	COROMOTANA	HIPERTENSION ARTERIAL ESTADIO II COMPENSADA	PERMANENTE	36.8599999999999994
+438	MAYO	2014-05-14	38851	2014-05-08	MENDEZ GIOVANNI	9837225	MENDEZ GIOVANNI	9837225	TITULAR	PIRITU II	COROMOTANA	HIPERTENSION ARTERIAL ESTADIO II COMPENSADA	PERMANENTE	1160
+439	MAYO	2014-05-14	38802	2014-05-05	SIERRA EFREN	7543855	SIERRA ANDREA	MENOR	HIJA	PIRITU II	COROMOTANA	DIARREA AGUDA FEBRIL	AMBULATORIO	264.990000000000009
+440	MAYO	2014-05-14	38874	2014-05-09	SIERRA EFREN	7543855	SIERRA ANDREA	MENOR	HIJA	PIRITU II	COROMOTANA	DIARREA AGUDA FEBRIL	AMBULATORIO	100
+441	MAYO	2014-05-14	38817	2014-05-06	JIMENEZ GLADYS	13353211	JIMENEZ PANTALEON	1226690	PADRE	PIRITU II	COROMOTANA	ADC DE PROTASTA	AMBULATORIO	567.019999999999982
+442	MAYO	2014-05-14	38813	2014-05-06	RAMOS ELI	12089670	ALBERTI JENNY	14469240	ESPOSA	PIRITU I	COROMOTANA	ARTOSIS CRONICA Y SINDROME DE HOMBRO DOLOROSO	AMBULATORIO	1140
+443	MAYO	2014-05-14	38815	2014-05-06	RAMOS ELI	12089670	ALBERTI JENNY	14469240	ESPOSA	PIRITU I	COROMOTANA	ARTOSIS CRONICA Y SINDROME DE HOMBRO DOLOROSO	AMBULATORIO	17
+444	MAYO	2014-05-14	38816	2014-05-06	ESCOBAR CANDIDO	10636444	ESCOBAR CANDIDO	10636444	TITULAR	PIRITU II	COROMOTANA	COLONOPATIA Y POSIBLE HPB	PERMANENTE	1179.94000000000005
+445	MAYO	2014-05-14	38810	2014-05-06	SALMERON JOSE	18872133	SALMERON DEMETRIO	5945899	PADRE	PIRITU I	COROMOTANA	HIPERTENSION ARTERIAL 	PERMANENTE	755
+446	MAYO	2014-05-14	38833	2014-05-07	TORREALBA JOSE	16753020	TORREALBA JOSE	16753020	TITULAR	PIRITU II	COROMOTANA	RINITIS ALERGICA	AMBULATORIO	160
+447	MAYO	2014-05-14	38836	2014-05-07	ROJAS GIMMY	12858021	ROJAS BETTY	3527210	MADRE	TRANSPORTE	COROMOTANA	CONSULTA	AMBULATORIO	700
+448	MAYO	2014-05-14	38832	2014-05-07	LOPEZ HECTOR	24022859	LOPEZ ESTEBAN	MENOR	HIJO	PIRITU II	COROMOTANA	PARASITOSIS	AMBULATORIO	177.990000000000009
+449	MAYO	2014-05-14	38841	2014-05-07	ANGULO OLGA	14092444	ANGULO OLGA	14092444	TITULAR	PIRITU III	COROMOTANA	GASTRIRTIS ACTIVA ASOCIADA A BACTERIAS	AMBULATORIO	710.009999999999991
+450	MAYO	2014-05-14	38839	2014-05-07	FIGUEROA JOSE	13585438	FIGUEROA JOSMARLIS	MENOR	HIJA	PIRITU II	COROMOTANA	ANEMIA / RINITIS ALERGICA	AMBULATORIO	249.990000000000009
+451	MAYO	2014-05-14	38850	2014-05-08	LUCENA MARI LUZ	12447000	LUCENA MARI LUZ	12447000	TITULAR	ACCION CENTRAL	COROMOTANA	CERI DE ASMA	AMBULATORIO	714.980000000000018
+452	MAYO	2014-05-14	38853	2014-05-08	CASTILLO CARLOS	17601438	CASTILLO PASCUAL	9841895	PADRE	PIRITU II	COROMOTANA	RINITIS CRONICA	AMBULATORIO	800.009999999999991
+453	MAYO	2014-05-14	38854	2014-05-08	CASTILLO CARLOS	17601438	CARVAJAL ADIS	10636514	MADRE	PIRITU II	COROMOTANA	SOBREPESO/TRASTORNOS PERIMENOPANSICOS/HTA	PERMANENTE	163.990000000000009
+454	MAYO	2014-05-14	38880	2014-05-10	CASTILLO CARLOS	17601438	CARVAJAL ADIS	10636514	MADRE	PIRITU II	COROMOTANA	SOBREPESO/TRASTORNOS PERIMENOPANSICOS/HTA	PERMANENTE	160
+455	MAYO	2014-05-14	38872	2014-05-09	GUEVARA ARCANGEL	14677755	TORREALBA MARIA	4609864	MADRE	PIRITU II	COROMOTANA	HTA/DIABETES MELLITUS TIPO2/DISLIPIDERMIA...	PERMANENTE	2000.00999999999999
+456	MAYO	2014-05-14	38869	2014-05-09	ARANGUREN ARTURO	21060049	ARANGUREN ARTURO	21060049	TITULAR	PIRITU II	COROMOTANA	ODONTALGIA	AMBULATORIO	350.009999999999991
+457	MAYO	2014-05-14	38868	2014-05-09	MEDINA FREDDY	20025575	VELOZ ELIANA	21058596	CONCUBINA	PIRITU III	COROMOTANA	EMBARAZO SIMPLE DE 6 SEMANAS /ITU	AMBULATORIO	250
+458	MAYO	2014-05-14	38867	2014-05-09	DIAZ MARIA	14887833	DIAZ MARIA	14887833	TITULAR	ACCION CENTRAL	COROMOTANA	AMIGDALITIS AGUDA 	AMBULATORIO	679.990000000000009
+459	MAYO	2014-05-14	38860	2014-05-09	COLINA JOHAN	17277901	COLINA JEAN FRANCO	MENOR	HIJO	PIRITU II	COROMOTANA	SINDROME ANEMICO	AMBULATORIO	217.990000000000009
+460	MAYO	2014-05-14	38877	2014-05-10	CASTRO JOSE	11543604	CASTRO JOSE	11543604	TITULAR	PIRITU II	COROMOTANA	LUMBALGIA MECANICA DISLIPIDERMIA	AMBULATORIO	389.980000000000018
+461	MAYO	2014-05-14	38885	2014-05-12	MENDONCA JOSE	18672248	SILVA MAYERLIN	20273396	CONCUBINA	PIRITU III	COROMOTANA	MASTALGIA DERECHA	AMBULATORIO	155.009999999999991
+462	MAYO	2014-05-14	38892	2014-05-12	FIGUEROA JOSE	13585438	FIGUEROA GILBERTO	1124036	PADRE	PIRITU II	COROMOTANA	DOLORES MUSCULARES/FIEBRE	AMBULATORIO	60
+463	MAYO	2014-05-14	38893	2014-05-12	YUSTIZ CARMEN	11543412	YUSTIZ RICARDA	1126764	MADRE	PIRITU I	COROMOTANA	HIPERTENSION ARTERIAL 	PERMANENTE	944.200000000000045
+464	MAYO	2014-05-14	38894	2014-05-12	YUSTIZ CARMEN	11543412	YUSTIZ RICARDA	1126764	MADRE	PIRITU I	COROMOTANA	HIPERTENSION ARTERIAL 	PERMANENTE	379.230000000000018
+465	MAYO	2014-05-14	38896	2014-05-12	NARVAEZ FELIX	18753996	NARVAEZ FELIX	18753996	TITULAR	PIRITU II	COROMOTANA	ABCESO EN REGION ANAL	AMBULATORIO	180.009999999999991
+466	MAYO	2014-05-14	38898	2014-05-12	BARRIOS CARMEN	12262084	BARRIOS CARMEN	12262084	TITULAR	ACCION CENTRAL	COROMOTANA	DOLOR ABDOMINAL TIPO COLICO	AMBULATORIO	220
+467	MAYO	2014-05-14	38901	2014-05-12	PACHECO TONNY	16294139	PACHECO TONNY	16294139	TITULAR	PIRITU II	COROMOTANA	DISLIPIDERMIA CONJUTIVITIS	AMBULATORIO	240
+468	MAYO	2014-05-22	38923	2014-05-13	ROSENDO SIMON	9841670	ROSENDO SIMON	9841670	TITULAR	PIRITU II	COROMOTANA	SD VIRAL	AMBULATORIO	359.990000000000009
+469	MAYO	2014-05-22	38932	2014-05-14	ALVAREZ ALIRIO	14425184	ALVAREZ JOSE	MENOR	HIJO	PIRITU I	COROMOTANA	CONTROL DE PUERICULTURA	AMBULATORIO	697.019999999999982
+470	MAYO	2014-05-22	38925	2014-05-13	YANALI HERNANDEZ	24022597	YANALI HERNANDEZ	24022597	TITULAR	ACCION CENTRAL	COROMOTANA	ARTRALGIA	AMBULATORIO	140
+471	MAYO	2014-05-22	38934	2014-05-14	HOWER VIVEROS	24588289	OMAIRA RUIZ	24588396	MADRE	TRANSPORTE	COROMOTANA	PRE DIABETES . DISLIPIDEMIA	PERMANENTE	280
+472	MAYO	2014-05-22	38937	2014-05-14	GIMMI ROJAS	12858021	BETTY ROJAS	3527210	MADRE	TRANSPORTE	COROMOTANA	DM TIPO II. INSUFICIENCIA VENOSA	PERMANENTE	1242.76999999999998
+473	MAYO	2014-05-22	38938	2014-05-14	ALVAREZ ALIRIO	14425184	ALVAREZ JOSE	MENOR	HIJO	PIRITU I	COROMOTANA	VARICELA	AMBULATORIO	392.980000000000018
+474	MAYO	2014-05-22	38944	2014-05-14	LISCANO JORGE	12446864	MARIANGEL LISCANO	MENOR	HIJA	PIRITU II	COROMOTANA	CRISIS DE ASMA BRONQUIAL	AMBULATORIO	755
+475	MAYO	2014-05-22	38945	2014-05-14	YELITZA MARTINEZ	15071456	YELITZA MARTINEZ	15071456	TITULAR	PIRITU II	COROMOTANA	CEFALEA EPIGASTRALGIA	AMBULATORIO	350
+476	MAYO	2014-05-22	38946	2014-05-14	GLADIS JIMENES	13353211	GLADYS JIMENEZ	13353211	TITULAR	PIRITU II	COROMOTANA	HEMORROIDES NO TROMBOSADAS	AMBULATORIO	115
+477	MAYO	2014-05-22	38955	2014-05-15	DEISY GAINZA	16565969	DEISY LOPEZ	3869477	MADRE	PIRITU I	COROMOTANA	CARDIOPATIA ISQUEMICA	PERMANENTE	4044.86000000000013
+478	MAYO	2014-05-22	38954	2014-05-15	ROSMARY MENDEZ	12090662	ROSA GALLARDO	5369243	MADRE	PIRITU III	COROMOTANA	HTA. OSTEOPOROSIS.DISLIPIDEMIA	PERMANENTE	2100
+479	MAYO	2014-05-22	38956	2014-05-15	JIMENEZ JOSE	19590185	JIMENEZ JOSE	19590185	TITULAR	PIRITU I	COROMOTANA	BRONQUITIS AGUDA	AMBULATORIO	430
+480	MAYO	2014-05-22	38960	2014-05-15	BAREÑO BEATRIZ	20811114	BAREÑO BEATRIZ	20811114	TITULAR	ACCION CENTRAL	COROMOTANA	CONJUNTIVITIS REACTIVA	AMBULATORIO	90
+481	MAYO	2014-05-22	38967	2014-05-16	LUCENA MARY	12447000	LUCENTA JACINTO	4611989	PADRE	ACCION CENTRAL	COROMOTANA	CARDIOPATIA MIXTA	PERMANENTE	1147.99000000000001
+482	MAYO	2014-05-22	38972	2014-05-16	LEGON EMMA	11548743	RIOS EMMA	859934	MADRE	AGUA BLANCA	COROMOTANA	DM TIPO II. HTA ESTADIO II	PERMANENTE	2600.0300000000002
+483	MAYO	2014-05-22	38973	2014-05-16	ROSMARY MENDEZ	12090662	ROSMARY MENDEZ GALLARDO	12090662	TITULAR	PIRITU III	COROMOTANA	RINOFARINGITIS	AMBULATORIO	568.200000000000045
+484	MAYO	2014-05-22	38974	2014-05-16	NAUDIS MEDINA	18799452	YONAIKER MEDINA	MENOR	HIJA	PIRITU II	COROMOTANA	OTITIS AGUDA BILATERAL	AMBULATORIO	579.980000000000018
+485	MAYO	2014-05-22	39066	2014-05-22	NAUDIS MEDINA	18799452	YONAIKER MEDINA	MENOR	HIJA	PIRITU II	COROMOTANA	OTITIS AGUDA BILATERAL	AMBULATORIO	489.970000000000027
+486	MAYO	2014-05-22	39012	2014-05-19	RODRIGUEZ JINETH	19338681	VASQUEZ MELIDA	9157207	MADRE	ACCION CENTRAL	COROMOTANA	HTA. HIPERLIPIDEMIA	PERMANENTE	785.019999999999982
+487	MAYO	2014-05-22	39013	2014-05-19	SONNY ALVARADO	7384272	SONNY ALVARADO	7384272	TITULAR	TRANSPORTE	COROMOTANA	ABSESO EN REGION TESTICULAR	AMBULATORIO	250
+488	MAYO	2014-05-22	39014	2014-05-19	CARLOS CASTILLO	17601438	PASCUAL CASTILLO	9841895	PADRE	PIRITU II	COROMOTANA	REGION EN GLUTEO	AMBULATORIO	220
+489	MAYO	2014-05-22	39016	2014-05-19	JUNIOR USTRERA	20024930	JUNIOR USTRERA	20024930	TITULAR	PIRITU II	COROMOTANA	HERNIA  DISCAL. CON COMPRENSION RADICULAR SEVERA	AMBULATORIO	1110.03999999999996
+490	MAYO	2014-05-22	39017	2014-05-19	RAMOS ELI	12089670	RAMOS ELI	12089670	TITULAR	PIRITU I	COROMOTANA	HIPERGLICEMIA	PERMANENTE	1599.92000000000007
+491	MAYO	2014-05-22	39026	2014-05-20	GOMEZ CARMEN	9841301	GOMEZ CARMEN	9841301	TITULAR	BICEABASTO	COROMOTANA	SD VERTIGINOSO	PERMANENTE	934.990000000000009
+492	MAYO	2014-05-22	39032	2014-05-20	FELIX NARVAEZ	18753996	VANESSA HIDALGO	21057886	CONCUBINA	PIRITU II	COROMOTANA	RINITIS ALERGICA	PERMANENTE	340
+493	MAYO	2014-05-22	39033	2014-05-20	CUENCA NORIS	14092771	CASTRO DOMINGA	4611971	MADRE	ACCION CENTRAL	COROMOTANA	ARTRITIS REMATOIDEA. OSTEOPOROSIS	PERMANENTE	350
+494	MAYO	2014-05-22	39034	2014-05-20	ESCORCHA NORAILY	14676545	ESCORCHA NORAILY	14676545	TITULAR	ACCION CENTRAL	COROMOTANA	DISPEPSIA. ESTREÑIMIENTO	AMBULATORIO	650
+495	MAYO	2014-05-22	39035	2014-05-20	MILNEYVA ZABALETA	16751915	MILNEYVA ZABALETA	16751915	TITULAR	ACCION CENTRAL	COROMOTANA	RINOFARONGITIS	AMBULATORIO	499.990000000000009
+496	MAYO	2014-05-22	39036	2014-05-20	MORIAN WILMER	6680335	TIBIZAI LINAREZ	7461583	MADRE	PIRITU II	COROMOTANA	ARTRALGIA GENERALIZADA	AMBULATORIO	1899.91000000000008
+497	MAYO	2014-05-22	39039	2014-05-20	RODRIGUEZ EDGAR	14695019	ORIANA RODRIGUEZ	MENOR	HIJA	ACCION CENTRAL	COROMOTANA	AMIBIASIS. DESHIDRATACION MODERADA	PERMANENTE	500.009999999999991
+498	MAYO	2014-05-22	39052	2014-05-21	LOPEZ HECTOR	11077530	AVELINA TORREZ	5369460	MADRE	PIRITU II	COROMOTANA	INSUFICIENCIA VENOSA PERIFERICA	AMBULATORIO	235
+499	MAYO	2014-05-22	39053	2014-05-21	LOPEZ HECTOR	11077530	AVELINA TORREZ	5369460	MADRE	PIRITU II	COROMOTANA	INSUFICIENCIA VENOSA PERIFERICA	AMBULATORIO	235
+500	MAYO	2014-05-22	39058	2014-05-21	TORREALBA JOSE	16753020	ANDREA TORREALBA	MENOR	HIJA	PIRITU II	COROMOTANA	SD ANEMICO	AMBULATORIO	220.009999999999991
+501	MAYO	2014-06-05	39067	2014-02-22	ALEXANDER BALZA	24142091	MARIALEX BALZA	MENOR	HIJA	PIRITU I	COROMOTANA	NEUMONIA BILATERAL	PERMANENTE	949.029999999999973
+502	MAYO	2014-06-05	39090	2014-05-23	VICENTE CASTRO	11543604	VICENTE CASTRO	11543604	TITULAR	PIRITU II	COROMOTANA	OTITIS MEDIA DERECHA / LUMBALGIA	AMBULATORIO	760.019999999999982
+503	MAYO	2014-06-05	39091	2014-05-23	TONNY PACHECO	16294139	TONNY PACHECO	16294139	TITULAR	PIRITU II	COROMOTANA	FARINGOAMIGDALITIS 	AMBULATORIO	210
+504	MAYO	2014-06-05	39902	2014-05-23	PEDRO MAMBEL	9044561	PEDRO MAMBEL	9044561	TITULAR	ACCION CENTRAL	COROMOTANA	LUMBALGIA	AMBULATORIO	540.019999999999982
+505	MAYO	2014-06-05	39089	2014-05-23	ROSMARY MENDEZ	12090662	RANIA BONILLA	MENOR	HIJA	PIRITU III	COROMOTANA	RINOSINOSITIS	AMBULATORIO	154.990000000000009
+506	MAYO	2014-06-05	39094	2014-05-23	FREDDY MEDINA	20025575	ELIANA VELOZ	21058596	CONCUBINA	PIRITU III	COROMOTANA	AMENORREA DOLOR PELVICO	PERMANENTE	478.990000000000009
+507	MAYO	2014-06-05	39102	2014-05-23	MARY LUZ LUCENA	12447000	MARY LUZ LUCENA	12447000	TITULAR	ACCION CENTRAL	COROMOTANA	DISNEA / DOLOR INTERCOSTAL	AMBULATORIO	499.980000000000018
+508	MAYO	2014-06-05	39099	2014-05-23	JOSE MENDONCA	18672248	MERYELIN DA SILVA	20273396	CONCUBINA	PIRITU III	COROMOTANA	CONTROL GINECOLOGICO	AMBULATORIO	50
+509	MAYO	2014-06-05	39097	2014-05-23	JAVIER PEREZ	12965923	LEONELLA PEREZ	MENOR	HIJA	PIRITU III	COROMOTANA	FARINGITIS AGUDA	AMBULATORIO	500.009999999999991
+510	MAYO	2014-06-05	39137	2014-05-26	ALEXIS FIGUEROA	7389495	ALEXIS FIGUEROA	7389495	TITULAR	PIRITU II	COROMOTANA	TRAUMATISMO EN DEDO PULGAR DERECHO	AMBULATORIO	9.22000000000000064
+511	MAYO	2014-06-05	39138	2014-05-26	ANGULO MARYERIS	21561653	ANGULO MARYERIS	21561653	TITULAR	ACCION CENTRAL	COROMOTANA	AMIGDALITIS AGUDA	AMBULATORIO	270
+512	MAYO	2014-06-05	39141	2014-05-26	MANUEL ALVARADO	20780929	YANECCI ABREU	22105965	CONCUBINA	PIRITU II	COROMOTANA	AMIGDALITIS AGUDA	AMBULATORIO	172
+513	MAYO	2014-06-05	39152	2014-05-27	HOWER VIVEROS	24588289	CRISTIAN VIVERO	MENOR	HIJO	TRANSPORTE	COROMOTANA	EPISTAXIS RECURRENTE	AMBULATORIO	173
+514	MAYO	2014-06-05	39157	2014-05-27	ALEXIS SULBARAN	10144490	HOMERO SULBARAN	3271838	PADRE	PIRITU II	COROMOTANA	HIPERTENSION ARTERIAL	PERMANENTE	1500.04999999999995
+515	MAYO	2014-06-05	39201	2014-05-29	ALEXIS SULBARAN	10144490	HOMERO SULBARAN	3271838	PADRE	PIRITU II	COROMOTANA	HIPERTENSION ARTERIAL	PERMANENTE	1029.97000000000003
+516	MAYO	2014-06-05	39158	2014-05-27	CAROLINA OROPEZA	11851836	CARMEN DE OROPEZA	4816132	MADRE	CAÑO SECO	COROMOTANA	INFECCION URINARIA	AMBULATORIO	582.990000000000009
+517	MAYO	2014-06-05	39160	2014-05-27	FRANCISCO BUSTILLO	21564162	FRANCISCO BUSTILLO	21564162	TITULAR	PIRITU II	COROMOTANA	PIELONEFRITIS	AMBULATORIO	279.990000000000009
+518	MAYO	2014-06-05	39163	2014-05-27	JESUS LIMIA	46925	JESUS LIMIA	46925	TITULAR	ACCION CENTRAL	COROMOTANA	HIPERTENSION ARTERIAL	PERMANENTE	25.5
+519	MAYO	2014-06-05	39173	2014-05-28	CARLOS MOLINA	10135498	DOLORES COLMENAREZ	1985467	MADRE	ACCION CENTRAL	COROMOTANA	HIPERTENSION ARTERIAL / HIPERLIPIDEMIA	PERMANENTE	580.019999999999982
+520	MAYO	2014-06-05	39174	2014-05-28	FELIX NARVAEZ	18753996	MARICELA ARIZA	10639807	MADRE	PIRITU II	COROMOTANA	LUMBALGIA SEVERA / OSTEOPOROSIS	PERMANENTE	585.990000000000009
+521	MAYO	2014-06-05	39177	2014-05-28	NORAILY ESCORCHA	14676545	NORAILY ESCORCHA	14676545	TITULAR	ACCION CENTRAL	COROMOTANA	HEMORROIDES INTERNA	AMBULATORIO	38
+522	MAYO	2014-06-05	39178	2014-05-28	NORAILY ESCORCHA	14676545	NORAILY ESCORCHA	14676545	TITULAR	ACCION CENTRAL	COROMOTANA	DISPEPSIA / ESTREÑIMIENTO	AMBULATORIO	374.990000000000009
+523	MAYO	2014-06-05	39179	2014-05-28	FIDEL ESCALONA	13696387	SANTIAGO ESCALONA	MENOR	HIJO	TRANSPORTE	COROMOTANA	CONTROL PEDIATRICO	AMBULATORIO	45
+524	MAYO	2014-06-05	39181	2014-05-28	FIDEL ESCALONA	13696387	FABRICIO ESCALONA	MENOR	HIJO	TRANSPORTE	COROMOTANA	CONTROL PEDIATRICO	AMBULATORIO	12
+525	MAYO	2014-06-05	39186	2014-05-28	SALUSTRIO ORELLANA	5940201	FAVIO ARELLANO	28107529	HIJO	AGUA BLANCA	COROMOTANA	SD DOLOR ABDOMINAL + BRONQUITIS	AMBULATORIO	880.039999999999964
+526	MAYO	2014-06-05	39190	2014-05-28	LORETO INOSTROZA	24320049	ZOILA FIERRO	81288458	MADRE	ACCION CENTRAL	COROMOTANA	HAS. IVMI.OSTEOSPOROSIS	PERMANENTE	1204.94000000000005
+527	MAYO	2014-06-05	39200	2014-05-29	LORETO INOSTROZA	24320049	ZOILA FIERRO	81288458	MADRE	ACCION CENTRAL	COROMOTANA	HAS. IVMI.OSTEOSPOROSIS	PERMANENTE	196
+528	MAYO	2014-06-05	39191	2014-05-28	RAMOS ELI	12089670	ELI RAMOS	12089670	TITULAR	PIRITU I	COROMOTANA	DM TIPO II	PERMANENTE	800
+529	MAYO	2014-06-05	39193	2014-05-28	GRINVER GALLEGOS	16566374	GLADYS REYES	17277977	ESPOSA	PIRITU II	COROMOTANA	HTA	PERMANENTE	600
+530	MAYO	2014-06-05	39196	2014-05-28	JESUS LIMIA	46925	JESUS LIMIA	46925	TITULAR	ACCION CENTRAL	COROMOTANA	INSUFICIENCIA VENOSA PERIFERICA	PERMANENTE	659.980000000000018
+531	MAYO	2014-06-05	39213	2014-05-29	NELSON CHIRINOS	12088526	NELSON CHIRINOS	12088526	TITULAR	PIRITU I	COROMOTANA	SIATIALGIA	AMBULATORIO	175
+532	MAYO	2014-06-05	39204	2014-05-29	MIGUEL PEREZ	16032969	MIGUEL PEREZ	16032969	TITULAR	PIRITU II	COROMOTANA	CEFALEA + DOLOR MUSCULAR	AMBULATORIO	153
+533	MAYO	2014-06-05	39206	2014-05-29	GREORIO MENDOZA	10726265	ATHENA MENDOZA	26940029	HIJA	PIRITU II	COROMOTANA	SD VIRAL	AMBULATORIO	389.980000000000018
+534	MAYO	2014-06-05	39234	2014-05-30	DEISYS GAINZA	16565969	ENRIQUE GAINZA	3319981	PADRE	PIRITU I	COROMOTANA	DIABETES	PERMANENTE	1439.94000000000005
+535	MAYO	2014-06-05	39236	2014-05-30	CARLOS CASTILLO	17601438	MARIA CASTILLO	MENOR	HIJA	PIRITU II	COROMOTANA	IRB	AMBULATORIO	218
+536	JULIO	2014-07-07	39772	2014-07-03	GONZALEZ MANUEL	10140861	QUINTANA MIREYA	10637302	ESPOSA	PIRITU II	COROMOTANA	DX. DEPRESIVO MAYOR	PERMANENTE	1379.95000000000005
+537	JUNIO	2014-07-07	39585	2014-06-20	LUGO ARGENIS	9843582	LUGO ARGENIS	9843582	TITULAR	PIRITU III	COROMOTANA	TRM EN REGION DE LUMBAR Y CODO IZQUIERDO	AMBULATORIO	780.029999999999973
+538	JUNIO	2014-07-07	39583	2014-06-20	TORREALBA LORENZO	18871213	TORREALBA MANUEL	MENOR	HIJO	PIRITU II	COROMOTANA	CUADRO DE CEFALEA/OTITIS AGUDA	AMBULATORIO	1050.02999999999997
+539	JUNIO	2014-07-07	39586	2014-06-20	ROSMARY MENDEZ	12090662	GALLARDO ROSA 	5369243	MADRE	PIRITU III	COROMOTANA	ARTRITIS/HTA/OSTEOPOROSIS	PERMANENTE	1940.05999999999995
+540	JUNIO	2014-07-07	39587	2014-06-20	LINAREZ YAURI	19799594	FRANYELIS LINAREZ	MENOR	HIJA	PIRITU II	COROMOTANA	ANEMIA 	AMBULATORIO	341
+541	JUNIO	2014-07-07	39589	2014-06-20	BASTIDAS JOSE	13703910	BASTIDAS JOSE	13703910	TITULAR	PIRITU II	COROMOTANA	ASTRALGIA EN RODILLA IZQUIERDA	AMBULATORIO	286
+542	JUNIO	2014-07-07	39590	2014-06-20	MENDOCA JOSE	18672248	MENDOCA ANDREA	MENOR	HIJA	PIRITU III	COROMOTANA	DEPRESION DE HIERRO POR ANEMIA	AMBULATORIO	425.019999999999982
+543	JUNIO	2014-07-07	39591	2014-06-20	FIGUEROA ALEXIS	7389495	FIGUEROA ALEXIS	7389495	TITULAR	PIRITU II	COROMOTANA	TENDINITIS DE LA MUÑECA DERECHA	AMBULATORIO	190
+544	JUNIO	2014-07-07	39624	2014-06-23	CARLINO JOSE	19130806	CARLINO JOSE	19130806	TITULAR	ACCION CENTRAL	COROMOTANA	CELULITIS EN BRAZO DERECHO	AMBULATORIO	293.009999999999991
+545	JUNIO	2014-07-07	39693	2014-06-23	MORIAN WILMER	6680335	LINAREZ TIBIZAI	7461583	CONCUBINA	PIRITU II	COROMOTANA	OMALGIA IZQUIERDA	PERMANENTE	1590.00999999999999
+546	JUNIO	2014-07-07	39632	2014-06-23	MENDOZA GREGORIO	10726265	CAMPOS LUZ	10636744	CONCUBINA	PIRITU II	COROMOTANA	FIBROMATOSIS UTERINA	PERMANENTE	411.980000000000018
+547	JUNIO	2014-07-07	39633	2014-06-23	MENDOZA GREGORIO	10726265	CAMPOS LUZ	10636744	CONCUBINA	PIRITU II	COROMOTANA	SIND. DE BACTERIURIA/COLON IRRITABLE	AMBULATORIO	805.029999999999973
+548	JUNIO	2014-07-07	39635	2014-06-23	GALLEGOS GRINVER	16566374	REYES GLADYS	17277977	CONCUBINA	PIRITU II	COROMOTANA	CIFRAS TENSIONALES CONTROLADAS	PERMANENTE	600
+549	JUNIO	2014-07-07	39645	2014-06-25	HERRERA RUFINO	9562576	HERRERA RUFINO	9562576	TITULAR	PIRITU II	COROMOTANA	DISLIPIDERMIA/ESPOLON PIE DERECHO	AMBULATORIO	860.009999999999991
+550	JUNIO	2014-07-07	39654	2014-06-25	MEDINA FREDDY	20025575	VELOZ ELIANA	21058596	CONCUBINA	PIRITU III	COROMOTANA	CONTROL PRENATAL	PERMANENTE	1164.94000000000005
+551	JUNIO	2014-07-07	39655	2014-06-25	COLMENAREZ JOSE	14425942	MORENO GEORGINA	4201889	MADRE	PIRITU II	COROMOTANA	CARDIOPATIA IZQUEMICA CRONICA/DIABETES TIPO II	PERMANENTE	770.009999999999991
+552	JUNIO	2014-07-07	39657	2014-06-25	LUCENA MARY	12447000	LUCENA MARY	12447000	TITULAR	PIRITU II	COROMOTANA	INSUFICIENCIA VENOSA SUPERFICIAL/RINITIS	AMBULATORIO	376.990000000000009
+553	JUNIO	2014-07-07	39672	2014-06-26	RIVERO JOSE	11851161	PEÑA CARMEN	12266195	ESPOSA	PIRITU II	COROMOTANA	RINITIS ALERGICA	AMBULATORIO	950
+554	JUNIO	2014-07-07	39667	2014-06-26	GOMEZ CARMEN	9841301	GOMEZ CARMEN	9841301	TITULAR	BICEABASTO	COROMOTANA	INFECCION RESPIRATORIA BAJA	PERMANENTE	889.980000000000018
+555	JUNIO	2014-07-07	39668	2014-06-26	GOMEZ CARMEN	9841301	GOMEZ CARMEN	9841301	TITULAR	BICEABASTO	COROMOTANA	INFECCION RESPIRATORIA BAJA	PERMANENTE	35
+556	JUNIO	2014-07-07	39674	2014-06-26	MARTINEZ FRANCISCO	12858761	LOPEZ CARIDAD	16415268	ESPOSA	ACCION CENTRAL	COROMOTANA	EMBARAZO DE 11 SEMANAS	PERMANENTE	569.019999999999982
+557	JUNIO	2014-07-07	39673	2014-06-26	MARTINEZ FRANCISCO	12858761	LOPEZ CARIDAD	16415268	ESPOSA	ACCION CENTRAL	COROMOTANA	EMBARAZO DE 11 SEMANAS	PERMANENTE	580
+558	JUNIO	2014-07-07	39675	2014-06-26	HERNANDEZ YANALI	24022597	KLEYBER CARRIZO	MENOR	HIJO	ACCION CENTRAL	COROMOTANA	GIARDIASIS	AMBULATORIO	526.980000000000018
+559	JUNIO	2014-07-07	393901	2014-06-09	SANCHEZ JEISUM	16138848	SANCHEZ JEISUM	16138848	TITULAR	PIRITU II	COROMOTANA	CEFALEA TENSIONAL	AMBULATORIO	270.009999999999991
+560	JUNIO	2014-07-07	39686	2014-06-27	SALMERON JOSE	18872133	SALMERON DEMETRIO	5945899	PADRE	PIRITU I	COROMOTANA	HTA	PERMANENTE	959.980000000000018
+561	JUNIO	2014-07-07	39687	2014-06-27	MENDEZ GIOVANNY	9837225	MENDEZ JESUS	MENOR	HIJO	PIRITU I	COROMOTANA	FIEBRE/AMIGADALITIS AGUDA	AMBULATORIO	182
+562	JUNIO	2014-07-07	39689	2014-06-27	GUEVARA ARCANGEL	14677755	GUEVARA ARCANGEL	14677755	TITULAR	PIRITU II	COROMOTANA	MIASIS SUPERFICIAL	AMBULATORIO	600.019999999999982
+563	JUNIO	2014-07-07	39692	2014-06-27	SIERRA EFREN	7543855	SIERRA EFREN	7543855	TITULAR	PIRITU II	COROMOTANA	DIABETES MELLITUS TIPO II	PERMANENTE	1259.98000000000002
+564	JUNIO	2014-07-07	39694	2014-06-27	VELIZ HECTOR	16386311	VELIZ ANGEL	MENOR	HIJO	PIRITU II	COROMOTANA	INFECCION RESPIRATORIA AGUDA	AMBULATORIO	195.009999999999991
+565	JUNIO	2014-07-07	39693	2014-06-27	VELIZ HECTOR	16386311	VELIZ ANGEL	MENOR	HIJO	PIRITU II	COROMOTANA	BRONQUITIS AGUDA	AMBULATORIO	309.990000000000009
+566	JUNIO	2014-07-07	39695	2014-06-27	RODRIGUEZ WILLIAN	13073341	RODRIGUEZ WILLIAN	13073341	TITULAR	PIRITU I	COROMOTANA	DOLOR ABDOMINAL	AMBULATORIO	1784.98000000000002
+567	JUNIO	2014-07-07	39696	2014-06-27	TIMAURE LUIS	11542710	MARTINEZ FANNY	15492975	ESPOSA	PIRITU I	COROMOTANA	ASTENIA GENERALIZADA/DOLOR ABDOMINAL	AMBULATORIO	640.029999999999973
+568	JUNIO	2014-07-07	39726	2014-06-30	COLINA JOHAN	17277901	COLINA YOHANA	MENOR	HIJA	PIRITU II	COROMOTANA	RINOFARINGITIS AGUDA	AMBULATORIO	646.990000000000009
+569	JUNIO	2014-07-07	39728	2014-06-30	MARTINEZ FRANCISCO	12858761	MARTINEZ FRANCISCO	12858761	TITULAR	ACCION CENTRAL	COROMOTANA	BRONQUITIS AGUDA	AMBULATORIO	364
+570	JUNIO	2014-07-07	39736	2014-07-01	OROPEZA JULIO	10142400	OROPEZA JULIO	10142400	TITULAR	PIRITU I	COROMOTANA	HIPERTENSION ARTERIAL CRONICA	PERMANENTE	100
+571	JUNIO	2014-07-07	39741	2014-07-01	PADILLA ELVYS	13555075	VILLAVICENCIO PAULA	4371449	MADRE	SAN JOSE DEL CANDIL	COROMOTANA	SINUSOPATIA AGUDA	AMBULATORIO	498.519999999999982
+572	JUNIO	2014-07-07	39748	2014-07-01	SOLANO ANTONIO	19637485	SOLANO ANTONIO	19637485	TITULAR	PIRITU II	COROMOTANA	FRACTURA RADIO IZQUIERDO	AMBULATORIO	1829.96000000000004
+573	JUNIO	2014-07-07	39740	2014-07-01	VASQUEZ MIGUEL	14540230	PERNIA YARISMA	14000494	ESPOSA	PIRITU I	COROMOTANA	HIPERINSULINISMO	PERMANENTE	144.419999999999987
+574	JUNIO	2014-07-07	39763	2014-07-02	GARCIA EULOGIO	5366913	GARCIA EULOGIO	5366913	TITULAR	PIRITU II	COROMOTANA	DIABETES TIPO II DESCOMPENSADA	PERMANENTE	640.019999999999982
+575	JULIO	2014-07-13	39394	2014-06-09	LINAREZ JOSE	11546595	LINAREZ JOSE	11546595	TITULAR	PIRITU II	COROMOTANA	DISLIPIDERMIA	AMBULATORIO	159.990000000000009
+576	JUNIO	2014-07-13	39396	2014-06-09	MORIAN WILMER	6680335	NIERES NATIVIDAD	1225103	MADRE	PIRITU II	COROMOTANA	CARDIOPATIA HIPERTENSIVA/HTA II	PERMANENTE	1599.93000000000006
+577	JUNIO	2014-07-13	39416	2014-06-10	YUSTIZ CARMEN	11543412	YUSTIZ RICARDA	1126764	MADRE	PIRITU I	COROMOTANA	HTA SISTEMATICA/OSTEOARTRISTIS/OSTEOPOROSIS	PERMANENTE	920
+578	JUNIO	2014-07-13	39420	2014-06-10	AGUIN GUILLERMO	19377858	AGUIN ALEJANDRA	MENOR	HIJA	PIRITU II	COROMOTANA	ESTREÑIMIENTO/RINITIS ALERGICA	AMBULATORIO	619.980000000000018
+579	JUNIO	2014-07-13	39425	2014-06-11	QUERALES LUIS	17277931	QUERALES ANGEL	MENOR	HIJO	PIRITU II	COROMOTANA	RINOSINUPATIA 	AMBULATORIO	295
+580	JUNIO	2014-07-13	39429	2014-06-11	ANGULO MARYELIS	21561653	ANGULO MARYELIS	21561653	TITULAR	ACCION CENTRAL	COROMOTANA	INFLAMACION PELVICA	AMBULATORIO	269.990000000000009
+581	JUNIO	2014-07-13	39430	2014-06-11	MORENO LUIS	20810631	PEREZ MADEIRA	10143173	MADRE	PIRITU II	COROMOTANA	CEFALEA DE ETIOLOGIA A PRECISAR	AMBULATORIO	1139.98000000000002
+582	JUNIO	2014-07-13	39435	2014-06-11	AGUIN VICTORIANO	10639072	AGUIN ANGEL	MENOR	HIJO	PIRITU II	COROMOTANA	COLITIS AGUDA	AMBULATORIO	384.990000000000009
+583	JUNIO	2014-07-13	39436	2014-06-11	PINEDA WILMER	14676853	PINEDA ROSA	5943673	MADRE	PIRITU II	COROMOTANA	INSUFICIENCIA VENOSA CRONICA CLASE 1	AMBULATORIO	530
+584	JUNIO	2014-07-13	39452	2014-06-12	ARMARIO JORGE	15869322	GUITIERRE LESVIA	11847556	MADRE	PIRITU II	COROMOTANA	OSTEOARTRITIS	PERMANENTE	1960.07999999999993
+585	JUNIO	2014-07-13	39455	2014-06-12	GARCIA EULOGIO	5366913	JIMENEZ ROSA	5366119	CONCUBINA	PIRITU II	COROMOTANA	HTA CRONICA/ARTROSIS CRONICA	AMBULATORIO	614.980000000000018
+586	JUNIO	2014-07-13	39458	2014-06-12	GONZALEZ VICTOR	8660986	GONZALEZ VICTOR	8660986	TITULAR	PIRITU II	COROMOTANA	SINDROME DIARREICO AGUDO	AMBULATORIO	447.009999999999991
+587	JUNIO	2014-07-13	39459	2014-06-12	LISCANO JORGE	12446864	LISCANO MARIANGEL	MENOR	HIJA	PIRITU II	COROMOTANA	PARASITOSIS/INFECCION URINARIA 	AMBULATORIO	542.009999999999991
+588	JUNIO	2014-07-13	39456	2014-06-12	GARCIA EULOGIO	5366913	JIMENEZ ROSA	5366119	CONCUBINA	PIRITU II	COROMOTANA	HTA CRONICA 	PERMANENTE	47.009999999999998
+589	JUNIO	2014-07-13	39521	2014-06-16	GARCIA EULOGIO	5366913	JIMENEZ ROSA	5366119	CONCUBINA	PIRITU II	COROMOTANA	HTA CRONICA 	PERMANENTE	125
+590	JUNIO	2014-07-13	39461	2014-06-12	RODRIGUEZ MARGHILYZ	11525250	RODRIGUEZ MARGHILYZ	11525250	TITULAR	ACCION CENTRAL	COROMOTANA	HIPOGLUCEMIA SECUNDARIA	AMBULATORIO	207.139999999999986
+591	JUNIO	2014-07-13	39463	2014-06-12	RODRIGUEZ WILLIAN	13073341	RODRIGUEZ WILLIAN	13073341	TITULAR	PIRITU I	COROMOTANA	ARTRITIS AGUDA	AMBULATORIO	299.980000000000018
+592	JUNIO	2014-07-13	39474	2014-06-13	ROJAS GIMMI	12858021	ROJAS BETTY	3527210	MADRE	TRANSPORTE	COROMOTANA	DIABETES TIPO II/INSUFICIENCIA VENOSA DE MIEMBROS INFERIORES	PERMANENTE	1100.00999999999999
+593	JUNIO	2014-07-13	39475	2014-06-13	CORDERO ULISES	11541347	CORDERO LEONIDAS	3332934	MADRE	SAN JOSE DEL CANDIL	COROMOTANA	HTA CONTROLADA/INSOMNIO CRONICO	PERMANENTE	961.039999999999964
+594	JUNIO	2014-07-13	39476	2014-06-13	PEREZ JAVIER	12965923	PEREZ LEONELLA	MENOR	HIJA	PIRITU III	COROMOTANA	DERMATITIS EN REGION TORACICA	AMBULATORIO	124.010000000000005
+595	JUNIO	2014-07-13	39477	2014-06-13	PEREZ JAVIER	12965923	PEREZ GUMERSINDA	1107884	MADRE	PIRITU III	COROMOTANA	SINDROME DE COMPRENSION RADICULAR LUMBAR	PERMANENTE	1377.99000000000001
+596	JUNIO	2014-07-13	39479	2014-06-13	RODRIGUEZ JINETH	19338681	VASUQEZ MELIDA	9157207	MADRE	ACCION CENTRAL	COROMOTANA	HTA COMPLICADA/HIPERLIPIDERMIA	PERMANENTE	1130.97000000000003
+597	JUNIO	2014-07-13	39480	2014-06-13	GRATEROL EUCLIDES	19377860	GRATEROL DEIBIS	MENOR	HIJO	PIRITU II	COROMOTANA	OTITIS AGUDA EXTERNA	AMBULATORIO	620
+598	JUNIO	2014-07-13	39483	2014-06-13	COLINA JOHAN	17277901	COLINA JEAN FRANCO	MENOR	HIJO	PIRITU II	COROMOTANA	SINDROME ANEMICO	AMBULATORIO	221.990000000000009
+599	JUNIO	2014-07-13	39485	2014-06-13	ROJAS CARLOS 	19637324	ROJAS CARLOS 	19637324	TITULAR	PIRITU II	COROMOTANA	DESGARRE MUSCULAR	AMBULATORIO	1150.01999999999998
+600	JUNIO	2014-07-13	39490	2014-06-13	DIAZ MARIA	14887833	PEREZ YUBERIS	4239170	MADRE	ACCION CENTRAL	COROMOTANA	HIPERINSULINISMO	PERMANENTE	522
+601	JUNIO	2014-07-13	39488	2014-06-13	CUENCA NORIS	14092771	CUENCA NORIS	14092771	TITULAR	ACCION CENTRAL	COROMOTANA	ODONTALGIA/EPIGASTRALGIA	AMBULATORIO	319.990000000000009
+602	JUNIO	2014-07-13	39528	2014-06-17	BUSTILLOS FRANCISCO	21564162	BUSTILLOS FRANCISCO	21564162	TITULAR	PIRITU II	COROMOTANA	NEFROLITIASIS BILATERAL	AMBULATORIO	1049.95000000000005
+603	JUNIO	2014-07-13	39529	2367-02-14	PUERTA ILDEGAR	15486915	PUERTA ILDEGAR	15486915	TITULAR	TRANSPORTE	COROMOTANA	LUMBALGIA/INFECCION URINARIA	AMBULATORIO	270
+604	JUNIO	2014-07-13	39530	2014-06-17	ULACIO CLEMENTE	17278779	ULACIO VALENTIA	MENOR	HIJA	BICEABASTO	COROMOTANA	IMPETIGO	AMBULATORIO	144
+605	JUNIO	2014-07-13	39533	2014-06-17	RODRIGUEZ WILLIAN	13073341	RODRIGUEZ WILLIAN	13073341	TITULAR	PIRITU I	COROMOTANA	GASTRITIS AGUDA/DISLIPIDERMIA	AMBULATORIO	299.990000000000009
+606	JUNIO	2014-07-13	39549	2014-06-18	CUERVO EMILIN	13036421	CUERVO HUGO	5240050	PADRE	ACCION CENTRAL	COROMOTANA	DIABETES MELLITUS INSULINO DEPENDIENTE	PERMANENTE	2136.05000000000018
+607	JUNIO	2014-07-13	39551	2014-06-18	JIMENEZ JOSE	19590185	JIMENEZ JOSE	19590185	TITULAR	PIRITU I	COROMOTANA	DIARREA AGUDA FEBRIL	AMBULATORIO	308
+608	JUNIO	2014-07-13	39553	2014-06-18	ESCALONA ENZO	15071461	ESCALONA JHORMAN	30133850	HIJO	PIRITU I	COROMOTANA	OSTEOMIELITIS DEL CALCANEO IZQUIERDO	AMBULATORIO	960.009999999999991
+609	JUNIO	2014-07-13	39570	2014-06-19	CARDENAS JOSE	5948461	CASTILLO PETRA	3868229	MADRE	CAÑO SECO	COROMOTANA	DIABETES TIPO II/HTA	PERMANENTE	821.450000000000045
+610	JUNIO	2014-07-13	39573	2014-06-19	RIVERO JOSE	11851161	RIVERO STALIN	27937886	HIJO	PIRITU I	COROMOTANA	BRONQUITIS SERENA	AMBULATORIO	500
+611	JUNIO	2014-07-13	39574	2014-06-19	TORREALBA LORENZO	18871213	AIDEMAR TORREALBA	MENOR	HIJA	PIRITU II	COROMOTANA	PARASITOSIS 	AMBULATORIO	706.779999999999973
+612	JULIO	2014-07-20	39788	2014-07-04	ROSENDO SIMON	9841670	ROSENDO SIMON	9841670	TITULAR	PIRITU II	COROMOTANA	ALERGIA ADMIGDALITIS AGUDA	AMBULATORIO	554.970000000000027
+613	JULIO	2014-07-20	39790	2014-07-04	ALEXANDER VARGAS	5363739	LEONELA PARRA	7546841	ESPOSA	PIRITU III	COROMOTANA	HIPERTENSION ARTERIAL	PERMANENTE	2799.84000000000015
+614	JULIO	2014-07-20	39792	2014-07-04	MARGHILYZ RODRIGUEZ	11525250	MARGHILYZ RODRIGUEZ	11525250	TITULAR	ACCION CENTRAL	COROMOTANA	OSTEOPENIA	AMBULATORIO	360
+615	JULIO	2014-07-20	39797	2014-07-04	TORREALBA LORENZO	18871213	MARCOLINA LOBATON	5366877	MADRE	PIRITU II	COROMOTANA	HIPERTENSION ARTERIAL NO CONTROLADA	AMBULATORIO	835.970000000000027
+616	JULIO	2014-07-20	39808	2014-07-05	JUNIOR USTRERA	20024930	JUNIOR USTRERA	20024930	TITULAR	PIRITU II	COROMOTANA	HERNIA DISCAL	AMBULATORIO	699.980000000000018
+617	JULIO	2014-07-20	39839	2014-07-07	ELSY COLMENAREZ	15869120	COLMENAREZ TEODORO	5954761	PADRE	PIRITU I	COROMOTANA	HTA	AMBULATORIO	379.980000000000018
+618	JULIO	2014-07-20	39845	2014-07-07	ROSMARY MENDEZ	12090662	ROSMARY MENDEZ	12090662	TITULAR	PIRITU III	COROMOTANA	PRUVITES ALERGIA	AMBULATORIO	1159.95000000000005
+619	JULIO	2014-07-20	39851	2014-07-07	JOSE JIMENEZ 	19642804	HEIDY GOMEZ	20642804	ESPOSA	PIRITU I	COROMOTANA	EMBARAZO DE 6 SEMANAS	AMBULATORIO	119
+620	JULIO	2014-07-20	39861	2014-07-07	VASQUEZ MIGUEL	14540230	VASQUEZ MIGUEL	14540230	TITULAR	PIRITU I	COROMOTANA	HERIDA EN HOMBRO IZQUIERDO	AMBULATORIO	689.990000000000009
+621	JULIO	2014-07-20	39864	2014-07-08	VICTOR SEQUERA	16566845	VICTOR SEQUERA	16566845	TITULAR	PIRITU I	COROMOTANA	FRACTURA SEVERA TOBILLO IZQUIERDO	AMBULATORIO	999.990000000000009
+622	JULIO	2014-07-20	39867	2014-07-08	CARLOS GONZALEZ	16966805	CARLOS GONZALEZ	16966805	TITULAR	PIRITU I	COROMOTANA	DIABETE	PERMANENTE	920.029999999999973
+623	JULIO	2014-07-20	39869	2014-07-08	FREDDY MEDINA	20025575	GIANINA CARLINO	9566876	MADRE	PIRITU III	COROMOTANA	HIPERTENSION VENOSA	PERMANENTE	259.990000000000009
+624	JULIO	2014-07-20	39868	2014-07-08	FREDDY MEDINA	20025575	GIANINA CARLINO	9566876	MADRE	PIRITU III	COROMOTANA	HIPERTENSION VENOSA	PERMANENTE	979.980000000000018
+625	JULIO	2014-07-20	39871	2014-07-08	CARLOS MOLINA	10135498	CARLOS MOLINA	10135498	TITULAR	ACCION CENTRAL	COROMOTANA	HEMORROIDES EXTERNA	AMBULATORIO	744.769999999999982
+626	JULIO	2014-07-20	39876	2014-07-08	JAVIER LEON	16753367	KEIDA LEON	7549658	MADRE	ACCION CENTRAL	COROMOTANA	LESION COMPLETA DEL MANGUITO ROTADOR	AMBULATORIO	375
+627	JULIO	2014-07-20	39872	2014-07-08	ANDRES MENDOCA	18672248	ANDREA MENDOCA	MENOR	HIJA	PIRITU III	COROMOTANA	AMIGDALITIS PULTACIA	AMBULATORIO	1709.52999999999997
+628	JULIO	2014-07-20	39874	2014-07-08	CARLOS JARA	15692059	KARLA JARA	30095435	HIJA	PIRITU II	COROMOTANA	BRONQUITIS AGUDA	AMBULATORIO	483.129999999999995
+629	JULIO	2014-07-20	39875	2014-07-08	JAVIER LEON 	16753367	MARIA AULAR	19377276	ESPOSA	ACCION CENTRAL	COROMOTANA	PUERPERIO QX TARDIO	AMBULATORIO	347.850000000000023
+630	JULIO	2014-07-20	39879	2014-07-08	JOSE GONZALEZ	20812517	MARLENIS SIERRA	8657624	MADRE	PIRITU II	COROMOTANA	DIABETE MELLUTIS	PERMANENTE	843.960000000000036
+631	JULIO	2014-07-20	39878	2014-07-08	MIGUEL LOBATON	19377862	CORTEZA MENDOZA	10638907	MADRE	PIRITU II	COROMOTANA	GASTRITIS AGUDA	AMBULATORIO	565.559999999999945
+632	JULIO	2014-07-20	39883	2014-07-08	GRINVER GALLEGOS	16566374	GRINVERLY GALLEGOS	MENOR	HIJA	PIRITU II	COROMOTANA	DISNEA AGUDA 	AMBULATORIO	230.009999999999991
+633	JULIO	2014-07-20	39904	2014-07-09	SOLANO ANTONIO M.	19637485	FRANCISCA MORANTE	3525178	MADRE	PIRITU II	COROMOTANA	SEPTODESVIACION NASAL	AMBULATORIO	1164.72000000000003
+634	JULIO	2014-07-20	39900	2014-07-09	EMILIN CUERVO	13036421	EMILIN CUERVO	13036421	TITULAR	ACCION CENTRAL	COROMOTANA	SINDROME METABOLICO 	PERMANENTE	655.669999999999959
+635	JULIO	2014-07-20	39896	2014-07-09	EUCLIDES GRATEROL	19377860	DETZI JIMENEZ	18503815	ESPOSA	PIRITU II	COROMOTANA	CA CUELLO UTERINO 	AMBULATORIO	310
+636	JULIO	2014-07-20	39894	2014-07-09	MENDEZ GIOVANNY	9837225	MENDEZ GIOVANNI	9837225	TITULAR	PIRITU II	COROMOTANA	HIPERTENSION ARTERIAL	AMBULATORIO	424
+637	JULIO	2014-07-20	39887	2014-07-09	JELIBETH ALVARADO	11785981	JELIBETH ALVARADO	11785981	TITULAR	TRANSPORTE	COROMOTANA	BAY PASS GASTRICO	AMBULATORIO	390
+638	JULIO	2014-07-20	39913	2014-07-10	WILLIAN RODRIGUEZ	13073341	WILLIANS RODRIGUEZ	13073341	TITULAR	PIRITU I	COROMOTANA	ERGE	AMBULATORIO	155.990000000000009
+639	JULIO	2014-07-20	39915	2014-07-10	AMADO ARIAS 	7549548	AMADO ARIAS 	7549548	TITULAR	PIRITU I	COROMOTANA	HOSTITIS MEDIA	AMBULATORIO	1502.88000000000011
+640	JULIO	2014-07-20	39911	2014-07-10	CARLOS JARA 	15692059	KARLA JARA 	MENOR	HIJA	PIRITU II	COROMOTANA	ANEMIA 	AMBULATORIO	830
+641	JULIO	2014-07-20	39920	2014-07-10	ANGEL HERRERA 	19051909	ALEJANDRINA TOCARTE	8662322	MADRE	PIRITU III	COROMOTANA	HERNIA DISCAL	AMBULATORIO	1155.04999999999995
+642	JULIO	2014-07-20	39921	2014-07-10	SALUSTIO ARELLANO	5940201	SALUSTIO ARELLANO	5940201	TITULAR	AGUA BLANCA	COROMOTANA	DIABETE MELLUTIS	PERMANENTE	973.990000000000009
+643	JULIO	2014-07-20	39923	2014-07-10	CARMEN YUSTIZ	11543412	RICARDA YUSTIZ	1126764	MADRE	PIRITU I	COROMOTANA	HIPERTENSION ARTERIAL	AMBULATORIO	914
+644	ENERO	2014-02-19	650253	2014-01-28	PARRA ADA MARIA	16384778	VICTOR SANCHEZ	15811582	ESPOSO	UPSA BANCO DE PAVONES	FARMACIA 11-11	HIPERGLICEMIA	AMBULATORIO	1378
+645	ENERO	2014-02-19	651106	0214-01-29	AQUINO COROMOTO	19343805	AQUINO COROMOTO	19343805	TITULAR	 UPSA MARIA DE LOS ANGELES	FARMACIA 11-11	EMBARAZO DE 5 SEMANAS	AMBULATORIO	349
+646	ENERO	2014-02-19	651212	2014-01-29	CIOFFI APONTE REINA	14538752	APONTE HILDA	5154202	MADRE	 UPSA SAN ANTONIO	FARMACIA 11-11	HTA. NEUMONIA IZQ	AMBULATORIO	126
+647	ENERO	2014-02-19	651225	2014-01-29	CIOFFI APONTE REINA	14538752	APONTE HILDA	5154202	MADRE	 UPSA SAN ANTONIO	FARMACIA 11-11	SD VERTIGINOSO	AMBULATORIO	315
+648	ENERO	2014-02-19	651226	2014-01-29	CIOFFI APONTE REINA	14538752	CIOFFI APONTE REINA	14538752	TITULAR	 UPSA SAN ANTONIO	FARMACIA 11-11	SD METABOLICO	PERMANENTE	174
+649	ENERO	2014-02-19	651239	2014-01-29	CIOFFI APONTE REINA	14538752	APONTE HILDA	5154202	MADRE	 UPSA SAN ANTONIO	FARMACIA 11-11	HIPOTIROIDISMO	PERMANENTE	310
+650	ENERO	2014-02-19	651256	2014-01-29	CIOFFI APONTE REINA	14538752	APONTE HILDA	5154202	MADRE	 UPSA SAN ANTONIO	FARMACIA 11-11	ASA II	PERMANENTE	334
+651	ENERO	2014-02-19	651237	2014-01-29	SANTOS YECIBEL	11089451	MELANY CABRERA	28011153	HIJA	 UPSA WILLIAN LARA	FARMACIA 11-11	DERMATITIS SEBORREICA	AMBULATORIO	575
+652	ENERO	2014-02-19	651933	2014-01-30	CORDOVA QUEVEDO RONNY	18540169	DAURA CORDOVA	MENOR	HIJA	UPSA BANCO DE PAVONES	FARMACIA 11-11	REFLUJO GASTRICO	AMBULATORIO	362
+653	ENERO	2014-02-19	651983	2014-01-30	ALBA MARINA FAJARDO	19760130	RIVERO ALBANY	MENOR	HIJA	 UPSA MARIA DE LOS ANGELES	FARMACIA 11-11	IRA. ASMA	AMBULATORIO	937
+654	ENERO	2014-02-19	651986	2014-01-30	CASTILLO HERMINIA	14239182	CASTILLO CONTRERAS ARACELIS	4345786	MADRE	 UPSA MARIA DE LOS ANGELES	FARMACIA 11-11	GASTRITIS MEDICAAMENTOSA	AMBULATORIO	626
+655	ENERO	2014-02-19	651987	2014-01-30	CASTILLO HERMINIA	14239182	GARCIA ANA ISABELA	MENOR	HIJA	 UPSA MARIA DE LOS ANGELES	FARMACIA 11-11	SD GRIPAL	AMBULATORIO	380
+656	ENERO	2014-02-19	651989	2014-01-30	CASTILLO HERMINIA	14239182	CASTILLO CONTRERAS ARACELIS	4345786	MADRE	 UPSA MARIA DE LOS ANGELES	FARMACIA 11-11	GASTRITIS MEDICAAMENTOSA	AMBULATORIO	413
+657	FEBRERO	2014-02-19	652889	2014-02-03	HERNANDEZ ARELIS	16913080	MARIA GABRIELA	MENOR	HIJA	UPSA BANCO DE PAVONES	FARMACIA 11-11	OSTEOCAANDITIS	AMBULATORIO	176
+658	FEBRERO	2014-02-19	652954	2014-02-03	JUAN PERDOMO	8795863	JUAN PERDOMO	8795863	TITULAR	UPSA BANCO DE PAVONES	FARMACIA 11-11	DISLIPIDEMIA; CERVICALGIA	AMBULATORIO	891
+659	FEBRERO	2014-02-19	652986	2014-02-03	GIL HERNANDEZ	16913942	GIL JONAIKER	MENOR	HIJO	UPSA BANCO DE PAVONES	FARMACIA 11-11	GASTROENTERITIS AGUDA	AMBULATORIO	234.449999999999989
+660	FEBRERO	2014-02-19	652992	2014-02-03	JUAN FLORES	15130874	ANA TRINA FRANCO	11795197	MADRE	 UPSA WILLIAN LARA	FARMACIA 11-11	HTA. DOLOR ABDOMINAL	AMBULATORIO	275.420000000000016
+661	FEBRERO	2014-02-19	652990	2014-02-03	JUAN FLORES	15130874	ANA TRINA FRANCO	11795197	MADRE	 UPSA WILLIAN LARA	FARMACIA 11-11	HTA. DOLOR ABDOMINAL	AMBULATORIO	329
+662	FEBRERO	2014-03-07	653108	2014-02-04	PAEZ YANETH MARBELIS	13540407	PAEZ YANETH MARBELIS	13540407	TITULAR	UPSA MARIA DE LOS ANGELES	FARMACIA 11-11	GASTRITIS	AMBULATORIO	1089
+663	FEBRERO	2014-03-07	653246	2014-02-05	CORDOVA QUEVEDO RONNY	18540169	RODRIGUEZ TERAN DEXI ADRIANA	18540169	CONCUBINA	UPSA BANCO DE PAVONES	FARMACIA 11-11	MICROLITIASSIS RENAL	AMBULATORIO	412.300000000000011
+664	FEBRERO	2014-03-07	653461	2014-02-06	ORTIZ MARRERO PEDRO	8562899	ORTIZ MARRERO PEDRO	8562899	TITULAR	UPSA BANCO DE PAVONES	FARMACIA 11-11	LUMBOCIATALGIA	AMBULATORIO	776
+665	FEBRERO	2014-03-07	653474	2014-02-06	CIOFFI APONTE REINA	14538752	APONTE HILDA	5154202	MADRE	UPSA SAN ANTONIO	FARMACIA 11-11	HTA ESTADIO II	PERMANENTE	1314
+666	FEBRERO	2014-03-07	653476	2014-02-06	CIOFFI APONTE REINA	14538752	SEBASTIAN CIOFFI	MENOR	HIJO	UPSA SAN ANTONIO	FARMACIA 11-11	OTITIS MEDIA	AMBULATORIO	1070
+667	FEBRERO	2014-03-07	653482	2014-02-06	JOSE BENAVENTA	8633844	BENAVENTA JESUS	5361670	PADRE	UPSA MARIA DE LOS ANGELES	FARMACIA 11-11	LUMBOCIATALGIA	AMBULATORIO	473
+668	FEBRERO	2014-03-07	653510	2014-02-06	MARCANO YOBANA	14538117	JUDITH MARCANO	8572685	MADRE	UPSA WILLIAN LARA	FARMACIA 11-11	SD DIARREICO.  SD FEBRIL	AMBULATORIO	356
+669	FEBRERO	2014-03-07	653665	2014-02-07	DAMARYS PADRINO	16639572	REYES PADRINO MALEIDYS	8619893	MADRE	UPSA MARIA DE LOS ANGELES	FARMACIA 11-11	P.O HISTERECTOMIA ABDOMINAL	AMBULATORIO	1326
+670	FEBRERO	2014-03-07	653715	2014-02-07	CORDOVA CARLOS	13650017	GONZALEZ MAYRA	15811039	ESPOSA	UPSA MARIA DE LOS ANGELES	FARMACIA 11-11	EMBARAZO DE 9 SEMANAS	AMBULATORIO	485
+671	FEBRERO	2014-03-07	653725	2014-02-07	PETRO ERAZO	81927543	PATRON SORAIDA	E-50846777	ESPOSA	UPSA BANCO DE PAVONES	FARMACIA 11-11	PARASITOSIS Y GASTRITIS EROSIVA	AMBULATORIO	1061
+672	FEBRERO	2014-03-07	653737	2014-02-07	RODRIGUEZ SILA	8626902	RODRIGUEZ SILA	8626902	TITULAR	UPSA MARIA DE LOS ANGELES	FARMACIA 11-11	COLITIS	AMBULATORIO	167
+673	FEBRERO	2014-03-07	654434	2014-02-10	ZURITA ANTYOLI	15256114	BASTIDAS YOLANDA	8820898	MADRE	UPSA WILLIAN LARA	FARMACIA 11-11	SD BRONQUIAL	AMBULATORIO	217
+674	FEBRERO	2014-03-07	654517	2014-02-10	CASTILLO HERMINIA	14239182	CASTILLO CONTRERAS ARACELIS	4345182	MADRE	UPSA MARIA DE LOS ANGELES	FARMACIA 11-11	CARDIOPATIA HIPERTENSIVA	AMBULATORIO	708
+675	FEBRERO	2014-03-07	654518	2014-02-10	CASTILLO HERMINIA	14239182	CASTILLO HERMINIA	14239182	TITULAR	UPSA MARIA DE LOS ANGELES	FARMACIA 11-11	DISLIPIDEMIA	AMBULATORIO	514
+676	FEBRERO	2014-03-07	654676	2014-02-11	LOPEZ CORONADO JOSE MANUEL	15480840	CORONADO VILMA	4392736	MADRE	UPSA BANCO DE PAVONES	FARMACIA 11-11	SD FEBRIL. IRA	AMBULATORIO	365
+677	FEBRERO	2014-03-07	654677	2014-02-11	LOPEZ CORONADO JOSE MANUEL	15480840	LOPEZ RAFAEL	645763	PADRE	UPSA BANCO DE PAVONES	FARMACIA 11-11	MAREOS Y CEFALEA VASCULAR	AMBULATORIO	420
+678	FEBRERO	2014-03-07	654946	2014-02-13	CORONADO SANCHEZ NIGUEL ANGEL	16340708	CORONADO SANCHEZ NIGUEL ANGEL	16340708	TITULAR	UPSA RÍO GUÁRICO	FARMACIA 11-11	LUMBOCIATALGIA	AMBULATORIO	461
+679	FEBRERO	2014-03-07	655037	2014-02-13	CORDOVA CARLOS	13650017	CORDOVA CARLOS	13650017	TITULAR	UPSA MARIA DE LOS ANGELES	FARMACIA 11-11	SD VERTIGINOSO	AMBULATORIO	470
+680	FEBRERO	2014-03-07	655038	2014-02-13	CASTILLO HERMINIA	14239182	CASTILLO HERMINIA	14239182	TITULAR	UPSA MARIA DE LOS ANGELES	FARMACIA 11-11	HTA. DISLIPIDEMIA;ARTRALGIA	PERMANENTE	1724
+681	FEBRERO	2014-03-07	655863	2014-02-17	SANOJA MIRABAL JESUS EDUARDO	11795542	SANOJA MIRABAL JESUS EDUARDO	11795542	TITULAR	UPSA BANCO DE PAVONES	FARMACIA 11-11	LUMBOCIATALGIA	AMBULATORIO	462
+682	FEBRERO	2014-03-07	656166	2014-02-18	GIL HERNANDEZ	16913942	GIL TORO DANIELA DEL CARMEN	MENOR	HIJA	UPSA BANCO DE PAVONES	FARMACIA 11-11	FIEBRE Y EVACUACIONES LIQUIDAS	AMBULATORIO	169
+683	FEBRERO	2014-03-07	656167	2014-02-18	GIL HERNANDEZ	16913942	GIL HERNANDEZ	16913942	TITULAR	UPSA BANCO DE PAVONES	FARMACIA 11-11	FIEBRE. CEFALEA Y DOLOR TORACICO	AMBULATORIO	361.279999999999973
+684	FEBRERO	2014-03-07	656184	2014-02-18	DAMARYS PADRINO	16639572	MALEIDYS PADRINO	8619893	MADRE	UPSA MARIA DE LOS ANGELES	FARMACIA 11-11	HTA. DIABETES MELLITUS	PERMANENTE	352
+685	FEBRERO	2014-03-07	656195	2014-02-18	MACUMA LUIS	16913869	XAVIER MACUMA	MENOR	HIJO	 UPSA WILLIAN LARA	FARMACIA 11-11	VOMITOS Y FIEBRE	AMBULATORIO	97
+686	FEBRERO	2014-03-07	656306	2014-02-19	MARCANO JUAN	19943439	MARCANO MARGARITA	MENOR	HIJA	 UPSA RÍO GUÁRICO	FARMACIA 11-11	OTITIS SISTEMICA	AMBULATORIO	90
+687	FEBRERO	2014-03-07	656358	2014-02-19	OMAR DAVID PANTOJA	19760210	MIRLA MORALES	8729074	MADRE	 UPSA WILLIAN LARA	FARMACIA 11-11	CLIMATERIO. OSTEOARTRITIS	AMBULATORIO	655
+688	FEBRERO	2014-03-07	656366	2014-02-19	AQUINO CRISTIAN	19343805	AQUINO CRISTIAN	19343805	TITULAR	 UPSA WILLIAN LARA	FARMACIA 11-11	DERMATITIS ALERGICA	AMBULATORIO	424
+689	FEBRERO	2014-03-07	656384	2014-02-19	APONTE MARBELIS	12562597	JUANA PEÑA	5003749	MADRE	 UPSA WILLIAN LARA	FARMACIA 11-11	HTA. HIPERGLICEMIA	AMBULATORIO	1511.41000000000008
+690	FEBRERO	2014-03-07	656385	2014-02-19	APONTE MARBELIS	12562597	JUANA PEÑA	5003749	MADRE	 UPSA WILLIAN LARA	FARMACIA 11-11	OSTEOSPOROSIS	AMBULATORIO	393
+691	FEBRERO	2014-03-07	656529	2014-02-19	ALBA MARINA FAJARDO	19760130	ALBA MARINA FAJARDO	19760130	TITULAR	UPSA MARIA DE LOS ANGELES	FARMACIA 11-11	MIGRAÑA	AMBULATORIO	975
+692	ABRIL	2014-04-28	81684	2014-04-07	CIOFFI APONTE REINA	14538752	CIOFFI APONTE REINA	14538752	TITULAR	UPSA SAN ANTONIO	FARMACIA 11-11	SINDROME METABOLICO	PERMANENTE	170
+693	ABRIL	2014-04-28	81685	2014-04-07	CIOFFI APONTE REINA	14538752	APONTE HILDA	5154202	MADRE	UPSA SAN ANTONIO	FARMACIA 11-11	HIPOTIROIDISMO	AMBULATORIO	138
+694	ABRIL	2014-04-28	81687	2014-04-07	CIOFFI APONTE REINA	14538752	APONTE HILDA	5154202	MADRE	UPSA SAN ANTONIO	FARMACIA 11-11	HTA ESTADIO II	PERMANENTE	1478
+695	ABRIL	2014-04-28	247980	2014-04-07	JOSE BENAVENTA	8633844	JESUS BENAVENTA	5361670	PADRE	UPSA MARIA DE LOS ANGELES	FARMACIA 11-11	GASTRITIS CRONICA. ULCERA 	PERMANENTE	981
+696	ABRIL	2014-04-28	81874	2014-04-07	ALBA MARINA FAJARDO	19760130	ALBANY RIVERO	MENOR	HIJA	UPSA MARIA DE LOS ANGELES	FARMACIA 11-11	RINUSOPATIA CRONICA. RINITIS ALERGICA	AMBULATORIO	713
+697	ABRIL	2014-04-28	81875	2014-04-07	CESAR LADERA	11795056	CESAR LADERA	11795056	TITULAR	UPSA MARIA DE LOS ANGELES	FARMACIA 11-11	LUMBOCIATALGIA	AMBULATORIO	402
+698	ABRIL	2014-04-28	81878	2014-04-07	MALDONADO RAFAEL	17108554	MALDONADO RAFAEL	17108554	TITULAR	UPSA WILLIAN LARA	FARMACIA 11-11	EPISODIOS DE PANICO	AMBULATORIO	387
+699	ABRIL	2014-04-28	248455	2014-04-09	GLADYS MERCADO	15480499	ALEXANDRA HERNANDEZ	MENOR	HIJA	UPSA BANCO DE PAVONES	FARMACIA 11-11	ENTEROPATIA INFLAMATORIA	AMBULATORIO	1579
+700	ABRIL	2014-04-28	248456	2014-04-09	GLADYS MERCADO	15480499	MERCADO JOSE	5743755	PADRE	UPSA BANCO DE PAVONES	FARMACIA 11-11	DISPEPSIA	PERMANENTE	970
+701	ABRIL	2014-04-28	83015	2014-04-10	PARRA ADA MARIA	16384778	PARRA ADA MARIA	16384778	TITULAR	UPSA BANCO DE PAVONES	FARMACIA 11-11	EMBARAZO DE 34 SEMANAS	AMBULATORIO	1114
+702	ABRIL	2014-04-28	83054	2014-04-10	BELLO DAXY	10271178	NIEVES DE BELLO CARMEN	5981439	MADRE	UPSA WILLIAN LARA	FARMACIA 11-11	MIGRAÑA TENSIONAL. CERVICALGIA EN ESTUDIO	AMBULATORIO	269.980000000000018
+703	ABRIL	2014-04-28	248912	2014-04-11	ZERPA ZAMORA MARIA ANDREINA	16639024	ZERPA ZAMORA MARIA ANDREINA	16639024	TITULAR	UPSA WILLIAN LARA	FARMACIA 11-11	LITIASIS RENAL	PERMANENTE	627.299999999999955
+704	ABRIL	2014-04-28	84552	2014-04-14	GLADYS MERCADO	15480499	MERCADO JOSE	5743755	PADRE	UPSA BANCO DE PAVONES	FARMACIA 11-11	TRATAMIENTO GASTROENTEROLOGO	AMBULATORIO	182
+705	ABRIL	2014-04-28	84651	2014-04-14	AULAR WILLIAM	19600173	MORELBA LAYA	8621585	ESPOSA	UPSA WILLIAN LARA	FARMACIA 11-11	ASCITIS LEVE	PERMANENTE	1248.47000000000003
+706	ABRIL	2014-04-28	84916	2014-04-14	LOPEZ MALUENGA ANIBAL	8422454	LOPEZ MALUENGA ANIBAL	8422454	TITULAR	UPSA RÍO GUÁRICO	FARMACIA 11-11	HTA ESTADIO II	PERMANENTE	356
+707	ABRIL	2014-04-28	84917	2014-04-14	CHOURIO NERIO SEGUNDO	11215806	CHOURIO DE CHOURIO PETRONILA 	2731872	MADRE	UPSA RÍO GUÁRICO	FARMACIA 11-11	DIABETES MELLITUS TIPO 2	PERMANENTE	794
+708	ABRIL	2014-04-28	249587	2014-04-14	CRISTIAN LOZADA	17374281	ARIANNYS LOZADA	HIJA	TITULAR	UPSA SAN ANTONIO	FARMACIA 11-11	IRB. ATOPIA RESPIRATORIA	AMBULATORIO	1019
+709	ABRIL	2014-04-28	85288	2014-04-15	ADELSO BLANCO	14925787	SEIJAS ZULAY DEL CARMEN	11797447	CONCUBINA	UPSA MARIA DE LOS ANGELES	FARMACIA 11-11	HTA ESTADIO I. ARTRITIS REMATOIDEA	AMBULATORIO	490
+710	ABRIL	2014-05-06	251373	2014-04-22	CHOURIO NERIO SEGUNDO	11215806	BRACHO JAQUELINE	11223226	ESPOSA	UPSA RÍO GUÁRICO	FARMACIA 11-11	INFECCION URINARIA	AMBULATORIO	596.5
+711	ABRIL	2014-05-06	88382	2014-04-23	JOSE BENAVENTA	8633844	JESUS BENAVENTA	5361670	PADRE	UPSA MARIA DE LOS ANGELES	FARMACIA 11-11	PO PROSTACTOMIA	AMBULATORIO	925
+712	ABRIL	2014-05-06	88384	2014-04-23	VILERA VICTOR EGREDI	15480202	TERESA MESA	16639190	CONCUBINA	UPSA MARIA DE LOS ANGELES	FARMACIA 11-11	CERVICODORSALGIA	AMBULATORIO	552
+713	ABRIL	2014-05-06	251655	2014-04-23	JOSE GARCIA	5358599	JOSE GARCIA	5358599	TITULAR	UPSA WILLIAN LARA	FARMACIA 11-11	RINITIS ALERGICA. GASTRITIS. PARASITOSIS	AMBULATORIO	1249
+714	ABRIL	2014-05-06	251802	2014-04-24	ANGEL SILVA	10267278	VALERA MARISOL	17937815	CONCUBINA	UPSA WILLIAN LARA	FARMACIA 11-11	GASTRITIS	AMBULATORIO	478
+715	ABRIL	2014-05-06	88842	2014-04-24	ASCANIO LUIS	10265610	ASCANIO LUIS	10265610	TITULAR	UPSA RÍO GUÁRICO	FARMACIA 11-11	TRAUMATISMO EN RODILLA DERECHA	AMBULATORIO	392
+716	ABRIL	2014-05-06	252048	2014-04-25	REQUENA JOSE	18908635	REQUENA JOSE	18908635	TITULAR	UPSA RÍO GUÁRICO	FARMACIA 11-11	SINUSITIS CRONICA	AMBULATORIO	491
+717	ABRIL	2014-05-06	89211	2014-04-25	SAYAGO GALLARDO NELSON	13238559	GALLARDO TRINA FIDELINA	4344453	MADRE	UPSA MARIA DE LOS ANGELES	FARMACIA 11-11	CEFALEA Y CERVICALGIA	AMBULATORIO	323.980000000000018
+718	ABRIL	2014-05-06	252068	2014-04-25	APONTE MARBELIS	12562597	JUANA PEÑA	5003479	MADRE	UPSA WILLIAN LARA	FARMACIA 11-11	DM TIPO 2 . HTA ESTADIO 2	PERMANENTE	1316.6400000000001
+719	ABRIL	2014-05-06	251624	2014-04-23	CORDOVA QUEVEDO RONNY	18540169	RONNY CORDOVA	18540169	TITULAR	UPSA RÍO GUÁRICO	FARMACIA 11-11	COLICO NEFRITICO	AMBULATORIO	869
+720	JUNIO	2014-06-27	262362	2014-06-11	SANTOS YECIBEL 	11089451	ZENAIDA DE SANTOS 	3515629	MADRE	UPSA WILLIAN LARA 	FARMACIA 11-11	HTA	AMBULATORIO	808
+721	JUNIO	2014-06-27	262363	2014-06-11	SANTOS YECIBEL 	11089451	MARIA CABRERA	MENOR	HIJA	UPSA WILLIAN LARA 	FARMACIA 11-11	ABSCESO EN UNO DE LOS DEDOS  PIE DERECHO	AMBULATORIO	395
+722	JUNIO	2014-06-27	108955	2014-06-11	CIOFFI APONTE REINA	14538752	APONTE HILDA	5154202	MADRE	SAN ANTONIO	FARMACIA 11-11	SINDROME DE VERTIGINOSO 	PERMANENTE	683
+723	JUNIO	2014-06-27	108956	2014-06-11	CIOFFI APONTE REINA	14538752	APONTE HILDA	5154202	MADRE	SAN ANTONIO	FARMACIA 11-11	HTA 	AMBULATORIO	408
+724	JUNIO	2014-06-27	262456	2014-06-11	ZURITA ANTYOLI	15256114	ZURITA ANTYOLI	15256114	TITULAR	UPSA WILLIAN LARA 	FARMACIA 11-11	NEURITIS INTERCOSTAL	AMBULATORIO	178.5
+725	JUNIO	2014-06-27	262674	2014-06-12	ESCOBAR HERNANDEZ NIEVES AVELINO	20247704	BRAYAN ESCOBAR 	MENOR	HIJO	UPSA BANCO DE PAVONES	FARMACIA 11-11	DOLOR DE OIDO. FIEBRE	AMBULATORIO	142
+726	JUNIO	2014-06-27	109334	2014-06-12	ORANGEL BILVAO	17374577	CHRISTIAN BILVAO	MENOR 	HIJO	UPSA WILLIAN LARA 	FARMACIA 11-11	TRAUMATISMO CRANEAL. SINDROME DIARREICO	AMBULATORIO	452
+727	JUNIO	2014-06-27	109775	2014-06-13	MONTERO LAYA HENRY JESUS	18220208	LAYA DE MONTERO MERCEDES TERESA	8621134	MADRE	UPSA WILLIAN LARA 	FARMACIA 11-11	PTIRIGION EN AMBOS OJOS	AMBULATORIO	170
+728	MAYO	2014-07-16	11466	2014-07-14	ENO PEROZO	15867917	ENO PEROZO	15867917	TITULAR	PAYARA	PROMIFAR	ARTRALGIA RODILLA DERECHA	AMBULATORIO	306.870000000000005
+729	MAYO	2014-07-16	11466	2014-07-14	MAIKER PEÑA	14045337	BARBARA PEÑA	MENOR	HIJA	AGUA BLANCA	PROMIFAR	SINDROME COQUEDUCHOIDE	AMBULATORIO	544.370000000000005
+730	MAYO	2014-07-16	11466	2014-07-14	RODRIGUEZ JINETH	19338681	VASQUEZ MELIDA	9157207	MADRE	ACCION CENTRAL	PROMIFAR	HTA COMPLICADA	AMBULATORIO	227.5
+731	MAYO	2014-07-16	11466	2014-07-14	RODRIGUEZ JINETH	19338681	RODRIGUEZ JINETH	19338681	TITULAR	ACCION CENTRAL	PROMIFAR	RINITES ALERGICA	AMBULATORIO	220.710000000000008
+732	MAYO	2014-07-16	11466	2014-07-14	MARTINEZ FRANCISCO	12858761	LOPEZ CARIDAD	16415268	ESPOSA	ACCION CENTRAL	PROMIFAR	EMBARAZO DE 6 SEMANAS	AMBULATORIO	4116.9399999999996
+733	MAYO	2014-06-18	11439	2014-06-16	NAUDI PIÑA	19377150	ROSANNYS TIMAURE	20641693	ESPOSA	AGUA BLANCA	PROMIFAR	APENDICECTOMIA	AMBULATORIO	1431.25
+734	MAYO	2014-06-18	11439	2014-06-16	OSCAR ESCOBAR	15071538	ISABEL CORDERO	7541843	MADRE	PAYARA	PROMIFAR	LITIASIS RENAL IZQUIERDA/COLITIS	AMBULATORIO	963
+735	MAYO	2014-06-18	11439	2014-06-16	INOJOSA JOSE	9572198	INOJOSA JOSE	9572198	TITULAR	PAYARA	PROMIFAR	CARDIOPATIA MIXTA ISQUEMICA	PERMANENTE	286.120000000000005
+736	MAYO	2014-06-18	11439	2014-06-16	LUCAS GOTOPO	9044886	LUCAS GOTOPO	9044886	TITULAR	PAYARA	PROMIFAR	EPIGASTRALGIA/MIALGIA	AMBULATORIO	970.009999999999991
+737	MAYO	2014-06-18	11439	2014-06-16	JOSE ROSA	10144706	JOSLEIDY ROSA	30484710	HIJA	AGUA BLANCA	PROMIFAR	ADENOTONSILITIS	AMBULATORIO	670.620000000000005
+738	MAYO	2014-06-18	11439	2014-06-16	MENDOZA MARIA 	11540631	MENDOZA MARIA 	11540631	TITULAR	ACCION CENTRAL	PROMIFAR	CELULITIS EN PIERNA IZQUIERDA. EPIGASTRALGIA	AMBULATORIO	182.210000000000008
+739	MAYO	2014-06-18	11439	2014-06-16	OSMAN PRADA	17599943	OSMAN PRADA	MENOR	HIJO	PAYARA	PROMIFAR	SD FEBRIL Y DIARREICO AGUDO	AMBULATORIO	1204.36999999999989
+740	MAYO	2014-06-18	11436	2014-06-16	ANDRES GODOY	14980471	MARIA VASQUEZ	3736442	MADRE	PAYARA	PROMIFAR	HTA	AMBULATORIO	698.149999999999977
+741	MAYO	2014-06-18	11436	2014-06-16	GARCIA TIRSO	13556123	GARCIA TIRSO	13556123	TITULAR	PIRITU I	PROMIFAR	SD DIARREICO AGUDO	AMBULATORIO	359.360000000000014
+742	MAYO	2014-06-18	11436	2014-06-16	AMADO TORCATES	11079797	FRANCISCA LOPEZ	4611389	MADRE	PAYARA	PROMIFAR	ARTROSIS CRONICA. HTA. GASTROPATIA. IRB	AMBULATORIO	2213.07999999999993
+743	MAYO	2014-06-18	11436	2014-06-16	YUSMAIRA RODRIGUEZ	19798052	ANA LAMEDA	MENOR	HIJA	PAYARA	PROMIFAR	RINOSINUSITIS AGUDA	AMBULATORIO	1468.75999999999999
+744	MAYO	2014-06-18	11436	2014-06-16	JOSE PIÑA	12264979	GREISMAR PIÑA	MENOR	HIJA	PAYARA	PROMIFAR	RINOFARINGITIS	AMBULATORIO	317.5
+745	MAYO	2014-06-18	11436	2014-06-16	JOSE TORRELLEZ	13072133	ANA RIVERO	4200165	MADRE	PAYARA	PROMIFAR	HTA. SD VERTIGINOSO	AMBULATORIO	2713.61000000000013
+746	MAYO	2014-06-18	11436	2014-06-16	DANNY DURAN	16992813	MILENNY GIL	16775860	ESPOSA	AGUA BLANCA	PROMIFAR	INFECCION URINARIA	AMBULATORIO	545
+747	MAYO	2014-06-18	11436	2014-06-16	DANNY DURAN	16992813	RITA HERNANDEZ	7186818	MADRE	AGUA BLANCA	PROMIFAR	MENOSPAUSIA	AMBULATORIO	443.759999999999991
+748	JUNIO	2014-07-16	10372	2014-07-15	SAGGIOMO CARLOS	12266564	GSAGGIOMO CARLOS	12266564	TITULAR	PIRITU I	PROMIFAR	CRISIS HIPERTENSIVA	AMBULATORIO	1293.74000000000001
+749	JUNIO	2014-07-16	10372	2014-07-15	ELVYS PADILLA	13555075	PAULA VILLAVICENCIO	4371449	MADRE	SAN JOSE DEL CANDIL	PROMIFAR	SINUSOPATIA AGUDA	AMBULATORIO	265
+750	JUNIO	2014-07-16	10372	2014-07-15	JOSE LAMEDA	17797582	JOSE DAVID LAMEDA	MENOR	HIJO	PIRITU III	PROMIFAR	DIARREA LEVE	AMBULATORIO	242.5
+751	JUNIO	2014-07-16	10372	2014-07-15	GONZALEZ ALEXIS	7595395	GONZALEZ JOLEXIS	MENOR	HIJA	PIRITU I	PROMIFAR	FLUJO  GENITAL	AMBULATORIO	240
+752	JUNIO	2014-07-16	10372	2014-07-15	CARLOS MOLINA 	10135468	DOLORES COLMENAREZ	1985467	MADRE	ACCION CENTRAL	PROMIFAR	HIPERTESION ARTERIAL 	PERMANENTE	1719
+753	JUNIO	2014-07-16	10372	2014-07-15	SEQUERA VICTOR	16566845	SEQUERA VICTOR	16566845	TITULAR	PIRITU I	PROMIFAR	FRACTURA TOBILLO IZQUIERDO	AMBULATORIO	1014.22000000000003
+754	JUNIO	2014-07-16	11467	2014-07-15	MAIKEL PEÑA	14045337	YADIRA PINTO	6428189	MADRE	AGUA BLANCA	PROMIFAR	MENOPAUSIA_OSTEPENIA	AMBULATORIO	470
+755	JUNIO	2014-07-16	11467	2014-07-15	GUEVARA ABINADAL	16416882	TORREALBA MARIA ISABEL	4609864	MADRE	PIRITU II	PROMIFAR	ARTROSIS INSUFICIENTE VENOSA	PERMANENTE	1655.46000000000004
+756	JUNIO	2014-07-16	11467	2014-07-15	MARCOS CIVIRA	9045190	PAULA ESCOBAR	9564177	CONYUGUE	PAYARA	PROMIFAR	DIABETES_CARCINOMA	PERMANENTE	2470.32000000000016
+757	JUNIO	2014-07-16	11467	2014-07-15	BLANCO GLADYS	12262410	JOSE D JESUS CARUCI 	MENOR	HIJO	SAN JOSE DEL CANDIL	PROMIFAR	TDAH	PERMANENTE	727.5
+758	JUNIO	2014-07-16	11467	2014-07-15	BELKYS CRESPO	8657682	ANGELA COMENARES	1117366	MADRE	ACCION CENTRAL	PROMIFAR	ARTRITIS REUMATOIDEA	AMBULATORIO	328.720000000000027
+759	JUNIO	2014-07-16	11467	2014-07-15	VASQUEZ MIGUEL	14540230	VASQUEZ ANA	1126102	MADRE	PIRITU I	PROMIFAR	HIPERTENSION ARTERIAL 	PERMANENTE	1607.5
+760	JUNIO	2014-07-16	11467	2014-07-15	RODRIGUEZ MARGHILYS	11525250	RODRIGUEZ MARGHILYS	11525250	TITULAR	ACCION CENTRAL	PROMIFAR	OSTEOPENIA	AMBULATORIO	161.289999999999992
+761	JUNIO	2014-07-16	11467	2014-07-15	ELVYS PADILLA	13555075	PAULA VILLAVICENCIO	4371449	MADRE	SAN JOSE DEL CANDIL	PROMIFAR	DIABETES MELLUTIS TIPO 2 H.A	PERMANENTE	577.169999999999959
+762	JUNIO	2014-07-16	11467	2014-07-15	CAMEJO EDGAR	17364409	CAMEJO KIMBERLY	MENOR	HIJA	MECANIZACION 	PROMIFAR	REFLUJO_GASTROESOFAGICO	AMBULATORIO	209.379999999999995
+763	JUNIO	2014-07-16	11455	2014-06-16	 VALMERI RODRIGUEZ	21563795	VALMERI RODRIGUEZ	21563795	TITULAR	PIRITU III	PROMIFAR	MIALGIA DE HOMBRO IZQUIERDO	AMBULATORIO	250.599999999999994
+\.
+
+
+--
+-- Name: hfarmacias_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
+--
+
+SELECT pg_catalog.setval('hfarmacias_id_seq', 1, false);
+
+
+--
+-- Data for Name: hreembolso; Type: TABLE DATA; Schema: public; Owner: arrozalba
+--
+
+COPY hreembolso (id, periodo, titular, tcedula, paciente, pcedula, parentesco, fecha_solicitud, fecha_recibido, factura, sede, tipo_nomina, diagnostico, tipo_gasto, monto_solicitado, deduccion, monto_pagado, observacion, monto_pagado_reembolso, total_cancelar) FROM stdin;
+1	2014-01-01	CRESPO BELKYS	8657682	CRESPO JESUS	2499599	PADRE	2014-01-21	2014-01-21	128763-51864-2852	ACCION CENTRAL	CONTRATADO	SINDROME ICTAL	MEDICAMENTOS	553.559999999999945	\N	553.559999999999945	\N	553.559999999999945	553.559999999999945
+2	2014-01-01	PEREZ PEDRO	9569079	SANCHEZ RAFAELA	1228205	MADRE	2014-01-13	2014-01-13	4865-4866	PIRITU 1	CONTRATADO	COLELITIASIS	CONSULTA+ECOSONOGRAMA	650	\N	650	\N	650	650
+3	2014-01-01	ROSA JOSE	10144706	ROSA JOSLEIDYS	30484710	HIJA	2004-01-08	2014-01-13	3035-45492	AGUA BLANCA	CONTRATADO	OTITIS BILATERAL	CONSULTA+MEDICAMENTOS	732.860000000000014	\N	732.860000000000014	\N	732.860000000000014	732.860000000000014
+4	2014-01-01	AGUIN VICTORIANO	10639072	AGUIN VICTORIANO	10639072	TITULAR	2014-01-13	2014-01-15	694	PIRITU 2	CONTRATADO	HERIDA EN PIERNA IZQUIERDA	CONSULTA	500	\N	500	\N	500	500
+5	2014-01-01	MENDOZA LISDY	11083527	CORDOBA REINA	4195617	MADRE	2014-01-20	2014-01-20	92629-159516	ACCION CENTRAL	CONTRATADO	HAS ESTADIO 1	MEDICAMENTOS	421.79000000000002	\N	421.79000000000002	\N	421.79000000000002	421.79000000000002
+6	2014-01-01	ALVARADO JELIBETH	11785981	ALVARADO JOSE	3536880	PADRE	2014-01-13	2014-01-13	92350	TRANSPORTE	CONTRATADO	NEURITIS POST TRAUMATICA	MEDICAMENTOS	645.490000000000009	\N	645.490000000000009	\N	645.490000000000009	645.490000000000009
+7	2014-01-01	LANDINEZ ROSA	12092691	LICON HILDA	3043305	MADRE	2014-01-17	2014-01-17	259100	MECANIZACION	CONTRATADO	SX METABOLICO-HIPOTIROIDISMO	MEDICAMENTOS	488.279999999999973	\N	488.279999999999973	\N	488.279999999999973	\N
+8	2014-01-01	LANDINEZ ROSA	12092691	LANDINEZ ROSA	12092691	TITULAR	2014-01-17	2014-01-17	4564-94364-146671	MECANIZACION	CONTRATADO	CONSULTA+EXAMENES +MEDICAMENTOS	EMBARAZO 35 SEMANAS	1965.63000000000011	\N	1965.63000000000011	\N	1965.63000000000011	2453.90999999999985
+9	2014-01-01	ALVARADO CARLOS	12264948	ALVARADO CARLOS	12264948	TITULAR	2014-01-20	2014-01-20	205972-598	PIRITU 1	CONTRATADO	FARINGITIS AGUDA	CONSULTA+MEDICAMENTOS	538.5	\N	538.5	\N	538.5	538.5
+10	2014-01-01	DELGADO ERIKA	13228242	DELGADO ERIKA	13228242	TITULAR	2014-01-13	2014-01-13	5842-33803	PIRITU 1	CONTRATADO	HEMANGIOMAS HEPATICOS	CONSULTA+ECO+RESONANCIA	3900	\N	3900	\N	3900	3900
+11	2014-01-01	SANCHEZ PEDRO	13556353	SANCHEZ PEDRO	13556353	TITULAR	2014-01-13	2014-01-13	65155	ACCION CENTRAL	CONTRATADO	HIPERTENSION SISTEMICA	MEDICAMENTOS	235.210000000000008	\N	235.210000000000008	\N	235.210000000000008	235.210000000000008
+12	2014-01-01	MUÑOZ ROMEL	13585018	NAGUAS MARIA	17601053	ESPOSA	2014-01-15	2014-01-15	119672-130065	PAYARA	CONTRATADO	EMBARAZO 6 SEMANAS	MEDICAMENTOS	706.210000000000036	\N	706.210000000000036	\N	706.210000000000036	706.210000000000036
+13	2014-01-01	CUENCA NORIS	14092771	GALINDEZ C. DIEGO A.	30275610	HIJO	2014-01-22	2014-01-22	3030-46208-301607-199410	ACCION CENTRAL	CONTRATADO	CRISIS AGUDA DE BRONCOESPASMO	CONSULTA+MEDICAMENTOS	1484.46000000000004	\N	1484.46000000000004	\N	1484.46000000000004	\N
+14	2014-01-01	CUENCA NORIS	14092771	GALINDEZ C. DANIEL A.	MENOR	HIJO	2014-01-12	2014-01-12	2746-150969-289058-334131	ACCION CENTRAL	CONTRATADO	RINOFARINGITIS	CONSULTA+EXAMENES+MEDICAMENTOS	838.919999999999959	\N	838.919999999999959	\N	838.919999999999959	\N
+15	2014-01-01	CUENCA NORIS	14092771	GALINDEZ OSCAR	12527587	ESPOSO	2014-01-15	2014-01-15	1145-281884	ACCION CENTRAL	CONTRATADO	DMNID	CONSULTA+MEDICAMENTOS	714.909999999999968	\N	714.909999999999968	\N	714.909999999999968	3038.28999999999996
+16	2014-01-01	QUERO YAJAIRA	16292305	QUERO YAJAIRA	16292305	TITULAR	2014-01-17	2014-01-17	251698	ACCION CENTRAL	CONTRATADO	VAGINOSIS BACTERIANA	MEDICAMENTOS	598.240000000000009	\N	598.240000000000009	\N	598.240000000000009	\N
+17	2014-01-01	QUERO YAJAIRA	16292305	RAMIREZ MATIAS	MENOR	HIJO	2014-01-13	2014-01-13	77	ACCION CENTRAL	CONTRATADO	ANEMIA LEVE	CONSULTA+MEDICAMENTOS	607.419999999999959	\N	607.419999999999959	\N	607.419999999999959	1205.66000000000008
+18	2014-01-01	FREITEZ RENZO	16416522	PEREIRA OMAIRA	19282523	ESPOSA	2014-01-17	2014-01-17	1054-54399-35319-68462	PROD. AGRICOLA	CONTRATADO	EMBARAZO 22 SEMANAS	CONSULTA+MEDICAMENTOS	737.399999999999977	\N	737.399999999999977	\N	737.399999999999977	737.399999999999977
+19	2014-01-01	GAINZA DEISYS	16565969	GAINZA ENRIQUE	3319981	PADRE	2014-01-16	2014-01-16	1786	PIRITU 3	CONTRATADO	ULVERA CORNEAL	CONSULTA	300	\N	300	\N	300	300
+20	2014-01-01	SEQUERA VICTOR	16566845	SEQUERA MARKELYS	MENOR	HIJA	2014-01-20	2014-01-22	4565-576-4054	PIRITU 1	CONTRATADO	HIPERCALCIURIA	CONSULTA+ECO+EXAMENES	1300	\N	1300	\N	1300	1300
+21	2014-01-01	MOLINA YANIS	16776892	ALVAREZ MARISELA	9045103	MADRE	2014-01-20	2014-01-20	1229	PIRITU 1	CONTRATADO	QUISTE DE OVARIO	CONSULTA	650	\N	650	\N	650	650
+22	2014-01-01	ULACIO CLEMENTE	17278779	ULACIO VALENTINA	MENOR	HIJA	2014-01-17	2014-01-22	288375	BICEABASTO	CONTRATADO	OTITIS BILATERAL	MEDICAMENTOS	237.5	\N	237.5	\N	237.5	\N
+23	2014-01-01	ULACIO CLEMENTE	17278779	ULACIO VALERY	MENOR	HIJA	2014-01-10	2014-01-16	149693	BICEABASTO	CONTRATADO	INFECCION URINARIA	MEDICAMENTOS	304.5	\N	304.5	\N	304.5	542
+24	2014-01-01	GALLEGOS MILAGROS	17796643	AVENDAÑO ZADKIEL	MENOR	HIJO	2014-01-20	2014-01-20	313948-275	ACCION CENTRAL	CONTRATADO	URTICARIA SEVERA	CONSULTA+MEDICAMENTOS	468	\N	468	\N	468	468
+25	2014-01-01	GALINDEZ LISNEY	17944278	GALINDEZ ADDIS	3907433	PADRE	2014-01-15	2014-01-15	131022-130629	PAYARA	CONTRATADO	DIABETES MELLITUS	MEDICAMENTOS	807.950000000000045	\N	807.950000000000045	\N	807.950000000000045	807.950000000000045
+26	2014-01-01	JUAREZ YUSBELIS	17944390	JUAREZ YUSBELIS	17944390	TITULAR	2014-01-16	2014-01-20	404-123439	AGUA BLANCA	CONTRATADO	EMBARAZO 32 SEMANAS	CONSULTA+MEDICAMENTOS	1030	78.5699999999999932	951.42999999999995	NO PRESENTA RECIPE DE NATELE	951.42999999999995	951.42999999999995
+27	2014-01-01	CARLINO JOSE DANIEL	19130806	CARLINO JOSE DANIEL	19130806	TITULAR	2014-01-22	2014-01-22	2368	ACCION CENTRAL	CONTRATADO	ESGUINCE EN TOBILLO IZQUIERDO	CONSULTA	500	\N	500	\N	500	500
+28	2014-01-01	MORALES VICTOR	19799308	MORALES VICTOR	19799308	TITULAR	2014-01-13	2014-01-13	78781-3250	AGUA BLANCA	CONTRATADO	PALPITACIONES Y DOLOR TORACICO	CONSULTA+ELECTROCARD.	500	\N	500	\N	500	500
+29	2014-01-01	INOSTROZA LORETO	24320049	FIERRO ZOILA	81288458	MADRE	2014-01-07	2014-01-07	130060	ACCION CENTRAL	CONTRATADO	ENFERMEDAD VASCULAR CEREBRAL	MEDICAMENTOS	115.900000000000006	\N	115.900000000000006	\N	115.900000000000006	115.900000000000006
+30	2014-01-01	CASTILLO FRANKLIN	10141980	CASTILLO FRANKLIN	10141980	TITULAR	2014-01-09	2014-01-09	311331-4843	BICEABASTO	OBRERO	DOLOR LUMBAR IZQUIERDO	CONSULTA+ECO+MEDICAMENTOS	1030	\N	1030	\N	1030	1030
+31	2014-01-01	TIMAURE LUIS	11542710	TIMAURE ANGELES	MENOR	HIJO	2014-01-15	2014-01-20	90972	PIRITU 1	OBRERO	INFECCION DEL TRACTO URINARIO	MEDICAMENTOS	252	\N	252	\N	252	\N
+32	2014-01-01	TIMAURE LUIS	11542710	MARTINEZ FANNY	15492975	ESPOSA	2014-01-15	2014-01-22	187767	PIRITU 1	OBRERO	SX DOLOROSO ABDOMINAL	MEDICAMENTOS	281.300000000000011	\N	281.300000000000011	\N	281.300000000000011	\N
+33	2014-01-01	TIMAURE LUIS	11542710	MARTINEZ FANNY	15492975	ESPOSA	2014-01-15	2014-01-22	36985	PIRITU 1	OBRERO	INFECCION VAGINAL	MEDICAMENTOS	149.990000000000009	\N	149.990000000000009	\N	149.990000000000009	683.289999999999964
+34	2014-01-01	YUSTIZ CARMEN	11543412	YUSTIZ CARMEN	11543412	TITULAR	2014-01-22	2014-01-22	23730	PIRITU 1	OBRERO	METRORRAGIA	MAMOGRAFÍA	500	\N	500	\N	500	\N
+35	2014-01-01	YUSTIZ CARMEN	11543412	YUSTIZ CARMEN	11543412	TITULAR	2014-01-22	2014-01-22	42838-4043-1374	PIRITU 1	OBRERO	HIPERTENSION ARTERIAL SISTEMICA	CONSULTA+EXAMENES+DENSIMETRIA	1720	\N	1720	\N	1720	2220
+36	2014-01-01	MALDONADO RAFAEL	17108554	MALDONADO RAFAEL	17108554	TITULAR	2014-01-17	2014-01-20	662-205157-42876-47313	WILLIANS LARA	OBRERO	TRASTORNOS DE PANICO	CONSULTA+MEDICAMENTOS	1203.65000000000009	\N	1203.65000000000009	\N	1203.65000000000009	1203.65000000000009
+37	2014-01-01	PEÑA WILMER	18871319	PEÑA WILMER	7596440	PADRE	2014-01-09	2014-01-13	21936	PIRITU 1	OBRERO	HIPERTENSION ARTERIAL	MEDICAMENTOS	705.100000000000023	\N	705.100000000000023	\N	705.100000000000023	705.100000000000023
+38	2014-01-01	VALERA SERGIO	20809291	VALERA SERGIO	20809291	TITULAR	2014-01-20	2014-01-20	100992-343573-132382-5265-3346	ACCION CENTRAL	OBRERO	SEPTODESVIACION+FARINGITIS	CONSULTA+MEDICAMENTOS	1991.53999999999996	\N	1991.53999999999996	\N	1991.53999999999996	1991.53999999999996
+39	2014-02-01	ORTIZ NESTOR	3866991	ORTIZ NESTOR	3866991	TITULAR	2014-01-27	2014-01-27	276229-273338	ACCION CENTRAL	CONTRATADO	HIPERTENSION ARTERIAL	MEDICAMENTOS	405	\N	405	\N	405	405
+40	2014-02-01	MORILLO GRACIELA	8660443	SEGURA ISABEL	1256270	MADRE	2014-01-27	2014-01-30	4622	BICEABASTO	CONTRATADO	DIABETES MELLITUS	CONSULTA	400	\N	400	\N	400	400
+41	2014-02-01	HERRERA RUFINO	9562576	HERRERA YEISON	27860138	HIJO	2014-01-27	2014-01-27	37182	PIRITU 2	CONTRATADO	AUMENTO DE VOLUMEN EN HOMBRO DERECHO	MEDICAMENTOS	120	\N	120	\N	120	120
+42	2014-02-01	CEDEÑO SIMON	11548326	CEDEÑO SIMON	11548326	TITULAR	2014-01-28	2014-01-28	660-303240	PROD. AGRICOLA	CONTRATADO	LITIASIS VESICULAR	CONSULTA+MEDICAMENTOS	931.25	\N	931.25	\N	931.25	931.25
+43	2014-02-01	SILVA WILLIANS	12264783	SILVIA GILIA	1109972	MADRE	2014-01-23	2014-01-27	146279-1219	AGUA BLANCA	CONTRATADO	OSTEOARTROSIS	CONSULTA+MEDICAMENTOS	947.850000000000023	\N	947.850000000000023	\N	947.850000000000023	947.850000000000023
+44	2014-02-01	DURAN MARIA	13073131	SILVA MARIANGEL	MENOR	HIJA	2014-01-21	2014-01-23	1252	PAYARA	CONTRATADO	RUBEOLA	CONSULTA	400	\N	400	\N	400	400
+45	2014-02-01	MORA YULY	13353300	ARBELO FRANCISCO	30441121	HIJO	2014-01-30	2014-01-30	2960	ACCION CENTRAL	CONTRATADO	BAJO RENDIMIENTO+ FALTA DE ATENCION	CONSULTA+ELECTROENC.	1200	\N	1200	\N	1200	1200
+46	2014-02-01	GALLARDO YESSICA	13354020	GALLARDO EZEQUIEL	MENOR	HIJO	2014-01-22	2014-01-23	70243-70271-690	ACCION CENTRAL	CONTRATADO	VOMITOS	CONSULTA+EXAMENES	560	\N	560	\N	560	\N
+47	2014-02-01	GALLARDO YESSICA	13354020	HUERFANO YANIRA	4603160	MADRE	2014-01-20	2014-01-23	343267	ACCION CENTRAL	CONTRATADO	SINDROME DIARREICO AGUDO	MEDICAMENTOS	405.079999999999984	\N	405.079999999999984	\N	405.079999999999984	965.080000000000041
+48	2014-02-01	SANCHEZ PEDRO	13556353	ZAVARCE MILCAHUR	1127931	MADRE	2014-01-28	2014-01-28	148484-137295-129996	ACCION CENTRAL	CONTRATADO	HIPERTENSION ARTERIAL	MEDICAMENTOS	867.470000000000027	\N	867.470000000000027	\N	867.470000000000027	867.470000000000027
+49	2014-02-01	GUARENTE CLAUDIA	13785339	GUARENTE CLAUDIA	13785339	TITULAR	2014-01-23	2014-01-24	4446	BICEABASTO	CONTRATADO	TRASTORNO MENSTRUAL	CONSULTA	520	\N	520	\N	520	520
+50	2014-02-01	RODRIGUEZ JOSE LUIS	14677390	PIÑA ALICIA	14177137	ESPOSA	2014-01-23	2014-01-27	116952-403890-4474	AGUA BLANCA	CONTRATADO	CONSULTA+MEDICAMENTOS	EMBARAZO 6 SEMANAS	1157.31999999999994	\N	1157.31999999999994	\N	1157.31999999999994	1157.31999999999994
+51	2014-02-01	GUEVARA ARCANGEL	14677755	JIMENEZ KARLA	19637184	ESPOSA	2014-01-27	2014-01-27	1299	PIRITU 2	CONTRATADO	EMBARAZO 7 SEMANAS	EXAMENES	1090	\N	1090	\N	1090	1090
+52	2014-02-01	DIAZ MARIA	14887833	PEREZ YUBERIS	4239170	MADRE	2014-01-27	2014-01-27	250604-3839	ACCION CENTRAL	CONTRATADO	DISPEPSIA	CONSULTA+MEDICAMENTOS	1124.58999999999992	\N	1124.58999999999992	\N	1124.58999999999992	1124.58999999999992
+53	2014-02-01	RIVERO IVAN	16414995	MATOS DAMARYS	16751467	ESPOSA	2014-01-24	2014-01-24	1354-315014-300190-12194-12246	ACCION CENTRAL	CONTRATADO	EMBARAZO 35 SEMANAS	CONSULTA+MEDICAMENTOS+EXAMENES	1191.45000000000005	\N	1191.45000000000005	\N	1191.45000000000005	\N
+54	2014-02-01	RIVERO IVAN	16414995	MATOS DAMARYS	16751467	ESPOSA	2014-01-24	2014-01-24	334730	ACCION CENTRAL	CONTRATADO	EMBARAZO 36 SEMANAS	EXAMENES	300	\N	300	\N	300	\N
+55	2014-02-01	RIVERO IVAN	16414995	MATOS DAMARYS	16751467	ESPOSA	2014-01-24	2014-01-24	1386	ACCION CENTRAL	CONTRATADO	EMBARAZO 36 SEMANAS	CONSULTA	500	\N	500	\N	500	1991.45000000000005
+56	2014-02-01	GAINZA DEISYS	16565969	GAINZA DEISYS	16565969	TITULAR	2014-01-27	2014-01-27	5532-94987	PIRITU 3	CONTRATADO	ASMA BRONQUIAL	CONSULTA+EXAMENES	650	\N	650	\N	650	650
+57	2014-02-01	PADRINO DAMARYS	16639572	PADRINO MALEIDYS	8619893	MADRE	2014-01-23	2014-01-28	76125-7034	TRILLADORA	CONTRATADO	FIBROMATOSIS UTERINA	CONSULTA+BIOPSIAS	1952	\N	1952	\N	1952	1952
+58	2014-02-01	MOLINA YANIS	16776892	MOLINA ADRIAN	MENOR	HIJO	2014-01-23	2014-01-27	399689-1420	PIRITU 1	CONTRATADO	DOLOR ABDOMINAL, VOMITOS	CONSULTA+MEDICAMENTOS	595.970000000000027	\N	595.970000000000027	\N	595.970000000000027	595.970000000000027
+59	2014-02-01	QUERALES LUIS	17277931	QUERALES ANGEL	MENOR	HIJO	2014-01-23	2014-01-27	254796-397260-37062-4879-4884-4880-4891	PIRITU 2	CONTRATADO	INTOXICACION ALIMENTARIA	CONSULTA+MEDICAMENTOS+EXAMENES	1552	\N	1552	\N	1552	\N
+60	2014-02-01	QUERALES LUIS	17277931	QUERALES ANGEL	MENOR	HIJO	2014-01-23	2014-01-27	204916-36959-188	PIRITU 2	CONTRATADO	RINISINOPATIA-AMIGDALITIS	CONSULTA+MEDICAMENTOS	898	\N	898	\N	898	2450
+61	2014-02-01	QUERALES NAYROVI	18871270	ANSELAR YOJHAN	MENOR	HIJO	2014-01-23	2014-01-24	149894-217	BICEABASTO	CONTRATADO	CUADRO FARINGO AMIGDALAR	CONSULTA+MEDICAMENTOS	518.289999999999964	\N	518.289999999999964	\N	518.289999999999964	518.289999999999964
+62	2014-02-01	ROJAS JUANA	19376966	ROJAS JUANA	19376966	TITULAR	2014-01-17	2014-01-22	149805-69693-588-192	BICEABASTO	CONTRATADO	EMBARAZO 5 SEMANAS	CONSULTA+EXAMENES+MEDICAMENTOS	2205.5	\N	2205.5	\N	2205.5	2205.5
+63	2014-02-01	LOBATON MIGUEL	19377862	MENDOZA CORTEZA	10638907	MADRE	2014-01-22	2014-01-22	2295	PIRITU 2	CONTRATADO	HIPERTENSION ARTERIAL	CONSULTA	500	\N	500	\N	500	500
+64	2014-02-01	CORDOVA CARLOS	19636360	CORDOVA KARLISMAR	MENOR	HIJA	2014-01-27	2014-01-27	597	PIRITU 2	CONTRATADO	AMIGDALITIS 	CONSULTA	250	\N	250	\N	250	250
+65	2014-02-01	VERA JOSE	19636886	SUAREZ LUISANA	19799070	ESPOSA	2014-01-24	2014-01-27	963-43263	PIRITU 2	CONTRATADO	HIPERTENSION ENDOCRANEAL	CONSULTA+RESONANCIA	2500	\N	2500	\N	2500	2500
+66	2014-02-01	CONDE KEVIN	19798851	VERGARA EDUARDA	11080295	MADRE	2014-01-30	2014-01-30	25332-334979	ACCION CENTRAL	CONTRATADO	CA DE MAMAS	EXAMENES	460	\N	460	\N	460	460
+67	2014-02-01	MEDINA JOSE 	20156351	MEDINA JOSE	20156351	TITULAR	2014-01-24	2014-01-24	2512-447	ACCION CENTRAL	CONTRATADO	ALOEPCIA ANDROGENETICA	CONSULTA+EXAMENES	1500	\N	1500	\N	1500	1500
+68	2014-02-01	PETRO MANUEL	81927543	PATRON ZORAIDA	50846777	ESPOSA	2014-01-27	2014-01-27	700-31823-194790	BANCO DE PAVONES	CONTRATADO	INSUFICIENCIA VENOSA	CONSULTA+MEDICAMENTOS	1828	\N	1828	\N	1828	1828
+69	2014-02-01	INOSTROZA LORETO	24320049	FIERRO MERCEDES	81288458	MADRE	2014-01-24	2014-01-24	70844-97513-2122	ACCION CENTRAL	CONTRATADO	DOLOR EN MUÑECA IZQUIERDA	CONSULTA+MEDICAMENTOS	834.5	\N	834.5	\N	834.5	834.5
+70	2014-02-01	ORTIZ FRANCISCO	12262363	ORTIZ ANDREA	MENOR	HIJA	2014-01-23	2014-01-23	1231	ACCION CENTRAL	DIRECTIVO	EPISODIOS DE LIPOTIMIA	ELECTROENCEFALOGRAMA	700	\N	700	\N	700	\N
+71	2014-02-01	ORTIZ FRANCISCO	12262363	ORTIZ ANDREA	MENOR	HIJA	2014-01-23	2014-01-23	9852	ACCION CENTRAL	DIRECTIVO	CRISIS VEGETATIVA	CONSULTA	800	\N	800	\N	800	1500
+72	2014-02-01	QUERALES JUAN	1129450	QUERALES JUAN	1129450	TITULAR	2014-01-30	2014-01-30	12414-687	BICEABASTO	OBRERO	DISURIA	CONSULTA+ECOSONOGRAMA	700	\N	700	\N	700	700
+73	2014-02-01	SOTO CARLOS	19715985	RODRIGUEZ YSMAR	18871327	ESPOSA	2014-01-23	2014-01-27	566	AGUA BLANCA	OBRERO	EMBARAZO 35 SEMANAS	CONSULTA+ECOSONOGRAMA	460	\N	460	\N	460	460
+74	2014-02-01	LINAREZ YAURI	19799594	LUCENA YOLIANNY	23049606	ESPOSA	2014-01-22	2014-01-22	1285	PIRITU 2	OBRERO	EMBARAZO 29 SEMANAS	CONSULTA+ECO 3D	1000	\N	1000	\N	1000	1000
+75	2014-02-01	MORENO LUIS	20810631	PEREZ MADEIRA	10143173	MADRE	2014-01-20	2014-01-22	4850	PIRITU 2	OBRERO	CUADRO DE DORSALGIA	CONSULTA+TTO. EV	680	\N	680	\N	680	680
+76	2014-03-01	FLORES LUIS	3693865	RIVERO MARÍA	5941780	ESPOSA	2014-02-10	2014-02-10	311919-238109-5331-5403-39350	PIRITU 1	CONTRATADO	SINDROME SINUSOBROQUIAL	CONSULTA+MEDICAMENTOS+TOMOGRAFÍA	3397.19999999999982	\N	3397.19999999999982	\N	3397.19999999999982	3397.19999999999982
+77	2014-03-01	ORTIZ NESTOR	3866991	RAMIREZ VICTORIA	4261562	ESPOSA	2014-01-31	2014-02-03	9166-24053-260003-167429	ACCION CENTRAL	CONTRATADO	RINOFARINGITIS AGUDA	CONSULTA+MEDICAMENTOS	1937.08999999999992	\N	1937.08999999999992	\N	1937.08999999999992	1937.08999999999992
+78	2014-03-01	HOPKINS JEANET	6549906	HOPKINS JEANET	6549906	TITULAR	2014-01-29	2014-02-04	23126	WILLIAM LARA	CONTRATADO	CARIES MODERADA	TRATAMIENTO ODONTOLÓGICO	720	\N	720	\N	720	\N
+79	2014-03-01	HOPKINS JEANET	6549906	HOPKINS GLADYS	1737140	MADRE	2014-01-29	2014-02-04	71434	WILLIAM LARA	CONTRATADO	TU DE PANCREAS	MEDICAMENTOS	293.740000000000009	\N	293.740000000000009	\N	293.740000000000009	1013.74000000000001
+80	2014-03-01	ALVARADO SONNY	7384272	ALVARADO SONNY	7384272	TITULAR	2014-02-10	2014-02-10	409446	TRANSPORTE	CONTRATADO	CRISIS HIPERTENSIVA	MEDICAMENTOS	371.079999999999984	\N	371.079999999999984	\N	371.079999999999984	371.079999999999984
+81	2014-03-01	PUERTA FEDERICO	7544554	PUERTA FEDERICO	7544554	TITULAR	2014-01-20	2014-02-02	527	PAYARA	CONTRATADO	COLECISTECTOMIA ABIERTA	CONSULTA	500	\N	500	\N	500	500
+82	2014-03-01	CRESPO BELKYS	8657682	CRESPO JESUS	2499599	PADRE	2014-02-07	2014-02-07	26259-130177	ACCION CENTRAL	CONTRATADO	SINDROME ICTAL	MEDICAMENTOS	571.970000000000027	\N	571.970000000000027	\N	571.970000000000027	\N
+83	2014-03-01	CRESPO BELKYS	8657682	CRESPO JESUS	2499599	PADRE	2014-02-12	2014-02-13	46444-46448	ACCION CENTRAL	CONTRATADO	ENFERMEDAD RENAL CRÓNICA	MEDICAMENTOS	400	\N	400	\N	400	\N
+84	2014-03-01	CRESPO BELKYS	8657682	COLMENAREZ ANGELA	1117366	MADRE	2014-02-07	2014-02-07	130176	ACCION CENTRAL	CONTRATADO	HTA-OSTEOARTROSIS	MEDICAMENTOS	368.160000000000025	\N	368.160000000000025	\N	368.160000000000025	1340.13000000000011
+85	2014-03-01	MORILLO GRACIELA	8660443	SEGURA DE M. ISABEL	1256270	MADRE	2014-02-04	2014-02-04	8718	BICEABASTO	CONTRATADO	ECCEMA MICROBIANO	CONSULTA	400	\N	400	\N	400	400
+86	2014-03-01	MAMBEL PEDRO	9044561	GOMEZ ZULEYDA	7547668	ESPOSA	2014-02-07	2014-02-07	8351-38782	ACCION CENTRAL	CONTRATADO	PRESBICIA	CONSULTA+MEDICAMENTOS	834	\N	834	\N	834	\N
+87	2014-03-01	MAMBEL PEDRO	9044561	MAMBEL PEDRO	9044561	TITULAR	2014-02-13	2014-02-13	1411-88073	ACCION CENTRAL	CONTRATADO	HIPERPLASIA CONJUNTIVAL	CONSULTA+MEDICAMENTOS	674.480000000000018	\N	674.480000000000018	\N	674.480000000000018	\N
+88	2014-03-01	MAMBEL PEDRO	9044561	MAMBEL PEDRO	9044561	TITULAR	2014-02-07	2014-02-07	8352-35221795-38781	ACCION CENTRAL	CONTRATADO	AUMENTO DE VOLUMEN-PRESBICIA	CONSULTA+MEDICAMENTOS	1047	\N	1047	\N	1047	2555.48000000000002
+89	2014-03-01	PEREZ PEDRO	9569079	SANCHEZ RAFAELA	1228205	MADRE	2014-01-27	2014-02-03	5973-255035-4885	PIRITU 1	CONTRATADO	DOLOR LUMBAR	CONSULTA+MEDICAMENTOS +EXAMENES	897.5	\N	897.5	\N	897.5	897.5
+90	2014-03-01	MENDEZ GIOVANNY	9837225	PINEDA ANA MARIA	12448545	ESPOSA	2014-02-03	2014-02-10	76411-7918	PIRITU 2	CONTRATADO	POLIPO DE CUERDA IZQUIERDA	CONSULTA+MEDICAMENTOS	885.32000000000005	\N	885.32000000000005	\N	885.32000000000005	\N
+91	2014-03-01	MENDEZ GIOVANNY	9837225	MENDEZ GIOVANNY	9837225	TITULAR	2014-02-10	2014-02-12	4924	PIRITU 2	CONTRATADO	HIPERTENSION ARTERIAL	CONSULTA	550	\N	550	\N	550	1435.31999999999994
+92	2014-03-01	PEREZ EXYS	9844654	PEREZ EXYS	9844654	TITULAR	2014-02-07	2014-02-10	289017	ACCION CENTRAL	CONTRATADO	HTA SISTEMICA	MEDICAMENTOS	354.420000000000016	\N	354.420000000000016	\N	354.420000000000016	354.420000000000016
+93	2014-03-01	MOLINA CARLOS	10135498	COLMENAREZ DOLORES	1985467	MADRE	2014-02-10	2014-02-10	3637	ACCION CENTRAL	CONTRATADO	HTA	CONSULTA	500	\N	500	\N	500	500
+94	2014-03-01	SULBARAN ALEXIS	10144490	SULBARAN KEMBERLY	MENOR	HIJA	2014-02-03	2014-02-10	62353	PIRITU 2	CONTRATADO	OTITIS MEDIA	MEDICAMENTOS	396.379999999999995	\N	396.379999999999995	\N	396.379999999999995	396.379999999999995
+95	2014-03-01	MENDOZA GREGORIO	10276265	MENDOZA ATHENAS	26940029	HIJO	2014-01-28	2014-02-10	478	PIRITU 2	CONTRATADO	OVARIO POLIQUISTICO	CONSULTA	500	\N	500	\N	500	500
+96	2014-03-01	MEDINA JOSE SEGUNDO	11079247	MEDINA JOSE SEGUNDO	11079247	TITULAR	2014-02-10	2014-02-10	5549-59630-107876-597791-27065-1748-25168-252748-1749-9179	PROD. AGRICOLA	CONTRATADO	INFECCION RESPIRATORIA+BRONCOESPASMO	CONSULTAS+MEDICAMENTOS+RX TORAX	4885.02000000000044	\N	4885.02000000000044	\N	4885.02000000000044	4885.02000000000044
+97	2014-03-01	RODRIGUEZ MARGHILYZ	11525250	RODRIGUEZ MARGHILYZ	11525250	TITULAR	2014-02-06	2014-02-07	148443-2116	ACCION CENTRAL	CONTRATADO	LUMBALGIA MECÁNICA	CONSULTA+MEDICAMENTOS	846.299999999999955	\N	846.299999999999955	\N	846.299999999999955	846.299999999999955
+98	2014-03-01	MENDOZA MARIA A.	11540631	MENDOZA MARIA A.	11540631	TITULAR	2014-02-06	2014-02-06	909-115826-580	ACCION CENTRAL	CONTRATADO	DOLOR PELVICO	CONSULTA+MEDICAMENTOS +ECO MAMARIO	911	\N	911	\N	911	911
+99	2014-03-01	ALVARADO JELIBETH	11785981	ALVARADO JELIBETH	11785981	TITULAR	2014-02-05	2014-02-05	2242-25266	TRANSPORTE	CONTRATADO	VAGINOSIS INESPECIFICA	CONSULTA+MEDICAMENTOS	1015.17999999999995	\N	1015.17999999999995	\N	1015.17999999999995	1015.17999999999995
+100	2014-03-01	MENDEZ ROSMARY	12090662	MENDEZ ROSMARY	12090662	TITULAR	2014-02-12	2014-02-12	16549	PIRITU 3	CONTRATADO	SIN DIAGNOSTICO	CONSULTA	450	\N	450	\N	450	\N
+101	2014-03-01	MENDEZ ROSMARY	12090662	GALLARDO ROSA	5369243	MADRE	2014-02-14	2014-02-14	3510-3516-3497-3503-3509	PIRITU 3	CONTRATADO	DISFUNCION LUMBO-SEVERA CON RADIACION A MI IZQ.	TERAPIAS FISICA	600	\N	600	\N	600	\N
+102	2014-03-01	MENDEZ ROSMARY	12090662	BONILLA LEONARDO	12526449	ESPOSO	2014-02-03	2014-02-03	246024	PIRITU 3	CONTRATADO	HIPERTENSION ARTERIAL	MEDICAMENTOS	463	\N	463	\N	463	\N
+103	2014-03-01	MENDEZ ROSMARY	12090662	BONILLA RANIA	MENOR	HIJA	2014-02-12	2014-02-12	6055	PIRITU 3	CONTRATADO	RINOSINUSITIS	CONSULTA	500	\N	500	\N	500	\N
+104	2014-03-01	MENDEZ ROSMARY	12090662	GALLARDO ROSA	5369243	MADRE	2014-02-03	2014-02-03	4526-314211	PIRITU 3	CONTRATADO	RADICULOPATÍA MI. IZQ.	CONSULTA+MEDICAMENTOS	1401.88000000000011	\N	1401.88000000000011	\N	1401.88000000000011	\N
+105	2014-03-01	MENDEZ ROSMARY	12090662	GALLARDO ROSA	5369243	MADRE	2014-02-03	2014-02-03	3454-3457-3466-3472-3479-3486	PIRITU 3	CONTRATADO	RADICULOPATÍA MI. IZQ.	TERAPIAS FISICA	870	\N	870	\N	870	\N
+106	2014-03-01	MENDEZ ROSMARY	12090662	GALLARDO ROSA	5369243	MADRE	2014-02-03	2014-02-03	179310	PIRITU 3	CONTRATADO	DOLOR EN COLUMNA LUMBAR	RESONANCIA MAGNÉTICA	1220	\N	1220	\N	1220	5504.88000000000011
+107	2014-03-01	LANDINEZ ROSA	12092691	LANDINEZ ROSA	12092691	TITULAR	2014-02-04	2014-02-06	79087-79366-3255-253419-191303	MECANIZACION	CONTRATADO	HIPERTENSION ARTERIAL	CONSULTA+MEDICAMENTOS +ELECTROCARDIOGRAMA	2944.9699999999998	\N	2944.9699999999998	\N	2944.9699999999998	2944.9699999999998
+108	2014-03-01	TIRADO ANTONIO	12368356	TIRADO ANTONIO	2514670	PADRE	2014-02-11	2014-02-11	195732-5654-1536	PIRITU 1	CONTRATADO	FARINGO LARINGITIS	CONSULTA+MEDICAMENTOS	731.899999999999977	\N	731.899999999999977	\N	731.899999999999977	731.899999999999977
+109	2014-03-01	DELGADO ERIKA	13228242	DI DIOMEDE ANTONIETTA	12446197	MADRE	2014-02-10	2014-02-10	7565	PIRITU 1	CONTRATADO	ARTRITIS REUMATOIDEA	CONSULTA	500	\N	500	\N	500	\N
+110	2014-03-01	DELGADO ERIKA	13228242	DI DIOMEDE ANTONIETTA	12446197	MADRE	2014-02-10	2014-02-10	23900-23893	PIRITU 1	CONTRATADO	OSTEOPOROSIS-HTA	MAMOGRAFIA-ECO MAMARIO	750	\N	750	\N	750	1250
+111	2014-03-01	SANCHEZ PEDRO	13556353	SANCHEZ PEDRO	13556353	TITULAR	2014-01-24	2014-02-10	316249	ACCION CENTRAL	CONTRATADO	HIPERTENSION ARTERIAL	MEDICAMENTOS	350	\N	350	\N	350	\N
+112	2014-03-01	SANCHEZ PEDRO	13556353	SANCHEZ PEDRO	1110898	PADRE	2014-02-03	2014-02-03	68515	ACCION CENTRAL	CONTRATADO	SINUSOPATÍA	MEDICAMENTOS	373.449999999999989	\N	373.449999999999989	\N	373.449999999999989	\N
+113	2014-03-01	SANCHEZ PEDRO	13556353	CARRERA ALIDA	12964202	ESPOSA	2014-02-03	2014-02-03	150974	ACCION CENTRAL	CONTRATADO	ALERGIA OCULAR BILATERAL	MEDICAMENTOS	242.259999999999991	\N	242.259999999999991	\N	242.259999999999991	\N
+114	2014-03-01	SANCHEZ PEDRO	13556353	SANCHEZ JUAN PEDRO	MENOR	HIJO	2014-02-03	2014-02-03	150974	ACCION CENTRAL	CONTRATADO	RINITIS ALERGICA	MEDICAMENTOS	132.150000000000006	\N	132.150000000000006	\N	132.150000000000006	1097.8599999999999
+115	2014-03-01	MUÑOZ ROMEL	13585018	NAGUAS MARIA	17601053	ESPOSA	2014-02-05	2014-02-05	8119	PAYARA	CONTRATADO	EMBARAZO 12 SEMANAS	CONSULTA	500	\N	500	\N	500	500
+116	2014-03-01	GUARENTE CLAUDIA	13785339	TRUJILLO SANTIAGO	MENOR	HIJO	2014-01-31	2014-02-06	245806-6027-326	BICEABASTO	CONTRATADO	CUADRO DIARREICO	CONSULTA+MEDICAMENTOS	875	\N	875	\N	875	\N
+117	2014-03-01	GUARENTE CLAUDIA	13785339	GUARENTE CLAUDIA	13785339	TITULAR	2014-01-31	2014-02-07	245805-1713	BICEABASTO	CONTRATADO	EMBARAZO 5 SEMANAS	CONSULTA+MEDICAMENTOS	727.899999999999977	\N	727.899999999999977	\N	727.899999999999977	1602.90000000000009
+118	2014-03-01	CUENCA NORIS	14092771	GALINDEZ C. DANIEL A.	MENOR	HIJO	2014-02-12	2014-02-12	3079	ACCION CENTRAL	CONTRATADO	HIPERREACTIVIDAD BRONQUIAL	CONSULTA	500	\N	500	\N	500	500
+119	2014-03-01	MENDOZA ANIBAL	14092815	MENDOZA ANTHONI	MENOR	HIJO	2014-02-05	2014-02-05	2769-278350	PAYARA	CONTRATADO	AMIGDALOFARINGITIS	CONSULTA+MEDICAMENTOS	657	\N	657	\N	657	657
+120	2014-03-01	CASTILLO HERMINIA	14239182	CASTILLO ARACELYS	4345785	MADRE	2014-01-31	2014-02-05	441	TRILLADORA	CONTRATADO	HIPERTENSION ARTERIAL	CONSULTA	400	\N	400	\N	400	\N
+121	2014-03-01	CASTILLO HERMINIA	14239182	GARCIA ANA ISABEL	MENOR	HIJA	2014-01-31	2014-02-05	4914	TRILLADORA	CONTRATADO	SINDROME GRIPAL	CONSULTA	400	\N	400	\N	400	\N
+122	2014-03-01	CASTILLO HERMINIA	14239182	CASTILLO ARACELYS	4345785	MADRE	2014-01-30	2014-02-05	1669-92-708-46540-313260-11	TRILLADORA	CONTRATADO	HIPERTENSION ARTERIAL	CONSULTA+ECO+ MEDICAMENTOS	2442.01999999999998	\N	2442.01999999999998	\N	2442.01999999999998	3242.01999999999998
+123	2014-03-01	VASQUEZ MIGUEL	14540230	VASQUEZ ANA	1126102	MADRE	2014-02-06	2014-02-10	1304	PIRITU 1	CONTRATADO	HIPERTENSION ARTERIAL	CONSULTA	500	\N	500	\N	500	500
+124	2014-03-01	PINEDA WILMER	14676853	PINEDA SAMUEL	MENOR	HIJO	2014-02-10	2014-02-12	1499	PIRITU 2	CONTRATADO	SINDROME FEBRIL	CONSULTA	400	\N	400	\N	400	400
+125	2014-03-01	MARTINEZ YELITZA	15071456	BARRIOS MARIA	4611413	MADRE	2014-02-12	2014-02-12	433-931-212919-1332	PIRITU 2	CONTRATADO	ARTROSIS DE RODILLA DERECHA	CONSULTA+MEDICAMENTOS +EXAMENES	2067	\N	2067	\N	2067	2067
+126	2014-03-01	GARCIA KELLYS	16073371	RIVEROJHOANNY	18731119	ESPOSA	2014-02-03	2014-02-05	674	TRANSPORTE	CONTRATADO	EMBARAZO 17 SEMANAS	CONSULTA	500	\N	500	\N	500	\N
+127	2014-03-01	GARCIA KELLYS	16073371	GARCIA STEISY	MENOR	HIJA	2014-02-03	2014-02-05	4401	TRANSPORTE	CONTRATADO	PIE PLANO	CONSULTA	500	\N	500	\N	500	1000
+128	2014-03-01	PARRA ADA	16384778	PARRA ADA	16384778	TITULAR	2014-01-29	2014-02-04	2314-37131	BANCO DE PAVONES	CONTRATADO	EMBARAZO 25 SEMANAS	CONSULTA+MEDICAMENTOS	1175.21000000000004	\N	1175.21000000000004	\N	1175.21000000000004	1175.21000000000004
+129	2014-03-01	MORANTES MAYERLIN	16386789	PIÑA MARIA LUCIA	MENOR	HIJA	2014-02-10	2014-02-12	1585-129318	PIRITU 2	CONTRATADO	BRONQUITIS+CELULITIS	CONSULTA+MEDICAMENTOS	424.170000000000016	\N	424.170000000000016	\N	424.170000000000016	424.170000000000016
+130	2014-03-01	RIVERO IVAN	16414995	SANCHEZ NANCY	8660637	MADRE	2014-02-11	2014-02-12	255-315448-90944-12237	ACCION CENTRAL	CONTRATADO	DIABETES MELLITUS-HTA	CONSULTA+MEDICAMENTOS +EXAMENES	3290	\N	3290	\N	3290	\N
+131	2014-03-01	RIVERO IVAN	16414995	MATOS DAMARIS	16751467	ESPOSA	2014-02-11	2014-02-12	50333	ACCION CENTRAL	CONTRATADO	CESAREA SEGMENTAREA	MEDICAMENTOS	700.559999999999945	\N	700.559999999999945	\N	700.559999999999945	\N
+132	2014-03-01	RIVERO IVAN	16414995	SANCHEZ NANCY	8660637	MADRE	2014-02-11	2014-02-11	80097-3337	ACCION CENTRAL	CONTRATADO	HIPERTENSION ARTERIAL	CONSULTA+ELECTROC.	500	\N	500	\N	500	\N
+133	2014-03-01	RIVERO IVAN	16414995	MATOS DAMARIS	16751467	ESPOSA	2014-02-04	2014-02-04	580	ACCION CENTRAL	CONTRATADO	EMBARAZO 38 SEMANAS	CONSULTA	460	\N	460	\N	460	4950.5600000000004
+134	2014-03-01	FREITEZ RENZO	16416522	PEREIRA OMAIRA	19282523	ESPOSA	2014-02-11	2014-02-11	1068	MECANIZACION	CONTRATADO	EMBARAZO 26 SEMANAS	CONSULTA	400	\N	400	\N	400	400
+135	2014-03-01	GAINZA DEISYS	16565969	GAINZA ENRIQUE	3319981	PADRE	2014-02-13	2014-02-13	1865	PIRITU 3	CONTRATADO	ULCERA CORNEAL OI	CONSULTA	250	\N	250	\N	250	\N
+136	2014-03-01	GAINZA DEISYS	16565969	GAINZA ENRIQUE	3319981	PADRE	2014-02-03	2014-02-03	1835	PIRITU 3	CONTRATADO	ULCERA CORNEAL OI	CONSULTA	250	\N	250	\N	250	500
+137	2014-03-01	BONILLA ABRAHAN	16566467	BONILLA ABRAHAN	16566467	TITULAR	2014-02-06	2014-02-10	213287	PIRITU 1	CONTRATADO	VOMITO Y DESHIDRATACION	MEDICAMENTOS	171	\N	171	\N	171	171
+138	2014-03-01	MOLINA YANIS	16776892	MOLINA JOSE	MENOR	HIJO	2014-02-12	2014-02-12	1445	PIRITU 1	CONTRATADO	AMIGDALITIS	CONSULTA	400	\N	400	\N	400	400
+139	2014-03-01	HERNANDEZ ARELIS	16913080	HERNANDEZ ARELIS	16913080	TITULAR	2014-01-17	2014-01-22	24830-4925-76052	BANCO DE PAVONES	CONTRATADO	INFLAMACION MODERADA	CONSULTA+MEDICAMENTOS +CITOLOGIA	1629.68000000000006	\N	1629.68000000000006	\N	1629.68000000000006	1629.68000000000006
+140	2014-03-01	QUERALES LUIS	17277931	QUERALES ANGEL	MENOR	HIJO	2014-02-10	2014-02-12	866	PIRITU 2	CONTRATADO	PRESENCIA DE SOPLO	CONSULTA+ECOCARDIOG.	1200	\N	1200	\N	1200	1200
+141	2014-03-01	GARCIA CARLOS	17362441	RODRIGUEZ KARIBETH	17276559	ESPOSA	2014-02-10	2014-02-10	315	TRANSPORTE	CONTRATADO	EMBARAZO 17 SEMANAS	CONSULTA	650	\N	650	\N	650	\N
+142	2014-03-01	GARCIA CARLOS	17362441	RODRIGUEZ KARIBETH	17276559	ESPOSA	2014-02-03	2014-02-03	314-91045-205947-285660	TRANSPORTE	CONTRATADO	EMBARAZO 13 SEMANAS	CONSULTA+MEDICAMENTOS	1035.09999999999991	\N	1035.09999999999991	\N	1035.09999999999991	1685.09999999999991
+143	2014-03-01	CASTILLO CARLOS	17601438	CARVAJAL RAMONA	10636514	MADRE	2014-02-11	2014-02-12	1188	PIRITU 2	CONTRATADO	HIPERTENSION ARTERIAL	CONSULTA	400	\N	400	\N	400	400
+144	2014-03-01	MONTES GREGORIA	17945099	MENDOZA SANTIAGO	MENOR	HIJO	2014-02-11	2014-02-13	2784	PAYARA	CONTRATADO	GINGIVITIS-RINITIS	CONSULTA	400	\N	400	\N	400	400
+145	2014-03-01	TORRES JUVITO	17946898	TORRES ADRIAN	MENOR	HIJO	2014-02-12	2014-02-13	601-82974	PAYARA	CONTRATADO	OTITIS BILATERAL-CRISIS DE ASMA	CONSULTA+MEDICAMENTOS	497.5	\N	497.5	\N	497.5	\N
+146	2014-03-01	TORRES JUVITO	17946898	TORRES ADRIAN	MENOR	HIJO	2014-02-12	2014-02-13	612	PAYARA	CONTRATADO	CEFALEA-RINOFARINGITIS	CONSULTA	350	\N	350	\N	350	\N
+147	2014-03-01	TORRES JUVITO	17946898	GIMENEZ YOSELIS	16861207	ESPOSA	2014-02-12	2014-02-13	1805	PAYARA	CONTRATADO	FORMACIONES VASCULARES	CONSULTA	600	\N	600	\N	600	\N
+148	2014-03-01	TORRES JUVITO	17946898	TORRES CRISTIAN	MENOR	HIJO	2014-02-12	2014-02-13	613	PAYARA	CONTRATADO	ANEMIA LEVE	CONSULTA	350	\N	350	\N	350	\N
+149	2014-03-01	TORRES JUVITO	17946898	GIMENEZ YOSELIS	16861207	ESPOSA	2014-02-03	2014-02-05	675	PAYARA	CONTRATADO	DOLOR ABDOMINAL DIFUSO	CONSULTA	500	\N	500	\N	500	\N
+150	2014-03-01	TORRES JUVITO	17946898	TORRES CRISTIAN	MENOR	HIJO	2014-02-12	2014-02-13	614	PAYARA	CONTRATADO	SINDROME VIRAL	CONSULTA	350	\N	350	\N	350	2647.5
+151	2014-03-01	MANJARES HIVANEL	18102664	MANJARES HIVANEL	18102664	TITULAR	2014-02-03	2014-02-03	290181	MECANIZACION	CONTRATADO	DESGENERACION DISCAL	MEDICAMENTOS	445.350000000000023	\N	445.350000000000023	\N	445.350000000000023	445.350000000000023
+152	2014-03-01	MARTINEZ YENIRE	18297349	MARTINEZ YENIRE	18297349	TITULAR	2014-01-29	2014-02-06	11570	PAYARA	CONTRATADO	ASTIGMATISMO HIPERTROPICO	CONSULTA	400	\N	400	\N	400	\N
+153	2014-03-01	MARTINEZ YENIRE	18297349	PERDOMO MARIA	8657817	MADRE	2014-02-12	2014-02-13	2425-164102-142352-87422	PAYARA	CONTRATADO	MENOPAUSIA QUIRURGICA	CONSULTA+MEDICAMENTOS	1433.28999999999996	\N	1433.28999999999996	\N	1433.28999999999996	\N
+154	2014-03-01	MARTINEZ YENIRE	18297349	MARTINEZ JOSE	80344317	PADRE	2014-01-29	2014-02-05	97333-186667	PAYARA	CONTRATADO	HIPERPLASIA PROSTATICA	MEDICAMENTOS	326	\N	326	\N	326	2159.28999999999996
+155	2014-03-01	RODRIGUEZ JINETH	19338681	RODRIGUEZ JINETH	19338681	TITULAR	2014-02-06	2014-02-06	52	ACCION CENTRAL	CONTRATADO	CARIES DENTAL	TRATAMIENTO ODONTOLÓGICO	900	\N	900	\N	900	900
+156	2014-03-01	AQUINO CRISTIAN	19343805	AQUINO CRISTIAN	19343805	TITULAR	2014-01-29	2014-02-04	424-193216-62120	WILLIAM LARA	CONTRATADO	BRONCOESPASMO	CONSULTA+MEDICAMENTOS	514.610000000000014	\N	514.610000000000014	\N	514.610000000000014	514.610000000000014
+157	2014-03-01	AQUINO COROMOTO	19343811	AQUINO COROMOTO	19343811	TITULAR	2014-01-30	2014-02-05	4923-9742-9742	TRILLADORA	CONTRATADO	EMBARAZO 5 SEMANAS	CONSULTA+EXAMENES	1640	\N	1640	\N	1640	1640
+271	2014-04-01	LOPEZ WILMER	15214008	LOPEZ WILMER	15214008	TITULAR	2014-02-18	2014-02-18	5595	PIRITU 1	OBRERO	NEURITIS+NEUMONIA BASAL DERECHA	CONSULTA	500	\N	500	\N	500	500
+158	2014-03-01	ROJAS JUANA	19376966	ROJAS JUANA	19376966	TITULAR	2014-02-06	2014-02-06	131366-4415-299	BICEABASTO	CONTRATADO	EMBARAZO 12 SEMANAS	CONSULTA+EXAMENES+ MEDICAMENTOS	830.460000000000036	\N	830.460000000000036	\N	830.460000000000036	830.460000000000036
+159	2014-03-01	CORDOBA CARLOS	19636360	JIMENEZ MARY	16416805	ESPOSA	2014-02-12	2014-02-12	3589	PIRITU 3	CONTRATADO	LITIASIS	CONSULTA	800	\N	800	\N	800	\N
+160	2014-03-01	CORDOBA CARLOS	19636360	CORDOBA KARLISMAR	MENOR	HIJA	2014-02-12	2014-02-12	615	PIRITU 3	CONTRATADO	DESNUTRICION MODERADA	CONSULTA	250	\N	250	\N	250	1050
+161	2014-03-01	PARRA ANGEL	19637051	VASQUEZ NELLYS	11084922	MADRE	2014-02-04	2014-02-04	46447-149112-4404	AGUA BLANCA	CONTRATADO	HIGADO GRASO	CONSULTA+ECO+ MEDICAMENTOS	2706.94000000000005	\N	2706.94000000000005	\N	2706.94000000000005	2706.94000000000005
+162	2014-03-01	FAJARDO ALBA MARINA	19760130	RIVERO ALBANY	MENOR	HIJA	2014-01-31	2014-02-05	3975	TRILLADORA	CONTRATADO	INFECCION RESPIRATORIA BAJA	CONSULTA	400	\N	400	\N	400	400
+163	2014-03-01	ANGULO MARYELIS	21561653	LINAREZ ANTONELLA	MENOR	HIJA	2014-02-13	2014-02-13	215279-3865	ACCION CENTRAL	CONTRATADO	PARASITOSIS INTESTINAL	CONSULTA+MEDICAMENTOS	446	\N	446	\N	446	446
+164	2014-03-01	ORTIZ FRANCISCO	12262363	ORTIZ ANDREA	MENOR	HIJA	2014-02-10	2014-02-10	9905-65565	ACCION CENTRAL	PRESIDENTE	CRISIS VEGETATIVA	ESTUDIOS ESPECIALES DE NEUROLOGIA+MEDICAMENTO	8217.84000000000015	\N	8217.84000000000015	\N	8217.84000000000015	8217.84000000000015
+165	2014-03-01	INOSTROZA LORETO	24320049	FIERRO ZOILA	81288458	MADRE	2014-02-07	2014-02-07	103019-47291	ACCION CENTRAL	DIRECTIVO	ENFERMEDAD VASCULAR CEREBRAL	MEDICAMENTOS	579.5	\N	579.5	\N	579.5	579.5
+166	2014-03-01	QUERALES JUAN	1129450	QUERALES JUAN	1129450	TITULAR	2014-02-12	2014-02-13	698	BICEABASTO	OBRERO	POST OPERATORIO	CONSULTA	300	\N	300	\N	300	\N
+167	2014-03-01	QUERALES JUAN	1129450	QUERALES JUAN	1129450	TITULAR	2014-02-04	2014-02-04	12976	BICEABASTO	OBRERO	ESTRECHEZ A NIVEL DE URETRA	URETROGRAFÍA	660	\N	660	\N	660	960
+168	2014-03-01	USTRERA SEGUNDO	5367225	USTRERA SEGUNDO	5367225	TITULAR	2014-02-03	2014-02-05	37286	PIRITU 2	OBRERO	HERNIOPLASTIA	MEDICAMENTOS	1080.00999999999999	\N	1080.00999999999999	\N	1080.00999999999999	1080.00999999999999
+169	2014-03-01	CIVIRA MARCOS	9045190	ESCOBA PAULA	9564177	ESPOSA	2014-02-11	2014-02-12	2359	PAYARA	OBRERO	VERTIGOS	CONSULTA	500	\N	500	\N	500	500
+170	2014-03-01	TORREALBA JAIRO	11793657	TORREALBA JAIRO	26752013	HIJO	2014-01-30	2014-02-05	8212-34062-34063-34064-34081	TRILLADORA	OBRERO	DISLIPIDEMIA MIXTA	EXAMENES+ECOSONOGRAMA	2690	\N	2690	\N	2690	2690
+171	2014-03-01	JIMENEZ GLADYS	13353211	JIMENEZ PANTALEON	1226690	PADRE	2014-02-03	2014-02-10	3529-302337	PIRITU 2	OBRERO	DISURIA	CONSULTA+MEDICAMENTOS	1239.76999999999998	\N	1239.76999999999998	\N	1239.76999999999998	\N
+172	2014-03-01	JIMENEZ GLADYS	13353211	JIMENEZ PANTALEON	1226690	PADRE	2014-02-03	2014-02-10	5539-25742	PIRITU 2	OBRERO	INFECCION RESPIRATORIA BAJA	CONSULTA+EXAMENES	840	\N	840	\N	840	2079.76999999999998
+173	2014-03-01	PEREZ MIGUEL	16032696	PEREZ MIGUEL	MENOR	HIJO	2014-01-30	2014-02-10	1963-1956	PIRITU 2	OBRERO	PATOLOGIA PULPAR TIPO III	TRATAMIENTO ODONTOLÓGICO	1950	\N	1950	\N	1950	1950
+174	2014-03-01	PEÑA WILMER	18871319	PEÑA WILMER	7596440	PADRE	2014-01-28	2014-02-03	28607	PIRITU 1	OBRERO	HIPERTENSION ARTERIAL	MEDICAMENTOS	317	\N	317	\N	317	317
+175	2014-03-01	SALMERON JOSE	18872133	SALMERON JOSE	18872133	TITULAR	2014-02-03	2014-02-03	211220	PIRITU 1	OBRERO	FARINGITIS-DOLOR LUMBAR	MEDICAMENTOS	636	\N	636	\N	636	636
+176	2014-03-01	LINAREZ YAURI	19799594	LUCENA YOLIANNY	23049606	ESPOSA	2014-02-03	2014-02-05	4665	PIRITU 2	OBRERO	EMBARAZO 30 SEMANAS	ECOSONOGRAMA PERINATAL	650	\N	650	\N	650	650
+177	2014-04-01	ARIAS FRANKLIN	5456447	ARIAS FRANKLIN	5456447	TITULAR	2014-02-17	2014-02-24	385489	PIRITU 2	CONTRATADO	SINDROME VERTIGINOSO	MEDICAMENTOS	1042	\N	1042	\N	1042	\N
+178	2014-04-01	ARIAS FRANKLIN	5456447	ARIAS FRANKLIN	5456447	TITULAR	2014-02-19	2014-02-24	407792	PIRITU 2	CONTRATADO	SINDROME VERTIGINOSO+ RINITIS ALERGICA	MEDICAMENTOS	807	\N	807	\N	807	1849
+179	2014-04-01	NUÑEZ EDGAR	7250341	NUÑEZ EDGAR	7250341	TITULAR	2014-02-20	2014-02-26	174369	MARIA DE LOS ANGELES	CONTRATADO	DERMATITIS 	MEDICAMENTOS	191	\N	191	\N	191	191
+180	2014-04-01	 FIGUEROA JOSE	9564903	FIGUEROA FRANCISCA 	1228463	MADRE	2014-02-13	2014-02-17	4941	PIRITU 2	CONTRATADO	HIPERTENSION ARTERIAL ESTADIO I+COLON IRRITABLE	CONSULTA+SERVICIO MEDICO	550	\N	550	\N	550	550
+181	2014-04-01	ROMAN RAFAEL	9569409	ROMAN SILVA	MENOR	HIJA	2014-02-15	2014-02-15	3844-4579-24125-116751	TRANSPORTE	CONTRATADO	SINDROME VIRAL	CONSULTA+EXAMENES	1974	\N	1974	\N	1974	1974
+182	2014-04-01	RIVERO MANUEL 	9844634	 PEREZ GLEYDYS	14272807	ESPOSA	2014-02-07	2014-02-17	37373-212391-37295	PIRITU 2	CONTRATADO	BRONQUITIS AGUDA, BRONCOESPASMO	MEDICAMENTOS	1626.95000000000005	\N	1626.95000000000005	\N	1626.95000000000005	\N
+183	2014-04-01	RIVERO MANUEL 	9844634	RIVERO MANUEL 	9844634	TITULAR	2014-02-21	2014-02-24	4080	PIRITU 2	CONTRATADO	CRISIS HIPERTENSIVA	EXAMENES	680	\N	680	\N	680	2306.94999999999982
+184	2014-04-01	 MENDOZA LISDY	11083527	 MENDOZA ADRIANA	28004538	HIJA	2014-02-17	2014-02-17	31034-287789-257495-6036-3429-4929-	ACCION CENTRAL	CONTRATADO	MICOSIS EN AXILA+ANEMIA	CONSULTA+EXAMENES +MEDICAMENTOS	2377.05999999999995	\N	2377.05999999999995	\N	2377.05999999999995	2377.05999999999995
+185	2014-04-01	CHOURIO NERIO	11215806	BRACHO JACKELINE	11225226	CONYUGE	2014-02-26	2014-02-26	2592-10343-20574-178245-3486-20491-3284-6200	RIO GUARICO	CONTRATADO	COLICO NEFRITICO+RIÑONES POLIQUISTICO	CONSULTA+ MEDICAMENTOS+ EXAMENES+ ECOSONOGRAMA ABDOMINAL	5402.52000000000044	421.930000000000007	4980.59000000000015	SUMA ERRADA DE FACTURAS	4980.59000000000015	4980.59000000000015
+186	2014-04-01	RODRIGUEZ MARGHILYZ	11525250	RODRIGUEZ MARGHILYZ	11525250	TITULAR	2014-02-20	2014-02-20	71236-71583	ACCION CENTRAL	CONTRATADO	SINDROME VERTIGINOSO	EXAMENES	1250	\N	1250	\N	1250	1250
+187	2014-04-01	MENDOZA MARIA	11540631	BRACHO DIEGO	MENOR	HIJO	2014-02-24	2014-02-24	10687-43464-6603	ACCION CENTRAL	CONTRATADO	EPISTASIS ANTERIOR	CONSULTA+RX+EXAMENES	1095	\N	1095	\N	1095	1095
+188	2014-04-01	CARVAJAL EGRIS	11543873	CARVAJAL EGRIS	11543873	TITULAR	2014-02-26	2014-02-26	1998	ACCION CENTRAL	CONTRATADO	TRATAMIENTO ODONTOLOGICO	COLOCACIÓN DE RESINAS	2000	\N	2000	\N	2000	\N
+189	2014-04-01	CARVAJAL EGRIS	11543873	FERNANDEZ ANA	12448844	ESPOSA	2014-02-26	2014-02-26	1996	ACCION CENTRAL	CONTRATADO	TRATAMIENTO ODONTOLOGICO	COLOCACIÓN DE RESINAS+TARTRECTOMIA SUPERFICIAL	4000	\N	4000	\N	4000	6000
+190	2014-04-01	 CEDEÑO SIMON	11548326	 CEDEÑO SIMON	11548326	TITULAR	2014-02-17	2014-02-17	5320-4484-4498-288110	CAÑO SECO	CONTRATADO	LITIASIS VESICULAR+HERNIA UMBILICAL	CONSULTA+EXAMENES +MEDICAMENTOS	2995.4699999999998	\N	2995.4699999999998	\N	2995.4699999999998	2995.4699999999998
+191	2014-04-01	OROPEZA CAROLINA	11851836	APOSTO CARMEN	4816132	MADRE	2014-02-25	2014-02-25	4758	CAÑO SECO	CONTRATADO	MENOPAUSIA	ULTRASONIDO MAMARIO + ULTRASONIDO ABDOMINAL+ DENSIOMETRIA OSEA	1200	\N	1200	\N	1200	\N
+192	2014-04-01	OROPEZA CAROLINA	11851836	APOSTO CARMEN	4816132	MADRE	2014-02-25	2014-02-25	4853	CAÑO SECO	CONTRATADO	MENOPAUSIA	MAMOGRAFIA BILATERAL	500	\N	500	\N	500	1700
+193	2014-04-01	RIVERO JOSE	11851161	PEÑA CARMEN 	12266195	ESPOSA	2014-02-26	2014-02-26	251336-403899	PIRITU 2	CONTRATADO	ENFERMEDAD HEMORROIDAL COMPLICADA	MEDICAMENTOS	1384.26999999999998	\N	1384.26999999999998	\N	1384.26999999999998	1384.26999999999998
+194	2014-04-01	MENDEZ ROSMARY	12090662	GALLARDO ROSA	5369243	MADRE	2014-02-20	2014-02-20	4648-62962	PIRITU 3	CONTRATADO	HERNIA DISCAL	CONSULTA+MEDICAMENTOS	604	\N	604	\N	604	\N
+195	2014-04-01	MENDEZ ROSMARY	12090662	GALLARDO ROSA	5369243	MADRE	2014-02-20	2014-02-20	380	PIRITU 3	CONTRATADO	HERNIA DISCAL	CONSULTA	500	\N	500	\N	500	1104
+196	2014-04-01	TOVAR ALEXIS 	12263227	 TOVAR GAVINO	1109596	PADRE	2014-02-20	2014-02-20	A016223-336283	CAÑO SECO	CONTRATADO	CRECIMIENTO PROSTATICO GRADO II, OBSTRUCTIVO	RX+EXAMENES	850	\N	850	\N	850	\N
+197	2014-04-01	TOVAR ALEXIS 	12263227	TOVAR ALEXIS 	MENOR	HIJO	2014-02-20	2014-02-20	245731-147126	CAÑO SECO	CONTRATADO	EVACUACIONES LIQUIDAS+INTOLERANCIA ORAL	MEDICAMENTOS	232.259999999999991	\N	232.259999999999991	\N	232.259999999999991	1082.25999999999999
+198	2014-04-01	GONZALEZ GUILLERMO 	12266407	JIMENEZ CENEIDA 	1128449	MADRE	2014-02-19	2014-02-19	119955-4544-3849	PIRITU 1	CONTRATADO	MAREO DE EAP	CONSULTA+EXAMENES+ MEDICAMENTOS	1329.88000000000011	\N	1329.88000000000011	\N	1329.88000000000011	1329.88000000000011
+199	2014-04-01	SAGGIOMO CARLOS 	12266564	 SAGGIOMO VANESSA	27215508	HIJA	2014-02-17	2014-02-18	216685-215622	PIRITU 1	CONTRATADO	MASTOIDECTOMIA CERRADA+TIMPANOPLASTIA DERECHA	CONSULTA ORL+AUDIOMETRIA TONAL	200	\N	200	\N	200	200
+200	2014-04-01	APONTE MILAGROS 	13226149	APONTE MILAGROS 	13226149	TITULAR	2014-02-14	2014-02-17	6307-470874	PIRITU 2	CONTRATADO	PTERIGION NASAL OJO DERECHO	CONSULTA +MEDICAMENTOS	619	\N	619	\N	619	619
+201	2014-04-01	DELGADO ERIKA 	13228242	DELGADO ERIKA 	13228242	TITULAR	2014-02-17	2014-02-17	348154-5568-2397	PIRITU 1	CONTRATADO	DOLOR PELVICO	CONSULTA+CITOLOGIA+ MEDICAMENTOS	831.230000000000018	\N	831.230000000000018	\N	831.230000000000018	\N
+202	2014-04-01	DELGADO ERIKA 	13228242	DELGADO JOSE	903379	PADRE	2014-02-26	2014-02-26	16594	PIRITU 1	CONTRATADO	CATARATA SENIL ODI	CONSULTA	600	\N	600	\N	600	\N
+203	2014-04-01	DELGADO ERIKA 	13228242	DI DIOMEDE ANTONIETTA	12446197	MADRE	2014-02-26	2014-02-26	16595	PIRITU 1	CONTRATADO	PSEUDAFAGUIA ODI+SINDROME DE OJO SECO+ALTEPR OI	CONSULTA	600	\N	600	\N	600	\N
+204	2014-04-01	DELGADO ERIKA 	13228242	DI DIOMEDE ANTONIETTA	12446197	MADRE	2014-02-26	2014-02-26	5191-95491	PIRITU 1	CONTRATADO	HIPOTIROIDISMO+HTA	CONSULTA+EXAMENES	2190	\N	2190	\N	2190	\N
+205	2014-04-01	DELGADO ERIKA 	13228242	DI DIOMEDE ANTONIETTA	12446197	MADRE	2014-02-26	2014-02-26	83987	PIRITU 1	CONTRATADO	ARTRITIS REUMATOIDE	MEDICAMENTOS	770.5	\N	770.5	\N	770.5	4991.72999999999956
+206	2014-04-01	MUÑOZ ROMEL 	13585018	 MARQUEZ ROMELIA	5436297	MADRE	2014-02-17	2014-02-19	46543-122690	PAYARA	CONTRATADO	PROCESO PELVICO INFLAMATORIO         + SINDROME CLIMATERICO	MEDICAMENTOS	440	\N	440	\N	440	440
+207	2014-04-01	CORDOBA CARLOS	13650017	SILVA MAYRA	15811039	ESPOSA	2014-02-13	2014-02-26	7074	MARIA DE LOS ANGELES	CONTRATADO	EMBARAZO 9 SEMANAS	CONSULTA	500	\N	500	\N	500	500
+208	2014-04-01	 SANCHEZ JUAN	13820798	AMAVIC JHOAN 	MENOR	HIJO	2014-02-03	2014-02-17	4364	TRANSPORTE	CONTRATADO	LIBERACIÓN DEL PREPUCIO+ QUISTE DE ESMEGNA	CONSULTA+CIRUGIA MENOR	1100	\N	1100	\N	1100	1100
+209	2014-04-01	CAÑIZALEZ MARIA 	14205596	ROSARIO ANGEL	MENOR	HIJO	2014-02-15	2014-02-15	10101-220221	TRANSPORTE	CONTRATADO	SINDROME ANEMICO Y DERMATITIS	CONSULTA+MEDICAMENTOS	824	\N	824	\N	824	\N
+210	2014-04-01	CAÑIZALEZ MARIA 	14205596	CAÑIZALEZ MARIA 	14205596	TITULAR	2014-02-17	2014-02-17	220220	TRANSPORTE	CONTRATADO	SINDROME METABOLICO+HTA	MEDICAMENTOS	355	\N	355	\N	355	1179
+211	2014-04-01	COLMENAREZ JOSE	14425942	MORENO MARIA	4201889	MADRE	2014-02-25	2014-02-26	4875-80581-257428	PIRITU 2	CONTRATADO	CARDIOPATIA ISQUEMICA CRONICA+INSUFICIENCIA CARDIACA IZQUIERDA	CONSULTA+ ELECTROCARDIOGRAMA+ MEDICAMENTOS	1154.38000000000011	\N	1154.38000000000011	\N	1154.38000000000011	1154.38000000000011
+212	2014-04-01	 CIOFFI REINA	14538752	 CIOFFI REINA	14538752	TITULAR	2014-01-29	2014-02-17	2762	PRODUCCION AGRICOLA	CONTRATADO	SINDROME METABOLICO	CONSULTA	400	\N	400	\N	400	\N
+213	2014-04-01	 CIOFFI REINA	14538752	APONTE HILDA 	5154202	MADRE	2014-01-29	2014-02-17	33985-3964	PRODUCCION AGRICOLA	CONTRATADO	NEUMONIA IZQUIERDA+NEURITIS INTERCOSTAL	CONSULTA+MEDICAMENTOS	1020.50999999999999	\N	1017.38	NO SE CANCELA JERINGA	1017.38	\N
+214	2014-04-01	 CIOFFI REINA	14538752	APONTE HILDA 	5154202	MADRE	2014-01-29	2014-02-17	582280-284248-193276-24676-3936-58269	PRODUCCION AGRICOLA	CONTRATADO	INFECCION RESPÍRATORIA+RINITIS ALERGICA+HTA+INSUFICIENCIA VENOSA	CONSULTA +IMAGENES+MEDICAMENTOS	1943.13000000000011	\N	1943.13000000000011	\N	1943.13000000000011	\N
+215	2014-04-01	 CIOFFI REINA	14538752	APONTE HILDA 	5154202	MADRE	2014-01-29	2014-02-17	27523-2757-9687-28669	PRODUCCION AGRICOLA	CONTRATADO	HIPOTIROIDISMO	CONSULTA+EXAMENES+ MEDICAMENTOS	1770.59999999999991	\N	1770.59999999999991	\N	1770.59999999999991	\N
+216	2014-04-01	 CIOFFI REINA	14538752	APONTE HILDA 	5154202	MADRE	2014-02-12	2014-02-17	192747-33986-198385-316302-317007	PRODUCCION AGRICOLA	CONTRATADO	SINDROME VERTIGINOSO	MEDICAMENTOS	1591.6400000000001	\N	1591.6400000000001	\N	1591.6400000000001	\N
+217	2014-04-01	 CIOFFI REINA	14538752	 CIOFFI SEBASTIAN	MENOR	HIJO	2014-02-12	2014-02-17	197049-2516	PRODUCCION AGRICOLA	CONTRATADO	OTITIS AGUDA+SEROSIS BILATERAL	MEDICAMENTOS	579.980000000000018	\N	579.980000000000018	\N	579.980000000000018	\N
+218	2014-04-01	 CIOFFI REINA	14538752	 CIOFFI SEBASTIAN	MENOR	HIJO	2014-02-12	2014-02-17	49696-669	PRODUCCION AGRICOLA	CONTRATADO	OTITIS MEDIA BILATERAL+ADENOIDISTIS	CONSULTA+MEDICAMENTOS	811.789999999999964	\N	811.789999999999964	\N	811.789999999999964	8114.52000000000044
+219	2014-04-01	VASQUEZ MIGUEL	14540230	VASQUEZ MICHELL	27880255	HIJA	2014-02-24	2014-02-24	646	PIRITU 1	CONTRATADO	CRECIMIENTO OSEO RETENIDO 	RX PANORAMICA+RXCEFALICA LATERAL	400	\N	400	\N	400	400
+220	2014-04-01	RODRIGUEZ JOSE	14677390	PIÑA ALICIA	14177137	CONYUGE	2014-02-25	2014-02-26	63	AGUA BLANCA	CONTRATADO	EMBARAZO DE 16 SEMANAS	CONSULTA+ECOSONOGRAMA	500	\N	500	\N	500	500
+221	2014-04-01	 GUEVARA ARCANGEL	14677755	JIMENEZ KARLA 	19637184	CONYUGE	2014-02-07	2014-02-17	336089-255073-306	PIRITU 2	CONTRATADO	EMBARAZO 11 SEMANAS	CONSULTA+MEDICAMENTOS	1026.5	\N	1026.5	\N	1026.5	1026.5
+222	2014-04-01	ABDUL ALISAR	14811932	ABDUL ALISAR	14811932	TITULAR	2014-02-18	2014-02-26	35839-35838	MARIA DE LOS ANGELES	CONTRATADO	DISLIPIDEMIA	EXAMENES	1240	\N	1240	\N	1240	\N
+223	2014-04-01	ABDUL ALISAR	14811932	ABDUL ALISAR	14811932	TITULAR	2014-02-18	2014-02-26	51040	MARIA DE LOS ANGELES	CONTRATADO	DISLIPIDEMIA	MEDICAMENTOS	579.049999999999955	\N	579.049999999999955	\N	579.049999999999955	1819.04999999999995
+224	2014-04-01	DIAZ MARIA	14887833	DIAZ MARIA	14887833	TITULAR	2014-02-17	2014-02-17	3066	ACCION CENTRAL	CONTRATADO	DOLOR AGUDO MOLAR IZQUIERDO+EXTRACCION DENTAL	CONSULTA+EXTRACCION DENTARIA	1200	\N	1200	\N	1200	1200
+225	2014-04-01	PALACIOS WILLIAMS 	14981495	PALENCIA SILVIA 	17944761	ESPOSA	2014-02-20	2014-02-20	43328	SAN JOSE DEL CANDIL	CONTRATADO	DOLOR A NIVEL LUMBAR 	R.M. COLUMNA LUMBO-SACRA	1200	\N	1200	\N	1200	1200
+226	2014-04-01	 ESCALONA ENZO	15071461	 ESCALONA ENZO	15071461	TITULAR	2014-02-18	2014-02-18	617	PIRITU 1	CONTRATADO	DOLOR CERVICAL SEVERO	CONSULTA	250	\N	250	\N	250	250
+227	2014-04-01	 FLORES JUAN	15130874	FLORES ANA 	11795197	MADRE	2014-02-03	2014-02-17	155	WILLIAN LARA	CONTRATADO	HTA+INFECCIÓN URINARIA	CONSULTA	400	\N	400	\N	400	400
+228	2014-04-01	 ROJAS JEAN CARLOS	15480462	BETANCOURT DAYANA 	20184672	ESPOSA	2014-02-04	2014-02-17	5281-51339	SAN ANTONIO	CONTRATADO	POST OPERATORIO DE CESAREA SEGMENTARIA	MEDICAMENTOS	1039.32999999999993	\N	1039.32999999999993	\N	1039.32999999999993	\N
+229	2014-04-01	ROJAS JEAN CARLOS	15480462	BETANCOURT DAYANA 	20184672	ESPOSA	2014-01-15	2014-02-17	7018	SAN ANTONIO	CONTRATADO	EMBARAZO 36 SEMANAS	CONSULTA 	400	\N	400	\N	400	1439.32999999999993
+230	2014-04-01	PIREZ PEDRO	15691566	PIREZ PAOLA	MENOR	HIJA	2014-02-24	2014-02-26	193067-102364-724	ACCION CENTRAL	CONTRATADO	SINDROME FEBRIL AGUDO	CONSULTA+MEDICAMENTOS	691.809999999999945	\N	691.809999999999945	\N	691.809999999999945	691.809999999999945
+231	2014-04-01	PERAZA FRANMER	15868665	PERAZA MARIA	9258033	MADRE	2014-02-10	2014-02-26	4540-261224-46349-113938-46540	AGUA BLANCA	CONTRATADO	FIBROMIALGIA+ HIPOTIROIDISMO	CONSULTA+MEDICAMENTOS	1223.75	\N	1223.75	\N	1223.75	1223.75
+232	2014-04-01	MARQUEZ WILMER 	16040072	MARQUEZ WILMER 	16040072	TITULAR	2014-02-19	2014-02-19	60345	ACCION CENTRAL	CONTRATADO	MORDEDURA CANINA 	MEDICAMENTOS	778.399999999999977	\N	778.399999999999977	\N	778.399999999999977	778.399999999999977
+233	2014-04-01	AULAR JEAN CARLOS	16041033	AULAR JEAN CARLOS	16041033	TITULAR	2014-02-21	2014-02-21	57	MECANIZACION	CONTRATADO	SINDROME DOLOROSO ABDOMINAL	CONSULTA	450	\N	450	\N	450	450
+234	2014-04-01	MORANTES MAYERLIN	16386789	MORANTES MAYERLIN	16386789	TITULAR	2014-02-20	2014-02-24	1704-122974-133536-47111-1726	PIRITU 2	CONTRATADO	OVARIO POLIQUISTICO+   RESISTENCIA A LA INSULINA	CONSULTA+ECO+CITOLOGIA+ EXAMENES+MEDICAMENTOS	2788.48999999999978	\N	2788.48999999999978	\N	2788.48999999999978	2788.48999999999978
+235	2014-04-01	RIVERO IVAN	16414995	SANCHEZ NANCY	8660637	MADRE	2014-02-21	2014-02-21	1545-320683	ACCION CENTRAL	CONTRATADO	DIABETES MILLITUS +HTAS	CONSULTA+MEDICAMENTOS	1208	\N	1208	\N	1208	\N
+236	2014-04-01	RIVERO IVAN	16414995	RIVERO DIANA	MENOR	HIJA	2014-02-25	2014-02-25	2821	ACCION CENTRAL	CONTRATADO	RNAT.AEG+T.NEONATAL	CONSULTA	500	\N	500	\N	500	1708
+237	2014-04-01	 FREITEZ RENZO	16416522	PEREIRA OMAIRA 	19282523	CONYUGE	2014-02-19	2014-02-19	4699	MECANIZACION	CONTRATADO	EMBARAZO 27 SEMANAS	ECOSONOGRAMA TRIDIMENSIONAL	650	\N	650	\N	650	650
+238	2014-04-01	 ARIAS YOHALY	16567899	ARIAS MARISOL 	8656017	MADRE	2014-02-17	2014-02-17	167484-1146	ACCION CENTRAL	CONTRATADO	CUADRO DE COLITIS+GASTRITIS	CONSULTA+MEDICAMENTOS	1076.79999999999995	\N	1076.79999999999995	\N	1076.79999999999995	1076.79999999999995
+239	2014-04-01	 DURAN DAANY	16992813	 GIL MILENNY	16775860	ESPOSA	2014-02-17	2014-02-17	707130	MECANIZACION	CONTRATADO	DOLOR DE CABEZA+PERDIDA DE SENSIBILIDAD.	MEDICAMENTOS	189.789999999999992	\N	189.789999999999992	\N	189.789999999999992	189.789999999999992
+240	2014-04-01	MOLINA YANIS	16776892	MOLINA JOSE	MENOR	HIJO	2014-02-17	2014-02-19	386607-443-136	PIRITU 1	CONTRATADO	SINDROME RESPIRATORIO	CONSULTA+EXAMENES+ MEDICAMENTOS	886	\N	886	\N	886	\N
+241	2014-04-01	MOLINA YANIS	16776892	CARPIO MARCELA	16414143	ESPOSA	2014-02-21	2014-02-24	389593-1212	PIRITU 1	CONTRATADO	INFECCION RESPIRATORIA BAJA	CONSULTA+MEDICAMENTOS	647	\N	647	\N	647	\N
+242	2014-04-01	MOLINA YANIS	16776892	MOLINA ADRIAN 	MENOR	HIJO	2014-02-12	2014-02-24	1444	PIRITU 1	CONTRATADO	MICOSIS BUCAL+FARINGITIS AGUDA	CONSULTA	400	\N	400	\N	400	\N
+243	2014-04-01	MOLINA YANIS	16776892	CARPIO MARCELA	16414143	ESPOSA	2014-02-21	2014-02-24	389265-139	PIRITU 1	CONTRATADO	SINDROME RESPIRATORIO	CONSULTA+MEDICAMENTOS	577	\N	577	\N	577	\N
+244	2014-04-01	MOLINA YANIS	16776892	CARPIO MARCELA	16414143	ESPOSA	2014-02-25	2014-02-26	9266	PIRITU 1	CONTRATADO	RINOFARINGITIS AGUDA+ SINOSOPATIA	CONSULTA	500	\N	500	\N	500	3010
+245	2014-04-01	COLINA JOHAN	17277901	COLINA JOHAN	17277901	TITULAR	2014-02-20	2014-02-20	4	PIRITU 2	CONTRATADO	EMERGENCIA ODONTOLOGICA	CONSULTA	250	\N	250	\N	250	250
+246	2014-04-01	ARIAS YARIMI	17795983	ARIAS YARIMI	17795983	TITULAR	2014-02-18	2014-02-26	501	AGUA BLANCA	CONTRATADO	EMBARAZO 29 SEMANAS	CONSULTA	550	\N	550	\N	550	\N
+247	2014-04-01	ARIAS YARIMI	17795983	ARIAS YARIMI	17795983	TITULAR	2014-02-10	2014-02-26	336397	AGUA BLANCA	CONTRATADO	EMBARAZO 24 SEMANAS	EXAMENES	1160	\N	1160	\N	1160	1710
+248	2014-04-01	GALLEGOS MILAGROS	17796642	BONILLA DULCE	4197758	MADRE	2014-02-24	2014-02-24	10828-108777-109504-181104	ACCION CENTRAL	CONTRATADO	HIPERTENSION ARTERIAL SISTEMICA+DISLIPIDEMIA	CONSULTA+EXAMENES+ MEDICAMENTOS	1173.94000000000005	\N	1173.94000000000005	\N	1173.94000000000005	1173.94000000000005
+249	2014-04-01	 TORRES JUVITO	17946898	TORRES JUBITO 	7595971	PADRE	2014-02-17	2014-02-19	612	PAYARA	CONTRATADO	SP. OCLUSION DE VENA CENTRAL DE LA RETINA OD	CONSULTA	500	\N	500	\N	500	\N
+250	2014-04-01	 TORRES JUVITO	17946898	TORRES JUBITO 	7595971	PADRE	2014-02-17	2014-02-19	609-123	PAYARA	CONTRATADO	SP. OVCR+EDEMA MACULAR EN REMISION DE OJO DERECHO	CONSULTA+OUT ODI	2000	\N	2000	\N	2000	2500
+251	2014-04-01	 PEREZ ANGEL	18405207	URDANETA GREILY 	19459618	ESPOSA	2014-02-12	2014-02-17	34676	PRODUCCION AGRICOLA	CONTRATADO	MAREO	EXAMENES	160	\N	160	\N	160	\N
+252	2014-04-01	 PEREZ ANGEL	18405207	PEREZ GABRIEL 	MENOR	HIJO	2014-02-12	2014-02-17	4368-34107-34150	PRODUCCION AGRICOLA	CONTRATADO 	DIARREA AGUDA FEBRIL.	CONSULTA+EXAMENES+SUMINISTRO DE MEDICAMENTOS	790	\N	790	\N	790	950
+253	2014-04-01	PALACIOS JOHAN	19051739	PALACIOS YOHAN	MENOR	HIJO	2014-02-20	2014-02-20	150406-84460	SAN JOSE DEL CANDIL	CONTRATADO	PARASITOSIS INTESTINAL	MEDICAMENTOS	526	\N	526	\N	526	526
+254	2014-04-01	LOPEZ YULEIMA	19053988	MORAN JUAN	MENOR	HIJO	2014-02-17	2014-02-26	28964-287661-28746-465-24892-59369-21573-1413	AGUA BLANCA	CONTRATADO	INFECCIÓN RESPIRATORIA	CONSULTA+EXAMENES+ MEDICAMENTOS	1146	\N	1146	\N	1146	1146
+255	2014-04-01	ARENAS ROSALVA	19171304	ARENAS ROSALVA	19171304	TITULAR	2014-02-25	2014-02-25	2623-338576-241844	ACCION CENTRAL	CONTRATADO	CANDIDIASIS GENITAL	CONSULTA+ECO+CITOLOGIA+ MEDICAMENTOS	940.669999999999959	\N	940.669999999999959	\N	940.669999999999959	940.669999999999959
+256	2014-04-01	AQUINO COROMOTO	19343811	AQUINO COROMOTO	19343811	TITULAR	2014-02-21	2014-02-21	5033	MARIA DE LOS ANGELES	CONTRATADO	EMBARAZO 10 SEMANAS	CONSULTA	600	\N	600	\N	600	600
+257	2014-04-01	 GRATEROL EUCLIDE	19377860	JIMENEZ DETZI 	18503815	ESPOSA	2014-02-05	2014-02-17	3610	PIRITU 2	CONTRATADO	EXAMENES POST-OPERATORIO	CONSULTA	500	\N	500	\N	500	500
+258	2014-04-01	 VERA JOSE	19636886	SUAREZ LUISANA 	19799070	ESPOSA	2014-02-14	2014-02-17	879-410602-258231-707006-140748-76654	PIRITU 2	CONTRATADO	CUADRO ANSIOSO DEPRESIVO	CONSULTA+MEDICAMENTOS	1447.48000000000002	\N	1447.48000000000002	\N	1447.48000000000002	1447.48000000000002
+259	2014-04-01	 LEON JAVIER	19753367	AULAR MARIA 	19377276	CONYUGE	2014-02-10	2014-02-10	334619	ACCION CENTRAL	CONTRATADO	EMBARAZO 16 SEMANAS	EXAMENES	250	\N	250	\N	250	\N
+260	2014-04-01	 LEON JAVIER	19753367	AULAR MARIA 	19377276	CONYUGE	2014-02-21	2014-02-21	410	ACCION CENTRAL	CONTRATADO	EMBARAZO DE 21 SEMANAS	CONSULTA	500	\N	500	\N	500	\N
+261	2014-04-01	 LEON JAVIER	19753367	AULAR MARIA 	19377276	CONYUGE	2014-02-24	2014-02-24	338069-2666	ACCION CENTRAL	CONTRATADO	EMBARAZO DE 21 SEMANAS	EXAMENES	750	\N	750	\N	750	1500
+262	2014-04-01	CONDE KEVIN	19798851	VERGARA EDUARDA	11080295	MADRE	2014-02-24	2014-02-24	23970	ACCION CENTRAL	CONTRATADO	ANTECEDENTES DE C.A. DE MAMA	ECOSONOGRAMA MAMARIO	250	\N	250	\N	250	250
+263	2014-04-01	MORALES VICTOR	19799308	MORALES MILAN	3529222	PADRE	2014-02-14	2014-02-26	129943-129940-28339	AGUA BLANCA	CONTRATADO	HIPERTENSION ARTERIAL	MEDICAMENTOS	436.480000000000018	\N	436.480000000000018	\N	436.480000000000018	436.480000000000018
+264	2014-04-01	SALCEDO GILDELIS 	20388909	OJEDA DIEGO 	MENOR	HIJO	2014-02-18	2014-02-19	14204	PAYARA	CONTRATADO	CATARRO COMUN	CONSULTA	500	\N	500	\N	500	500
+265	2014-04-01	FLORES EDUARDO 	20390058	FLORES RAMON	5157236	PADRE	2014-02-25	2014-02-26	619	PIRITU 1	CONTRATADO	OTITIS MEDIA DERECHA+MICOSIS CUTANEO	CONSULTA	250	\N	250	\N	250	250
+266	2014-04-01	INOSTROZA LORETO	24320049	FIERRO MERCEDES	81288458	68	2014-02-18	2014-02-18	91	ACCION CENTRAL	DIRECTIVO	TRATAMIENTO ODONTOLOGICO	CONSULTA+EXTRACCION DENTARIA+ COLOCACION DE RESINAS	2500	\N	2500	\N	2500	2500
+267	2014-04-01	PEREIRA RAFAEL	10274523	PEREIRA RAFAEL	10274523	TITULAR	2014-02-26	2014-02-26	6269-88081-34935	BANCO DE PAVONES	OBRERO	HERNIA INGUINAL DERECHA	EVALUACION PRE-OPERATORIA	1050	\N	1050	\N	1050	1050
+268	2014-04-01	ESCOBAR CANDIDO	10636444	ESCOBAR CANDIDO	10636444	TITULAR	2014-02-13	2014-02-17	4953	PIRITU 2	OBRERO	HIPERTENCION ARTERIAL	CONSULTA	400	\N	400	\N	400	400
+269	2014-04-01	SANCHEZ JOSE	12527097	SANCHEZ ALISMAR	MENOR	HIJA	2014-02-19	2014-02-26	358	AGUA BLANCA	OBRERO	CEFALEA+MAREOS	CONSULTA	350	\N	350	\N	350	350
+270	2014-04-01	PAEZ JANETH	13640407	PAEZ JANETH	13640407	TITULAR	2014-02-19	2014-02-26	35057	MARIA DE LOS ANGELES	OBRERO	INFECCION POR HELICOBACTER PYLORI	EXAMENES	540	\N	540	\N	540	540
+272	2014-04-01	PEREZ MIGUEL	16032969	PEREZ MIGUEL 	MENOR	HIJO	2014-02-18	2014-02-24	1972-1969	PIRITU 2	OBRERO	PULPOTOMIA	TRATAMIENTO ODONTOLOGICO	3500	\N	3500	\N	3500	\N
+273	2014-04-01	PEREZ MIGUEL	16032969	PEREZ MIGUEL 	MENOR	HIJO	2014-02-25	2014-02-26	1976	PIRITU 2	OBRERO	EXTRACION 74+RESINA 85	TRATAMIENTO ODONTOLOGICO	1600	\N	1600	\N	1600	5100
+274	2014-04-01	SALMERON JOSE	18872133	MUÑOS JORDANLISBETH	24022921	CONYUGE	2014-02-12	2014-02-18	291717-1943	PIRITU 1	OBRERO	DERMATITIS CRONICA	CONSULTA+MEDICAMENTOS	1405	\N	1405	\N	1405	1405
+275	2014-04-01	REQUENA JOSE	18908632	REQUENA LUIS	MENOR	HIJO	2014-02-26	2014-02-26	22502333-22502181-22501085	BANCO DE PAVONES	OBRERO	OSTEOPENIA	CONSULTA+RX+EXAMENES	1156	\N	1156	\N	1156	1156
+276	2014-04-01	AULAR WILLIAM	19600173	LAYA MORELBA	8621585	MADRE	2014-02-03	2014-02-17	9747-9748-9749	WILLIAN LARA	OBRERO	ASCIT S LEVE	EXAMENES	1960	\N	1960	\N	1960	1960
+277	2014-04-01	LINARES YAURIS	19799594	LUCENA YOLIANNY	23049606	CONYUGE	2014-02-25	2014-02-26	327	PIRITU 2	OBRERO	EMBARAZO 34 SEMANAS	CONSULTA+ECOSONOGRAMA	650	\N	650	\N	650	650
+278	2014-04-01	USTRERA JUNIOR	20024930	USTRERA ENYER	MENOR	HIJO	2014-02-13	2014-02-17	146157	PIRITU 2	OBRERO	CUADRO GRIPAL+AMIGDALITIS	MEDICAMENTOS	215	\N	215	\N	215	215
+279	2014-04-01	SEGURA JULIO	20158112	SEGURA JULIO	20158112	TITULAR	2014-02-19	2014-02-24	5594	PIRITU 2	OBRERO	NEUMONITIS QUIMICA	CONSULTA	500	\N	500	\N	500	500
+280	2014-04-01	GARCIA ALI	24633077	GARCIA ALI 	4608536	PADRE	2014-02-25	2014-02-26	9248	AGUA BLANCA	OBRERO	BRONCO ESPASMO AGUDO	CONSULTA	500	\N	500	\N	500	500
+281	2014-05-01	ARIAS FRANKLIN	5456447	ARIAS FRANKLIN	5456447	TITULAR	2014-03-07	2014-03-10	8055	PIRITU 2	CONTRATADO	SINDROME VERTIGINOSO	ESTUDIO OTONEUROLOGICO	2500	\N	2500	\N	2500	2500
+282	2014-05-01	WILMER MORIAN	6680335	NATIVIDAD NIERES	1225103	MADRE	2014-03-10	2014-03-10	355673	PIRITU 2	CONTRATADO	SHAGRIN PERIFERICO CORNEAL	MEDICAMENTOS	1044.98000000000002	\N	1044.98000000000002	\N	1044.98000000000002	1044.98000000000002
+283	2014-05-01	WILFREDO GALINDEZ	7405389	WILFREDO GALINDEZ	7405389	TITULAR	2014-03-07	2014-03-10	337673-337741-2914	PIRITU 2	CONTRATADO	CP BENOSO IZQ	CONSULTA+CONTROL	1910	\N	1910	\N	1910	1910
+284	2014-05-01	ANIBAL LOPEZ	8422454	ANIBAL LOPEZ	8422454	TITULAR	2014-03-06	2014-03-10	6301-320189- 247234-22456	RIO GUARICO	CONTRATADO	EXAMENES MEDICOS	CONSULTA+MEDICAMENTOS	1033.05999999999995	\N	1033.05999999999995	\N	1033.05999999999995	1033.05999999999995
+285	2014-05-01	JOSE BENAVENTA	8633844	JESUS BENAVENTA	8633844	PADRE	2014-03-10	2014-03-12	3737-3750	MARIA DE LOS ANGELES	CONTRATADO	LUMBOCIATALGIA AGUDA	CONSULTA 	900	\N	900	\N	900	\N
+286	2014-05-01	JOSE BENAVENTA	8633844	JESUS BENAVENTA	8633844	PADRE	2014-03-10	2014-03-12	2868	MARIA DE LOS ANGELES	CONTRATADO	DOLOR ABDOMINAL Y DISPEPSIA	CONSULTA 	450	\N	450	\N	450	\N
+287	2014-05-01	JOSE BENAVENTA	8633844	JESUS BENAVENTA	8633844	PADRE	2014-03-10	2014-03-12	22426-22428	MARIA DE LOS ANGELES	CONTRATADO	DOLOR ABDOMINAL Y DISPEPSIA	EXAMENES	970	\N	970	\N	970	2320
+288	2014-05-01	BELKYS CRESPO	8657682	BELKYS CRESPO	8657682	TITULAR	2014-02-13	2014-02-13	338103-5107-5395-1732-13108	ACCION CENTRAL	CONTRATADO	MASTALGIA Y OSTEOPENIA	CONSULTA+EXAMENES+ MEDICAMENTOS	2540	\N	2540	\N	2540	2540
+289	2014-05-01	COLLAZO RAFAEL	9839635	COLLAZO RAFAEL	9839635	TITULAR	0201-03-06	0201-03-06	934-386899	SAN JOSE DEL CANDIL	CONTRATADO	DIABETES	CONSULTA+MEDICAMENTOS	476	\N	476	\N	476	476
+290	2014-05-01	BELLO DAXY 	10271178	BELLO LISDIANNY	10271178	TITULAR	2014-02-05	2014-02-05	1683-203150-0802	WILLIAN LARA	CONTRATADO	HIPERTENSION PULMONAR	CONSULTA+MEDICAMENTOS	1211.1099999999999	\N	1211.1099999999999	\N	1211.1099999999999	1211.1099999999999
+291	2014-05-01	AGUIN VICTORIANO	10639072	AGUIN VICTORIANO	10639072	TITULAR	2014-03-07	2014-03-10	260977	PIRITU 2	CONTRATADO	CICATRICEZ MULTIPLES	MEDICAMENTOS	800	\N	800	\N	800	800
+292	2014-05-01	BARRIOS FERNANDO	10665813	BARRIOS FERNANDO	10665813	TITULAR	2014-03-10	2014-03-13	2154-33330-7075-2170	BANCO DE PAVONES	CONTRATADO	CUADRO HEMORRAGICO COMPLICADO	CONSULTA+MEDICAMENTOS	2299	\N	2299	\N	2299	2299
+293	2014-05-01	LINAREZ ANABEL	11081662	RODRIGEZ TERESA	1122241	MADRE	2014-03-07	2014-03-07	324858-80929-80794	ACCION CENTRAL	CONTRATADO	LUMBALGIA	MEDICAMENTOS	1225.92000000000007	\N	1225.92000000000007	\N	1225.92000000000007	1225.92000000000007
+294	2014-05-01	MENDOZA LISDY	11083527	CORDOBA REINA	4195617	MADRE	2014-03-11	2014-03-12	263163	ACCION CENTRAL	CONTRATADO	CIFRAS TENSIONALES ELEVADAS	MEDICAMENTOS	534.039999999999964	\N	534.039999999999964	\N	534.039999999999964	534.039999999999964
+295	2014-05-01	CHOURIO NERIO	11215806	BRACHO JAKELINE	11223226	CONCUBINA	2014-03-06	2014-03-06	35785-35786-35787-0715	CALABOZO	CONTRATADO	QUISTES EN RIÑON	EXAMES+ECOGRAFIA	2530	\N	2530	\N	2530	2530
+296	2014-05-01	LINAREZ JOSE GREGORIO	11546595	LINAREZ MIGUEL	4609266	PADRE	2014-03-05	0214-03-10	4993-4994	PIRITU 2	CONTRATADO	NEPOLITIASIS	CONSULTA+ECOSONOGRAMA	650	\N	650	\N	650	\N
+297	2014-05-01	LINAREZ JOSE GREGORIO	11546595	LINAREZ MIGUEL	4609266	PADRE	2014-03-10	2014-03-10	37891	PIRITU 2	CONTRATADO	NEPOLITIASIS	MEDICAMENTOS	810.029999999999973	\N	810.029999999999973	\N	810.029999999999973	1460.02999999999997
+298	2014-05-01	ALVARADO JELIBETH	11785981	ALVARADO JELIBETH	11785981	TITULAR	2014-03-13	2014-03-13	183	TRANSPORTE	CONTRATADO	LUMBO-SACROLOGIA	CONSULTA 	300	\N	300	\N	300	300
+299	2014-05-01	VASQUEZ TULIO	11849149	VASQUEZ TULIO	11849149	TITULAR	2014-03-07	2014-03-10	2987	PIRITU 2	CONTRATADO	HIPERMETROPIA LEVE	CONSULTA 	500	\N	500	\N	500	\N
+300	2014-05-01	VASQUEZ TULIO	11849149	VASQUEZ TULIO	11849149	TITULAR	2014-03-05	2014-03-10	2982	PIRITU 2	CONTRATADO	PTERIGION NASAL	CONSULTA 	500	\N	500	\N	500	\N
+301	2014-05-01	VASQUEZ TULIO	11849149	VASQUEZ TULIO	11849149	TITULAR	2014-03-05	2014-03-05	25457	PIRITU 2	CONTRATADO	CEFALEA	MEDICINA+EXAMENES DE LABORATORIO	1080	\N	1080	\N	1080	2080
+302	2014-05-01	LANDINEZ ROSA	12092261	COLMENAREZ HILDA	MENOR	HIJA	2014-03-07	2014-03-10	1690-88281	PIRITU 2	CONTRATADO	BAJA DE PESO	CONSULTA+MEDICAMENTOS	595	\N	595	\N	595	595
+303	2014-05-01	TOVAR ALEXIS	12263227	TOVAR GAVINO	1109596	PADRE	2014-03-10	2014-03-10	713152	CAÑO SECO	CONTRATADO	RESECCION ENDOSCOPIA DE PROSTATA	CIRUGIA	23845	\N	23845	\N	23845	\N
+304	2014-05-01	TOVAR ALEXIS	12263227	TOVAR GAVINO	1109596	PADRE	2014-03-10	2014-03-10	5421	CAÑO SECO	CONTRATADO	PROCESAMIENTO DE BIOPSIA	BIOPSIA	800	\N	800	\N	800	24645
+305	2014-05-01	GARCIA LUIS	12475582	CORONADO LIVIS	10270068	CONCUBINA	2013-03-02	2013-03-02	1820-320118-5143	CALABOZO	CONTRATADO	MASTOPATIA CICLICA MAMARIA	CONSULTA+MEDICAMENTOS+ECOSONOGRAMA	1071	\N	1071	\N	1071	1071
+306	2014-05-01	ROJAS GIMMI	12858021	VARGAS ROSA	11544365	ESPOSA	2014-03-05	2014-03-05	281671-9299-1433	TRANSPORTE	CONTRATADO	LITIASIS RENAL	MEDICAMENTOS+EXAMENES+ CONSULTA	1206	\N	1206	\N	1206	1206
+307	2014-05-01	DELGADO ERIKA	13228242	BASTIDAS BRENDA	MENOR	HIJA	2014-03-05	2014-03-08	249004-5424	PIRITU 1	CONTRATADO	EFETEXIS Y PARASITOSIS	MEDICAMENTOS+CONSULTA	621	\N	621	\N	621	\N
+308	2014-05-01	DELGADO ERIKA	13228242	DI DIOMEDE ANTONIETA	12446197	MADRE	2014-03-05	2014-03-05	31210-37528	PIRITU 1	CONTRATADO	HIPOTERUDISMO Y HTA	MEDICAMENTOS	1758	\N	1758	\N	1758	\N
+309	2014-05-01	DELGADO ERIKA	13228242	DI DIOMEDE ANTONIETA	12446197	MADRE	2014-03-05	2014-03-05	37527	PIRITU 1	CONTRATADO	ARTRITIS REMATOIDEA	MEDICAMENTOS	238	\N	238	\N	238	2617
+310	2014-05-01	GALLARDO YESICA	13354020	GALLARDO EZEQUIEL	MENOR	HIJO	2014-03-10	2014-03-10	32511	PRODUCCION AGRICOLA	CONTRATADO	ABSCESO EN LA REGION CERVICAL	MEDICAMENTOS	310.45999999999998	\N	310.45999999999998	\N	310.45999999999998	310.45999999999998
+311	2014-05-01	MUÑOZ ROMEL	13585018	NAGUAS MARIA	17061053	CONYUGE	2014-02-25	2014-03-06	8207	PAYARA	CONTRATADO	CONTROL PRENATAL	CONSULTA 	1850	\N	1850	\N	1850	1850
+312	2014-05-01	 GUARENTE CLAUDIA	13785339	 GUARENTE CLAUDIA	13785339	TITULAR	2014-03-10	2014-03-10	9487	BICEABASTO	CONTRATADO	SALPIGECTOMIA IZQUIERDA	MEDICAMENTOS	1516.72000000000003	\N	1516.72000000000003	\N	1516.72000000000003	1516.72000000000003
+313	2014-05-01	ROJAS STALIN	14092210	ROJAS FHER 	MENOR	HIJO	2014-03-17	2014-03-14	357896	ACCION CENTRAL	CONTRATADO	NEUMONIA	MEDICAMENTOS	274.870000000000005	\N	274.870000000000005	\N	274.870000000000005	\N
+314	2014-05-01	ROJAS STALIN	14092210	STALIN JONATHAN	MENOR	HIJO	2014-03-17	2014-03-14	96624	ACCION CENTRAL	CONTRATADO	DIFICULTAD RESPIRATORIOA	MEDICAMENTOS	325.279999999999973	\N	325.279999999999973	\N	325.279999999999973	600.149999999999977
+315	2014-05-01	MENDOZA ANIBAL	14092815	MENDOZA ANTHONY	MENOR	HIJO	2014-03-05	2014-03-06	2754-710012	PAYARA	CONTRATADO	RINITIS 	MEDICAMENTOS+CONSULTA	885.059999999999945	\N	885.059999999999945	\N	885.059999999999945	885.059999999999945
+316	2014-05-01	CIOFFI REINA	14538752	CIOFFI SEBASTIAN	MENOR	HIJO	2014-03-07	2014-03-12	10778-246946-202697-292262-9995-4017	SAN ANTONIO	CONTRATADO	ADENOTONSILITIS Y RINITIS ALERGICA	MEDICAMENTOS+EXAMENES+ CONSULTA	1910.34999999999991	\N	1910.34999999999991	\N	1910.34999999999991	\N
+317	2014-05-01	CIOFFI REINA	14538752	CIOFFI SEBASTIAN	MENOR	HIJO	2014-03-07	2014-03-12	35747-0689	SAN ANTONIO	CONTRATADO	DISMINUCION DE LA AGUDESA AUDITIVA	EXAMENES+CONSULTA	250	\N	250	\N	250	\N
+318	2014-05-01	CIOFFI REINA	14538752	CIOFFI SEBASTIAN	MENOR	HIJO	2014-03-07	2014-03-12	9949-9947-60026-1948	SAN ANTONIO	CONTRATADO	OTITIS MEDIA BILATERAL	EXAMENES+IMAGENES+CONSULTA	1308	\N	1308	\N	1308	\N
+319	2014-05-01	CIOFFI REINA	14538752	APONTE HILDA	5154202	MADRE	2014-03-07	2014-03-12	200122-4011	SAN ANTONIO	CONTRATADO	HIPERREACTIVIDAD BRONQUIAL, RINUSOPATIA CRONICA	MEDICAMENTOS+CONSULTA	1063.50999999999999	\N	1063.50999999999999	\N	1063.50999999999999	\N
+320	2014-05-01	CIOFFI REINA	14538752	APONTE HILDA	5154202	MADRE	2014-03-07	2014-03-13	292261-293720	SAN ANTONIO	CONTRATADO	SINDROME VERTIGINOSO	MEDICAMENTOS	393.810000000000002	\N	393.810000000000002	\N	393.810000000000002	\N
+321	2014-05-01	CIOFFI REINA	14538752	CIOFFI REINA	14538752	TITULAR	2014-03-07	2014-03-13	52004	SAN ANTONIO	CONTRATADO	SINDROME METABOLICO SEVERO	MEDICAMENTOS	349.920000000000016	\N	349.920000000000016	\N	349.920000000000016	5275.59000000000015
+322	2014-05-01	CARRASCO CIRILO	14888905	CARRASCO CIRILO	5916925	PADRE	2014-02-28	2014-02-28	1851-166961	SAN JOSE DEL CANDIL	CONTRATADO	BRONCOESPASMO	CONSULTA+MEDICAMENTOS	1479.46000000000004	\N	1479.46000000000004	\N	1479.46000000000004	\N
+323	2014-05-01	CARRASCO CIRILO	14888905	CARRASCO CIRILO	5916925	PADRE	2014-03-10	2014-03-10	180984-12304	SAN JOSE DEL CANDIL	CONTRATADO	VALORACION CARDIOVASCULAR	IMAGENES+EXAMENES	1790.09999999999991	\N	1790.09999999999991	\N	1790.09999999999991	3269.55999999999995
+324	2014-05-01	SANCHEZ NEPTALY	15341658	SANCHEZ OMAIRA	1121047	MADRE	2014-03-12	2014-03-12	401366-938	ACCION CENTRAL	CONTRATADO	INSUFICIENCIA VENA DE MIEMBROS INFERIORES	CONSULTA+MEDICAMENTOS	329	\N	329	\N	329	329
+325	2014-05-01	MERCADO GLADYS	15480499	HERNANDEZ ALEXANDRA	MENOR	HIJA	2014-02-04	2014-02-26	4972	BANCO DE PAVONES	CONTRATADO	ICTERICIA NEONATAL	CONSULTA 	300	\N	300	\N	300	\N
+326	2014-05-01	MERCADO GLADYS	15480499	MERCADO GLADYS	15480499	TITULAR	2014-02-24	2014-02-26	7042-9721	BANCO DE PAVONES	CONTRATADO	EMBARAZO SIMPLE DE 35 SEMANAS	CONSULTA+EXAMENES 	1090	\N	1090	\N	1090	\N
+327	2014-05-01	MERCADO GLADYS	15480499	HERNANDEZ ALEXANDRA	MENOR	HIJA	2014-03-17	2014-03-17	5021	BANCO DE PAVONES	CONTRATADO	COLICOS DEL LACTANTE	CONSULTA 	300	\N	300	\N	300	1690
+328	2014-05-01	GARCIA KELLYS	16073371	RIVERO JHOANNY	18731119	ESPOSA	2014-03-05	2014-03-05	691-74115-32696	TRANSPORTE	CONTRATADO	CONTROL PRENATAL	CONSULTA+MEDICAMENTOS+ EXAMENES	1168.44000000000005	\N	1168.44000000000005	\N	1168.44000000000005	1168.44000000000005
+329	2014-05-01	QUERO YAJAIRA	16292305	QUERO YAJAIRA	16292305	TITULAR	2014-03-14	2014-03-14	168-5454	ACCION CENTRAL	CONTRATADO	APENDICITIS AGUDA 	CONSULTA+BIOPSIA	1290	\N	1290	\N	1290	1290
+330	2014-05-01	FREITEZ RENZO	16416522	PEREIRA OMAIRA	19282523	CONYUGE	2014-03-12	2014-03-12	1083	CAÑO SECO	CONTRATADO	CONTROL PRENATAL	CONSULTA 	400	\N	400	\N	400	400
+331	2014-05-01	PACHECO ARMANDO	16435847	PACHECO ALMARY	MENOR	HIJA	2014-03-10	2014-03-10	1976	WILLIAN LARA	CONTRATADO	DOLOR RENAL Y ABDOMINAL	IMAGENES 	300	\N	300	\N	300	300
+332	2014-05-01	ZERPA MARIA ANDREINA	16639024	ZERPA MARIA ANDREINA	16639024	TITULAR	2014-03-10	2014-03-10	3240-5541	WILLIAN LARA	CONTRATADO	LITIASIS RENAL+INFECCION URINARIA+HTA	IMAGENES+EXAMENES	740	\N	740	\N	740	740
+333	2014-05-01	HERNANDEZ ARELIS	16913080	BOGOTA MARIA	MENOR	HIJA	2014-01-30	2014-02-26	3685	BANCO DE PAVONES	CONTRATADO	OATEOARTRITIS EN PIE DERECHO	CONSULTA 	400	\N	400	\N	400	400
+334	2014-05-01	DURAN DANNY	16992813	ESIDIO DURAN	4602503	PADRE	2014-03-11	2014-03-11	1875	CAÑO SECO	CONTRATADO	BRONQUITIS CRONICA	CONSULTA 	500	\N	500	\N	500	\N
+335	2014-05-01	DURAN DANNY	16992813	GIL MILENNY	16775860	ESPOSA	2014-03-11	2014-03-12	2993	CAÑO SECO	CONTRATADO	PTERIGION NASAL	CONSULTA 	500	\N	500	\N	500	\N
+336	2014-05-01	DURAN DANNY	16992813	DURAN ANTHONY	MENOR	HIJO	2013-02-26	2014-03-06	2175	CAÑO SECO	CONTRATADO	SINDROME FEBRIL Y ESTOMATITIS	CONSULTA 	600	\N	600	\N	600	\N
+337	2014-05-01	DURAN DANNY	16992813	DURAN ESIDIO	4602503	PADRE	2014-03-10	2014-03-10	125098-11858	CAÑO SECO	CONTRATADO	IRB+EBPOC	MEDICAMENTOS	1011.41999999999996	\N	1011.41999999999996	\N	1011.41999999999996	2611.42000000000007
+338	2014-05-01	GARCIA CARLOS	17362441	RODRIQUEZ KARIBETH	17276559	ESPOSA	2014-03-10	2014-03-10	326	TRANSPORTE	CONTRATADO	CONTROL PRENATAL	CONSULTA+IMAGENES	650	\N	650	\N	650	650
+339	2014-05-01	MONTES GREGORIA	17945099	MENDOZA SANTIAGO	MENOR	HIJO	2014-03-05	2014-03-06	2753-710013	PAYARA	CONTRATADO	CATTARRO	CONSULTA+MEDICAMENTOS	614.379999999999995	\N	614.379999999999995	\N	614.379999999999995	\N
+340	2014-05-01	MONTES GREGORIA	17945099	MONTES GREGORIA	17945099	TITULAR	2014-02-20	2014-03-06	2440	PAYARA	CONTRATADO	ESQUIMOSIS LEUCORREA	CONSULTTA	750	\N	750	\N	750	1364.38000000000011
+341	2014-05-01	MARTINEZ YENIRE	18297349	MARTINEZ YENIRE	18297349	TITULAR	2014-02-20	2014-03-06	2439	PAYARA	CONTRATADO	LEUCORREA OLIGOMENORREA	CONSULTA 	750	\N	750	\N	750	750
+342	2014-05-01	CAMEJO SONNY	18731153	PARADA MARITZA	15070967	CONYUGE	2014-03-10	2014-03-12	604	CAÑO SECO	CONTRATADO	EMBARAZO 28 SEMANAS	CONSULTA+IMAGENES	460	\N	460	\N	460	460
+343	2014-05-01	MEDINA NAUDIS	18799452	MEDINA SAID	MENOR	HIJO	2014-03-06	2014-03-10	222601-33793-344	PIRITU 2	CONTRATADO	DERMATITIS	MEDICAMENTOS+CONSULTA	601	\N	601	\N	601	601
+344	2014-05-01	AQUINO CRISTIAN	19343805	AQUINO CRISTIAN	19343805	TITULAR	2014-02-05	2014-02-05	1385-179477	WILLIAN LARA	CONTRATADO	DERMATITIS ALERGICA AL SOL	CONSULTA+MEDICAMENTOS	575	\N	575	\N	575	575
+345	2014-05-01	RODRIGUEZ YUSMAIRA	19798052	RODRIGUEZ YUSMAIRA	19798052	TITULAR	2014-03-11	2014-03-13	121	PAYARA	CONTRATADO	CARIES DENTAL	CONSULTA 	1050	\N	1050	\N	1050	\N
+346	2014-05-01	RODRIGUEZ YUSMAIRA	19798052	LAMEDA ANA VALENTINA	MENOR	HIJA	2014-02-19	2014-03-06	575	PAYARA	CONTRATADO	RINOSINOSITIS AGUDA	CONSULTA 	400	\N	400	\N	400	1450
+347	2014-05-01	NADIEL DANIS	20523167	LAYA YOLANDA	6936993	MADRE	2014-03-05	2014-03-05	2148	WILLIAN LARA	CONTRATADO	DOLOR PRECARDIAL PUNZANTE	CONSULTA 	500	\N	500	\N	500	500
+348	2014-05-01	VIVEROS HOWER	24588289	VIVEROS HOWER	24588289	TITULAR	2014-03-05	2014-03-05	67729-1934	TRANSPORTE	CONTRATADO	FOLECULITIS QUELOIDEA	MEDICAMENTO+CONSULTA	696.75	\N	696.75	\N	696.75	696.75
+349	2014-05-01	PETRO MANUEL	81927543	SORAIDA DE PETRO	50846777	CONYUGE	2014-02-21	2014-02-26	21903-76520-860	BANCO DE PAVONES	CONTRATADO	GASTRITIS	ESTUDIO+BIOPSIA+CONSULTA	3586	\N	3586	\N	3586	3586
+350	2014-05-01	CUERVO EMILI 	13036421	CUERVO HUGO	5240050	PADRE	2014-03-13	2014-03-14	85201	ACCION CENTRAL	DIRECTIVO	DIABETES TIPO II	MEDICAMENTOS	846.129999999999995	\N	846.129999999999995	\N	846.129999999999995	\N
+351	2014-05-01	CUERVO EMILI 	13036421	CUERVO EMILI 	13036421	TITULAR	2014-03-12	2014-03-14	43847	ACCION CENTRAL	DIRECTIVO	CONJUTIBITIS	MEDICAMENTOS	160.659999999999997	\N	160.659999999999997	\N	160.659999999999997	1006.78999999999996
+352	2014-05-01	USTRERA SERGIO	5367225	USTRERA SERGIO	5367225	TITULAR	2014-03-07	2014-03-10	160638-408411	PIRITU 2	OBRERO	DESCENSO HEMOGLOBINA	MEDICAMENTOS	561.5	\N	561.5	\N	561.5	561.5
+353	2014-05-01	TORRELLES JOSE	13072133	TORRELLES JOSE	13072133	TITULAR	2014-03-11	2014-03-13	5119	PAYARA	OBRERO	SINOSITIS CRONICA	CONSULTA 	600	\N	600	\N	600	600
+354	2014-05-01	MONTIEL JUAN	16984178	PAZ MINDALIA	13474425	CONYUGE	2014-03-11	2014-03-13	1125	PAYARA	OBRERO	EXTRACCION DE CORDAL 	EXODONCIA	1000	\N	1000	\N	1000	1000
+355	2014-05-01	MALDONADO RAFAEL	17108554	MALDONADO RAFAEL	17108554	TITULAR	2014-03-05	2014-03-05	180290	WILLIAN LARA	OBRERO	TRASTORNO DE PANICO	MEDICAMENTO 	167	\N	167	\N	167	167
+356	2014-05-01	PEREZ HENRRY	17618624	PEREZ LAYLHA	MENOR	HIJA	2014-03-14	2014-03-14	735-94978-137625	PIRITU 2	OBRERO	SINTOMAS VIRAL	CONSULTA+MEDICAMENTOS	611.059999999999945	\N	611.059999999999945	\N	611.059999999999945	611.059999999999945
+357	2014-05-01	SALMERON JOSE	18872133	MUÑOZ JORDANLISBETH	24022291	ESPOSA	2013-02-26	2014-03-05	3714	PIRITU 1	OBRERO	DERMATITIS CRONICA PALENO-PLANTA	EXAMENES	340	\N	340	\N	340	340
+358	2014-05-01	BRACHO HERWUIS	18902850	BRACHO ERVIA	MENOR	HIJA	2014-01-29	2014-02-04	83606-83607	RIO GUARICO	OBRERO	AUMENTO DE VOLUIMEN EN GLUTEO DERECHO	ESTUDIOS	4400	\N	4400	\N	4400	4400
+359	2014-05-01	MEDINA FREDDY	20025575	VELOZ ELIANA 	21058596	CONYUGE	2014-03-06	2014-03-07	4992	PIRITU 3	OBRERO	HIPERMENORREA	CONSULTA 	400	\N	400	\N	400	400
+360	2014-06-01	GALINDEZ WILFREDO	7405389	GALINDEZ WILFREDO	7405389	TITULAR	2014-03-21	2014-03-26	65243	PIRITU 2	CONTRATADO	RINITIS ALERGICA	MEDICAMENTO	420	89	331	NO SE CANCELA CARVEDILOL POR NO ESTAR EN EL RECIPE	331	331
+361	2014-06-01	COLMENAREZ HENRRI	7547441	COLMENAREZ HENRRI	7547441	TITULAR	2014-03-18	2014-03-18	44387	BICEABASTO	CONTRATADO	HIPERTENSION ARTERIAL	MEDICAMENTO	328	\N	328	\N	328	328
+362	2014-06-01	GONZALEZ ALEXIS	7595395	GONZALEZ JOLEXIS	MENOR	HIJA	2014-03-13	2014-03-17	516	PIRITU 1	CONTRATADO	OBESIDAD DISLIPIDEMIA	CONSULTA	500	\N	500	\N	500	500
+363	2014-06-01	BENAVENTA JOSE	8633844	BENAVENTA JESUS	5361670	PADRE	2014-03-25	2014-03-31	2879-181868	MARIA DE LOS ANGELES	CONTRATADO	GASTRITIS CRONICA+ULCERAS GASTRICAS	ESTUDIO+MEDICAMEN5TO	1984.72000000000003	\N	1984.72000000000003	\N	1984.72000000000003	1984.72000000000003
+364	2014-06-01	CRESPO BELKYS	8657682	COLMENAREZ ANGELA	1117366	MADRE	2014-03-27	2014-03-27	5032-82195-316234	ACCION CENTRAL	CONTRATADO	HIPERTENSION ARTERIAL CONTROLADA+TRASTORNO DEL RITMO CARDIACO:FA CON RV ADECUADA	CONSULTA+ESTUDIO+MEDICAMENTOS	1753.86999999999989	\N	1753.86999999999989	\N	1753.86999999999989	1753.86999999999989
+365	2014-06-01	MORILLO GRACIELA	8660443	MORILLO GRACIELA	8660443	TITULAR	2014-03-21	2014-03-24	56992-412231	BICEABASTO	CONTRATADO	OTITIS OIDO DERECHO	MEDICAMENTO	672	\N	672	\N	672	672
+366	2014-06-01	MENDEZ GIOVANNY	9837225	PINEDA ANA	12448545	CONYUGE	2014-03-24	2014-03-26	265785-314963	PIRITU 1	CONTRATADO	LUMBALGIA MECANICA	MEDICAMENTO	405.160000000000025	\N	405.160000000000025	\N	405.160000000000025	405.160000000000025
+367	2014-06-01	MOLINA CARLOS	10135498	COLMENAREZ DOLORES	1985467	MADRE	2014-03-26	2014-03-26	5187	PIRITU 2	CONTRATADO	OSTEOPOROSIS+HIMPERTENSION ARTERIAL+HIPERLIPIDEMIA	CONSULTA	600	\N	600	\N	600	600
+368	2014-06-01	GONZALEZ MANUEL	10140861	GONZALEZ MANUEL	10140861	TITULAR	2014-03-11	2014-03-19	37808	PIRITU 2	CONTRATADO	OSTEOARTRITIS DEGENERATIVA	MEDICAMENTO	409.990000000000009	\N	409.990000000000009	\N	409.990000000000009	\N
+369	2014-06-01	GONZALEZ MANUEL	10140861	QUINTANA MIREYA	10637302	CONYUGE	2014-03-11	2014-03-19	64319-84389-11367	PIRITU 2	CONTRATADO	CEFALIA VASCULAR AGUDA+AGAROFOBIA	MEDICAMENTO+CONSULTA	1181.61999999999989	\N	1181.61999999999989	\N	1181.61999999999989	\N
+370	2014-06-01	GONZALEZ MANUEL	10140861	QUINTANA MIREYA	10637302	CONYUGE	2014-03-11	2014-03-19	401992-37807	PIRITU 2	CONTRATADO	OSTEOARTROSIS CERVICAL+MIGRAÑA	MEDICAMENTO	1144.02999999999997	\N	1144.02999999999997	\N	1144.02999999999997	2735.63999999999987
+371	2014-06-01	SULBARAN ALEXIS	10144490	SULBARAN KEMBERLYS	MENOR	HIJA	2014-03-26	2014-03-26	45338-066801-82669-96658-5254	PIRITU 2	CONTRATADO	DOLOR ABDOMINAL RECURRENTE+REFLUJO	MEDICAMENTO+CONCULTA+ESTUDIO	7303.84000000000015	\N	7303.84000000000015	\N	7303.84000000000015	7303.84000000000015
+372	2014-06-01	BELLO DAXY	10271178	NIEVES CARMEN	5981439	MADRE	2014-03-20	2014-03-24	35483	WILLIAN LARA	CONTRATADO	HIPERTENSION ARTERIAL+CLINICA NEROLOGICA	IMAGENES+CONSULTAS	960	\N	960	\N	960	960
+373	2014-06-01	BARRIOS FERNANDO	10665813	BARRIOS FERNANDO	10665813	TITULAR	2014-03-25	2014-03-25	2189	BANCO DE PAVONES	CONTRATADO	HEMORROIDE MIXTA	CONSULTA	600	\N	600	\N	600	600
+374	2014-06-01	HERNANDEZ JOSE	11540534	GUTIERREZ YANET	11078705	ESPOSA	2014-03-26	2014-03-26	1245-398092-38115	TRANSPORTE	CONTRATADO	FIBROMALGIA Y CEFALEA VASCULAR	FIBROMALGIA+CEFALIA VASCULAR	1825.07999999999993	777.080000000000041	1048	FALTA INFORME DE RX E INFORME DE FACTURA 312227	1048	1048
+375	2014-06-01	MENDOZA MARIA	11540631	BRACHO DIEGO	MENOR	HIJO	2014-03-19	2014-03-19	10818-96011-156-253	ACCION CENTRAL	CONTRATADO	VOMITO+DOLOR ABDOMINAL	CONSULTA+EXAMENES 	850	\N	850	\N	850	850
+376	2014-06-01	CEDEÑO SIMON	11548326	CEDEÑO SIMON	11548326	TITULAR	2014-03-26	2014-03-26	290529-62150	CAÑO SECO	CONTRATADO	LITIASIS VESICULAR+HERNIA UMBLICAL	MEDICAMENTO	1674.44000000000005	\N	1674.44000000000005	\N	1674.44000000000005	\N
+377	2014-06-01	CEDEÑO SIMON	11548326	CEDEÑO SIMON	11548326	TITULAR	2014-03-26	2014-03-26	688	CAÑO SECO	CONTRATADO	LITIASIS VESICULAR+HERNIA UMBLICAL	CONSULTA	500	\N	500	\N	500	2174.44000000000005
+378	2014-06-01	BASTIDAS AMARILIS	11851601	BASTIDAS AMARILIS	11851601	TITULAR	2014-03-26	2014-03-26	31683	ACCION CENTRAL	CONTRATADO	OTITIS MEDIO OIDO DERECHO	MEDICAMENTO	212.360000000000014	\N	212.360000000000014	\N	212.360000000000014	212.360000000000014
+379	2014-06-01	ALVARADO JELIBETH	11785981	ALVARADO JELIBETH	11785981	TITULAR	2014-03-17	2014-03-17	714020	TRANSPORTE	CONTRATADO	MASTALGIA BILATERIAL	ESTUDIOS	500	\N	500	\N	500	500
+380	2014-06-01	CHIRINOS NELSON	12088526	CHIRINOS NELSON	12088526	TITULAR	2014-03-24	2014-03-24	228935	PIRITU 1	CONTRATADO	NEURALGIA LUMBAR+LITIASIS RENAL	MEDICAMENTO	281.5	\N	281.5	\N	281.5	281.5
+381	2014-06-01	MENDEZ ROSMARY	12090662	RANIA BONILLA	MENOR	HIJA	2014-03-19	2014-03-20	4584	PIRITU 3	CONTRATADO	GENUS VALGO	CONSULTA	500	\N	500	\N	500	500
+382	2014-06-01	BLANCO GLADYS	12262410	BLANCO JESUS MARIA	3369826	PADRE	2014-03-17	2014-03-17	5742	SAN JOSE DEL CANDIL	CONTRATADO	HTA	CONSULTA	550	\N	550	\N	550	550
+383	2014-06-01	MEJIAS FIDEL	12264438	MEJIAS FIDEL	12264438	TITULAR	2014-03-20	2014-03-21	50098	PIRITU 2	CONTRATADO	ARTRODESIS L4 S1	MEDICAMENTO	173	\N	173	\N	173	173
+384	2014-06-01	SILVA WILLIAM	12264783	RODRIGUEZ GILIA	1109972	MADRE	2014-03-24	2014-03-25	9366-133655-1255	AGUA BLANCA	CONTRATADO	OSTEARTRITIS+DOLOR POLIARTICULAR	EXAMENES+MEDICAMENTOS+ CONSULTA	2081	\N	2081	\N	2081	\N
+385	2014-06-01	SILVA WILLIAM	12264783	SILVA WILLIAM	12264783	TITULAR	2014-03-14	2014-03-19	5872-5877-1354611249	AGUA BLANCA	CONTRATADO	ANSIEDAD	MEDICAMENTO+CONSULTA	949.299999999999955	\N	949.299999999999955	\N	949.299999999999955	3030.30000000000018
+386	2014-06-01	GONZALEZ GUILLERMO	12266407	GONZALEZ GUILLERMO	MENOR	HIJO	2014-03-24	2014-03-24	260802-2058	PIRITU 1	CONTRATADO	FARINGOAMIGDALITIS	MEDICAMENTO+CONSULTA	310	\N	310	\N	310	310
+387	2014-06-01	RAMIREZ CARLOS	12475088	RAMIREZ LUIS	MENOR	HIJO	2014-03-25	2014-03-31	2309-31183	MARIA DE LOS ANGELES	CONTRATADO	CATARRO COMUN	COSULTA+MEDICAMENTO	1186.21000000000004	\N	1186.21000000000004	\N	1186.21000000000004	1186.21000000000004
+388	2014-06-01	ROJAS GIMMI	12858021	ROJAS BETTY	3527210	MADRE	2014-03-17	2014-03-17	855-63753	TRANSPORTE	CONTRATADO	DIABETES TIPO II+OSTEOPENIA+INSUFICIENCIA VENOSA DE MIEMBROS INFERIORES	CONSULTA+MEDICAMENTOS	763.299999999999955	\N	763.299999999999955	\N	763.299999999999955	763.299999999999955
+389	2014-06-01	PEREZ JAVIER 	12965923	PEREZ LEONELA	MENOR	HIJA	2014-03-19	2014-03-19	5026	PIRITU 3	CONTRATADO	RINITIS ALERGICA	CONSULTA	400	\N	400	\N	400	\N
+390	2014-06-01	PEREZ JAVIER 	12965923	ESCALONA MARIANELA	23579313	ESPOSA	2014-03-20	2014-03-20	38104	PIRITU 3	CONTRATADO	HIPERTENSION ARTERIAL+NEURALGIO CERVICAL	MEDICAMENTO	389.990000000000009	\N	389.990000000000009	\N	389.990000000000009	789.990000000000009
+391	2014-06-01	IACOBUCCI ALEXANDRA	13227704	PARRA ELIO	MENOR	HIJO	2014-03-25	2014-03-25	396822-238-4584	BICEABASTO	CONTRATADO	CUADRO FAHONGO AMIGDALITIS	CONSULTA+MEDICAMENTOS	504	\N	504	\N	504	504
+392	2014-06-01	DELGADO ERIKA	13228242	DELGADO ERIKA	13228242	TITULAR	2014-03-06	2014-03-17	31211-4865-3170863-3170940	PIRITU 1	CONTRATADO	LOE HEPATICA+DOLOR ABDOMINAL	MEDICAMENTO+CONSULTA+EXAMENES+IMAGENES	7173.76000000000022	\N	7173.76000000000022	\N	7173.76000000000022	7173.76000000000022
+393	2014-06-01	CONTRERA ARNALDO	13264124	CONTRERAS NATALY	MENOR	HIJA	2014-03-24	2014-03-24	3441-73204	ACCION CENTRAL	CONTRATADO	CUADRO RESPIRATORIO AGUDO	CONSULTA+MEDICAMENTOS	572	\N	572	\N	572	\N
+394	2014-06-01	CONTRERA ARNALDO	13264124	CONTRERAS NATALY	MENOR	HIJA	2014-03-24	2014-03-24	2865-52812	ACCION CENTRAL	CONTRATADO	RINOFARINGITIS ALERGICA	CONSULTA+MEDICAMENTOS	518	\N	518	\N	518	\N
+395	2014-06-01	CONTRERA ARNALDO	13264124	CONTRERAS NATALY	MENOR	HIJA	2014-03-24	2014-03-24	21861-28509	ACCION CENTRAL	CONTRATADO	TOS HUMEDA	CONSULTA+MEDICAMENTOS	419.699999999999989	\N	419.699999999999989	\N	419.699999999999989	\N
+396	2014-06-01	CONTRERA ARNALDO	13264124	CONTRERA ARNALDO	13264124	TITULAR	2014-03-24	2014-03-24	3332-7543-7554-7569-7591-7634-7659-7664-7673	ACCION CENTRAL	CONTRATADO	SINDROME COMPRENSIVO L5-S1 BILATERAL A PREDOMINIO IZQUIERDO	CONSULTA+SECION DE FISIOTERAPIAS	2600	\N	2600	\N	2600	\N
+397	2014-06-01	CONTRERA ARNALDO	13264124	BRITO KATSUMY	13188563	ESPOSA	2014-03-24	2014-03-24	10423	ACCION CENTRAL	CONTRATADO	HIPOTIROIDISMO	CONSULTA	500	\N	500	\N	500	\N
+398	2014-06-01	CONTRERA ARNALDO	13264124	BRITO KATSUMY	13188563	ESPOSA	2014-03-24	2014-03-24	996	ACCION CENTRAL	CONTRATADO	CONTROL PRENATAL	ESTUDIOS	420	\N	420	\N	420	5029.69999999999982
+399	2014-06-01	PADILLA ELVYS	13555075	PADILLA CIRELVYS	MENOR	HIJA	2014-03-31	2014-03-31	69257	SAN JOSE DEL CANDIL	CONTRATADO	INFECCION DE PARTE BLANDA EN REGION UMBILICAL	MEDICAMENTO	439.560000000000002	\N	439.560000000000002	\N	439.560000000000002	\N
+400	2014-06-01	PADILLA ELVYS	13555075	VILLAVICENCIO PAULA	4371449	MADRE	2014-03-26	2014-03-26	109011-265235	SAN JOSE DEL CANDIL	CONTRATADO	DIABETES MELLITUS TIPO 2+HIPERTENSION ARTERIAL+SINUSOPATIA AGUDA	MEDICAMENTO	1408.33999999999992	\N	1408.33999999999992	\N	1408.33999999999992	\N
+401	2014-06-01	PADILLA ELVYS	13555075	PADILLA CIRELVYS	MENOR	HIJA	2014-03-31	2014-03-31	473-196-47496-130959-44356-274418	SAN JOSE DEL CANDIL	CONTRATADO	SINDROME FEBRIL+DESIDRATACION MODERADA	CONSULTA+MEDICAMENTOS+ IMAGENES+EXAMENES	2317	\N	2317	\N	2317	\N
+402	2014-06-01	PADILLA ELVYS	13555075	VILLAVICENCIO PAULA	4371449	MADRE	2014-03-26	2014-03-26	19287-5684	SAN JOSE DEL CANDIL	CONTRATADO	CUADRO DE BRONCOESPASMO	MEDICAMENTO+CONSULTA	1018.10000000000002	\N	1018.10000000000002	\N	1018.10000000000002	5183
+403	2014-06-01	CORDOVA CARLOS	13650017	SILVA MAYRA	15811039	ESPOSA	2014-03-18	2014-03-20	2124-36054	MARIA DE LOS ANGELES	CONTRATADO	CONTROL PRENATAL	CONSULTA+ESTUDIOS	1110	\N	1110	\N	1110	1110
+404	2014-06-01	GUARENTE CLAUDIA	13785339	GUARENTE CLAUDIA	13785339	TITULAR	2014-03-25	2014-03-26	1037	BICEABASTO	CONTRATADO	HIPERTENSION ARTERIAL	CONSULTA	500	\N	500	\N	500	500
+405	2014-06-01	CAÑIZALEZ  MARIA	14205596	ROSARIO ANGEL	MENOR	HIJO	2014-03-26	2014-03-26	10337-41595-232756	ACCION CENTRAL	CONTRATADO	SINDROME CALOSTRAL	CONSULTA+MEDICAMENTOS	763.980000000000018	\N	763.980000000000018	\N	763.980000000000018	763.980000000000018
+406	2014-06-01	ROJAS STALIN	14092210	OTERO HILDA	3869585	MADRE	2014-03-24	2014-03-24	30232-30233	ACCION CENTRAL	CONTRATADO	DOLOR EN MUÑECA IZQUIERDA	CONSULTA MEDICA E IMAGENES	3565.23000000000002	\N	3565.23000000000002	\N	3565.23000000000002	3565.23000000000002
+407	2014-06-01	JIMENEZ RAFAEL	14347169	JIMENEZ RAFAEL	14347169	TITULAR	2014-03-28	2014-03-31	286489-6079	PIRITU 2	CONTRATADO	CUERPO EXTRAÑO EN OJO DERECHO	CONSULTA+MEDICAMENTOS	747	\N	747	\N	747	747
+408	2014-06-01	BASTIDAS ELISAUL	14425186	BASTIDAS ELISAUL	MENOR	HIJO	2014-03-17	2014-03-17	38047-38035	TRANSPORTE	CONTRATADO	CUADRO DE AMIGDALITIS	MEDICAMENTO	420.009999999999991	\N	420.009999999999991	\N	420.009999999999991	420.009999999999991
+409	2014-06-01	COLMENAREZ JOSE	14425942	COLMENAREZ ROMUALDO	4196639	PADRE	2014-03-21	2014-03-26	5608-727006-44155	PIRITU 2	CONTRATADO	CUADRO DE INFECCION RESPIRATORIA BAJA	CONSULTA+ESTUDIOS+IMAGENES	1805	\N	1805	\N	1805	1805
+410	2014-06-01	PINEDA WILMER	14676853	PINEDA ROSAURA	5943673	MADRE	2014-03-27	2014-03-31	864216	PIRITU 2	CONTRATADO	DISLIPIDERMIA	CONSULTA	300	\N	300	\N	300	\N
+411	2014-06-01	PINEDA WILMER	14676853	PINEDA WILMER	14676853	TITULAR	2014-03-25	2014-03-31	3003	PIRITU 2	CONTRATADO	CUERPO EXTRAÑO EN OJO IZQUIERDO	CONSULTA	800	\N	800	\N	800	1100
+412	2014-06-01	ROODRIGUEZ JOSE 	14677390	PIÑA ALICIA	14177137	CONYUGE	2014-03-14	2014-03-19	70-476690	AGUA BLANCA	CONTRATADO	EMBARAZO DE 21 SEMANAS	CONSULTA+MEDICAMENTOS	953	\N	953	\N	953	953
+413	2014-06-01	DIAZ MARIA	14887883	SANOJA KARLA	MENOR	HIJA	2014-03-31	2014-04-09	6166-297738-83985-45865-253109	ACCION CENTRAL	CONTRATADO	RINOSINUSITIS	CONSULTA+MEDICAMENTOS	1393.03999999999996	\N	1393.03999999999996	\N	1393.03999999999996	\N
+414	2014-06-01	DIAZ MARIA	14887883	DIAZ MARIA	14887883	TITULAR	2014-03-24	2014-04-09	404607	ACCION CENTRAL	CONTRATADO	SINDROME DIARREICO AGUDO+COLITIS AGUDA	MEDICAMENTO	307	\N	307	\N	307	1700.03999999999996
+415	2014-06-01	CARRASCO CIRILO 	14888905	DURAN MARYELIS	20157551	ESPOSA	2014-03-17	2014-03-17	-3079	SAN JOSE DEL CANDIL	CONTRATADO	RINOSINISITIS-OTITIS	CONSULTA+MEDICAMENTOS	3324.78999999999996	749.350000000000023	2575.44000000000005	NO SE CANCELA DIKLASON Y JERINGAS. FACTURAS DE RX Y LABORATORIO VENCIDAS	2575.44000000000005	\N
+416	2014-06-01	CARRASCO CIRILO 	14888905	CARRASCO CIRILO 	14888905	TITULAR	2014-03-17	2014-03-17	63008	SAN JOSE DEL CANDIL	CONTRATADO	AMIGDALITIS+DESTRUCCION NASAL	IMAGENES 	850	\N	850	\N	850	3425.44000000000005
+417	2014-06-01	MARTINEZ YELITZA	15071456	BARRIOS MARIA	4611413	MADRE	2014-03-21	2014-03-26	954-94214	PIRITU 2	CONTRATADO	ASTRALGIA CON PREDOMINIO DE ARTICULACION HOMBRO DERECHO Y RODILLA DERECHA	CONSULTA+MEDICAMENTOS	753.659999999999968	\N	753.659999999999968	\N	753.659999999999968	753.659999999999968
+418	2014-06-01	ESCOBAR OSCAR	15071538	ESCOBAR OSCAR	15071538	TITULAR	2014-03-14	2014-03-19	291861-40430-40432	PAYARA	CONTRATADO	TOS Y MALESTAR	MEDICAMENTO	904.899999999999977	\N	904.899999999999977	\N	904.899999999999977	\N
+419	2014-06-01	ESCOBAR OSCAR	15071538	ESCOBAR NATALIA	MENOR	HIJA	2014-03-14	2014-03-14	291860	PAYARA	CONTRATADO	INFECCION RESPIRATORIA	MEDICAMENTO	748	\N	748	\N	748	1652.90000000000009
+420	2014-06-01	REYES JOHN	15371065	REYES JOHN	MENOR	HIJO	2014-03-25	2014-03-25	5415-36794	ACCION CENTRAL	CONTRATADO	RINITIS ALERGICA	CONSULTA+MEDICAMENTOS	501	\N	501	\N	501	\N
+421	2014-06-01	REYES JOHN	15371065	REYES JOHN	MENOR	HIJO	2014-03-31	2014-03-31	52659-329063	ACCION CENTRAL	CONTRATADO	LARINGOFARINGUITIS	CONSULTA+MEDICAMENTOS	4283.22999999999956	\N	4283.22999999999956	\N	4283.22999999999956	\N
+422	2014-06-01	REYES JOHN	15371065	REYES JOHANA	MENOR	HIJA	2014-03-25	2014-03-25	5416	ACCION CENTRAL	CONTRATADO	RINITIS ALERGICA Y DERMATITIS	CONSULTA	350	\N	350	\N	350	5134.22999999999956
+423	2014-06-01	PIREZ PEDRO	15691566	PIREZ PAOLA	MENOR	HIJA	2014-03-19	2014-03-24	502751-742	ACCION CENTRAL	CONTRATADO	DERMATITIS DE CONTACTO EN PLIEGUE CODO IZQUIERDO	CONSULTA+MEDICAMENTOS	519	\N	519	\N	519	519
+424	2014-06-01	AULAR JEAN CARLOS	16041033	AULAR JEAN CARLOS	16041033	TITULAR	2014-03-19	2014-03-19	4721	CAÑO SECO	CONTRATADO	FRACTURA DE PELVIS+FRACTURA DE HUMERO+FRACTURA DECADERA	CONSULTA	500	\N	500	\N	500	500
+425	2014-06-01	PARRA ADA	16384778	PARRA ADA	16384778	TITULAR	2014-03-27	2014-03-27	2373	BANCO DE PAVONES	CONTRATADO	CONTROL PRENATAL	CONSULTA	500	\N	500	\N	500	500
+426	2014-06-01	MORANTES MAYERLIN	16386789	MORANTES MAYERLIN	16386789	TITULAR	2014-03-31	2014-03-31	1599-274272-352638	PIRITU 2	CONTRATADO	RINOSINOSITIS+ TRN EN DEDO MEDIO MANO IZQUIERDA	CONSULTA+MEDICAMENTOS	633.740000000000009	\N	633.740000000000009	\N	633.740000000000009	633.740000000000009
+427	2014-06-01	RIVERO IVAN	16414995	SANCHEZ NANCY	8660637	MADRE	2014-03-31	2014-03-31	2152	ACCION CENTRAL	CONTRATADO	INFECCION DEL TRACTO URINARIO	CONSULTA	450	\N	450	\N	450	\N
+428	2014-06-01	RIVERO IVAN	16414995	RIVERO CAMILA	MENOR	HIJA	2014-03-17	2014-03-17	786	ACCION CENTRAL	CONTRATADO	CONTRACCION FEMURAL	CONSULTA	800	\N	800	\N	800	1250
+429	2014-06-01	BARELA JEAN CARLOS	16415909	BARELA JOBVIER	MENOR	HIJO	2014-03-14	2014-03-17	920	AGUA BLANCA	CONTRATADO	INFECCION EN FARINGE Y AMIGDALA	CONSULTA	670	\N	670	\N	670	670
+430	2014-06-01	FREITES RENZO	16416522	PEREIRA OMAIRA	19282523	CONYUGE	2014-03-26	2014-03-26	295907-26527-22894-5863-6411	CAÑO SECO	CONTRATADO	EMBARAZO DE 31 SEMANAS CON AMENAZA DE PARTO+ ANEMIA	MEDICAMENTO	1098.61999999999989	\N	1098.61999999999989	\N	1098.61999999999989	1098.61999999999989
+431	2014-06-01	RODRIGUEZ ENDER	16565825	PEREZ OLEIDA	5949343	MADRE	2014-03-14	2014-03-19	6056-152989	AGUA BLANCA	CONTRATADO	IRRITACION EN OJOS Y DIFILCULTAD VISUAL	CONSULTA+MEDICAMENTOS	609.409999999999968	\N	609.409999999999968	\N	609.409999999999968	609.409999999999968
+432	2014-06-01	GAINZA DEYSIS	16565969	GAINZA ENRRIQUE	3319981	PADRE	2014-03-25	2014-03-25	2718	PIRITU 3	CONTRATADO	TOS CON EXPECTORACION VERDOSA	CONSULTA	600	\N	600	\N	600	\N
+433	2014-06-01	GAINZA DEYSIS	16565969	LOPEZ DEYSIS	3869477	MADRE	2014-03-17	2014-03-19	2764	PIRITU 3	CONTRATADO	HTA+CARDIOPATIA IZQUEMICA+SINDROME VERTIGINOSO	CONSULTA CARDIOVASCULAR	400	\N	400	\N	400	1000
+434	2014-06-01	LEON JAVIER	16753367	AULAR MARIA	19377256	CONYUGE	2014-03-25	2014-03-25	4765	ACCION CENTRAL	CONTRATADO	EMBARAZO DE 29 SEMANAS CON 6 DIAS DE GESTACION	IMAGENES 	650	\N	650	\N	650	\N
+435	2014-06-01	LEON JAVIER	16753367	AULAR MARIA	19377256	CONYUGE	2014-03-25	2014-03-25	818	ACCION CENTRAL	CONTRATADO	EMBARAZO DE 28 SEMANAS CON 3 DIAS	CONTROL PRENATAL	550	\N	550	\N	550	1200
+436	2014-06-01	MOLINA YANIS	16776892	MOLINA ADRIAN	MENOR	HIJO	2014-03-17	2014-03-17	392007-1467	PIRITU 1	CONTRATADO	LARINGITIS+RINITIS	CONNSULTA+MEDICAMENTOS	597	\N	597	\N	597	597
+437	2014-06-01	HERNANDEZ ARELIS	16913080	BOGOTA MARIA	MENOR	HIJA	2014-03-27	2014-03-27	1556	BANCO DE PAVONES	CONTRATADO	EPICTAXIS NASAL AGUDA	CONSULTA	450	\N	450	\N	450	450
+438	2014-06-01	GARCIA JUAN	17164247	GARCIA JUAN	17164247	TITULAR	2014-03-20	2014-03-24	3765	WILLIAN LARA	CONTRATADO	TENDINITIS POST TRAUMATICA DEL MANGUITO ROTADOR HOMBRO DERECHO	CONSULTA	500	\N	500	\N	500	500
+439	2014-06-01	QUERALES LUIS	17277931	ALVAREZ YESSICA	19715929	CONYUGE	2014-03-28	2014-03-31	5013	PIRITU 2	CONTRATADO	DOLOR PELVICO	CONSULTA+IMAGENES	700	\N	700	\N	700	700
+440	2014-06-01	ULACIO CLEMENTE	17278779	ULACIO VALENTINA	MENOR	HIJA	2014-03-15	2014-03-19	56964-296440	BICEABASTO	CONTRATADO	SINDROME VIRAL	MEDICAMENTO	285	\N	285	\N	285	285
+441	2014-06-01	ARIAS YARIMY	17795983	ARIAS YARIMY	17795983	TITULAR	2014-03-24	2014-03-25	516-102198	AGUA BLANCA	CONTRATADO	EMBARAZO DE 32 SEMANAS 	CONSULTA PRENATAL + MEDICAMENTOS	725.950000000000045	\N	725.950000000000045	\N	725.950000000000045	725.950000000000045
+442	2014-06-01	GALLEGOS MILAGROS	17796642	ZADKIEL AVENDAÑO	MENOR	HIJO	2014-03-26	2014-03-26	262284-2770	ACCION CENTRAL	CONTRATADO	ATOPIA+MANISFESTACION RESPIRATORIA PROBABLE ALERGIA ALIMENTARIA	CONSULTA+MEDICAMENTOS	1548.8900000000001	\N	1548.8900000000001	\N	1548.8900000000001	\N
+443	2014-06-01	GALLEGOS MILAGROS	17796642	AVENDAÑO EMILI	MENOR	HIJA	2014-03-14	2014-03-14	112065-350800-31020	ACCION CENTRAL	CONTRATADO	VOMITO+DOLOR ABDOMINAL+MALESTAR GENERAL	MEDICAMENTO+ESTUDIOS	337.019999999999982	\N	337.019999999999982	\N	337.019999999999982	1885.91000000000008
+444	2014-06-01	GALINDEZ LISNEY	17944278	GALINDEZ ADDIS	3907431	PADRE	2014-03-13	2014-03-19	326569	PAYARA	CONTRATADO	DIABETES + INSUFICENCIA CARDIACA+ GASTRITIS CRONICA	MEDICAMENTO	221.300000000000011	\N	221.300000000000011	\N	221.300000000000011	221.300000000000011
+445	2014-06-01	MONTES GREGORIA	17945099	MENDOZA SANTIAGO	MENOR	HIJO	2014-03-27	2014-03-31	2814-197092-63524	PAYARA	CONTRATADO	BRONCOESPASMO+ RINOFARINGITIS	CONSULTA+MEDICAMENTOS+ CONSULTA POR EMERGENCIA	818.149999999999977	\N	818.149999999999977	\N	818.149999999999977	\N
+446	2014-06-01	MONTES GREGORIA	17945099	VASQUEZ MARIA 	4604779	MADRE	2014-03-26	2014-03-31	4632-197093	PAYARA	CONTRATADO	DOLOOR ABDOMINAL	CONSULTA+MEDICAMENTOS	821	\N	821	\N	821	1639.15000000000009
+447	2014-06-01	TORRES JUVITO 	17946898	TORRES ADRIAN	MENOR	HIJO	2014-03-13	2014-03-19	620-44136-71286	PAYARA	CONTRATADO	DISLIPIDERMIA+RINOSINUSITIS+OTITIS	CONSULTA+MEDICAMENTOS	900.25	\N	900.25	\N	900.25	\N
+448	2014-06-01	TORRES JUVITO 	17946898	TORRES CRISTIAN	MENOR	HIJO	2014-03-13	2014-03-19	619-88879-44136	PAYARA	CONTRATADO	SINDROME COQUELUCHOIDE	CONSULTA+MEDICAMENTOS	403.189999999999998	\N	403.189999999999998	\N	403.189999999999998	1303.44000000000005
+449	2014-06-01	MENDONCA JOSE	18672248	ANDREA MENDONCA	MENOR	HIJA	2014-03-17	2014-03-19	202-93624-38009	PIRITU 3	CONTRATADO	ADENOIDITIS+DIARREA AGUDA	CONSULTA+MEDICAMENTOS	889.980000000000018	\N	889.980000000000018	\N	889.980000000000018	889.980000000000018
+450	2014-06-01	PALACIOS JOHAN	19051739	PALACIOS JOHAN	MENOR	HIJO	2014-03-26	2014-03-26	59398-395084-151830	SAN JOSE DEL CANDIL	CONTRATADO	TOS PRODUCTIVA	MEDICAMENTO	534	\N	534	\N	534	\N
+451	2014-06-01	PALACIOS JOHAN	19051739	DORANTE GRENNY	24023623	ESPOSA	2014-03-26	2014-03-26	151830	SAN JOSE DEL CANDIL	CONTRATADO	OTITIS EXTERNA+AMIGDALITIS	MEDICAMENTO	173.210000000000008	\N	173.210000000000008	\N	173.210000000000008	\N
+452	2014-06-01	PALACIOS JOHAN	19051739	PALACIOS JOHAN	MENOR	HIJO	2014-03-26	2014-03-26	152112-67376-4596	SAN JOSE DEL CANDIL	CONTRATADO	PARASITOSIS INTESTINAL	MEDICAMENTO+EXAMENES	425.70999999999998	140	285.70999999999998	NO PRESENTA ORDEN DE EXAMANES DE LAB.	285.70999999999998	992.919999999999959
+453	2014-06-01	LOPEZ YULEIMA	19053988	MORAN JUAN	MENOR	HIJO	2014-03-11	2014-03-19	125337-290070-467	AGUA BLANCA	CONTRATADO	OTITIS MEDIA DERECHA	MECAMENTOS+CONSULTA	978.200000000000045	\N	978.200000000000045	\N	978.200000000000045	978.200000000000045
+454	2014-06-01	ARENAS ROSALBA	19171304	ARENAS ROSALBA	19171304	TITULAR	2014-03-25	2014-03-25	6415-105808	ACCION CENTRAL	CONTRATADO	SX ANDROGENIZACION/ INSULINORRESISTENCIA	CONSULTA+MEDICAMENTOS	905.5	\N	905.5	\N	905.5	905.5
+455	2014-06-01	RODRIGUEZ JINETH	19338681	OLIVERO DANIEL	MENOR	HIJO	2014-03-25	2014-03-25	349158	ACCION CENTRAL	CONTRATADO	LBERACION DE ADHERENCIAS EN SURCO OVALANO PREPUCIAL	MEDICAMENTO	215	\N	215	\N	215	215
+456	2014-06-01	AQUINO COROMOTO	19343811	AQUINO COROMOTO	19343811	TITULAR	2014-03-31	2014-03-31	5116-214040	MARIA DE LOS ANGELES	CONTRATADO	EMBARAZO DE 15 SEMANAS	CONSULTA+MEDICAMENTOS	1352	\N	1352	\N	1352	1352
+457	2014-06-01	ROJAS JUANA	19376966	ROJAS JUANA	19376966	TITULAR	2014-03-19	2014-03-19	313-43050	BICEABASTO	CONTRATADO	EMBARAZO DE 17 SEMANAS	CONSULTA+MEDICAMENTOS	653	\N	653	\N	653	\N
+458	2014-06-01	ROJAS JUANA	19376966	ROJAS JUANA	19376966	TITULAR	2014-03-19	2014-03-19	221	BICEABASTO	CONTRATADO	EMBARAZO DE 13 SEMANAS	IMAGENES 	700	\N	700	\N	700	1353
+459	2014-06-01	CONDE KEVIN	19798851	CONDE JOSE	11075704	PADRE	2014-03-27	2014-03-27	204-22029	ACCION CENTRAL	CONTRATADO	CIRUGIA DE LA CORDAL INFERIOR DERECHA	CONSULTA+MEDICAMENTOS	1660	\N	1660	\N	1660	\N
+460	2014-06-01	CONDE KEVIN	19798851	VERGARA EDUARDA	11080295	MADRE	2014-03-27	2014-03-27	339210	ACCION CENTRAL	CONTRATADO	C.A. MAMA	EXAMENES 	320	\N	320	\N	320	1980
+461	2014-06-01	RODRIGUEZ YUSMAIRA	19798052	RODRIGUEZ YUSMAIRA	19798052	TITULAR	2014-03-28	2014-03-31	1249831	PAYARA	CONTRATADO	MIOPIA ODI	CONSULTA OFTALMOLOGICA	700	\N	700	\N	700	700
+462	2014-06-01	PEÑA TABATA	20810797	MARQUEZ INES	9842489	MADRE	2014-03-28	2014-03-31	5049	PIRITU 2	CONTRATADO	HIPERTENSION ARTERIAL ESTADIO I	ESTUDIOS	550	\N	550	\N	550	550
+463	2014-06-01	ORTIZ FRANCISCO	12262363	ORTIZ OLGA	3867798	MADRE	2014-03-20	2014-03-24	5106-137288-96297-5640	ACCION CENTRAL	PRESIDENTE	BRONQUITIS AGUDA	CONSULTA+MEDICAMENTOS+ESTUDIOS	1262.15000000000009	280	982.149999999999977	FALTA RESULTADOS DE EXAMENES DE LAB.	982.149999999999977	982.149999999999977
+464	2014-06-01	TIRADO ANTONIO	12368356	TIRADO ANTONIO	2514670	PADRE	2014-02-26	2014-03-17	2657	PIRITU 1	DIRECTIVO	HIPERTENSION ARTERIAL	CONSULTA	300	\N	300	\N	300	300
+465	2014-06-01	ZABALA ROSMARY	18871413	ZABALA ROSMARY	18871413	TITULAR	2014-03-25	2014-03-25	1757-65205-53816	ACCION CENTRAL	DIRECTIVO	EPIGASTRALGIA	CONSULTA+MEDICAMENTOS	1479.57999999999993	\N	1479.57999999999993	\N	1479.57999999999993	\N
+466	2014-06-01	ZABALA ROSMARY	18871413	ZABALA ROSMARY	18871413	TITULAR	2014-03-25	2014-03-25	1449-65206	ACCION CENTRAL	DIRECTIVO	ORAÑO POLIGESTO+HIGADO GRASO	CONNSULTA+MEDICAMENTOS	1270.40000000000009	\N	1270.40000000000009	\N	1270.40000000000009	2749.98000000000002
+467	2014-06-01	RODRIGUEZ SILA	8626902	RODRIGUEZ SILA	8626902	TITULAR	2014-03-31	2014-03-31	808	MARIA DE LOS ANGELES	OBRERO	BACIO TIROIDEO	CONSULTA	500	\N	500	\N	500	500
+468	2014-06-01	GOTOPO LUCAS	9044886	AMANA CARMEN	3332028	MADRE	2014-03-17	2014-03-19	10910	PAYARA	OBRERO	CARDIOPATIA CONGENITA 	ESTUDIOS CARDIOLOGICO	1200	\N	1200	\N	1200	1200
+469	2014-06-01	SANCHEZ ALIRIO	12527097	SANCHEZ ALIRIO	12527097	TITULAR	2014-03-19	2014-03-19	3246	AGUA BLANCA	OBRERO	DOLOR ABDOMINAL EN REGION EPIGRASTICA	IMAGENES 	230	\N	230	\N	230	230
+470	2014-06-01	JIMENEZ GLADYS	13353211	JIMENEZ PANTALEON 	1226690	PADRE	2014-03-31	2014-03-31	3674-48075	PIRITU 2	OBRERO	ALTERACION DE AMILASA Y LIPASA	CONSULTA	1042.5	\N	1042.5	\N	1042.5	\N
+471	2014-06-01	JIMENEZ GLADYS	13353211	JIMENEZ PANTALEON 	1226690	PADRE	2014-03-31	2014-03-31	4107-48076	PIRITU 2	OBRERO	CARDIOPATIA HIPERTENSIVA E ISQUEMICA	CONSULTA+MEDICAMENTOS	991	\N	991	\N	991	2033.5
+472	2014-06-01	PAEZ YANETH	13640407	BRIZUELA MARIA DEL CARMEN	8628112	MADRE	2014-03-27	2014-03-31	6017	MARIA DE LOS ANGELES	OBRERO	CERVICOBRAQUIALGIA DERECHA	CONSULTA	600	\N	600	\N	600	600
+473	2014-06-01	NARVAEZ FELIX	18753996	ARIZA MARICELA	10639807	MADRE	2014-03-18	2014-03-19	37985	PIRITU 2	OBRERO	ARTRITIS +OSTEOPOROSIS	MEDICAMENTO	259.990000000000009	\N	259.990000000000009	\N	259.990000000000009	\N
+474	2014-06-01	NARVAEZ FELIX	18753996	ARIZA MARICELA	10639807	MADRE	2014-03-28	2014-03-31	1656-774-185899	PIRITU 2	OBRERO	ARTRITIS REUMATOIDEA	CONSULTA+ESTUDIOS	1270	\N	1270	\N	1270	1529.99000000000001
+475	2014-06-01	PEÑA WILMER	18871319	PEÑA WILLMER	7596440	PADRE	2014-03-20	2014-03-24	93813-126161	PIRITU 1	OBRERO	HIPERTENSION ARTERIAL	MEDICAMENTO	296.5	\N	296.5	\N	296.5	\N
+476	2014-06-01	PEÑA WILMER	18871319	PEÑA WILLMER	7596440	PADRE	2014-02-26	2014-03-17	323712	PIRITU 1	OBRERO	HIPERTENSION ARTERIAL	MEDICAMENTO	289	\N	289	\N	289	585.5
+477	2014-06-01	CARDOZO FRANK	18909054	CARDOZO FRANK	18909054	TITULAR	2014-03-28	2014-03-28	77485-202591-3275-3555	BANCO DE PAVONES	OBRERO	DOLOOR ABDOMINAL	MEDICAMENTO+IMAGENES+EXAMENES	887	\N	887	\N	887	887
+478	2014-06-01	SOTO CARLOS	19715985	SOTO BRAYAN	MENOR	HIJO	2014-03-24	2014-03-25	3521	AGUA BLANCA	OBRERO	HERNIA INGUINAL BILATERAL	CONSULTA	450	\N	450	\N	450	450
+479	2014-06-01	LINAREZ YAURI	19799594	LINAREZ FRANYELIS	MENOR	HIJA	2014-03-25	2014-03-26	3907	PIRITU 2	OBRERO	SUDAMINA+HIPERTROFIA MAMARIA	CONSULTA	350	\N	350	\N	350	350
+480	2014-06-01	MEDINA FREDDY	20025575	MEDINA FREDDY	20025575	TITULAR	2014-03-19	2014-03-19	630	PIRITU 3	OBRERO	FIBROMIALGIA DORSO-LUMBAR	CONSULTA+IMAGENES	500	\N	500	\N	500	\N
+481	2014-06-01	MEDINA FREDDY	20025575	VELOZ ELIANA	21058596	ESPOSA	2014-03-19	2014-03-19	1266	PIRITU 3	OBRERO	MASTALGIA DERECHA	CONSULTA+IMAGENES	700	\N	700	\N	700	1200
+482	2014-07-01	ORTIZ NESTOR	3866991	ORTIZ NESTOR	3866991	TITULAR	2014-04-08	2014-04-09	65244-95092	ACCION CENTRAL	CONTRATADO	HIPERTENSION ARTERIAL	MEDICAMENTOS	567.309999999999945	\N	567.309999999999945	\N	567.309999999999945	567.309999999999945
+483	2014-07-01	GARCIA JOSE	5358599	GARCIA JOSE	5358599	TITULAR	2014-04-01	2014-04-02	250932-52130-209234	WILLIAN LARA	CONTRATADO	RINUSOPATIA CRONICA	MEDICAMENTOS	593.889999999999986	\N	593.889999999999986	\N	593.889999999999986	593.889999999999986
+484	2014-07-01	ARIAS FRANKLIN	5456447	PARRA AURA	826745	MADRE	2014-04-09	2014-04-10	388133	PIRITU 2	CONTRATADO	CRISIS ASMATICA – BRONQUITIS	MEDICAMENTOS	957.5	\N	957.5	\N	957.5	957.5
+485	2014-07-01	CARDENAS JOSE	5948461	CARDENAS VALENTINA	MENOR	HIJA	2014-04-07	2014-04-07	14316-339149-339133	PROD. AGRICOLA	CONTRATADO	SINDROME INFECCIOSO	CONSULTA+EXAMENES 	920	\N	920	\N	920	920
+486	2014-07-01	GONZALEZ ALEXIS	7595395	LOPEZ EGLY	10640535	ESPOSA	2014-04-08	2014-04-14	383359	PIRITU 1	CONTRATADO	RINITIS ALERGICA	MEDICAMENTOS	619.980000000000018	\N	619.980000000000018	\N	619.980000000000018	619.980000000000018
+487	2014-07-01	CRESPO BELKYS	8657682	CRESPO BELKYS	8657682	TITULAR	2014-04-08	2014-04-08	115524-4322	ACCION CENTRAL	CONTRATADO	SINDROME DE POLIARTRITIS	CONSULTA+MEDICAMENTOS	943	\N	943	\N	943	\N
+488	2014-07-01	CRESPO BELKYS	8657682	CRESPO BELKYS	8657682	TITULAR	2014-04-01	2014-04-01	316233-139349	ACCION CENTRAL	CONTRATADO	MASTALGIA-DOLOR TORACICO	MEDICAMENTOS	547.879999999999995	\N	547.879999999999995	\N	547.879999999999995	\N
+489	2014-07-01	CRESPO BELKYS	8657682	CRESPO JESUS	2499599	PADRE	2014-03-26	2014-04-14	185365	ACCION CENTRAL	CONTRATADO	NEUMONIA BILATERAL	RX TORAX-RX PELVIS	540.799999999999955	\N	540.799999999999955	\N	540.799999999999955	2031.68000000000006
+490	2014-07-01	INOJOSA JOSE	9572198	INOJOSA JOSE	9572198	TITULAR	2014-04-09	2014-04-14	4137	PAYARA	CONTRATADO	CARDIOPATIA MIXTA	CONSULTA	450	\N	450	\N	450	450
+491	2014-07-01	ROSA JOSE	10144706	ROSA JOSE	10144706	TITULAR	2014-04-04	2014-04-04	1211	AGUA BLANCA	CONTRATADO	CERVICAL CRONICA	CONSULTA	500	\N	500	\N	500	\N
+492	2014-07-01	ROSA JOSE	10144706	ROSA JOSE	10144706	TITULAR	2014-04-14	2014-04-14	1245	AGUA BLANCA	CONTRATADO	HERNIA DISCAL	CONSULTA	500	\N	500	\N	500	1000
+493	2014-07-01	OROPEZA JUAN FELIX	10274930	OROPEZA JULIO	MENOR	HIJO	2014-04-07	2014-04-09	1174-77747-53228-36940	WILLIAN LARA	CONTRATADO	TOS SECA	CONSULTA+EXAMENES+ MEDICAMENTOS	1467.82999999999993	\N	1467.82999999999993	\N	1467.82999999999993	1467.82999999999993
+494	2014-07-01	AGUIN RAMON	10639072	AGUIN RAMON	10639078	TITULAR	2014-04-14	2014-04-14	34-40	PIRITU 2	CONTRATADO	DISMINUCION DE AMPLITUD ARTICULAR	CONSULTA+TERAPIAS	1400	\N	1400	\N	1400	\N
+495	2014-07-01	AGUIN RAMON	10639072	AGUIN RAMON	10639078	TITULAR	2014-04-07	2014-04-07	770	PIRITU 2	CONTRATADO	FRACTURA FEMUR	CONSULTA	500	\N	500	\N	500	1900
+496	2014-07-01	BARRIOS FERNANDO	10665813	BARRIOS BERTHA	4796245	MADRE	2014-04-07	2014-04-09	4059-2408934796245-121253	WILLIAN LARA	CONTRATADO	ARTRITIS REUMATOIDEA	CONSULTA+MEDICAMENTOS	1700.68000000000006	\N	1700.68000000000006	\N	1700.68000000000006	1700.68000000000006
+497	2014-07-01	MENDOZA GREGORIO	10726265	CAMPOS LUZ MARIA	10636744	ESPOSA	2014-04-10	2014-04-14	966	PIRITU 2	CONTRATADO	HIPERGLICEMIA	CONSULTA	600	\N	600	\N	600	\N
+498	2014-07-01	MENDOZA GREGORIO	10726265	MENDOZA GREGORIO	10726265	TITULAR	2014-04-09	2014-04-10	232495	PIRITU 2	CONTRATADO	BRONCONEUMONIA	MEDICAMENTOS	517.5	\N	517.5	\N	517.5	1117.5
+499	2014-07-01	LINARES ANABEL	11081662	RODRIGUEZ TERESA	1122241	MADRE	2014-04-09	2014-04-09	5063-196388-47863-45509294288-47749-415989	ACCION CENTRAL	CONTRATADO	HERNIAS DISCALES	CONSULTA+MEDICAMENTOS+ RESONANCIA	3059.92000000000007	\N	3059.92000000000007	\N	3059.92000000000007	3059.92000000000007
+500	2014-07-01	CEDEÑO SIMON	11548326	CEDEÑO SIMON	11548326	TITULAR	2014-04-11	2014-04-15	269155	PROD. AGRICOLA	CONTRATADO	HELICOBACTER PILORY	MEDICAMENTOS	651.139999999999986	\N	651.139999999999986	\N	651.139999999999986	651.139999999999986
+501	2014-07-01	VASQUEZ MARIA CECILIA	11783858	VASQUEZ MARIA CECILIA	11783858	TITULAR	2014-04-10	2014-04-10	12462-18668	ACCION CENTRAL	CONTRATADO	CUADRO DE CERVICO DORSALGIA	CONSULTA+MEDICAMENTOS	1214	\N	1214	\N	1214	1214
+502	2014-07-01	PIÑA EMILIO	11847988	GONZALEZ MARIA	10644897	ESPOSA	2014-04-09	2014-04-09	295603-1398-141704-24898	PIRITU 3	CONTRATADO	VAGINOSIS BACTERIANA	CONSULTA+MEDICAMENTOS	1805.63000000000011	\N	1805.63000000000011	\N	1805.63000000000011	1805.63000000000011
+503	2014-07-01	RIVERO JOSE	11851161	PEÑA CARMEN	12266195	ESPOSA	2014-03-31	2014-04-10	713	PIRITU 2	CONTRATADO	VAGINOSIS MIXTA	CONSULTA+ECOSONOGRAMA	1000	\N	1000	\N	1000	\N
+504	2014-07-01	RIVERO JOSE	11851161	YUSTIZ GUILLERMINA	1229852	MADRE	2014-04-14	2014-04-14	1271	PIRITU 2	CONTRATADO	DIABETES MELLITUS	CONSULTA	500	\N	500	\N	500	1500
+505	2014-07-01	BASTIDAS AMARILIS	11851601	BASTIDAS AMARILIS	11851601	TITULAR	2014-04-14	2014-04-14	299293	ACCION CENTRAL	CONTRATADO	HIPERTENSION ARTERIAL	MEDICAMENTOS	570	\N	570	\N	570	570
+506	2014-07-01	MANAVALLES ALBERTO	11848760	GARCIA LOLA	12264638	ESPOSA	2014-03-31	2014-04-08	1087-6265	PAYARA	CONTRATADO	BACTERIANA MIXTA	CONSULTA+CITOLOGIA	820	\N	820	\N	820	820
+507	2014-07-01	CHIRINOS NELSON	12088526	CHIRINOS NELSON	12088526	TITULAR	2014-04-02	2014-04-02	5057	PIRITU 1	CONTRATADO	SACROILEITIS IZQUIERDA	CONSULTA	400	\N	400	\N	400	400
+508	2014-07-01	MENDEZ ROSMARY	12090662	BONILLA RANIA	MENOR	HIJA	2014-04-01	2014-04-02	6144-330069	PIRITU 3	CONTRATADO	HIPERTROFIA ADENOIDEA	CONSULTA+MEDICAMENTOS	1468	\N	1468	\N	1468	1468
+509	2014-07-01	LANDINEZ ROSA	12092691	LANDINEZ ROSA	12092691	TITULAR	2014-04-07	2014-04-11	4665-5712	MECANIZACION	CONTRATADO	POST CESAREA	CONSULTA+CITOLOGIA	720	\N	720	\N	720	\N
+510	2014-07-01	LANDINEZ ROSA	12092691	LICON HILDA	3043305	MADRE	2014-04-07	2014-04-14	1466-3007-3307-13167	MECANIZACION	CONTRATADO	SX METABOLICO	CONSULTA+ECOSONOGRAMA+MAMOGRAFIA	2130	\N	2130	\N	2130	\N
+511	2014-07-01	LANDINEZ ROSA	12092691	COLMENAREZ HILDA	MENOR	HIJA	2014-04-01	2014-04-14	3525-129174-30028	MECANIZACION	CONTRATADO	HERNIA INGUINAL IZQUIERDA	CONSULTA+MEDICAMENTOS+ ECOSONOGRAMAS	2288	\N	2288	\N	2288	5138
+512	2014-07-01	BLANCO GLADYS	12262410	CARUCI JOSE	MENOR	HIJO	2014-04-02	2014-04-02	3034	PROD. AGRICOLA	CONTRATADO	TDAH	ELECTROENCEFALOGRAMA	1200	\N	1200	\N	1200	1200
+513	2014-07-01	COLMENAREZ EDUARDO	12965690	SILVA DILCIA	4195959	MADRE	2014-04-09	2014-04-14	406442-963	PIRITU 1	CONTRATADO	HIPERTENSION ARTERIAL	CONSULTA+MEDICAMENTOS	742	\N	742	\N	742	742
+514	2014-07-01	PEREZ JAVIER	12965923	PEREZ LEONELA	MENOR	HIJA	2014-04-08	2014-04-09	57019	PIRITU 3	CONTRATADO	RINITIS ALERGICA	MEDICAMENTOS	379.5	\N	379.5	\N	379.5	\N
+515	2014-07-01	PEREZ JAVIER	12965923	ESCALONA MARIANELA	23579313	ESPOSA	2014-04-08	2014-04-09	57020	PIRITU 3	CONTRATADO	HIPERTENSION ARTERIAL	MEDICAMENTOS	249.5	\N	249.5	\N	249.5	\N
+516	2014-07-01	PEREZ JAVIER	12965923	PEREZ LEONELA	MENOR	HIJA	2014-04-08	2014-04-09	233453-38434	PIRITU 3	CONTRATADO	INFECCION DEL TRACTO URINARIO	MEDICAMENTOS	306	\N	306	\N	306	\N
+517	2014-07-01	PEREZ JAVIER	12965923	ESCALONA MARIANELA	23579313	ESPOSA	2014-04-02	2014-04-02	1990	PIRITU 3	CONTRATADO	MIOPIA ODI-CONJUNTIVITIS	CONSULTA	500	\N	500	\N	500	1435
+518	2014-07-01	DURAN MARIA	13073131	DURAN MARIA	13073131	TITULAR	2014-04-02	2014-04-08	5175	PAYARA	CONTRATADO	SINDROME POLIARTICULAR	CONSULTA	600	\N	600	\N	600	600
+519	2014-07-01	RAMOS RAFAEL	13073504	RAMOS RAFAEL	13073504	TITULAR	0140-04-14	2014-04-14	3440-9491-177558	AGUA BLANCA	CONTRATADO	LITIASIS RENAL IZQUIERDA	CONSULTA+ECOSONOGRAMA+ MEDICAMENTOS	1226.3900000000001	\N	1226.3900000000001	\N	1226.3900000000001	1226.3900000000001
+520	2014-07-01	CONTRERAS ARNALDO	13264124	CONTRERAS NATALY	MENOR	HIJA	2014-04-03	2014-04-07	2990-88062	RIO GUARICO	CONTRATADO	RINOFARINGITIS ALERGICA	CONSULTA+MEDICAMENTOS	715.5	\N	715.5	\N	715.5	715.5
+521	2014-07-01	SANCHEZ PEDRO	13556353	ZAVARCE MILCAHUR	1127937	MADRE	2014-04-14	2014-04-14	142406-95412	ACCION CENTRAL	CONTRATADO	HIPERTENSION ARTERIAL	MEDICAMENTOS	684.159999999999968	\N	684.159999999999968	\N	684.159999999999968	\N
+522	2014-07-01	SANCHEZ PEDRO	13556353	SANCHEZ PEDRO	13556353	TITULAR	2014-04-14	2014-04-14	167920	ACCION CENTRAL	CONTRATADO	HIPERTENSION ARTERIAL	MEDICAMENTOS	232.939999999999998	\N	232.939999999999998	\N	232.939999999999998	917.100000000000023
+523	2014-07-01	FIGUEROA JOSE	13585438	FIGUEROA GILBERTO	1124036	PADRE	2014-04-04	2014-04-14	4147	PIRITU 2	CONTRATADO	CARDIOPATIA CHAGASICA E ISQUEMICA	CONSULTA+HOLTER+ECC	1530	\N	1530	\N	1530	1530
+524	2014-07-01	BRIZUELA FREDDY	13906103	BRIZUELA FREDDY	13906103	TITULAR	2014-04-01	2014-04-02	1445-112718-185420-185421	PIRITU 2	CONTRATADO	DOLOR LUMBAR DERECHO	CONSULTA+UROTAC+  EXAMENES	2400	\N	2400	\N	2400	2400
+525	2014-07-01	CUENCA NORIS	14092771	CUENCA NORIS	14092771	TITULAR	2014-04-01	2014-04-01	167-170	ACCION CENTRAL	CONTRATADO	APENDICECTOMIA+  HERNIORRAFIA	CONSULTA	1000	\N	1000	\N	1000	\N
+526	2014-07-01	CUENCA NORIS	14092771	CASTRO DOMINGA	4611971	MADRE	2014-04-01	2014-04-01	4695	ACCION CENTRAL	CONTRATADO	ARTRITIS REUMATOIDEA	CONSULTA	500	\N	500	\N	500	\N
+527	2014-07-01	CUENCA NORIS	14092771	GALINDEZ DANIEL	MENOR	HIJO	2014-04-03	2014-04-03	2821	ACCION CENTRAL	CONTRATADO	GINGIVITIS-RINITIS ALERGICA	CONSULTA	400	\N	400	\N	400	1900
+528	2014-07-01	MENDOZA ANIBAL	14092815	MENDOZA ANIBAL	14092815	TITULAR	2014-04-11	2014-04-14	1442-171104	PAYARA	CONTRATADO	DISCOPATIA LUMBOSACRA	CONSULTA+MEDICAMENTOS	1032.25999999999999	\N	1032.25999999999999	\N	1032.25999999999999	1032.25999999999999
+529	2014-07-01	VALDERRAMA GUSTAVO	14271811	DOMINGUEZ AMINTA	4199883	MADRE	2014-04-08	2014-04-08	46036	ACCION CENTRAL	CONTRATADO	DOLOR LUMBAR	ATENCION POR EMERGENCIA	2396.26999999999998	\N	2396.26999999999998	\N	2396.26999999999998	2396.26999999999998
+530	2014-07-01	RODRIGUEZ JOSE LUIS	14677390	PIÑA ALICIA	14177137	ESPOSA	2014-04-10	2014-04-10	4802	AGUA BLANCA	CONTRATADO	EMBARAZO 21 SEMANAS	ECOSONOGRAMA 3D	650	\N	650	\N	650	\N
+531	2014-07-01	RODRIGUEZ JOSE LUIS	14677390	PIÑA ALICIA	14177137	ESPOSA	2014-04-15	2014-04-15	85	AGUA BLANCA	CONTRATADO	EMBARAZO 25 SEMANAS	CONSULTA	500	\N	500	\N	500	1150
+532	2014-07-01	GUEVARA ARCANGEL	14677755	JIMENEZ KARLA	19637184	ESPOSA	2014-04-10	2014-04-14	331-23881	PIRITU 2	CONTRATADO	EMBARAZO 19 SEMANAS	CONSULTA+MEDICAMENTOS	981	\N	981	\N	981	981
+533	2014-07-01	CARRASCO CIRILO	14888905	CARRASCO CIRILO	14888905	TITULAR	2014-04-04	2014-04-04	713760-64917-456-8229-4226-44675	PROD. AGRICOLA	CONTRATADO	HIPERTROFIA DE CORNETES	CONSULTA+EXAMENES+RX+MEDICAMENTOS	2299.34000000000015	\N	2299.34000000000015	\N	2299.34000000000015	\N
+534	2014-07-01	CARRASCO CIRILO	14888905	DURAN MARYELIS	20157551	MADRE	2014-04-07	2014-04-15	8243-96892	PROD. AGRICOLA	CONTRATADO	OTOMICOSIS BILATERAL	CONSULTA+MEDICAMENTOS	603.879999999999995	\N	603.879999999999995	\N	603.879999999999995	\N
+535	2014-07-01	CARRASCO CIRILO	14888905	CARRASCO DIEGO	MENOR	HIJO	2014-04-07	2014-04-15	8242-64916	PROD. AGRICOLA	CONTRATADO	RINITIS ATOPICA	CONSULTA+MEDICAMENTOS	1051	\N	1051	\N	1051	3954.2199999999998
+536	2014-07-01	ESCOBAR OSCAR	15071538	ESCOBAR NATALIA	MENOR	HIJA	2014-04-10	2014-04-10	154309-18392-11546	AGUA BLANCA	CONTRATADO	SINDROME FEBRIL	CONSULTA+MEDICAMENTOS	977.879999999999995	\N	977.879999999999995	\N	977.879999999999995	977.879999999999995
+537	2014-07-01	MERCADO GLADYS	15480499	MERCADO JOSE	5743755	PADRE	2014-04-09	2014-04-12	919-625	BANCO DE PAVONES	CONTRATADO	DISPEPSIA	CONSULTA+MEDICAMENTOS	911.92999999999995	\N	911.92999999999995	\N	911.92999999999995	\N
+538	2014-07-01	MERCADO GLADYS	15480499	HERNANDEZ ALEXANDRA	MENOR	HIJA	2014-04-09	2014-04-12	38358-28760-28759-4543-3543	BANCO DE PAVONES	CONTRATADO	ENTEROPATIA INFLAMATORIA	CONSULTA+MEDICAMENTOS	4396.10000000000036	1440	2956.09999999999991	NO SE CANCELA RECIBO NRO. 58486. NO SE CANCELA NUTRAMIGEN LECHE	2956.09999999999991	3868.0300000000002
+539	2014-07-01	PERAZA FRANMER	15868665	PERAZA FRANMER	15868665	TITULAR	2014-04-10	2014-04-10	81	AGUA BLANCA	CONTRATADO	CIRUGIA MENOR DE GRANULOMA	CIRUGIA	1800	\N	1800	\N	1800	\N
+540	2014-07-01	PERAZA FRANMER	15868665	PERAZA MARIA	9258033	MADRE	2014-04-05	2014-04-05	127690-127884-47767-47548-128795-174536	AGUA BLANCA	CONTRATADO	FIBROMIALGIA	MEDICAMENTOS	1650.49000000000001	\N	1650.49000000000001	\N	1650.49000000000001	3450.48999999999978
+541	2014-07-01	PIREZ PEDRO PABLO	15691566	PIREZ PAOLA	MENOR	HIJA	2014-04-09	2014-04-09	36986-2371	ACCION CENTRAL	CONTRATADO	DERMATITIS ALERGICA DE CONTACTO	CONSULTA+MEDICAMENTOS	714.019999999999982	\N	714.019999999999982	\N	714.019999999999982	714.019999999999982
+542	2014-07-01	GARCIA KELLYS	16073371	RIVERO JHOANNY	18731119	ESPOSA	2014-04-07	2014-04-07	710	TRANSPORTE	CONTRATADO	EMBARAZO 24 SEMANAS	CONSULTA	500	\N	500	\N	500	500
+543	2014-07-01	RODRIGUEZ YOLEIDA	16090696	RODRIGUEZ YOLEIDA	16090696	TITULAR	2014-04-03	2014-04-03	339229-339408	ACCION CENTRAL	CONTRATADO	INFECCION URINARIA	EXAMENES 	580	\N	580	\N	580	580
+544	2014-07-01	APONTE ALEXIS	16384488	ESCALONA AMARYLYS	18144195	ESPOSA	2014-04-09	2014-04-09	212	WILLIAN LARA	CONTRATADO	CORDALES INCLUIDAS UD 18,28,38,48 (EXODONCIA)	TRATAMIENTO ODONTOLOGICO	3600	\N	3600	\N	3600	3600
+545	2014-07-01	ṔARRA ADA	16384778	SANCHEZ VICTORIA	MENOR	HIJA	2014-04-08	2014-04-12	223574-50635-211924-4071	BANCO DE PAVONES	CONTRATADO	CRISIS DE ASMA-RINITIS ALERGICA	CONSULTA+MEDICAMENTOS	1248.00999999999999	\N	1248.00999999999999	\N	1248.00999999999999	\N
+546	2014-07-01	PARRA ADA	16384778	PARRA ADA	16384778	TITULAR	2014-04-12	2014-04-12	211213-50636-2394	BANCO DE PAVONES	CONTRATADO	EMBARAZO 34 SEMANAS	CONSULTA+MEDICAMENTOS	611.139999999999986	\N	611.139999999999986	\N	611.139999999999986	1859.15000000000009
+547	2014-07-01	MORANTES MAYERLIN	16386789	JIMENEZ BARTOLA	5386353	MADRE	2014-04-08	2014-04-10	1597-274091-274273-3375	PIRITU 2	CONTRATADO	FARINGITIS	CONSULTA+MEDICAMENTOS+EXAMENES	1237.28999999999996	\N	1237.28999999999996	\N	1237.28999999999996	\N
+548	2014-07-01	MORANTES MAYERLIN	16386789	PIÑA MAYERLIN	MENOR	HIJA	2014-04-07	2014-04-10	1596-274091	PIRITU 2	CONTRATADO	RINITIS ALERGICA	CONSULTA+MEDICAMENTOS	354.04000000000002	\N	354.04000000000002	\N	354.04000000000002	1591.32999999999993
+549	2014-07-01	CAMACARO WILIAN	16414276	CAMACARO ALEX 	MENOR	HIJO	2014-04-07	2014-04-07	1493	AGUA BLANCA	CONTRATADO	SINDROME DIARREICO AGUDO FEBRIL	MEDICAMENTOS	680	\N	680	\N	680	680
+550	2014-07-01	FREITEZ RENZO	16416522	PEREIRA OMAIRA	19282523	ESPOSA	2014-04-07	2014-04-07	1098	MECANIZACION	CONTRATADO	EMBARAZO 33 SEMANAS	CONSULTA	400	\N	400	\N	400	400
+551	2014-07-01	GAINZA DEISYS	16565969	GAINZA ENRIQUE	3319980	PADRE	2014-04-01	2014-04-01	170558	PIRITU 3	CONTRATADO	TOS SECA, MALESTAR	MEDICAMENTOS	272.180000000000007	\N	272.180000000000007	\N	272.180000000000007	272.180000000000007
+552	2014-07-01	CORONADO MIGUEL	16640708	CORONADO MIGUEL	16640708	TITULAR	2014-04-03	2014-04-07	49195	RIO GUARICO	CONTRATADO	RINUSOPATIA CRONICA	MEDICAMENTOS	1440	\N	1440	\N	1440	1440
+553	2014-07-01	ABREU JOSE	16640816	RONDON ELIHU	17937219	ESPOSA	2014-04-08	2014-04-09	2834	WILLIAN LARA	CONTRATADO	QUERATITIS ODI	CONSULTA	500	\N	500	\N	500	500
+554	2014-07-01	LEON JAVIER	16753367	AULAR MARIA	19377276	ESPOSA	2014-04-09	2014-04-09	20998	ACCION CENTRAL	CONTRATADO	EMBARAZO 12 SEMANAS	MEDICAMENTOS	124.879999999999995	\N	124.879999999999995	\N	124.879999999999995	\N
+555	2014-07-01	LEON JAVIER	16753367	AULAR MARIA	19377276	ESPOSA	2014-04-09	2014-04-09	495532	ACCION CENTRAL	CONTRATADO	EMBARAZO	MEDICAMENTOS	235	\N	235	\N	235	\N
+556	2014-07-01	LEON JAVIER	16753367	AULAR MARIA	19377276	ESPOSA	2014-04-09	2014-04-09	1766	ACCION CENTRAL	CONTRATADO	EMBARAZO	ECOSONOGRAMA 3D	1000	\N	1000	\N	1000	1359.88000000000011
+557	2014-07-01	MACUMA LUIS	16913869	ZERPA EMILY	17164131	ESPOSA	2014-04-08	2014-04-09	1577	WILLIAN LARA	CONTRATADO	FARINGO AMIGDALITIS	CONSULTA	450	\N	450	\N	450	450
+558	2014-07-01	COLINA JOHAN	17277901	COLINA JEAN	MENOR	HIJO	2014-04-02	2014-04-02	227303-40064-38086	PIRITU 2	CONTRATADO	CUADRO VIRAL	MEDICAMENTOS	323	\N	323	\N	323	323
+559	2014-07-01	ULACIO CLEMENTE	17278270	ULACIO VALENTINA	MENOR	HIJA	2014-04-01	2014-04-02	399770-352-6380	BICEABASTO	CONTRATADO	H. BRONQUIAL	CONSULTA+MEDICAMENTOS+ EXAMENES	1044	\N	1044	\N	1044	\N
+560	2014-07-01	ULACIO CLEMENTE	17278270	ULACIO VALERY	MENOR	HIJA	2014-04-01	2014-04-02	399770-352-6380	BICEABASTO	CONTRATADO	TOS ATOPICA, SIND. ANEMICO	CONSULTA+MEDICAMENTOS+ EXAMENES	888	\N	888	\N	888	\N
+561	2014-07-01	ULACIO CLEMENTE	17278270	ULACIO VALENTINA	MENOR	HIJA	2014-04-10	2014-04-14	402957-3610	BICEABASTO	CONTRATADO	H. BRONQUIAL	MEDICAMENTOS+EXAMENES	483	\N	483	\N	483	2415
+562	2014-07-01	BILVAO ORANGEL	17374577	BILVAO CHRISTIAN	MENOR	HIJO	2014-04-01	2014-04-02	49752-77928	WILLIAN LARA	CONTRATADO	MUCROSIADOSIS	MEDICAMENTOS	865	\N	865	\N	865	865
+563	2014-07-01	GARCIA CARLOS	17362441	RODRIGUEZ KARIBETH	17276559	ESPOSA	2014-04-02	2014-04-02	292701-297740	TRANSPORTE	CONTRATADO	EMBARAZO 21 SEMANAS	MEDICAMENTOS	311.5	\N	311.5	\N	311.5	311.5
+564	2014-07-01	GALLEGOS MILAGROS	17796642	BONILLA DULCE	4197758	MADRE	2014-04-08	2014-04-08	10952	ACCION CENTRAL	CONTRATADO	HIPERTENSION ARTERIAL	CONSULTA	600	\N	600	\N	600	600
+565	2014-07-01	LAMEDA JOSE 	17797582	LAMEDA JOSE	MENOR	HIJO	2014-04-07	2014-04-07	384	PIRITU 3	CONTRATADO	SINDROME DIARREICO AGUDO	ATENCION POR EMERGENCIA	880	\N	880	\N	880	880
+566	2014-07-01	GALINDEZ LISNEY	17944278	GALINDEZ ADDIS	3907431	PADRE	2014-04-03	2014-04-14	331117-331118-19515-3357	PAYARA	CONTRATADO	DIABETES MELLITUS	CONSULTA+MEDICAMENTOS	1548	\N	1548	\N	1548	1548
+567	2014-07-01	JUAREZ YUSBELYS	17944390	JUAREZ ALICIA	6777167	MADRE	2014-04-14	2014-04-14	4692	AGUA BLANCA	CONTRATADO	DISPEPSIA+DOLOR ABDOMINAL	CONSULTA+ECOSONOGRAMA	800	\N	800	\N	800	800
+568	2014-07-01	MANJAREZ HIVANEL	18102664	AGUERO MARISELA	13073119	ESPOSA	2014-04-14	2014-04-14	4484-106435-47051-168813	MECANIZACION	CONTRATADO	INFECCION DEL TRACTO URINARIO	MEDICAMENTOS+EXAMENES	551.830000000000041	\N	551.830000000000041	\N	551.830000000000041	551.830000000000041
+569	2014-07-01	CAMEJO SONNY	18731153	PARADA MARITZA	15070967	ESPOSA	2014-04-07	2014-04-07	627	MECANIZACION	CONTRATADO	EMBARAZO 32 SEMANAS	CONSULTA	460	\N	460	\N	460	\N
+570	2014-07-01	CAMEJO SONNY	18731153	PARADA MARITZA	15070967	ESPOSA	2014-04-07	2014-04-07	1017	MECANIZACION	CONTRATADO	DIABETES GESTACIONAL	CONSULTA	500	\N	500	\N	500	960
+571	2014-07-01	LOPEZ YULEIMA	19053988	GOMEZ IRIS	10140562	MADRE	2014-04-14	2014-04-14	74	AGUA BLANCA	CONTRATADO	BACILOS DE DODERLEIN	CONSULTA+CITOLOGIA	500	\N	500	\N	500	500
+572	2014-07-01	ARENAS ROSALBA	19171304	ARENAS ROSALBA	19171304	TITULAR	2014-04-07	2014-04-09	10012850-10013204	ACCION CENTRAL	CONTRATADO	ANDROGENIZACION+  INSULINORRESISTENCIA	EXAMENES 	470	\N	470	\N	470	470
+573	2014-07-01	RODRIGUEZ JINETH	19338681	OLIVERO DANIEL	MENOR	HIJO	2014-04-07	2014-04-09	2192	ACCION CENTRAL	CONTRATADO	PIE PLANO	CONSULTA	500	\N	500	\N	500	500
+574	2014-07-01	AQUINO CRISTIAN	19343805	AQUINO CRISTIAN	19343805	TITULAR	2014-04-07	2014-04-07	296124-845092-845093-37615	WILLIAN LARA	CONTRATADO	SINDROME COQUELUCHOIDE	AMIGDALITIS AGUDA	815.399999999999977	\N	815.399999999999977	\N	815.399999999999977	815.399999999999977
+575	2014-07-01	ROJAS JUANA	19376966	ROJAS JUANA	19376966	TITULAR	2014-04-11	2014-04-14	300182-27-318-4683	BICEABASTO	CONTRATADO	EMBARAZO 21 SEMANAS+AMENAZA DE PARTO PREMATURO	CONSULTA+MEDICAMENTOS+ EXAMENES	1084	\N	1084	\N	1084	1084
+576	2014-07-01	LINAREZ JEAN CARLOS	19377861	LINAREZ JEANCARLIS	MENOR	HIJA	2014-04-02	2014-04-02	1988-38319	PIRITU 2	CONTRATADO	CONJUNTIVIS ALERGICA	CONSULTA+MEDICAMENTOS	1059.99000000000001	\N	1059.99000000000001	\N	1059.99000000000001	1059.99000000000001
+577	2014-07-01	MORALES VICTOR	19799308	MORALES GREVIANA	MENOR	HIJA	2014-04-14	2014-04-14	9465	AGUA BLANCA	CONTRATADO	INGESTION DE HIDROCARBURO	EXAMENES 	290	\N	290	\N	290	\N
+578	2014-07-01	MORALES VICTOR	19799308	MORALES VICTOR	19799308	TITULAR	2014-04-14	2014-04-14	373	AGUA BLANCA	CONTRATADO	SINDROME DOLOROSO TORACICO	EXAMENES 	420	\N	420	\N	420	710
+579	2014-07-01	PEÑA TABATA	20810797	MARQUEZ INES	9842489	MADRE	2014-04-14	2014-04-14	869	PIRITU 2	CONTRATADO	HIPERTENSION ARTERIAL	EXAMENES 	860	\N	860	\N	860	860
+580	2014-07-01	ANGULO MARYELIS	21561653	ANGULO MARYELIS	21561653	TITULAR	2014-04-01	2014-04-01	228537	ACCION CENTRAL	CONTRATADO	AMIGDALITIS AGUDA	MEDICAMENTOS	161.5	\N	161.5	\N	161.5	\N
+581	2014-07-01	ANGULO MARYELIS	21561653	LINAREZ KARLA	MENOR	HIJA	2014-04-14	2014-04-14	3934	ACCION CENTRAL	CONTRATADO	ESTOMATITIS	CONSULTA	400	\N	400	\N	400	561.5
+582	2014-07-01	HERNANDEZ YANALI	24022597	CARRIZO KLEYBER	MENOR	HIJO	2014-04-09	2014-04-09	297596-8359	ACCION CENTRAL	CONTRATADO	RINITIS ATOPICA	CONSULTA+MEDICAMENTOS	839.32000000000005	\N	839.32000000000005	\N	839.32000000000005	839.32000000000005
+583	2014-07-01	ORTIZ FRANCISCO	12262363	ORTIZ FRANCYS	MENOR	HIJA	2014-04-07	2014-04-09	10834-10903	ACCION CENTRAL	PRESIDENTE	CONSULTAS	CONSULTA	800	400	400	NO SE CANCELA FACTURA 10834 POR ESTAR VENCIDA	400	\N
+584	2014-07-01	ORTIZ FRANCISCO	12262363	ORTIZ FRANCISCO	12262363	TITULAR	2014-04-07	2014-04-09	292779	ACCION CENTRAL	PRESIDENTE	SX ICTERICO	MEDICAMENTOS	865	\N	865	\N	865	1265
+585	2014-07-01	BARROSO REINALDO	12091391	CALANCHE MARTINA	14887893	ESPOSA	2014-04-09	2014-04-09	466-50856	ACCION CENTRAL	DIRECTIVO	OTITIS AGUDA DERECHA	CONSULTA+MEDICAMENTOS	1006.33000000000004	\N	1006.33000000000004	\N	1006.33000000000004	1006.33000000000004
+586	2014-07-01	CUERVO EMILIN	13036421	CUERVO EMILIN	13036421	TITULAR	2014-04-07	2014-04-08	2238	ACCION CENTRAL	DIRECTIVO	CERVICALGIA 	MEDICAMENTOS	560	63	497	NO SE CANCELA ALRES POR NO ESTAR INDICADO EN EL RECIPE	497	497
+587	2014-07-01	ZABALA ROSMARY	18871413	ZABALA JOSE LUIS	8656753	PADRE	2014-04-02	2014-04-02	4971-166595	ACCION CENTRAL	DIRECTIVO	OTITIS	CONSULTA+MEDICAMENTOS	837.889999999999986	\N	837.889999999999986	\N	837.889999999999986	837.889999999999986
+588	2014-07-01	USTRERA SERGIO	5367225	USTRERA SERGIO	5367225	TITULAR	2014-04-07	2014-04-07	38271	PIRITU 2	OBRERO	ENFERMEDAD HIPERTENSIVA	MEDICAMENTOS	279.990000000000009	\N	279.990000000000009	\N	279.990000000000009	279.990000000000009
+589	2014-07-01	RODRIGUEZ SILA	8626902	RODRIGUEZ SILA	8626902	MADRE	2014-04-04	2014-04-04	213552	TRILLADORA	OBRERO	BOCIO TIROIDEO	MEDICAMENTOS	264	\N	264	\N	264	264
+590	2014-07-01	YUSTIZ CARMEN	11543412	YUSTIZ RICARDA	1126764	MADRE	2014-04-07	2014-04-07	406142	PIRITU 1	OBRERO	HIPERTENSION ARTERIAL	MEDICAMENTOS	959.5	\N	959.5	\N	959.5	959.5
+591	2014-07-01	SANCHEZ JOSE	12527097	MORAN NATI	15693141	ESPOSA	2014-04-10	2014-04-10	692-131814	AGUA BLANCA	OBRERO	INFLAMACION PELVICA POR OVARIOS POLIQUISTICOS	CONSULTA+MEDICAMENTOS	738.279999999999973	\N	738.279999999999973	\N	738.279999999999973	738.279999999999973
+592	2014-07-01	TORRELLES JOSE	13072133	TORRELLES JOSE	13072133	TITULAR	2014-04-11	2014-04-14	243034	PAYARA	OBRERO	ARTRITIS	EXAMENES 	1500	\N	1500	\N	1500	\N
+593	2014-07-01	TORRELLES JOSE	13072133	TORRELLES JOSE	13072133	TITULAR	2014-04-07	2014-04-14	5203	PAYARA	OBRERO	ARTRITIS	CONSULTA	600	\N	600	\N	600	2100
+594	2014-07-01	JIMENEZ GLADYS	13353211	JIMENEZ PANTALEON	1226690	PADRE	2014-04-07	2014-04-07	3673-401-6701	PIRITU 2	OBRERO	ADENOCARCINOMA	CONSULTA+BIOPSIA	7600	\N	7600	\N	7600	7600
+595	2014-07-01	FABER ALEXIS	15538322	FABER ALEXIS	15538322	PADRE	2014-04-02	2014-04-02	132217	AGUA BLANCA	OBRERO	DISLIPIDEMIA	MEDICAMENTOS	337.20999999999998	\N	337.20999999999998	\N	337.20999999999998	337.20999999999998
+596	2014-07-01	JARA CARLOS	15692059	BARRIOS NELY	5944005	MADRE	2014-04-08	2014-04-10	171238	PIRITU 2	OBRERO	LUMBALGIA EN ESTUDIO	MEDICAMENTOS	546.509999999999991	\N	546.509999999999991	\N	546.509999999999991	546.509999999999991
+597	2014-07-01	MALDONADO RAFAEL	17108554	MALDONADO RAFAEL	17108554	TITULAR	2014-04-02	2014-04-02	687-50299	WILLIAN LARA	OBRERO	TRASTORNO DE PANICO	CONSULTA+MEDICAMENTOS	789	\N	789	\N	789	789
+598	2014-07-01	NARVAEZ FELIX	18753996	ARIZA MARICELA	10639807	MADRE	2014-04-03	2014-04-07	38334	PIRITU 2	OBRERO	LUMBOCIALGIA SEVERA	MEDICAMENTOS	730	\N	730	\N	730	\N
+599	2014-07-01	NARVAEZ FELIX	18753996	ARIZA MARICELA	10639807	MADRE	2014-04-03	2014-04-07	38335	PIRITU 2	OBRERO	ARTRITIS REUMATOIDEA	MEDICAMENTOS	140	\N	140	\N	140	870
+600	2014-07-01	MUÑOZ ORLANDO	18800445	MUÑOZ DAMIAN	MENOR	HIJO	2014-04-02	2014-04-02	933	AGUA BLANCA	OBRERO	FORAMEN OVAL	CONSULTA+ECOCARD.	1200	\N	1200	\N	1200	1200
+601	2014-07-01	SALMERON JOSE	18872133	MUÑOZ JORDANLISBETH	24022921	ESPOSA	2014-04-04	2014-04-04	1963	PIRITU 1	OBRERO	ECCEMA CRONICO	CONSULTA	500	\N	500	\N	500	500
+602	2014-07-01	REQUENA JOSE	18908635	REQUENA LUIS	MENOR	HIJO	2014-04-03	2014-04-07	22551851-22550993	BANCO DE PAVONES	OBRERO	RAQUITISMO HIPOFOSFATEMICO	ESTUDIOS VARIOS	540	\N	540	\N	540	540
+603	2014-07-01	MEDINA FREDDY	20025575	MEDINA FREDDY	20025575	TITULAR	2014-04-09	2014-04-09	233100	PIRITU 3	OBRERO	AMIGDALITIS PULTACEA	MEDICAMENTOS	261	\N	261	\N	261	261
+604	2014-08-01	ORTIZ NESTOR	3866991	ORTIZ NESTOR	3866991	TITULAR	2014-04-21	2014-04-21	5676-54459	ACCION CENTRAL	CONTRATADO	DOLOR EN HEMIABDOMEN	CONSULTA+MEDICAMENTOS	1467	\N	1467	\N	1467	1467
+605	2014-08-01	ARIAS FRANKLIN	5456447	PARRA DE ARIAS AURA	826745	MADRE	2014-04-21	2014-04-21	333913-31817	PIRITU 2	CONTRATADO	ASMA BRONQUIAL	MEDICAMENTOS	547.850000000000023	\N	547.850000000000023	\N	547.850000000000023	547.850000000000023
+606	2014-08-01	GONZALEZ ALICIA	6408282	GONZALEZ ALICIA	6408282	TITULAR	2014-04-24	2014-04-28	38101	WILLIAN LARA	CONTRATADO	CEFALEA DE FUERTE INTENSIDAD	EXAMENES 	490	\N	490	\N	490	490
+607	2014-08-01	PUERTA FEDERICO	7544554	TACHAN ELDA	4604675	ESPOSA	2014-04-08	2014-04-28	565	PAYARA	CONTRATADO	LITIASIS VESICULAR	CONSULTA	500	\N	500	\N	500	500
+608	2014-08-01	BENAVENTA JOSE	8633844	BENAVENTA JESUS	5361670	PADRE	2014-04-23	2014-04-28	1781	TRILLADORA	CONTRATADO	UROLOGIA	CONSULTA	500	\N	500	\N	500	500
+609	2014-08-01	CRESPO BELKYS	8657682	CRESPO BELKYS	8657682	TITULAR	2014-04-30	2014-04-30	243041-5030147	ACCION CENTRAL	CONTRATADO	POLIARTRITIS INFLAMATORIA EN ESTUDIO	EXAMANES+RX	3160	\N	3160	\N	3160	\N
+610	2014-08-01	CRESPO BELKYS	8657682	CRESPO JESUS	2499599	PADRE	2014-04-30	2014-04-30	31893-4031-384744-253803-421938-55052	ACCION CENTRAL	CONTRATADO	ENFERMEDAD RENAL	CONSULTA+RX+ MEDICAMENTOS	3716.38000000000011	\N	3716.38000000000011	\N	3716.38000000000011	6876.38000000000011
+611	2014-08-01	GONZALEZ MARGA	9432641	RODRIGUEZ ELENA	2396367	MADRE	2014-04-28	2014-04-28	83928	BANCO DE PAVONES	CONTRATADO	SINDROME AGUDO	MEDICAMENTOS	473.5	\N	473.5	\N	473.5	473.5
+612	2014-08-01	MENDEZ GIOVANNY	9837225	PINEDA ANA	12448545	TITULAR	2014-04-21	2014-04-21	4803	PIRITU 2	CONTRATADO	CERVICOBRAQUIALGIA	CONSULTA	500	\N	500	\N	500	500
+613	2014-08-01	MOLINA CARLOS	10135498	MOLINA RAFAEL	896771	PADRE	2014-04-28	2014-04-28	1184-4185-75946	ACCION CENTRAL	CONTRATADO	DOLOR LUMBAR-HIPERTENSION ARTERIAL	CONSULTA+EXAMENES	1125	\N	1125	\N	1125	1125
+614	2014-08-01	AGUIN VICTORIANO	10639072	AGUIN VICTORIANO	10639072	TITULAR	2014-04-22	2014-04-23	795-43-297273-45	PIRITU 2	CONTRATADO	HERIDAS COMPLICADAS EN          PIERNA IZQ.	CONSULTA+TERAPIAS	2332	\N	2332	\N	2332	2332
+615	2014-08-01	MENDOZA LISDY	11083527	CORDOBA REINA	4195617	MADRE	2014-04-25	2014-04-28	170412	ACCION CENTRAL	CONTRATADO	HAS ESTADIO 1	MEDICAMENTOS	598.17999999999995	\N	598.17999999999995	\N	598.17999999999995	598.17999999999995
+616	2014-08-01	RODRIGUEZ MARGHILYZ	11525250	MACHIQUEZ MARGARITA	3017735	MADRE	2014-04-28	2014-04-28	174985-1340	ACCION CENTRAL	CONTRATADO	AUMENTO DE VOLUMEN ENCIA VESTIBULAR SUPERIOR	TRATAMIENTO ODONTOLOGICO	2155.5	41779	2135	NO SE CANCELA OMEPRAZOL POR NO PRESENTAR INDICACIONES	2135	2135
+617	2014-08-01	MENDOZA MARIA A.	11540631	MENDOZA MARIA A.	11540631	TITULAR	2014-04-16	2014-04-16	1853-53618	ACCION CENTRAL	CONTRATADO	PRESBICIA	CONSULTA+MEDICAMENTOS	674.67999999999995	\N	674.67999999999995	\N	674.67999999999995	\N
+618	2014-08-01	MENDOZA MARIA A.	11540631	BRACHO DIEGO	MENOR	HIJO	2014-04-16	2014-04-16	1989-93263-6743	ACCION CENTRAL	CONTRATADO	ANEMIA	CONSULTA+MEDICAMENTOS+ EXAMENES	927.830000000000041	\N	927.830000000000041	\N	927.830000000000041	1602.50999999999999
+619	2014-08-01	PIÑA EMILIO	11847988	GONZALEZ MARIA	10644897	ESPOSA	2014-04-28	2014-04-28	271107-408717	PIRITU 3	CONTRATADO	DOLOR EN EPIGASTRIO	MEDICAMENTOS	286.509999999999991	79.5	207.009999999999991	NO SE CANCELA IVAGAN POR NO ESTAR EN RECIPE	207.009999999999991	207.009999999999991
+620	2014-08-01	CHIRINOS NELSON	12088526	CHIRINOS NELSON	12088526	TITULAR	2014-04-29	2014-04-30	5099	PIRITU 1	CONTRATADO	LUMBALGIA MECANICA	CONSULTA	400	\N	400	\N	400	\N
+621	2014-08-01	CHIRINOS NELSON	12088526	CHIRINOS NELSON	12088526	TITULAR	2014-04-25	2014-04-28	2289	PIRITU 1	CONTRATADO	LUMBALGIA EN ESTUDIO	ELECTROMIOGRAFIA	800	\N	800	\N	800	1200
+622	2014-08-01	MENDEZ ROSMARY	12090662	BONILLA RANIA	MENOR	HIJA	2014-04-21	2014-04-21	6190-90850-90856-48840	PIRITU 3	CONTRATADO	OTITIS MEDIA-HIPERACTIVIDAD BRONQUIAL	CONSULTA+MEDICAMENTOS	977.259999999999991	\N	977.259999999999991	\N	977.259999999999991	977.259999999999991
+623	2014-08-01	LANDINEZ ROSA	12092691	LICON HILDA	3043305	MADRE	2014-04-15	2014-04-16	299209-155399	MECANIZACION	CONTRATADO	SX METABOLICO-DM	MEDICAMENTOS	541.32000000000005	\N	541.32000000000005	\N	541.32000000000005	541.32000000000005
+624	2014-08-01	BLANCO GLADYS	12262410	BLANCO JESUS	3369826	PADRE	2014-04-30	2014-04-30	362195	PROD. AGRICOLA	CONTRATADO	HIPERTENSION ARTERIAL	MEDICAMENTOS	281.639999999999986	\N	281.639999999999986	\N	281.639999999999986	281.639999999999986
+625	2014-08-01	PIÑA JOSE	12264979	PIÑA MARIALIS	26379976	HIJA	2014-04-14	2014-04-23	345594	PAYARA	CONTRATADO	INFECCION DEL TRACTO URINARIO	MEDICAMENTOS	401	\N	401	\N	401	\N
+626	2014-08-01	PIÑA JOSE	12264979	PIÑA ZHARICK	MENOR	HIJA	2014-04-14	2014-04-23	345594	PAYARA	CONTRATADO	INFECCION DEL TRACTO URINARIO	MEDICAMENTOS	222.5	\N	222.5	\N	222.5	623.5
+627	2014-08-01	GONZALEZ GUILLERMO	12266407	GONZALEZ ALEXANDRA	17859422	ESPOSA	2014-04-14	2014-04-21	2059	PIRITU 1	CONTRATADO	VERTIGOS	CONSULTA	250	\N	250	\N	250	\N
+628	2014-08-01	GONZALEZ GUILLERMO	12266407	GONZALEZ GUILLERMO	MENOR	HIJO	2014-04-14	2014-04-21	38508-94824-5074	PIRITU 1	CONTRATADO	FARINGOAMIGDALITIS	CONSULTA+MEDICAMENTOS	637	\N	637	\N	637	887
+629	2014-08-01	RAMIREZ CARLOS	12475082	RAMIREZ LUIS CARLOS	MENOR	HIJO	2014-04-22	2014-04-28	2315	TRILLADORA	CONTRATADO	URTICARIA-AMIBIASIS	CONSULTA	500	\N	500	\N	500	500
+630	2014-08-01	APONTE MARBELIS	12562597	APONTE MARBELIS	12562597	TITULAR	2014-04-18	2014-04-28	213	WILLIAN LARA	CONTRATADO	CARIES EN UD. 41 Y 31	TRATAMIENTO ODONTOLOGICO	850	\N	850	\N	850	850
+631	2014-08-01	IACOBUCCI ALEXANDRA	13227704	PARRA ELIO	MENOR	HIJO	2014-04-22	2014-04-25	13026	BICEABASTO	CONTRATADO	HIPER BRONQ.	CONSULTA+TTO.	1200	\N	1200	\N	1200	1200
+632	2014-08-01	CONTRERA ARNALDO	13264124	CONTRERAS NATALY	MENOR	HIJA	2014-04-25	2014-04-28	3571	RIO GUARICO	CONTRATADO	CUADRO DE TOS ALERGICA	CONSULTA	400	\N	400	\N	400	\N
+633	2014-08-01	CONTRERA ARNALDO	13264124	CONTRERA ARNALDO	13264124	TITULAR	2014-04-25	2014-04-28	724462	RIO GUARICO	CONTRATADO	LUMBALGIA CRONICA	CONSULTA	250	\N	250	\N	250	650
+634	2014-08-01	SANCHEZ PEDRO	13556353	SANCHEZ LORENZO	MENOR	HIJO	2014-04-21	2014-04-21	255917	ACCION CENTRAL	CONTRATADO	FRACTURA RADIO DERECHO	MEDICAMENTOS	93	\N	93	\N	93	93
+635	2014-08-01	FIGUEROA JOSE	13585438	PEREZ ELDA	7540104	MADRE	2014-04-23	2014-04-23	3027	PIRITU 2	CONTRATADO	CATARATA SENIL	CONSULTA	500	\N	500	\N	500	500
+636	2014-08-01	CORDOVA CARLOS	13650017	SILVA MAYRA	15811039	ESPOSA	2014-04-14	2014-04-28	3160	TRILLADORA	CONTRATADO	EMBARAZO 17 SEMANAS	ECOSONOGRAMA PERINATOLOGICO	670	\N	670	\N	670	\N
+637	2014-08-01	CORDOVA CARLOS	13650017	SILVA MAYRA	15811039	ESPOSA	2014-04-24	2014-04-28	7196	TRILLADORA	CONTRATADO	EMBARAZO 20 SEMANAS	CONSULTA	600	\N	600	\N	600	\N
+638	2014-08-01	CORDOVA CARLOS	13650017	SILVA MAYRA	15811039	ESPOSA	2014-04-14	2014-04-28	202697-99200	TRILLADORA	CONTRATADO	EMBARAZO	MEDICAMENTOS	693	\N	693	\N	693	1963
+639	2014-08-01	MUÑOZ ROMEL	13585018	NAGUAS MARIA	17601053	ESPOSA	2014-04-29	2014-04-30	8275	PAYARA	CONTRATADO	EMBARAZO 21 SEMANAS	CONSULTA	500	\N	500	\N	500	500
+640	2014-08-01	ALVAREZ RODOLFO	14091105	ALVAREZ RODOLFO	14091105	TITULAR	2014-04-16	2014-04-16	11631-48314	TRANSPORTE	CONTRATADO	DM-2	MEDICAMENTOS	994.740000000000009	27.6600000000000001	967.080000000000041	SE DESCUENTA MEDICAMENTO POR NO ESTAR EN RECIPE	967.080000000000041	967.080000000000041
+641	2014-08-01	CAÑIZALEZ MARIA	14205596	ROSARIO ANGEL	MENOR	HIJO	2014-04-15	2014-04-16	40804-10456-257727-256685	ACCION CENTRAL	CONTRATADO	SIND. CATARRAL	CONSULTA+MEDICAMENTOS	919.519999999999982	\N	919.519999999999982	\N	919.519999999999982	919.519999999999982
+642	2014-08-01	PINEDA WILMER	14676853	PINEDA ROSAURA	5943673	MADRE	2014-04-21	2014-04-21	877116	PIRITU 2	CONTRATADO	INSUFICIENCIA VENOSA CRONICA	CONSULTA	300	\N	300	\N	300	\N
+643	2014-08-01	PINEDA WILMER	14676853	PINEDA WILMER	14676853	HIJA	2014-04-21	2014-04-21	38545-38544	PIRITU 2	CONTRATADO	ARTRITIS REUMATOIDEA	MEDICAMENTOS	240	\N	240	\N	240	\N
+644	2014-08-01	PINEDA WILMER	14676853	PINEDA ROSAURA	5943673	MADRE	2014-04-21	2014-04-21	872775	PIRITU 2	CONTRATADO	INSUFICIENCIA VENOSA CRONICA	ECO DOPLER	500	\N	500	\N	500	\N
+645	2014-08-01	PINEDA WILMER	14676853	PINEDA SAMUEL	MENOR	HIJO	2014-04-21	2014-04-21	1550	PIRITU 2	CONTRATADO	SINDROME GRIPAL	CONSULTA	400	\N	400	\N	400	\N
+646	2014-08-01	PINEDA WILMER	14676853	PINEDA SAMUEL	MENOR	HIJO	2014-04-21	2014-04-21	209755-113933	PIRITU 2	CONTRATADO	SINDROME GRIPAL	MEDICAMENTOS	211.199999999999989	\N	211.199999999999989	\N	211.199999999999989	1651.20000000000005
+647	2014-08-01	CARRASCO CIRILO	14888905	CARRASCO CIRILO	14888905	TITULAR	2014-04-30	2014-04-30	13253-52453	PROD. AGRICOLA	CONTRATADO	AMIGDALITIS	MEDICAMENTOS	454.5	\N	454.5	\N	454.5	454.5
+648	2014-08-01	SANCHEZ NEPTALY	15341658	SANCHEZ OMAIRA	1121047	MADRE	2014-04-23	2014-04-23	135321-957	ACCION CENTRAL	CONTRATADO	INSUFICIENCIA VENOSA	CONSULTA+MEDICAMENTOS	444.069999999999993	\N	444.069999999999993	\N	444.069999999999993	444.069999999999993
+649	2014-08-01	VILERA VICTOR	15480202	MEZA TERESA	16639190	ESPOSA	2014-04-25	2014-04-28	3853	TRILLADORA	CONTRATADO	CERVICODORSALGIA	CONSULTA	500	\N	500	\N	500	500
+650	2014-08-01	MERCADO GLADYS	15480499	MERCADO JOSE	5743755	PADRE	2014-04-24	2014-04-28	932-10508	BANCO DE PAVONES	CONTRATADO	DISPEPSIA	CONSULTA+ENDOSCOPIA+ EXAMENES	3670	\N	3670	\N	3670	3670
+651	2014-08-01	PIREZ PEDRO PABLO	15691566	MONTILLA YOBIESIZ	16566544	ESPOSA	2014-04-23	2014-04-23	80429-114940-97101-1199770-307-188043-187688-187700	ACCION CENTRAL	CONTRATADO	LITIASIS VESICULAR	CONSULTA+EXAMENES + TOMOGRAFIA+ECOSONOG.	5574.75	\N	5574.75	\N	5574.75	5574.75
+652	2014-08-01	PERAZA FRAMBER	15868665	PERAZA FRANCARLYS	30176862	HIJA	2014-04-22	2014-04-23	267435-720569-1492	AGUA BLANCA	CONTRATADO	URTICARIA	CONSULTA+MEDICAMENTOS	1187.3900000000001	\N	1187.3900000000001	\N	1187.3900000000001	1187.3900000000001
+653	2014-08-01	COLMENAREZ ELSY	15869120	COLMENAREZ TEODORO	5954761	PADRE	2014-04-28	2014-04-28	95417-5092	PIRITU 1	CONTRATADO	HTA+DISURIA	CONSULTA+MEDICAMENTOS	529	\N	529	\N	529	\N
+654	2014-08-01	COLMENAREZ ELSY	15869120	COLMENAREZ ELSY	15869120	TITULAR	2014-04-21	2014-04-21	38506-5535-1782	PIRITU 1	CONTRATADO	DODERLEIN	CONSULTA+MEDICAMENTOS	930	\N	930	\N	930	1459
+655	2014-08-01	MARQUEZ WILMER OMAR	16040072	MARQUEZ WILMER GILBERTO	3528866	PADRE	2014-04-16	2014-04-21	4271-118891-82772	ACCION CENTRAL	CONTRATADO	HAS ESTADIO 1	CONSULTA+EXAMENES	980	\N	980	\N	980	\N
+656	2014-08-01	MARQUEZ WILMER OMAR	16040072	CALDERON DE M. ANA	3766727	MADRE	2014-04-21	2014-04-21	294222	ACCION CENTRAL	CONTRATADO	CELULITIS EN GLUTEO DERECHO	MEDICAMENTOS	850	\N	850	\N	850	1830
+657	2014-08-01	RODRIGUEZ YOLEIDA	16090696	ARRIECHI BENEDICTA	7417036	MADRE	2014-04-21	2014-04-21	340807-51994	ACCION CENTRAL	CONTRATADO	RINOSINUSITIS	EXAMENES+MEDICAMENTOS	946	84	862	NO SE CANCELA BARGONIL POR NO ESTAR EN RECIPE	862	862
+658	2014-08-01	QUERO YAJAIRA	16292305	RAMIREZ MATIAS	MENOR	HIJO	2014-04-22	2014-04-22	14493	ACCION CENTRAL	CONTRATADO	AMIGDALITIS AGUDA	CONSULTA	500	\N	500	\N	500	\N
+659	2014-08-01	QUERO YAJAIRA	16292305	RAMIREZ MARIAS	MENOR	HIJO	2014-04-25	2014-04-25	341982	ACCION CENTRAL	CONTRATADO	AMIGDALITIS AGUDA	EXAMENES 	220	\N	220	\N	220	720
+660	2014-08-01	ROJAS FRANCISCO	16384206	MOLINA NANCY	17602520	ESPOSA	2014-04-23	2014-04-28	16783-70902	BANCO DE PAVONES	CONTRATADO	EMBARAZO 19 SEMANAS	CONSULTA+MEDICAMENTOS	912.649999999999977	\N	912.649999999999977	\N	912.649999999999977	\N
+661	2014-08-01	ROJAS FRANCISCO	16384206	MOLINA NANCY	17602520	ESPOSA	2014-04-23	2014-04-28	16293	BANCO DE PAVONES	CONTRATADO	CARIES AVANZADA EN UD 25	TRATAMIENTO ODONTOLOGICO	250	\N	250	\N	250	1162.65000000000009
+662	2014-08-01	PARRA ADA	16384778	PARRA ADA	16384778	TITULAR	2014-04-24	2014-04-28	644-2422	BANCO DE PAVONES	CONTRATADO	EMBARAZO 38 SEMANAS	CONSULTA+MEDICAMENTOS	691	191	500	SE DESCUENTA SUNTA POR NO ESTAR EN RECIPE	500	\N
+663	2014-08-01	PARRA ADA	16384778	PARRA ADA	16384778	TITULAR	2014-04-24	2014-04-28	38164	BANCO DE PAVONES	CONTRATADO	EMBARAZO 34 SEMANAS	EXAMENES 	440	\N	440	\N	440	940
+664	2014-08-01	RIVERO IVAN	16414995	RIVERO DIANA	MENOR	HIJA	2014-04-28	2014-04-28	2923-422599-49053	PIRITU 2	CONTRATADO	TOS LARINGO TRAQUEAL	CONSULTA+MEDICAMENTOS	714.870000000000005	\N	714.870000000000005	\N	714.870000000000005	\N
+665	2014-08-01	RIVERO IVAN	16414995	RIVERO CAMILA	MENOR	HIJA	2014-04-28	2014-04-28	1848-85558-300830-45295	ACCION CENTRAL	CONTRATADO	DERMATITIS ATOPICA	CONSULTA+MEDICAMENTOS	1432.72000000000003	\N	1432.72000000000003	\N	1432.72000000000003	\N
+666	2014-08-01	RIVERO IVAN	16414995	RIVERO DIANA	MENOR	HIJA	2014-04-28	2014-04-28	820-48799	ACCION CENTRAL	CONTRATADO	TOS-RINORREA	CONSULTA+MEDICAMENTOS	565.5	\N	565.5	\N	565.5	\N
+667	2014-08-01	RIVERO IVAN	16414995	RIVERO DIANA	MENOR	HIJA	2014-04-10	2014-04-10	2863	ACCION CENTRAL	CONTRATADO	RINORREA	CONSULTA	500	\N	500	\N	500	3213.09000000000015
+668	2014-08-01	FREITEZ RENZO	16416522	PEREIRA OMAIRA	19282523	ESPOSA	2014-04-30	2014-04-30	113	MECANIZACION	CONTRATADO	EMBARAZO 37 SEMANAS	CONSULTA	400	\N	400	\N	400	400
+669	2014-08-01	PACHECO ARMANDO 	16435847	PACHECO ARMARYS	MENOR	HIJA	2014-04-22	2014-04-28	37312	WILLIAN LARA	CONTRATADO	INFECCION URINARIA	EXAMENES 	1090	\N	1090	\N	1090	1090
+670	2014-08-01	GARCIA CARLOS	17362441	RODRIGUEZ KARIBETH	17256559	ESPOSA	2014-04-23	2014-04-23	297443-340	TRANSPORTE	CONTRATADO	EMBARAZO 25 SEMANAS	CONSULTA+MEDICAMENTOS	838.5	\N	838.5	\N	838.5	838.5
+671	2014-08-01	BILVAO ORANGEL	17374577	BILVAO CHRISTIAN	MENOR	HIJO	2014-04-22	2014-04-28	37287-37057-37058	WILLIAN LARA	CONTRATADO	NEUROSARIDOSIS	EXAMENES 	1700	\N	1700	\N	1700	1700
+672	2014-08-01	ARIAS YARIMY	17795983	ARIAS YARIMY	17795983	TITULAR	2014-04-28	2014-04-28	525	AGUA BLANCA	CONTRATADO	EMBARAZO 39 SEMANAS	CONSULTA	550	\N	550	\N	550	\N
+673	2014-08-01	ARIAS YARIMY	17795983	ARIAS YARIMY	17795983	TITULAR	2014-04-15	2014-04-16	523-521-331174-269043-33978	AGUA BLANCA	CONTRATADO	EMBARAZO 37 SEMANAS	CONSULTA+MEDICAMENTOS + EXAMENES	1875.75999999999999	114.459999999999994	1761.29999999999995	SE DESCUENTA PHARMORAT POR NO ESTAR EN RECIPE	1761.29999999999995	2311.30000000000018
+674	2014-08-01	TORRES JUVITO	17946898	TORRES CRISTIAN	MENOR	HIJO	2014-04-21	2014-04-23	627	PAYARA	CONTRATADO	RINITIS ALERGICA	CONSULTA	350	\N	350	\N	350	\N
+675	2014-08-01	TORRES JUVITO	17946898	TORRES JUBITO	7595971	PADRE	2014-04-21	2014-04-23	1005-108542	PAYARA	CONTRATADO	ODONTALGIA	TRATAMIENTO ODONTOLOGICO	747.019999999999982	190.080000000000013	556.940000000000055	NO SE CANCELA NUBY BIBERON	556.940000000000055	906.940000000000055
+676	2014-08-01	MANJARES HIVANEL	18102664	MANJARES HIVANEL	18102664	TITULAR	2014-04-16	2014-04-16	150525	MECANIZACION	CONTRATADO	DEGENERACION DISCAL	MEDICAMENTOS	182	\N	182	\N	182	182
+677	2014-08-01	PEREZ ANGEL	18405207	PEREZ GABRIEL	MENOR	HIJO	2014-04-14	2014-04-28	634	SAN ANTONIO	CONTRATADO	GLICEMIA ALTERADA	CONSULTA	600	\N	600	\N	600	\N
+678	2014-08-01	PEREZ ANGEL	18405207	URDANETA GREILY	19459618	ESPOSA	2014-03-24	2014-04-28	14324-410	SAN ANTONIO	CONTRATADO	EMBARAZO 4 SEMANAS	CONSULTA+EXAMENES	680	180	500	NO SE CUBRE PRUEBA DE EMBARAZO	500	\N
+679	2014-08-01	PEREZ ANGEL	18405207	URDANETA GREILY	19459618	ESPOSA	2014-04-14	2014-04-28	2666-69770-415	SAN ANTONIO	CONTRATADO	EMBARAZO 11 SEMANAS	CONSULTA+MEDICAMENTOS	631	270	361	NO SE CANCELA FACTURA 2666 POR NO ESPECIFICAR MEDICAMENTOS	361	\N
+680	2014-08-01	PEREZ ANGEL	18405207	URDANETA GREILY	19459618	ESPOSA	2014-04-11	2014-04-28	33198-52734-416	SAN ANTONIO	CONTRATADO	EMBARAZO	CONSULTA+MEDICAMENTOS	1137.04999999999995	\N	1137.04999999999995	\N	1137.04999999999995	2598.05000000000018
+681	2014-08-01	MEDINA NAUDIS	18799452	MEDINA SAID	MENOR	HIJO	2014-04-15	2014-04-16	42050-359-84290-13030	PIRITU 2	CONTRATADO	DERMATITIS ATOPICA	CONSULTA+MEDICAMENTOS+ EXAMENES	1400.28999999999996	\N	1400.28999999999996	\N	1400.28999999999996	\N
+682	2014-08-01	MEDINA NAUDIS	18799452	CELIS MARBELIS	13342804	ESPOSA	2014-04-23	2014-04-23	34	PIRITU 2	CONTRATADO	EMBARAZO 17 SEMANAS	CONSULTA	500	\N	500	\N	500	1900.28999999999996
+683	2014-08-01	QUERALES NAIROVY	18871270	ANSELAR MARY	MENOR	HIJA	2014-04-23	2014-04-25	67397-94-341530-152420	BICEABASTO	CONTRATADO	SX VIRAL, RINITIS ALERGICA	CONSULTA+MEDICAMENTOS+ EXAMANES+ECOSONOG.	1503.5	280	1223.5	NO SE CANCELA ECO RENAL POR NO PRESENTAR FACTURA (RECIBO DE PAGO)	1223.5	1223.5
+684	2014-08-01	LOPEZ YULEIMA	19053988	MORAN JUAN DIEGO	MENOR	HIJO	2014-04-29	2014-04-29	170631-71136-13261-1551	AGUA BLANCA	CONTRATADO	ENFERMEDAD DIARREICA AGUDA	MEDICAMENTOS+EXAMENES	471.529999999999973	160	311.529999999999973	SE DESCUENTAEXAMEN SIN ORDEN. FACTURA 13261 MEDICAMENTOSNO ESTAN EN RECIPE	311.529999999999973	311.529999999999973
+685	2014-08-01	HERNANDEZ CARLOS	19052735	TORRES ELIZABETH	9045204	MADRE	2014-04-25	2014-04-30	6383	PAYARA	CONTRATADO	INSUFICIENCIA VALVULAR	ECO DOPLER	1100	\N	1100	\N	1100	\N
+686	2014-08-01	HERNANDEZ CARLOS	19052735	TORRES ELIZABETH	9045204	MADRE	2014-04-25	2014-04-30	83424-3589-97278	PAYARA	CONTRATADO	HAS ESTADIO 1	CONSULTA+EXAMENES	1210	\N	1210	\N	1210	2310
+687	2014-08-01	RODRIGUEZ JINETH	19338681	VASQUEZ MELIDA	9157207	MADRE	2014-04-28	2014-04-28	3253-86162-362357-23460	ACCION CENTRAL	CONTRATADO	HTA COMPLICADA	CONSULTA+MEDICAMENTOS+ EXAMENES	2011.29999999999995	\N	2011.29999999999995	\N	2011.29999999999995	2011.29999999999995
+688	2014-08-01	FAJARDO ALBA	19760130	RIVERO ALBANY	MENOR	HIJA	2014-04-07	2014-04-25	4086	TRILLADORA	CONTRATADO	ADENOTONSILITIS INFECTADA	CONSULTA	400	\N	400	\N	400	400
+689	2014-08-01	RODRIGUEZ YUSMAIRA	19798052	LAMEDA JOSE	14425943	ESPOSO	2014-04-25	2014-04-28	1251176	PAYARA	CONTRATADO	ASTIGMATISMO MIOPICO	CONSULTA	700	\N	700	\N	700	\N
+690	2014-08-01	RODRIGUEZ YUSMAIRA	19798052	LAMEDA JOSE	14425943	ESPOSO	2014-04-25	2014-04-28	1249846	PAYARA	CONTRATADO	ASTIGMATISMO MIOPICO	CONSULTA	700	\N	700	\N	700	1400
+691	2014-08-01	SALCEDO GILDELIS	20388909	ORJUELA DIEGO	MENOR	HIJO	2014-04-11	2014-04-23	14404	PAYARA	CONTRATADO	CATARRO COMUN	CONSULTA	500	\N	500	\N	500	500
+692	2014-08-01	LINAREZ YACKELINE	20643168	LINAREZ YACKELINE	20643168	TITULAR	2014-04-30	2014-04-30	84	ACCION CENTRAL	CONTRATADO	EMBARAZO 15 SEMANAS	CONSULTA	500	\N	500	\N	500	500
+693	2014-08-01	BAREÑO BEATRIZ	20811114	BAREO BEATRIZ	20811114	TITULAR	2014-04-23	2014-04-23	31	ACCION CENTRAL	CONTRATADO	EXODONCIA DE CORDALES	TRATAMIENTO ODONTOLOGICO	800	\N	800	\N	800	800
+694	2014-08-01	VIVEROS HOWER	24588289	RIUIZ OMAIRA	24588396	MADRE	2014-04-16	2014-04-16	10969	TRANSPORTE	CONTRATADO	HIPERTENSION ARTERIAL	CONSULTA	600	\N	600	\N	600	600
+695	2014-08-01	PETRO MANUEL	81927543	PATRON DE P. SORAIDA	50846777	ESPOSA	2014-04-28	2014-04-28	58855-71261-217017	BANCO DE PAVONES	CONTRATADO	INSUFICIENCIA VENOSA	CONSULTA+MEDICAMENTOS	2899.26000000000022	\N	2899.26000000000022	\N	2899.26000000000022	2899.26000000000022
+696	2014-08-01	USTRERA SERGIO	5367225	USTRERA SERGIO	5367225	TITULAR	2014-04-21	2014-04-21	5872	PIRITU 2	OBRERO	HTA ESTADIO 1	CONSULTA	550	\N	550	\N	550	550
+697	2014-08-01	RODRIGUEZ SILA	8626902	RODRIGUEZ JESUS	28345509	HIJO	2014-04-25	2014-04-28	220260	TRILLADORA	OBRERO	INFECCION RESPIRATORIA	MEDICAMENTOS	881.639999999999986	\N	881.639999999999986	\N	881.639999999999986	881.639999999999986
+698	2014-08-01	TORRELLES JOSE	13072133	TORRELLES JOSE	13072133	TITULAR	2014-04-28	2014-04-28	5265	PAYARA	OBRERO	ARTRITIS CRONICA	CONSULTA	600	\N	600	\N	600	600
+699	2014-08-01	GALLEGOS GRINVER	16566374	GALLEGOS GRIVERLYS	MENOR	HIJA	2014-04-22	2014-04-23	84038-46887-6194	PIRITU 2	OBRERO	CUADRO VIRAL AGUDO	CONSULTA+MEDICAMENTOS+ EXAMENES	722.139999999999986	\N	722.139999999999986	\N	722.139999999999986	722.139999999999986
+700	2014-08-01	BARRIOS GENADIO	16964345	BARRIOS SEBASTIAN	MENOR	HIJO	2014-04-08	2014-04-23	11037-82842-25117	PAYARA	OBRERO	RINOSINUPATIA	CONSULTA+MEDICAMENTOS+ RX	1454.56999999999994	\N	1454.56999999999994	\N	1454.56999999999994	1454.56999999999994
+701	2014-08-01	REQUENA JOSE ARGENIS	18908635	REQUENA LUIS	MENOR	HIJO	2014-04-25	2014-04-28	10540	RIO GUARICO	OBRERO	RAQUITISMO	EXAMENES 	650	\N	650	\N	650	650
+702	2014-08-01	SOTO CARLOS	19715985	SOTO BRAYAN	MENOR	HIJO	2014-04-02	2014-04-23	3571	AGUA BLANCA	OBRERO	HERNIA INGUINAL	CONSULTA	500	\N	500	\N	500	500
+703	2014-08-01	LINAREZ YAURI	19799594	LINAREZ FRANYELIS	MENOR	HIJA	2014-04-21	2014-04-21	3939	PIRITU 2	OBRERO	INCORDINACION ANAL	CONSULTA	400	\N	400	\N	400	400
+704	2014-08-01	VALERA SERGIO	20809291	VALERA TIBISAY	9560834	MADRE	2014-04-21	2014-04-21	2670-119803	ACCION CENTRAL	OBRERO	DISFUNCION NEURO INTESTINAL	CONSULTA+EXAMENES	830	\N	830	\N	830	\N
+705	2014-08-01	VALERA SERGIO	20809291	VALERA TIBISAY	9560834	MADRE	2014-04-21	2014-04-21	131165-270045-129906	ACCION CENTRAL	OBRERO	GASTRITIS AGUDA+INFECCION URINARIA	MEDICAMENTOS	700.629999999999995	\N	700.629999999999995	\N	700.629999999999995	\N
+706	2014-08-01	VALERA SERGIO	20809291	VALERA TIBISAY	9560834	MADRE	2014-04-21	2014-04-21	130415-3989	ACCION CENTRAL	OBRERO	GLAUCOMA PRIMARIO	CONSULTA+MEDICAMENTOS	806	\N	806	\N	806	2336.63000000000011
+707	2014-09-01	ORTIZ NESTOR	3866991	RAMIREZ VICTORIA	4261562	ESPOSA	2014-04-28	2014-04-28	74531-9407	ACCION CENTRAL	CONTRATADO	BRONCOESPASMO AGUDO	CONSULTA+MEDICAMENTOS	1890	\N	1890	\N	1890	1890
+708	2014-09-01	GARCIA JOSE	5358599	GARCIA JOSE	5358599	TITULAR	2014-04-29	2014-05-10	4107-38234	WILLIAN LARA	CONTRATADO	RINUSOPATIA CRONICA	CONSULTA+EXAMENES	940	\N	940	\N	940	940
+709	2014-09-01	SIERRA EFREN	7543855	SIERRA ANDREA	MENOR	HIJA	2014-05-05	2014-05-05	5103-29368	PIRITU 2	CONTRATADO	DIARREA AGUDA FEBRIL	CONSULTA+EXAMENES	450	\N	450	\N	450	450
+710	2014-09-01	PUERTA FEDERICO	7544554	TACHAN ELDA	4604675	ESPOSA	2014-05-05	2014-05-05	5276-1309-10014412	PAYARA	CONTRATADO	INSUFICIENCIA VENOSA	CONSULTA+ECO+EXAMENES	1765	\N	1765	\N	1765	1765
+711	2014-09-01	CRESPO BELKYS	8657682	CRESPO JESUS	2499599	PADRE	2014-05-14	2014-05-14	254857-26324-326487-189651	ACCION CENTRAL	CONTRATADO	ERC EN HEMODIALISIS, SX CONVULSIVO	MEDICAMENTOS+EXAMENES+ TAC CEREBRAL	2556.82999999999993	\N	2556.82999999999993	\N	2556.82999999999993	2556.82999999999993
+712	2014-09-01	GONZALEZ VICTOR	8660983	FIGUEREDO NILDA	9840615	ESPOSA	2014-04-16	2014-05-02	5076	PIRITU 2	CONTRATADO	DOLOR PELVICO	CONSULTA+CITOLOGIA	700	\N	700	\N	700	700
+713	2014-09-01	FALCON ANTONIO	9842041	GUANIPA MARITZA	9841486	ESPOSA	2014-04-14	2014-05-14	5248-66-68-299833-296783	MECANIZACION	CONTRATADO	COLECISTITIS AGUDA	CONSULTA+MEDICAMENTOS	1491.84999999999991	\N	1491.84999999999991	\N	1491.84999999999991	1491.84999999999991
+714	2014-09-01	MOLINA CARLOS	10135498	MOLINA RAFAEL	896771	PADRE	2014-05-14	2014-05-14	4224-4254-190592	ACCION CENTRAL	CONTRATADO	HIPERTENSION ARTERIAL	CONSULTA+EXAMENES	1200	\N	1200	\N	1200	1200
+715	2014-09-01	SULBARAN ALEXIS	10144490	SULBARAN KEMBERLY	MENOR	HIJA	2014-05-12	2014-05-12	5340	PIRITU 2	CONTRATADO	GASTRITIS CRONICA ACTIVA	CONSULTA	500	\N	500	\N	500	500
+716	2014-09-01	AGUIN VICTORINANO	10639072	AGUIN VICTORIANO	10639072	TITULAR	2014-05-05	2014-05-05	54	PIRITU 2	CONTRATADO	FRACTURA FEMUR IZQ.	TERAPIAS	750	\N	750	\N	750	\N
+717	2014-09-01	AGUIN VICTORINANO	10639072	AGUIN VICTORIANO	10639072	TITULAR	2014-04-29	0020-05-14	50	PIRITU 2	CONTRATADO	FRACTURA FEMUR IZQ.	TERAPIAS	1000	\N	1000	\N	1000	1750
+718	2014-09-01	MENDOZA LISDY	11083527	CORDOBA REINA	4195617	MADRE	2014-05-15	2014-05-15	95754-5122	ACCION CENTRAL	CONTRATADO	CONTRACTURA MUSCULAR	CONSULTA+MEDICAMENTOS	789.009999999999991	\N	789.009999999999991	\N	789.009999999999991	789.009999999999991
+719	2014-09-01	CHOURIO NERIO	11215806	BRACHO JAKELINE	11225226	ESPOSA	2014-05-07	2014-05-10	1349	RIO GUARICO	CONTRATADO	DISURIA	CONSULTA+ECOSONOGRAMA	800	\N	800	\N	800	800
+720	2014-09-01	MENDOZA MARIA A.	11540631	MENDOZA PETRA	4198698	MADRE	2014-05-08	2014-05-08	651	ACCION CENTRAL	CONTRATADO	INSUFICIENCIA VENOSA	ECO DOPLER	700	\N	700	\N	700	700
+721	2014-09-01	ALVARADO JELIBETH	11785981	ALVARADO JELIBETH	11785981	TITULAR	2014-05-07	2014-05-12	3596	TRANSPORTE	CONTRATADO	BYPASS GASTRICO Y SOBREPESO	CONSULTA	350	\N	350	\N	350	\N
+722	2014-09-01	ALVARADO JELIBETH	11785981	ALVARADO JELIBETH	11785981	TITULAR	2014-04-28	2014-05-05	4371	TRANSPORTE	CONTRATADO	SINDROME VERTIGINOSO	EXAMENES 	580	\N	580	\N	580	930
+723	2014-09-01	TOVAR ALEXIS	12263227	TOVAR ALEXIS SEBASTIAN	MENOR	HIJO	2014-05-08	2014-05-14	368954	PROD. AGRICOLA	CONTRATADO	AMIGDALITIS PULTACEA	MEDICAMENTOS	256.350000000000023	\N	256.350000000000023	\N	256.350000000000023	256.350000000000023
+724	2014-09-01	GONZALEZ GUILLERMO	12266407	GONZALEZ DAVID	MENOR	HIJO	2014-05-13	2014-05-14	5989	PIRITU 1	CONTRATADO	DIABETES TIPO II	CONSULTA	500	\N	500	\N	500	500
+725	2014-09-01	ROJAS GIMMI	12858021	ROJAS BETTY	3527210	MADRE	2014-05-14	2014-05-14	897	TRANSPORTE	CONTRATADO	DIABETES TIPO II	CONSULTA	500	\N	500	\N	500	500
+726	2014-09-01	CONTRERAS ARNALDO	13264124	BRITO KATSUMY	13188563	ESPOSA	2014-05-07	2014-05-07	724976-143327-724974-79794	RIO GUARICO	CONTRATADO	CERVICOBRAQUIALGIA	CONSULTA+MEDICAMENTOS	883.610000000000014	121.599999999999994	762.009999999999991	SE DESCUENTA COLLARIN	762.009999999999991	\N
+727	2014-09-01	CONTRERAS ARNALDO	13264124	BRITO KATSUMY	13188563	ESPOSA	2014-05-04	2014-05-07	721656-175863-721891	RIO GUARICO	CONTRATADO	CERVICOBRAQUIALGIA	CONSULTA+RX COLUMNA	786	\N	786	\N	786	1548.00999999999999
+728	2014-09-01	DUARTE ALBARO	13569088	DUARTE KRISMAR	26674643	HIJA	2014-05-13	2014-05-14	4	BICEABASTO	CONTRATADO	RETENCIÓN DE UD 13,33,43	TRATAMIENTO ODONTOLOGICO	6000	\N	6000	\N	6000	6000
+729	2014-09-01	GOZAINE MIGUEL	13775225	GOZAINE MIGUEL	13775225	TITULAR	2014-04-23	2014-04-23	1153	ACCION CENTRAL	CONTRATADO	TX MIXTO ANSIOSO	CONSULTA	500	\N	500	\N	500	500
+730	2014-09-01	ALVAREZ RODOLFO	14091105	CARUCI YURAIMA	13073222	ESPOSA	2014-05-14	2014-05-14	515061-76626-106874	TRANSPORTE	CONTRATADO	RINOSINUSITIS FEBRIL	MEDICAMENTOS	575.220000000000027	5	570.220000000000027	NO SE CANCELA JERINGA	570.220000000000027	\N
+731	2014-09-01	ALVAREZ RODOLFO	14091105	ALVAREZ FABIAN	MENOR	HIJO	2014-05-14	2014-05-14	2265-76625-153201-145507	TRANSPORTE	CONTRATADO	RINITIS AGUDA-OTITIS	CONSULTA+MEDICAMENTOS	1151.38000000000011	5	1146.38000000000011	NO SE CANCELA LORATADINA POR NO ESTAR EN RECIPE	1146.38000000000011	\N
+732	2014-09-01	ALVAREZ RODOLFO	14091105	ALVAREZ ROHANY	MENOR	HIJA	2014-05-05	2014-05-05	151029-91787-99453	TRANSPORTE	CONTRATADO	ASMA MODERADA	MEDICAMENTOS	446.75	\N	446.75	\N	446.75	\N
+733	2014-09-01	ALVAREZ RODOLFO	14091105	ALVAREZ FABIAN	MENOR	HIJO	2014-05-05	2014-05-05	2244-204985-18570-51905-78655-71275	TRANSPORTE	CONTRATADO	RINOFARINGITIS AGUDA	CONSULTA+MEDICAMENTOS	2358.55000000000018	\N	2358.55000000000018	\N	2358.55000000000018	4521.89999999999964
+734	2014-09-01	ANGULO OLGA	14092444	ANGULO OLGA	14092444	TITULAR	2014-04-23	2014-05-12	1665-269969-38585-6304-1666	PIRITU 3	CONTRATADO	GASTRODUODENOPATIA	CONSULTA+ECO+ MEDICAMENTOS	3651	\N	3651	\N	3651	3651
+735	2014-09-01	MENDOZA ANIBAL	14092815	MENDOZA ANTHONY	MENOR	HIJO	2014-05-13	2014-05-14	2880	PAYARA	CONTRATADO	SINDROME RINOSINOBROQUIAL	CONSULTA	600	\N	600	\N	600	600
+736	2014-09-01	ALVAREZ ALIRIO	14425184	ALVAREZ JOSE FRANCISCO	MENOR	HIJO	2014-05-08	2014-05-12	530	PIRITU 1	CONTRATADO	OBSTRUCCION PARCIAL INTESTINAL	CONSULTA	500	\N	500	\N	500	\N
+737	2014-09-01	ALVAREZ ALIRIO	14425184	ALVAREZ JOSE FRANCISCO	MENOR	HIJO	2014-05-14	2014-05-14	64	PIRITU 1	CONTRATADO	VARICELA	CONSULTA	450	\N	450	\N	450	950
+738	2014-09-01	COLMENAREZ JOSE	14425942	MORENO GEORGINA	4201889	MADRE	2014-04-24	2014-05-02	236076	PIRITU 2	CONTRATADO	CARDIOPATIA ISQUEMICA	MEDICAMENTOS	1002	\N	1002	\N	1002	1002
+739	2014-09-01	CIOFFI REINA	14538752	APONTE HILDA	5154202	MADRE	2014-04-23	2014-04-28	298902-329551-328042-6786-52185-33855-300793	SAN ANTONIO	CONTRATADO	SINDROME COMICIAL Y VERTIGINOSO	MEDICAMENTOS	3589.40999999999985	506.269999999999982	3083.13999999999987	NO SE CANCELAN FACTURAS VENCIDAS	3083.13999999999987	\N
+740	2014-09-01	CIOFFI REINA	14538752	CIOFFI SEBASTIAN	MENOR	HIJO	2014-04-23	2014-04-28	209483-5043	SAN ANTONIO	CONTRATADO	SINDROME FEBRIL TIPO DENGUE	CONSULTA+MEDICAMENTOS	457	\N	457	\N	457	3540.13999999999987
+741	2014-09-01	ESCORCHA NORAILY	14676545	ESCORCHA NELLYS	7542709	MADRE	2014-05-14	2014-05-14	1290-38551	ACCION CENTRAL	CONTRATADO	INFECCION VAGINAL	CONSULTA+MEDICAMENTOS	1086.99000000000001	\N	1086.99000000000001	\N	1086.99000000000001	1086.99000000000001
+742	2014-09-01	PINEDA WILMER	14676853	PINEDA SAMUEL	MENOR	HIJO	2014-05-05	2014-05-12	12872	PIRITU 2	CONTRATADO	CUADRO DE BRONCOESPASMO	MEDICAMENTOS	221	\N	221	\N	221	221
+743	2014-09-01	GUEVARA ARCANGEL	14677755	JIMENEZ KARLA	19637184	ESPOSA	2014-04-30	2014-05-02	354	PIRITU 2	CONTRATADO	EMBARAZO 26 SEMANAS	CONSULTA	600	\N	600	\N	600	600
+744	2014-09-01	MORA YOSIRIS	14887082	MORA JOAQUIN	30441126	HIJO	2014-05-14	2014-05-14	616-98011	PROD. AGRICOLA	CONTRATADO	RINOSINUSITIS	CONSULTA+MEDICAMENTOS	594.899999999999977	\N	594.899999999999977	\N	594.899999999999977	594.899999999999977
+745	2014-09-01	AZUAJE JORGE	14888607	RIVERO GLADYS	5363919	MADRE	2014-05-12	2014-05-12	1067	ACCION CENTRAL	CONTRATADO	HIPERTENSION ARTERIAL	CONSULTA	600	\N	600	\N	600	600
+746	2014-09-01	MORALES CARMEN	14926613	MORALES CARMEN	14926613	TITULAR	2014-05-08	2014-05-12	2883-333991	BANCO DE PAVONES	CONTRATADO	CUERPO EXTRAÑO EN OJO IZQUIERDO	CONSULTA+MEDICAMENTOS	625.059999999999945	\N	625.059999999999945	\N	625.059999999999945	625.059999999999945
+747	2014-09-01	MERCADO GLADYS	15480499	HERNANDEZ ALEXANDRA	MENOR	HIJA	2014-04-30	2014-05-26	38583	BANCO DE PAVONES	CONTRATADO	ENTEROPATÍA INFLAMATORIA	TAC DE ABDOMEN	1250	\N	1250	\N	1250	\N
+748	2014-09-01	MERCADO GLADYS	15480499	HERNANDEZ ALEXANDRA	MENOR	HIJA	2014-05-08	2014-05-12	5090	BANCO DE PAVONES	CONTRATADO	SINDROME VIRAL, REFLUJO GASTRICO	CONSULTA	350	\N	350	\N	350	1600
+749	2014-09-01	MENDEZ LISBETH	15491902	VARGAS MICHELLE	MENOR	HIJA	2014-05-12	2014-05-13	359-139378	AGUA BLANCA	CONTRATADO	IRB NEUMONIA	MEDICAMENTOS	250.830000000000013	35	215.830000000000013	SE DESCUENTA CEBION POR NO ESTAR EN RECIPE	215.830000000000013	\N
+750	2014-09-01	MENDEZ LISBETH	15491902	MENDEZ DERIBETH	MENOR	HIJA	2014-05-12	2014-05-13	4572-139274-142199	AGUA BLANCA	CONTRATADO	ASMA NO CONTROLADA, NEUMONIA	CONSULTA+MEDICAMENTOS	1193.8900000000001	\N	1193.8900000000001	\N	1193.8900000000001	1409.72000000000003
+751	2014-09-01	PERAZA FRANMER	15868665	PERAZA MARÍA	9258033	MADRE	2014-05-12	2014-05-12	9427-9447	AGUA BLANCA	CONTRATADO	GRANULOMA PULMONAR	CONSULTA+MEDICAMENTOS	2390	1890	500	SE CANCELA SÓLO CONSULTA. MEDICAMENTOS EN REVISION	500	\N
+752	2014-09-01	PERAZA FRANMER	15868665	PERAZA MARIA	9258033	MADRE	2014-04-08	2014-05-27	17883-17894	AGUA BLANCA	CONTRATADO	FIBROMIALGIA	CONSULTA+MEDICAMENTOS	600	\N	600	REEMBOLSO VENCIDO APROBADO POR RRHH	600	\N
+753	2014-09-01	PERAZA FRANMER	15868665	PERAZA MARIA	9258033	MADRE	2014-05-12	2014-05-13	814-140659-48928-180338-18446-178133	AGUA BLANCA	CONTRATADO	FIBROMIALGIA	MEDICAMENTOS	1622.02999999999997	200	1422.02999999999997	NO SE CUBRE NOTOLAC POR NO ESTAR EN RECIPE	1422.02999999999997	2522.0300000000002
+754	2014-09-01	COLMENAREZ ELSY	15869120	COLMENAREZ TEODORO	5954761	PADRE	2014-05-12	2014-05-12	654	PIRITU 1	CONTRATADO	HTA	ECOSONOGRAMA ABDOMINAL	250	\N	250	\N	250	250
+755	2014-09-01	GARCIA KELLYS	16073371	RIVERO JHOANNY	18371119	ESPOSA	2014-05-12	2014-05-12	730-34046	TRANSPORTE	CONTRATADO	EMBARAZO 29 SEMANAS+INFECCION URIN.	CONSULTA+EXAMENES	990	\N	990	\N	990	990
+756	2014-09-01	RODRIGUEZ YOLEIDA	16090696	ARRIECHI BENEDICTA	7417036	MADRE	2014-05-12	2014-05-12	6153-390-617-77619	ACCION CENTRAL	CONTRATADO	RINOSINUSITIS+FARINGITIS	CONSULTA+EXAMENES+ MEDICAMENTOS	2046.75	150	1896.75	SE DESCUENTA LABORATORIOS POR NO PRESENTAR ORDEN	1896.75	1896.75
+757	2014-09-01	RIVERO IVAN	16414995	MATOS DAMARYS	16751467	MADRE	2014-05-06	2014-05-06	650-348527-152970	ACCION CENTRAL	CONTRATADO	VAGINOSIS BACTERIANA	CONSULTA+MEDICAMENTOS	1733.5	197	1536.5	NO SE CUBRE FERGANIC FOLIC POR NO ESTAR EN RECIPE	1536.5	1536.5
+758	2014-09-01	ABREU JOSE	16640816	RONDON ELIHU	17937219	ESPOSA	2014-04-30	2014-05-05	2855	WILLIAN LARA	CONTRATADO	QUERATITIS	CONSULTA	500	\N	500	\N	500	500
+759	2014-09-01	TORREALBA JOSE	16753020	RODRIGUEZ CANDIDA	9564776	MADRE	2014-05-09	2014-05-12	516582-3146	PIRITU 2	CONTRATADO	FARINGITIS	CONSULTA+MEDICAMENTOS	1105.5	\N	1105.5	\N	1105.5	1105.5
+760	2014-09-01	LEON JAVIER	16753367	AULAR MARIA JOSE	19377276	ESPOSA	2014-05-05	2014-05-05	838-2862	ACCION CENTRAL	CONTRATADO	EMBARAZO 33 SEMANAS	CONSULTA+EXAMENES	1000	\N	1000	\N	1000	\N
+761	2014-09-01	LEON JAVIER	16753367	LEON DANIEL	MENOR	HIJO	2014-05-09	2014-05-09	2054	ACCION CENTRAL	CONTRATADO	CUERPO EXTRAÑO OD+CONJUNTIVITIS	CONSULTA	500	\N	500	\N	500	\N
+762	2014-09-01	LEON JAVIER	16753367	AULAR MARIA JOSE	19377276	ESPOSA	2014-05-15	2014-05-15	848-2946	ACCION CENTRAL	CONTRATADO	EMBARAZO 36 SEMANAS	CONSULTA+EXAMENES	820	\N	820	\N	820	2320
+763	2014-09-01	HERNANDEZ ARELIS	16913080	HERNANDEZ ARELIS	16913080	TITULAR	2014-05-08	2014-05-12	22446	BANCO DE PAVONES	CONTRATADO	RUPTURA DE LIGAMENTO CRUZADO ANTERIOR	CONSULTA	700	\N	700	\N	700	700
+764	2014-09-01	QUERALES LUIS	17277931	QUERALES ANGEL	MENOR	HIJO	2014-05-05	2014-05-05	5255	PIRITU 2	CONTRATADO	PIE PLANO	CONSULTA	500	\N	500	\N	500	500
+765	2014-09-01	GARCIA CARLOS	17362441	RODRIGUEZ KARIBETH	17276559	ESPOSA	2014-05-12	2014-05-12	346	TRANSPORTE	CONTRATADO	EMBARAZO	CONSULTA	650	\N	650	\N	650	650
+766	2014-09-01	CASTILLO CARLOS	17601438	CASTILLO PASCUAL	9841895	PADRE	2014-05-08	2014-05-12	318	PIRITU 2	CONTRATADO	RINITIS CRONICA	CONSULTA	400	\N	400	\N	400	400
+767	2014-09-01	GALLEGOS MILAGROS	17796642	GALLEGOS MILAGROS	17796642	TITULAR	2014-03-20	2014-03-20	6351	ACCION CENTRAL	CONTRATADO	TRASTORNOS MENSTRUALES	CONSULTA+CITOLOGIA	600	\N	600	\N	600	600
+768	2014-09-01	GALINDEZ LISNEY	17977278	GALINDEZ ADDIS	3907431	PADRE	2014-05-05	2014-05-05	51167-16344-333290	PAYARA	CONTRATADO	DIABETES TIPO II	MEDICAMENTOS	753.600000000000023	\N	753.600000000000023	\N	753.600000000000023	753.600000000000023
+769	2014-09-01	MONTES GREGORIA	17945099	MENDOZA SANTIAGO	MENOR	HIJO	2014-05-13	2014-05-14	2265-76625-153201-145507	PAYARA	CONTRATADO	COQUELUCHE	CONSULTA	400	\N	400	\N	400	400
+770	2014-09-01	TORRES JUVITO	17946898	TORRES JUVITO	7595971	PADRE	2014-04-21	2014-05-05	1006	PAYARA	CONTRATADO	ABSCESO APICAL	TRATAMIENTO ODONTOLOGICO	500	\N	500	\N	500	500
+810	2014-10-01	ROSA ISAIAS	10144706	ROSA JOSLEIDYS	30484710	HIJA	2014-05-26	2014-05-27	3660	AGUA BLANCA	CONTRATADO	ADENOTONSILITIS	CONSULTA	500	\N	500	\N	500	500
+771	2014-09-01	MARTINEZ YENIRE	18297349	MARTINEZ YENIRE	18297349	TITULAR	2014-05-12	2014-05-12	816-189275	PAYARA	CONTRATADO	TENDINITIS CRONICA	CONSULTA+RX DE HOMBRO	807	\N	807	\N	807	\N
+772	2014-09-01	MARTINEZ YENIRE	18297349	MARTINEZ JOSE	80344317	PADRE	2014-05-05	2014-05-05	267258-114947-114912-130837	PAYARA	CONTRATADO	HIPERPLASIA PROSTATICA+DIABETES 	MEDICAMENTOS	750.600000000000023	129.5	621.100000000000023	SE DESCUENTAN MEDICAMENTOS POR NO ESTAR EN RECIPE+JERINGA	621.100000000000023	1428.09999999999991
+773	2014-09-01	MENDONCA JOSE	18672248	DA SILVA MAYERLIN	20273396	ESPOSA	2014-05-12	2014-05-12	5115	PIRITU 3	CONTRATADO	MASTALGIA DERECHA	CONSULTA	500	\N	500	\N	500	500
+774	2014-09-01	QUERALES NAYROVI	18871270	ANSELAR MARY CARMEN	MENOR	HIJA	2014-05-13	2014-05-14	722	BICEABASTO	CONTRATADO	ACIDOSIS METABOLICA	CONSULTA	500	\N	500	\N	500	500
+775	2014-09-01	FREITEZ INDEMAR	19192723	FREITEZ DANIELA	MENOR	HIJA	2014-04-30	2014-05-02	159442-1505	BICEABASTO	CONTRATADO	PARASITOSIS INTESTINAL	CONSULTA+MEDICAMENTOS	635	\N	635	\N	635	635
+776	2014-09-01	AQUINO CRISTIAN	19343805	AQUINO CRISTIAN	19343805	TITULAR	2014-05-02	2014-05-10	536	WILLIAN LARA	CONTRATADO	RINOSINUSITIS AGUDA+ASMA	CONSULTA+MEDICAMENTOS	700	\N	700	\N	700	700
+777	2014-09-01	ROJAS JUANA	19376966	ROJAS JUANA	19376966	TITULAR	2014-04-30	2014-05-02	320+361	BICEABASTO	CONTRATADO	EMBARAZO 25 SEMANAS	CONSULTA+EXAMENES	550	\N	550	\N	550	550
+778	2014-09-01	CONDE KEVIN	19798851	VERGARA EDUARDA	11080295	MADRE	2014-05-05	2014-05-05	3131-172607	ACCION CENTRAL	CONTRATADO	OTITIS EXTERNA	CONSULTA+EXAMENES	980	\N	980	\N	980	980
+779	2014-09-01	VERA JOSE	19636886	VERA ANDREA	MENOR	HIJA	2014-04-30	2014-05-02	239555	PIRITU 2	CONTRATADO	CONJUNTIVITIS	MEDICAMENTOS	265.5	\N	265.5	\N	265.5	\N
+780	2014-09-01	VERA JOSE	19636886	SUAREZ LUISANA	19799070	ESPOSA	2014-04-30	2014-05-02	1654-67918-158893-176913	PIRITU 2	CONTRATADO	HIPOTIROIDISMO PRIMARIO	CONSULTA+MEDICAMENTOS	1117.34999999999991	272.029999999999973	845.32000000000005	NO SE CANCELAN TAVANIC Y MALTOFERFOL POR NO ESTAR EN RECIPE	845.32000000000005	1110.81999999999994
+781	2014-09-01	HERNANDEZ JOSE ANTONIO	19759261	HERNANDEZ DEISY	MENOR	HIJA	2014-04-30	2014-05-05	870	TRILLADORA	CONTRATADO	ASMA	CONSULTA	500	\N	500	\N	500	500
+782	2014-09-01	LINAREZ JOHAN	20158558	LINAREZ JACKSON	MENOR	HIJO	2014-05-12	2014-05-12	241923-660	PIRITU 3	CONTRATADO	BRONQUITIS AGUDA	CONSULTA+MEDICAMENTOS	945	270	675	NO SE CANCELAN EXAMENES POR NO PRESENTAR ORDEN	675	675
+783	2014-09-01	SALCEDO GILDELIS	20388909	ORJUELA DIEGO	MENOR	HIJO	2014-05-06	2014-05-12	513773-100461	PAYARA	CONTRATADO	BRONQUITIS AGUDA	MEDICAMENTOS	568.450000000000045	\N	568.450000000000045	\N	568.450000000000045	568.450000000000045
+784	2014-09-01	BARRETO CINDY	20389614	PEÑUELA BARBARA	MENOR	HIJA	2014-05-06	2014-05-07	1559-342321-342103-75142	PIRITU 2	CONTRATADO	DERMATITIS ATOPICA	CONSULTA+EXAMENES+ MEDICAMENTOS	760.039999999999964	\N	760.039999999999964	\N	760.039999999999964	760.039999999999964
+785	2014-09-01	VIVEROS HOWER	24588289	RUIZ OMAIRA	24588396	MADRE	2014-05-14	2014-05-14	3141-1464-34450-72699-87734	TRANSPORTE	CONTRATADO	CARDIOPATIA, CAROTIDINEA	CONSULTA+MEDICAMENTOS + EXAMENES	2327.73000000000002	\N	2327.73000000000002	\N	2327.73000000000002	\N
+786	2014-09-01	VIVEROS HOWER	24588289	RUIZ OMAIRA	24588396	MADRE	2014-05-05	2014-05-05	294367	TRANSPORTE	CONTRATADO	HIPERTENSION ARTERIAL	MEDICAMENTOS	431	\N	431	\N	431	2758.73000000000002
+787	2014-09-01	ORTIZ FRANCISCO	12262363	ORTIZ ANDREA	MENOR	HIJA	2014-05-09	2014-05-09	737	ACCION CENTRAL	PRESIDENCIA	REFLUJO GASTROESOFAGICO	CONSULTA	500	\N	500	\N	500	\N
+788	2014-09-01	ORTIZ FRANCISCO	12262363	ORTIZ FRANCISCO	12262363	TITULAR	2014-05-09	2014-05-09	9344	ACCION CENTRAL	PRESIDENCIA	HEPATITIS	CONSULTA	650	\N	650	\N	650	1150
+789	2014-09-01	GOMEZ CARMEN	9841301	GOMEZ CARMEN	9841301	TITULAR	2014-04-29	2014-05-05	451	BICEABASTO	OBRERO	ABDOMEN AGUDO, PROBABLE COLONOPATÍA	CONSULTA	700	\N	700	\N	700	\N
+790	2014-09-01	GOMEZ CARMEN	9841301	GOMEZ CARMEN	9841301	TITULAR	2014-05-13	2014-05-14	3666-13298	BICEABASTO	OBRERO	ABDOMEN AGUDO, PROBABLE COLONOPATÍA	ECO MAMARIO+MAMOGRAFIA	900	\N	900	\N	900	1600
+791	2014-09-01	LUCENA MARY LUZ	12447000	LUCENA JACINTO	4611989	PADRE	2014-05-15	2014-05-15	5127	ACCION CENTRAL	OBRERO	CARDIOPATIA MIXTA	CONSULTA	700	\N	700	\N	700	700
+792	2014-09-01	TORRELLES JOSE	13072133	TORRELLES JOSE	13072133	TITULAR	2014-05-14	2014-05-14	5332	PAYARA	OBRERO	MONOARTRITIS CRONICA	CONSULTA	600	\N	600	\N	600	600
+793	2014-09-01	MUÑOZ ORLANDO	15102013	MUÑOZ ADRIAN	MENOR	HIJO	2014-05-02	2014-05-02	576-4949	AGUA BLANCA	OBRERO	TRAUMATISMO EN CADERA+ESTREÑIMIENTO	CONSULTA	950	\N	950	REEMBOLSO VENCIDO APROBADO POR RRHH	950	950
+794	2014-09-01	BARRIOS GENADIO	16964345	BARRIOS SEBASTIAN	MENOR	HIJO	2014-05-06	2014-05-12	11208	PAYARA	OBRERO	TOS SECA, MALESTAR	CONSULTA	400	\N	400	\N	400	400
+795	2014-09-01	TORREALBA LORENZO	18871213	TORREALBA LORENZO	18871213	TITULAR	2014-05-06	2014-05-12	5113	PIRITU 2	OBRERO	DOLOR EN HIPOGASTRIO	ECOSONOGRAMA HEPATICO	300	\N	300	\N	300	300
+796	2014-09-01	MEDINA FREDDY	20025575	VELOZ ELIANA	21058596	ESPOSA	2014-05-05	2014-05-05	5105-300916	PIRITU 3	OBRERO	EMBARAZO 5 SEMANAS	CONSULTA+MEDICAMENTOS	1089.5	\N	1089.5	\N	1089.5	1089.5
+797	2014-09-01	MAJANO JUNIOR	20271985	MAJANO JONAIKER	MENOR	HIJO	2014-05-12	2014-05-12	2041	AGUA BLANCA	OBRERO	MOLUSCOS CONTAGIOSOS	CONSULTA	500	\N	500	\N	500	500
+798	2014-10-01	FLORES LUIS	3693865	RIVERO MARIA	5941780	ESPOSA	2014-05-26	2014-05-26	10050	PIRITU 1	CONTRATADO	HIPOTIROIDISMO 	CONSULTA	1000	\N	1000	\N	1000	1000
+799	2014-10-01	ARELLANO SALUSTIO ALIPIO	5940201	ALIPIO SALUSTIO ALIPIO	5940201	TITULAR	2014-05-21	2014-05-26	1257	AGUA BLANCA	CONTRATADO	RESINA EN INCISIVO	TRATAMIENTO ODONTOLOGICO	500	\N	500	\N	500	500
+800	2014-10-01	CARDENAS JOSE	5948461	CASTILLO PETRA	3868229	MADRE	2014-05-26	2014-05-26	49045-6454-16924	PROD. AGRICOLA	CONTRATADO	SINDROME METABOLICO CRONICO	EXAMENES+MEDICAMENTOS +RX	1050	\N	1050	\N	1050	\N
+801	2014-10-01	CARDENAS JOSE	5948461	CASTILLO PETRA	3868229	MADRE	2014-05-26	2014-05-26	363519-42640	PROD. AGRICOLA	CONTRATADO	SINDROME METABOLICO CRONICO	MEDICAMENTOS	302.29000000000002	\N	302.29000000000002	\N	302.29000000000002	\N
+802	2014-10-01	CARDENAS JOSE	5948461	CASTILLO PETRA	3868229	MADRE	2014-05-26	2014-05-26	513-49681-372901-425601	PROD. AGRICOLA	CONTRATADO	HIPOTIROIDISMO 	CONSULTA+MEDICAMENTOS	1630.07999999999993	\N	1630.07999999999993	\N	1630.07999999999993	2982.36999999999989
+803	2014-10-01	HOPKINS JEANET	6549906	HOPKINS GLADYS	1737140	MADRE	2014-05-15	2014-05-26	232841-492165-492360	WILLIAN LARA	CONTRATADO	ADC PANCREAS Y OVARIO	TOMOGRAFIA+EXAMENES	10318	\N	10318	\N	10318	10318
+804	2014-10-01	GALINDEZ WILFREDO	7405389	RODRIGUEZ VIDALINA	2534085	MADRE	2014-05-27	2014-05-27	8110	ACCION CENTRAL	CONTRATADO	CATARATA EN OJO DERECHO	CONSULTA	600	\N	600	\N	600	600
+805	2014-10-01	BENAVENTA JOSE	8633844	BENAVENTA ANGEL	MENOR	HIJO	2014-05-09	2014-05-20	1191	TRILLADORA	CONTRATADO	HIDRONEFROSIS IZQUIERDA	CONSULTA	700	\N	700	\N	700	700
+806	2014-10-01	CRESPO BELKYS	8657682	CRESPO BELKYS	8657682	TITULAR	2014-05-23	2014-05-23	311366	ACCION CENTRAL	CONTRATADO	ARTRITIS DEGENERATIVA	MEDICAMENTOS	517	\N	517	\N	517	517
+807	2014-10-01	GONZALEZ VICTOR	8660986	SANCHEZ SARA	1227567	MADRE	2014-05-19	2014-05-21	5	PIRITU 2	CONTRATADO	PARO RESPIRATORIO	SERVICIOS FUNERARIOS	4500	\N	4500	\N	4500	4500
+808	2014-10-01	MENDEZ GIOVANNI	9837225	MENDEZ GIOVANNI	9837225	TITULAR	2014-05-19	2014-05-22	1503	PIRITU 2	CONTRATADO	LESIONES ERITEMATOSAS EN OREJAS	CONSULTA	500	\N	500	\N	500	500
+809	2014-10-01	COLLAZO RAFAEL	9839635	COLLAZO RAFAEL	9839635	TITULAR	2014-05-26	2014-05-26	971	PROD. AGRICOLA	CONTRATADO	DIABETES MELLITUS	CONSULTA	300	\N	300	\N	300	300
+811	2014-10-01	AGUIN VICTORIANO	10639072	AGUIN VICTORIANO	10639072	TITULAR	2014-05-26	2014-05-26	69	PIRITU 2	CONTRATADO	DISMINUCION DE AMPLITUD EN RODILLA	TERAPIAS	1120	\N	1120	\N	1120	\N
+812	2014-10-01	AGUIN VICTORIANO	10639072	AGUIN VICTORIANO	10639072	TITULAR	2014-05-19	2014-05-22	871	PIRITU 2	CONTRATADO	HERIDA COMPLICADA EN PIERNA	CONSULTA	600	\N	600	\N	600	\N
+813	2014-10-01	AGUIN VICTORIANO	10639072	AGUIN VICTORIANO	10639072	TITULAR	2014-05-14	2014-05-22	62	PIRITU 2	CONTRATADO	DISMINUCION DE AMPLITUD EN RODILLA	TERAPIAS	1960	\N	1960	\N	1960	3680
+814	2014-10-01	MENDOZA LISDY	11083527	CORDOBA REINA	4195617	MADRE	2014-05-22	2014-05-22	173411-153195	ACCION CENTRAL	CONTRATADO	HAS ESTADIO 	MEDICAMENTOS	658.110000000000014	\N	658.110000000000014	\N	658.110000000000014	658.110000000000014
+815	2014-10-01	CHOURIO NERIO	11215806	CHOURIO LUZNEIRIS	26177412	ESPOSA	2014-05-26	2014-05-26	728-341671-258060	RIO GUARICO	CONTRATADO	INFECCION RESPIRATORIA	CONSULTA+MEDICAMENTOS	571.009999999999991	\N	571.009999999999991	\N	571.009999999999991	571.009999999999991
+816	2014-10-01	RODRIGUEZ MARGHILYZ	11525250	RODRIGUEZ MARGHILYZ	11525250	TITULAR	2014-05-23	2014-05-23	30045	ACCION CENTRAL	CONTRATADO	SINDROME VERTIGINOSO+HIPOGLICEMIA	EXAMENES	1320	\N	1320	\N	1320	1320
+817	2014-10-01	MENDOZA MARIA	11540631	MENDOZA PÉTRA	4198698	MADRE	2014-05-21	2014-05-21	371994	ACCION CENTRAL	CONTRATADO	OSTEOPOROSIS	MEDICAMENTOS	696.840000000000032	\N	696.840000000000032	\N	696.840000000000032	696.840000000000032
+818	2014-10-01	CORDERO ULISES	11541347	CORDERO LEONIDAS	3332934	MADRE	2014-05-26	2014-05-26	2084	PROD. AGRICOLA	CONTRATADO	HIPERTENSION ARTERIAL	CONSULTA	600	\N	600	\N	600	600
+819	2014-10-01	OROPEZA CAROLINA	11851836	APOSTOL CARMEN	4816132	MADRE	2014-05-26	2014-05-26	2019	PROD. AGRICOLA	CONTRATADO	PRURITO-INFECCION	CONSULTA	500	\N	500	\N	500	500
+820	2014-10-01	LANDINEZ ROSA	12092691	LICON DE L. HILDA	3043305	MADRE	2014-05-15	2014-05-21	720977	MECANIZACION	CONTRATADO	DM TIPO 2	MEDICAMENTOS	523.5	\N	523.5	\N	523.5	523.5
+821	2014-10-01	RAMIREZ CARLOS	12475082	RAMIREZ LUIS	MENOR	HIJO	2014-05-09	2014-05-20	222022-59727	TRILLADORA	CONTRATADO	RINUSOPATIA EN CRISIS	MEDICAMENTOS	549.210000000000036	\N	549.210000000000036	\N	549.210000000000036	549.210000000000036
+822	2014-10-01	IACOBUCCI ALEXANDRA	13227704	IACOBUCCI ALEXANDRA	13227704	TITULAR	2014-05-28	2014-05-28	414439−1343−30232	BICEABASTO	CONTRATADO	RINITIS AGUDA-OTITIS	CONSULTA+MEDICAMENTOS          +   EXAMENES	2547.5	\N	2547.5	\N	2547.5	2547.5
+823	2014-10-01	MUÑOZ ROMEL	13585018	NAGUAS MARIA	17601053	ESPOSA	2014-05-27	2014-05-29	8344	PAYARA	CONTRATADO	EMBARAZO 27 SEMANAS	CONSULTA	1020	\N	1020	\N	1020	1020
+824	2014-10-01	CORDOVA CARLOS	13650017	SILVA MAYRA	15811039	ESPOSA	2014-05-12	2014-05-20	2215	TRILLADORA	CONTRATADO	EMBARAZO 21 SEMANAS	CONSULTA	600	\N	600	\N	600	600
+825	2014-10-01	ALVAREZ RODOLFO	14091105	ALVAREZ RODOLFO	14091105	TITULAR	2014-05-26	2014-05-28	9101	TRANSPORTE	CONTRATADO	DIABETES MELLITUS	CONSULTA+ECO+ MEDICAMENTOS	415.560000000000002	48.4799999999999969	367.079999999999984	SE DESCUENTA GLIMEPIRIDA POR NO ESTAR EN RECIPE	367.079999999999984	367.079999999999984
+826	2014-10-01	CUENCA NORIS	14092771	CASTRO DOMINGA	4611971	MADRE	2014-05-30	2014-05-30	5687	ACCION CENTRAL	CONTRATADO	LESION HIPERPIGMENTADA EN PIERNA DERECHA	BIOPSIA	780	\N	780	\N	780	780
+827	2014-10-01	VALDERRAMA GUSTAVO	14271811	DOMINGUEZ AMINTA	4199883	MADRE	2014-05-19	2014-05-19	2436-010451-297770-5742	ACCION CENTRAL	CONTRATADO	DOLOR PELVICO, LEUCORREA	CONSULTA+CITOLOGIA                              + MEDICAMENTOS+MAMOGRAFIA	1776	\N	1776	\N	1776	1776
+828	2014-10-01	LANDAETA JORGE	14425236	TORO GRACIELA	18628567	ESPOSA	2014-05-07	2014-05-19	3538-3411-37	PAYARA	CONTRATADO	VAGINITIS+MASTODENIA	CONSULTA+CITOLOGIA+ECO MAMARIO+EXAMENES	1840	\N	1840	\N	1840	1840
+829	2014-10-01	MARCANO YOBANA	14538117	HERRERA YOSDEILI	MENOR	HIJA	2014-05-15	2014-05-26	545-95041	WILLIAN LARA	CONTRATADO	BRONQUIATITIS AGUDA	CONSULTA+ MEDICAMENTOS	730	\N	730	\N	730	730
+830	2014-10-01	ESCORCHA NORAILY	14676545	ESCORCHA NORAILY	14676545	TITULAR	2014-05-21	2014-05-26	4129-246639-411597	ACCION CENTRAL	CONTRATADO	DISPEPSIA+ESTREÑIMIENTO	CONSULTA+ESTREÑIMIENTO	1217.5	\N	1217.5	\N	1217.5	1217.5
+831	2014-10-01	RODRIGUEZ JOSE	14677390	PIÑA ALICIA	14177137	ESPOSA	2014-05-21	2014-05-21	94	AGUA BLANCA	CONTRATADO	CONTROL PRENATAL	CONSULTA	500	\N	500	\N	500	500
+832	2014-10-01	GUEVARA ARCANGEL	14677755	JIMENEZ KARLA	19637184	ESPOSA	2014-05-22	2014-05-26	357-1337	PIRITU 2	CONTRATADO	\N	CONSULTA+EXAMENES	1700	\N	1700	\N	1700	1700
+833	2014-10-01	PEÑA JUAN	14773389	COLMENAREZ ELOISA	5941738	MADRE	2014-05-15	2014-05-19	273460-662-1338	PIRITU 1	CONTRATADO	SINDROME VERTIGINOSO+DOLORES ARTICULARES	CONSULTA+MEDICAMENTOS	1309.00999999999999	\N	1309.00999999999999	\N	1309.00999999999999	1309.00999999999999
+834	2014-10-01	AZUAJE JORGE	14888607	RIVERO GLADYS	5363919	MADRE	2014-05-28	2014-05-28	2388	ACCION CENTRAL	CONTRATADO	HIPERTENSION ARTERIAL SISTEMICA	CONSULTA	700	\N	700	\N	700	700
+835	2014-10-01	MARTINEZ YELITZA	15071456	MARTINEZ YELITZA	15071456	TITULAR	2014-05-22	2014-05-26	77027	PIRITU 2	CONTRATADO	HIPOTIROIDISMO 	EXAMENES	300	\N	300	\N	300	300
+836	2014-10-01	ESCOBAR OSCAR	15071538	CORDERO ROSA	7541843	MADRE	2014-05-26	2014-05-27	2380-164	AGUA BLANCA	CONTRATADO	DOLOR ABDOMINAL	EXAMENES-CONSULTA	1200	\N	1200	\N	1200	1200
+837	2014-10-01	SANCHEZ ALEXANDER	15341479	SOTO MARY	15538836	ESPOSA	2014-05-21	2014-05-26	222	AGUA BLANCA	CONTRATADO	INFECCION URINARIA RECURRENTE	CONSULTA	500	\N	500	\N	500	500
+838	2014-10-01	MERCADO GLADYS	15480499	ALEXANDRA HERNANDEZ	MENOR	HIJA	2014-05-26	2014-05-26	3660-56036	BANCO DE PAVONES	CONTRATADO	SINDROME GRIPAL+REFLUJO GASTROESOFAGICO	CONSULTA+MEDICAMENTOS	974.850000000000023	51.2199999999999989	923.629999999999995	SE DESCUENTAN MOTA DE ALGODON CHICCO	923.629999999999995	\N
+839	2014-10-01	MERCADO GLADYS	15480499	ALEXANDRA HERNANDEZ	MENOR	HIJA	2014-05-26	2014-05-26	77962-35778-546	BANCO DE PAVONES	CONTRATADO	SX BRONQUIAL	CONSULTA+MEDICAMENTOS	664.309999999999945	164.310000000000002	500	SE DESCUENTAN MEDICAMENTOS POR NO TENER INDICACIONES	500	1423.63000000000011
+840	2014-10-01	MACHADO ENDER	15491709	MACAHADO ENDER	15491709	TITULAR	2014-05-26	2014-05-26	771	AGUA BLANCA	CONTRATADO	HERNIA DISCAL L4 L5	CONSULTA	600	\N	600	\N	600	600
+841	2014-10-01	AULAR JEAN CARLOS	16041033	AULAR JEAN CARLOS	16041033	TITULAR	2014-05-21	2014-05-22	4911	MECANIZACION	CONTRATADO	DOLOR EN CADERA	CONSULTA	600	\N	600	\N	600	600
+842	2014-10-01	ROJAS FRANCISCO	16384206	MOLINA NANCY	17602520	ESPOSA	2014-05-23	2014-05-26	17399-63360-4306-79756-39638-39639	BANCO DE PAVONES	CONTRATADO	CONTROL PRENATAL	CONSULTA+MEDICAMENTOS +EXAMENES	2246.63000000000011	\N	2246.63000000000011	\N	2246.63000000000011	2246.63000000000011
+843	2014-10-01	PARRA ADA	16384778	PARRA ADA	16384778	TITULAR	2014-05-23	2014-05-26	2437-15921-38518	BANCO DE PAVONES	CONTRATADO	EMBARAZO DE 38 SEMANAS	CONSULTA+EXAMENES	1260	460	800	NO SE CANCELAN LABORATORIOS POR FALTA DE RESULTADOS	800	800
+844	2014-10-01	RIVERO IVAN	16414995	SANCHEZ NANCY	8660637	MADRE	2014-05-19	2014-05-19	6279	ACCION CENTRAL	CONTRATADO	DIABETES MELLITUS+HTA	CONSULTA	600	\N	600	\N	600	\N
+845	2014-10-01	RIVERO IVAN	16414995	SANCHEZ NANCY	8660637	MADRE	2014-05-19	2014-05-19	309679-1727	ACCION CENTRAL	CONTRATADO	DIABETES MELLITUS+HTAESTADIO 2	CONSULTA+MEDICAMENTOS	1987.90000000000009	\N	1987.90000000000009	\N	1987.90000000000009	2587.90000000000009
+846	2014-10-01	BARELA JEAN 	16415909	BARELA JOBVIER	MENOR	HIJO	2014-05-21	2014-05-21	11643	AGUA BLANCA	CONTRATADO	SINDROME COMVULSIVO	CONSULTA+EGG	1800	\N	1800	\N	1800	1800
+847	2014-10-01	FREITEZ RENZO	16416522	FREITEZ ARANZA	MENOR	HIJA	2014-05-21	2014-05-22	472-60522	MECANIZACION	CONTRATADO	COLICO DEL LACTANTE	CONSULTA+MEDICAMENTOS	504	\N	504	\N	504	504
+848	2014-10-01	ESCOBAR TORIBIO	16640474	ESCOBAR ALFREDO	MENOR	HIJO	2014-05-26	2014-05-26	1241	BANCO DE PAVONES	CONTRATADO	HIDROCELE BILATERAL	CONSULTA	600	\N	600	\N	600	600
+849	2014-10-01	HERNANDEZ ARELIS	16913080	HERNANDEZ ARELIS	16913080	TITULAR	2014-05-26	2014-05-26	2929	BANCO DE PAVONES	CONTRATADO	DOLOR RODILLA IZQUIERDA	CONSULTA	600	\N	600	\N	600	\N
+850	2014-10-01	HERNANDEZ ARELIS	16913080	HERNANDEZ ARELIS	16913080	TITULAR	2014-05-26	2014-05-26	3899	BANCO DE PAVONES	CONTRATADO	INESTABILIDAD EN RODILLA IZQUIERDA+RUPTURA DEL LCA	CONSULTA	500	\N	500	\N	500	\N
+851	2014-10-01	HERNANDEZ ARELIS	16913080	HERNANDEZ ARELIS	16913080	TITULAR	2014-05-26	2014-05-26	2399-34730	BANCO DE PAVONES	CONTRATADO	DOLOR RODILLA IZQUIERDA	CONSULTA 	994	494	500	FALTAN RESULTADOS DE RX	500	1600
+852	2014-10-01	DURAN DANNY	16992813	GIL MILENNY	16775860	ESPOSA	2014-05-21	2014-05-21	3793	AGUA BLANCA	CONTRATADO	QUERATITIS	CONSULTA	500	\N	500	\N	500	500
+853	2014-10-01	GARCIA CARLOS 	17362441	RODRIGUEZ KARIBETH	17276559	ESPOSA	2014-05-28	2014-05-28	4885	TRANSPORTE	CONTRATADO	EMBARAZO DE 33 SEMANAS	IMAGENES	700	\N	700	\N	700	700
+854	2014-10-01	GALLEGOS MILAGROS	17796642	AVENDAÑO EMILY 	MENOR	HIJA	2014-05-22	2014-05-22	5380	ACCION CENTRAL	CONTRATADO	DOLOR ABDOMINAL FRECUENTE	COMSULTA	700	\N	700	\N	700	700
+855	2014-10-01	TORRES JUVITO	17946898	ADRIAN TORRES	MENOR	HIJO	2014-05-16	2014-05-20	642	PAYARA	CONTRATADO	RINOFARINGITIS VIRAL+CRISIS DE ASMA LEVE	CONSULTA	747	\N	747	\N	747	\N
+856	2014-10-01	TORRES JUVITO	17946898	CRISTIAN TORRES	MENOR	HIJO	2014-05-16	2014-05-19	643	PAYARA	CONTRATADO	RINIFARINGITIS BACTERIANA	CONSULTA+MEDICAMENTOS	1166.1400000000001	232.139999999999986	934	SE DESCUENTA GERDEX	934	1681
+857	2014-10-01	MANJARES HIVANEL	18102664	MANJARES HIVANEL	18102664	TITULAR	2014-05-19	2014-05-19	189	MECANIZACION	CONTRATADO	HERNIOPLASTIA INGUINAL 	CONSULTA	500	\N	500	\N	500	500
+858	2014-10-01	MEDINA NAUDIS	18799452	MEDINA YONAIKER	MENOR	HIJO	2014-05-16	2014-05-22	665	PIRITU 2	CONTRATADO	OTITIS AGUDA BILATERAL	CONSULTA	250	\N	250	\N	250	250
+859	2014-10-01	ARENAS ROSALBA	19171304	ARENAS ROSALBA	19171304	TITULAR	2014-05-27	2014-05-27	31-216442-610-4972	ACCION CENTRAL	CONTRATADO	INSULINORRESISTENCIA+ DISLIPIDEMIA	CONSULTA+MEDICAMENTOS +EXAMENES	3094.5	\N	3094.5	\N	3094.5	3094.5
+860	2014-10-01	RODRIGUEZ JINETH	19338681	VASQUEZ MELIDA	9157207	MADRE	2014-05-26	2014-05-26	548-23988	ACCION CENTRAL	CONTRATADO	SINDROME METABOLICO	COSNULTA+LABORATORIO	2280	\N	2280	\N	2280	\N
+861	2014-10-01	RODRIGUEZ JINETH	19338681	RODRIGUEZ JINETH	19338681	TITULAR	2014-05-20	2014-05-26	112073	ACCION CENTRAL	CONTRATADO	DOLO ABDOMINAL+AMIBIASIS INTESTINAL	MEDICAMENTOS	192	\N	192	\N	192	\N
+862	2014-10-01	RODRIGUEZ JINETH	19338681	DANIEL OLIVERO	MENOR	HIJO	2014-05-20	2014-05-26	3284-308641	ACCION CENTRAL	CONTRATADO	SINDROME DIARREICO E INTOLERANCIA	CONSULTA+MEDICAMENTOS	592.92999999999995	\N	592.92999999999995	\N	592.92999999999995	3064.92999999999984
+863	2014-10-01	AQUINO COROMOTO	19343811	AQUINO COROMOTO	19343811	TITULAR	2014-05-22	2014-06-02	1027	TRILLADORA	CONTRATADO	EMBARAZO DE 21 SEMANAS	CONSULTA	800	\N	800	\N	800	800
+864	2014-10-01	ROJAS JUANA	19376966	ROJAS JUANA	19376966	TITULAR	2014-05-27	2014-05-28	327882-153516-408-330	BICEABASTO	CONTRATADO	CONTROL PRENATAL	CONSULTA+MEDICAMENTOS +IMAGENES	1794.17000000000007	\N	1794.17000000000007	\N	1794.17000000000007	1794.17000000000007
+865	2014-10-01	LINAREZ JEAN CARLOS	19377861	LINAREZ JEANCARLYS	MENOR	HIJA	2014-05-19	2014-05-22	2906	PIRITU 2	CONTRATADO	ANEMIA	CONSULTA	700	\N	700	\N	700	700
+866	2014-10-01	FAJARDO JUANA	19760130	RIVERO ALBANYS	MENOR	HIJA	2014-05-14	2014-05-20	4130-336404-281811-2912	TRILLADORA	CONTRATADO	ESTOMATITIS+RINITIS ALERGICA	CONSULTA+MEDICAMENTOS	1503.94000000000005	\N	1503.94000000000005	\N	1503.94000000000005	1503.94000000000005
+867	2014-10-01	VIVEROS HOWER	24588289	RUIS OMAIRA	24588395	MADRE	2014-05-19	2014-05-19	80235-80234	TRANSPORTE	CONTRATADO	CARDIOPATIA HIEPERTENSIVA	MEDICAMENTOS	215.759999999999991	\N	215.759999999999991	\N	215.759999999999991	215.759999999999991
+868	2014-10-01	ORTIZ FRANCISCO	12262363	ORTIZ OLGA	3867798	MADRE	2014-05-21	2014-05-26	1256671-143983	ACCION CENTRAL	PRESIDENCIA	PSEUDOFAQUIA ODI	CONSULTA+MEDICAMENTOS	1015	\N	1015	\N	1015	1015
+869	2014-10-01	AGUIN XIOMARA	9841952	HERNANDEZ HILDA	1106361	MADRE	2014-05-22	2014-05-22	6231	ACCION CENTRAL	DIRECTIVO	GLAUCOMA CRONIVA	CONSULTA	600	\N	600	\N	600	600
+870	2014-10-01	INOSTROZA LORETO	24320049	FIERRO ZOILA 	81288458	MADRE	2014-05-28	2014-05-28	48377-907	ACCION CENTRAL	DIRECTIVO	HTA SISTEMICA+ANEMIA MODERADA	HIPERTENSION ARTERIAL 	820	\N	820	\N	820	820
+871	2014-10-01	PEREZ NELSON	8618312	ARRIAZA NELLY	10272413	ESPOSA	2014-05-22	2014-06-02	2486	TRILLADORA	OBRERO	DOLOR PELVICO 	CONSULTA	800	\N	800	\N	800	800
+872	2014-10-01	RODRIGUEZ SILA	8626902	RODRIGUEZ JESUS	28345509	HIJO	2014-05-12	2014-05-20	94608	TRILLADORA	OBRERO	INTOXICACION ALIMENTARIA	MEDICAMENTOS	230	\N	230	\N	230	230
+873	2014-10-01	GOMEZ CARMEN	9841301	GOMEZ CARMEN	9841301	TITULAR	2014-05-19	2014-05-20	977	BICEABASTO	OBRERO	SINDROME VERTIGINOSO 	CONSULTA	300	\N	300	\N	300	300
+874	2014-10-01	LUCENA MARY LUZ	12447000	LUCENA MARY LUZ	12447000	TITULAR	2014-05-23	2014-05-23	5857	ACCION CENTRAL	OBRERO	HIPERACTIVIDAD BRONQUIAL	CONSULTA	600	\N	600	\N	600	600
+875	2014-10-01	JIMENEZ GLADYS	13353211	JIMENES PANTALEON	1226690	PADRE	2014-05-20	2014-05-22	9391-49490	PIRITU 2	OBRERO	COLONOPATIA	CONSULTA+MEDICAMENTOS	3180	\N	3180	\N	3180	3180
+876	2014-10-01	MALDONADO RAFAEL	17108554	MALDONADO RAFAEL	17108554	TITULAR	2014-05-15	2014-05-26	47636-3442	WILLIAN LARA	OBRERO	TRASTORNO DE PANICO	MEDICAMENTOS	425.370000000000005	\N	425.370000000000005	\N	425.370000000000005	425.370000000000005
+877	2014-10-01	NARVAEZ FELIX	18753996	ARIZA MARICELA	10639807	MADRE	2014-05-22	2014-05-26	880	PIRITU 2	OBRERO	\N	CONSULTA	600	\N	600	\N	600	600
+878	2014-10-01	AGUIN GUILLERMO	19377858	AGUIN ALEXANDRA	MENOR	HIJA	2014-05-20	2014-05-22	9391-49490	PIRITU 2	OBRERO	CIFRAS ELEVADAS DE HEMOGLOBINAS Y PLAQUETAS	CONSULTA	750	\N	750	\N	750	750
+879	2014-10-01	JIMENEZ JOSE	19590185	JIMENEZ JOSE	19590185	TITULAR	2014-05-15	2014-05-19	664	PIRITU 1	OBRERO	BRONQUITIS AGUDA	CONSULTA	250	\N	250	\N	250	250
+880	2014-10-01	PANTOJA OMAR	19760210	GARRIDO FRANCIS	20184208	ESPOSA	2014-05-16	2014-05-26	215	WILLIAN LARA	OBRERO	CARIES	ESTUDIO	1200	\N	1200	\N	1200	1200
+881	2014-10-01	MEDINA FREDDY	20025575	MEDINA FREDDY	20025575	TITULAR	2014-05-26	2014-05-26	246709-668	PIRITU 3	OBRERO	CARDIOPATIA MIXTA	CONSULTA	1069	\N	1069	\N	1069	1069
+882	2014-10-01	ALMARIO RONAL	20156063	GONZALEZ ROSA	19799898	ESPOSA	2014-05-19	2014-05-19	53320	PIRITU 1	OBRERO	DOLOR MAMARIO	IMAGENES	400	\N	400	\N	400	400
+883	2014-11-01	ARELLANO SALUSTIO	5940201	ARELLANO FAVIO	28107529	HIJO	2014-05-28	2014-06-03	673	AGUA BLANCA	CONTRATADO	SINDROME DOLOROSO	CONSULTA	250	\N	250	\N	250	250
+884	2014-11-01	CARDENAS JOSE	5948461	CARDENA MARIAN	MENOR	HIJO	2014-06-10	2014-06-10	8077-25661-121189	CAÑO SECO	CONTRATADO	TOS HUMEDA+ANEMIA	CONSULTA+EXAMENES +IMAGENES	910	\N	910	\N	910	910
+885	2014-11-01	PINTO GILBERTO 	7599002	MUÑOZ FLORIMAR	10135080	ESPOSA	2014-06-05	2014-06-09	50074	PIRITU 1	CONTRATADO	LEUCORREA BLANCA	EXAMENES	1190	\N	1190	\N	1190	1190
+886	2014-11-01	MARQUEZ MARIA	8628954	MARQUEZ CRISTIAN	29657691	HIJO	2014-05-22	2014-06-03	4999-39945	WILLIAN LARA	CONTRATADO	CONJUTIVITIS VIRAL 	MEDICAMENTOS+EXAMENES	536.25	\N	536.25	\N	536.25	\N
+926	2014-11-01	BLANCO ADELSO	14925787	MIRANDA ROSA	4141341	MADRE	2014-05-27	2014-06-03	4991	TRILLADORA	CONTRATADO	DISPEPSIA 	MEDICAMENTOS	1014.5	\N	1014.5	\N	1014.5	5614.5
+887	2014-11-01	MARQUEZ MARIA	8628954	RONDON WILFREDO	17936580	ESPOSO	2014-05-22	2014-06-09	63413-39944	WILLIAN LARA	CONTRATADO	DIABETIS MELLITUS TIPO II	MEDICAMENTOS+EXAMENES	1590	101	1489	SE DESCUENTA BISOLVON POR NO ESTAR EN RECIPE	1489	2025.25
+888	2014-11-01	MORILLO GRACIELA	8660443	MORILLO GRACIELA	8660443	TITULAR	2014-06-05	2014-06-06	5258	BICEABASTO	CONTRATADO	ATRAPAMIENTO DEL NERVIO PLANTAR	CONSULTA	700	\N	700	\N	700	700
+889	2014-11-01	BENAVENTA JOSE G.	8633844	BENAVENTA JESUS	5361670	PADRE	2014-05-27	2014-06-03	3906-36457	TRILLADORA	CONTRATADO	HERNIAS DISCALES EN L4-L5	CONSULTA+ MEDICAMENTOS	1083.83999999999992	\N	1083.83999999999992	\N	1083.83999999999992	1083.83999999999992
+890	2014-11-01	MENDEZ GIOVANNY	9837225	MENDEZ JESUS	MENOR	HIJO	2014-06-05	2014-06-09	578935-756	PIRITU 1	CONTRATADO	SINDROME ANEMICO/PARASITOSIS INTESTINAL	CONSULTAS+EXAMENES	1010	\N	1010	\N	1010	1010
+891	2014-11-01	MOLINA CARLOS	10135498	RAFAEL MOLINA	896771	PADRE	2014-06-09	2014-06-09	63721	ACCION CENTRAL	CONTRATADO	CARCINOMA DE CELULAS RENALES	BIOPSIA	2000	\N	2000	\N	2000	2000
+892	2014-11-01	GONZALEZ MANUEL	10140861	QUINTANA MIREYA	10637302	ESPOSA	2014-06-19	2014-06-25	111	PIRITU 2	CONTRATADO	TRASTORNO DE ANSIEDAD GENERALIZADO	CONSULTA+TRATAMIENTO MEDICO	10000	\N	10000	\N	10000	\N
+893	2014-11-01	GONZALEZ MANUEL	10140861	QUINTANA MIREYA	10637302	ESPOSA	2014-06-18	2014-06-18	174630-95039	PIRITU 2	CONTRATADO	TRASTORNO DE ANSIEDAD GENERALIZADO	MEDICAMENTOS	1165.55999999999995	\N	1165.55999999999995	\N	1165.55999999999995	11165.5599999999995
+894	2014-11-01	BELLO DAXY	10271178	NIEVES CARMEN	5981439	MADRE	2014-05-23	2014-06-03	1922	WILLIAN LARA	CONTRATADO	CISTICELEFEADO III	CONSULTA	700	\N	700	\N	700	700
+895	2014-11-01	AGUIN VICTORIANO	10639072	AGUIN VICTORIANO	10639072	TITULAR	2014-06-02	2014-06-02	77	PIRITU 2	CONTRATADO	FRACTURA DE FEMUR IZQUIERDO	TERAPIAS	840	\N	840	\N	840	\N
+896	2014-11-01	AGUIN VICTORIANO	10639072	AGUIN VICTORIANO	10639072	TITULAR	2014-06-09	2014-06-09	84	PIRITU 2	CONTRATADO	FRACTURA DE FEMUR IZQUIERDO	TERAPIAS	840	\N	840	\N	840	1680
+897	2014-11-01	LINAREZ JOSE	11546595	LINAREZ JOSE	11546595	TITULAR	2014-06-09	2014-06-12	4162	PIRITU 2	CONTRATADO	HTA SISTEMICA/DOLOR ABDOMINAL	EXAMENES DE LABORATORIO	450	\N	450	\N	450	450
+898	2014-11-01	TORREALBA JAIRO	11793657	TORREALBA JAIRO 	MENOR	HIJO	2014-06-06	2014-06-03	16705	TRILLADORA	CONTRATADO	CRANEOFARINGIOMA	EXAMENES DE LABORATORIO	790	\N	790	\N	790	790
+899	2014-11-01	APONTE LUIS	11082374	APONTE LUIS	11082374	TITULAR	2014-05-21	2014-06-04	874-64394	PIRITU 2	CONTRATADO	FRACTURA DE F1 HALLUX DE PIE DERECHO	CONSULTA+IMAGENES	947	\N	947	\N	947	947
+940	2014-11-01	MENDEZ LISBETH	15491902	VARGAS MICHELLE	MENOR	HIJA	2014-06-10	2014-06-10	4633	AGUA BLANCA	CONTRATADO	ASMA NO CONTROLADA	CONSULTA	600	\N	600	\N	600	600
+900	2014-11-01	BASTIDAS AMARILIS	11851601	BASTIDAS AMARILIS	11851601	TITULAR	2014-06-10	2014-06-10	2392	ACCION CENTRAL	CONTRATADO	DOLOR EN REGION DE TALON IZQUIERDO	CONSULTA	600	\N	600	\N	600	600
+901	2014-11-01	MENDEZ ROSMARY	12090662	BONILLA RANIA	MENOR	HIJA	2014-06-04	2014-06-04	8615	PIRITU 3	CONTRATADO	RINITIS ATOPICA+ADENOIDITIS MODERADA	CONSULTA	500	\N	500	\N	500	\N
+902	2014-11-01	MENDEZ ROSMARY	12090662	MENDEZ ROSMARY	12090662	TITULAR	2014-06-02	2014-06-02	8484	PIRITU 3	CONTRATADO	RINOFARINGITIS+OTITIS MEDIA	EXAMENES DE LABORATORIO	510	\N	510	\N	510	\N
+903	2014-11-01	MENDEZ ROSMARY	12090662	BONILLA RANIA	MENOR	HIJA	2014-06-02	2014-06-02	6259-25723	PIRITU 3	CONTRATADO	CUADRO RINOSINOSISTIS	CONSULTA+IMAGENES	900	\N	900	\N	900	1910
+904	2014-11-01	TOVAR ALEXIS	12263227	ALEXIS TOVAR	MENOR	HIJO	2014-06-06	2014-06-09	316438	PROD. AGRICOLA	CONTRATADO	CUADRO DE ASMA	MEDICAMENTOS	222	\N	222	\N	222	222
+905	2014-11-01	BLANCO GLADYS	12262410	CARUCI JOSE	MENOR	HIJO	2014-06-06	2014-06-09	3104	PROD. AGRICOLA	CONTRATADO	TDAH	CONSULTA	600	\N	600	\N	600	\N
+906	2014-11-01	BLANCO GLADYS	12262410	BLANCO GLADYS	12262410	TITULAR	2014-06-06	2014-06-09	2549	PROD. AGRICOLA	CONTRATADO	CARIES DENTAL PROFUNDA	TRATAMIENTO ODONTOLOGICO	4500	\N	4500	\N	4500	5100
+907	2014-11-01	MEJIAS FIDEL	12264438	VIVAS YANIRA	12088194	ESPOSA	2014-06-05	2014-06-05	58628	PIRITU 2	CONTRATADO	ASMA	MEDICAMENTOS	258	\N	258	\N	258	258
+908	2014-11-01	LISCANO JORGE	12446864	GOMEZ MARYERIS	13073748	ESPOSA	2014-06-04	2014-06-09	250060	PIRITU 2	CONTRATADO	CLIMATERIO+DISURIA+POLIMENORREA	CONSULTA+MEDICAMENTOS	989.5	\N	989.5	\N	989.5	\N
+909	2014-11-01	LISCANO JORGE	12446864	NIERES ELIBERTA	2720104	MADRE	2014-06-12	2014-06-12	8645	PIRITU 2	CONTRATADO	VERTIGO POSICIONAL	CONSULTA	600	\N	600	\N	600	1589.5
+910	2014-11-01	RAMIREZ CARLOS	12475082	RAMIREZ LUIS	MENOR	HIJO	2014-05-22	2014-06-02	2346	MARIA DE LOS ANGELES	CONTRATADO	INFECCION RESPIRATORIA ALTA	CONSULTA	500	\N	500	\N	500	500
+911	2014-11-01	APONTE MILAGROS	13226149	APONTE REINA	5956754	MADRE	2014-06-10	2014-06-10	192616	PIRITU 2	CONTRATADO	LUXACION HOMBRO IZQUIERDO	IMAGENES	829.590000000000032	\N	829.590000000000032	\N	829.590000000000032	829.590000000000032
+912	2014-11-01	GONZALEZ MIGUEL	13775225	GONZALEZ MIGUEL	13775225	TITULAR	2014-06-05	2014-06-05	1202	ACCION CENTRAL	CONTRATADO	TX ANSIOSO DEPRESIVO	CONSULTA	500	\N	500	\N	500	500
+913	2014-11-01	GUARENTE CLAUDIA	13785339	TRUJILLO SANTIAGO	MENOR	HIJO	2014-06-12	2014-06-12	6311	BICEABASTO	CONTRATADO	PARASITO	CONSULTA	500	\N	500	\N	500	\N
+914	2014-11-01	GUARENTE CLAUDIA	13785339	GUARENTE CLAUDIA	13785339	TITULAR	2014-06-12	2014-06-12	260592-1435-25747	BICEABASTO	CONTRATADO	ENFERMEDAD INFLAMATORIA PELVICA LEVE	CONSULTA+MEDICAMENTOS          + EXAMENES	1725	\N	1725	\N	1725	2225
+915	2014-11-01	ESCALONA NILSON	14091175	ESCALONA AGUSTINO	4197637	PADRE	2014-05-22	2014-06-02	39048	PIRITU 1	CONTRATADO	HERNIA INGUINAL IZQUIERDA ATASCADA	MEDICAMENTOS	349.990000000000009	\N	349.990000000000009	\N	349.990000000000009	349.990000000000009
+916	2014-11-01	CAÑIZALES MARIA	14205596	ROSARIO ANGEL	MENOR 	HIJO	2014-06-02	2014-06-02	145051-10833	ACCION CENTRAL	CONTRATADO	SINDROME FEBRIL	MEDICAMENTOS+CONSULTA 	973	\N	973	\N	973	973
+917	2014-11-01	SANTANA ANA	14239953	SANTANA ANA	14239953	TITULAR	2014-06-02	2014-06-03	4157	MARIA DE LOS ANGELES	CONTRATADO	INFECCION RESPIRATORIA ALTA	CONSULTA	500	\N	500	\N	500	\N
+918	2014-11-01	SANTANA ANA	14239953	54	14239953	TITULAR	2014-06-02	2014-06-03	4676-215065-50137-24531	MARIA DE LOS ANGELES	CONTRATADO	CEFALEA INTENSA	CONSULTA+MEDICAMENTOS	1765.72000000000003	\N	1765.72000000000003	\N	1765.72000000000003	2265.7199999999998
+919	2014-11-01	CIOFFI REINA	14538752	CIOFFI REINA	14538752	TITULAR	2014-05-26	2014-06-04	190652-23659-2898	SAN ANTONIO	CONTRATADO	SIND.METABOLICO Y SIND. COLON IRRITABLE	CONSULTA+MEDICAMENTOS	1414.30999999999995	\N	1414.30999999999995	\N	1414.30999999999995	\N
+920	2014-11-01	CIOFFI REINA	14538752	CIOFFI REINA	14538752	TITULAR	2014-05-26	2014-06-04	3907-10842-10841	SAN ANTONIO	CONTRATADO	SINDROME METABOLICO	IMAGENES+EXAMNENES	1350	\N	1350	\N	1350	\N
+921	2014-11-01	CIOFFI REINA	14538752	APONTE HILDA	5154202	MADRE	2014-05-26	2014-06-04	1723	SAN ANTONIO	CONTRATADO	HTA SISTEMICA ESTADIO I	CONSULTA	500	\N	500	\N	500	3264.30999999999995
+922	2014-11-01	VASQUEZ MIGUEL	14540230	VASQUEZ ANA	1126102	MADRE	2014-06-09	2014-06-10	11735	PIRITU 1	CONTRATADO	PARKINSOMN	CONSULTA	600	\N	600	\N	600	600
+923	2014-11-01	PINEDA WILMER	14676853	PINEDA ROSA	5943673	MADRE	2014-06-10	2014-06-12	893044-894384-900145	PIROTU 2	CONTRATADO	INSUFICIENCIA VENOSA CRONICA	CONSULTA-IMAGENES	1400	\N	1400	\N	1400	1400
+924	2014-11-01	BLANCO ADELSO	14925787	MIRANDA ROSA	4141341	MADRE	2014-05-27	2014-06-03	3102	TRILLADORA	CONTRATADO	DISPEPSIA 	ESTUDIO	4000	\N	4000	\N	4000	\N
+925	2014-11-01	BLANCO ADELSO	14925787	MIRANDA ROSA	4141341	MADRE	2014-05-27	2014-06-03	3098	TRILLADORA	CONTRATADO	DISPEPSIA 	CONSULTA	600	\N	600	\N	600	\N
+927	2014-11-01	ESCALONA ENZO	15071461	ESCALONA SABY	30133596	HIJA	2014-06-05	2014-06-09	535	PIRITU 2	CONTRATADO	APENDICECTOMIA	CONSULTA	500	\N	500	\N	500	\N
+928	2014-11-01	ESCALONA ENZO	15071461	ESCALONA SABY	30133596	HIJA	2014-06-02	2014-06-02	412001-276736-427469-85095	PIRITU 2	CONTRATADO	APENDICITIS AGUDA	MEDICAMENTOS	2468.51999999999998	\N	2468.51999999999998	\N	2468.51999999999998	\N
+929	2014-11-01	ESCALONA ENZO	15071461	ESCALONA SABY	30133596	ESPOSA	2014-06-03	2014-06-04	5681	PIRITU 2	CONTRATADO	APENDICITIS AGUDA	ESTUDIO	980	\N	980	\N	980	3948.51999999999998
+930	2014-11-01	FLORES JUAN	15130874	FLORES JUAN	7179749	PADRE	2014-05-29	2014-06-03	34134	WILLIAN LARA	CONTRATADO	TEMBLOR ESENCIAL	CONSULTA	600	\N	600	\N	600	600
+931	2014-11-01	ROJAS JEAN CARLOS	15480462	ROJAS FABIANA	MENOR	HIJA	2014-05-20	2014-06-04	228546-5019-39781-60758-258450	SAN ANTONIO	CONTRATADO	DINROME GRIPAL	CONSULTA+MEDICAMENTOS	1107.93000000000006	\N	1107.93000000000006	\N	1107.93000000000006	\N
+932	2014-11-01	ROJAS JEAN CARLOS	15480462	ROJAS FABIANA	MENOR	HIJA	2014-05-26	2014-06-04	228083-230041	SAN ANTONIO	CONTRATADO	DIARREICO AGUDO	MEDICAMENTOS	625.370000000000005	\N	625.370000000000005	\N	625.370000000000005	\N
+933	2014-11-01	ROJAS JEAN CARLOS	15480462	ROJAS DAJENNY	MENOR	HIJA	2014-05-20	2014-06-04	60758-258450-5020	SAN ANTONIO	CONTRATADO	SINDROME GRIPAL+	CONSULTA+MEDICAMENTOS	1028.22000000000003	\N	1028.22000000000003	\N	1028.22000000000003	\N
+934	2014-11-01	ROJAS JEAN CARLOS	15480462	ROJAS DAJENNY	MENOR	HIJA	2014-05-20	2014-06-04	34883	SAN ANTONIO	CONTRATADO	RINITIS ALERGICA	CONSULTA+ MEDICAMENTOS	628	\N	628	\N	628	\N
+935	2014-11-01	ROJAS JEAN CARLOS	15480462	ROJAS DAJENNY	MENOR	HIJA	2014-05-20	2014-06-04	79464-225033-4149	SAN ANTONIO	CONTRATADO	ASMA EN CRISIS+BRONQUITIS ASMATIFORME	CONSULTA+MEDICAMENTOS	1269	\N	1269	\N	1269	\N
+936	2014-11-01	ROJAS JEAN CARLOS	15480462	ROJAS JEAN CARLOS	15480462	TITULAR	2014-05-20	2014-06-04	4871-100213-228547	SAN ANTONIO	CONTRATADO	ESGUINSE EN TOBILLO ISQUIERDO GRADO II	MEDICAMENTOS+CONSULTA+ IMAGENES	1290.05999999999995	\N	1290.05999999999995	\N	1290.05999999999995	\N
+937	2014-11-01	ROJAS JEAN CARLOS	15480462	ROJAS FABIANA	MENOR	HIJA	2014-05-20	2014-06-04	79465-225032-4150	SAN ANTONIO	CONTRATADO	RINUSOPATIA AGUDA+RINITIS ALERGICA	CONSULTA+ MEDICAMENTOS	1231.99000000000001	\N	1231.99000000000001	\N	1231.99000000000001	7180.56999999999971
+938	2014-11-01	MERCADO GLADYS	15480499	ALEXANDRA HERNANDEZ	MENOR	HIJA	2014-05-23	2014-06-09	5106	BANCO DE PAVONES	CONTRATADO	HIPERACTIVIDAD BRONQUIAL	CONSULTA	350	\N	350	\N	350	\N
+939	2014-11-01	MERCADO GLADYS	15480499	ALEXANDRA HERNANDEZ	MENOR	HIJA	2014-06-03	2014-06-03	58898-256540	BANCO DE PAVONES	CONTRATADO	\N	MEDICAMENTOS	255	\N	255	\N	255	605
+941	2014-11-01	ARMARIO JORGE	15809322	GUIRIERREZ LESVIA	11847556	MADRE	2014-06-12	2014-06-12	5279	PIRITU 2	CONTRATADO	OSTEARTRITIS	CONSULTA	700	\N	700	\N	700	700
+942	2014-11-01	RODRIGUEZ YOLEIDA	16090696	ARRIECHI BENEDICTA	7417036	MADRE	2014-06-05	2014-06-05	395-623-94892	ACCION CENTRAL	CONTRATADO	INFECCION URINARIA	CONSULTA+EXAMEN+ MEDICAMENTOS	642.92999999999995	37.1199999999999974	605.809999999999945	NO SE CUBRE VITAMINA C	605.809999999999945	605.809999999999945
+943	2014-11-01	SANCHEZ JEISUM	16138848	SANCHEZ JEISUM	16138848	TITULAR	2014-06-11	2014-06-11	11441	PIRITU 2	CONTRATADO	CEFALEA TERMINAL	EXAMENES	330	\N	330	\N	330	330
+944	2014-11-01	QUERO YAJAIRA	16292305	RAMIREZ MATIAS	MENOR	HIJO	2014-05-04	2014-06-04	3672	ACCION CENTRAL	CONTRATADO	CARACTERIZACION EN FOSA NASAL IZQUIERDA	CONSULTA	500	\N	500	\N	500	\N
+945	2014-11-01	QUERO YAJAIRA	16292305	RAMIREZ MATIAS	MENOR	HIJO	2014-05-04	2014-06-04	306171-4130	ACCION CENTRAL	CONTRATADO	TRAUMATISMO CRANEOENCEFALICO	EXAMENES +MEDICAMENTOS	393	\N	393	\N	393	893
+946	2014-11-01	PARRA ADA	16384778	SANCHEZ VICTORIA	MENOR	HIJA	2014-06-06	2014-06-09	6821-469167	BANCO DE PAVONES	CONTRATADO	RINITIS ALERGICA	CONSULTA+ MEDICAMENTOS	1675	\N	1675	\N	1675	\N
+947	2014-11-01	PARRA ADA	16384778	SANCHEZ VICTORIA	MENOR	HIJA	2014-06-06	2014-06-09	78704-334175-4122	BANCO DE PAVONES	CONTRATADO	INFECCION RESPIRATORIA BAJA	CONSULTA+ MEDICAMENTOS	935.629999999999995	58.9099999999999966	876.720000000000027	SE DESCUENTA ADEMINA POR NO ESTAR EN RECIPE	876.720000000000027	2551.7199999999998
+948	2014-11-01	MORANTES MAYERLIN	16386789	JIMENEZ BARTOLA	7386353	MADRE	2014-05-27	2014-06-02	7602-66670-348-12568	PIRITU 2	CONTRATADO	DIABETES MELLITUS-DISLIPIDEMIA	CONSULTA+RX+ESTUDIOS+ MEDICAMENTOS	3220	\N	3220	\N	3220	\N
+949	2014-11-01	MORANTES MAYERLIN	16386789	JIMENEZ BARTOLA	7386353	MADRE	2014-06-10	2014-06-12	284911	PIRITU 2	CONTRATADO	DISLIPIDERMIA MIXTA	MEDICAMENTOS	1456.96000000000004	\N	1456.96000000000004	\N	1456.96000000000004	4676.96000000000004
+950	2014-11-01	RIVERO IVAN	16414995	SANCHEZ NANCY	8660637	MADRE	2014-06-12	2014-06-12	6365	ACCION CENTRAL	CONTRATADO	DIABETIS MELLITUS	CONSULTA	3600	\N	3600	\N	3600	3600
+951	2014-11-01	FREITEZ RENZO	16416522	FREITEZ ARANZA	MENOR	HIJA	2014-06-05	2014-06-05	495	MECANIZACION	CONTRATADO	REFLUJO GASTROESOFAGICO	CONSULTA	400	\N	400	\N	400	400
+952	2014-11-01	SEQUERA VICTOR	16566845	SEQUERA VICTOR	16566845	TITULAR	2014-05-30	2014-06-02	894	PIRITU 1	CONTRATADO	LUXO FRACTURA SEVERA DE TOBILLO IZQUIERDO	CONSULTA	600	\N	600	\N	600	\N
+953	2014-11-01	SEQUERA VICTOR	16566845	SEQUERA VICTOR	16566845	TITULAR	2014-05-29	2014-05-02	39194	PIRITU 1	CONTRATADO	LUXO FRACTURA SEVERA DE TOBILLO IZQUIERDO	MEDICAMENTOS	282	\N	282	\N	282	\N
+954	2014-11-01	SEQUERA VICTOR	16566845	SEQUERA VICTOR	16566845	TITULAR	2014-06-06	2014-06-11	916	PIRITU I	CONTRATADO	LUXO FRACTURA SEVERA DE TOBILLO IZQUIERDO	CONSULTA	600	\N	600	\N	600	1482
+955	2014-11-01	ZABALETA MILNEYVA	16751915	ZABALETA MILNEYVA	16751915	TITULAR	2014-06-05	2014-06-05	39322	ACCION CENTRAL	CONTRATADO	BRONQUITIS AGUDA	MEDICAMENTOS	260.009999999999991	\N	260.009999999999991	\N	260.009999999999991	260.009999999999991
+956	2014-11-01	MOLINA YANIS	16776892	MOLINA JOSE	MENOR	HIJO	2014-05-28	2014-06-02	329279-5227	PIRITU 1	CONTRATADO	SANGRADO NASAL	CONSULTA+MEDICAMENTOS	1430	\N	1430	\N	1430	1430
+957	2014-11-01	HERNANDEZ ARELIS	16913080	HERNANDEZ ARELIS	16913080	TITULAR	2014-06-06	2014-06-09	40987	BANCO DE PAVONES	CONTRATADO	RUPTURA L.C.A	ESTUDIO	1456.33999999999992	\N	1456.33999999999992	\N	1456.33999999999992	1456.33999999999992
+958	2014-11-01	DURAN DANNY	16992813	GIL MILENNY	16775860	ESPOSA	2014-06-10	2014-06-10	1502	AGUA BLANCA	CONTRATADO	DOLOR PELVICO	CONSULTA	800	\N	800	\N	800	800
+959	2014-11-01	QUERALES LUIS	17277931	QUERALES ANGEL	MENOR	HIJO	2014-06-11	2014-06-12	5195	PIRITU 2	CONTRATADO	RINOSINUSOPATIA	CONSULTA	500	\N	500	\N	500	500
+960	2014-11-01	GARCIA CARLOS	17362441	RODRIGUEZ KARIBETH	17276559	ESPOSA	2014-06-04	2014-06-04	352-307552	TRANSPORTE	CONTRATADO	EMBARAZO UNICO DE 32 SEMANAS	CONSULTA+MEDICAMENTOS	838.5	\N	838.5	\N	838.5	838.5
+961	2014-11-01	GALLEGOS MILAGROS	17796642	AVENDAÑO EMILY	MENOR	HIJA	2014-06-12	2014-06-12	972	ACCION CENTRAL	CONTRATADO	GASTRITIS AGUDA	EXAMENES	370	\N	370	\N	370	370
+962	2014-11-01	GALINDEZ LISNEY	17944278	GALINDEZ LISNEY	17944278	TITULAR	2014-06-02	2014-06-04	191629-3569-34118	PAYARA	CONTRATADO	FARINGITIS	EXAMENES+MEDICAMENTOS+ RAYOS X	2464	\N	2464	\N	2464	2464
+963	2014-11-01	MONTES GREGORIA	17945099	MONTES GREGORIA	17945099	TITULAR	2014-06-04	2014-06-06	173594-1462-98352-98353	PAYARA	CONTRATADO	CEFALEA CRONICA/SINOSUPATIA GLOBAL	CONSULTA+ MEDICAMENTOS+EXAMEN	4106.22000000000025	\N	4106.22000000000025	\N	4106.22000000000025	4106.22000000000025
+964	2014-11-01	CEDEÑO ONEY	18053829	CEDEÑO ONEY	18053829	TITULAR	2014-06-02	2014-06-04	21021	PAYARA	CONTRATADO	RECONSTRUCCION CON RESINA	TRATAMIENTO ODONTOLOGICO	600	\N	600	\N	600	\N
+965	2014-11-01	CEDEÑO ONEY	18053829	CEDEÑO ONEY	18053829	TITULAR	2014-06-02	2014-06-04	20917	PAYARA	CONTRATADO	RESTAURACION EN PIEZA 16	TRATAMIENTO ODONTOLOGICO	600	\N	600	\N	600	1200
+966	2014-11-01	PEREZ ANGEL	18405207	URDANETA GREILY	19459618	ESPOSA	2014-05-20	2014-06-04	35282-422-39198-39199	SAN ANTONIO	CONTRATADO	CONTROL PRENATAL	CONSULTA+MEDICAMENTOS+ EXAMENES	1911.57999999999993	\N	1911.57999999999993	\N	1911.57999999999993	1911.57999999999993
+967	2014-11-01	CAMEJO SONNY	18731153	CAMEJO ALEXANDRA	MENOR	HIJA	2014-06-05	2014-06-05	488	MECANIZACION	CONTRATADO	DISPLASIA DE CADERA	CONSULTA	400	\N	400	\N	400	400
+968	2014-11-01	MARTINEZ YENIRE	18297349	MARTINEZ YENIRE	18297349	TITULAR	2014-06-06	2014-06-09	54755	PAYARA	CONTRATADO	LIMITACION FUNCIONAL DEL HOMBRO DERECHO	IMAGENES	1470	\N	1470	\N	1470	1470
+969	2014-11-01	MEDINA NAUDY	18799452	MEDINA YONAIKER	MENOR	HIJO	2014-06-03	2014-06-04	382-4144	PIRITU 2	CONTRATADO	HIPERACTIVIDAD BRONQUIAL	CONSULTA+EXAMEN 	600	\N	600	\N	600	\N
+970	2014-11-01	MEDINA NAUDY	18799452	MEDINA SAID	MENOR	HIJO	2014-05-27	2014-06-05	189194-438253-7535	PIRITU 2	CONTRATADO	PRURIGO	CONSULTA+MEDICAMENTOS	1851.56999999999994	\N	1851.56999999999994	\N	1851.56999999999994	\N
+971	2014-11-01	MEDINA NAUDY	18799452	MEDINA SAID	MENOR	HIJO	2014-06-10	2014-06-12	7576	PIRITU 2	CONTRATADO	PRURIGO	CONSULTA	1000	\N	1000	\N	1000	3451.57000000000016
+972	2014-11-01	AQUINO CRISTIAN	19343805	AQUINO CRISTIAN	19343805	TITULAR	2014-05-23	2014-06-03	1032-78024	WILLIAN LARA	CONTRATADO	MASTITIS AGUDA	CONSULTA	720	\N	720	\N	720	720
+973	2014-11-01	PIÑA NAUDY	19377150	TIMAURE ROSSANNYS	20641693	ESPOSA	2014-06-04	2014-06-10	205	AGUA BLANCA	CONTRATADO	APENDICECTOMIA LAPAROSCOPICA	CONSULTA	500	\N	500	\N	500	500
+974	2014-11-01	VERA JOSE	19636886	VERA ANDREA	MENOR	HIJA	2014-06-11	2014-06-12	4661	PIRITU 2	CONTRATADO	PIE PLANO	CONSULTA	600	\N	600	\N	600	600
+975	2014-11-01	PARRA ANGEL	19637051	MAGALHAES LURDES	24320488	ESPOSA	2014-05-30	2014-06-10	52	AGUA BLANCA	CONTRATADO	AST-HIPERMETROPICO IZQUIERDO	CONSULTA	600	\N	600	\N	600	600
+976	2014-11-01	CONDE KEVIN	19798851	VERGARA ADUARDA	11080295	MADRE	2014-06-13	2014-06-13	343322-54517	ACCION CENTRAL	CONTRATADO	MASTALGIA IZQUIERDA	EXAMENES+ESTUDIO	3330	\N	3330	\N	3330	3330
+977	2014-11-01	RODRIGUEZ YUSMAIRA	19798052	RODRIGUEZ YUSMAIRA	19798052	TITULAR	2014-06-02	1946-06-14	593	PAYARA	CONTRATADO	DOLOR PELVICO 	CONSULTA	900	\N	900	\N	900	900
+978	2014-11-01	MEDINA JOSE	20156351	MEDINA JOSE	20156351	TITULAR	2014-06-04	2014-06-04	8618	ACCION CENTRAL	CONTRATADO	OTOMICOSIS OIDO IZQUIERDO	CONSULTA	600	\N	600	\N	600	600
+979	2014-11-01	ANDRADE JOSE	20273142	CAMPO LERIDA	10642977	MADRE	2014-06-03	2014-06-04	48468	PAYARA	CONTRATADO	EVENTRACION EN HIPOGASTRIO PARAMEDIAL 	IMAGENES	3600	\N	3600	\N	3600	3600
+980	2014-11-01	SALCEDO GILDELIS	20388909	SALCEDO JOSE	5948545	PADRE	2014-06-06	2014-06-09	4960	PAYARA	CONTRATADO	BURSITIS EN HOMBRO DERECHO	CONSULTA	600	\N	600	\N	600	600
+981	2014-11-01	LINAREZ YACKELINE	20643168	LINAREZ YACKELINE	20643168	TITULAR	2014-06-02	2014-06-02	89	ACCION CENTRAL	CONTRATADO	EMBARAZO DE 19 SEMANAS	CONSULTA	500	\N	500	\N	500	500
+982	2014-11-01	ANGULO MARYELIS	21561653	ANGULO MARYELIS	21561653	TITULAR	2014-06-09	2014-06-09	39299-100	ACCION CENTRAL	CONTRATADO	INFLAMACION CUELLO UTERINO	MEDICAMENTOS+EXAMEN	410.009999999999991	\N	410.009999999999991	\N	410.009999999999991	410.009999999999991
+983	2014-11-01	VIVEROS HOWER	24588289	VIVEROS CRISTIAN	MENOR	HIJO	2014-06-04	2014-06-04	75292-46796	TRANSPORTE	CONTRATADO	EPISTAXIS RECURRENTE	MEDICAMENTOS+IMAGENES	649.629999999999995	\N	649.629999999999995	\N	649.629999999999995	\N
+984	2014-11-01	VIVEROS HOWER	24588289	VIVEROS CRISTIAN	MENOR	HIJO	2014-06-02	2014-06-02	14607-74504	TRANSPORTE	CONTRATADO	EPISTAXIS RECURRENTE	CONSULTA+MEDICAMENTOS	734.399999999999977	87	647.399999999999977	NO SE CUBRE GALLETAS Y DULCES	647.399999999999977	1297.02999999999997
+985	2014-11-01	XIOMARA AGUIN	9841952	HERNANDEZ HILDA	1106361	MADRE	2014-06-12	2014-06-12	85467	ACCION CENTRAL	DIRECTIVO	INSUFIENCIA LEVE DEL SISTEMA VENOSO	IMAGENES	1300	\N	1300	\N	1300	\N
+986	2014-11-01	XIOMARA AGUIN	9841952	HERNANDEZ HILDA	1106361	MADRE	2014-06-12	2014-06-12	6986-5970-6019	ACCION CENTRAL	DIRECTIVO	HTA ESTADIO II/FLEBITIS	CONSULTA+EXAMEN 	2130	\N	2130	\N	2130	3430
+987	2014-11-01	INOSTROZA LORETO	24320049	FIERRO ZOILA	81288458	MADRE	2014-06-09	2014-06-09	175493	ACCION CENTRAL	DIRECTIVO	EVC ISQUEMICA/CERVICOARTROSIS	MEDICAMENTOS	846.57000000000005	\N	846.57000000000005	\N	846.57000000000005	846.57000000000005
+988	2014-11-01	YUSTIZ CARMEN	11543412	YUSTIZ CARMEN	11543412	TITULAR	2014-06-02	2014-06-02	353	PIRITU 1	OBRERO	DOLOR PELVICO	CONSULTA+IMAGENES	1000	\N	1000	\N	1000	1000
+989	2014-11-01	BARRIOS CARMEN	12262084	BARRIOS CARMEN	12262084	TITULAR	2014-06-11	2014-06-11	1219-53568	ACCION CENTRAL	OBRERO	PARASINUSITIS	IMAGENES	595	\N	595	\N	595	595
+990	2014-11-01	MEREGOTE MATILDE	12477902	MEREGOTE MARTINA	2002735	MADRE	2014-05-26	2014-06-04	551	SAN ANTONIO	OBRERO	BRONQUITIS CRONICA	CONSULTA	500	\N	500	\N	500	500
+991	2014-11-01	TORRELLES JOSE	13072133	TORRELLES JOSE	13072133	TITULAR	2014-06-11	2014-06-11	5406	PAYARA	OBRERO	MONOARTRITIS CRONICA	CONSULTA	600	\N	600	\N	600	600
+992	2014-11-01	JIMENEZ GLADIS	13353211	JIMENEZ GLADIS	13353211	TITULAR	2014-06-09	2014-06-09	1825-54592-1962-173807-5666	PIRITU 2	OBRERO	SINDROME HEMORROIDAL/MENOPAUSIA	CONSULTA+MEDICAMENTOS	2965.0300000000002	\N	2965.0300000000002	\N	2965.0300000000002	2965.0300000000002
+993	2014-11-01	PAEZ YANETH	13540407	PAEZ YANETH	13540407	TITULAR	2014-06-02	2014-06-03	743	MARIA DE LOS ANGELES	OBRERO	HTA SISTEMICA/ HIPERLIPIDERMIA MIXTA	CONSULTA	500	\N	500	\N	500	500
+994	2014-11-01	PEREZ MIGUEL	16032969	PEREZ MIGUEL	16032969	TITULAR	2014-06-02	2014-06-02	4141	PIRITU 2	OBRERO	CEFALEA/DOLORES MUSCULARES	EXAMENES	450	\N	450	\N	450	450
+995	2014-11-01	GUEVARA ABINADAL	16416882	TORREALBA MARIA	4609864	MADRE	2014-06-05	2014-06-09	4145-5163	PIRITU 2	OBRERO	COLICO NEFRITICA/HIPERTENSION ARTERIAL	CONSULTA+EXAMENES 	1540	\N	1540	\N	1540	1540
+996	2014-11-01	MALDONADO RAFAEL	17108554	MALDONADO RAFAEL	17108554	TITULAR	2014-05-29	2014-06-03	49746	WILLIAN LARA	OBRERO	TRASTORNO DEL PANICO	MEDICAMENTOS	223	\N	223	\N	223	223
+997	2014-11-01	COLINA JOHAN	17277901	LOPEZ ZULEIMA	9564354	MADRE	2014-06-12	2014-06-19	10104-210384	PIRITU 2	OBRERO	GLAUCOMA	CONSULTA/ESTUDIO	2250	\N	2250	\N	2250	2250
+998	2014-11-01	MUÑOZ ORLANDO	18800445	MEJIA LIBIA	8672970	MADRE	2014-06-03	2014-06-10	18	AGUA BLANCA	OBRERO	FRACTURA A NIVEL DE LA CORONA	TRATAMIENTO ODONTOLOGICO	2500	\N	2500	\N	2500	2500
+999	2014-11-01	MUÑOZ ORLANDO	18800445	MUÑOS DAMIAN	MENOR	HIJO	2014-06-03	2014-06-10	878	AGUA BLANCA	OBRERO	HIPERACTIVIDAD BRONQUIAL	MEDICAMENTOS	674.5	\N	674.5	\N	674.5	674.5
+1000	2014-11-01	AGUIN GUILLERMO	19377858	AGUIN ALEJANDRA	MENOR	HIJA	2014-06-10	2014-06-12	1863	PIRITU 2	OBRERO	ESTREÑIMIENTO/RINITIS ALERGICA	CONSULTA	500	\N	500	\N	500	500
+1001	2014-11-01	GUEVARA ANGEL	19956656	GUEVARA ANGEL	19956656	TITULAR	2014-06-03	2014-06-04	529	PIRITU 2	OBRERO	IRRITACION PREPUCIAL	CONSULTA	450	\N	450	\N	450	450
+1002	2014-11-01	MEDINA FREDDY	20025575	VELOZ ELIANA	21058596	ESPOSA	2014-06-02	2014-06-02	5162	PIRITU 3	OBRERO	DOLOR EN FID	IMAGENES	300	\N	300	\N	300	300
+1003	2014-11-01	MEDINA FREDDY	20025575	VELOZ ELIANA	21058596	ESPOSA	2014-06-02	2014-06-02	5165	PIRITU 3	OBRERO	ESTREÑIMIENTO 	CONSULTA	500	\N	500	\N	500	500
+1004	2014-11-01	SERGIO VALERA	20809291	SERGIO VALERA	20809291	TITULAR	2014-06-04	2014-06-04	1193	ACCION CENTRAL	OBRERO	DOLOR EN ZONA POSTERIOR 	TRATAMIENTO ODONTOLOGICO 	250	\N	250	\N	250	250
+1005	2014-11-01	SERGIO VALERA	20809291	VALERA TIBISAY	9560834	MADRE	2014-06-12	2014-06-12	4051-54849-1370	ACCION CENTRAL	OBRERO	ASTIGMATISMO HIPERMETROPICO	CONSULTA/MEDICAMENTOS/IMAGENES	2229	\N	2229	\N	2229	2229
+\.
+
+
+--
+-- Name: hreembolso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
+--
+
+SELECT pg_catalog.setval('hreembolso_id_seq', 1, false);
 
 
 --
@@ -6397,6 +8856,7 @@ SELECT pg_catalog.setval('medicina_id_seq', 1, false);
 COPY medico (id, usuario_id, fecha_registro, fecha_modificado, nacionalidad, cedula, rmpps, rif, nombre1, nombre2, apellido1, apellido2, sexo, celular, telefono, correo_electronico, observacion) FROM stdin;
 1	\N	2014-06-02 18:48:19.763325-04:30	2014-06-02 18:48:19.763325-04:30	v	1	1	1	PEDRO	JOSE	PEREZ	\N	M	\N	\N	\N	\N
 2	\N	2014-07-28 18:20:48.169269-04:30	2014-07-28 18:20:48.169269-04:30	V	12	12	12	CARLOS	\N	ESCALONA	\N	M	\N	\N	\N	\N
+0	\N	2014-10-07 15:07:30.4629-04:30	2014-10-07 15:07:30.4629-04:30	-	----	----	----	----	----	----	----	-	----	----	----	----
 \.
 
 
@@ -6412,34 +8872,17 @@ SELECT pg_catalog.setval('medico_id_seq', 2, true);
 --
 
 COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id, menu, url, posicion, icono, activo, visibilidad) FROM stdin;
-4	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	4	Accesos	sistema/acceso/listar/	901	icon-exchange	1	1
-5	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	5	Auditorías	sistema/auditoria/	902	icon-eye-open	1	1
-6	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	6	Backups	sistema/backup/listar/	903	icon-hdd	1	1
-7	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	7	Mantenimiento	sistema/mantenimiento/	904	icon-bolt	1	1
 8	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	8	Menús	sistema/menu/listar/	905	icon-list	1	1
 9	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	9	Perfiles	sistema/perfil/listar/	906	icon-group	1	1
-10	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	10	Permisos	sistema/privilegio/listar/	907	icon-magic	1	1
-11	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	11	Recursos	sistema/recurso/listar/	908	icon-lock	1	1
-12	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	12	Usuarios	sistema/usuario/listar/	909	icon-user	1	1
-13	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	13	Visor de sucesos	sistema/sucesos/	910	icon-filter	1	1
 14	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	14	Sistema	sistema/configuracion/	911	icon-wrench	1	1
 16	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	15	Empresa	config/empresa/	876	icon-briefcase	1	1
-19	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	18	Profesion	config/profesion/listar	803	\N	1	1
-20	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	19	Cargo	config/cargo/listar	804	\N	1	1
-21	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	20	Cobertura	config/cobertura/listar	805	\N	1	1
-22	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	21	Departamento	config/departamento/listar	806	\N	1	1
-23	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	22	Discapacidad	config/discapacidad/listar	807	\N	1	1
-24	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	23	Patologia	config/patologia/listar	808	\N	1	1
-25	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	24	Recaudos	config/recaudo/listar	809	\N	1	1
 26	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	28	25	Titular	beneficiarios/titular/listar	101	icon-user	1	1
 45	\N	2014-06-24 15:51:37.984221-04:30	2014-06-24 15:51:37.984221-04:30	36	42	Servicio	proveedorsalud/servicio/	605	icon-th	1	1
 46	\N	2014-06-24 23:52:34.310536-04:30	2014-06-24 23:52:34.310536-04:30	15	43	Tipo de Solicitudes	config/tiposolicitud/listar	810	icon-th	1	1
 17	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	16	Sucursales	config/sucursal/listar/	802	icon-sitemap	1	1
 47	\N	2014-07-30 14:25:46.578584-04:30	2014-07-30 14:25:46.578584-04:30	30	44	Registro	solicitudes/solicitud_medicina/registro	202	icon-plus-sign	1	1
-48	\N	2014-07-30 14:26:23.724504-04:30	2014-07-30 14:26:23.724504-04:30	30	45	Aprobacion	solicitudes/solicitud_medicina/aprobacion	203	icon-ok-sign	1	1
 49	\N	2014-07-30 14:26:53.261228-04:30	2014-07-30 14:26:53.261228-04:30	30	46	Contabilizar	solicitudes/solicitud_medicina/contabilizar	204	icon-check	1	1
 31	\N	2014-03-16 13:26:21.282386-04:30	2014-03-16 13:26:21.282386-04:30	29	28	Atención Primaria	#	211	icon-th	1	1
-32	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	29	Solicitudes Odontologicas	#	221	icon-th	1	1
 33	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	30	Exámenes Médicos	#	231	icon-th	1	1
 34	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	31	Solicitudes de Reembolso	#	241	icon-th	1	1
 35	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	32	Funeraria	#	251	icon-th	1	1
@@ -6447,27 +8890,22 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 42	\N	2014-06-09 11:28:23.150623-04:30	2014-06-09 11:28:23.150623-04:30	31	39	Aprobación	solicitudes/solicitud_servicio/aprobacion	213	icon-ok-sign	1	1
 50	\N	2014-07-30 14:27:26.593054-04:30	2014-07-30 14:27:26.593054-04:30	30	47	Anular	solicitudes/solicitud_medicina/anular	205	icon-remove-sign	1	1
 51	\N	2014-07-30 15:14:45.308621-04:30	2014-07-30 15:14:45.308621-04:30	32	48	Registro	solicitudes/solicitud_odontologica/registro	222	icon-plus-sign	1	1
-52	\N	2014-07-30 15:19:32.343134-04:30	2014-07-30 15:19:32.343134-04:30	32	49	Aprobacion	solicitudes/solicitud_odontologica/aprobacion	223	icon-ok-sign	1	1
+53	\N	2014-07-30 15:31:18.854185-04:30	2014-07-30 15:31:18.854185-04:30	32	50	Contabilizar	solicitudes/solicitud_odontologica/contabilizar	224	icon-check	1	1
 54	\N	2014-07-30 15:34:10.258296-04:30	2014-07-30 15:34:10.258296-04:30	32	51	Anular	solicitudes/solicitud_odontologica/anular	225	icon-remove-sign	1	1
 55	\N	2014-07-30 15:55:09.056613-04:30	2014-07-30 15:55:09.056613-04:30	33	52	Registro	solicitudes/solicitud_examen/registro	232	icon-plus-sign	1	1
-56	\N	2014-07-30 15:55:38.334131-04:30	2014-07-30 15:55:38.334131-04:30	33	53	Aprobacion	solicitudes/solicitud_examen/aprobacion	233	icon-ok-sign	1	1
 57	\N	2014-07-30 15:56:20.014958-04:30	2014-07-30 15:56:20.014958-04:30	33	54	Contabilizar	solicitudes/solicitud_examen/contabilizar	234	icon-check	1	1
 58	\N	2014-07-30 15:56:51.212513-04:30	2014-07-30 15:56:51.212513-04:30	33	55	Anular	solicitudes/solicitud_examen/anular	235	icon-remove-sign	1	1
 59	\N	2014-07-30 16:02:17.372533-04:30	2014-07-30 16:02:17.372533-04:30	34	56	Registro	solicitudes/solicitud_reembolso/registro	242	icon-plus-sign	1	1
-60	\N	2014-07-30 16:03:33.102309-04:30	2014-07-30 16:03:33.102309-04:30	34	57	Aprobacion	solicitudes/solicitud_reembolso/aprobacion	243	icon-ok-sign	1	1
 61	\N	2014-07-30 16:04:13.959142-04:30	2014-07-30 16:04:13.959142-04:30	34	58	Contabilizar	solicitudes/solicitud_reembolso/contabilizar	244	icon-check	1	1
 62	\N	2014-07-30 16:05:13.790258-04:30	2014-07-30 16:05:13.790258-04:30	34	59	Anular	solicitudes/solicitud_reembolso/anular	245	icon-remove-sign	1	1
 63	\N	2014-07-30 16:06:13.758372-04:30	2014-07-30 16:06:13.758372-04:30	35	64	Registro	solicitudes/solicitud_funeraria/registro	252	icon-plus-sign	1	1
-64	\N	2014-07-30 16:07:03.414714-04:30	2014-07-30 16:07:03.414714-04:30	35	65	Aprobacion	solicitudes/solicitud_funeraria/aprobacion	253	icon-ok-sign	1	1
 65	\N	2014-07-30 16:10:05.371277-04:30	2014-07-30 16:10:05.371277-04:30	35	66	Contabilizar	solicitudes/solicitud_funeraria/contabilizar	254	icon-check	1	1
 66	\N	2014-07-30 16:13:09.462772-04:30	2014-07-30 16:13:09.462772-04:30	35	67	Anular	solicitudes/solicitud_funeraria/anular	255	icon-remove-sign	1	1
 2	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	1	2	Escritorio	dashboard/	11	icon-home	1	1
 68	\N	2014-07-30 20:07:05.413317-04:30	2014-07-30 20:07:05.413317-04:30	67	60	Registro	solicitudes/solicitud_carta/registro	262	icon-plus-sign	1	1
 67	\N	2014-07-30 19:32:00.487102-04:30	2014-07-30 19:32:00.487102-04:30	29	68	Carta Aval	#	261	icon-th	1	1
 44	\N	2014-06-09 11:31:13.991409-04:30	2014-06-09 11:31:13.991409-04:30	31	41	Anular	solicitudes/solicitud_servicio/anular	217	icon-remove-sign	1	1
-69	\N	2014-07-30 20:26:05.938004-04:30	2014-07-30 20:26:05.938004-04:30	67	61	Aprobacion	solicitudes/solicitud_carta/aprobacion	263	icon-ok-sign	1	1
 38	\N	2014-04-22 10:09:02.242857-04:30	2014-04-22 10:09:02.242857-04:30	36	36	Especialidad	proveedorsalud/especialidad/listar	601	icon-magic	1	1
-39	\N	2014-04-22 10:09:32.70358-04:30	2014-04-22 10:09:32.70358-04:30	36	35	Medico	proveedorsalud/medico/listar	603	icon-user	1	1
 40	\N	2014-04-22 14:52:02.983257-04:30	2014-04-22 14:52:02.983257-04:30	36	37	Medicinas	proveedorsalud/medicina/listar	604	icon-th	1	1
 29	\N	2014-03-16 13:23:40.74219-04:30	2014-03-16 13:23:40.74219-04:30	\N	\N	Solicitudes	solicitudes/solicitud_servicio/registro	200	icon-th	1	1
 28	\N	2014-03-16 12:46:04.752491-04:30	2014-03-16 12:46:04.752491-04:30	\N	\N	Titular	beneficiarios/titular/	100	icon-user	1	1
@@ -6475,16 +8913,39 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 30	\N	2014-03-16 13:24:43.632516-04:30	2014-03-16 13:24:43.632516-04:30	29	27	Solicitud de Medicinas	#	201	icon-th	1	1
 15	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	\N	\N	Configuraciones	config/empresa/	800	icon-wrench	1	1
 1	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	\N	\N	Escritorio	dashboard/	10	icon-home	1	1
-53	\N	2014-07-30 15:31:18.854185-04:30	2014-07-30 15:31:18.854185-04:30	32	50	aprobadas	solicitudes/solicitud_odontologica/contabilizar	224	icon-check	1	1
 70	\N	2014-07-30 20:27:20.039277-04:30	2014-07-30 20:27:20.039277-04:30	67	62	Contabilizar	solicitudes/solicitud_carta/contabilizar	264	icon-check	1	1
+32	\N	2014-03-16 13:27:52.745733-04:30	2014-03-16 13:27:52.745733-04:30	29	29	Solicitudes Odontológicas	#	221	icon-th	1	1
+39	\N	2014-04-22 10:09:32.70358-04:30	2014-04-22 10:09:32.70358-04:30	36	35	Médico	proveedorsalud/medico/listar	603	icon-user	1	1
+48	\N	2014-07-30 14:26:23.724504-04:30	2014-07-30 14:26:23.724504-04:30	30	45	Aprobación	solicitudes/solicitud_medicina/aprobacion	203	icon-ok-sign	1	1
+52	\N	2014-07-30 15:19:32.343134-04:30	2014-07-30 15:19:32.343134-04:30	32	49	Aprobación	solicitudes/solicitud_odontologica/aprobacion	223	icon-ok-sign	1	1
+56	\N	2014-07-30 15:55:38.334131-04:30	2014-07-30 15:55:38.334131-04:30	33	53	Aprobación	solicitudes/solicitud_examen/aprobacion	233	icon-ok-sign	1	1
+60	\N	2014-07-30 16:03:33.102309-04:30	2014-07-30 16:03:33.102309-04:30	34	57	Aprobación	solicitudes/solicitud_reembolso/aprobacion	243	icon-ok-sign	1	1
+64	\N	2014-07-30 16:07:03.414714-04:30	2014-07-30 16:07:03.414714-04:30	35	65	Aprobación	solicitudes/solicitud_funeraria/aprobacion	253	icon-ok-sign	1	1
+69	\N	2014-07-30 20:26:05.938004-04:30	2014-07-30 20:26:05.938004-04:30	67	61	Aprobación	solicitudes/solicitud_carta/aprobacion	263	icon-ok-sign	1	1
 71	\N	2014-07-30 20:29:29.133166-04:30	2014-07-30 20:29:29.133166-04:30	67	63	Anular	solicitudes/solicitud_carta/anular	265	icon-remove-sign	1	1
-72	\N	2014-08-20 14:31:37.537946-04:30	2014-08-20 14:31:37.537946-04:30	3	69	cambio clave	sistema/usuario_clave/cambiar_clave	912	\N	1	1
+20	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	19	Cargo	config/cargo/listar	804	icon-resize-vertical	1	1
+5	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	5	Auditorías	sistema/auditoria/	908	icon-eye-open	1	1
+7	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	7	Mantenimiento	sistema/mantenimiento/	904	icon-bolt	2	1
+13	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	13	Visor de sucesos	sistema/sucesos/	910	icon-filter	2	1
+11	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	11	Recursos	sistema/recurso/listar/	901	icon-lock	1	1
+22	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	21	Departamento	config/departamento/listar	806	icon-home	1	1
+23	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	22	Discapacidad	config/discapacidad/listar	807	icon-eye-close	1	1
+24	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	23	Patología	config/patologia/listar	808	icon-filter	1	1
+25	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	24	Recaudos	config/recaudo/listar	809	icon-folder-open	1	1
+6	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	6	Backups	sistema/backup/listar/	903	icon-hdd	2	1
+12	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	12	Usuarios	sistema/usuario/listar/	902	icon-user	1	1
+10	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	10	Permisos	sistema/privilegio/listar/	905	icon-magic	1	1
 27	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	28	26	Beneficiario	beneficiarios/beneficiario/listar	102	icon-user	2	1
 43	\N	2014-06-09 11:28:56.829577-04:30	2014-06-09 11:28:56.829577-04:30	31	40	Cargar Siniestro	solicitudes/solicitud_servicio/aprobadas	214	icon-plus-sign	1	1
 74	\N	2014-09-06 15:52:58.31682-04:30	2014-09-06 15:52:58.31682-04:30	31	71	Cargar Facturas	solicitudes/solicitud_servicio/facturacion	215	icon-plus-sign	1	1
 73	\N	2014-09-06 14:46:03.610789-04:30	2014-09-06 14:46:03.610789-04:30	31	70	Orden de pago	solicitudes/solicitud_servicio/pagos	216	icon-plus-sign	1	1
 37	\N	2014-04-22 09:57:03.54549-04:30	2014-04-22 09:57:03.54549-04:30	36	34	Proveedor	proveedorsalud/proveedor/listar	602	icon-briefcase	1	1
 36	\N	2014-04-22 09:51:53.400012-04:30	2014-04-22 09:51:53.400012-04:30	\N	\N	Provedores de Salud	proveedorsalud/proveedor/listar	600	icon-group	1	1
+75	\N	2014-10-07 09:08:13.046876-04:30	2014-10-07 09:08:13.046876-04:30	15	72	Patologias Coberturas	config/patologia_cobertura/	\N	icon-th-large	1	1
+19	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	18	Profesión	config/profesion/listar	803	icon-briefcase	1	1
+21	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	15	20	Cobertura	config/cobertura/listar	805	icon-list-alt	1	1
+72	\N	2014-08-20 14:31:37.537946-04:30	2014-08-20 14:31:37.537946-04:30	3	69	Contraseñas	sistema/usuario_clave/cambiar_clave	912	icon-lock	1	1
+4	\N	2014-03-13 13:30:24.848631-04:30	2014-03-13 13:30:24.848631-04:30	3	4	Accesos	sistema/acceso/listar/	908	icon-exchange	1	1
 \.
 
 
@@ -6492,7 +8953,7 @@ COPY menu (id, usuario_id, fecha_registro, fecha_modificado, menu_id, recurso_id
 -- Name: menu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('menu_id_seq', 74, true);
+SELECT pg_catalog.setval('menu_id_seq', 75, true);
 
 
 --
@@ -6848,16 +9309,30 @@ SELECT pg_catalog.setval('municipio_id_seq', 334, true);
 -- Data for Name: orden_pago; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
-COPY orden_pago (id, usuario_id, fecha_registro, fecha_modificado, nro_orden, numero_cheque, fecha_cheque, monto, observacion) FROM stdin;
+COPY orden_pago (usuario_id, fecha_registro, fecha_modificado, nro_orden, numero_cheque, fecha_cheque, monto, observacion, id) FROM stdin;
 \.
 
 
 --
--- Data for Name: orden_pago_factura_dt; Type: TABLE DATA; Schema: public; Owner: arrozalba
+-- Data for Name: orden_pago_factura; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
-COPY orden_pago_factura_dt (id, usuario_id, fecha_registro, fecha_modificado, orden_pago_id, factura_dt_id, monto) FROM stdin;
+COPY orden_pago_factura (usuario_id, fecha_registro, fecha_modificado, orden_pago_id, factura_id, monto, id) FROM stdin;
 \.
+
+
+--
+-- Name: orden_pago_factura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
+--
+
+SELECT pg_catalog.setval('orden_pago_factura_id_seq', 1, false);
+
+
+--
+-- Name: orden_pago_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
+--
+
+SELECT pg_catalog.setval('orden_pago_id_seq', 1, false);
 
 
 --
@@ -7658,6 +10133,7 @@ COPY parroquia (id, nombre, municipio_id) FROM stdin;
 502	Parroquia Cecilio Zubillaga	152
 503	Parroquia Chiquinquirá	152
 504	Parroquia El Blanco	152
+632	Parroquia Ocumare del Tuy	188
 505	Parroquia Espinoza de los Monteros	152
 506	Parroquia Lara	152
 507	Parroquia Las Mercedes	152
@@ -7785,7 +10261,6 @@ COPY parroquia (id, nombre, municipio_id) FROM stdin;
 629	Parroquia Tácata	186
 630	Parroquia Santa Teresa del Tuy	187
 631	Parroquia El Cartanal/	187
-632	Parroquia Ocumare del Tuy	188
 633	Parroquia La Democracia	188
 634	Parroquia Santa Bárbara	188
 635	Parroquia San Antonio de Los Altos	189
@@ -8255,7 +10730,6 @@ SELECT pg_catalog.setval('parroquia_id_seq', 1086, true);
 --
 
 COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, codigo, descripcion, observacion, activo) FROM stdin;
-14189	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	314	A00	Cólera	\N	t
 14190	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	314	A00.0	Cólera debido a Vibrio cholerae 01, biotipo cholerae	\N	t
 14191	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	314	A00.1	Cólera debido a Vibrio cholerae 01, biotipo El Tor	\N	t
 14192	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	314	A00.9	Cólera, no especificado	\N	t
@@ -8326,6 +10800,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 14257	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	315	A15	Tuberculosis respiratoria, confirmada bacteriológica e histológicamente	\N	t
 14258	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	315	A15.0	Tuberculosis del pulmón, confirmada por hallazgo microscópico del bacilo tuberculoso en esputo, con o sin cultivo	\N	t
 14259	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	315	A15.1	Tuberculosis del pulmón, confirmada únicamente por cultivo	\N	t
+14327	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	316	A23.8	Otras brucelosis	\N	t
 14260	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	315	A15.2	Tuberculosis del pulmón, confirmada histológicamente	\N	t
 14261	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	315	A15.3	Tuberculosis del pulmón, confirmada por medios no especificados	\N	t
 14262	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	315	A15.4	Tuberculosis de ganglios linfáticos intratorácicos, confirmada bacteriológica e histológicamente	\N	t
@@ -8394,7 +10869,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 14324	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	316	A23.1	Brucelosis debida a Brucella abortus	\N	t
 14325	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	316	A23.2	Brucelosis debida a Brucella suis	\N	t
 14326	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	316	A23.3	Brucelosis debida a Brucella canis	\N	t
-14327	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	316	A23.8	Otras brucelosis	\N	t
 14328	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	316	A23.9	Brucelosis, no especificada	\N	t
 14329	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	316	A24	Muermo y melioidosis	\N	t
 14330	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	316	A24.0	Muermo	\N	t
@@ -8761,6 +11235,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 14691	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	324	B08.3	Eritema infeccioso [quinta enfermedad]	\N	t
 14692	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	324	B08.4	Estomatitis vesicular enteroviral con exantema	\N	t
 14693	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	324	B08.5	Faringitis vesicular enterovírica	\N	t
+15448	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	345	C70	Tumor maligno de las meninges	\N	t
 14694	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	324	B08.8	Otras infecciones virales especificadas, caracterizadas por lesiones de la piel y de las membranas mucosas	\N	t
 14695	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	324	B09	Infección viral no especificada, caracterizada por lesiones de la piel y de las membranas mucosas	\N	t
 14696	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	325	B15	Hepatitis aguda tipo A	\N	t
@@ -9124,6 +11599,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 15053	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	332	B90	Secuelas de tuberculosis	\N	t
 15054	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	332	B90.0	Secuelas de tuberculosis del sistema nervioso central	\N	t
 15055	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	332	B90.1	Secuelas de tuberculosis genitourinaria	\N	t
+15585	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	348	C92.3	Sarcoma mieloide	\N	t
 15056	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	332	B90.2	Secuelas de tuberculosis de huesos y articulaciones	\N	t
 15057	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	332	B90.8	Secuelas de tuberculosis de otros órganos especificados	\N	t
 15058	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	332	B90.9	Secuelas de tuberculosis respiratoria y de tuberculosis no especificada	\N	t
@@ -9248,6 +11724,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 15176	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	336	C15.0	Tumor maligno del esófago, porción cervical	\N	t
 15177	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	336	C15.1	Tumor maligno del esófago, porción torácica	\N	t
 15178	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	336	C15.2	Tumor maligno del esófago, porción abdominal	\N	t
+15722	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	351	D14.2	Tumor benigno de la tráquea	\N	t
 15179	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	336	C15.3	Tumor maligno del tercio superior del esófago	\N	t
 15180	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	336	C15.4	Tumor maligno del tercio medio del esófago	\N	t
 15181	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	336	C15.5	Tumor maligno del tercio inferior del esófago	\N	t
@@ -9516,7 +11993,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 15445	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	345	C69.6	Tumor maligno de la órbita	\N	t
 15446	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	345	C69.8	Lesión de sitios contiguos del ojo y sus anexos	\N	t
 15447	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	345	C69.9	Tumor maligno del ojo, parte no especificada	\N	t
-15448	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	345	C70	Tumor maligno de las meninges	\N	t
 15449	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	345	C70.0	Tumor maligno de las meninges cerebrales	\N	t
 15450	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	345	C70.1	Tumor maligno de las meninges raquídeas	\N	t
 15451	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	345	C70.9	Tumor maligno de las meninges, parte no especificada	\N	t
@@ -9653,7 +12129,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 15582	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	348	C92.0	Leucemia mieloide aguda	\N	t
 15583	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	348	C92.1	Leucemia mieloide crónica	\N	t
 15584	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	348	C92.2	Leucemia mieloide subaguda	\N	t
-15585	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	348	C92.3	Sarcoma mieloide	\N	t
 15586	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	348	C92.4	Leucemia promielocítica aguda	\N	t
 15587	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	348	C92.5	Leucemia mielomonocítica aguda	\N	t
 15588	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	348	C92.7	Otras leucemias mieloides	\N	t
@@ -9722,6 +12197,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 15651	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	350	D04.2	Carcinoma in situ de la piel de la oreja y del conducto auditivo externo	\N	t
 15652	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	350	D04.3	Carcinoma in situ de la piel de otras partes y de las no especificadas de la cara	\N	t
 15653	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	350	D04.4	Carcinoma in situ de la piel del cuero cabelludo y cuello	\N	t
+16111	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	358	D82.1	Síndrome de Di George	\N	t
 15654	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	350	D04.5	Carcinoma in situ de la piel del tronco	\N	t
 15655	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	350	D04.6	Carcinoma in situ de la piel del miembro superior, incluido el hombro	\N	t
 15656	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	350	D04.7	Carcinoma in situ de la piel del miembro inferior, incluida la cadera	\N	t
@@ -9790,7 +12266,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 15719	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	351	D14	Tumor benigno del oído medio y del sistema respiratorio	\N	t
 15720	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	351	D14.0	Tumor benigno del oído medio, de la cavidad nasal y de los senos paranasales	\N	t
 15721	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	351	D14.1	Tumor benigno de la laringe	\N	t
-15722	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	351	D14.2	Tumor benigno de la tráquea	\N	t
 15723	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	351	D14.3	Tumor benigno de los bronquios y del pulmón	\N	t
 15724	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	351	D14.4	Tumor benigno del sistema respiratorio, sitio no especificado	\N	t
 15725	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	351	D15	Tumor benigno de otros órganos intratorácicos y de los no especificados	\N	t
@@ -10179,7 +12654,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 16108	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	358	D81.9	Inmunodeficiencia combinada, no especificada	\N	t
 16109	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	358	D82	Inmunodeficiencia asociada con otros defectos mayores	\N	t
 16110	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	358	D82.0	Síndrome de Wiskott-Aldrich	\N	t
-16111	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	358	D82.1	Síndrome de Di George	\N	t
 16112	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	358	D82.2	Inmunodeficiencia con enanismo micromélico [miembros cortos]	\N	t
 16113	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	358	D82.3	Inmunodeficiencia consecutiva a respuesta defectuosa hereditaria contra el virus de Epstein-Barr	\N	t
 16114	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	358	D82.4	Síndrome de hiperinmunoglobulina E [IgE]	\N	t
@@ -11306,6 +13780,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 17235	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	383	G55.0	Compresiones de las raíces y plexos nerviosos en enfermedades neoplásicas (C00-D48+)	\N	t
 17236	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	383	G55.1	Compresiones de las raíces y plexos nerviosos en trastornos de los discos intervertebrales (M50-M51+)	\N	t
 17237	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	383	G55.2	Compresiones de las raíces y plexos nerviosos en la espondilosis (M47.-+)	\N	t
+17517	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	391	H21.0	Hifema	\N	t
 17238	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	383	G55.3	Compresiones de las raíces y plexos nerviosos en otras dorsopatías (M45- M46+, M48.-+, M53-M54+)	\N	t
 17239	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	383	G55.8	Compresiones de las raíces y plexos nerviosos en otras enfermedades clasificadas en otra parte	\N	t
 17240	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	383	G56	Mononeuropatías del miembro superior	\N	t
@@ -11586,7 +14061,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 17514	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	391	H20.8	Otras iridociclitis especificadas	\N	t
 17515	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	391	H20.9	Iridociclitis, no especificada	\N	t
 17516	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	391	H21	Otros trastornos del iris y del cuerpo ciliar	\N	t
-17517	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	391	H21.0	Hifema	\N	t
 17518	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	391	H21.1	Otros trastornos vasculares del iris y del cuerpo ciliar	\N	t
 17519	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	391	H21.2	Degeneración del iris y del cuerpo ciliar	\N	t
 17520	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	391	H21.3	Quiste del iris, del cuerpo ciliar y de la cámara anterior	\N	t
@@ -11656,6 +14130,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 17584	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	393	H35.0	Retinopatías del fondo y cambios vasculares retinianos	\N	t
 17585	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	393	H35.1	Retinopatía de la prematuridad	\N	t
 17586	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	393	H35.2	Otras retinopatías proliferativas	\N	t
+18060	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	409	I47	Taquicardia paroxística	\N	t
 17587	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	393	H35.3	Degeneración de la mácula y del polo posterior del ojo	\N	t
 17588	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	393	H35.4	Degeneración periférica de la retina	\N	t
 17589	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	393	H35.5	Distrofia hereditaria de la retina	\N	t
@@ -11797,6 +14272,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 17725	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	400	H61.3	Estenosis adquirida del conducto auditivo externo	\N	t
 17726	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	400	H61.8	Otros trastornos especificados del oído externo	\N	t
 17727	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	400	H61.9	Trastorno del oído externo, no especificado	\N	t
+18063	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	409	I47.2	Taquicardia ventricular	\N	t
 17728	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	400	H62	Trastornos del oído externo en enfermedades clasificadas en otra parte	\N	t
 17729	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	400	H62.0	Otitis externa en enfermedades bacterianas clasificadas en otra parte	\N	t
 17730	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	400	H62.1	Otitis externa en enfermedades virales clasificadas en otra parte	\N	t
@@ -11997,6 +14473,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 17925	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	407	I23.1	Defecto del tabique auricular como complicación presente posterior al infarto del miocardio	\N	t
 17926	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	407	I23.2	Defecto del tabique ventricular como complicación presente posterior al infarto del miocardio	\N	t
 17927	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	407	I23.3	Ruptura de la pared cardíaca sin hemopericardio como complicación presente posterior al infarto agudo del miocardio	\N	t
+18061	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	409	I47.0	Arritmia por reentrada ventricular	\N	t
 17928	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	407	I23.4	Ruptura de las cuerdas tendinosas como complicación presente posterior al infarto agudo del miocardio	\N	t
 17929	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	407	I23.5	Ruptura de músculo papilar como complicación presente posterior al infarto agudo del miocardio	\N	t
 17930	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	407	I23.6	miocardio	\N	t
@@ -12064,6 +14541,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 17991	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	409	I36	Trastornos no reumáticos de la válvula tricúspide	\N	t
 17992	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	409	I36.0	Estenosis no reumática (de la válvula) tricúspide	\N	t
 17993	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	409	I36.1	Insuficiencia no reumática (de la válvula) tricúspide	\N	t
+18062	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	409	I47.1	Taquicardia supraventricular	\N	t
 17994	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	409	I36.2	Estenosis con insuficiencia no reumática (de la válvula) tricúspide	\N	t
 17995	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	409	I36.8	Otros trastornos no reumáticos de la válvula tricúspide	\N	t
 17996	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	409	I36.9	Trastorno no reumático de la válvula tricúspide, no especificado	\N	t
@@ -12131,10 +14609,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 18057	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	409	I46.0	Paro cardíaco con resucitación exitosa	\N	t
 18058	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	409	I46.1	Muerte cardíaca súbita, así descrita	\N	t
 18059	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	409	I46.9	Paro cardíaco, no especificado	\N	t
-18060	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	409	I47	Taquicardia paroxística	\N	t
-18061	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	409	I47.0	Arritmia por reentrada ventricular	\N	t
-18062	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	409	I47.1	Taquicardia supraventricular	\N	t
-18063	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	409	I47.2	Taquicardia ventricular	\N	t
 18064	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	409	I47.9	Taquicardia paroxística, no especificada	\N	t
 18065	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	409	I48	Fibrilación y aleteo auricular	\N	t
 18066	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	409	I49	Otras arritmias cardíacas	\N	t
@@ -12404,6 +14878,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 18333	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	415	J11	Influenza debida a virus no identificado	\N	t
 18334	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	415	J11.0	Influenza con neumonía, virus no identificado	\N	t
 18335	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	415	J11.1	Influenza con otras manifestaciones respiratorias, virus no identificado	\N	t
+18547	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	422	J94.2	Hemotórax	\N	t
 18336	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	415	J11.8	Influenza con otras manifestaciones, virus no identificado	\N	t
 18337	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	415	J12	Neumonía viral, no clasificada en otra parte	\N	t
 18338	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	415	J12.0	Neumonía debida a adenovirus	\N	t
@@ -12547,6 +15022,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 18476	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	419	J63.3	Fibrosis (del pulmón) debida a grafito	\N	t
 18477	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	419	J63.4	Siderosis	\N	t
 18478	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	419	J63.5	Estañosis	\N	t
+18619	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	424	K04.8	Quiste radicular	\N	t
 18479	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	419	J63.8	Neumoconiosis debida a otros polvos inorgánicos especificados	\N	t
 18480	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	419	J64	Neumoconiosis, no especificada	\N	t
 18481	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	419	J65	Neumoconiosis asociada con tuberculosis	\N	t
@@ -12615,7 +15091,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 18544	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	422	J94	Otras afecciones de la pleura	\N	t
 18545	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	422	J94.0	Quilotórax	\N	t
 18546	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	422	J94.1	Fibrotórax	\N	t
-18547	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	422	J94.2	Hemotórax	\N	t
 18548	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	422	J94.8	Otras afecciones especificadas de la pleura	\N	t
 18549	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	422	J94.9	Afección pleural, no especificada	\N	t
 18550	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	423	J95	Trastornos del sistema respiratorio consecutivos a procedimientos, no clasificados en otra parte	\N	t
@@ -12687,7 +15162,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 18616	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	424	K04.5	Periodontitis apical crónica	\N	t
 18617	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	424	K04.6	Absceso periapical con fístula	\N	t
 18618	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	424	K04.7	Absceso periapical sin fístula	\N	t
-18619	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	424	K04.8	Quiste radicular	\N	t
 18620	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	424	K04.9	Otras enfermedades y las no especificadas de la pulpa y del tejido periapical	\N	t
 18621	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	424	K05	Gingivitis y enfermedades periodontales	\N	t
 18622	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	424	K05.0	Gingivitis aguda	\N	t
@@ -12823,6 +15297,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 18751	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	425	K28.3	Ulcera gastroyeyunal, aguda sin hemorragia ni perforación	\N	t
 18752	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	425	K28.4	Ulcera gastroyeyunal, crónica o no especificada, con hemorragia	\N	t
 18753	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	425	K28.5	Ulcera gastroyeyunal, crónica o no especificada, con perforación	\N	t
+18823	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	427	K46	Hernia no especificada de la cavidad abdominal	\N	t
 18754	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	425	K28.6	Ulcera gastroyeyunal, crónica o no especificada, con hemorragia y perforación	\N	t
 18755	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	425	K28.7	Ulcera gastroyeyunal, crónica sin hemorragia ni perforación	\N	t
 18756	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	425	K28.9	Ulcera gastroyeyunal, no especificada como aguda ni crónica, sin hemorragia ni perforación	\N	t
@@ -12893,7 +15368,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 18820	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	427	K45.0	Otras hernias de la cavidad abdominal especificadas, con obstrucción, sin gangrena	\N	t
 18821	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	427	K45.1	Otras hernias de la cavidad abdominal especificadas, con gangrena	\N	t
 18822	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	427	K45.8	Otras hernias de la cavidad abdominal especificadas, sin obstrucción ni gangrena	\N	t
-18823	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	427	K46	Hernia no especificada de la cavidad abdominal	\N	t
 18824	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	427	K46.0	Hernia abdominal no especificada, con obstrucción, sin gangrena	\N	t
 18825	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	427	K46.1	Hernia abdominal no especificada, con gangrena	\N	t
 18826	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	427	K46.9	Hernia abdominal no especificada, sin obstrucción ni gangrena	\N	t
@@ -13107,6 +15581,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 19036	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	433	K90.9	Malabsorción intestinal, no especificada	\N	t
 19037	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	433	K91	Trastornos del sistema digestivo consecutivos a procedimientos, no clasificados en otra parte	\N	t
 19038	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	433	K91.0	Vómito postcirugía gastrointestinal	\N	t
+19111	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	435	L13	Otros trastornos flictenulares	\N	t
 19039	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	433	K91.1	Síndromes consecutivos a la cirugía gástrica	\N	t
 19040	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	433	K91.2	Malabsorción postquirúrgica, no clasificada en otra parte	\N	t
 19041	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	433	K91.3	Obstrucción intestinal postoperatoria	\N	t
@@ -13179,7 +15654,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 19108	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	435	L12.3	Epidermólisis bullosa adquirida	\N	t
 19109	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	435	L12.8	Otros penfigoides	\N	t
 19110	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	435	L12.9	Penfigoide, no especificado	\N	t
-19111	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	435	L13	Otros trastornos flictenulares	\N	t
 19112	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	435	L13.0	Dermatitis herpetiforme	\N	t
 19113	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	435	L13.1	Dermatitis pustulosa subcorneal	\N	t
 19189	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	437	L40.3	Pustulosis palmar y plantar	\N	t
@@ -13757,6 +16231,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 19687	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	446	M35.6	Paniculitis recidivante [Weber-Christian]	\N	t
 19688	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	446	M35.7	Síndrome de hipermovilidad	\N	t
 19689	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	446	M35.8	Otras enfermedades especificadas con compromiso sistémico del tejido conjuntivo	\N	t
+19761	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	449	M50	Trastornos de disco cervical	\N	t
 19690	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	446	M35.9	Compromiso sistémico del tejido conjuntivo, no especificado	\N	t
 19691	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	446	M36	Trastornos sistémicos del tejido conjuntivo en enfermedades clasificadas en otra parte	\N	t
 19692	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	446	M36.0	Dermato(poli)miositis en enfermedad neoplásica (C00-D48+)	\N	t
@@ -13829,7 +16304,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 19758	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	448	M49.4	Espondilopatía neuropática	\N	t
 19759	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	448	M49.5	Vértebra colapsada en enfermedades clasificadas en otra parte	\N	t
 19760	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	448	M49.8	Espondilopatía en otras enfermedades clasificadas en otra parte	\N	t
-19761	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	449	M50	Trastornos de disco cervical	\N	t
 19762	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	449	M50.0	Trastorno de disco cervical con mielopatía (G99.2*)	\N	t
 19763	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	449	M50.1	Trastorno de disco cervical con radiculopatía	\N	t
 19764	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	449	M50.2	Otros desplazamientos de disco cervical	\N	t
@@ -14363,6 +16837,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 20291	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	462	N36.9	Trastorno de la uretra, no especificado	\N	t
 20292	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	462	N37	Trastornos de la uretra en enfermedades clasificadas en otra parte	\N	t
 20293	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	462	N37.0	Uretritis en enfermedades clasificadas en otra parte	\N	t
+20365	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	464	N63	Masa no especificada en la mama	\N	t
 20294	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	462	N37.8	Otros trastornos uretrales en enfermedades clasificadas en otra parte	\N	t
 20295	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	462	N39	Otros trastornos del sistema urinario	\N	t
 20296	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	462	N39.0	Infección de vías urinarias, sitio no especificado	\N	t
@@ -14434,7 +16909,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 20362	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	464	N60.9	Displasia mamaria benigna, sin otra especificación	\N	t
 20363	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	464	N61	Trastornos inflamatorios de la mama	\N	t
 20364	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	464	N62	Hipertrofia de la mama	\N	t
-20365	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	464	N63	Masa no especificada en la mama	\N	t
 20366	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	464	N64	Otros trastornos de la mama	\N	t
 20367	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	464	N64.0	Fisura y fístula del pezón	\N	t
 20368	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	464	N64.1	Necrosis grasa de la mama	\N	t
@@ -14574,6 +17048,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 20503	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	466	N90.0	Displasia vulvar leve	\N	t
 20504	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	466	N90.1	Displasia vulvar moderada	\N	t
 20505	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	466	N90.2	Displasia vulvar severa, no clasificada en otra parte	\N	t
+21244	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	480	P35.3	Hepatitis viral congénita	\N	t
 20506	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	466	N90.3	Displasia de la vulva, no especificada	\N	t
 20507	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	466	N90.4	Leucoplasia de la vulva	\N	t
 20508	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	466	N90.5	Atrofia de la vulva	\N	t
@@ -14641,6 +17116,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 20569	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	467	N99.3	Prolapso de la cúpula vaginal después de histerectomía	\N	t
 20570	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	467	N99.4	Adherencias peritoneales pélvicas consecutivas a procedimientos	\N	t
 20571	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	467	N99.5	Mal funcionamiento de estoma externo de vías urinarias	\N	t
+20689	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	470	O22.0	Venas varicosas de los miembros inferiores en el embarazo	\N	t
 20572	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	467	N99.8	Otros trastornos del sistema genitourinario consecutivos a procedimientos	\N	t
 20573	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	467	N99.9	Trastorno no especificado del sistema genitourinario consecutivo a procedimientos	\N	t
 20574	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	468	O00	Embarazo ectópico	\N	t
@@ -14701,6 +17177,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 20627	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	468	O06.4	Aborto no especificado, incompleto, sin complicación	\N	t
 20628	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	468	O06.5	Aborto no especificado, completo o no especificado, complicado con infección genital y pelviana	\N	t
 20629	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	468	O06.6	Aborto no especificado, completo o no especificado, complicado por hemorragia excesiva o tardía	\N	t
+21001	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	474	O88.0	Embolia gaseosa, obstétrica	\N	t
 20630	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	468	O06.7	Aborto no especificado, completo o no especificado, complicado por embolia	\N	t
 20631	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	468	O06.8	Aborto no especificado, completo o no especificado, con otras complicaciones especificadas y las no especificadas	\N	t
 20632	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	468	O06.9	Aborto no especificado, completo o no especificado, sin complicación	\N	t
@@ -14759,7 +17236,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 20686	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	470	O21.8	Otros vómitos que complican el embarazo	\N	t
 20687	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	470	O21.9	Vómitos del embarazo, no especificados	\N	t
 20688	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	470	O22	Complicaciones venosas en el embarazo	\N	t
-20689	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	470	O22.0	Venas varicosas de los miembros inferiores en el embarazo	\N	t
 20690	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	470	O22.1	Várices genitales en el embarazo	\N	t
 20691	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	470	O22.2	Tromboflebitis superficial en el embarazo	\N	t
 20694	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	470	O22.5	Trombosis venosa cerebral en el embarazo	\N	t
@@ -14822,6 +17298,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 20751	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	471	O31.1	Embarazo que continúa después del aborto de un feto o más	\N	t
 20752	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	471	O31.2	Embarazo que continúa después de la muerte intrauterina de un feto o más	\N	t
 20753	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	471	O31.8	Otras complicaciones específicas del embarazo múltiple	\N	t
+21649	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	489	Q30.0	Atresia de las coanas	\N	t
 20754	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	471	O32	Atención materna por presentación anormal del feto, conocida o presunta	\N	t
 20755	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	471	O32.0	Atención materna por posición fetal inestable	\N	t
 20756	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	471	O32.1	Atención materna por presentación de nalgas	\N	t
@@ -15004,6 +17481,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 20932	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	472	O74.0	Neumonitis por aspiración debida a la anestesia administrada durante el trabajo de parto y el parto	\N	t
 20933	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	472	O74.1	Otras complicaciones pulmonares debidas a la anestesia administrada durante el trabajo de parto y el parto	\N	t
 20934	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	472	O74.2	Complicaciones cardíacas de la anestesia administrada durante el trabajo de parto y el parto	\N	t
+21002	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	474	O88.1	Embolia de líquido amniótico	\N	t
 20935	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	472	O74.3	Complicaciones del sistema nervioso central por la anestesia administrada durante el trabajo de parto y el parto	\N	t
 20936	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	472	O74.4	Reacción tóxica a la anestesia local administrada durante el trabajo de parto y el parto	\N	t
 20937	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	472	O74.5	Cefalalgia inducida por la anestesia espinal o epidural administradas durante el trabajo de parto y el parto	\N	t
@@ -15069,8 +17547,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 20998	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	474	O87.8	Otras complicaciones venosas en el puerperio	\N	t
 20999	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	474	O87.9	Complicación venosa en el puerperio, no especificada	\N	t
 21000	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	474	O88	Embolia obstétrica	\N	t
-21001	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	474	O88.0	Embolia gaseosa, obstétrica	\N	t
-21002	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	474	O88.1	Embolia de líquido amniótico	\N	t
 21003	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	474	O88.2	Embolia de coágulo sanguíneo, obstétrica	\N	t
 21004	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	474	O88.3	Embolia séptica y piémica, obstétrica	\N	t
 21005	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	474	O88.8	Otras embolias obstétricas	\N	t
@@ -15249,6 +17725,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 21176	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	478	P15.9	Traumatismo no especificado, durante el nacimiento	\N	t
 21177	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	479	P20	Hipoxia intrauterina	\N	t
 21178	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	479	P20.0	Hipoxia intrauterina notada por primera vez antes del inicio del trabajo de parto	\N	t
+21243	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	480	P35.2	Infecciones congénitas por virus del herpes simple	\N	t
 21179	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	479	P20.1	Hipoxia intrauterina notada por primera vez durante el trabajo de parto y el parto	\N	t
 21180	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	479	P20.9	Hipoxia intrauterina, no especificada	\N	t
 21181	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	479	P21	Asfixia del nacimiento	\N	t
@@ -15314,8 +17791,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 21240	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	480	P35	Enfermedades virales congénitas	\N	t
 21241	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	480	P35.0	Síndrome de rubéola congénita	\N	t
 21242	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	480	P35.1	Infección citomegalovírica congénita	\N	t
-21243	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	480	P35.2	Infecciones congénitas por virus del herpes simple	\N	t
-21244	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	480	P35.3	Hepatitis viral congénita	\N	t
 21245	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	480	P35.8	Otras enfermedades virales congénitas	\N	t
 21246	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	480	P35.9	Enfermedad viral congénita, sin otra especificación	\N	t
 21247	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	480	P36	Sepsis bacteriana del recién nacido	\N	t
@@ -15719,7 +18194,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 21646	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	488	Q28.8	Otras malformaciones congénitas del sistema circulatorio, especificadas	\N	t
 21647	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	488	Q28.9	Malformación congénita del sistema circulatorio, no especificada	\N	t
 21648	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	489	Q30	Malformaciones congénitas de la nariz	\N	t
-21649	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	489	Q30.0	Atresia de las coanas	\N	t
 21650	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	489	Q30.1	Agenesia o hipoplasia de la nariz	\N	t
 21651	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	489	Q30.2	Hendidura, fisura o muesca de la nariz	\N	t
 21652	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	489	Q30.3	Perforación congénita del tabique nasal	\N	t
@@ -15854,6 +18328,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 21782	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	492	Q51.2	Otra duplicación del útero	\N	t
 21783	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	492	Q51.3	Utero bicorne	\N	t
 21784	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	492	Q51.4	Utero unicorne	\N	t
+22201	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	498	R11	Náusea y vómito	\N	t
 21785	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	492	Q51.5	Agenesia y aplasia del cuello uterino	\N	t
 21786	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	492	Q51.6	Quiste embrionario del cuello uterino	\N	t
 22272	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	501	R35	Poliuria	\N	t
@@ -16133,6 +18608,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 22060	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	495	Q87.0	Síndromes de malformaciones congénitas que afectan principalmente la apariencia facial	\N	t
 22061	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	495	Q87.1	Síndromes de malformaciones congénitas asociadas principalmente con estatura baja:	\N	t
 22062	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	495	Q87.2	Síndromes de malformaciones congénitas que afectan principalmente los miembros	\N	t
+22202	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	498	R12	Acidez	\N	t
 22063	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	495	Q87.3	Síndromes de malformaciones congénitas con exceso de crecimiento precoz	\N	t
 22064	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	495	Q87.4	Síndrome de Marfan	\N	t
 22065	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	495	Q87.5	Otros síndromes de malformaciones congénitas con otros cambios esqueléticos	\N	t
@@ -16271,8 +18747,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 22198	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	498	R10.2	Dolor pélvico y perineal	\N	t
 22199	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	498	R10.3	Dolor localizado en otras partes inferiores del abdomen	\N	t
 22200	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	498	R10.4	Otros dolores abdominales y los no especificados	\N	t
-22201	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	498	R11	Náusea y vómito	\N	t
-22202	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	498	R12	Acidez	\N	t
 22203	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	498	R13	Disfagia	\N	t
 22204	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	498	R14	Flatulencia y afecciones afines	\N	t
 22205	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	498	R15	Incontinencia fecal	\N	t
@@ -16941,6 +19415,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 22870	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	514	S44.2	Traumatismo del nervio radial a nivel del brazo	\N	t
 22871	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	514	S44.3	Traumatismo del nervio axilar	\N	t
 22872	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	514	S44.4	Traumatismo del nervio musculocutáneo	\N	t
+24457	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	538	V56.6	accidente de tránsito	\N	t
 22873	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	514	S44.5	Traumatismo del nervio sensitivo cutáneo a nivel del hombro y del brazo	\N	t
 22874	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	514	S44.7	Traumatismo de múltiples nervios a nivel del hombro y del brazo	\N	t
 22875	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	514	S44.8	Traumatismo de otros nervios a nivel del hombro y del brazo	\N	t
@@ -17316,6 +19791,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 23244	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	520	T01.2	Heridas que afectan múltiples regiones del (de los) miembro(s) superior(es)	\N	t
 23245	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	520	T01.3	Heridas que afectan múltiples regiones del (de los) miembro(s) inferior(es)	\N	t
 23246	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	520	T01.6	Heridas que afectan múltiples regiones del (de los) miembro(s) superior(es) con miembro(s) inferior(es)	\N	t
+24754	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	541	V86.0	accidente de tránsito	\N	t
 23247	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	520	T01.8	Heridas que afectan otras combinaciones de las regiones del cuerpo	\N	t
 23248	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	520	T01.9	Heridas múltiples, no especificadas	\N	t
 23249	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	520	T02	Fracturas que afectan múltiples regiones del cuerpo	\N	t
@@ -17432,6 +19908,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 23359	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	522	T18.3	Cuerpo extraño en el intestino delgado	\N	t
 23360	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	522	T18.4	Cuerpo extraño en el colon	\N	t
 23362	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	522	T18.8	Cuerpo extraño en otras y en múltiples partes del tubo digestivo	\N	t
+24755	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	541	V86.1	V86.1	\N	t
 23363	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	522	T18.9	Cuerpo extraño en el tubo digestivo, parte no especificada	\N	t
 23364	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	522	T19	Cuerpo extraño en las vías genitourinarias	\N	t
 23365	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	522	T19.0	Cuerpo extraño en la uretra	\N	t
@@ -17491,6 +19968,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 23418	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	523	T25.1	Quemadura del tobillo y del pie, de primer grado	\N	t
 23419	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	523	T25.2	Quemadura del tobillo y del pie, de segundo grado	\N	t
 23420	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	523	T25.3	Quemadura del tobillo y del pie, de tercer grado	\N	t
+26277	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	555	X42.0	parte, en vivienda	\N	t
 23421	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	523	T25.4	Corrosión del tobillo y del pie, grado no especificado	\N	t
 23422	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	523	T25.5	Corrosión del tobillo y del pie, de primer grado	\N	t
 23423	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	523	T25.6	Corrosión del tobillo y del pie, de segundo grado	\N	t
@@ -17615,6 +20093,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 23542	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	527	T37.3	Envenenamiento por Otras drogas antiprotozoarias	\N	t
 23543	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	527	T37.4	Envenenamiento por Antihelmínticos	\N	t
 23544	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	527	T37.5	Envenenamiento por Drogas antivirales	\N	t
+23790	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	529	T67.6	Fatiga por calor, transitoria	\N	t
 23545	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	527	T37.8	Envenenamiento por Otros antiinfecciosos y antiparasitarios sistémicos especificados	\N	t
 23546	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	527	T37.9	Envenenamiento por Antiinfecciosos y antiparasitarios sistémicos, no especificados	\N	t
 23547	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	527	T38	Envenenamiento por hormonas y sus sustitutos y antagonistas sintéticos, no clasificados en otra parte	\N	t
@@ -17796,6 +20275,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 23724	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	528	T57.1	Envenenamiento por Fósforo y sus compuestos	\N	t
 23725	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	528	T57.2	Envenenamiento por Manganeso y sus compuestos	\N	t
 23726	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	528	T57.3	Envenenamiento por Acido cianhídrico	\N	t
+23791	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	529	T67.7	Edema por calor	\N	t
 23727	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	528	T57.8	Envenenamiento por Otras sustancias inorgánicas, especificadas	\N	t
 23932	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	531	T88.2	Choque debido a la anestesia	\N	t
 23728	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	528	T57.9	Envenenamiento por Sustancia inorgánica, no especificada	\N	t
@@ -17860,8 +20340,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 23787	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	529	T67.3	Agotamiento por calor, anhidrótico	\N	t
 23788	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	529	T67.4	Agotamiento por calor debido a depleción de sal	\N	t
 23789	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	529	T67.5	Agotamiento por calor, no especificado	\N	t
-23790	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	529	T67.6	Fatiga por calor, transitoria	\N	t
-23791	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	529	T67.7	Edema por calor	\N	t
+24197	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	536	V30.6	accidente de tránsito	\N	t
 23792	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	529	T67.8	Otros efectos del calor y de la luz	\N	t
 23793	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	529	T67.9	Efecto del calor y de la luz, no especificado	\N	t
 23794	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	529	T68	Hipotermia	\N	t
@@ -18152,6 +20631,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 24080	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	534	V16.5	Ciclista lesionado por colisión con otros vehículos sin motor, pasajero lesionado en accidente de tránsito	\N	t
 24081	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	534	V16.9	Ciclista lesionado por colisión con otros vehículos sin motor, ciclista no especificado, lesionado en accidente de tránsito	\N	t
 24082	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	534	V17	Ciclista lesionado por colisión con objeto estacionado o fijo,	\N	t
+24387	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	537	V49.6	en accidente de tránsito	\N	t
 24083	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	534	V17.0	Ciclista lesionado por colisión con objeto estacionado o fijo, conductor lesionado en accidente no de tránsito	\N	t
 24084	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	534	V17.1	Ciclista lesionado por colisión con objeto estacionado o fijo, pasajero lesionado en accidente no de tránsito	\N	t
 24085	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	534	V17.2	tránsito	\N	t
@@ -18266,7 +20746,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 24194	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	536	V30.3	vehículo de motor de tres ruedas, lesionado en accidente no de tránsito	\N	t
 24195	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	536	V30.4	bajar del vehículo	\N	t
 24196	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	536	V30.5	accidente de tránsito	\N	t
-24197	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	536	V30.6	accidente de tránsito	\N	t
 24198	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	536	V30.7	vehículo, lesionada en accidente de tránsito	\N	t
 24199	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	536	V30.9	vehículo de motor de tres ruedas, lesionado en accidente de tránsito	\N	t
 24200	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	536	V31	Ocupante de vehículo de motor de tres ruedas lesionado por colisión con vehículo de pedal	\N	t
@@ -18329,6 +20808,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 24257	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	536	V36.6	en accidente de tránsito	\N	t
 24258	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	536	V36.7	fuera del vehículo, lesionada en accidente de tránsito	\N	t
 24259	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	536	V36.9	especificado de vehículo de motor de tres ruedas, lesionado en accidente de tránsito	\N	t
+24455	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	538	V56.4	bajar del vehículo	\N	t
 24260	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	536	V37	Ocupante de vehículo de motor de tres ruedas lesionado por colisión con objeto fijo o estacionado	\N	t
 24261	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	536	V37.0	en accidente no de tránsito	\N	t
 24262	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	536	V37.1	en accidente no de tránsito	\N	t
@@ -18389,6 +20869,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 24317	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	537	V42.6	accidente de tránsito	\N	t
 24318	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	537	V42.7	vehículo, lesionada en accidente de tránsito	\N	t
 24319	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	537	V42.9	automóvil, lesionado en accidente de tránsito	\N	t
+24456	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	538	V56.5	accidente de tránsito	\N	t
 24320	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	537	V43	Ocupante de automóvil lesionado por colisión con otro automóvil, camioneta o furgoneta	\N	t
 24321	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	537	V43.0	accidente no de tránsito	\N	t
 24322	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	537	V43.1	accidente no de tránsito	\N	t
@@ -18456,7 +20937,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 24384	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	537	V49.3	Ocupante [cualquiera] de automóvil lesionado en accidente no de tránsito, no especificado	\N	t
 24385	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	537	V49.4	tránsito	\N	t
 24386	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	537	V49.5	tránsito	\N	t
-24387	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	537	V49.6	en accidente de tránsito	\N	t
 24388	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	537	V49.8	Ocupante [cualquiera] de automóvil lesionado en otros accidentes de transporte especificados	\N	t
 24389	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	537	V49.9	Ocupante [cualquiera] de automóvil lesionado en accidente de tránsito no especificado	\N	t
 24390	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	538	V50	Ocupante de camioneta o furgoneta lesionado por colisión con peatón o animal	\N	t
@@ -18524,9 +21004,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 24452	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	538	V56.1	accidente no de tránsito	\N	t
 24453	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	538	V56.2	vehículo, lesionada en accidente no de tránsito	\N	t
 24454	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	538	V56.3	camioneta o furgoneta, lesionado en accidente no de tránsito	\N	t
-24455	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	538	V56.4	bajar del vehículo	\N	t
-24456	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	538	V56.5	accidente de tránsito	\N	t
-24457	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	538	V56.6	accidente de tránsito	\N	t
 24458	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	538	V56.7	vehículo, lesionada en accidente de tránsito	\N	t
 24459	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	538	V56.9	camioneta o furgoneta, lesionado en accidente de tránsito	\N	t
 24460	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	538	V57	Ocupante de camioneta o furgoneta lesionado por colisión con objeto fijo o estacionado	\N	t
@@ -18717,6 +21194,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 24644	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	540	V75.3	lesionado en accidente no de tránsito	\N	t
 24645	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	540	V75.4	Ocupante de autobús lesionado por colisión con tren o vehículo de rieles, persona lesionada al subir o bajar del vehículo	\N	t
 24646	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	540	V75.5	Ocupante de autobús lesionado por colisión con tren o vehículo de rieles, conductor lesionado en accidente de tránsito	\N	t
+24756	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	541	V86.2	lesionada en accidente de tránsito	\N	t
 24647	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	540	V75.6	Ocupante de autobús lesionado por colisión con tren o vehículo de rieles, pasajero lesionado en accidente de tránsito	\N	t
 24648	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	540	V75.7	en accidente de tránsito	\N	t
 24649	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	540	V75.9	lesionado en accidente de tránsito	\N	t
@@ -18773,6 +21251,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 24699	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	541	V80.8	Jinete u ocupante de vehículo de tracción animal lesionado por colisión con objeto fijo o estacionado	\N	t
 24700	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	541	V80.9	Jinete u ocupante de vehículo de tracción animal lesionado en otros accidentes de transporte, y en los no especificados	\N	t
 24701	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	541	V81	Ocupante de tren o vehículo de rieles lesionado en accidente de transporte	\N	t
+24757	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	541	V86.3	lesionado en accidente de tránsito	\N	t
 24702	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	541	V81.0	Ocupante de tren o vehículo de rieles lesionado por colisión con vehículo de motor, en accidente no de tránsito	\N	t
 24936	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	545	W06.1	Caída que implica cama, en institución residencial	\N	t
 24703	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	541	V81.1	Ocupante de tren o vehículo de rieles lesionado por colisión con vehículo de motor, en accidente de tránsito	\N	t
@@ -18826,10 +21305,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 24751	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	541	V85.7	Persona que viaja fuera del vehículo especial para construcción lesionada en accidente no de tránsito	\N	t
 24752	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	541	V85.9	Ocupante no especificado de vehículo especial para construcción lesionado en accidente no de tránsito	\N	t
 24753	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	541	V86	V86	\N	t
-24754	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	541	V86.0	accidente de tránsito	\N	t
-24755	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	541	V86.1	V86.1	\N	t
-24756	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	541	V86.2	lesionada en accidente de tránsito	\N	t
-24757	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	541	V86.3	lesionado en accidente de tránsito	\N	t
 24758	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	541	V86.4	para uso fuera de la carretera	\N	t
 24759	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	541	V86.5	accidente no de tránsito	\N	t
 24760	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	541	V86.6	no de tránsito	\N	t
@@ -19169,6 +21644,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 25091	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	546	W20.2	Golpe por objeto arrojado, proyectado o que cae, en escuelas, otras instituciones y áreas administrativas públicas	\N	t
 25092	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	546	W20.3	Golpe por objeto arrojado, proyectado o que cae, en áreas de deporte y atletismo	\N	t
 25093	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	546	W20.4	Golpe por objeto arrojado, proyectado o que cae, en calles y carreteras	\N	t
+25371	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	546	W45.7	Cuerpo extraño que penetra a través de la piel, en granja	\N	t
 25094	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	546	W20.5	Golpe por objeto arrojado, proyectado o que cae, en comercio y área de servicios	\N	t
 25095	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	546	W20.6	Golpe por objeto arrojado, proyectado o que cae, en área industrial y de la construcción	\N	t
 25096	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	546	W20.7	Golpe por objeto arrojado, proyectado o que cae, en granja	\N	t
@@ -19222,6 +21698,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 25146	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	546	W25.2	Contacto traumático con vidrio cortante, en escuelas, otras instituciones y áreas administrativas públicas	\N	t
 25147	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	546	W25.3	Contacto traumático con vidrio cortante, en áreas de deporte y atletismo	\N	t
 25148	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	546	W25.4	Contacto traumático con vidrio cortante, en calles y carreteras	\N	t
+26526	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X66.7	sus vapores, en granja	\N	t
 25149	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	546	W25.5	Contacto traumático con vidrio cortante, en comercio y área de servicios	\N	t
 25150	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	546	W25.6	Contacto traumático con vidrio cortante, en área industrial y de la construcción	\N	t
 25151	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	546	W25.7	Contacto traumático con vidrio cortante, en granja	\N	t
@@ -19445,7 +21922,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 25368	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	546	W45.4	Cuerpo extraño que penetra a través de la piel, en calles y carreteras	\N	t
 25369	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	546	W45.5	Cuerpo extraño que penetra a través de la piel, en comercio y área de servicios	\N	t
 25370	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	546	W45.6	Cuerpo extraño que penetra a través de la piel, en área industrial y de la construcción	\N	t
-25371	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	546	W45.7	Cuerpo extraño que penetra a través de la piel, en granja	\N	t
 25372	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	546	W45.8	Cuerpo extraño que penetra a través de la piel, en otro lugar especificado	\N	t
 25373	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	546	W45.9	Cuerpo extraño que penetra a través de la piel, en lugar no especificado	\N	t
 25374	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	546	W49	Exposición a otras fuerzas mecánicas inanimadas, y las no especificadas	\N	t
@@ -19713,6 +22189,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 25634	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	549	W77.6	construcción	\N	t
 25635	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	549	W77.7	Obstrucción de la respiración debida a hundimiento, caída de tierra u otras sustancias, en granja	\N	t
 25636	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	549	W77.8	Obstrucción de la respiración debida a hundimiento, caída de tierra u otras sustancias, en otro lugar especificado	\N	t
+26278	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	555	X42.1	parte, en institución residencial	\N	t
 25637	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	549	W77.9	Obstrucción de la respiración debida a hundimiento, caída de tierra u otras sustancias, en lugar no especificado	\N	t
 25638	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	549	W78	Inhalación de contenidos gástricos	\N	t
 25639	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	549	W78.0	Inhalación de contenidos gástricos, en vivienda	\N	t
@@ -20078,6 +22555,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 25994	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	552	X16.3	Contacto con radiadores, cañerías y artefactos para calefacción, calientes, en áreas de deporte y atletismo	\N	t
 25995	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	552	X16.4	Contacto con radiadores, cañerías y artefactos para calefacción, calientes, en calles y carreteras	\N	t
 25996	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	552	X16.5	Contacto con radiadores, cañerías y artefactos para calefacción, calientes, en comercio y área de servicios	\N	t
+26050	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	553	X21.4	Contacto traumático con arañas venenosas, en calles y carreteras	\N	t
 25997	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	552	X16.6	Contacto con radiadores, cañerías y artefactos para calefacción, calientes, en área industrial y de la construcción	\N	t
 25998	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	552	X16.7	Contacto con radiadores, cañerías y artefactos para calefacción, calientes, en granja	\N	t
 25999	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	552	X16.8	Contacto con radiadores, cañerías y artefactos para calefacción, calientes, en otro lugar especificado	\N	t
@@ -20132,7 +22610,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 26047	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	553	X21.1	Contacto traumático con arañas venenosas, en institución residencial	\N	t
 26048	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	553	X21.2	Contacto traumático con arañas venenosas, en escuelas, otras instituciones y áreas administrativas públicas	\N	t
 26049	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	553	X21.3	Contacto traumático con arañas venenosas, en áreas de deporte y atletismo	\N	t
-26050	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	553	X21.4	Contacto traumático con arañas venenosas, en calles y carreteras	\N	t
+26103	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	553	X26.2	públicas	\N	t
 26051	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	553	X21.5	Contacto traumático con arañas venenosas, en comercio y área de servicios	\N	t
 26052	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	553	X21.6	Contacto traumático con arañas venenosas, en área industrial y de la construcción	\N	t
 26053	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	553	X21.7	Contacto traumático con arañas venenosas, en granja	\N	t
@@ -20186,7 +22664,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 26100	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	553	X26	Contacto traumático con animales y plantas marinas venenosos	\N	t
 26101	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	553	X26.0	Contacto traumático con animales y plantas marinas venenosos, en vivienda	\N	t
 26102	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	553	X26.1	Contacto traumático con animales y plantas marinas venenosos, en institución residencial	\N	t
-26103	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	553	X26.2	públicas	\N	t
 26104	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	553	X26.3	Contacto traumático con animales y plantas marinas venenosos, en áreas de deporte y atletismo	\N	t
 26105	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	553	X26.4	Contacto traumático con animales y plantas marinas venenosos, en calles y carreteras	\N	t
 26106	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	553	X26.5	Contacto traumático con animales y plantas marinas venenosos, en comercio y área de servicios	\N	t
@@ -20300,6 +22777,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 26215	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	554	X36.4	Víctima de avalancha, derrumbe y otros movimientos de tierra, en calles y carreteras	\N	t
 26216	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	554	X36.5	Víctima de avalancha, derrumbe y otros movimientos de tierra, en comercio y área de servicios	\N	t
 26217	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	554	X36.6	Víctima de avalancha, derrumbe y otros movimientos de tierra, en área industrial y de la construcción	\N	t
+26276	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	555	X42	otra parte	\N	t
 26218	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	554	X36.7	Víctima de avalancha, derrumbe y otros movimientos de tierra, en granja	\N	t
 26219	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	554	X36.8	Víctima de avalancha, derrumbe y otros movimientos de tierra, en otro lugar especificado	\N	t
 26220	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	554	X36.9	Víctima de avalancha, derrumbe y otros movimientos de tierra, en lugar no especificado	\N	t
@@ -20358,9 +22836,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 26273	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	555	X41.7	psicotrópicas, no clasificadas en otra parte, en granja	\N	t
 26274	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	555	X41.8	psicotrópicas, no clasificadas en otra parte, en otro lugar especificado	\N	t
 26275	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	555	X41.9	psicotrópicas, no clasificadas en otra parte, en lugar no especificado	\N	t
-26276	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	555	X42	otra parte	\N	t
-26277	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	555	X42.0	parte, en vivienda	\N	t
-26278	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	555	X42.1	parte, en institución residencial	\N	t
 26279	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	555	X42.2	parte, en escuelas, otras instituciones y áreas administrativas públicas	\N	t
 26280	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	555	X42.3	parte, en áreas de deporte y atletismo	\N	t
 26281	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	555	X42.4	parte, en calles y carreteras	\N	t
@@ -20544,6 +23019,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 26462	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X60.9	antirreumáticos, en lugar no especificado	\N	t
 26463	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X61	antiparkinsonianas y psicotrópicas, no clasificadas en otra parte	\N	t
 26464	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X61.0	antiparkinsonianas y psicotrópicas, no clasificadas en otra parte, en vivienda	\N	t
+26525	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X66.6	sus vapores, en área industrial y de la construcción	\N	t
 26465	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X61.1	antiparkinsonianas y psicotrópicas, no clasificadas en otra parte, en institución residencial	\N	t
 26466	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X61.2	públic	\N	t
 26467	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X61.3	antiparkinsonianas y psicotrópicas, no clasificadas en otra parte, en áreas de deporte y atletismo	\N	t
@@ -20604,8 +23080,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 26522	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X66.3	sus vapores, en áreas de deporte y atletismo	\N	t
 26523	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X66.4	sus vapores, en calles y carreteras	\N	t
 26524	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X66.5	sus vapores, en comercio y área de servicios	\N	t
-26525	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X66.6	sus vapores, en área industrial y de la construcción	\N	t
-26526	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X66.7	sus vapores, en granja	\N	t
 26527	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X66.8	sus vapores, en otro lugar especificado	\N	t
 26528	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X66.9	sus vapores, en lugar no especificado	\N	t
 26529	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X67	Envenenamiento autoinfligido intencionalmente por, y exposición a otros gases y vapores	\N	t
@@ -20659,6 +23133,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 26577	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X71.3	Lesión autoinfligida intencionalmente por ahogamiento y sumersión, en áreas de deporte y atletismo	\N	t
 26578	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X71.4	Lesión autoinfligida intencionalmente por ahogamiento y sumersión, en calles y carreteras	\N	t
 26579	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X71.5	Lesión autoinfligida intencionalmente por ahogamiento y sumersión, en comercio y área de servicios	\N	t
+26904	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	559	Y01.0	Agresión por empujón desde un lugar elevado, en vivienda	\N	t
 26580	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X71.6	Lesión autoinfligida intencionalmente por ahogamiento y sumersión, en área industrial y de la construcción	\N	t
 26757	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	559	X87.7	Agresión con plaguicidas, en granja	\N	t
 26581	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X71.7	Lesión autoinfligida intencionalmente por ahogamiento y sumersión, en granja	\N	t
@@ -20712,6 +23187,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 26629	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X76.0	Lesión autoinfligida intencionalmente por humo, fuego y llamas, en vivienda	\N	t
 26630	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X76.1	Lesión autoinfligida intencionalmente por humo, fuego y llamas, en institución residencial	\N	t
 26631	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X76.2	públicas	\N	t
+26958	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	559	Y06	Negligencia y abandono	\N	t
 26632	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X76.3	Lesión autoinfligida intencionalmente por humo, fuego y llamas, en áreas de deporte y atletismo	\N	t
 26633	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X76.4	Lesión autoinfligida intencionalmente por humo, fuego y llamas, en calles y carreteras	\N	t
 26634	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	558	X76.5	Lesión autoinfligida intencionalmente por humo, fuego y llamas, en comercio y área de servicios	\N	t
@@ -20870,6 +23346,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 26789	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	559	X90.6	Agresión con productos químicos y sustancias nocivas no especificadas, en área industrial y de la construcción	\N	t
 26790	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	559	X90.7	Agresión con productos químicos y sustancias nocivas no especificadas, en granja	\N	t
 26791	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	559	X90.8	Agresión con productos químicos y sustancias nocivas no especificadas, en otro lugar especificado	\N	t
+26959	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	559	Y06.0	Por esposo o pareja	\N	t
 26792	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	559	X90.9	Agresión con productos químicos y sustancias nocivas no especificadas, en lugar no especificado	\N	t
 26793	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	559	X91	Agresión por ahorcamiento, estrangulamiento y sofocación	\N	t
 26794	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	559	X91.0	Agresión por ahorcamiento, estrangulamiento y sofocación, en vivienda	\N	t
@@ -20982,7 +23459,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 26901	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	559	Y00.8	Agresión con objeto romo o sin filo, en otro lugar especificado	\N	t
 26902	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	559	Y00.9	Agresión con objeto romo o sin filo, en lugar no especificado	\N	t
 26903	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	559	Y01	Agresión por empujón desde un lugar elevado	\N	t
-26904	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	559	Y01.0	Agresión por empujón desde un lugar elevado, en vivienda	\N	t
 26905	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	559	Y01.1	Agresión por empujón desde un lugar elevado, en institución residencial	\N	t
 26906	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	559	Y01.2	Agresión por empujón desde un lugar elevado, en escuelas, otras instituciones y áreas administrativas públicas	\N	t
 26907	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	559	Y01.3	Agresión por empujón desde un lugar elevado, en áreas de deporte y atletismo	\N	t
@@ -21038,8 +23514,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 26955	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	559	Y05.7	Agresión sexual con fuerza corporal, en granja	\N	t
 26956	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	559	Y05.8	Agresión sexual con fuerza corporal, en otro lugar especificado	\N	t
 26957	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	559	Y05.9	Agresión sexual con fuerza corporal, en lugar no especificado	\N	t
-26958	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	559	Y06	Negligencia y abandono	\N	t
-26959	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	559	Y06.0	Por esposo o pareja	\N	t
 26960	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	559	Y06.1	Por padre o madre	\N	t
 26961	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	559	Y06.2	Por conocido o amigo	\N	t
 26962	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	559	Y06.8	Por otra persona especificada	\N	t
@@ -21550,6 +24024,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 27471	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	562	Y58.4	Efectos adversos de la vacuna contra el tétanos	\N	t
 27472	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	562	Y58.5	Efectos adversos de la vacuna contra la difteria	\N	t
 27473	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	562	Y58.6	Efectos adversos de la vacuna contra la tos ferina, inclusive combinaciones con un componente pertusis	\N	t
+27530	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	563	Y65	Otros incidentes durante la atención médica y quirúrgica	\N	t
 27474	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	562	Y58.8	Efectos adversos de vacunas bacterianas mixtas, excepto combinaciones con un componente pertusis	\N	t
 27475	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	562	Y58.9	Efectos adversos de otras vacunas bacterianas, y las no especificadas	\N	t
 27476	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	562	Y59	Efectos adversos de otras vacunas y sustancias biológicas, y las no especificadas	\N	t
@@ -21606,7 +24081,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 27527	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	563	Y64.1	Medicamento o sustancia biológica contaminado, inyectado o usado para inmunización	\N	t
 27528	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	563	Y64.8	Medicamento o sustancia biológica contaminado, administrado por otros medios	\N	t
 27529	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	563	Y64.9	Medicamento o sustancia biológica contaminado, administrado por medios no especificados	\N	t
-27530	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	563	Y65	Otros incidentes durante la atención médica y quirúrgica	\N	t
 27531	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	563	Y65.0	Sangre incompatible usada en transfusión	\N	t
 27532	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	563	Y65.1	Líquido erróneo usado en infusión	\N	t
 27533	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	563	Y65.2	Falla en la sutura o ligadura durante operación quirúrgica	\N	t
@@ -22240,6 +24714,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 28169	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	573	Z73.1	Problemas relacionados con la acentuación de rasgos de la personalidad	\N	t
 28170	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	573	Z73.2	Problemas relacionados con la falta de relajación y descanso	\N	t
 28171	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	573	Z73.3	Problemas relacionados con el estrés, no clasificados en otra parte	\N	t
+28288	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	574	Z89.1	Ausencia adquirida de mano y muñeca	\N	t
 28172	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	573	Z73.4	Problemas relacionados con habilidades sociales inadecuadas, no clasificados en otra parte	\N	t
 28381	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	574	Z99.1	Dependencia de respirador	\N	t
 28173	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	573	Z73.5	Problemas relacionados con el conflicto del rol social, no clasificados en otra parte	\N	t
@@ -22297,6 +24772,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 28225	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	574	Z82.4	Historia familiar de enfermedad isquémica del corazón y otras enfermedades del sistema circulatorio	\N	t
 28226	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	574	Z82.5	Historia familiar de asma y de otras enfermedades crónicas de las vías respiratorias inferiores	\N	t
 28227	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	574	Z82.6	Historia familiar de artritis y otras enfermedades del sistema osteomuscular y tejido conjuntivo	\N	t
+28287	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	574	Z89.0	Ausencia adquirida de dedo(s), [incluido el pulgar], unilateral	\N	t
 28228	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	574	Z82.7	Historia familiar de malformaciones congénitas, deformidades y otras anomalías cromosómicas	\N	t
 28297	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	574	Z90	Ausencia adquirida de órganos, no clasificada en otra parte	\N	t
 28229	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	574	Z82.8	Historia familiar de otras discapacidades y enfermedades crónicas incapacitantes no clasificadas en otra parte	\N	t
@@ -22357,8 +24833,6 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 28284	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	574	Z88.8	Historia personal de alergia a otras drogas, medicamentos y sustancias biológicas	\N	t
 28285	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	574	Z88.9	Historia personal de alergia a drogas, medicamentos y sustancias biológicas no especificadas	\N	t
 28286	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	574	Z89	Ausencia adquirida de miembros	\N	t
-28287	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	574	Z89.0	Ausencia adquirida de dedo(s), [incluido el pulgar], unilateral	\N	t
-28288	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	574	Z89.1	Ausencia adquirida de mano y muñeca	\N	t
 28289	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	574	Z89.2	Ausencia adquirida de miembro superior por arriba de la muñeca	\N	t
 28290	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	574	Z89.3	Ausencia adquirida de ambos miembros superiores [cualquier nivel]	\N	t
 28291	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	574	Z89.4	Ausencia adquirida de pie y tobillo	\N	t
@@ -22452,6 +24926,7 @@ COPY patologia (id, usuario_id, fecha_registro, fecha_modificado, categoria_id, 
 28383	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	574	Z99.3	Dependencia de silla de ruedas	\N	t
 28384	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	574	Z99.8	Dependencia de otras máquinas y dispositivos capacitantes	\N	t
 28385	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	574	Z99.9	Dependencia de máquina y dispositivo capacitante, no especificada	\N	t
+14189	\N	2014-05-26 03:54:40.649496-04:30	2014-05-26 03:54:40.649496-04:30	314	A00	Colera	\N	t
 \.
 
 
@@ -22529,6 +25004,7 @@ COPY patologia_categoria (id, usuario_id, fecha_registro, fecha_modificado, acti
 358	\N	2014-05-26 03:54:40.626861-04:30	2014-05-26 03:54:40.626861-04:30	t	294	(D80-D89) Ciertos trastornos que afectan el mecanismo de la inmunidad	\N
 359	\N	2014-05-26 03:54:40.626861-04:30	2014-05-26 03:54:40.626861-04:30	t	295	(E00-E07) Enfermedades de la glándula tiroides	\N
 360	\N	2014-05-26 03:54:40.626861-04:30	2014-05-26 03:54:40.626861-04:30	t	295	(E10-E14) Diabetes mellitus	\N
+427	\N	2014-05-26 03:54:40.626861-04:30	2014-05-26 03:54:40.626861-04:30	t	302	(K40-K46) Hernias abdominales	\N
 361	\N	2014-05-26 03:54:40.626861-04:30	2014-05-26 03:54:40.626861-04:30	t	295	(E15-E16) Otros desórdenes de la regulación de la glucosa y secreción interna pancreática	\N
 362	\N	2014-05-26 03:54:40.626861-04:30	2014-05-26 03:54:40.626861-04:30	t	295	(E20-E35) Otras enfermedades de las glándulas endocrinas	\N
 363	\N	2014-05-26 03:54:40.626861-04:30	2014-05-26 03:54:40.626861-04:30	t	295	(E40-E46) Desnutrición	\N
@@ -22595,7 +25071,6 @@ COPY patologia_categoria (id, usuario_id, fecha_registro, fecha_modificado, acti
 424	\N	2014-05-26 03:54:40.626861-04:30	2014-05-26 03:54:40.626861-04:30	t	302	(K00-K14) Enfermedades de la cavidad oral, las glándulas salivales y las mandíbulas	\N
 425	\N	2014-05-26 03:54:40.626861-04:30	2014-05-26 03:54:40.626861-04:30	t	302	(K20-K31) Enfermedades del esófago, estómago y del duodeno	\N
 426	\N	2014-05-26 03:54:40.626861-04:30	2014-05-26 03:54:40.626861-04:30	t	302	(K35-K38) Enfermedades del apéndice	\N
-427	\N	2014-05-26 03:54:40.626861-04:30	2014-05-26 03:54:40.626861-04:30	t	302	(K40-K46) Hernias abdominales	\N
 428	\N	2014-05-26 03:54:40.626861-04:30	2014-05-26 03:54:40.626861-04:30	t	302	(K50-K52) Enteritis y colitis no infecciosas	\N
 429	\N	2014-05-26 03:54:40.626861-04:30	2014-05-26 03:54:40.626861-04:30	t	302	(K55-K63) Otras enfermedades de los intestinos	\N
 430	\N	2014-05-26 03:54:40.626861-04:30	2014-05-26 03:54:40.626861-04:30	t	302	(K65-K67) Enfermedades del peritoneo	\N
@@ -22766,7 +25241,7 @@ COPY patologia_cobertura (id, patologia_id, cobertura_id) FROM stdin;
 -- Name: patologia_cobertura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('patologia_cobertura_id_seq', 1, false);
+SELECT pg_catalog.setval('patologia_cobertura_id_seq', 5, true);
 
 
 --
@@ -22787,8 +25262,8 @@ COPY perfil (id, usuario_id, fecha_registro, fecha_modificado, perfil, estado, p
 7	\N	2014-07-31 14:54:34.249491-04:30	2014-07-31 14:54:34.249491-04:30	Titular	1	default
 2	\N	2014-03-13 12:20:07.544255-04:30	2014-03-13 12:20:07.544255-04:30	administrador	1	default
 3	\N	2014-03-13 12:20:07.544255-04:30	2014-03-13 12:20:07.544255-04:30	Especialista	1	default
-6	\N	2014-07-31 14:54:17.855932-04:30	2014-07-31 14:54:17.855932-04:30	Operador	1	default
 8	\N	2014-08-20 14:31:07.601335-04:30	2014-08-20 14:31:07.601335-04:30	Minimo	1	default
+6	\N	2014-07-31 14:54:17.855932-04:30	2014-07-31 14:54:17.855932-04:30	Enlace	1	default
 \.
 
 
@@ -23003,15 +25478,11 @@ SELECT pg_catalog.setval('profesion_id_seq', 185, true);
 --
 
 COPY proveedor (id, usuario_id, fecha_registro, fecha_modificado, rif, razon_social, nombre_corto, pais_id, estado_id, municipio_id, parroquia_id, direccion, celular, telefono1, telefono2, fax, correo_electronico, observacion, tipo) FROM stdin;
-2	\N	2014-07-28 17:59:34.253814-04:30	2014-07-28 17:59:34.253814-04:30	J303168167	HPO HOSPITAL DE OCCIDENTE C.A.	CLINICA HPO	240	69	223	715	Av. Vencedores de Araure Araure Av. Vencedores de Araure Araure Portuguesa  	\N	0255-6004760	\N	\N	\N	\N	C
-3	\N	2014-07-28 18:02:07.563286-04:30	2014-07-28 18:02:07.563286-04:30	J308524158	CLINICA SAN JOSE C.A. 	CLINICA SAN JOSE	240	69	223	715	Av. 13 de Junio con Teo Capriles Edi. San José sector el trapiche	\N	0255-6212213	0255-3218789	\N	\N	\N	C
-4	\N	2014-09-26 00:12:05.408965-04:30	2014-09-26 00:12:05.408965-04:30	J085013768	MEDICA PORTUGUESA, C.A.	CLINICA VARGAS	240	69	223	716	Av. 28 con Teo Capriles Urb el pilar Araure – Portuguesa 	0424-5235274	 	 	\N	\N	 	C
-5	\N	2014-09-30 19:26:24.088765-04:30	2014-09-30 19:26:24.088765-04:30	V052704258	HENRY JOSE CAMACHO CASTELLANOS 	CLINICA DR. CAMACHO	240	69	223	715	AV.  ROMULO GALLEGOS PIRITU - ESTADO PORTUGUESA 	0424-5078054	 	\N	\N	\N	\N	C
-6	\N	2014-10-01 15:43:38.896921-04:30	2014-10-01 15:43:38.896921-04:30	J085277072	UNIDAD GINECO OBSTETRA OSCAR RAUL CASAL,C.A.	CLINICA CASAL	240	69	223	715	CALLE 29 ENTRE AVENIDAS 34 Y 35 CASA 34-38 SECTOR CENTRO ACARIGUA ESTADO PORTUGUESA 	\N	0255-6214283	0255-6150606	\N	\N	\N	C
-1	\N	2014-05-10 12:03:55.159164-04:30	2014-05-10 12:03:55.159164-04:30	J085258310	CLINICA DE ESPECIALIDADES MEDICAS LOS LLANOS, C.A.	CLINICA CEMELL	240	69	223	715	Av. las lágrimas con Av 14 Araure 	\N	0255-6001100	 	 	cemell@gmail.com	 	C
-7	\N	2014-10-01 15:45:23.683786-04:30	2014-10-01 15:45:23.683786-04:30	J303056911	 CENTRO MEDICO SAN FRANCISCO C.A.	CLINICA SAN FRANCISCO	240	69	223	715	Calle 15 entre carreras 22 y 23	\N	0251-2524715	\N	\N	\N	\N	C
-8	\N	2014-10-01 15:48:24.25959-04:30	2014-10-01 15:48:24.25959-04:30	J304160518	 UNIDAD QUIRURGICA LOS LEONES, C.A 	CLINICA LOS LEONES	240	69	223	715	AV LLOS LEONES ENTRE AV LARA Y MADRID	\N	0251-2530693	0251-2531871	\N	\N	\N	C
-9	\N	2014-10-01 15:58:23.627588-04:30	2014-10-01 15:58:23.627588-04:30	J303395163	CLINICA SANTA MARIA, C.A. 	CLINICA SANTA MARIA	240	69	223	715	AV. PAEZ ESQUINA CALLE 20 Y 21 SECTOR VILLA PASTORA. ACARIGUA ESTADO PORTUGUESA 	\N	\N	\N	\N	\N	\N	\N
+1	\N	2014-05-10 12:03:55.159164-04:30	2014-05-10 12:03:55.159164-04:30	g20082054	CENTRO MEDICO DE LOS LLANOS	CEMELL	240	69	223	715	av las lagrimas	\N	02222	02222	02222	cemell@gmail.com	asdas	\N
+3	\N	2014-07-28 17:59:34.253814-04:30	2014-07-28 17:59:34.253814-04:30	g20082055	HPO HOSPITAL DE OCCIDENTE C.A.	HPO	240	69	223	715	Av. Vencedores de Araure Araure Portuguesa 	\N	0255-6004760	\N	\N	\N	\N	\N
+6	\N	2014-09-26 00:12:05.408965-04:30	2014-09-26 00:12:05.408965-04:30	J-123589-0	ALEXIS BORHES	ALEX	240	69	223	716	SADFASDFAS SDFA SDFF	\N	34324423423	23423423423	\N	\N	ASDFASDFA324R5 EWFASDADS	F
+5	\N	2014-07-28 18:02:07.563286-04:30	2014-07-28 18:02:07.563286-04:30	j20000	 POLICLINICA SAN JAVIER 	SAN JAVIER	240	69	223	715	Av. Andres Bello entre carr. 33 y 34 .	\N	0251-2736943	\N	\N	\N	\N	C
+7	\N	2014-10-07 15:00:38.523669-04:30	2014-10-07 15:00:38.523669-04:30	G-20045784	FARMACIA EL AVILA	AVILA	240	69	229	732	POR MAMANICO	\N	02554545545	04165555	\N	\N	\N	F
 \.
 
 
@@ -23104,43 +25575,44 @@ COPY recurso (id, usuario_id, fecha_registro, fecha_modificado, modulo, controla
 28	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	solicitud_servicio	*	solicitudes/solicitud_servicio/*	Página para la gestión de Ordenes Medicas	1
 38	\N	2014-06-09 10:56:31.211246-04:30	2014-06-09 10:56:31.211246-04:30	solicitudes	solicitud_servicio	registro	solicitudes/solicitud_servicio/registro	Crear registro de solicitudes de servicio	1
 39	\N	2014-06-09 11:26:54.260015-04:30	2014-06-09 11:26:54.260015-04:30	solicitudes	solicitud_servicio	aprobacion	solicitudes/solicitud_servicio/aprobacion	Aprobacion de las Solicitudes de Servicio de Atención Primaria	1
+40	\N	2014-06-09 11:27:18.560757-04:30	2014-06-09 11:27:18.560757-04:30	solicitudes	solicitud_servicio	contabilizar	solicitudes/solicitud_servicio/contabilizar	Contabilizar las Solicitudes de Atención Primaria	1
 41	\N	2014-06-09 11:30:37.965083-04:30	2014-06-09 11:30:37.965083-04:30	solicitudes	solicitud_servicio	anular	solicitudes/solicitud_servicio/anular	Anular Solicitudes de Servicio Atención Primaria	1
 42	\N	2014-06-24 15:50:26.79701-04:30	2014-06-24 15:50:26.79701-04:30	proveedorsalud	servicio	*	proveedorsalud/servicio/*	Modulo para el registro de servicios profesionales	1
 43	\N	2014-06-24 23:50:31.046028-04:30	2014-06-24 23:50:31.046028-04:30	config	tiposolicitud	*	config/tiposolicitud/*	Gestionar los tipos de solicitudes dentro del sistema	1
 44	\N	2014-07-30 09:29:21.417534-04:30	2014-07-30 09:29:21.417534-04:30	solicitudes	solicitud_medicina	registro	solicitudes/solicitud_medicina/registro	Crear registro de solicitudes de medicina	1
 45	\N	2014-07-30 09:29:37.643509-04:30	2014-07-30 09:29:37.643509-04:30	solicitudes	solicitud_medicina	aprobacion	solicitudes/solicitud_medicina/aprobacion	Aprobacion de las Solicitudes de medicina	1
+46	\N	2014-07-30 09:30:27.955985-04:30	2014-07-30 09:30:27.955985-04:30	solicitudes	solicitud_medicina	contabilizar	solicitudes/solicitud_medicina/contabilizar	Contabilizar las Solicitudes de medicina	1
 47	\N	2014-07-30 09:30:55.82575-04:30	2014-07-30 09:30:55.82575-04:30	solicitudes	solicitud_medicina	anular	solicitudes/solicitud_medicina/anular	Anular Solicitudes de medicina	1
 48	\N	2014-07-30 14:37:24.664168-04:30	2014-07-30 14:37:24.664168-04:30	solicitudes	solicitud_odontologica	registro	solicitudes/solicitud_odontologica/registro	Crear registro de solicitudes odontologicas	1
 49	\N	2014-07-30 14:38:27.461241-04:30	2014-07-30 14:38:27.461241-04:30	solicitudes	solicitud_odontologica	aprobacion	solicitudes/solicitud_odontologica/aprobacion	Aprobacion de las Solicitudes odontologicas	1
 27	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	solicitud_medicina	*	solicitudes/solicitud_medicina/*	Página para la gestión de solicitudes de medicina	1
 29	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	solicitud_odontologica	*	solicitudes/solicitud_odontologica/*	Página para la gestión de Solicitudes Odontologicas	1
+50	\N	2014-07-30 14:40:58.865859-04:30	2014-07-30 14:40:58.865859-04:30	solicitudes	solicitud_odontologica	contabilizar	solicitudes/solicitud_odontologica/contabilizar	Contabilizar las Solicitudes odontologicas	1
 51	\N	2014-07-30 14:41:30.926049-04:30	2014-07-30 14:41:30.926049-04:30	solicitudes	solicitud_odontologica	anular	solicitudes/solicitud_odontologica/anular	Anular Solicitudes odontologicas	1
 52	\N	2014-07-30 14:44:57.241013-04:30	2014-07-30 14:44:57.241013-04:30	solicitudes	solicitud_examen	registro	solicitudes/solicitud_examen/registro	Crear registro de solicitudes de Examenes Medicos y de Laboratorio	1
 53	\N	2014-07-30 14:45:13.204799-04:30	2014-07-30 14:45:13.204799-04:30	solicitudes	solicitud_examen	aprobacion	solicitudes/solicitud_examen/aprobacion	Aprobar registro de solicitudes de Examenes Medicos y de Laboratorio	1
 32	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	solicitud_funeraria	*	solicitudes/solicitud_funeraria/*	Página para la gestión de Funeraria	1
 30	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	solicitud_examen	*	solicitudes/solicitud_examen/*	Página para la gestión de Examenes Medicos	1
-46	\N	2014-07-30 09:30:27.955985-04:30	2014-07-30 09:30:27.955985-04:30	solicitudes	solicitud_medicina	aprobadas	solicitudes/solicitud_medicina/contabilizar	Contabilizar las Solicitudes de medicina	1
-54	\N	2014-07-30 14:45:33.497835-04:30	2014-07-30 14:45:33.497835-04:30	solicitudes	solicitud_examen	aprobadas	solicitudes/solicitud_examen/contabilizar	Contabilizar registro de solicitudes de Examenes Medicos y de Laboratorio	1
-40	\N	2014-06-09 11:27:18.560757-04:30	2014-06-09 11:27:18.560757-04:30	solicitudes	solicitud_servicio	aprobadas	solicitudes/solicitud_servicio/contabilizar	Contabilizar las Solicitudes de Atención Primaria	1
+54	\N	2014-07-30 14:45:33.497835-04:30	2014-07-30 14:45:33.497835-04:30	solicitudes	solicitud_examen	contabilizar	solicitudes/solicitud_examen/contabilizar	Contabilizar registro de solicitudes de Examenes Medicos y de Laboratorio	1
 55	\N	2014-07-30 14:47:03.996344-04:30	2014-07-30 14:47:03.996344-04:30	solicitudes	solicitud_examen	anular	solicitudes/solicitud_examen/anular	Anular registro de solicitudes de Examenes Medicos y de Laboratorio	1
 56	\N	2014-07-30 14:51:48.968255-04:30	2014-07-30 14:51:48.968255-04:30	solicitudes	solicitud_reembolso	registro	solicitudes/solicitud_reembolso/registro	Crear registro de solicitudes de reembolso	1
 57	\N	2014-07-30 14:52:53.720865-04:30	2014-07-30 14:52:53.720865-04:30	solicitudes	solicitud_reembolso	aprobacion	solicitudes/solicitud_reembolso/aprobacion	Aprobar registro de solicitudes de reembolso	1
+58	\N	2014-07-30 14:53:12.72641-04:30	2014-07-30 14:53:12.72641-04:30	solicitudes	solicitud_reembolso	contabilizar	solicitudes/solicitud_reembolso/contabilizar	contabilizar registro de solicitudes de reembolso	1
 59	\N	2014-07-30 14:53:44.635347-04:30	2014-07-30 14:53:44.635347-04:30	solicitudes	solicitud_reembolso	anular	solicitudes/solicitud_reembolso/anular	Anular registro de solicitudes de reembolso	1
 60	\N	2014-07-30 14:56:54.45487-04:30	2014-07-30 14:56:54.45487-04:30	solicitudes	solicitud_carta	registro	solicitudes/solicitud_carta/registro	Crear registro de solicitudes de Carta Aval	1
 61	\N	2014-07-30 14:57:18.873272-04:30	2014-07-30 14:57:18.873272-04:30	solicitudes	solicitud_carta	aprobacion	solicitudes/solicitud_carta/aprobacion	Aprobacion de registro de solicitudes de Carta Aval	1
+62	\N	2014-07-30 14:57:37.619569-04:30	2014-07-30 14:57:37.619569-04:30	solicitudes	solicitud_carta	contabilizar	solicitudes/solicitud_carta/contabilizar	contabilizar registro de solicitudes de Carta Aval	1
 63	\N	2014-07-30 14:57:57.378824-04:30	2014-07-30 14:57:57.378824-04:30	solicitudes	solicitud_carta	anular	solicitudes/solicitud_carta/anular	Anular registro de solicitudes de Carta Aval	1
 64	\N	2014-07-30 14:59:44.870946-04:30	2014-07-30 14:59:44.870946-04:30	solicitudes	solicitud_funeraria	registro	solicitudes/solicitud_funeraria/registro	Crear registro de solicitudes de Funeraria	1
 65	\N	2014-07-30 15:00:00.870462-04:30	2014-07-30 15:00:00.870462-04:30	solicitudes	solicitud_funeraria	aprobacion	solicitudes/solicitud_funeraria/aprobacion	Aprobar registro de solicitudes de Funeraria	1
+66	\N	2014-07-30 15:00:20.714269-04:30	2014-07-30 15:00:20.714269-04:30	solicitudes	solicitud_funeraria	contabilizar	solicitudes/solicitud_funeraria/contabilizar	Contabilizar registro de solicitudes de Funeraria	1
 67	\N	2014-07-30 15:00:38.990127-04:30	2014-07-30 15:00:38.990127-04:30	solicitudes	solicitud_funeraria	anular	solicitudes/solicitud_funeraria/anular	Anular registro de solicitudes de Funeraria	1
 31	\N	2014-03-16 13:19:39.864679-04:30	2014-03-16 13:19:39.864679-04:30	solicitudes	solicitud_reembolso	*	solicitudes/solicitud_reembolso/*	Página para la gestión de Ordenes Medicas	1
 68	\N	2014-07-30 19:28:17.953379-04:30	2014-07-30 19:28:17.953379-04:30	solicitudes	solicitud_carta	*	solicitudes/solicitud_carta/*	Pagina para gestionar cartas avales	1
 69	\N	2014-08-20 14:29:28.051792-04:30	2014-08-20 14:29:28.051792-04:30	sistema	usuario_clave	cambiar_clave	sistema/usuario_clave/cambiar_clave	Modulo para la gestion de cambio de clave	1
 71	\N	2014-09-06 15:50:53.459536-04:30	2014-09-06 15:50:53.459536-04:30	solicitudes	solicitud_servicio	facturacion	solicitudes/solicitud_servicio/facturacion	CArgar las facturas con sus detalles al siniestro respectivo	1
 70	\N	2014-09-06 14:39:26.552626-04:30	2014-09-06 14:39:26.552626-04:30	solicitudes	solicitud_servicio	pagos	solicitudes/solicitud_servicio/pagos	Pagar las facturas correspondientes a las facturas	1
-50	\N	2014-07-30 14:40:58.865859-04:30	2014-07-30 14:40:58.865859-04:30	solicitudes	solicitud_odontologica	aprobadas	solicitudes/solicitud_odontologica/contabilizar	Contabilizar las Solicitudes odontologicas	1
-58	\N	2014-07-30 14:53:12.72641-04:30	2014-07-30 14:53:12.72641-04:30	solicitudes	solicitud_reembolso	aprobadas	solicitudes/solicitud_reembolso/contabilizar	contabilizar registro de solicitudes de reembolso	1
-62	\N	2014-07-30 14:57:37.619569-04:30	2014-07-30 14:57:37.619569-04:30	solicitudes	solicitud_carta	aprobadas	solicitudes/solicitud_carta/contabilizar	contabilizar registro de solicitudes de Carta Aval	1
-66	\N	2014-07-30 15:00:20.714269-04:30	2014-07-30 15:00:20.714269-04:30	solicitudes	solicitud_funeraria	aprobadas	solicitudes/solicitud_funeraria/contabilizar	Contabilizar registro de solicitudes de Funeraria	1
+72	\N	2014-10-07 09:03:58.185244-04:30	2014-10-07 09:03:58.185244-04:30	config	patologia_cobertura	*	config/patologia_cobertura/*	Pantalla para casar las patologías y las coberturas	1
 \.
 
 
@@ -23148,7 +25620,7 @@ COPY recurso (id, usuario_id, fecha_registro, fecha_modificado, modulo, controla
 -- Name: recurso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('recurso_id_seq', 71, true);
+SELECT pg_catalog.setval('recurso_id_seq', 72, true);
 
 
 --
@@ -23207,57 +25679,59 @@ COPY recurso_perfil (id, usuario_id, fecha_registro, fecha_modificado, recurso_i
 322	\N	2014-07-31 15:02:40.270536-04:30	2014-07-31 15:02:40.270536-04:30	62	5
 323	\N	2014-07-31 15:02:40.270536-04:30	2014-07-31 15:02:40.270536-04:30	63	5
 324	\N	2014-07-31 15:02:40.270536-04:30	2014-07-31 15:02:40.270536-04:30	64	5
-369	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	1	2
-370	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	26	2
-371	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	26	5
-372	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	26	3
-373	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	25	2
-374	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	25	5
-375	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	25	3
-376	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	24	2
-377	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	24	5
-378	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	22	2
-379	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	22	5
-380	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	23	2
-381	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	23	5
-382	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	19	2
-383	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	19	5
-384	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	43	2
-385	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	43	5
-386	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	15	2
-387	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	15	5
-388	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	15	3
-389	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	20	2
-390	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	20	5
-391	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	16	2
-392	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	16	5
-393	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	21	2
-394	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	21	5
-395	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	18	2
-396	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	18	5
-397	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	18	3
-398	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	37	2
-399	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	37	5
-400	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	36	2
-401	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	36	5
-402	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	35	2
-403	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	35	5
-404	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	42	2
-405	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	42	5
-406	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	34	2
-407	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	34	5
-408	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	7	2
-409	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	14	2
-410	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	6	2
-411	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	13	2
-412	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	12	2
-413	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	3	2
-414	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	11	2
-415	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	10	2
-416	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	5	2
-417	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	9	2
 418	\N	2014-07-31 15:07:14.026936-04:30	2014-07-31 15:07:14.026936-04:30	8	2
 419	\N	2014-08-20 14:31:07.709142-04:30	2014-08-20 14:31:07.709142-04:30	69	8
+421	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	1	2
+422	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	26	5
+423	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	26	3
+424	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	26	6
+425	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	26	2
+426	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	25	5
+427	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	25	3
+428	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	25	6
+429	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	25	2
+430	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	18	5
+431	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	18	3
+432	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	18	2
+433	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	19	5
+434	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	19	2
+435	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	24	5
+436	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	24	2
+437	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	21	5
+438	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	21	2
+439	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	43	5
+440	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	43	2
+441	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	15	5
+442	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	15	3
+443	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	15	2
+444	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	16	5
+445	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	16	2
+446	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	23	5
+447	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	23	2
+448	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	22	5
+449	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	22	2
+450	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	20	5
+451	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	20	2
+452	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	34	5
+453	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	34	2
+454	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	37	5
+455	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	37	2
+456	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	36	5
+457	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	36	2
+458	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	42	5
+459	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	42	2
+460	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	35	5
+461	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	35	2
+462	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	7	2
+463	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	14	2
+464	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	6	2
+465	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	13	2
+466	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	12	2
+467	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	3	2
+468	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	11	2
+469	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	10	2
+470	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	5	2
+471	\N	2014-10-23 02:52:22.338164-04:30	2014-10-23 02:52:22.338164-04:30	9	2
 \.
 
 
@@ -23265,7 +25739,7 @@ COPY recurso_perfil (id, usuario_id, fecha_registro, fecha_modificado, recurso_i
 -- Name: recurso_perfil_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('recurso_perfil_id_seq', 419, true);
+SELECT pg_catalog.setval('recurso_perfil_id_seq', 471, true);
 
 
 --
@@ -23296,6 +25770,7 @@ COPY servicio (id, usuario_id, fecha_registro, fecha_modificado, descripcion, ob
 21	\N	2014-07-27 01:00:53.029261-04:30	2014-07-27 01:00:53.029261-04:30	CONSULTA UROLOGIA 	\N
 22	\N	2014-07-27 01:01:08.825664-04:30	2014-07-27 01:01:08.825664-04:30	CONSULTA NUTRICION Y DIETETICA	\N
 23	\N	2014-07-27 01:01:33.357318-04:30	2014-07-27 01:01:33.357318-04:30	CONSULTA FISIOTERAPIA Y REHABILITACION	\N
+0	\N	2014-10-07 15:15:45.016707-04:30	2014-10-07 15:15:45.016707-04:30	FARMACIAS	\N
 \.
 
 
@@ -23340,8 +25815,38 @@ SELECT pg_catalog.setval('servicio_tiposolicitud_id_seq', 1, false);
 -- Data for Name: solicitud_servicio; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
-COPY solicitud_servicio (id, usuario_id, fecha_registro, fecha_modificado, estado_solicitud, tiposolicitud_id, fecha_solicitud, codigo_solicitud, titular_id, beneficiario_id, beneficiario_tipo, proveedor_id, medico_id, fecha_vencimiento, servicio_id, motivo, motivo_anulacion, observacion, motivo_rechazo, diagnostico, multifactura) FROM stdin;
+COPY solicitud_servicio (id, usuario_id, fecha_registro, fecha_modificado, estado_solicitud, tiposolicitud_id, fecha_solicitud, codigo_solicitud, titular_id, beneficiario_id, beneficiario_tipo, proveedor_id, medico_id, fecha_vencimiento, servicio_id, motivo, motivo_anulacion, observacion, motivo_rechazo, diagnostico, multifactura, persona_autorizada, ced_autorizado) FROM stdin;
 \.
+
+
+--
+-- Data for Name: solicitud_servicio_dt; Type: TABLE DATA; Schema: public; Owner: arrozalba
+--
+
+COPY solicitud_servicio_dt (id, medicina_id, examen_id, solicitud_servicio_id) FROM stdin;
+\.
+
+
+--
+-- Name: solicitud_servicio_dt_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
+--
+
+SELECT pg_catalog.setval('solicitud_servicio_dt_id_seq', 1, false);
+
+
+--
+-- Data for Name: solicitud_servicio_factura; Type: TABLE DATA; Schema: public; Owner: arrozalba
+--
+
+COPY solicitud_servicio_factura (id, solicitud_servicio_id, factura_id) FROM stdin;
+\.
+
+
+--
+-- Name: solicitud_servicio_factura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
+--
+
+SELECT pg_catalog.setval('solicitud_servicio_factura_id_seq', 1, true);
 
 
 --
@@ -23357,34 +25862,6 @@ SELECT pg_catalog.setval('solicitud_servicio_id_seq', 1, true);
 
 COPY solicitud_servicio_patologia (id, usuario_id, fecha_registro, fecha_modificado, patologia_id, solicitud_servicio_id, motivo, observacion) FROM stdin;
 \.
-
-
---
--- Name: solicitud_servicio_patologia_factura_dt_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
---
-
-SELECT pg_catalog.setval('solicitud_servicio_patologia_factura_dt_id_seq', 1, false);
-
-
---
--- Name: solicitud_servicio_patologia_factura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
---
-
-SELECT pg_catalog.setval('solicitud_servicio_patologia_factura_id_seq', 1, false);
-
-
---
--- Name: solicitud_servicio_patologia_factura_pagos_dt_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
---
-
-SELECT pg_catalog.setval('solicitud_servicio_patologia_factura_pagos_dt_id_seq', 1, false);
-
-
---
--- Name: solicitud_servicio_patologia_factura_pagos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
---
-
-SELECT pg_catalog.setval('solicitud_servicio_patologia_factura_pagos_id_seq', 1, false);
 
 
 --
@@ -23419,7 +25896,9 @@ SELECT pg_catalog.setval('sucursal_id_seq', 4, true);
 -- Data for Name: tipo_cobertura; Type: TABLE DATA; Schema: public; Owner: arrozalba
 --
 
-COPY tipo_cobertura (id, desripcion, estatus) FROM stdin;
+COPY tipo_cobertura (id, descripcion, estatus) FROM stdin;
+1	INDIVIDUAL	1
+2	GRUPAL	1
 \.
 
 
@@ -23427,7 +25906,7 @@ COPY tipo_cobertura (id, desripcion, estatus) FROM stdin;
 -- Name: tipo_cpbertura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('tipo_cpbertura_id_seq', 1, false);
+SELECT pg_catalog.setval('tipo_cpbertura_id_seq', 2, true);
 
 
 --
@@ -23460,6 +25939,8 @@ COPY tiposolicitud (id, usuario_id, fecha_registro, fecha_modificado, nombre, ob
 4	\N	2014-06-02 16:42:33.182268-04:30	2014-06-02 16:42:33.182268-04:30	EXAMENES ESPECIALES	\N	SASEE-0
 5	\N	2014-06-02 16:44:56.932481-04:30	2014-06-02 16:44:56.932481-04:30	SERVICIOS FUNERARIOS	\N	SASSF-0
 6	\N	2014-07-29 01:01:02.633039-04:30	2014-07-29 01:01:02.633039-04:30	CARTA AVAL	\N	SASCA-0
+7	\N	2014-10-05 20:26:27.066834-04:30	2014-10-05 20:26:27.066834-04:30	REEMBOLSOS	\N	SASRE-0
+8	\N	2014-10-07 14:00:04.157898-04:30	2014-10-07 14:00:04.157898-04:30	MEDICINAS	\N	SASME-0
 \.
 
 
@@ -23467,7 +25948,7 @@ COPY tiposolicitud (id, usuario_id, fecha_registro, fecha_modificado, nombre, ob
 -- Name: tiposolicitud_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('tiposolicitud_id_seq', 6, true);
+SELECT pg_catalog.setval('tiposolicitud_id_seq', 7, true);
 
 
 --
@@ -23504,6 +25985,7 @@ COPY titular (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1,
 31	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	14092444	OLGA	CONZUELO	ANGULO	GONZALEZ	V	F	1975-11-26	1	240	69	229	732	BARRIO OBRERO CARRERA 14	240	69	229	732	D	04245043912	04245043912	UPSA.PIRITU3@ARROZDELALBA.GOB.VE	N/A	1	2011-06-16	86	43	16	N/A	1	\N	\N	\N	\N	\N
 32	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	09843582	ARGENIS	RAMON	LUGO	GALINDEZ	V	M	1962-01-05	1	240	69	229	732	BARRIO BUMBI CARRERA 8 ENTRE CALLE 12 Y 13 #70	240	69	229	732	S	04245625824	02568083046	UPS.PIRITU@ARROZDELALBA.GOB.VE	N/A	1	2011-06-16	86	43	16	N/A	1	\N	\N	\N	\N	\N
 33	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	19636360	CARLOS	VICENTE	CORDOVA	ANGULO	V	M	1986-07-25	1	240	69	229	732	BARRIO OBRERO CALLE 9 #21	240	69	229	732	S	04160524515	04160524515	CALUCHO.EL.MEN@GMAIL.COM	N/A	1	2011-06-16	86	43	16	N/A	1	\N	\N	\N	\N	\N
+172	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	12262084	CARMEN	MARTINA	BARRIOS	GONZALEZ	V	F	1969-01-17	1	240	69	229	732	CALLEJON NUEVO PIRITU.	240	69	229	732	S	04160547686	02568080044	\N	\N	1	2013-09-09	2	7	20	\N	1	\N	\N	\N	\N	\N
 34	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	17362077	YULIMAR	COROMOTO	QUINTERO		V	F	1985-03-05	1	240	69	229	732	URB. LA GOAJIRA VERDA 35 #24	240	69	229	732	S	04163158406	02556235917	YULIMAR_C_QUINTERO@HOTMAIL.COM	N/A	1	2008-09-16	86	43	16	N/A	1	\N	\N	\N	\N	\N
 35	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	09569079	PEDRO	ANTONIO	PEREZ	SANCHEZ	V	M	1965-06-06	1	240	69	229	732	CALLE PRINCIPAL CHORO GONZALERO	240	69	229	732	S	04243626257	02563214128	UPS.PIRITU@ARROZDELALBA.GOB.VE	N/A	1	2009-05-26	86	43	16	N/A	1	\N	\N	\N	\N	\N
 36	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	20158558	JOHAN	JAVIER	LINAREZ		V	M	1986-10-07	1	240	69	229	732	BARRIO LA INDEPENDENCIA CALLE 3	240	69	229	732	S	04140728538	04140728538	UPS.PIRITU@ARROZDELALBA.GOB.VE	N/A	1	2011-06-16	86	43	16	N/A	1	\N	\N	\N	\N	\N
@@ -23592,6 +26074,7 @@ COPY titular (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1,
 117	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	17277901	JOHAN	RICARDO	COLINA	LOPEZ	V	M	1984-07-07	1	240	69	229	732	CALLE PRINCIPAL SECTOR ARRIBA	240	69	229	732	S	04245121976	02563214314	J.R.C_@HOTMAIL.COM	N/A	1	2012-08-13	86	43	16	N/A	1	\N	\N	\N	\N	\N
 118	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	13353207	JOSE	LUIS	JIMENEZ	ALVAREZ	V	M	1976-01-08	1	240	69	229	732	BARRIO LA BUTIERREÑA CALLE PRINCIPAL	240	69	229	732	S	04145134549	04145134549	UPS.PIRITU2@ARROZDELALBA.GOB.VE	N/A	1	1997-10-08	86	43	16	N/A	1	\N	\N	\N	\N	\N
 119	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	19636886	JOSE	GREGORIO	VERA	VELIZ	V	M	1989-04-30	1	240	69	229	732	BARRIO LA MARINERA CALLE 2	240	69	229	732	S	04268148506	04268148506	JOVELUSU_9107@HOTMAIL.COM	N/A	1	2012-09-03	86	43	16	N/A	1	\N	\N	\N	\N	\N
+220	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	19052735	CARLOS	EDUARDO	HERNANDEZ	TORRES	V	M	1984-07-19	1	240	69	229	732	BARRIO ESTADIO CALLE 9. #14	240	69	229	732	S	04269865158			N/A	1	2009-07-02	86	43	16	N/A	1	\N	\N	\N	\N	\N
 120	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	13226149	MILAGROS	COROMOTO	APONTE		V	F	1976-10-08	1	240	69	229	732	BARRIO MIRAFLORES CALLE 2 ENTRE AV 3 #114	240	69	229	732	S	04145124160	04145124160	MILAPONTE338@HOTMAIL.COM	N/A	1	2008-10-09	86	43	16	N/A	1	\N	\N	\N	\N	\N
 121	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	10144490	ALEXIS	ENRIQUE	SULBARAN	BALZA	V	M	1969-10-16	1	240	69	229	732	URB LA CORTEZA CALLE 4 VERDA G #9	240	69	229	732	S	04145309618	02556214414	UPS.PIRITU2@ARROZDELALBA.GOB.VE	N/A	1	2001-06-06	86	43	16	N/A	1	\N	\N	\N	\N	\N
 122	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	16294139	TONNY	RAFAEL	PACHECO	NARVAEZ	V	M	1984-07-18	1	240	69	229	732	BARRIO LIBERTADOR SECTOR 2 EL SAMAN CALLEJÓN 1	240	69	229	732	S	04165381162	04165381162	UPS.PIRITU2@ARROZDELALBA.GOB.VE	N/A	1	2005-07-18	86	43	16	N/A	1	\N	\N	\N	\N	\N
@@ -23622,7 +26105,6 @@ COPY titular (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1,
 146	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	16040045	MARTIN	RAMON	PARRA	ARANGUREN	V	M	1980-05-25	1	240	69	229	732	BARRIO TIERRA FLOJA CARRERA 5 CON CALLE 2	240	69	229	732	S	04145619554		UPS.PIRITU2@ARROZDELALBA.GOB.VE	N/A	1	2009-12-01	86	43	16	N/A	1	\N	\N	\N	\N	\N
 147	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	20642330	CARLOS	ANTONIO	ARANGUREN	ALVARADO	V	M	1989-09-27	1	240	69	229	732	BARRIO LIMONCITO CALLE 1	240	69	229	732	S	04245383204	02568083241	MONCHI_GRATELORACHO@HOTMAIL.COM	N/A	1	2009-05-04	86	43	16	N/A	1	\N	\N	\N	\N	\N
 149	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	14981118	ANGEL	ANTONIO	PEREZ		V	M	1980-04-21	1	240	69	229	732	BARRIO BRISAS DE ELENA, CALLE 8 AL FINAL	240	69	229	732	S	04269141417		ELKUKIPEREZ@HOTMAIL.COM	N/A	1	2012-11-07	86	43	16		1	\N	\N	\N	\N	\N
-151	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	16416882	ABINADAL	ABELIS	GUEVARA	TORREALBA	V	M	1980-09-03	1	240	69	229	732	BARRIO EL LIBERTADOR CALLE 3.	240	69	229	732	c	04264944316		UPS.PIRITU2@ARROZDELALBA.GOB.VE	N/A	1	2009-12-01	86	43	16		1	\N	\N	\N	\N	\N
 148	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	13556353	PEDRO	JOSE	SANCHEZ	ZAVARCE	V	M	1978-03-18	1	240	69	229	732	URB MIRAFLORES CALLE 1 #46	240	69	229	732	S	04265510152	\N	PJSZAVARCE@GMAIL.COM	\N	1	2012-01-03	116	6	16	N/A	1	\N	\N	\N	\N	\N
 154	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	17796642	MILAGROS	EVANGELISTA	GALLEGOS	BONILLA	V	F	1985-05-07	1	240	69	229	732	URB LA CONCORDIA AV PRINCIPAL #80	240	69	229	732	S	04145548299	02554146560	MGMILAGROS.13@GMAIL.COM	\N	1	2010-02-22	38	9	16	N/A	1	\N	\N	\N	\N	\N
 152	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	21561653	MARYELIS	DE LOS ANGELES	ANGULO	CASTILLO	V	F	1992-05-05	1	240	69	229	732	BARRIO LA MARINERA CALLE 2	240	69	229	732	S	04169207846	02563950313	MARYELISANGULO@GMAIL.COM	\N	1	2011-10-01	114	16	16	N/A	1	\N	\N	\N	\N	\N
@@ -23653,7 +26135,6 @@ COPY titular (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1,
 165	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	16567899	YOHALY	AMARILY	ARIAS	\N	V	F	1983-12-14	1	240	69	229	732	CIRCUNVALACIÓN SUR, URB VALLE ARRIBA, ETAPA 4, CASA #457	240	69	229	732	S	04264548298	02556213383	YOHALY.ARIAS@GMAIL.COM	\N	1	2008-10-14	116	15	15	\N	1	\N	\N	\N	\N	\N
 168	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	15693833	ARELYS	\N	ACOSTA	NOGUERA	V	F	1983-07-20	1	240	69	229	732	SECTOR 4 DE FEBRERO CALLE PRINCIPAL	240	69	229	732	S	04264544472	02563959448	ARELYSACOSTA123@GMAIL.COM	\N	1	2010-11-01	86	7	16	\N	1	\N	\N	\N	\N	\N
 177	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	16966084	RAFAEL	ROLANDO	ALVAREZ	CASTILLO	V	M	1985-12-13	1	240	69	229	732	CONJ. ROCA DEL LLANO #13-02	240	69	229	732	C	04149540842	02556654218	RALVAREZCASTILLO@GMAIL.COM	\N	1	2013-06-07	46	6	16	\N	1	\N	\N	\N	\N	\N
-172	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	12262084	CARMEN	MARTINA	BARRIOS	GONZALEZ	V	F	1969-01-17	1	240	69	229	732	CALLEJON NUEVO PIRITU.	240	69	229	732	S	04160547686	02568080044	\N	\N	1	2013-09-09	2	7	20	\N	1	\N	\N	\N	\N	\N
 174	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	11851601	AMARILIS	LISETT	BASTIDAS	\N	V	F	1970-06-26	1	240	69	229	732	URB. PEDRO CAMEJO AV. 1 ENTRE CALLES 1 Y 2 #9	240	69	229	732	C	04167565030	02556217178	AMARILISBASTIDAS.06@GMAIL.COM	\N	1	2011-05-23	1	16	16	\N	1	\N	\N	\N	\N	\N
 173	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	19171304	ROSALBA	MARIA	ARENAS	HERRERA	V	F	1988-03-28	1	240	69	229	732	URB VILLA ARAURE 1 AV 5 CON CALLE 3 Y 4 #28	240	69	229	732	S	04162529852	02556214197	R_ARENAS_H@HOTMAIL.COM	\N	1	2013-03-11	114	18	16	N/A	1	\N	\N	\N	\N	\N
 175	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	12447000	MARY	LUZ	LUCENA	VASQUEZ	V	F	1975-08-21	1	240	69	229	732	SECTOR PUEBLO NUEVO, SECTOR LAS MARGARITAS	240	69	229	732	S	04245843483	\N	LUCENAVMARYLUZ@GMAIL.COM	\N	1	2011-03-28	3	17	20	\N	1	\N	\N	\N	\N	\N
@@ -23686,7 +26167,6 @@ COPY titular (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1,
 217	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	13172133	JOSE	GREGORIO	TORRELLES	RIVERO	V	M	1976-06-18	1	240	69	229	732	PAYARA CENTRO CALLE N°9.	240	69	229	732	S	04268074972		UPS.PAYARA@ARROZDELALBA.GOB.VE	N/A	1	2008-11-05	86	43	16	N/A	1	\N	\N	\N	\N	\N
 218	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	11077030	MARLENE	COROMOTO	VARGAS	RODRIGUEZ	V	F	1967-04-26	1	240	69	229	732	CASERIO LOS MAMONES AV PRINCIPAL #23	240	69	229	732	S	04268094303	02559893553		N/A	1	2008-10-20	86	43	16	N/A	1	\N	\N	\N	\N	\N
 219	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	18053829	ONEY	GABRIEL	CEDEÑO	MARTINEZ	V	M	1988-01-29	1	240	69	229	732	AV 20 CON ESQUINA CALLE 21 EDIF. SEVERINO APT #4	240	69	229	732	S	04121504603	02512329513	ONEYGABRIELSRV@GMAIL.COM	N/A	1	2012-11-19	86	43	16	N/A	1	\N	\N	\N	\N	\N
-220	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	19052735	CARLOS	EDUARDO	HERNANDEZ	TORRES	V	M	1984-07-19	1	240	69	229	732	BARRIO ESTADIO CALLE 9. #14	240	69	229	732	S	04269865158			N/A	1	2009-07-02	86	43	16	N/A	1	\N	\N	\N	\N	\N
 189	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	15341350	ANA	KARINA	CARMONA	VILLANUEVA	V	F	1982-08-16	1	240	69	229	732	URB LOS ROBLES CALLE 3 #141	240	69	229	732	S	04143538130	02556156432	ANAKARINA.CARMONA@GMAIL.COM	\N	1	2009-12-01	119	6	16	N/A	1	\N	\N	\N	\N	\N
 187	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	19798851	KEVIN	JOSE	CONDE	VERGARA	V	M	1991-06-20	1	240	69	229	732	URB. VILLAS DEL PILAR SEGUNDA ETAPA CALLE 3 #494	240	69	229	732	S	04245977430	02556650548	KEVINJC206@HOTMAIL.COM	\N	1	2013-04-04	3	20	17	\N	1	\N	\N	\N	\N	\N
 221	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	17943072	ENDER	JOSE	HERRERA		V	M	1988-03-15	1	240	69	229	732	AV PRINCIPAL VÍA LOS MAMONES	240	69	229	732	S	04164546742		ENDERHERRERA88@HOTMAIL.COM	N/A	1	2008-11-05	86	43	16	N/A	1	\N	\N	\N	\N	\N
@@ -23730,12 +26210,10 @@ COPY titular (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1,
 263	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	07384272	SONNY	ANTONIO	ALVARADO	MERLO	V	M	1964-10-24	1	240	69	229	732	BARRIO EL LIMONCITO, AVENIDA 02, ENTRE CALLES 07 Y 08	240	69	229	732	S	04262274983			N/A	1	2011-06-16	86	43	16	TRANSPORTE	1	\N	\N	\N	\N	\N
 264	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	24653714	ANA	KARELYS	VERASTEGUI		V	F	1992-01-23	1	240	69	229	732	CALLE 10 ENTRE 3 Y 4. SECTOR PUMA ROSO	240	69	229	732	S	04125183866			N/A	1	2011-03-16	86	43	16	N/A	1	\N	\N	\N	\N	\N
 265	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	09566612	LUIS	ENRIQUES	ZAPATA		V	M	1964-10-10	1	240	69	229	732	BARRIO LA COROMOTO CALLEJON 5 CON CALLE 1 Y 1A. VILLA BRUZUAL TUREN	240	69	229	732	C	04161483654	02563955880	ZAPATA6129@HOTMAIL.COM	N/A	1	2008-09-15	86	43	16	N/A	1	\N	\N	\N	\N	\N
-266	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	19798052	YUSMAIRA	DEL CARMEN	RODRIGUEZ		V	F	1988-03-04	1	240	69	229	732	URB LLANO LINDO ETAPA I CONJUNTO ESCAMPADERO CASA B-34 ARAURE	240	69	229	732	S	04161056158	04140573719	YUSMA_20_36@HOTMAIL.COM	N/A	1	2010-01-01	86	43	16	N/A	1	\N	\N	\N	\N	\N
 269	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	21564162	FRANCISCO	RAMON	BUSTILLO	GUEVARA	V	M	1986-04-28	1	240	69	229	732	CARRERA 8 ENTRE 09 Y 13, BARRIO BUMBI	240	69	229	732	S	04269324957			N/A	1	2008-12-01	86	43	16	N/A	1	\N	\N	\N	\N	\N
 271	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	10639122	JOSE	GREGORIO	MENDOZA	MUÑOZ	V	M	1966-04-19	1	240	69	229	732	CALLE 5, CASA NUM 127, BARRIO LA MARINERA PIRITU ESTADO PORTUGUESA	240	69	229	732	S	04162193270	04269117153		N/A	1	2014-05-23	86	43	16	N/A	1	\N	\N	\N	\N	\N
 273	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	11078582	JUANA	MARIA	CASTAÑEDA	DE UNDA	V	F	1970-10-29	1	240	69	229	732	UR.FUNDACION MENDOZA AVENIDA 02, ESQUINA CALLE 06, NRO H78	240	69	229	732	C	04145579797	02556236302	JUANACDEUNDA29@GMAIL.COM	N/A	1	2014-07-01	86	43	16	N/A	1	\N	\N	\N	\N	\N
 4	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	12090662	ROSMARY	\N	MENDEZ	DE BONILLA	V	F	1974-12-09	1	240	69	229	732	URB. MOLINOS I CALLE 5 #29	240	69	229	732	C	04268080521	02556228293	DELVMENDEZ@HOTMAIL.COM	\N	1	2011-06-16	86	43	16	N/A	1	\N	\N	\N	\N	\N
-1	1	2014-08-09 11:49:07.877445-04:30	2014-08-09 11:49:07.877445-04:30	20643647	ALEXIS	JOSE	BORGES	TUA	V	M	2014-04-03	1	240	69	229	732	urb 12 de octubre calle 9 entre av 6 y 7 	240	69	229	732	S	04167012111	\N	TUAALEXIS@GMAIL.COM	A-	1	2013-01-29	86	43	16	N/A	1	\N	\N	\N	\N	\N
 2	\N	2014-08-09 17:38:17.859252-04:30	2014-08-09 17:38:17.859252-04:30	16753367	JAVIER	ENRIQUE	LEON	\N	V	M	1984-12-09	1	240	69	229	732	baraure diagonal al inces	240	69	229	732	S	04162546908	\N	JEL1284@GMAIL.COM	A-	1	2008-10-01	86	43	16	N/A	1	\N	\N	\N	\N	\N
 276	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	07549548	AMADO	ANTONIO	ARIAS	MEDINA	V	M	1964-02-04	4	240	69	229	732	BARRIO TIERRA FLOJA 1, CALLE 06 ENTRE CARRERAS 5 Y 6	240	69	229	732	C	04245828916	\N	\N	\N	1	2014-05-23	86	43	16	N/A	1	\N	\N	\N	\N	\N
 180	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	20809291	SERGIO	ALEJANDRO	VALERA	\N	V	M	1990-03-18	1	240	69	229	732	URB BETTY HERRERA	240	69	229	732	S	04149553185	\N	SERGIOALEJANDROVALERA90@GMAIL.COM	\N	2	2011-07-01	1	16	20	\N	1	\N	\N	\N	\N	\N
@@ -23754,12 +26232,8 @@ COPY titular (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1,
 151	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	16416882	ABINADAL	ABELIS	GUEVARA	\N	V	M	1980-09-03	1	240	59	91	732	BARRIO EL LIBERTADOR CALLE 3.	240	69	229	732	c	04267014312	\N	ABINDA@HOTMAIL.COM	N/A	1	2009-11-17	88	7	16	\N	1	\N	DE NUEVO PA LA PRIEBA	2014-09-27	REACTIVE DE NUEXW	2014-09-27
 1	1	2014-08-09 11:49:07.877445-04:30	2014-08-09 11:49:07.877445-04:30	20643647	ALEXIS	JOSE	BORGES	TUA	V	M	1990-12-11	4	240	69	229	732	urb 12 de octubre calle 9 entre av 6 y 7 	240	69	229	732	S	04167012111	\N	TUAALEXIS@GMAIL.COM	A-	1	2013-01-29	86	43	16	N/A	1	\N	YO QUICE	2014-09-28	LO DEVOLVI A LA VIDAAA	2014-09-28
 278	\N	2014-09-30 13:02:18.679318-04:30	2014-09-30 13:02:18.679318-04:30	19123123	ALEXIS	\N	TOVAR	\N	V	M	1974-09-01	1	240	69	233	743	12 octubress	240	69	224	718	c	04167012111	\N	\N	N/A	1	2010-09-01	3	40	2	ASDFASD	1	default.png	\N	\N	\N	\N
-279	\N	2014-09-30 13:09:37.035136-04:30	2014-09-30 13:09:37.035136-04:30	20123123	JUANETO	\N	PEPETO	\N	V	M	1980-09-01	1	240	69	231	738	sadfasdfasdfasdf	240	60	93	288	c	04167012111	\N	\N	N/A	4	2014-09-17	3	36	14	DFAQSDF	1	default.png	\N	\N	\N	\N
-280	\N	2014-09-30 13:22:24.197267-04:30	2014-09-30 13:22:24.197267-04:30	19123234	EDUARDO	\N	MORA	\N	V	M	1980-09-01	1	240	68	220	711	asdfasdfa	240	69	223	716	C	04167012111	\N	\N	N/A	1	2014-09-16	4	29	17	\N	1	default.png	\N	\N	\N	\N
-281	\N	2014-09-30 13:31:37.533912-04:30	2014-09-30 13:31:37.533912-04:30	20123234	EDUARDODDD	\N	MORA	\N	V	M	1980-09-01	1	240	69	234	746	asdfasdfa	240	70	240	772	C	04167012111	\N	\N	N/A	1	2014-09-16	4	12	17	\N	1	default.png	\N	\N	\N	\N
-282	\N	2014-09-30 13:33:22.638273-04:30	2014-09-30 13:33:22.638273-04:30	12123123	JUANCETES	\N	MORA	\N	V	M	1980-09-01	1	240	70	247	795	asdfasdfasdf	240	63	139	429	C	04167012111	\N	\N	N/A	4	2014-09-16	6	39	13	\N	1	default.png	\N	\N	\N	\N
-283	\N	2014-09-30 13:39:47.069974-04:30	2014-09-30 13:39:47.069974-04:30	87123123	RECARGAR	\N	KLDJKLL	\N	E	F	1990-09-01	1	240	69	233	743	adsfasdfas	240	58	67	205	D	04167012111	\N	\N	N/A	4	2009-12-01	6	12	3	\N	1	default.png	\N	\N	\N	\N
-284	\N	2014-09-30 15:39:05.984712-04:30	2014-09-30 15:39:05.984712-04:30	12098765	ISAAC	\N	GUITIERREZ	\N	V	F	1984-02-01	1	240	69	234	746	sdfsdfasdf	240	69	229	732	c	04125048738	\N	\N	A-	1	2014-09-23	4	7	14	FSDAFDFSDSD	1	default.png	\N	\N	\N	\N
+0	\N	2014-10-07 11:48:27.307608-04:30	2014-10-07 11:48:27.307608-04:30	----------	-----------------	-----------------	-----------------	-----------------	-	-	1900-01-01	1	240	69	234	746	-----------	240	69	229	732	-	----------	----------	----------	N/A	1	1900-01-01	1	1	1	\N	0	\N	\N	\N	\N	\N
+266	\N	2014-08-20 16:01:46.559133-04:30	2014-08-20 16:01:46.559133-04:30	19798052	YUSMAIRA	DEL CARMEN	RODRIGUEZ	\N	V	F	1988-03-04	4	240	69	229	732	URB LLANO LINDO ETAPA I CONJUNTO ESCAMPADERO CASA B-34 ARAURE	240	69	229	732	S	04161056158	04140573719	YUSMA_20_36@HOTMAIL.COM	N/A	1	2010-01-01	86	43	16	N/A	1	\N	PRUEBA	2014-10-23	PASO LA PRUEBA	2014-10-23
 \.
 
 
@@ -23767,7 +26241,7 @@ COPY titular (id, usuario_id, fecha_registro, fecha_modificado, cedula, nombre1,
 -- Name: titular_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('titular_id_seq', 284, true);
+SELECT pg_catalog.setval('titular_id_seq', 278, true);
 
 
 --
@@ -23775,17 +26249,8 @@ SELECT pg_catalog.setval('titular_id_seq', 284, true);
 --
 
 COPY usuario (id, usuario_id, fecha_registro, fecha_modificado, fecha_desactivacion, sucursal_id, titular_id, login, perfil_id, email, tema, app_ajax, datagrid, estatus, intentos, proveedor_id) FROM stdin;
-1	\N	2014-08-09 11:50:25.26152-04:30	2014-08-09 11:50:25.26152-04:30	\N	1	1	admin	1	\N	default	1	30	1	0	\N
-2	\N	2014-08-09 17:39:12.728828-04:30	2014-08-09 17:39:12.728828-04:30	\N	1	2	jelitox	3	\N	default	1	50	2	0	\N
-12	\N	2014-09-30 11:58:21.172289-04:30	2014-09-30 11:58:21.172289-04:30	\N	1	\N	juanito	2	alexis@hotmai.com	default	1	30	3	0	\N
-14	\N	2014-09-30 13:09:37.130794-04:30	2014-09-30 13:09:37.130794-04:30	\N	1	279	20123123	7	\N	default	1	0	\N	\N	\N
-15	\N	2014-09-30 13:22:24.270263-04:30	2014-09-30 13:22:24.270263-04:30	\N	1	280	19123234	7	\N	default	1	0	\N	\N	\N
-16	\N	2014-09-30 13:31:37.663937-04:30	2014-09-30 13:31:37.663937-04:30	\N	1	281	20123234	7	\N	default	1	0	\N	\N	\N
-17	\N	2014-09-30 13:33:22.686382-04:30	2014-09-30 13:33:22.686382-04:30	\N	1	282	12123123	7	\N	default	1	0	\N	\N	\N
-18	\N	2014-09-30 13:39:47.122595-04:30	2014-09-30 13:39:47.122595-04:30	\N	1	283	87123123	7	\N	default	1	0	\N	\N	\N
-19	\N	2014-09-30 15:39:06.383719-04:30	2014-09-30 15:39:06.383719-04:30	\N	1	284	12098765	7	\N	default	1	0	\N	\N	\N
-20	\N	2014-09-30 15:48:59.899894-04:30	2014-09-30 15:48:59.899894-04:30	\N	1	\N	programer	3	\N	\N	1	30	\N	\N	\N
-21	\N	2014-09-30 15:51:05.691958-04:30	2014-09-30 15:51:05.691958-04:30	\N	1	\N	isaloj	2	\N	\N	1	30	\N	\N	\N
+2	1	2014-08-09 17:39:12.728828-04:30	2014-08-09 17:39:12.728828-04:30	\N	1	2	jelitox	3	\N	default	1	50	2	0	\N
+1	1	2014-08-09 11:50:25.26152-04:30	2014-08-09 11:50:25.26152-04:30	\N	1	1	admin	1	admin@admin.com	default	1	30	1	0	\N
 \.
 
 
@@ -23794,16 +26259,8 @@ COPY usuario (id, usuario_id, fecha_registro, fecha_modificado, fecha_desactivac
 --
 
 COPY usuario_clave (id, usuario_id, fecha_registro, fecha_modificado, password, fecha_inicio, fecha_fin) FROM stdin;
-1	2	2014-08-24 19:06:32.517357-04:30	2014-08-24 19:06:32.517357-04:30	d93a5def7511da3d0f2d171d9c344e91	2014-08-01	2014-08-20
-2	1	2014-08-09 11:51:21.701566-04:30	2014-08-09 11:51:21.701566-04:30	d93a5def7511da3d0f2d171d9c344e91	2014-08-01	2014-08-20
-3	1	2014-08-24 19:08:40.683729-04:30	2014-08-24 19:08:40.683729-04:30	d93a5def7511da3d0f2d171d9c344e91	2014-08-21	2014-12-02
-27	1	2014-09-25 18:41:49.226228-04:30	2014-09-25 18:41:49.226228-04:30	20eabe5d64b0e216796e834f52d61fd0b70332fc	2014-09-25	2014-09-25
-28	2	2014-09-27 12:38:55.894302-04:30	2014-09-27 12:38:55.894302-04:30	cd5ea73cd58f827fa78eef7197b8ee606c99b2e6	2014-09-27	2014-09-27
-29	12	2014-09-30 11:58:21.172289-04:30	2014-09-30 11:58:21.172289-04:30	d93a5def7511da3d0f2d171d9c344e91	2014-09-30	1969-12-31
-30	18	2014-09-30 13:39:47.231502-04:30	2014-09-30 13:39:47.231502-04:30	d5d8f8140584610763de8c67f57fadd8	2014-09-30	1969-12-31
-31	19	2014-09-30 15:39:06.535769-04:30	2014-09-30 15:39:06.535769-04:30	00a6852dc998700cff068aa1ac5f8a2f	2014-09-30	2014-12-31
-32	20	2014-09-30 15:48:59.899894-04:30	2014-09-30 15:48:59.899894-04:30	d93a5def7511da3d0f2d171d9c344e91	2014-09-30	1969-12-31
-33	21	2014-09-30 15:51:05.691958-04:30	2014-09-30 15:51:05.691958-04:30	d93a5def7511da3d0f2d171d9c344e91	2014-09-30	1969-12-31
+1	1	2014-08-09 11:51:21.701566-04:30	2014-08-09 11:51:21.701566-04:30	d93a5def7511da3d0f2d171d9c344e91	2014-08-01	2015-08-20
+2	2	2014-10-23 01:25:32.249363-04:30	2014-10-23 01:25:32.249363-04:30	d93a5def7511da3d0f2d171d9c344e91	2014-10-23	2015-12-10
 \.
 
 
@@ -23811,14 +26268,14 @@ COPY usuario_clave (id, usuario_id, fecha_registro, fecha_modificado, password, 
 -- Name: usuario_clave_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('usuario_clave_id_seq', 33, true);
+SELECT pg_catalog.setval('usuario_clave_id_seq', 5, true);
 
 
 --
 -- Name: usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: arrozalba
 --
 
-SELECT pg_catalog.setval('usuario_id_seq', 21, true);
+SELECT pg_catalog.setval('usuario_id_seq', 5, true);
 
 
 --
@@ -24158,6 +26615,46 @@ ALTER TABLE ONLY estado_usuario
 
 
 --
+-- Name: factura_dt_id_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+ALTER TABLE ONLY factura_dt
+    ADD CONSTRAINT factura_dt_id_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: factura_id_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+ALTER TABLE ONLY factura
+    ADD CONSTRAINT factura_id_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: hclinicas_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+ALTER TABLE ONLY hclinicas
+    ADD CONSTRAINT hclinicas_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: hfarmacias_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+ALTER TABLE ONLY hfarmacias
+    ADD CONSTRAINT hfarmacias_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: hreembolso_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+ALTER TABLE ONLY hreembolso
+    ADD CONSTRAINT hreembolso_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: medicina_descripcion_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
@@ -24227,6 +26724,22 @@ ALTER TABLE ONLY municipio
 
 ALTER TABLE ONLY profesion
     ADD CONSTRAINT nombre UNIQUE (nombre);
+
+
+--
+-- Name: orden_pago_factura_id_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+ALTER TABLE ONLY orden_pago_factura
+    ADD CONSTRAINT orden_pago_factura_id_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orden_pago_id_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+ALTER TABLE ONLY orden_pago
+    ADD CONSTRAINT orden_pago_id_pkey PRIMARY KEY (id);
 
 
 --
@@ -24438,43 +26951,27 @@ ALTER TABLE ONLY servicio_tiposolicitud
 
 
 --
--- Name: solicitud_dt_factura_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
---
-
-ALTER TABLE ONLY factura_dt
-    ADD CONSTRAINT solicitud_dt_factura_pkey PRIMARY KEY (id);
-
-
---
--- Name: solicitud_factura_pagos__dt_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
---
-
-ALTER TABLE ONLY orden_pago_factura_dt
-    ADD CONSTRAINT solicitud_factura_pagos__dt_pkey PRIMARY KEY (id);
-
-
---
--- Name: solicitud_factura_pagos_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
---
-
-ALTER TABLE ONLY orden_pago
-    ADD CONSTRAINT solicitud_factura_pagos_pkey PRIMARY KEY (id);
-
-
---
--- Name: solicitud_factura_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
---
-
-ALTER TABLE ONLY factura
-    ADD CONSTRAINT solicitud_factura_pkey PRIMARY KEY (id);
-
-
---
 -- Name: solicitud_servicio_codigo_solicitud_key; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
 --
 
 ALTER TABLE ONLY solicitud_servicio
     ADD CONSTRAINT solicitud_servicio_codigo_solicitud_key UNIQUE (codigo_solicitud);
+
+
+--
+-- Name: solicitud_servicio_dt_id_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+ALTER TABLE ONLY solicitud_servicio_dt
+    ADD CONSTRAINT solicitud_servicio_dt_id_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: solicitud_servicio_factura_id_pkey; Type: CONSTRAINT; Schema: public; Owner: arrozalba; Tablespace: 
+--
+
+ALTER TABLE ONLY solicitud_servicio_factura
+    ADD CONSTRAINT solicitud_servicio_factura_id_pkey PRIMARY KEY (id);
 
 
 --
@@ -25391,7 +27888,7 @@ ALTER TABLE ONLY cobertura
 --
 
 ALTER TABLE ONLY cobertura
-    ADD CONSTRAINT coberura_tipo_cobertura_id_fkey FOREIGN KEY (tipo_cobertura_id) REFERENCES tipo_cobertura(id);
+    ADD CONSTRAINT coberura_tipo_cobertura_id_fkey FOREIGN KEY (tipo_cobertura) REFERENCES tipo_cobertura(id);
 
 
 --
@@ -25531,19 +28028,35 @@ ALTER TABLE ONLY estado_usuario
 
 
 --
--- Name: factura_dt_factura_dt_id_kfey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+-- Name: facrtura_sol_ser_factura_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY solicitud_servicio_factura
+    ADD CONSTRAINT facrtura_sol_ser_factura_id_fkey FOREIGN KEY (factura_id) REFERENCES factura(id);
+
+
+--
+-- Name: factura_factura_dt_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
 ALTER TABLE ONLY factura_dt
-    ADD CONSTRAINT factura_dt_factura_dt_id_kfey FOREIGN KEY (factura_id) REFERENCES factura(id);
+    ADD CONSTRAINT factura_factura_dt_id_fkey FOREIGN KEY (factura_id) REFERENCES factura(id);
 
 
 --
--- Name: factura_dt_orden_pago_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+-- Name: factura_orden_pago_factura_id_pkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
-ALTER TABLE ONLY orden_pago_factura_dt
-    ADD CONSTRAINT factura_dt_orden_pago_fkey FOREIGN KEY (factura_dt_id) REFERENCES factura_dt(id);
+ALTER TABLE ONLY orden_pago_factura
+    ADD CONSTRAINT factura_orden_pago_factura_id_pkey FOREIGN KEY (factura_id) REFERENCES factura(id);
+
+
+--
+-- Name: medicina_solicitud_servicio_dt_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY solicitud_servicio_dt
+    ADD CONSTRAINT medicina_solicitud_servicio_dt_fkey FOREIGN KEY (medicina_id) REFERENCES medicina(id);
 
 
 --
@@ -25587,11 +28100,11 @@ ALTER TABLE ONLY municipio
 
 
 --
--- Name: orden_pago_factura_dt_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+-- Name: orden_pago_orden_pa_fact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
 --
 
-ALTER TABLE ONLY orden_pago_factura_dt
-    ADD CONSTRAINT orden_pago_factura_dt_fkey FOREIGN KEY (orden_pago_id) REFERENCES orden_pago(id);
+ALTER TABLE ONLY orden_pago_factura
+    ADD CONSTRAINT orden_pago_orden_pa_fact_id_fkey FOREIGN KEY (orden_pago_id) REFERENCES orden_pago(id);
 
 
 --
@@ -25824,6 +28337,22 @@ ALTER TABLE ONLY solicitud_servicio
 
 ALTER TABLE ONLY solicitud_servicio
     ADD CONSTRAINT solicitud_servicio_servicio_id_fkey FOREIGN KEY (servicio_id) REFERENCES servicio(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: solicitud_servicio_sol_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY solicitud_servicio_dt
+    ADD CONSTRAINT solicitud_servicio_sol_id_fkey FOREIGN KEY (solicitud_servicio_id) REFERENCES solicitud_servicio(id);
+
+
+--
+-- Name: solicitud_servicio_sol_ser_fact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: arrozalba
+--
+
+ALTER TABLE ONLY solicitud_servicio_factura
+    ADD CONSTRAINT solicitud_servicio_sol_ser_fact_id_fkey FOREIGN KEY (solicitud_servicio_id) REFERENCES solicitud_servicio(id);
 
 
 --
