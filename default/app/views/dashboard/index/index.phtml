@@ -4,7 +4,7 @@
 
     
     <?php View::process($page_module, $page_title, $set_title); ?>
-            <?php if(Session::get('perfil_id')<=3) { ?>
+            <?php if(Session::get('perfil_id')==5) { ?>
 
          <div class="row">
       	<div class="span6">
@@ -105,9 +105,11 @@
 
        </div> <!-- /row -->	
        
-    
+ <?php } elseif (Session::get('perfil_id')==3)  { ?>
+					<h3>especialista<?php echo Session::get('nombre1').' '.Session::get('apellido1');?>  </h3>
 
-    <?php } else { ?>
+
+    <?php } elseif (Session::get('perfil_id')==7)  { ?>
 <div class="span12">
 			<div class="widget stacked widget-table action-table">
 					
@@ -278,19 +280,185 @@
 </div>    
  
 
-        <?php } ?>
-<!-- 
-    <p>Sesion ID: <?php  echo Session::get('id'); ?> </p>
-+     <p>Sesion TITULAR_ID: <?php  echo Session::get('titular_id'); ?> </p>
-+     <p>Sesion LOGIN: <?php  echo Session::get('login'); ?> </p>
-+     <p>Sesion TEMA: <?php  echo Session::get('tema'); ?> </p>
-+     <p>Sesion AJAX: <?php  echo Session::get('ajax'); ?> </p>
-+     <p>Sesion DATAGRID: <?php  echo Session::get('datagrid'); ?> </p>
-+     <p>Sesion PERFIL_ID: <?php  echo Session::get('perfil_id'); ?> </p>
-+     <p>Sesion IP: <?php  echo Session::get('ip'); ?> </p>
-+
-+     <p>Sesion : <?php  echo var_dump($_SESSION); ?> </p>
--->	
+        <?php } elseif (Session::get('perfil_id')==6) { ?>
+					<h3>enlace<?php echo Session::get('nombre1').' '.Session::get('apellido1');?>  </h3>
+
+<div class="span12">
+			<div class="widget stacked widget-table action-table">
+					
+				<div class="widget-header">
+					<i class="icon-list-alt"></i>
+					<h3>Cuenta Individual <?php echo Session::get('nombre1').' '.Session::get('apellido1');?>  </h3>
+				</div> <!-- /widget-header -->
+				
+				<div class="widget-content">
+					
+					<table class="table table-striped table-bordered">
+						<thead>
+                            <tr>
+                                <th><h5>DATOS PERSONALES</h5></th>
+                            </tr>
+						</thead>
+						<tbody>
+                            <tr>
+                                <td><b>CEDULA DE IDENTIDAD:</b></td>
+                                <td><?php echo $datostitular->cedula;?></td>
+                                <td><b>NOMBRES:</b></td>
+                                <td><?php echo $datostitular->nombre1.' '.$datostitular->nombre2;?></td>
+                                <td><b>APELLIDOS:</b></td>
+                                <td><?php echo $datostitular->apellido1.' '.$datostitular->apellido2;?></td>
+							</tr>
+                            <tr>
+                                <td><b>SEXO:</b></td>
+                                <td><?php echo $datostitular->sexo;?></td>
+                                <td><b>FECHA DE NACIMIENTO:<b></td>
+                                <td><?php echo $datostitular->fecha_nacimiento;?></td>
+                                <td><b>FECHA DE INGRESO:</b></td>
+                                <td><?php echo $datostitular->fecha_ingreso;?></td>
+							</tr>                            
+                            <tr>
+                                <td><b>SEDE:</b></td>
+                                <td><?php echo $datostitular->sucursal;?></td>
+                                <td><b>DEPARTAMENTO:</b></td>
+                                <td><?php echo $datostitular->departamento;?></td>
+                                <td><b>CARGO:</b></td>
+                                <td><?php echo $datostitular->cargo;?></td>
+							</tr>                               
+                            <tr>
+                                <td><b>TELEFONO LOCAL:</b></td>
+                                <td><?php echo $datostitular->telefono;?></td>
+                                <td><b>TELEFONO MOVIL:</b></td>
+                                <td><?php echo $datostitular->celular;?></td>
+                                <td><b>CORREO ELECTRONICO:<b></td>
+                                <td><?php echo $datostitular->correo_electronico;?></td>
+							</tr>            
+
+						</tbody>
+						</table>
+					
+				</div> <!-- /widget-content -->
+				<div class="widget-content">
+					
+					<table class="table table-striped table-bordered">
+						<thead>
+                            <tr>
+                                <th><h5>SALDOS CONSOLIDADOS TITULAR</h5></th>
+                            </tr>
+						</thead>
+						<tbody>
+                            <tr>
+                                <td><b>TOTAL SOLICITUDES:</b></td>
+                                <td><b>SOLICITUDES MEDICINAS:</b></td>
+                                <td><b>SOLICITUDES REEMBOLSOS:</b></td>
+                                <td><b>SOLICITUDES CLINICAS:<b></td>
+							</tr>
+                            <tr>
+                                <td><?php echo ($hfarmacia_countitular[0]->count+$hreembolso_countitular[0]->count+$hclinica_countitular[0]->count);?></td>
+                                <td><?php echo $hfarmacia_countitular[0]->count;?></td>
+                                <td><?php echo $hreembolso_countitular[0]->count;?></td>
+                                <td><?php echo $hclinica_countitular[0]->count;?></td>
+
+							</tr>
+                            <tr>
+                                <td><b>MONTO TOTAL SOLICITUDES:</b></td>
+                                <td><b>MONTO SOLICITUDES MEDICINAS:</b></td>
+                                <td><b>MONTO SOLICITUDES REEMBOLSOS:</b></td>
+                                <td><b>MONTO SOLICITUDES CLINICAS:<b></td>
+							</tr>
+                            <tr>
+                                <td><?php echo ($hreembolso_montotitular[0]->sum+ $hfarmacia_montotitular[0]->sum+$hclinica_montotitular[0]->sum).' Bs.';?></td>
+                                <td><?php echo $hfarmacia_montotitular[0]->sum.' Bs.';?></td>
+                                <td><?php echo $hreembolso_montotitular[0]->sum.' Bs.';?></td>
+                                <td><?php echo $hclinica_montotitular[0]->sum.' Bs.';?></td>
+
+							</tr>
+						</tbody>
+						</table>
+					
+				</div> <!-- /widget-content -->                         
+                
+				<div class="widget-content">
+					
+					<table class="table table-striped table-bordered">
+						<thead>
+                            <tr>
+                                <th><h5>BENEFICIARIOS</h5></th>
+                            </tr>
+						</thead>
+						<tbody>
+                <tr>
+                                <td><b>CEDULA DE IDENTIDAD:</b></td>
+                                <td><b>NOMBRES:</b></td>
+                                <td><b>APELLIDOS:</b></td>
+                                <td><b>PARENTESCO:<b></td>
+                                <td><b>FECHA NACIMIENTO:<b></td>
+                                
+							</tr>
+                    <?php foreach($beneficiarios as $beneficiario): ?>
+                    <tr>
+                    
+                        <td><?php echo $beneficiario->cedula; ?></td>
+                        <td><?php echo $beneficiario->nombre1.' '.$beneficiario->nombre2; ?></td>
+                        <td><?php echo $beneficiario->apellido1.' '.$beneficiario->apellido2; ?></td>
+                        <td><?php echo $beneficiario->parentesco; ?></td>
+                        <td><?php echo $beneficiario->fecha_nacimiento; ?></td>
+                        
+                    </tr>
+                                    <?php endforeach; ?>
+                            
+						</tbody>
+						</table>
+					
+				</div> <!-- /widget-content -->
+				<div class="widget-content">
+					
+					<table class="table table-striped table-bordered">
+						<thead>
+                            <tr>
+                                <th><h5>SALDOS CONSOLIDADOS BENEFICIARIOS</h5></th>
+                            </tr>
+						</thead>
+						<tbody>
+                            <tr>
+                                <td><b>TOTAL SOLICITUDES:</b></td>
+                                <td><b>SOLICITUDES MEDICINAS:</b></td>
+                                <td><b>SOLICITUDES REEMBOLSOS:</b></td>
+                                <td><b>SOLICITUDES CLINICAS:<b></td>
+							</tr>
+                            <tr>
+                                <td><?php echo ($hfarmacia_countbeneficiario[0]->count+$hreembolso_countbeneficiario[0]->count+$hclinica_countbeneficiario[0]->count);?></td>
+                                <td><?php echo $hfarmacia_countbeneficiario[0]->count;?></td>
+                                <td><?php echo $hreembolso_countbeneficiario[0]->count;?></td>
+                                <td><?php echo $hclinica_countbeneficiario[0]->count;?></td>
+
+							</tr>
+                            <tr>
+                                <td><b>MONTO TOTAL SOLICITUDES:</b></td>
+                                <td><b>MONTO SOLICITUDES MEDICINAS:</b></td>
+                                <td><b>MONTO SOLICITUDES REEMBOLSOS:</b></td>
+                                <td><b>MONTO SOLICITUDES CLINICAS:<b></td>
+							</tr>
+                            <tr>
+                                <td><?php echo ($hreembolso_montobeneficiario[0]->sum+ $hfarmacia_montobeneficiario[0]->sum+$hclinica_montobeneficiario[0]->sum).' Bs.';?></td>
+                                <td><?php echo $hfarmacia_montobeneficiario[0]->sum.' Bs.';?></td>
+                                <td><?php echo $hreembolso_montobeneficiario[0]->sum.' Bs.';?></td>
+                                <td><?php echo $hclinica_montobeneficiario[0]->sum.' Bs.';?></td>
+
+							</tr>
+						</tbody>
+						</table>
+					
+				</div> <!-- /widget-content -->                
+			</div> <!-- /widget -->
+</div>    
+
+<?php } elseif (Session::get('perfil_id')==8) { ?>
+<h3>proveedor<?php echo Session::get('nombre1').' '.Session::get('apellido1');?>  </h3>
+
+<?php } else { ?>
+
+<?php }  ?>
+
 </div>
 <?php 
 echo "<script language='JavaScript'>\n"; 
