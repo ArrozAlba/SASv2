@@ -209,7 +209,7 @@ class beneficiario extends ActiveRecord {
         if(($anoac-$ano >18)&&($this->parentesco_id=="1")){
             $this->beneficiario_tipo_id = "2";
         }
-      $this->fecha_inclusion = date("y-m-d");
+      $this->fecha_inclusion = date("Y-m-d");
       } //cierre del if de metodo distindo de edicion
 
       //fecha inclusion
