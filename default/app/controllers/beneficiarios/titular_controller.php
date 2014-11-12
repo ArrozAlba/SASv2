@@ -165,23 +165,23 @@ class TitularController extends BackendController {
                        }
                        else{
                           ActiveRecord::rollbackTrans();
-                          DwMessage::valid('Ah ocurrido un error creandole la password el usuario asociado al titular.');
+                          DwMessage::warning('Ah ocurrido un error creando el password al usuario asociado al titular.');
 
                        }
                     }
                     else{
                       ActiveRecord::rollbackTrans();
-                      DwMessage::valid('Ah ocurrido un error creando el usuario asociado al titular.');
+                      DwMessage::warning('Ah ocurrido un error creando el usuario asociado al titular.');
                     }
                 }
                 else{
                     ActiveRecord::rollbackTrans();
-                    DwMessage::valid('Ah ocurrido un error al crear el titular.');
+                    DwMessage::warning('Ah ocurrido un error al crear el titular.');
                 }
             }
             else{
                   ActiveRecord::rollbackTrans();
-                  DwMessage::valid('No creo un carajo xD.');
+                  DwMessage::warning('Usuario Registrado pero con algunos problemas.');
             }
           //  unset($titu);
             $this->pais = $pais->getListadoPais();           
