@@ -193,9 +193,9 @@ class Titular extends ActiveRecord {
         $columns = 'municipio.nombre as municipios, municipio.id as idmunicipio, estado.nombre as estados, estado.id as idestado, pais.nombre as paiss, pais.id as idpais,  departamento.id, departamento.nombre as departamento, sucursal.sucursal, sucursal.direccion, cargo.nombre as cargo';
         $join= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';
         $join.= 'INNER JOIN sucursal ON sucursal.id = departamento.sucursal_id ';
-        $join.= 'INNER JOIN pais ON  titular.pais_id = pais.id ';
-        $join.= 'INNER JOIN estado ON  titular.estado_id = estado.id ';
-        $join.= 'INNER JOIN municipio ON  titular.municipio_id = municipio.id ';
+        $join.= 'INNER JOIN pais ON  sucursal.pais_id = pais.id ';
+        $join.= 'INNER JOIN estado ON  sucursal.estado_id = estado.id ';
+        $join.= 'INNER JOIN municipio ON  sucursal.municipio_id = municipio.id ';
         $join.= 'INNER JOIN cargo ON cargo.id = titular.cargo_id ';
         $condicion = "titular.id = $titular";        
         return $this->find_first("columns: $columns", "join: $join", "conditions: $condicion");
