@@ -27,14 +27,14 @@
                     </div>
                     <div class="span3">
                         <?php 
-                        echo DwForm::text('titular.cedula', array('class'=>'input-xlarge mask-pint input-numeric input-required show-error data-toggle="tooltip" title="Introduzca la cedula del titular"'), NULL ,'Cédula de Identidad','Solo se aceptan Nùmeros ejemplo: "12345678"'); 
+                        echo DwForm::text('titular.cedula', array('class'=>'input-xlarge mask-pint input-numeric input-required show-error data-toggle="tooltip" title="Introduzca la cedula del titular"'), NULL ,'Cédula de Identidad'); 
                        ?>
                     </div>
                     <div class="span3">
-                        <?php echo DwForm::select('titular.sexo', array(''=>'Seleccione:', 'M'=>'Masculino', 'F'=>'Femenino'), array('class'=>'input-xlarge input-required show-error data-toggle="tooltip" title="Sexo del Titular" '), NULL, 'Sexo:','Seleccione una de las dos Opciones'); ?>
+                        <?php echo DwForm::select('titular.sexo', array(''=>'Seleccione:', 'M'=>'Masculino', 'F'=>'Femenino'), array('class'=>'input-xlarge input-required show-error data-toggle="tooltip" title="Sexo" '), NULL, 'Sexo:'); ?>
                     </div>
                     <div class="span3">
-                        <?php echo DwForm::date('titular.fecha_nacimiento', array('class'=>'input-large input-required mask-date input-date show-errors data-toggle="tooltip" title="Seleccione Fecha de Nacimiento del titular"'), NULL ,'Fecha de Nacimiento','Ejemplo:"1991-04-06"'); ?>
+                        <?php echo DwForm::date('titular.fecha_nacimiento', array('class'=>'input-large input-required show-errors title="Fecha de Nacimiento"'), NULL,'Fecha de Nacimiento' )?>
                     </div>
                 </div>
                 
@@ -216,20 +216,18 @@ $(function(){
     //VALIDAR NRO MINIMO ( NO PERMITIR MENOS DE 11 Xd)
 })
 </script>
-
 <!-- para validad que si se marca ninguno en patologias desactive las demas -->
 <script type='text/javascript'>
-
-
 function chequear(obj) {  
   var patologia_id = document.getElementById('solicitud_servicio_patologia_id').value;
-//para validar que no repita el patologia en el arreglo.
+  //para validar que no repita el patologia en el arreglo.
    for(var i=0;i<document.getElementsByName('patologia_id[]').length;i++)
     {                               
         if (document.getElementsByName('patologia_id[]')[i].value==patologia_id){
             alert('Estas intentando agregar una patologia con caracteristicas iguales.\nVerifica los datos!');
             return false;
         }                 
+    }
 } 
 </script>
 <!-- Script crear el usuario y la contraseña  -->
@@ -249,8 +247,6 @@ $("#titular_nombre1").change(function(){
 
 });
 </script>
-
-
 <!-- Script para obtener por Ajax el departamento en funcion de las Upsas  -->
 <script type='text/javascript'>
 $("#titular_sucursal_id").change(function(){
@@ -293,7 +289,6 @@ $("#titular_hpais_id").change(function(){
             $("#div_hestado").html(html);
           }
         });
-
 });
 </script>
 

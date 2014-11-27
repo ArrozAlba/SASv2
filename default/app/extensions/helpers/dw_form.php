@@ -630,12 +630,12 @@ class DwForm extends Form {
         if(self::$_style=='form-search' OR self::$_style=='form-inline') {
             $attrs['placeholder'] = $label;
         }
-        $input.= '<div class="input-append date">';
+        $input.= '<div class="input-append date" >';
         //Armo el input del form
         if(!DESKTOP) {
             $input.= parent::text($field, $attrs, $value, 'date');
         } else {
-            $attrs['class'] = 'js-datepicker '.$attrs['class'];
+            $attrs['class'] = 'js-datepicker data-date="12-02-2012" data-date-format="dd-mm-yyyy" '.$attrs['class'];
             $input.= parent::text($field, $attrs, $value);
         }
         $input.= '<span class="add-on"><i class="icon-calendar"></i></span>';
@@ -651,7 +651,7 @@ class DwForm extends Form {
         }
         //Verifico si tiene un label
         $label = ($label && self::$_show_label) ? self::label($label, $field, null, $attrs['class'])  : '';
-        return '<div class="control-group">'.$label.$input.'</div>'.PHP_EOL;
+        return '<div class="control-group" >'.$label.$input.'</div>'.PHP_EOL;
     }
 
     /**
