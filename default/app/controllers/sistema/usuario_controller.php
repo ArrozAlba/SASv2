@@ -108,9 +108,11 @@ class UsuarioController extends BackendController {
     /**
      * Método para editar
      */
-    public function editar($key) {        
+    public function editar($key) {       
+    exit($key) ;
         if(!$id = DwSecurity::isValidKey($key, 'upd_usuario', 'int')) {
-            return DwRedirect::toAction('listar');
+           exit($id);
+           return DwRedirect::toAction('listar');
         }
         
         $usuario = new Usuario();
