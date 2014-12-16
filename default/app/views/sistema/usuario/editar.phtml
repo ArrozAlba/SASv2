@@ -55,7 +55,10 @@
 
                 </div>
                 <div class="row-fluid">
+                    <input type="text" value="<?= $usuario->id ?>" > 
+
                     <?php $key_upd = DwSecurity::getKey($usuario->id, 'upd_usuario'); ?>
+                    
                     <?php //echo DwForm::hidden('usuario.titular_id', NULL, NULL); ?>
 
                     <div class="form-actions">
