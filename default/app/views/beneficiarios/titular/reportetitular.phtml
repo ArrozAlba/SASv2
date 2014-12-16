@@ -12,7 +12,7 @@ $pdf->SetFillColor(255);
 $pdf->SetTextColor(000);
 $pdf->SetMargins(8,8,8,8);
 //Imprimiendo las fechas
-$Fecha=date("d/m/Y");
+    $Fecha=date("d/m/Y");
     $elDia=substr($Fecha,0,2);
     $elMes=substr($Fecha,3,2);
     $elYear=substr($Fecha,6,4);
@@ -73,10 +73,11 @@ $pdf->Cell(199,6,utf8_decode("DIRECCIÓN DE HABITACIÓN"),1,1,'C',true);
 $pdf->SetFont('Times','',9);
 $pdf->Cell(199,6,utf8_decode('Dirección: '.$direccion),1,1,'L',true);
 
-$pdf->Cell(28,6,utf8_decode('Pais: '.$hpais),1,0,'L',true);   
-$pdf->Cell(34,6,utf8_decode('Estado: '.$hestado),1,0,'L',true);
-$pdf->Cell(63,6,utf8_decode('Parroquia: '.$hparroquia),1,0,'L',true);
-$pdf->Cell(74,6,'E-mail: '.$correo_electronico,1,1,'L',true);
+$pdf->Cell(60,6,utf8_decode('Pais: '.$hpais),1,0,'L',true);   
+$pdf->Cell(60,6,utf8_decode('Estado: '.$hestado),1,0,'L',true);
+$pdf->Cell(79,6,utf8_decode('Parroquia: '.$hparroquia),1,1,'L',true);
+
+$pdf->Cell(199,6,'Correo Electronico: '.$correo_electronico,1,1,'L',true);
 $pdf->SetFont('Times','B',9);
 
 //--------------DIRECCION DE TRABAJO-------------------------------
@@ -84,19 +85,19 @@ $pdf->SetFont('Times','B',9);
 $email_corpo = "";
 $pdf->Cell(199,6,utf8_decode('DIRECCIÓN DE TRABAJO'),1,1,'C',true); 
 $pdf->SetFont('Times','',8);
-$pdf->Cell(34,6,'Upsa: '.$upsa,1,0,'L',true);
-$pdf->Cell(121,6,utf8_decode('Dirección: '.$direccionlaboral),1,0,'L',true);
-$pdf->Cell(44,6,'Municipio: '.$municipio_laboral,1,1,'L',true);
-$pdf->Cell(40,6,'Estado: '.$estado_laboral,1,0,'L',true);
-$pdf->Cell(33,6,'Pais: '.$pais_laboral,1,0,'L',true);  
-$pdf->Cell(76,6,'Email: '.$email_corpo,1,0,'L',true); 
-$pdf->Cell(50,6,'Cargo: '.utf8_decode($cargo),1,1,'L',true);
+$pdf->Cell(59,6, utf8_decode('Upsa: '.$upsa),1,0,'L',true);
+$pdf->Cell(140,6,utf8_decode('Dirección: '.$direccionlaboral),1,1,'L',true);
+$pdf->Cell(59,6, utf8_decode('País: '.$pais_laboral),1,0,'L',true);  
+$pdf->Cell(61,6, utf8_decode('Municipio: '.$municipio_laboral),1,0,'L',true);
+$pdf->Cell(79,6, utf8_decode('Estado: '.$estado_laboral),1,1,'L',true);
+$pdf->Cell(100,6, utf8_decode('Correo Electronico: '.$email_corpo),1,0,'L',true); 
+$pdf->Cell(99,6,'Cargo: '.utf8_decode($cargo),1,1,'L',true);
 
 //datos de beneficiarios
 $pdf->Ln(3);
 $pdf->SetFont('Times','B',10);  
-$pdf->Cell(30,6,'OBSERVACION:',1,0,'C',true);    
-$pdf->SetFont('Times','',10);   
+$pdf->Cell(30,6,utf8_decode('OBSERVACIÓN:'),1,0,'C',true);    
+$pdf->SetFont('Times','',8);   
 $pdf->MultiCell(169,6,$observacion,1,1,'C',true);   
 $pdf->Ln(3);
 $pdf->SetFont('Times','B',10);  
