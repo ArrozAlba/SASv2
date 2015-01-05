@@ -66,6 +66,13 @@ class Titular extends ActiveRecord {
         $rs = $obj->$method();
         return ($rs) ? $obj : FALSE;
     }
+    /*   Funcion para crear listado de todos los titulares con su respectivos beneficiarios    */
+    public function getListadoTitularBeneficiarios(){
+        //NO FUNCIONANDO AUN
+    }
+
+
+
 
     public function getListadotitular($estado, $order='', $page=0) {
         $columns = 'titular.*, titular.id as idtitular, sucursal.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';       
@@ -102,20 +109,12 @@ class Titular extends ActiveRecord {
         }  
     }
     public function getListadoTitularReporte() {
-         $columns = 'titular.*, titular.id as idtitular, sucursal.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';       
+        $columns = 'titular.*, titular.id as idtitular, sucursal.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';       
         $join= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
         $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';
         $join.= 'INNER JOIN sucursal ON departamento.sucursal_id = sucursal.id';
         $join.= ' ORDER BY titular.cedula ';
         return $this->find("columns: $columns", "join: $join");
-       
-        /*$columns = 'titular.*, titular.id as idtitular, sucursal.*, tipoempleado.id, tipoempleado.nombre as tipoe, departamento.id, departamento.nombre as departamento';       
-        $join= 'INNER JOIN tipoempleado  ON  titular.tipoempleado_id = tipoempleado.id ';   
-        $join.= 'INNER JOIN departamento  ON  titular.departamento_id = departamento.id ';
-        $join.= 'INNER JOIN sucursal ON departamento.sucursal_id = sucursal.id';
-
-            return $this->find("columns: $columns", "join: $join");*/
-          
     }
     /**
      * Método para obtener titulares

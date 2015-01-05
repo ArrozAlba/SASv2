@@ -1,0 +1,54 @@
+ <?php
+ // LImpia el bufer (evita los errores de: Some data has already been output ) 
+ob_end_clean(); 
+Load::models('beneficiarios/titular', 'beneficiarios/beneficiario');
+$tbHtml = "<table>
+            <header>
+                <tr>
+                  <th>".utf8_decode('Cédula')."</th>
+                  <th>Apellidos y Nombres</th>
+                  <th>Nomina</th>
+                  <th>Departamento</th>
+                  <th>Sucursal</th>
+                  <th>-------------</th>
+                  <th>".utf8_decode('Cédula')."</th>
+                  <th>Apellidos y Nombres</th>
+                  <th>Fecha de Nacimiento</th>
+                  <th>Edad</th>
+                  <th>Sexo</th>
+                  <th>Parentesco</th>
+                </tr>
+            </header>";
+
+foreach($titularesmuchos as $titular){
+    $beneficiario = new beneficiario();
+    $beneficiarios = $beneficiario->getListadoBeneTitular($titular->idtitular);
+    //ciclo para sacar cada beneficiario de los titulares 
+    foreach($beneficiarios as $bene){
+        $elDia=substr($bene->fecha_nacimiento,8,2);
+        $elMes=substr($bene->fecha_nacimiento,5,2);
+        $elYear=substr($bene->fecha_nacimiento,0,4);
+        $fc=$elDia.'-'.$elMes.'-'.$elYear;
+        $tbHtml .= "<tr>
+                <td>".$titular->cedula."</td>
+                <td>".$titular->nombre1." ". $titular->apellido1 ."</td>
+                <td>".$titular->tipoe."</td>
+                <td>".$titular->departamento."</td>
+                <td>".$titular->sucursal."</td>
+                <td>------------------------</td>
+                <td>".$bene->cedula."</td>
+                <td>".utf8_decode($bene->nombre1.' '.$bene->nombre2.' '.$bene->apellido1.' '.$bene->apellido2)."</td>
+                <td>".$fc."</td>
+                <td>".$bene->edad."</td>
+                <td>".$bene->sexo."</td>
+                <td>".$bene->parentesco."</td>";
+    }
+}
+
+$tbHtml .= "</html>";
+header("Content-type: application/octet-stream");
+header("Content-Disposition: attachment; filename=listadopersonal.xls");
+header("Pragma: no-cache");
+header("Expires: 0");
+echo $tbHtml;
+?>
