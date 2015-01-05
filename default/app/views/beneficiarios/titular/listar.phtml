@@ -17,6 +17,8 @@
         <div class="btn-actions">
             <?php echo DwHtml::button("beneficiarios/titular/agregar/", 'agregar', array('class'=>'btn-success'), 'check', APP_AJAX); ?>
             <?php echo DwButton::report("titular/listar/", 'html', 'Reporte de Titulares', 'imprimir'); ?>
+            <? echo DwHtml::buttonTable('Listado General', "beneficiarios/titular/reportetitularbeneficiario/", NULL, 'success', 'search');
+            ?>
         </div>
     </div>
 

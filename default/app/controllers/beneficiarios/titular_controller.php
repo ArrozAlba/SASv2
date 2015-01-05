@@ -367,6 +367,19 @@ class TitularController extends BackendController {
            return $bisiesto; 
         } 
    
+    /* Metodo para buscar todos los titulares con sus respectivos beneficiarios, (TODOS TODOS)
+    Fecha: 05/01/2015
+    */
+    public function reportetitularbeneficiario($order='order.id.desc', $page=''){
+        View::template(NULL); 
+        $titular=new Titular();
+        $this->titularesmuchos = $titular->getListadoTitular('todos', $order, $page);
+        
+        //$beneficiario = new beneficiario();
+        //$this->beneficiarios = $beneficiario->getListadoBeneTitular($id);
+    }
+
+
     /**
      * Método para formar el reporte en pdf 
      */
