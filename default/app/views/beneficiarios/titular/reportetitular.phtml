@@ -111,7 +111,6 @@ $pdf->Cell(25,6,'PARENTESCO',1,0,'C',true);
 $pdf->Cell(16,6,'PARTIC.',1,1,'C',true);
 $pdf->SetFont('Times','',8);
 
-
 foreach($beneficiarios as $bene){
 $pdf->Cell(80,6,strtoupper(utf8_decode($bene->nombre1.' '.$bene->nombre2.' '.$bene->apellido1.' '.$bene->apellido2)),1,0,'C',true);
         $elDia=substr($bene->fecha_nacimiento,8,2);
