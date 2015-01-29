@@ -1,8 +1,8 @@
 <?php View::notify(); ?>
+<style type="text/css">
+    .tab-pane { min-height: 200px;}
+</style>
 <div class="container-fluid dw-shell-view">
-
-
-    
     <?php View::process($page_module, $page_title, $set_title); ?>
             <?php if(Session::get('perfil_id')==5) { ?>
 
@@ -281,8 +281,12 @@
  
 
         <?php } elseif (Session::get('perfil_id')==6) { ?>
-					<h3>enlace<?php echo Session::get('nombre1').' '.Session::get('apellido1');?>  </h3>
-
+<ul class="nav nav-tabs">
+	<li class="active"><a href="#tab1" data-toggle="tab">Cuenta Individual  <?php echo Session::get('nombre1').' '.Session::get('apellido1');?> </a></li>
+	<li ><a href="#tab2" data-toggle="tab">Gestión Enlace RRHH</a></li>
+</ul>
+<div class="tab-content">
+	<div class="tab-pane active" id="tab1">
 <div class="span12">
 			<div class="widget stacked widget-table action-table">
 					
@@ -451,6 +455,12 @@
 				</div> <!-- /widget-content -->                
 			</div> <!-- /widget -->
 </div>    
+		
+    </div><!--Cierre tab1-->
+	
+	<div class="tab-pane" id="tab2">
+    </div><!--Cierre tab2-->
+</div>        
 
 <?php } elseif (Session::get('perfil_id')==8) { ?>
 <h3>proveedor<?php echo Session::get('nombre1').' '.Session::get('apellido1');?>  </h3>
